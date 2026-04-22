@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sobre Nosotros - LitMate{% endblock %}
+
+{% block content %}
+<header class="masthead" style="background-image: url({% static 'assets/img/about-bg.jpg' %})">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="page-heading">
+                    <h1>Sobre Nosotros</h1>
+                    <span class="subheading"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<main class="mb-4  border border-dark rounded p-2 m-5">
+    <div class="container px-4 px-lg-5">
+        <br class="row gx-4 gx-lg-5 justify-content-center">
+        <p class="lead mb-4">
+          Nuestro proyecto nace con la misión de <strong>conectar lectores de todo el mundo</strong>
+          con la información más completa y actualizada sobre libros, autores y tendencias literarias.
+        </p>
+        <p class="mb-4">
+          Creamos esta plataforma como un emprendimiento tecnológico que
+          combina <strong>gestión de información literaria</strong> con <strong>inteligencia artificial</strong>.
+          A través de un chatbot innovador, ayudamos a los usuarios a descubrir nuevas lecturas
+          según sus gustos, encontrar libros a partir de recuerdos o descripciones, y acceder a datos
+          complementarios de autores y géneros.
+        </p>
+        <p class="mb-4">
+          Además, integramos un <strong>módulo de enlaces externos</strong> a diversas librerías en línea,
+          facilitando la comparación de precios y la compra directa de los títulos que más te interesen.
+          De esta forma, no solo centralizamos la información, sino que <strong>creamos un puente
+          entre la exploración literaria y la adquisición del libro</strong>.
+        </p>
+        <p class="fw-semibold">
+          Nuestra finalidad: <span class="text-primary">democratizar el acceso a la lectura
+          y mejorar la experiencia digital de los lectores en todo el mundo.</span>
+        </p>
+    </div>
+    <hr>
+    <section class="page-section bg-light" id="team">
+        <div class="container px-4 px-lg-5">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Nuestro Equipo</h2>
+                <h3 class="section-subheading text-muted">La mente detrás de LitMate</h3>
+            </div>
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="team-member">
+                        <img class="mx-auto rounded-circle" src="{% static 'assets/img/team/3.jpg' %}" alt="René Muñoz" />
+                        <h4>René Muñoz</h4>
+                        <p class="text-muted">Desarrollador</p>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="team-member">
+                        <img class="mx-auto rounded-circle" src="{% static 'assets/img/team/3.jpg' %}" alt="Benjamin Toro" />
+                        <h4>Benjamin Toro</h4>
+                        <p class="text-muted">Desarrollador</p>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="team-member">
+                        <img class="mx-auto rounded-circle" src="{% static 'assets/img/team/sebastian.jpg' %}" alt="Sebastian Lillo" />
+                        <h4>Sebastian Lillo</h4>
+                        <p class="text-muted">Desarrollador</p>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="team-member">
+                        <img class="mx-auto rounded-circle" src="{% static 'assets/img/team/jp.jpg' %}" alt="Juan Pablo Molina" />
+                        <h4>Juan Pablo Molina</h4>
+                        <p class="text-muted">Desarrollador</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

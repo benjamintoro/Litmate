@@ -1,0 +1,14 @@
+django
+djangorestframework
+pymongo
+djongo
+sentence-transformers
+torch
+transformers
+pinecone
+pymysql
+tqdm
+requests
+googlesearch-python
+huggingface_hub
+python-dotenv

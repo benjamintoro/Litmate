@@ -1,0 +1,588 @@
+2025-12-03 20:06:52,918 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 20:07:00,737 INFO Mensaje: Narnia
+2025-12-03 20:07:02,127 INFO Búsqueda simple: Las crónicas de Narnia
+2025-12-03 20:07:04,195 INFO Mensaje: Quién es el autor
+2025-12-03 20:07:04,198 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: autor)
+2025-12-03 20:07:05,613 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:07:05,615 INFO Resultado detalles: True
+2025-12-03 20:07:05,615 INFO Patrón autor sobre: Las crónicas de Narnia
+2025-12-03 20:09:36,406 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 20:10:49,072 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 20:11:41,110 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 20:12:07,553 INFO Mensaje: Narnia
+2025-12-03 20:12:08,965 INFO Búsqueda simple: Las crónicas de Narnia
+2025-12-03 20:13:23,369 INFO Mensaje: Narnia
+2025-12-03 20:13:25,170 INFO Búsqueda simple: Las crónicas de Narnia
+2025-12-03 20:13:32,212 INFO Mensaje: Narnia
+2025-12-03 20:13:33,572 INFO Búsqueda simple: Las crónicas de Narnia
+2025-12-03 20:13:36,625 INFO Mensaje: Quién es el autor
+2025-12-03 20:13:36,628 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: autor)
+2025-12-03 20:13:36,628 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='autor'
+2025-12-03 20:13:36,628 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:13:37,976 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:13:37,976 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:13:37,976 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:13:37,976 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:13:37,976 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:13:37,977 INFO Resultado detalles: True
+2025-12-03 20:13:37,977 INFO Patrón autor sobre: Las crónicas de Narnia
+2025-12-03 20:13:41,052 INFO Mensaje: 1984
+2025-12-03 20:13:42,822 INFO Búsqueda simple: Test sobre la Ley 53/1984, de 26 de diciembre, de Incompatibilidades del Personal al Servicio de las Administraciones Públicas
+2025-12-03 20:20:11,595 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 20:20:50,915 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 20:20:52,551 INFO Mensaje: Narnia
+2025-12-03 20:20:54,282 INFO Búsqueda simple: Las crónicas de Narnia
+2025-12-03 20:21:05,017 INFO Mensaje: Narnia
+2025-12-03 20:21:06,667 INFO Búsqueda simple: Las crónicas de Narnia
+2025-12-03 20:21:09,712 INFO Mensaje: Quién es el autor
+2025-12-03 20:21:09,715 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: autor)
+2025-12-03 20:21:09,715 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='autor'
+2025-12-03 20:21:09,715 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:21:10,430 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:21:10,430 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:21:10,430 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:21:10,430 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:21:10,430 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:21:10,432 INFO Resultado detalles: True
+2025-12-03 20:21:10,432 INFO Patrón autor sobre: Las crónicas de Narnia
+2025-12-03 20:22:01,398 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 20:23:22,567 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 20:23:26,576 INFO Mensaje: Narnia
+2025-12-03 20:23:28,031 INFO Búsqueda simple: Las crónicas de Narnia
+2025-12-03 20:23:31,095 INFO Mensaje: Quién es el autor
+2025-12-03 20:23:31,098 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: autor)
+2025-12-03 20:23:31,098 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='autor'
+2025-12-03 20:23:31,098 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:23:32,475 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:23:32,476 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:23:32,476 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:23:32,476 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:23:32,476 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:23:32,477 INFO Resultado detalles: True
+2025-12-03 20:23:32,478 INFO Patrón autor sobre: Las crónicas de Narnia
+2025-12-03 20:23:35,520 INFO Mensaje: ¿Cuál es la trama?
+2025-12-03 20:23:35,522 INFO Buscando detalles para: 'cuál' (tipo: trama)
+2025-12-03 20:23:35,523 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='cuál', type='trama'
+2025-12-03 20:23:35,523 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=cu%C3%A1l&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:23:37,289 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:23:37,289 INFO [DEBUG] Item 0: 'Física para las ciencias de la vida' - desc_len=554
+2025-12-03 20:23:37,289 INFO [DEBUG] Seleccionado: 'Física para las ciencias de la vida'
+2025-12-03 20:23:37,290 INFO [DEBUG] Detalles encontrados: Física para las ciencias de la vida by Alan H. Cromer
+2025-12-03 20:23:37,290 INFO Detalles encontrados para: Física para las ciencias de la vida
+2025-12-03 20:23:37,291 INFO Resultado detalles: True
+2025-12-03 20:23:37,291 INFO Patrón trama sobre: Física para las ciencias de la vida
+2025-12-03 20:23:40,337 INFO Mensaje: Cuéntame sobre la serie
+2025-12-03 20:23:40,340 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: serie)
+2025-12-03 20:23:40,340 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='serie'
+2025-12-03 20:23:40,340 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:23:41,080 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:23:41,081 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:23:41,081 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:23:41,081 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:23:41,081 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:23:41,083 INFO Resultado detalles: True
+2025-12-03 20:23:41,083 INFO Patrón serie sobre: Las crónicas de Narnia
+2025-12-03 20:24:50,031 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 20:24:53,964 INFO Mensaje: Narnia
+2025-12-03 20:24:55,339 INFO Búsqueda simple: Las crónicas de Narnia
+2025-12-03 20:24:58,404 INFO Mensaje: Quién es el autor
+2025-12-03 20:24:58,407 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: autor)
+2025-12-03 20:24:58,407 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='autor'
+2025-12-03 20:24:58,407 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:24:59,807 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:24:59,807 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:24:59,807 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:24:59,808 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:24:59,808 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:24:59,809 INFO Resultado detalles: True
+2025-12-03 20:24:59,810 INFO Patrón autor sobre: Las crónicas de Narnia
+2025-12-03 20:25:02,866 INFO Mensaje: ¿Cuál es la trama?
+2025-12-03 20:25:02,868 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: trama)
+2025-12-03 20:25:02,869 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='trama'
+2025-12-03 20:25:02,869 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:25:03,609 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:25:03,610 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:25:03,610 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:25:03,610 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:25:03,610 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:25:03,612 INFO Resultado detalles: True
+2025-12-03 20:25:03,612 INFO Patrón trama sobre: Las crónicas de Narnia
+2025-12-03 20:25:06,661 INFO Mensaje: Dame info de la serie
+2025-12-03 20:25:06,664 INFO Buscando detalles para: 'dame info' (tipo: serie)
+2025-12-03 20:25:06,664 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='dame info', type='serie'
+2025-12-03 20:25:06,664 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=dame%20info&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:25:08,804 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:25:08,804 INFO [DEBUG] Item 0: 'ILLUMINAE. Expediente_01 (Illuminae 1)' - desc_len=1227
+2025-12-03 20:25:08,804 INFO [DEBUG] Seleccionado: 'ILLUMINAE. Expediente_01 (Illuminae 1)'
+2025-12-03 20:25:08,805 INFO [DEBUG] Detalles encontrados: ILLUMINAE. Expediente_01 (Illuminae 1) by Amie Kaufman, Jay Kristoff
+2025-12-03 20:25:08,805 INFO Detalles encontrados para: ILLUMINAE. Expediente_01 (Illuminae 1)
+2025-12-03 20:25:08,806 INFO Resultado detalles: True
+2025-12-03 20:25:08,806 INFO Patrón serie sobre: ILLUMINAE. Expediente_01 (Illuminae 1)
+2025-12-03 20:25:11,875 INFO Mensaje: ¿Donde puedo leerlo?
+2025-12-03 20:25:13,443 INFO Búsqueda simple: ¡Yo puedo leer con los ojos cerrados! (I Can Read With My Eyes Shut! Spanish Edition)
+2025-12-03 20:25:45,653 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 20:26:13,248 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 20:26:14,955 INFO Mensaje: Narnia
+2025-12-03 20:26:15,709 INFO Búsqueda simple: Las crónicas de Narnia
+2025-12-03 20:26:18,776 INFO Mensaje: Quién es el autor
+2025-12-03 20:26:18,778 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: autor)
+2025-12-03 20:26:18,779 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='autor'
+2025-12-03 20:26:18,779 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:26:20,334 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:26:20,335 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:26:20,335 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:26:20,335 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:26:20,338 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:26:20,339 INFO Resultado detalles: True
+2025-12-03 20:26:20,339 INFO Patrón autor sobre: Las crónicas de Narnia
+2025-12-03 20:26:23,429 INFO Mensaje: ¿Cuál es la trama?
+2025-12-03 20:26:23,431 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: trama)
+2025-12-03 20:26:23,432 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='trama'
+2025-12-03 20:26:23,432 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:26:24,852 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:26:24,853 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:26:24,853 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:26:24,853 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:26:24,853 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:26:24,854 INFO Resultado detalles: True
+2025-12-03 20:26:24,855 INFO Patrón trama sobre: Las crónicas de Narnia
+2025-12-03 20:26:27,937 INFO Mensaje: Dame info de la serie
+2025-12-03 20:26:27,940 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: serie)
+2025-12-03 20:26:27,940 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='serie'
+2025-12-03 20:26:27,940 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:26:29,782 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:26:29,782 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:26:29,782 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:26:29,782 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:26:29,783 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:26:29,784 INFO Resultado detalles: True
+2025-12-03 20:26:29,784 INFO Patrón serie sobre: Las crónicas de Narnia
+2025-12-03 20:26:32,851 INFO Mensaje: ¿Donde puedo leerlo?
+2025-12-03 20:26:34,227 INFO Búsqueda simple: ¡Yo puedo leer con los ojos cerrados! (I Can Read With My Eyes Shut! Spanish Edition)
+2025-12-03 20:26:37,276 INFO Mensaje: Gracias
+2025-12-03 20:26:37,279 INFO Patrón social: gracias
+2025-12-03 20:27:12,784 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 20:27:21,179 INFO Mensaje: Hola
+2025-12-03 20:27:21,180 INFO Patrón social: saludo
+2025-12-03 20:27:23,740 INFO Mensaje: Narnia
+2025-12-03 20:27:25,112 INFO Búsqueda simple: Las crónicas de Narnia
+2025-12-03 20:27:27,699 INFO Mensaje: Quién es el autor
+2025-12-03 20:27:27,703 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: autor)
+2025-12-03 20:27:27,703 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='autor'
+2025-12-03 20:27:27,703 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:27:29,519 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:27:29,519 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:27:29,519 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:27:29,520 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:27:29,520 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:27:29,521 INFO Resultado detalles: True
+2025-12-03 20:27:29,521 INFO Patrón autor sobre: Las crónicas de Narnia
+2025-12-03 20:27:32,065 INFO Mensaje: ¿Cuál es la trama?
+2025-12-03 20:27:32,068 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: trama)
+2025-12-03 20:27:32,068 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='trama'
+2025-12-03 20:27:32,069 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:27:32,841 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:27:32,841 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:27:32,841 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:27:32,841 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:27:32,842 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:27:32,843 INFO Resultado detalles: True
+2025-12-03 20:27:32,843 INFO Patrón trama sobre: Las crónicas de Narnia
+2025-12-03 20:27:35,440 INFO Mensaje: Dame info de la serie
+2025-12-03 20:27:35,442 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: serie)
+2025-12-03 20:27:35,443 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='serie'
+2025-12-03 20:27:35,443 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:27:36,848 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:27:36,849 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:27:36,849 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:27:36,849 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:27:36,849 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:27:36,853 INFO Resultado detalles: True
+2025-12-03 20:27:36,853 INFO Patrón serie sobre: Las crónicas de Narnia
+2025-12-03 20:27:39,413 INFO Mensaje: ¿Donde puedo leerlo?
+2025-12-03 20:27:39,415 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: link)
+2025-12-03 20:27:39,415 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='link'
+2025-12-03 20:27:39,416 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:27:40,115 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:27:40,115 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:27:40,115 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:27:40,116 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:27:40,116 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:27:40,117 INFO Resultado detalles: True
+2025-12-03 20:27:40,117 INFO Patrón link sobre: Las crónicas de Narnia
+2025-12-03 20:27:42,665 INFO Mensaje: El Señor de los Anillos
+2025-12-03 20:27:44,336 INFO Búsqueda simple: El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)
+2025-12-03 20:27:46,907 INFO Mensaje: Quién escribió este libro
+2025-12-03 20:27:46,910 INFO Buscando detalles para: 'El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)' (tipo: autor)
+2025-12-03 20:27:46,910 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)', type='autor'
+2025-12-03 20:27:46,910 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=El%20Se%C3%B1or%20de%20los%20Anillos%20no%2001/03%20La%20Comunidad%20del%20Anillo%20%28edici%C3%B3n%20revisada%29&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:27:48,218 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:27:48,218 INFO [DEBUG] Item 0: 'El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)' - desc_len=878
+2025-12-03 20:27:48,218 INFO [DEBUG] Seleccionado: 'El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)'
+2025-12-03 20:27:48,218 INFO [DEBUG] Detalles encontrados: El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada) by J. R. R. Tolkien
+2025-12-03 20:27:48,218 INFO Detalles encontrados para: El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)
+2025-12-03 20:27:48,220 INFO Resultado detalles: True
+2025-12-03 20:27:48,220 INFO Patrón autor sobre: El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)
+2025-12-03 20:27:50,756 INFO Mensaje: Gracias
+2025-12-03 20:27:50,759 INFO Patrón social: gracias
+2025-12-03 20:27:58,057 INFO Mensaje: test
+2025-12-03 20:27:58,954 INFO Búsqueda simple: Handbook of Special Tests in Musculoskeletal Examination E-Book
+2025-12-03 20:28:06,408 INFO Mensaje: Narnia
+2025-12-03 20:28:07,811 INFO Búsqueda simple: Las crónicas de Narnia
+2025-12-03 20:28:09,849 INFO Mensaje: ¿Donde puedo leerlo?
+2025-12-03 20:28:09,852 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: link)
+2025-12-03 20:28:09,852 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='link'
+2025-12-03 20:28:09,852 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:28:11,231 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:28:11,232 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:28:11,232 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:28:11,232 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:28:11,232 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:28:11,233 INFO Resultado detalles: True
+2025-12-03 20:28:11,234 INFO Patrón link sobre: Las crónicas de Narnia
+2025-12-03 20:28:20,411 INFO Mensaje: Hola
+2025-12-03 20:28:20,412 INFO Patrón social: saludo
+2025-12-03 20:28:22,499 INFO Mensaje: Narnia
+2025-12-03 20:28:23,951 INFO Búsqueda simple: Las crónicas de Narnia
+2025-12-03 20:28:26,005 INFO Mensaje: Quién es el autor
+2025-12-03 20:28:26,007 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: autor)
+2025-12-03 20:28:26,008 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='autor'
+2025-12-03 20:28:26,008 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:28:26,807 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:28:26,807 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:28:26,807 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:28:26,808 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:28:26,808 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:28:26,809 INFO Resultado detalles: True
+2025-12-03 20:28:26,809 INFO Patrón autor sobre: Las crónicas de Narnia
+2025-12-03 20:28:28,862 INFO Mensaje: ¿Cuál es la trama?
+2025-12-03 20:28:28,866 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: trama)
+2025-12-03 20:28:28,866 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='trama'
+2025-12-03 20:28:28,867 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:28:30,253 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:28:30,254 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:28:30,254 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:28:30,254 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:28:30,254 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:28:30,256 INFO Resultado detalles: True
+2025-12-03 20:28:30,256 INFO Patrón trama sobre: Las crónicas de Narnia
+2025-12-03 20:28:32,301 INFO Mensaje: Dame info de la serie
+2025-12-03 20:28:32,304 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: serie)
+2025-12-03 20:28:32,304 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='serie'
+2025-12-03 20:28:32,304 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:28:33,676 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:28:33,676 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:28:33,676 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:28:33,676 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:28:33,676 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:28:33,678 INFO Resultado detalles: True
+2025-12-03 20:28:33,678 INFO Patrón serie sobre: Las crónicas de Narnia
+2025-12-03 20:28:35,722 INFO Mensaje: ¿Donde puedo leerlo?
+2025-12-03 20:28:35,725 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: link)
+2025-12-03 20:28:35,725 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='link'
+2025-12-03 20:28:35,725 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:28:37,141 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:28:37,141 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:28:37,142 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:28:37,142 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:28:37,142 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:28:37,143 INFO Resultado detalles: True
+2025-12-03 20:28:37,143 INFO Patrón link sobre: Las crónicas de Narnia
+2025-12-03 20:28:39,167 INFO Mensaje: El Señor de los Anillos
+2025-12-03 20:28:39,955 INFO Búsqueda simple: El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)
+2025-12-03 20:28:41,987 INFO Mensaje: Quién escribió este libro
+2025-12-03 20:28:41,989 INFO Buscando detalles para: 'El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)' (tipo: autor)
+2025-12-03 20:28:41,990 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)', type='autor'
+2025-12-03 20:28:41,990 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=El%20Se%C3%B1or%20de%20los%20Anillos%20no%2001/03%20La%20Comunidad%20del%20Anillo%20%28edici%C3%B3n%20revisada%29&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:28:43,666 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:28:43,667 INFO [DEBUG] Item 0: 'El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)' - desc_len=878
+2025-12-03 20:28:43,667 INFO [DEBUG] Seleccionado: 'El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)'
+2025-12-03 20:28:43,667 INFO [DEBUG] Detalles encontrados: El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada) by J. R. R. Tolkien
+2025-12-03 20:28:43,667 INFO Detalles encontrados para: El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)
+2025-12-03 20:28:43,668 INFO Resultado detalles: True
+2025-12-03 20:28:43,668 INFO Patrón autor sobre: El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)
+2025-12-03 20:28:45,715 INFO Mensaje: ¿Me das el link?
+2025-12-03 20:28:45,718 INFO Buscando detalles para: 'El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)' (tipo: link)
+2025-12-03 20:28:45,718 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)', type='link'
+2025-12-03 20:28:45,719 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=El%20Se%C3%B1or%20de%20los%20Anillos%20no%2001/03%20La%20Comunidad%20del%20Anillo%20%28edici%C3%B3n%20revisada%29&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:28:46,438 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:28:46,438 INFO [DEBUG] Item 0: 'El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)' - desc_len=878
+2025-12-03 20:28:46,438 INFO [DEBUG] Seleccionado: 'El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)'
+2025-12-03 20:28:46,439 INFO [DEBUG] Detalles encontrados: El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada) by J. R. R. Tolkien
+2025-12-03 20:28:46,439 INFO Detalles encontrados para: El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)
+2025-12-03 20:28:46,440 INFO Resultado detalles: True
+2025-12-03 20:28:46,440 INFO Patrón link sobre: El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)
+2025-12-03 20:28:48,482 INFO Mensaje: Gracias
+2025-12-03 20:28:48,485 INFO Patrón social: gracias
+2025-12-03 20:28:55,210 INFO Mensaje: Hola
+2025-12-03 20:28:55,211 INFO Patrón social: saludo
+2025-12-03 20:28:57,279 INFO Mensaje: Narnia
+2025-12-03 20:28:58,713 INFO Búsqueda simple: Las crónicas de Narnia
+2025-12-03 20:29:00,767 INFO Mensaje: Quién es el autor
+2025-12-03 20:29:00,770 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: autor)
+2025-12-03 20:29:00,770 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='autor'
+2025-12-03 20:29:00,770 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:29:02,414 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:29:02,414 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:29:02,414 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:29:02,414 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:29:02,414 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:29:02,416 INFO Resultado detalles: True
+2025-12-03 20:29:02,416 INFO Patrón autor sobre: Las crónicas de Narnia
+2025-12-03 20:29:04,477 INFO Mensaje: ¿Cuál es la trama?
+2025-12-03 20:29:04,480 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: trama)
+2025-12-03 20:29:04,480 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='trama'
+2025-12-03 20:29:04,480 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:29:05,210 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:29:05,211 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:29:05,211 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:29:05,211 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:29:05,211 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:29:05,212 INFO Resultado detalles: True
+2025-12-03 20:29:05,213 INFO Patrón trama sobre: Las crónicas de Narnia
+2025-12-03 20:29:14,039 INFO Mensaje: Dame info de la serie
+2025-12-03 20:29:14,996 INFO Resultado Pinecone encontrado
+2025-12-03 20:29:17,082 INFO Mensaje: ¿Donde puedo leerlo?
+2025-12-03 20:29:17,085 INFO Buscando detalles para: 'puedo' (tipo: link)
+2025-12-03 20:29:17,085 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='puedo', type='link'
+2025-12-03 20:29:17,085 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=puedo&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:29:18,941 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:29:18,941 INFO [DEBUG] Item 0: '¡Yo puedo leer con los ojos cerrados! (I Can Read With My Eyes Shut! Spanish Edition)' - desc_len=1822
+2025-12-03 20:29:18,941 INFO [DEBUG] Seleccionado: '¡Yo puedo leer con los ojos cerrados! (I Can Read With My Eyes Shut! Spanish Edition)'
+2025-12-03 20:29:18,942 INFO [DEBUG] Detalles encontrados: ¡Yo puedo leer con los ojos cerrados! (I Can Read With My Eyes Shut! Spanish Edition) by Dr. Seuss
+2025-12-03 20:29:18,942 INFO Detalles encontrados para: ¡Yo puedo leer con los ojos cerrados! (I Can Read With My Eyes Shut! Spanish Edition)
+2025-12-03 20:29:18,943 INFO Resultado detalles: True
+2025-12-03 20:29:18,943 INFO Patrón link sobre: ¡Yo puedo leer con los ojos cerrados! (I Can Read With My Eyes Shut! Spanish Edition)
+2025-12-03 20:29:20,991 INFO Mensaje: El Señor de los Anillos
+2025-12-03 20:29:21,698 INFO Búsqueda simple: El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)
+2025-12-03 20:29:23,733 INFO Mensaje: Quién escribió este libro
+2025-12-03 20:29:23,736 INFO Buscando detalles para: 'El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)' (tipo: autor)
+2025-12-03 20:29:23,736 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)', type='autor'
+2025-12-03 20:29:23,736 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=El%20Se%C3%B1or%20de%20los%20Anillos%20no%2001/03%20La%20Comunidad%20del%20Anillo%20%28edici%C3%B3n%20revisada%29&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:29:24,506 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:29:24,506 INFO [DEBUG] Item 0: 'El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)' - desc_len=878
+2025-12-03 20:29:24,506 INFO [DEBUG] Seleccionado: 'El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)'
+2025-12-03 20:29:24,506 INFO [DEBUG] Detalles encontrados: El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada) by J. R. R. Tolkien
+2025-12-03 20:29:24,506 INFO Detalles encontrados para: El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)
+2025-12-03 20:29:24,508 INFO Resultado detalles: True
+2025-12-03 20:29:24,508 INFO Patrón autor sobre: El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)
+2025-12-03 20:29:34,968 INFO Mensaje: Hola
+2025-12-03 20:29:34,969 INFO Patrón social: saludo
+2025-12-03 20:29:37,029 INFO Mensaje: Narnia
+2025-12-03 20:29:38,416 INFO Búsqueda simple: Las crónicas de Narnia
+2025-12-03 20:29:40,481 INFO Mensaje: Quién es el autor
+2025-12-03 20:29:40,484 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: autor)
+2025-12-03 20:29:40,484 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='autor'
+2025-12-03 20:29:40,485 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:29:42,125 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:29:42,125 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:29:42,126 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:29:42,126 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:29:42,126 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:29:42,127 INFO Resultado detalles: True
+2025-12-03 20:29:42,127 INFO Patrón autor sobre: Las crónicas de Narnia
+2025-12-03 20:29:44,172 INFO Mensaje: ¿Cuál es la trama?
+2025-12-03 20:29:44,174 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: trama)
+2025-12-03 20:29:44,174 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='trama'
+2025-12-03 20:29:44,175 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:29:45,698 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:29:45,698 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:29:45,698 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:29:45,699 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:29:45,699 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:29:45,700 INFO Resultado detalles: True
+2025-12-03 20:29:45,701 INFO Patrón trama sobre: Las crónicas de Narnia
+2025-12-03 20:29:47,814 INFO Mensaje: Dame info de la serie
+2025-12-03 20:29:47,817 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: serie)
+2025-12-03 20:29:47,817 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='serie'
+2025-12-03 20:29:47,817 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:29:49,259 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:29:49,259 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:29:49,259 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:29:49,260 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:29:49,260 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:29:49,261 INFO Resultado detalles: True
+2025-12-03 20:29:49,261 INFO Patrón serie sobre: Las crónicas de Narnia
+2025-12-03 20:29:51,314 INFO Mensaje: ¿Donde puedo leerlo?
+2025-12-03 20:29:51,317 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: link)
+2025-12-03 20:29:51,317 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='link'
+2025-12-03 20:29:51,317 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:29:52,708 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:29:52,708 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:29:52,709 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:29:52,709 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:29:52,709 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:29:52,710 INFO Resultado detalles: True
+2025-12-03 20:29:52,710 INFO Patrón link sobre: Las crónicas de Narnia
+2025-12-03 20:29:54,796 INFO Mensaje: El Señor de los Anillos
+2025-12-03 20:29:56,425 INFO Búsqueda simple: El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)
+2025-12-03 20:29:58,501 INFO Mensaje: Quién escribió este libro
+2025-12-03 20:29:58,503 INFO Buscando detalles para: 'El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)' (tipo: autor)
+2025-12-03 20:29:58,504 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)', type='autor'
+2025-12-03 20:29:58,504 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=El%20Se%C3%B1or%20de%20los%20Anillos%20no%2001/03%20La%20Comunidad%20del%20Anillo%20%28edici%C3%B3n%20revisada%29&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:29:59,942 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:29:59,942 INFO [DEBUG] Item 0: 'El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)' - desc_len=878
+2025-12-03 20:29:59,943 INFO [DEBUG] Seleccionado: 'El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)'
+2025-12-03 20:29:59,943 INFO [DEBUG] Detalles encontrados: El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada) by J. R. R. Tolkien
+2025-12-03 20:29:59,943 INFO Detalles encontrados para: El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)
+2025-12-03 20:29:59,944 INFO Resultado detalles: True
+2025-12-03 20:29:59,944 INFO Patrón autor sobre: El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)
+2025-12-03 20:30:02,013 INFO Mensaje: ¿Dónde puedo leerlo?
+2025-12-03 20:30:02,015 INFO Buscando detalles para: 'El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)' (tipo: link)
+2025-12-03 20:30:02,016 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)', type='link'
+2025-12-03 20:30:02,016 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=El%20Se%C3%B1or%20de%20los%20Anillos%20no%2001/03%20La%20Comunidad%20del%20Anillo%20%28edici%C3%B3n%20revisada%29&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:30:03,645 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:30:03,645 INFO [DEBUG] Item 0: 'El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)' - desc_len=878
+2025-12-03 20:30:03,646 INFO [DEBUG] Seleccionado: 'El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)'
+2025-12-03 20:30:03,646 INFO [DEBUG] Detalles encontrados: El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada) by J. R. R. Tolkien
+2025-12-03 20:30:03,646 INFO Detalles encontrados para: El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)
+2025-12-03 20:30:03,647 INFO Resultado detalles: True
+2025-12-03 20:30:03,647 INFO Patrón link sobre: El Señor de los Anillos no 01/03 La Comunidad del Anillo (edición revisada)
+2025-12-03 20:30:05,702 INFO Mensaje: Gracias
+2025-12-03 20:30:05,705 INFO Patrón social: gracias
+2025-12-03 20:31:49,437 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 20:32:26,638 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 20:32:37,226 INFO Mensaje: Hola
+2025-12-03 20:32:37,229 INFO Patrón social: saludo
+2025-12-03 20:32:52,264 INFO Mensaje: Cronicas de Narnia
+2025-12-03 20:32:53,724 INFO Búsqueda simple: Las crónicas de Narnia
+2025-12-03 20:32:58,145 INFO Mensaje: Trama
+2025-12-03 20:32:58,149 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: trama)
+2025-12-03 20:32:58,149 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='trama'
+2025-12-03 20:32:58,150 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:32:59,795 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:32:59,796 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:32:59,796 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:32:59,796 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:32:59,796 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:32:59,797 INFO Resultado detalles: True
+2025-12-03 20:32:59,798 INFO Patrón trama sobre: Las crónicas de Narnia
+2025-12-03 20:33:06,354 INFO Mensaje: Personajes
+2025-12-03 20:33:06,357 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: personajes)
+2025-12-03 20:33:06,357 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='personajes'
+2025-12-03 20:33:06,358 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:33:07,774 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:33:07,774 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:33:07,774 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:33:07,774 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:33:07,775 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:33:07,776 INFO Resultado detalles: True
+2025-12-03 20:33:07,776 INFO Patrón personajes sobre: Las crónicas de Narnia
+2025-12-03 20:33:19,924 INFO Mensaje: Autor
+2025-12-03 20:33:19,928 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: autor)
+2025-12-03 20:33:19,928 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='autor'
+2025-12-03 20:33:19,928 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:33:21,307 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:33:21,307 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:33:21,307 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:33:21,307 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:33:21,308 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:33:21,309 INFO Resultado detalles: True
+2025-12-03 20:33:21,309 INFO Patrón autor sobre: Las crónicas de Narnia
+2025-12-03 20:33:24,844 INFO Mensaje: Link
+2025-12-03 20:33:24,847 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: link)
+2025-12-03 20:33:24,848 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='link'
+2025-12-03 20:33:24,848 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:33:26,220 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:33:26,220 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:33:26,220 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:33:26,220 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:33:26,221 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:33:26,222 INFO Resultado detalles: True
+2025-12-03 20:33:26,222 INFO Patrón link sobre: Las crónicas de Narnia
+2025-12-03 20:34:33,715 INFO Mensaje: Juego de tronos
+2025-12-03 20:34:35,235 INFO Búsqueda simple: Juego de tronos y la filosofía
+2025-12-03 20:34:42,833 INFO Mensaje: autor
+2025-12-03 20:34:42,836 INFO Buscando detalles para: 'Juego de tronos y la filosofía' (tipo: autor)
+2025-12-03 20:34:42,836 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Juego de tronos y la filosofía', type='autor'
+2025-12-03 20:34:42,836 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Juego%20de%20tronos%20y%20la%20filosof%C3%ADa&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:34:44,587 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:34:44,588 INFO [DEBUG] Item 0: 'Juego de tronos y la filosofía' - desc_len=2365
+2025-12-03 20:34:44,588 INFO [DEBUG] Seleccionado: 'Juego de tronos y la filosofía'
+2025-12-03 20:34:44,588 INFO [DEBUG] Detalles encontrados: Juego de tronos y la filosofía by Henry Jacoby, William Irwin
+2025-12-03 20:34:44,588 INFO Detalles encontrados para: Juego de tronos y la filosofía
+2025-12-03 20:34:44,590 INFO Resultado detalles: True
+2025-12-03 20:34:44,590 INFO Patrón autor sobre: Juego de tronos y la filosofía
+2025-12-03 20:35:06,975 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 20:35:07,481 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 20:35:12,954 INFO Mensaje: teror
+2025-12-03 20:35:14,090 INFO Búsqueda simple: Las palabras hablan al mundo
+2025-12-03 20:35:19,993 INFO Mensaje: terror
+2025-12-03 20:35:21,453 INFO Búsqueda simple: Relatos de Terror en Español
+2025-12-03 20:35:26,584 INFO Mensaje: Ficcion
+2025-12-03 20:35:35,784 INFO Mensaje: genero ficcion
+2025-12-03 20:35:37,339 INFO Búsqueda simple: Los Géneros Cinematográficos
+2025-12-03 20:36:31,965 INFO Mensaje: hola como estas
+2025-12-03 20:36:31,969 INFO Patrón social: saludo
+2025-12-03 20:36:39,563 INFO Mensaje: Naria
+2025-12-03 20:36:41,050 INFO Búsqueda simple: Tropical Marine Mollusks
+2025-12-03 20:36:45,944 INFO Mensaje: Cronicas de narnia
+2025-12-03 20:36:47,738 INFO Búsqueda simple: Las crónicas de Narnia
+2025-12-03 20:36:52,963 INFO Mensaje: Autor
+2025-12-03 20:36:52,967 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: autor)
+2025-12-03 20:36:52,967 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='autor'
+2025-12-03 20:36:52,967 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:36:54,626 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:36:54,627 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:36:54,627 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:36:54,627 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:36:54,627 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:36:54,628 INFO Resultado detalles: True
+2025-12-03 20:36:54,629 INFO Patrón autor sobre: Las crónicas de Narnia
+2025-12-03 20:36:56,733 INFO Mensaje: Personajes
+2025-12-03 20:36:56,737 INFO Buscando detalles para: 'Las crónicas de Narnia' (tipo: personajes)
+2025-12-03 20:36:56,737 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='Las crónicas de Narnia', type='personajes'
+2025-12-03 20:36:56,738 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=Las%20cr%C3%B3nicas%20de%20Narnia&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:36:58,130 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:36:58,130 INFO [DEBUG] Item 0: 'Las crónicas de Narnia' - desc_len=1860
+2025-12-03 20:36:58,130 INFO [DEBUG] Seleccionado: 'Las crónicas de Narnia'
+2025-12-03 20:36:58,131 INFO [DEBUG] Detalles encontrados: Las crónicas de Narnia by C. S. Lewis
+2025-12-03 20:36:58,131 INFO Detalles encontrados para: Las crónicas de Narnia
+2025-12-03 20:36:58,132 INFO Resultado detalles: True
+2025-12-03 20:36:58,132 INFO Patrón personajes sobre: Las crónicas de Narnia
+2025-12-03 20:37:15,054 INFO Mensaje: Dame informacion sobre Arcane
+2025-12-03 20:37:16,878 INFO Búsqueda simple: The Arcane Schools
+2025-12-03 20:37:22,484 INFO Mensaje: autor
+2025-12-03 20:37:22,488 INFO Buscando detalles para: 'The Arcane Schools' (tipo: autor)
+2025-12-03 20:37:22,488 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='The Arcane Schools', type='autor'
+2025-12-03 20:37:22,488 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=The%20Arcane%20Schools&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:37:24,351 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:37:24,352 INFO [DEBUG] Item 0: 'The Arcane Schools' - desc_len=953
+2025-12-03 20:37:24,352 INFO [DEBUG] Seleccionado: 'The Arcane Schools'
+2025-12-03 20:37:24,352 INFO [DEBUG] Detalles encontrados: The Arcane Schools by John Yarker
+2025-12-03 20:37:24,352 INFO Detalles encontrados para: The Arcane Schools
+2025-12-03 20:37:24,353 INFO Resultado detalles: True
+2025-12-03 20:37:24,354 INFO Patrón autor sobre: The Arcane Schools
+2025-12-03 20:37:28,896 INFO Mensaje: personajes
+2025-12-03 20:37:28,901 INFO Buscando detalles para: 'The Arcane Schools' (tipo: personajes)
+2025-12-03 20:37:28,901 INFO [DEBUG] Iniciando buscar_detalles_libro_google: title='The Arcane Schools', type='personajes'
+2025-12-03 20:37:28,901 INFO [DEBUG] URL: https://www.googleapis.com/books/v1/volumes?q=The%20Arcane%20Schools&maxResults=10&langRestrict=es&orderBy=relevance
+2025-12-03 20:37:30,335 INFO [DEBUG] Respuesta API: 10 items
+2025-12-03 20:37:30,336 INFO [DEBUG] Item 0: 'The Arcane Schools' - desc_len=953
+2025-12-03 20:37:30,336 INFO [DEBUG] Seleccionado: 'The Arcane Schools'
+2025-12-03 20:37:30,336 INFO [DEBUG] Detalles encontrados: The Arcane Schools by John Yarker
+2025-12-03 20:37:30,336 INFO Detalles encontrados para: The Arcane Schools
+2025-12-03 20:37:30,337 INFO Resultado detalles: True
+2025-12-03 20:37:30,338 INFO Patrón personajes sobre: The Arcane Schools
+2025-12-03 20:48:08,894 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 20:48:30,134 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 20:53:24,384 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 20:53:44,132 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 21:02:44,849 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 21:02:58,909 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 21:03:15,513 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 21:07:55,419 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 21:08:12,733 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 21:08:32,660 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 21:12:36,543 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 21:25:00,545 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 23:58:48,764 INFO Pinecone y modelo de embeddings listos.
+2025-12-03 23:58:49,857 INFO Pinecone y modelo de embeddings listos.
+2025-12-04 00:02:30,753 INFO Pinecone y modelo de embeddings listos.
+2025-12-04 00:02:31,645 INFO Pinecone y modelo de embeddings listos.
+2026-04-22 16:35:54,982 INFO Pinecone y modelo de embeddings listos.
+2026-04-22 16:40:52,632 INFO Pinecone y modelo de embeddings listos.
+2026-04-22 16:43:32,984 ERROR Error Google Books: 429 Client Error: Too Many Requests for url: https://www.googleapis.com/books/v1/volumes?q=recomiendame%20un%20libro&maxResults=3&langRestrict=es&orderBy=relevance
+2026-04-22 17:37:33,660 ERROR Error Google Books: 429 Client Error: Too Many Requests for url: https://www.googleapis.com/books/v1/volumes?q=o%C3%B1a&maxResults=3&langRestrict=es&orderBy=relevance
+2026-04-22 17:37:45,464 ERROR Error Google Books: 429 Client Error: Too Many Requests for url: https://www.googleapis.com/books/v1/volumes?q=dime%20libros%20de%20terror&maxResults=3&langRestrict=es&orderBy=relevance
+2026-04-22 17:37:55,109 ERROR Error Google Books: 429 Client Error: Too Many Requests for url: https://www.googleapis.com/books/v1/volumes?q=terror&maxResults=3&langRestrict=es&orderBy=relevance

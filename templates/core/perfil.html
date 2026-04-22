@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Perfil de {{ user.username }}{% endblock %}
+
+{% block content %}
+<header class="masthead" style="background-image: url('{% static 'assets/img/post-bg.jpg' %}')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="page-heading">
+                    {% if user.perfil.imagen %}
+                        <img src="{{ user.perfil.imagen.url }}" class="rounded-circle mb-3 border border-4 border-white" style="width: 150px; height: 150px; object-fit: cover;">
+                    {% endif %}
+                    <h1>{{ user.username }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container px-4 px-lg-5 my-5">
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Sobre mí</h5>
+                    <p class="text-muted">{{ user.perfil.biografia|default:"Sin descripción." }}</p>
+                    <hr>
+                    <ul class="list-unstyled">
+                        <li><strong>Email:</strong> {{ user.email }}</li>
+                        {% if user.perfil.telefono %}
+                            <li><strong>Tel:</strong> {{ user.perfil.telefono }}</li>
+                        {% endif %}
+                    </ul>
+                    <div class="d-grid">
+                        <a href="{% url 'editar_perfil' %}" class="btn btn-outline-primary">Editar Perfil</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <h3 class="mb-4">Mis Libros Favoritos</h3>
+            {% if favoritos %}
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                {% for fav in favoritos %}
+                <div class="col">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="row g-0 h-100">
+                            <div class="col-4">
+                                <img src="{{ fav.imagen_url|default:'#' }}" class="img-fluid rounded-start h-100" style="object-fit: cover;" alt="Portada">
+                            </div>
+                            <div class="col-8">
+                                <div class="card-body">
+                                    <h6 class="card-title">{{ fav.titulo|truncatechars:40 }}</h6>
+                                    <p class="card-text small">{{ fav.autores }}</p>
+                                    <a href="{% url 'eliminar_favorito' fav.id %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Eliminar?')">
+                                        <i class="fas fa-trash"></i> Eliminar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+                <div class="alert alert-light border">Aún no tienes favoritos.</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Editar Perfil{% endblock %}
+
+{% block content %}
+<header class="masthead" style="background-image: url('{% static 'assets/img/contact-bg.jpg' %}')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="page-heading">
+                    <h1>Editar Perfil</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <h5 class="mb-3">Datos de Usuario</h5>
+                        {{ u_form.as_p }}
+                        <hr>
+                        <h5 class="mb-3">Datos de Perfil</h5>
+                        {{ p_form.as_p }}
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                            <a href="{% url 'perfil' %}" class="btn btn-link text-center mt-2">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

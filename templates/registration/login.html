@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Iniciar Sesión - LitMate{% endblock %}
+
+{% block content %}
+<header class="masthead" style="background-image: url('{% static 'assets/img/home-bg.jpg' %}')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>Bienvenido</h1>
+                    <span class="subheading">Ingresa a tu cuenta</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container px-4 px-lg-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-0 rounded-lg mt-5">
+                <div class="card-body p-5">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label>Usuario</label>
+                            <input class="form-control" name="username" type="text" required />
+                        </div>
+                        <div class="mb-3">
+                            <label>Contraseña</label>
+                            <input class="form-control" name="password" type="password" required />
+                        </div>
+                        <div class="d-grid gap-2 mt-4">
+                            <button class="btn btn-primary" type="submit">Iniciar Sesión</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="{% url 'register' %}">¿No tienes cuenta? Regístrate</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

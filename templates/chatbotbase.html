@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Asistente IA - LitMate{% endblock %}
+
+{% block content %}
+<header class="masthead" style="background-image: url({% static 'assets/img/chatbot.jpg' %})">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="page-heading">
+                    <h1>Asistente con IA</h1>
+                    <span class="subheading">Tu compañero literario personal</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div id="chat-container">
+
+                <div id="chat-character-page">
+                    <img src="{% static 'assets/img/avatar/cuerpo.jpg' %}" alt="Asistente de LitMate">
+                </div>
+
+                <div id="chat-main-page">
+                    <div id="chat-body-page">
+                        <div class="chat-message bot">
+                            <p>¡Hola! Soy tu asistente LitMate. ¿Qué libro te gustaría encontrar o sobre qué tema te gustaría leer hoy?</p>
+                        </div>
+                    </div>
+
+                    <div id="chat-footer-page">
+                        <form id="chat-form">
+                            {% csrf_token %}
+                            <input type="text" id="chat-input" placeholder="Pregúntame sobre un libro..." autocomplete="off">
+                            <button type="submit" id="send-btn"><i class="fas fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/chatbot.js' %}"></script>
+{% endblock %}

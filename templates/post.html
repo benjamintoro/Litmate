@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Artículos - LitMate{% endblock %}
+
+{% block content %}
+<header class="masthead" style="background-image: url({% static 'assets/img/libreria.jpg' %})">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="post-heading">
+                    <h1>Innovación en una libreria</h1>
+                    <h2 class="recuadro ">Cuando sientes que no puedas encontrar tu libro favorito de la infancia, solo habla con nuestro chatbot y lo encontrarás</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<article class="mb-4">
+    <div class="container px-1 px-lg-100 ">
+        <main class="mb-4  border border-dark rounded p-2 m-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <br>
+                    <h1 class="cabeza1">Inteligencia artificial y su influencia</h1>
+                    <br>
+                    <h2 class="texto ">Nosotros decidimos crear una pagina con inteligencia artifical, porque sabemos que la IA y los chatbots estan avanzando a grandes pasos, ayudando y siendo utiles para todo tipo de tareas cotidianas en el día a día.</h2>
+                    <br>
+                    <h4 class="texto2">Acá contamos con varios articulos con los cuales nos inspiramos a poder crear esta página con un chatbot e IA. </h4>
+                    <br>
+                    <hr class="new3">
+                    <p class="pete"><h6><a class="cabeza"  href="https://www.wired.com/story/why-read-books-when-you-can-use-chatbots-to-talk-to-them-instead/" target="_blank">WIRED – “¿Por qué leer libros cuando puedes usar chatbots para hablar con ellos?”</a></h6><br>Este artículo presenta Book AI, una app que convierte un libro en un chatbot "consciente" del contenido. Permite interactuar con el libro haciéndolo más accesible y dinámico — ideal para aclarar conceptos o discutir temas profundos— utilizando técnicas como RAG (Retrieval-Augmented Generation) para mantener respuestas fieles a la fuente.</p>
+                    <p class="pete"><h2><a class="cabeza" href="https://www.voguebusiness.com/story/technology/how-generative-ai-will-upend-online-search?utm_source" target="_blank">Vogue Business - "Cómo la IA generativa revolucionará las búsquedas en línea"</a></h2><br>Analiza cómo la IA generativa mejora la experiencia de búsqueda en e-commerce, permitiendo preguntas por voz o texto más naturales, con recomendaciones más relevantes. Este enfoque cambia la forma en que los usuarios descubren productos y contenido, haciéndolo menos rígido que los buscadores tradicionales.</p>
+                    <p class="pete"><h2><a class="cabeza" href="https://www.reuters.com/business/retail-consumer/ai-influenced-shopping-boosts-online-holiday-sales-salesforce-data-shows-2025-01-06/?utm_source" target="_blank">Reuters – “Las compras impulsadas por IA impulsan las ventas navideñas online”</a></h2><br>Durante la temporada navideña 2024, el uso de chatbots y asistentes virtuales impulsados por IA aumentó las ventas en EE. UU. en casi un 4 %, con un uso de chatbots un 42 % mayor que el año anterior. Refleja cómo esta tecnología puede mover decisiones de compra con eficacia.</p>
+                    <p class="pete"><h2><a  class="cabeza" href="https://www.searchengineguidelines.com/news/the-role-of-chatbots-in-website-performance-who-loves-them-who-hates-them-and-how-they-impact-seo/?utm_source=" target="_blank">SearchEngineGuidelines – “El papel de los chatbots en el rendimiento del sitio web”</a></h2><br>Destaca cómo los chatbots mejoran la atención al cliente (respuestas instantáneas, disponibilidad 24/7, soporte en varios idiomas), generan leads, personalizan recomendaciones, y aportan insights útiles para mejorar el SEO y la estrategia de contenido.<br><br><a href="#!"><img class="img-fluid p-2" src="{% static 'assets/img/evolucion-inteligencia-artificial.jpg' %}" alt="..." /></a></p>
+                </div>
+            </div>
+        </main>
+    </div>
+</article>
+{% endblock %}

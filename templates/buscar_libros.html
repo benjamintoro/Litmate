@@ -1,0 +1,229 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Explorar Libros - LitMate{% endblock %}
+
+{% block content %}
+<header class="masthead" style="background-image: url({% static 'assets/img/buscarlibros.jpg' %})">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="page-heading">
+                    <h1>Explora el Universo de los Libros</h1>
+                    <span class="subheading">Encuentra tu próxima gran lectura.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container px-4 px-lg-5">
+    <div class="row justify-content-center my-4">
+        <div class="col-lg-10">
+            <form method="get" action="{% url 'buscar_libros' %}">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="q" placeholder="Buscar por título..." value="{{ valores_busqueda.q }}">
+                    <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3"><input type="text" class="form-control" name="author" placeholder="Autor" value="{{ valores_busqueda.author }}"></div>
+                    <div class="col-md-4 mb-3">
+                        <select class="form-select" name="genre">
+                            <option value="">Cualquier Género</option>
+                            {% for genero in generos %}
+                                <option value="{{ genero }}" {% if valores_busqueda.genre == genero %}selected{% endif %}>{{ genero }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <select class="form-select" name="year">
+                            <option value="">Cualquier Año</option>
+                            {% for año in años %}
+                                <option value="{{ año }}" {% if valores_busqueda.year == año|stringformat:"s" %}selected{% endif %}>{{ año }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-lg-10">
+            {% for libro in libros %}
+            <div class="card mb-3 shadow-sm">
+                <div class="row g-0">
+                    <div class="col-md-2 d-flex align-items-center justify-content-center">
+                        {% if libro.imagen %}
+                            <img src="{{ libro.imagen }}" class="img-fluid rounded-start p-2" alt="Portada de {{ libro.titulo }}">
+                        {% else %}
+                            <div class="text-center p-2"><i class="fas fa-book fa-3x text-muted"></i><br><small>Sin Portada</small></div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-10">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ libro.titulo }}</h5>
+                            <p class="card-text"><small class="text-muted">Por: {{ libro.autores|join:", " }} ({{ libro.fecha_publicacion }})</small></p>
+                            <p class="card-text">{{ libro.descripcion|truncatewords:35 }}</p>
+                            
+                            <div class="d-flex flex-wrap gap-2">
+                                <a href="{{ libro.link_google }}" class="btn btn-sm btn-outline-secondary" target="_blank">Ver en Google</a>
+                                
+                                {% if libro.a_la_venta and libro.precio %}
+                                <button type="button" class="btn btn-sm btn-success price-btn" data-bs-toggle="modal" data-bs-target="#priceModal" 
+                                        data-title="{{ libro.titulo }}" 
+                                        data-price="{{ libro.precio }}" 
+                                        data-currency="{{ libro.moneda }}" 
+                                        data-buy-link="{{ libro.link_compra }}">
+                                    <i class="fas fa-dollar-sign"></i> Precios
+                                </button>
+                                {% endif %}
+                                
+                                <button type="button" class="btn btn-sm btn-info chart-btn" data-bs-toggle="modal" data-bs-target="#chartModal" data-title="{{ libro.titulo }}">
+                                    <i class="fas fa-chart-line"></i> Gráfico
+                                </button>
+
+                                {% if user.is_authenticated %}
+                                <button class="btn btn-outline-danger btn-sm btn-fav" 
+                                        data-google-id="{{ libro.id }}"
+                                        data-titulo="{{ libro.titulo }}"
+                                        data-autores="{{ libro.autores|join:', ' }}"
+                                        data-imagen="{{ libro.imagen }}">
+                                    <i class="far fa-heart"></i> Favoritos
+                                </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="alert alert-warning text-center" role="alert">No se encontraron libros. ¡Prueba con otros términos!</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="priceModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="priceModalTitle">Precios para...</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="priceModalBody"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="chartModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="chartModalTitle">Precios Históricos para...</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <canvas id="priceChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // 1. Lógica Original: Modal de Precios
+    const priceModal = document.getElementById('priceModal');
+    if(priceModal){
+        priceModal.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget;
+            const title = button.dataset.title;
+            const price = button.dataset.price;
+            const currency = button.dataset.currency;
+            const buyLink = button.dataset.buyLink;
+
+            document.getElementById('priceModalTitle').textContent = `Precios para: ${title}`;
+            let bodyHtml = `<p>Hemos encontrado el siguiente precio de referencia:</p>`;
+            bodyHtml += `<ul class="list-group"><li class="list-group-item d-flex justify-content-between align-items-center">
+                            Google Play Store <strong>${price} ${currency}</strong></li></ul>`;
+            if (buyLink && buyLink !== '#') {
+                bodyHtml += `<div class="d-grid gap-2 mt-3">
+                                <a href="${buyLink}" target="_blank" class="btn btn-primary">Ir a la tienda</a>
+                            </div>`;
+            }
+            document.getElementById('priceModalBody').innerHTML = bodyHtml;
+        });
+    }
+
+    // 2. Lógica Original: Gráficos
+    const chartModal = document.getElementById('chartModal');
+    let priceChart = null;
+    if(chartModal){
+        chartModal.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget;
+            const title = button.dataset.title;
+            document.getElementById('chartModalTitle').textContent = `Precios Históricos: ${title}`;
+
+            const labels = ['Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre'];
+            const data = labels.map(() => 15000 + Math.random() * 5000);
+
+            const chartCanvas = document.getElementById('priceChart');
+            if (priceChart) priceChart.destroy();
+
+            priceChart = new Chart(chartCanvas, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Precio (CLP)',
+                        data: data,
+                        fill: false,
+                        borderColor: 'rgb(0, 133, 161)',
+                        tension: 0.1
+                    }]
+                },
+                options: { scales: { y: { beginAtZero: false } } }
+            });
+        });
+    }
+
+    // 3. NUEVA LÓGICA: Botón de Favoritos
+    const btnsFav = document.querySelectorAll('.btn-fav');
+    btnsFav.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const data = {
+                google_id: this.dataset.googleId,
+                titulo: this.dataset.titulo,
+                autores: this.dataset.autores,
+                imagen_url: this.dataset.imagen
+            };
+
+            fetch("{% url 'agregar_favorito' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.status === 'ok') {
+                    this.classList.replace('btn-outline-danger', 'btn-danger');
+                    this.innerHTML = '<i class="fas fa-heart"></i> Guardado';
+                    alert("¡Libro agregado a favoritos!");
+                } else if (data.status === 'exists') {
+                    alert("Ya tienes este libro en favoritos.");
+                } else {
+                    alert("Error al guardar: " + (data.msg || 'Desconocido'));
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+});
+</script>
+{% endblock %}
