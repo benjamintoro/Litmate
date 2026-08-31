@@ -12334,10 +12334,30 @@ blockquote {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1030;
+  z-index: 1060;
   border-bottom: 1px solid #dee2e6;
   background-color: #fff;
   font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+#mainNav .dropdown-menu {
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+  z-index: 1070;
+  overflow: hidden;
+}
+
+#mainNav .dropdown-item {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  transition: all 0.2s ease;
+}
+
+#mainNav .dropdown-item:hover {
+  background-color: #f0f7f9;
+  color: #0085A1;
 }
 
 #mainNav .navbar-brand {
@@ -12722,9 +12742,13 @@ hr.new3 {
   transition: transform 0.3s ease;
 }
 
+.btn {
+  transition: all 0.2s ease-in-out;
+}
+
 .btn:hover {
-  transform: scale(1.1);
-  transition: transform 0.3s ease;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
 /* --- ESTILOS PARA LA PÁGINA DEL CHATBOT --- */
@@ -12765,8 +12789,37 @@ hr.new3 {
   gap: 15px;
 }
 
+/* --- ANIMACIONES EXTRA PARA DARLE VIDA AL CHAT --- */
+
+/* Efecto de aparición suave para los globos de chat */
 .chat-message {
-  max-width: 80%;
+  animation: fadeInBubble 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+  opacity: 0; /* Empieza invisible */
+  transform: translateY(15px); /* Empieza un poco más abajo */
+}
+
+@keyframes fadeInBubble {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Efecto de pulso suave al avatar para que parezca que respira (opcional) */
+#chat-character-page img {
+  animation: breathe 4s infinite ease-in-out;
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+/* Sombra extra brillante cuando el usuario escribe */
+#chat-input:focus {
+  border-color: #0085a1;
+  box-shadow: 0 0 15px rgba(0, 133, 161, 0.4);
+  transition: all 0.3s ease;
 }
 
 .chat-message p {

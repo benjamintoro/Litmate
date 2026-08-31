@@ -6,7 +6,9 @@
 window.addEventListener('DOMContentLoaded', () => {
     let scrollPos = 0;
     const mainNav = document.getElementById('mainNav');
-    const headerHeight = mainNav ? mainNav.clientHeight : 0;
+    if (!mainNav) return;
+    
+    const headerHeight = mainNav.clientHeight || 50;
 
     window.addEventListener('scroll', function() {
         const currentTop = document.body.getBoundingClientRect().top * -1;
@@ -28,19 +30,18 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-
-window.sr = ScrollReveal();
-
-sr.reveal('h3, h4, h5, h6, p, section, div,a,img', {
-    duration: 700,
-    origin: 'bottom',
-    distance: '50px',
-    interval: 100,   
-    reset: false     
-});
-
-/*
-* * LA LÓGICA DEL CHATBOT ANTIGUO SE HA ELIMINADO DE AQUÍ PARA EVITAR CONFLICTOS.
-* El JavaScript del chatbot ahora solo vive en el archivo chatbot.html
-*
-*/
+// ScrollReveal seguro (solo si la librería está cargada)
+if (typeof ScrollReveal !== 'undefined') {
+    try {
+        window.sr = ScrollReveal();
+        sr.reveal('h3, h4, h5, h6, p, section, .card', {
+            duration: 700,
+            origin: 'bottom',
+            distance: '30px',
+            interval: 100,   
+            reset: false     
+        });
+    } catch (e) {
+        console.warn("ScrollReveal warning:", e);
+    }
+}

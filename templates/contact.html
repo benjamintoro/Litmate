@@ -17,46 +17,65 @@
     </div>
 </header>
 
-<main class="mb-4">
-    <div class="container px-4 px-lg-5">
-        <p>¿Quieres contactarnos? Completa el formulario a continuación para enviarnos un mensaje y te responderemos lo antes posible!</p>
+<main class="mb-5">
+    <div class="container px-4 px-lg-5 py-4">
+        <div class="row justify-content-center mb-4">
+            <div class="col-lg-8">
+                <p class="text-muted" style="line-height: 1.7;">¿Quieres contactarnos? Completa el formulario a continuación para enviarnos un mensaje y te responderemos lo antes posible.</p>
+            </div>
+        </div>
 
         {% if success %}
-            <div class="alert alert-success" role="alert">
-                {{ success }}
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="alert alert-success" role="alert">
+                        {{ success }}
+                    </div>
+                </div>
             </div>
         {% endif %}
 
-        <div class="row gx-4 gx-lg-5">
-            <div class="col-md-6">
-                <form id="contactForm" method="post">
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-5 mb-4">
+                <form id="contactForm" method="post" action="{% url 'contact' %}">
                     {% csrf_token %}
-                    <div class="form-floating mb-3">
-                        <input class="form-control" id="name" name="name" type="text" placeholder="Ingresa tu nombre..." required />
-                        <label for="name">Nombre</label>
+                    <!-- Campo Honeypot Anti-Spam -->
+                    <div class="hp-field" style="display:none !important; position:absolute; left:-9999px;" aria-hidden="true" tabindex="-1">
+                        <input type="text" name="website_url_check" value="" autocomplete="off">
                     </div>
-                    <div class="form-floating mb-3">
-                        <input class="form-control" id="email" name="email" type="email" placeholder="Ingresa tu correo..." required />
-                        <label for="email">Correo electrónico</label>
+                    <div class="mb-3">
+                        <label for="name" class="form-label small fw-semibold text-muted">Nombre</label>
+                        <input class="form-control" id="name" name="name" type="text" placeholder="Tu nombre completo" required />
                     </div>
-                    <div class="form-floating mb-3">
-                        <input class="form-control" id="phone" name="phone" type="tel" placeholder="Ingresa tu teléfono..." required />
-                        <label for="phone">Número de teléfono</label>
+                    <div class="mb-3">
+                        <label for="email" class="form-label small fw-semibold text-muted">Correo electrónico</label>
+                        <input class="form-control" id="email" name="email" type="email" placeholder="correo@ejemplo.com" required />
                     </div>
-                    <div class="form-floating mb-3">
-                        <textarea class="form-control" id="message" name="message" placeholder="Ingresa tu mensaje aquí..." style="height: 12rem" required></textarea>
-                        <label for="message">Mensaje</label>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label small fw-semibold text-muted">Teléfono</label>
+                        <input class="form-control" id="phone" name="phone" type="tel" placeholder="+56 9 1234 5678" required />
                     </div>
-                    <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Enviar</button>
+                    <div class="mb-4">
+                        <label for="message" class="form-label small fw-semibold text-muted">Mensaje</label>
+                        <textarea class="form-control" id="message" name="message" placeholder="Escribe tu mensaje aquí..." style="height: 10rem" required></textarea>
+                    </div>
+                    <button class="btn btn-primary w-100" id="submitButton" type="submit">Enviar mensaje</button>
                 </form>
             </div>
-            <div class="col-md-6">
-               <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3323.7535486720667!2d-70.58110130000001!3d-33.5857476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662d718a032972d%3A0x45da5699698e2261!2sINACAP%20Puente%20Alto!5e0!3m2!1ses-419!2scl!4v1760580957042!5m2!1ses-419!2scl" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-
-                <p>
-                    <strong>Nuestra Ubicación:</strong> Santiago, Chile<br>
-                    <strong>Horario de Atención:</strong> Lunes a Viernes, 9:00 a 18:00
-                </p>
+            <div class="col-lg-5 mb-4">
+                <div class="mb-4" style="border-radius: 10px; overflow: hidden; border: 1px solid #e8e5e0;">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3323.7535486720667!2d-70.58110130000001!3d-33.5857476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662d718a032972d%3A0x45da5699698e2261!2sINACAP%20Puente%20Alto!5e0!3m2!1ses-419!2scl!4v1760580957042!5m2!1ses-419!2scl" width="100%" height="280" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+                <div style="color: #6b6b6b; font-size: 0.9rem; line-height: 1.8;">
+                    <p class="mb-2">
+                        <i class="fas fa-map-marker-alt me-2" style="color: #b08d57;"></i>
+                        <strong style="color: #2c2c2c;">Ubicación:</strong> Santiago, Chile
+                    </p>
+                    <p class="mb-0">
+                        <i class="fas fa-clock me-2" style="color: #b08d57;"></i>
+                        <strong style="color: #2c2c2c;">Horario:</strong> Lunes a Viernes, 9:00 a 18:00
+                    </p>
+                </div>
             </div>
         </div>
     </div>

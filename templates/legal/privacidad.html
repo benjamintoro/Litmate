@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Política de Privacidad - LitMate{% endblock %}
+
+{% block content %}
+<!-- Header Minimalista -->
+<header class="masthead mb-0" style="background-image: url('{% static "assets/img/about-bg.jpg" %}'); padding: 4.5rem 0 3.5rem 0;">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-9 text-center">
+                <div class="page-heading">
+                    <span class="text-uppercase small tracking-wider text-white-50 d-block mb-1" style="letter-spacing: 2px; font-size: 0.75rem;">Centro Legal &bull; LitMate</span>
+                    <h1 class="fw-bold mb-2">Política de Privacidad</h1>
+                    <span class="subheading fs-6 text-white-50">Tratamiento, seguridad y protección de tus datos personales</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Navegación Rápida entre Documentos -->
+<div class="border-bottom bg-white sticky-top shadow-sm" style="top: 0; z-index: 1020;">
+    <div class="container px-4 px-lg-5">
+        <div class="d-flex justify-content-center overflow-auto py-2 gap-2">
+            <a href="{% url 'terminos' %}" class="btn btn-sm rounded-pill px-3 py-1 text-secondary text-decoration-none hover-pill">
+                Términos y Condiciones
+            </a>
+            <a href="{% url 'privacidad' %}" class="btn btn-sm rounded-pill px-3 py-1 fw-bold bg-dark text-white text-decoration-none">
+                Política de Privacidad
+            </a>
+            <a href="{% url 'cookies' %}" class="btn btn-sm rounded-pill px-3 py-1 text-secondary text-decoration-none hover-pill">
+                Política de Cookies
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Contenido Principal -->
+<main class="py-5 bg-light">
+    <div class="container px-4 px-lg-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-9 col-xl-8">
+                
+                <div class="bg-white rounded-4 p-4 p-md-5 border" style="border-color: #e2e8f0 !important;">
+                    
+                    <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+                        <div>
+                            <h2 class="h5 fw-bold text-dark mb-0">Protección de Datos Personales</h2>
+                            <small class="text-muted">Conforme a la Ley N° 19.628 de Chile</small>
+                        </div>
+                        <span class="text-muted small">Agosto 2026</span>
+                    </div>
+
+                    <!-- 1. Compromiso -->
+                    <section class="mb-4">
+                        <h3 class="h6 fw-bold text-dark mb-2">1. Compromiso de Privacidad</h3>
+                        <p class="text-secondary small leading-relaxed mb-0">
+                            En <strong>LitMate</strong> nos comprometemos a resguardar la privacidad de nuestros usuarios y la seguridad de sus datos personales, en estricto cumplimiento con la <strong>Ley N° 19.628 sobre Protección de la Vida Privada</strong> de la República de Chile y estándares internacionales de ciberseguridad.
+                        </p>
+                    </section>
+
+                    <!-- 2. Información que Recopilamos -->
+                    <section class="mb-4">
+                        <h3 class="h6 fw-bold text-dark mb-2">2. Información que Recopilamos</h3>
+                        <ul class="text-secondary small ps-3 mb-0">
+                            <li class="mb-1"><strong>Identificación:</strong> Nombre o apodo y correo electrónico al registrar una cuenta.</li>
+                            <li class="mb-1"><strong>Credenciales:</strong> Las contraseñas se almacenan mediante hash criptográfico unidireccional (PBKDF2/SHA-256). Nunca en texto plano.</li>
+                            <li class="mb-1"><strong>Actividad Literaria:</strong> Favoritos, estados de lectura, reseñas y valoraciones.</li>
+                            <li class="mb-1"><strong>Consultas con la IA:</strong> Mensajes al Asistente Literario para procesar recomendaciones en tiempo real.</li>
+                            <li class="mb-1"><strong>Datos de Pago:</strong> ID de transacción de pasarelas (Transbank, Mercado Pago, PayPal). <strong>Nunca almacenamos números de tarjetas bancarias.</strong></li>
+                        </ul>
+                    </section>
+
+                    <!-- 3. Finalidad del Tratamiento -->
+                    <section class="mb-4">
+                        <h3 class="h6 fw-bold text-dark mb-2">3. Finalidad del Tratamiento de Datos</h3>
+                        <p class="text-secondary small leading-relaxed mb-1">
+                            Utilizamos la información recopilada exclusivamente para:
+                        </p>
+                        <ol class="text-secondary small ps-3 mb-0">
+                            <li class="mb-1">Personalizar recomendaciones de libros y búsquedas en el catálogo.</li>
+                            <li class="mb-1">Gestionar el inicio de sesión y recuperación de contraseñas por correo.</li>
+                            <li class="mb-1">Habilitar el acceso a las funciones de suscripciones activas.</li>
+                            <li class="mb-1">Prevenir accesos no autorizados y fraudes en el servicio.</li>
+                        </ol>
+                    </section>
+
+                    <!-- 4. No Divulgación -->
+                    <section class="mb-4">
+                        <h3 class="h6 fw-bold text-dark mb-2">4. No Venta ni Comercialización de Datos</h3>
+                        <div class="p-3 rounded-3 mb-0" style="background: #f8fafc; border-left: 3px solid #00a6c6;">
+                            <p class="text-secondary small mb-0">
+                                <strong>Garantía de Confidencialidad:</strong> LitMate <strong>nunca vende, arrienda ni comercializa</strong> los datos personales o historiales de lectura de sus usuarios a empresas publicitarias o terceros.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- 5. Seguridad Técnica -->
+                    <section class="mb-4">
+                        <h3 class="h6 fw-bold text-dark mb-2">5. Medidas de Seguridad</h3>
+                        <p class="text-secondary small leading-relaxed mb-0">
+                            Aplicamos protocolos de seguridad estándar de la industria, incluyendo transmisión de datos cifrada mediante certificados <strong>SSL/TLS de 256 bits</strong>, aislamiento de bases de datos y protección contra ataques CSRF.
+                        </p>
+                    </section>
+
+                    <!-- 6. Derechos del Usuario -->
+                    <section class="mb-4">
+                        <h3 class="h6 fw-bold text-dark mb-2">6. Tus Derechos (ARCO)</h3>
+                        <p class="text-secondary small leading-relaxed mb-0">
+                            Puedes ejercer en cualquier momento tus derechos de acceso, rectificación, cancelación y oposición, así como solicitar la eliminación definitiva de tu cuenta y datos personales escribiendo a <a href="mailto:litmateproject@gmail.com" class="text-decoration-none text-dark fw-semibold">litmateproject@gmail.com</a>.
+                        </p>
+                    </section>
+
+                    <!-- Contacto -->
+                    <div class="pt-3 border-top d-flex flex-wrap justify-content-between align-items-center gap-2">
+                        <span class="text-muted small">Consultas de privacidad: <a href="mailto:litmateproject@gmail.com" class="text-decoration-none text-dark fw-semibold">litmateproject@gmail.com</a></span>
+                        <a href="{% url 'contact' %}" class="btn btn-outline-dark btn-sm rounded-pill px-3">Contacto</a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+<style>
+    .hover-pill {
+        transition: all 0.2s ease;
+    }
+    .hover-pill:hover {
+        background: #f1f5f9;
+        color: #0f172a !important;
+    }
+    .leading-relaxed {
+        line-height: 1.7;
+    }
+</style>
+{% endblock %}

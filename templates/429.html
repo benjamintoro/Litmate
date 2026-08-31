@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}429 - Límite de Solicitudes · LitMate{% endblock %}
+
+{% block content %}
+<header class="masthead" style="background-image: url('{% static "assets/img/home-bg.jpg" %}'); min-height: 260px; padding-top: 5rem; padding-bottom: 3rem;">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row justify-content-center text-center">
+            <div class="col-md-10 col-lg-8">
+                <span class="badge rounded-pill px-3 py-2 mb-3 shadow-sm bg-info text-dark" style="font-size: 0.85rem; letter-spacing: 0.05em;">
+                    RATE LIMIT EXCEEDED (429)
+                </span>
+                <h1 style="font-family: 'Playfair Display', serif; font-size: 2.4rem;">Demasiadas Solicitudes</h1>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container px-4 px-lg-5 my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-xl-7 text-center">
+            <div class="card border-0 shadow-lg p-4 p-md-5" style="border-radius: 20px;">
+                <div class="feature-icon rounded-circle mb-4 mx-auto d-flex align-items-center justify-content-center shadow-sm" style="width: 80px; height: 80px; background: rgba(13, 202, 240, 0.15); color: #0dcaf0; font-size: 2rem;">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+
+                <h2 class="h4 fw-bold mb-2" style="font-family: 'Playfair Display', serif;">Por motivos de seguridad y anti-spam</h2>
+                <p class="text-muted mb-4" style="font-size: 0.95rem; line-height: 1.7;">
+                    Has realizado demasiadas solicitudes en un periodo muy corto de tiempo. Para proteger el servicio de consultas automatizadas, por favor espera unos segundos antes de reintentar.
+                </p>
+
+                {% if retry_after %}
+                <div class="alert alert-info py-2 px-3 d-inline-block rounded-pill mb-4 small fw-semibold">
+                    <i class="fas fa-clock me-1"></i> Tiempo de espera estimado: <strong>{{ retry_after }} segundos</strong>
+                </div>
+                {% endif %}
+
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <button type="button" onclick="window.location.reload();" class="btn btn-primary px-4 py-2" style="border-radius: 10px;">
+                        <i class="fas fa-redo-alt me-2"></i> Reintentar ahora
+                    </button>
+                    <a href="{% url 'index' %}" class="btn btn-outline-primary px-4 py-2" style="border-radius: 10px;">
+                        <i class="fas fa-home me-2"></i> Ir al Inicio
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

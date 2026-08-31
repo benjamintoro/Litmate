@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}404 - Página no encontrada · LitMate{% endblock %}
+
+{% block content %}
+<header class="masthead" style="background-image: url('{% static "assets/img/home-bg.jpg" %}'); min-height: 260px; padding-top: 5rem; padding-bottom: 3rem;">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row justify-content-center text-center">
+            <div class="col-md-10 col-lg-8">
+                <span class="badge rounded-pill px-3 py-2 mb-3 shadow-sm" style="background: rgba(201, 169, 110, 0.2); color: #c9a96e; font-size: 0.85rem; letter-spacing: 0.05em;">
+                    ERROR 404
+                </span>
+                <h1 style="font-family: 'Playfair Display', serif; font-size: 2.4rem;">Página no encontrada</h1>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container px-4 px-lg-5 my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-xl-7 text-center">
+            <div class="card border-0 shadow-lg p-4 p-md-5" style="border-radius: 20px;">
+                <div class="feature-icon rounded-circle mb-4 mx-auto d-flex align-items-center justify-content-center shadow-sm" style="width: 80px; height: 80px; background: rgba(201, 169, 110, 0.12); color: #c9a96e; font-size: 2rem;">
+                    <i class="fas fa-book-dead"></i>
+                </div>
+
+                <h2 class="h4 fw-bold mb-2" style="font-family: 'Playfair Display', serif;">Como un capítulo perdido en el tiempo...</h2>
+                <p class="text-muted mb-4" style="font-size: 0.95rem; line-height: 1.7;">
+                    La página o libro que buscas no existe, cambió de ubicación o fue archivada. Pero no te preocupes, tu viaje literario aún continúa.
+                </p>
+
+                <!-- Atajo a búsqueda rápida -->
+                <div class="p-3 mb-4 rounded-3 d-flex flex-column flex-sm-row align-items-center justify-content-between gap-3" style="background: var(--lm-bg-warm, #faf9f7); border: 1px solid var(--lm-border, #e8e5e0);">
+                    <div class="d-flex align-items-center text-start">
+                        <i class="fas fa-search text-accent me-3 fa-lg"></i>
+                        <div>
+                            <div class="fw-semibold small" style="color: var(--lm-text);">¿Buscas una obra en específico?</div>
+                            <div class="text-muted small">Presiona <kbd style="background: #fff; border: 1px solid #ccc; padding: 1px 5px; border-radius: 4px;">Ctrl + K</kbd> para abrir el buscador Spotlight.</div>
+                        </div>
+                    </div>
+                    <a href="{% url 'buscar_libros' %}" class="btn btn-sm btn-outline-primary px-3 text-nowrap">Explorar Catálogo</a>
+                </div>
+
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <a href="{% url 'index' %}" class="btn btn-primary px-4 py-2" style="border-radius: 10px;">
+                        <i class="fas fa-home me-2"></i> Volver al Inicio
+                    </a>
+                    <a href="{% url 'chatbot_page' %}" class="btn btn-outline-secondary px-4 py-2" style="border-radius: 10px;">
+                        <i class="fas fa-robot me-2"></i> Consultar al Asistente IA
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

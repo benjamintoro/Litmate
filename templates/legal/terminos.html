@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Términos y Condiciones - LitMate{% endblock %}
+
+{% block content %}
+<!-- Header Minimalista -->
+<header class="masthead mb-0" style="background-image: url('{% static "assets/img/about-bg.jpg" %}'); padding: 4.5rem 0 3.5rem 0;">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-9 text-center">
+                <div class="page-heading">
+                    <span class="text-uppercase small tracking-wider text-white-50 d-block mb-1" style="letter-spacing: 2px; font-size: 0.75rem;">Centro Legal &bull; LitMate</span>
+                    <h1 class="fw-bold mb-2">Términos y Condiciones</h1>
+                    <span class="subheading fs-6 text-white-50">Condiciones de uso, servicios de IA y suscripciones</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Navegación Rápida entre Documentos -->
+<div class="border-bottom bg-white sticky-top shadow-sm" style="top: 0; z-index: 1020;">
+    <div class="container px-4 px-lg-5">
+        <div class="d-flex justify-content-center overflow-auto py-2 gap-2">
+            <a href="{% url 'terminos' %}" class="btn btn-sm rounded-pill px-3 py-1 fw-bold bg-dark text-white text-decoration-none">
+                Términos y Condiciones
+            </a>
+            <a href="{% url 'privacidad' %}" class="btn btn-sm rounded-pill px-3 py-1 text-secondary text-decoration-none hover-pill">
+                Política de Privacidad
+            </a>
+            <a href="{% url 'cookies' %}" class="btn btn-sm rounded-pill px-3 py-1 text-secondary text-decoration-none hover-pill">
+                Política de Cookies
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Contenido Principal -->
+<main class="py-5 bg-light">
+    <div class="container px-4 px-lg-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-9 col-xl-8">
+                
+                <div class="bg-white rounded-4 p-4 p-md-5 border" style="border-color: #e2e8f0 !important;">
+                    
+                    <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+                        <div>
+                            <h2 class="h5 fw-bold text-dark mb-0">Términos del Servicio</h2>
+                            <small class="text-muted">LitMate &bull; Santiago de Chile</small>
+                        </div>
+                        <span class="text-muted small">Agosto 2026</span>
+                    </div>
+
+                    <!-- 1. Aceptación -->
+                    <section class="mb-4">
+                        <h3 class="h6 fw-bold text-dark mb-2">1. Aceptación de los Términos</h3>
+                        <p class="text-secondary small leading-relaxed mb-0">
+                            Al acceder, registrarse o utilizar la plataforma web <strong>LitMate</strong>, usted declara haber leído, comprendido y aceptado en su totalidad los presentes Términos y Condiciones. Si no está de acuerdo con alguna de las disposiciones, debe abstenerse de utilizar el servicio.
+                        </p>
+                    </section>
+
+                    <!-- 2. Descripción del Servicio -->
+                    <section class="mb-4">
+                        <h3 class="h6 fw-bold text-dark mb-2">2. Descripción del Servicio</h3>
+                        <p class="text-secondary small leading-relaxed mb-2">
+                            LitMate es una plataforma digital orientada a la comunidad lectora que ofrece:
+                        </p>
+                        <ul class="text-secondary small ps-3 mb-0">
+                            <li class="mb-1"><strong>Catálogo y Reseñas:</strong> Información, sinopsis, calificaciones y fichas técnicas de libros.</li>
+                            <li class="mb-1"><strong>Comparador de Precios:</strong> Rastreo y comparación referencial de precios en librerías online.</li>
+                            <li class="mb-1"><strong>Asistente Literario con IA:</strong> Recomendaciones y análisis literario con inteligencia artificial.</li>
+                            <li class="mb-1"><strong>Gestión de Lectura:</strong> Favoritos, estados de lectura (<em>Por leer</em>, <em>Leyendo</em>, <em>Leído</em>) y valoraciones.</li>
+                        </ul>
+                    </section>
+
+                    <!-- 3. Registro y Cuentas -->
+                    <section class="mb-4">
+                        <h3 class="h6 fw-bold text-dark mb-2">3. Registro y Seguridad de la Cuenta</h3>
+                        <p class="text-secondary small leading-relaxed mb-0">
+                            Para acceder a ciertas funciones es necesario registrar una cuenta mediante un correo electrónico válido. El usuario es responsable de resguardar la confidencialidad de su contraseña y de las actividades realizadas desde su cuenta.
+                        </p>
+                    </section>
+
+                    <!-- 4. Suscripciones y Pagos -->
+                    <section class="mb-4">
+                        <h3 class="h6 fw-bold text-dark mb-2">4. Suscripciones y Pasarelas de Pago</h3>
+                        <p class="text-secondary small leading-relaxed mb-2">
+                            LitMate ofrece planes gratuitos y membresías de pago (<strong>Lector Pro</strong> y <strong>Lector VIP</strong>).
+                        </p>
+                        <div class="p-3 rounded-3 mb-2" style="background: #f8fafc; border-left: 3px solid #00a6c6;">
+                            <p class="text-secondary small mb-0">
+                                <strong>Pagos Seguros:</strong> Las transacciones se procesan mediante pasarelas certificadas: <strong>Transbank Webpay Plus</strong> (tarjetas chilenas), <strong>Mercado Pago</strong> y <strong>PayPal</strong>. LitMate no almacena datos de tarjetas ni claves bancarias.
+                            </p>
+                        </div>
+                        <p class="text-secondary small leading-relaxed mb-0">
+                            <strong>Cancelación:</strong> El usuario puede cancelar la renovación automática de su membresía en cualquier momento desde su perfil. El acceso continuará activo hasta el fin del periodo pagado.
+                        </p>
+                    </section>
+
+                    <!-- 5. Uso del Asistente IA -->
+                    <section class="mb-4">
+                        <h3 class="h6 fw-bold text-dark mb-2">5. Uso del Asistente con Inteligencia Artificial</h3>
+                        <p class="text-secondary small leading-relaxed mb-1">
+                            El Asistente IA tiene fines informativos y de recomendación literaria. Queda prohibido:
+                        </p>
+                        <ul class="text-secondary small ps-3 mb-0">
+                            <li class="mb-1">Intentar vulnerar, extraer o realizar ingeniería inversa sobre los modelos del sistema.</li>
+                            <li class="mb-1">Generar contenido difamatorio, ilícito o que vulnere derechos de autor.</li>
+                            <li class="mb-1">Automatizar peticiones masivas que saturen la plataforma.</li>
+                        </ul>
+                    </section>
+
+                    <!-- 6. Limitación de Responsabilidad -->
+                    <section class="mb-4">
+                        <h3 class="h6 fw-bold text-dark mb-2">6. Limitación de Responsabilidad</h3>
+                        <p class="text-secondary small leading-relaxed mb-0">
+                            Los precios y disponibilidad en el comparador son referenciales según la información provista por librerías externas. LitMate no vende libros físicos directamente ni responde por políticas de despacho o stock de comercios terceros.
+                        </p>
+                    </section>
+
+                    <!-- 7. Legislación Aplicable -->
+                    <section class="mb-4">
+                        <h3 class="h6 fw-bold text-dark mb-2">7. Legislación y Jurisdicción</h3>
+                        <p class="text-secondary small leading-relaxed mb-0">
+                            Estos términos se rigen por las leyes de la <strong>República de Chile</strong>. Cualquier controversia será sometida a los tribunales ordinarios de justicia de Santiago de Chile.
+                        </p>
+                    </section>
+
+                    <!-- Contacto -->
+                    <div class="pt-3 border-top d-flex flex-wrap justify-content-between align-items-center gap-2">
+                        <span class="text-muted small">Consultas legales: <a href="mailto:litmateproject@gmail.com" class="text-decoration-none text-dark fw-semibold">litmateproject@gmail.com</a></span>
+                        <a href="{% url 'contact' %}" class="btn btn-outline-dark btn-sm rounded-pill px-3">Contacto</a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+<style>
+    .hover-pill {
+        transition: all 0.2s ease;
+    }
+    .hover-pill:hover {
+        background: #f1f5f9;
+        color: #0f172a !important;
+    }
+    .leading-relaxed {
+        line-height: 1.7;
+    }
+</style>
+{% endblock %}

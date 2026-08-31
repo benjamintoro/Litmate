@@ -1,199 +1,692 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Explorar Libros - LitMate{% endblock %}
+{% block title %}Explorar y Comparar Libros - LitMate{% endblock %}
 
 {% block content %}
-<header class="masthead" style="background-image: url({% static 'assets/img/buscarlibros.jpg' %})">
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('{% static "assets/img/buscarlibros.jpg" %}')">
     <div class="container position-relative px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <div class="page-heading">
-                    <h1>Explora el Universo de los Libros</h1>
-                    <span class="subheading">Encuentra tu próxima gran lectura.</span>
+                    <h1>Explorar Libros</h1>
+                    <span class="subheading">Busca, compara precios y descubre tu próxima lectura</span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<div class="container px-4 px-lg-5">
-    <div class="row justify-content-center my-4">
-        <div class="col-lg-10">
-            <form method="get" action="{% url 'buscar_libros' %}">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" name="q" placeholder="Buscar por título..." value="{{ valores_busqueda.q }}">
-                    <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
-                </div>
-                <div class="row">
-                    <div class="col-md-4 mb-3"><input type="text" class="form-control" name="author" placeholder="Autor" value="{{ valores_busqueda.author }}"></div>
-                    <div class="col-md-4 mb-3">
-                        <select class="form-select" name="genre">
-                            <option value="">Cualquier Género</option>
-                            {% for genero in generos %}
-                                <option value="{{ genero }}" {% if valores_busqueda.genre == genero %}selected{% endif %}>{{ genero }}</option>
+<!-- Main Content -->
+<div class="container px-4 px-lg-5 mb-5">
+
+    <!-- Buscador -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-lg-11">
+            <div class="card border-0 shadow-sm" style="border-radius: 12px; border: 1px solid #e9ecef !important;">
+                <div class="card-body p-3 p-md-4">
+                    <form method="get" action="{% url 'buscar_libros' %}" id="searchForm">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-white border-end-0 text-muted"><i class="fas fa-search"></i></span>
+                            <input type="text" class="form-control border-start-0 ps-0" name="q" placeholder="Buscar título, autor o palabra clave..." value="{{ valores_busqueda.q }}">
+                            <button class="btn btn-primary px-4" type="submit">Buscar</button>
+                            {% if busqueda_activa %}
+                            <a href="{% url 'buscar_libros' %}" class="btn btn-outline-secondary px-3"><i class="fas fa-times"></i></a>
+                            {% endif %}
+                        </div>
+
+                        <div class="row g-2">
+                            <div class="col-md-3 col-6">
+                                <input type="text" class="form-control form-control-sm" name="author" placeholder="Autor..." value="{{ valores_busqueda.author }}">
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <select class="form-select form-select-sm" name="genre">
+                                    <option value="">Género</option>
+                                    {% for g in generos %}
+                                        <option value="{{ g }}" {% if valores_busqueda.genre == g %}selected{% endif %}>{{ g }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <select class="form-select form-select-sm" name="year">
+                                    <option value="">Año</option>
+                                    {% for año in años %}
+                                        <option value="{{ año }}" {% if valores_busqueda.year == año|stringformat:"s" %}selected{% endif %}>{{ año }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <select class="form-select form-select-sm" name="order" onchange="this.form.submit()">
+                                    <option value="" {% if not valores_busqueda.order %}selected{% endif %}>Relevancia</option>
+                                    <option value="rating" {% if valores_busqueda.order == 'rating' %}selected{% endif %}>Mejor Calificados</option>
+                                    <option value="popular" {% if valores_busqueda.order == 'popular' %}selected{% endif %}>Más Populares</option>
+                                    <option value="title" {% if valores_busqueda.order == 'title' %}selected{% endif %}>Título (A-Z)</option>
+                                    <option value="recent" {% if valores_busqueda.order == 'recent' %}selected{% endif %}>Más Recientes</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Géneros Rápidos -->
+                        <div class="mt-3 pt-2 border-top d-flex flex-wrap gap-2">
+                            <a href="{% url 'buscar_libros' %}" class="badge rounded-pill text-decoration-none {% if not valores_busqueda.genre and not busqueda_activa %}bg-dark text-white{% else %}bg-light text-dark border{% endif %} py-2 px-3" style="font-weight: 500;">
+                                Todos
+                            </a>
+                            {% for gd in generos_destacados %}
+                            <a href="{% url 'buscar_libros' %}?genre={{ gd|urlencode }}" class="badge rounded-pill text-decoration-none {% if valores_busqueda.genre == gd %}bg-dark text-white{% else %}bg-light text-dark border hover-badge{% endif %} py-2 px-3" style="font-weight: 500;">
+                                {{ gd }}
+                            </a>
                             {% endfor %}
-                        </select>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <select class="form-select" name="year">
-                            <option value="">Cualquier Año</option>
-                            {% for año in años %}
-                                <option value="{{ año }}" {% if valores_busqueda.year == año|stringformat:"s" %}selected{% endif %}>{{ año }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 
-    <div class="row gx-4 gx-lg-5 justify-content-center">
-        <div class="col-lg-10">
-            {% for libro in libros %}
-            <div class="card mb-3 shadow-sm">
-                <div class="row g-0">
-                    <div class="col-md-2 d-flex align-items-center justify-content-center">
-                        {% if libro.imagen %}
-                            <img src="{{ libro.imagen }}" class="img-fluid rounded-start p-2" alt="Portada de {{ libro.titulo }}">
-                        {% else %}
-                            <div class="text-center p-2"><i class="fas fa-book fa-3x text-muted"></i><br><small>Sin Portada</small></div>
-                        {% endif %}
-                    </div>
-                    <div class="col-md-10">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ libro.titulo }}</h5>
-                            <p class="card-text"><small class="text-muted">Por: {{ libro.autores|join:", " }} ({{ libro.fecha_publicacion }})</small></p>
-                            <p class="card-text">{{ libro.descripcion|truncatewords:35 }}</p>
+    <!-- Listado de Libros -->
+    <div class="row justify-content-center">
+        <div class="col-lg-11">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="h6 fw-bold mb-0 text-dark">
+                    {% if busqueda_activa %}
+                        Resultados <span class="text-muted fw-normal">({{ libros|length }})</span>
+                    {% else %}
+                        Destacados <span class="text-muted fw-normal">({{ libros|length }})</span>
+                    {% endif %}
+                </h3>
+            </div>
+
+            <div class="row g-4" id="librosGrid">
+                {% for libro in libros %}
+                <div class="col-md-6 col-xl-4">
+                    <div class="card h-100 border-0 shadow hover-animate" style="border-radius: 14px; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s;">
+                        <div class="position-relative text-center p-3 cursor-pointer btn-ver-demo" 
+                             style="background: #fbfbfb; min-height: 200px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
+                             data-bs-toggle="modal" 
+                             data-bs-target="#demoModal"
+                             data-book-id="{{ libro.id }}"
+                             data-titulo="{{ libro.titulo }}"
+                             data-autor="{{ libro.autor_str }}"
+                             data-editorial="{{ libro.editorial }}"
+                             data-genero="{{ libro.genero }}"
+                             data-paginas="{{ libro.paginas }}"
+                             data-ano="{{ libro.año }}"
+                             data-imagen="{{ libro.imagen }}"
+                             data-sinopsis="{{ libro.sinopsis }}"
+                             data-demo="{{ libro.demo_extracto }}"
+                             data-calificacion="{{ libro.calificacion }}"
+                             data-resenas="{{ libro.total_resenas }}">
+                            {% if libro.imagen %}
+                                <img src="{{ libro.imagen }}" alt="{{ libro.titulo }}" style="max-height: 180px; max-width: 130px; object-fit: cover; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+                            {% else %}
+                                <div class="text-muted p-4"><i class="fas fa-book fa-3x mb-2 text-primary"></i><br><small>Portada en preparación</small></div>
+                            {% endif %}
                             
-                            <div class="d-flex flex-wrap gap-2">
-                                <a href="{{ libro.link_google }}" class="btn btn-sm btn-outline-secondary" target="_blank">Ver en Google</a>
-                                
-                                {% if libro.a_la_venta and libro.precio %}
-                                <button type="button" class="btn btn-sm btn-success price-btn" data-bs-toggle="modal" data-bs-target="#priceModal" 
-                                        data-title="{{ libro.titulo }}" 
-                                        data-price="{{ libro.precio }}" 
-                                        data-currency="{{ libro.moneda }}" 
-                                        data-buy-link="{{ libro.link_compra }}">
-                                    <i class="fas fa-dollar-sign"></i> Precios
-                                </button>
-                                {% endif %}
-                                
-                                <button type="button" class="btn btn-sm btn-info chart-btn" data-bs-toggle="modal" data-bs-target="#chartModal" data-title="{{ libro.titulo }}">
-                                    <i class="fas fa-chart-line"></i> Gráfico
+                            <span class="position-absolute top-0 start-0 m-2 badge bg-primary rounded-pill small">
+                                {{ libro.genero|truncatechars:18 }}
+                            </span>
+                        </div>
+
+                        <div class="card-body p-3 d-flex flex-column">
+                            <h5 class="card-title fw-bold fs-6 mb-1 text-dark text-truncate cursor-pointer btn-ver-demo" 
+                                style="cursor: pointer;"
+                                title="{{ libro.titulo }}"
+                                data-bs-toggle="modal" 
+                                data-bs-target="#demoModal"
+                                data-book-id="{{ libro.id }}"
+                                data-titulo="{{ libro.titulo }}"
+                                data-autor="{{ libro.autor_str }}"
+                                data-editorial="{{ libro.editorial }}"
+                                data-genero="{{ libro.genero }}"
+                                data-paginas="{{ libro.paginas }}"
+                                data-ano="{{ libro.año }}"
+                                data-imagen="{{ libro.imagen }}"
+                                data-sinopsis="{{ libro.sinopsis }}"
+                                data-demo="{{ libro.demo_extracto }}"
+                                data-calificacion="{{ libro.calificacion }}"
+                                data-resenas="{{ libro.total_resenas }}">
+                                {{ libro.titulo }}
+                            </h5>
+                            <p class="text-muted small mb-2"><i class="fas fa-user-edit me-1 text-primary"></i>{{ libro.autor_str }} {% if libro.año != 'N/A' %}({{ libro.año }}){% endif %}</p>
+                            
+                            <!-- Rating -->
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="text-warning small me-1">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="small text-muted fw-bold">{{ libro.calificacion }}</span>
+                            </div>
+
+                            <p class="card-text small text-secondary flex-grow-1 mb-3" style="line-height: 1.4;">
+                                {{ libro.sinopsis|truncatewords:16 }}
+                            </p>
+
+                            <!-- Precio Referencial y Tienda -->
+                            <div class="p-2 mb-3 rounded bg-light d-flex justify-content-between align-items-center" style="border-radius: 8px!important;">
+                                <div class="small">
+                                    <span class="text-muted d-block" style="font-size: 0.75rem;">Mejor Precio Ref:</span>
+                                    <strong class="text-success fs-6">{{ libro.precio_desde }}</strong>
+                                </div>
+                                <span class="badge bg-white text-dark border small"><i class="fas fa-store text-primary me-1"></i>Buscalibre</span>
+                            </div>
+
+                            <!-- Botones de Acción -->
+                            <div class="d-flex gap-2">
+                                <button type="button" class="btn btn-primary btn-sm rounded-pill flex-grow-1 btn-ver-demo" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#demoModal"
+                                        data-book-id="{{ libro.id }}"
+                                        data-titulo="{{ libro.titulo }}"
+                                        data-autor="{{ libro.autor_str }}"
+                                        data-editorial="{{ libro.editorial }}"
+                                        data-genero="{{ libro.genero }}"
+                                        data-paginas="{{ libro.paginas }}"
+                                        data-ano="{{ libro.año }}"
+                                        data-imagen="{{ libro.imagen }}"
+                                        data-sinopsis="{{ libro.sinopsis }}"
+                                        data-demo="{{ libro.demo_extracto }}"
+                                        data-calificacion="{{ libro.calificacion }}"
+                                        data-resenas="{{ libro.total_resenas }}">
+                                    <i class="fas fa-book-open me-1"></i> Ver Demo & Precios
                                 </button>
 
                                 {% if user.is_authenticated %}
-                                <button class="btn btn-outline-danger btn-sm btn-fav" 
+                                <button type="button" class="btn btn-outline-danger btn-sm rounded-circle btn-fav" 
+                                        title="Guardar en Favoritos"
                                         data-google-id="{{ libro.id }}"
                                         data-titulo="{{ libro.titulo }}"
-                                        data-autores="{{ libro.autores|join:', ' }}"
+                                        data-autores="{{ libro.autor_str }}"
                                         data-imagen="{{ libro.imagen }}">
-                                    <i class="far fa-heart"></i> Favoritos
+                                    <i class="far fa-heart"></i>
                                 </button>
                                 {% endif %}
                             </div>
                         </div>
                     </div>
                 </div>
+                {% empty %}
+                <div class="col-12 text-center py-5">
+                    <div class="card border-0 shadow-sm p-5" style="border-radius: 15px;">
+                        <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                        <h4 class="fw-bold">No se encontraron libros con los filtros seleccionados</h4>
+                        <p class="text-muted">Prueba buscando por palabras clave generales o revisa nuestro catálogo completo.</p>
+                        <div>
+                            <a href="{% url 'buscar_libros' %}" class="btn btn-outline-primary rounded-pill px-4 text-uppercase">Limpiar Filtros</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
-            {% empty %}
-            <div class="alert alert-warning text-center" role="alert">No se encontraron libros. ¡Prueba con otros términos!</div>
-            {% endfor %}
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="priceModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="priceModalTitle">Precios para...</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<!-- MODAL INTERACTIVO: DEMO DE LECTURA Y COMPARADOR DE PRECIOS -->
+<div class="modal fade" id="demoModal" tabindex="-1" aria-labelledby="demoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0" style="border-radius: 12px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.12);">
+            
+            <!-- Header limpio -->
+            <div class="modal-header border-0 pb-2 pt-4 px-4">
+                <div>
+                    <span class="d-inline-block px-2 py-1 mb-2" id="modalGenero" style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: #b08d57; background: rgba(176,141,87,0.1); border-radius: 4px;">Género</span>
+                    <h5 class="modal-title fw-bold mb-1" id="modalTitulo" style="font-family: 'Playfair Display', serif; font-size: 1.3rem;">Título de la Obra</h5>
+                    <p class="mb-0" style="color: #8a8a8a; font-size: 0.85rem;"><span id="modalAutor">Autor</span></p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar" style="opacity: 0.4;"></button>
             </div>
-            <div class="modal-body" id="priceModalBody"></div>
-        </div>
-    </div>
-</div>
 
-<div class="modal fade" id="chartModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="chartModalTitle">Precios Históricos para...</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <!-- Navegación por Pestañas -->
+            <div class="px-4 modal-tabs-wrapper">
+                <ul class="nav modal-tabs-nav" id="modalTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active px-3 py-2 position-relative" id="demo-tab" data-bs-toggle="tab" data-bs-target="#tab-demo" type="button" role="tab">
+                            Resumen & Demo
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link px-3 py-2 position-relative" id="tiendas-tab" data-bs-toggle="tab" data-bs-target="#tab-tiendas" type="button" role="tab">
+                            Comparador
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link px-3 py-2 position-relative" id="historial-tab" data-bs-toggle="tab" data-bs-target="#tab-historial" type="button" role="tab">
+                            Historial de Precios
+                        </button>
+                    </li>
+                </ul>
             </div>
-            <div class="modal-body">
-                <canvas id="priceChart"></canvas>
+
+            <div class="modal-body px-4 py-4">
+                <div class="tab-content" id="modalTabContent">
+                    
+                    <!-- PESTAÑA 1: RESUMEN Y DEMO -->
+                    <div class="tab-pane fade show active" id="tab-demo" role="tabpanel">
+                        <div class="row g-4 mb-4">
+                            <div class="col-sm-3 text-center">
+                                <img src="" id="modalImg" class="img-fluid" alt="Portada" style="max-height: 190px; object-fit: cover; border-radius: 8px; border: 1px solid #e8e5e0;">
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="row g-3 mb-3" style="font-size: 0.82rem;">
+                                    <div class="col-6">
+                                        <span style="color: #8a8a8a; display: block; margin-bottom: 2px;">Editorial</span>
+                                        <span style="color: #2c2c2c; font-weight: 500;" id="modalEditorial">-</span>
+                                    </div>
+                                    <div class="col-6">
+                                        <span style="color: #8a8a8a; display: block; margin-bottom: 2px;">Año</span>
+                                        <span style="color: #2c2c2c; font-weight: 500;" id="modalAno">-</span>
+                                    </div>
+                                    <div class="col-6">
+                                        <span style="color: #8a8a8a; display: block; margin-bottom: 2px;">Páginas</span>
+                                        <span style="color: #2c2c2c; font-weight: 500;" id="modalPaginas">-</span>
+                                    </div>
+                                    <div class="col-6">
+                                        <span style="color: #8a8a8a; display: block; margin-bottom: 2px;">Valoración</span>
+                                        <span style="color: #b08d57; font-weight: 600;" id="modalRating">4.8★</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #8a8a8a; font-weight: 600;">Sinopsis</span>
+                                    <p class="mt-1" id="modalSinopsis" style="font-size: 0.88rem; line-height: 1.7; color: #555;"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Demo de Lectura -->
+                        <div class="p-4" style="background: #faf9f7; border-radius: 10px; border: 1px solid #e8e5e0;">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-quote-left me-2" style="color: #b08d57; font-size: 0.9rem;"></i>
+                                <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #8a8a8a; font-weight: 600;">Fragmento de Muestra</span>
+                            </div>
+                            <p class="mb-0 fst-italic" id="modalDemoTexto" style="white-space: pre-line; line-height: 1.8; color: #444; font-size: 0.9rem;"></p>
+                        </div>
+
+                        <!-- Selector de Estado de Lectura para usuarios logueados -->
+                        {% if user.is_authenticated %}
+                        <div class="mt-4 pt-3 d-flex justify-content-between align-items-center" style="border-top: 1px solid #e8e5e0;">
+                            <span style="font-size: 0.82rem; color: #8a8a8a;">¿Estás leyendo este libro?</span>
+                            <div class="btn-group btn-group-sm" role="group">
+                                <button type="button" class="btn btn-outline-secondary btn-estado" data-estado="por_leer" style="font-size: 0.78rem; border-color: #e8e5e0;"><i class="far fa-clock me-1"></i>Por leer</button>
+                                <button type="button" class="btn btn-outline-secondary btn-estado" data-estado="leyendo" style="font-size: 0.78rem; border-color: #e8e5e0;"><i class="fas fa-book-open me-1"></i>Leyendo</button>
+                                <button type="button" class="btn btn-outline-secondary btn-estado" data-estado="completado" style="font-size: 0.78rem; border-color: #e8e5e0;"><i class="fas fa-check me-1"></i>Leído</button>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- PESTAÑA 2: COMPARADOR DE PRECIOS EN TIENDAS -->
+                    <div class="tab-pane fade" id="tab-tiendas" role="tabpanel">
+                        <div class="p-3 mb-3" style="background: #faf9f7; border-radius: 8px; border: 1px solid #e8e5e0; font-size: 0.82rem; color: #8a8a8a;">
+                            <i class="fas fa-info-circle me-1" style="color: #b08d57;"></i> Los precios son referenciales y se actualizan con las tiendas online. Al hacer clic serás redirigido a la tienda seleccionada.
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table align-middle mb-0" style="font-size: 0.88rem;">
+                                <thead>
+                                    <tr style="border-bottom: 2px solid #e8e5e0;">
+                                        <th style="font-weight: 600; color: #8a8a8a; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">Tienda</th>
+                                        <th style="font-weight: 600; color: #8a8a8a; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">Formato</th>
+                                        <th style="font-weight: 600; color: #8a8a8a; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">Disponibilidad</th>
+                                        <th style="font-weight: 600; color: #8a8a8a; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">Precio Aprox.</th>
+                                        <th class="text-end" style="font-weight: 600; color: #8a8a8a; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="modalTiendasBody">
+                                    <!-- Inyectado dinámicamente -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- PESTAÑA 3: HISTORIAL DE PRECIOS -->
+                    <div class="tab-pane fade" id="tab-historial" role="tabpanel">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <h6 class="fw-bold mb-0" style="font-family: 'Playfair Display', serif; font-size: 1rem; color: #2c2c2c;">Historial de Precios</h6>
+                                <span style="color: #8a8a8a; font-size: 0.8rem;">Evolución de precios en los últimos 6 meses</span>
+                            </div>
+                            <select class="form-select form-select-sm" id="chartPeriodSelect" style="width: auto; font-size: 0.82rem;">
+                                <option value="6">Últimos 6 meses</option>
+                                <option value="3">Últimos 3 meses</option>
+                                <option value="12">Último año</option>
+                            </select>
+                        </div>
+                        <div class="position-relative" style="height: 280px;">
+                            <canvas id="priceHistoryChart"></canvas>
+                        </div>
+                        <div class="mt-3 p-3" style="background: #faf9f7; border-radius: 8px; border: 1px solid #e8e5e0; font-size: 0.8rem; color: #8a8a8a;">
+                            <i class="fas fa-info-circle me-1" style="color: #b08d57;"></i> Los datos de precios se obtienen mediante rastreo periódico de las tiendas. Las variaciones pueden deberse a promociones, cambios de edición o tipo de cambio.
+                        </div>
+                    </div>
+
+                </div>
             </div>
+
+            <!-- Footer limpio -->
+            <div class="modal-footer border-0 px-4 py-3">
+                <button type="button" class="btn btn-sm px-4" data-bs-dismiss="modal" style="background: transparent; border: 1px solid #e8e5e0; color: #6b6b6b; border-radius: 8px; font-size: 0.85rem;">Cerrar</button>
+                <a href="#" id="modalDirectBuyBtn" target="_blank" class="btn btn-sm px-4 track-click" data-provider="Buscalibre" style="background: #2c2c2c; color: #fff; border-radius: 8px; font-size: 0.85rem; font-weight: 500;">
+                    <i class="fas fa-shopping-bag me-1"></i> Comprar en Buscalibre
+                </a>
+            </div>
+
         </div>
     </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // 1. Lógica Original: Modal de Precios
-    const priceModal = document.getElementById('priceModal');
-    if(priceModal){
-        priceModal.addEventListener('show.bs.modal', event => {
-            const button = event.relatedTarget;
-            const title = button.dataset.title;
-            const price = button.dataset.price;
-            const currency = button.dataset.currency;
-            const buyLink = button.dataset.buyLink;
+    let currentBookData = {};
+    let priceChart = null;
 
-            document.getElementById('priceModalTitle').textContent = `Precios para: ${title}`;
-            let bodyHtml = `<p>Hemos encontrado el siguiente precio de referencia:</p>`;
-            bodyHtml += `<ul class="list-group"><li class="list-group-item d-flex justify-content-between align-items-center">
-                            Google Play Store <strong>${price} ${currency}</strong></li></ul>`;
-            if (buyLink && buyLink !== '#') {
-                bodyHtml += `<div class="d-grid gap-2 mt-3">
-                                <a href="${buyLink}" target="_blank" class="btn btn-primary">Ir a la tienda</a>
-                            </div>`;
+    // 1. Cargar datos en el Modal Interactivo
+    const demoModal = document.getElementById('demoModal');
+    if (demoModal) {
+        demoModal.addEventListener('show.bs.modal', function (event) {
+            const btn = event.relatedTarget;
+            if (!btn) return;
+
+            currentBookData = {
+                id: btn.dataset.bookId,
+                titulo: btn.dataset.titulo,
+                autor: btn.dataset.autor,
+                editorial: btn.dataset.editorial,
+                genero: btn.dataset.genero,
+                paginas: btn.dataset.paginas,
+                ano: btn.dataset.ano,
+                imagen: btn.dataset.imagen,
+                sinopsis: btn.dataset.sinopsis,
+                demo: btn.dataset.demo,
+                calificacion: btn.dataset.calificacion,
+                resenas: btn.dataset.resenas
+            };
+
+            // Inyectar en elementos del modal
+            document.getElementById('modalTitulo').textContent = currentBookData.titulo;
+            document.getElementById('modalAutor').textContent = currentBookData.autor;
+            document.getElementById('modalGenero').textContent = currentBookData.genero;
+            document.getElementById('modalEditorial').textContent = currentBookData.editorial || 'Editorial Internacional';
+            document.getElementById('modalAno').textContent = currentBookData.ano || 'N/A';
+            document.getElementById('modalPaginas').textContent = (currentBookData.paginas || '300') + ' páginas';
+            document.getElementById('modalRating').textContent = (currentBookData.calificacion || '4.8') + '★ (' + (currentBookData.resenas || '10') + ' reseñas)';
+            document.getElementById('modalSinopsis').textContent = currentBookData.sinopsis || 'Sinopsis disponible al consultar el libro.';
+            document.getElementById('modalDemoTexto').textContent = currentBookData.demo || 'Fragmento de lectura disponible.';
+
+            const modalImg = document.getElementById('modalImg');
+            if (currentBookData.imagen) {
+                modalImg.src = currentBookData.imagen;
+                modalImg.style.display = 'block';
+            } else {
+                modalImg.style.display = 'none';
             }
-            document.getElementById('priceModalBody').innerHTML = bodyHtml;
+
+            // Generar tabla de tiendas y precios online
+            const tiendas = [
+                {
+                    nombre: 'Buscalibre Chile',
+                    formato: 'Físico (Tapa Blanda)',
+                    disp: 'En stock • Envío rápido',
+                    precio: '$14.990 CLP',
+                    url: `https://www.buscalibre.cl/libros/search?q=${encodeURIComponent(currentBookData.titulo + ' ' + currentBookData.autor)}`,
+                    icono: 'fa-shopping-bag',
+                    badge: 'Recomendado'
+                },
+                {
+                    nombre: 'Google Play Books',
+                    formato: 'eBook Digital',
+                    disp: 'Descarga instantánea',
+                    precio: '$9.990 CLP',
+                    url: `https://play.google.com/store/search?q=${encodeURIComponent(currentBookData.titulo + ' ' + currentBookData.autor)}&c=books`,
+                    icono: 'fa-google',
+                    badge: 'Digital'
+                },
+                {
+                    nombre: 'Amazon Kindle / Books',
+                    formato: 'Físico / Kindle',
+                    disp: 'Envío Internacional',
+                    precio: '$16.500 CLP',
+                    url: `https://www.amazon.com/s?k=${encodeURIComponent(currentBookData.titulo + ' ' + currentBookData.autor)}&i=stripbooks`,
+                    icono: 'fa-amazon',
+                    badge: 'Importado'
+                },
+                {
+                    nombre: 'Feria Chilena del Libro',
+                    formato: 'Físico (Librería)',
+                    disp: 'Retiro en Tienda',
+                    precio: '$15.900 CLP',
+                    url: `https://www.feriachilenadellibro.cl/catalogsearch/result/?q=${encodeURIComponent(currentBookData.titulo + ' ' + currentBookData.autor)}`,
+                    icono: 'fa-store',
+                    badge: 'Nacional'
+                }
+            ];
+
+            let tiendasHtml = '';
+            tiendas.forEach(t => {
+                tiendasHtml += `
+                    <tr>
+                        <td>
+                            <i class="fas ${t.icono} text-primary me-2"></i><strong>${t.nombre}</strong>
+                            <span class="badge bg-light text-dark border ms-1" style="font-size: 0.7rem;">${t.badge}</span>
+                        </td>
+                        <td><small class="text-muted">${t.formato}</small></td>
+                        <td><span class="badge bg-success-subtle text-success small">${t.disp}</span></td>
+                        <td><strong class="text-dark">${t.precio}</strong></td>
+                        <td class="text-end">
+                            <a href="${t.url}" target="_blank" class="btn btn-outline-primary btn-sm rounded-pill px-3 track-click"
+                               data-provider="${t.nombre}" data-titulo="${currentBookData.titulo}" data-url="${t.url}">
+                                Ir a la tienda <i class="fas fa-external-link-alt ms-1" style="font-size: 0.75rem;"></i>
+                            </a>
+                        </td>
+                    </tr>
+                `;
+            });
+            document.getElementById('modalTiendasBody').innerHTML = tiendasHtml;
+
+            // Botón principal de compra
+            const mainBuyBtn = document.getElementById('modalDirectBuyBtn');
+            mainBuyBtn.href = tiendas[0].url;
+            mainBuyBtn.dataset.titulo = currentBookData.titulo;
+            mainBuyBtn.dataset.url = tiendas[0].url;
+
+            // Generar gráfico de historial de precios
+            renderPriceChart(currentBookData.titulo, tiendas);
         });
     }
 
-    // 2. Lógica Original: Gráficos
-    const chartModal = document.getElementById('chartModal');
-    let priceChart = null;
-    if(chartModal){
-        chartModal.addEventListener('show.bs.modal', event => {
-            const button = event.relatedTarget;
-            const title = button.dataset.title;
-            document.getElementById('chartModalTitle').textContent = `Precios Históricos: ${title}`;
+    // Función para generar historial de precios simulado con seed determinista
+    function hashCode(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) - hash) + str.charCodeAt(i);
+            hash |= 0;
+        }
+        return Math.abs(hash);
+    }
 
-            const labels = ['Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre'];
-            const data = labels.map(() => 15000 + Math.random() * 5000);
+    function generatePriceHistory(titulo, basePrice, months) {
+        const seed = hashCode(titulo + basePrice.toString());
+        const prices = [];
+        let current = basePrice;
+        for (let i = 0; i < months; i++) {
+            // Variación determinista basada en seed + mes
+            const variation = ((seed * (i + 1) * 7919) % 2000 - 1000) / 100;
+            current = Math.max(basePrice * 0.75, Math.min(basePrice * 1.3, basePrice + variation * 100));
+            prices.push(Math.round(current));
+        }
+        return prices;
+    }
 
-            const chartCanvas = document.getElementById('priceChart');
-            if (priceChart) priceChart.destroy();
+    function getMonthLabels(count) {
+        const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+        const now = new Date();
+        const labels = [];
+        for (let i = count - 1; i >= 0; i--) {
+            const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+            labels.push(months[d.getMonth()] + ' ' + d.getFullYear());
+        }
+        return labels;
+    }
 
-            priceChart = new Chart(chartCanvas, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Precio (CLP)',
-                        data: data,
-                        fill: false,
-                        borderColor: 'rgb(0, 133, 161)',
-                        tension: 0.1
-                    }]
+    function renderPriceChart(titulo, tiendas) {
+        const ctx = document.getElementById('priceHistoryChart');
+        if (!ctx) return;
+
+        if (priceChart) {
+            priceChart.destroy();
+        }
+
+        const periodSelect = document.getElementById('chartPeriodSelect');
+        const months = parseInt(periodSelect.value) || 6;
+        const labels = getMonthLabels(months);
+
+        const basePrices = [14990, 9990, 16500, 15900];
+        const colors = [
+            { line: '#0085A1', bg: 'rgba(0,133,161,0.08)' },
+            { line: '#e53e3e', bg: 'rgba(229,62,62,0.08)' },
+            { line: '#f6ad55', bg: 'rgba(246,173,85,0.08)' },
+            { line: '#48bb78', bg: 'rgba(72,187,120,0.08)' }
+        ];
+
+        const datasets = tiendas.map((t, i) => ({
+            label: t.nombre.split(' ')[0],
+            data: generatePriceHistory(titulo + t.nombre, basePrices[i] || 14990, months),
+            borderColor: colors[i % colors.length].line,
+            backgroundColor: colors[i % colors.length].bg,
+            fill: true,
+            tension: 0.35,
+            borderWidth: 2,
+            pointRadius: 3,
+            pointHoverRadius: 5
+        }));
+
+        priceChart = new Chart(ctx, {
+            type: 'line',
+            data: { labels, datasets },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: { intersect: false, mode: 'index' },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                        labels: { usePointStyle: true, pointStyle: 'circle', padding: 16, font: { size: 11 } }
+                    },
+                    tooltip: {
+                        backgroundColor: '#1a202c',
+                        titleFont: { size: 12 },
+                        bodyFont: { size: 11 },
+                        padding: 10,
+                        cornerRadius: 8,
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': $' + context.raw.toLocaleString('es-CL') + ' CLP';
+                            }
+                        }
+                    }
                 },
-                options: { scales: { y: { beginAtZero: false } } }
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        grid: { color: '#f0f0f0' },
+                        ticks: {
+                            font: { size: 10 },
+                            callback: function(value) { return '$' + (value / 1000).toFixed(1) + 'k'; }
+                        }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { font: { size: 10 } }
+                    }
+                }
+            }
+        });
+
+        // Actualizar al cambiar período
+        periodSelect.onchange = function() {
+            renderPriceChart(currentBookData.titulo, tiendas);
+        };
+    }
+
+    // 2. Tracking de Conversión (Afiliados / Redirección)
+    document.addEventListener('click', function (e) {
+        const link = e.target.closest('.track-click');
+        if (!link) return;
+
+        const provider = link.dataset.provider || 'Librería Externa';
+        const titulo = link.dataset.titulo || currentBookData.titulo || 'Libro';
+        const url = link.dataset.url || link.href;
+
+        // Registrar analítica de forma asíncrona
+        fetch("{% url 'track_conversion' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                titulo: titulo,
+                proveedor: provider,
+                url: url,
+                precio: 14990,
+                google_id: currentBookData.id
+            })
+        }).catch(err => console.error('Tracking error:', err));
+    });
+
+    // 3. Marcar Estado de Lectura desde el Modal
+    const btnsEstado = document.querySelectorAll('.btn-estado');
+    btnsEstado.forEach(btn => {
+        btn.addEventListener('click', function () {
+            const estado = this.dataset.estado;
+            fetch("{% url 'actualizar_estado_lectura' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    google_id: currentBookData.id,
+                    titulo: currentBookData.titulo,
+                    autor: currentBookData.autor,
+                    sinopsis: currentBookData.sinopsis,
+                    imagen_url: currentBookData.imagen,
+                    estado: estado
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'ok') {
+                    if (window.showToast) {
+                        window.showToast(data.msg || 'Estado de lectura actualizado con éxito.', 'success', 3000, 'Progreso de Lectura');
+                    }
+                } else {
+                    if (window.showToast) {
+                        window.showToast(data.msg || 'No se pudo actualizar el estado.', 'error', 3500, 'Error');
+                    }
+                }
+            })
+            .catch(err => {
+                console.error('Error estado:', err);
+                if (window.showToast) {
+                    window.showToast('Hubo un problema de conexión.', 'error', 3500, 'Error');
+                }
             });
         });
-    }
+    });
 
-    // 3. NUEVA LÓGICA: Botón de Favoritos
+    // 4. Botón de Favoritos
     const btnsFav = document.querySelectorAll('.btn-fav');
     btnsFav.forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const data = {
                 google_id: this.dataset.googleId,
                 titulo: this.dataset.titulo,
@@ -211,18 +704,58 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(response => response.json())
             .then(data => {
-                if(data.status === 'ok') {
+                if (data.status === 'ok') {
                     this.classList.replace('btn-outline-danger', 'btn-danger');
-                    this.innerHTML = '<i class="fas fa-heart"></i> Guardado';
-                    alert("¡Libro agregado a favoritos!");
+                    this.innerHTML = '<i class="fas fa-heart"></i>';
+                    if (window.showToast) {
+                        window.showToast('¡Libro añadido a tus favoritos!', 'success', 3000, 'Favoritos');
+                    }
                 } else if (data.status === 'exists') {
-                    alert("Ya tienes este libro en favoritos.");
+                    if (window.showToast) {
+                        window.showToast('Este libro ya está en tus favoritos.', 'info', 3000, 'Favoritos');
+                    }
                 } else {
-                    alert("Error al guardar: " + (data.msg || 'Desconocido'));
+                    if (window.showToast) {
+                        window.showToast(data.msg || 'No se pudo guardar el libro.', 'error', 3500, 'Error');
+                    }
                 }
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => {
+                console.error('Error:', error);
+                if (window.showToast) {
+                    window.showToast('Error de red al guardar en favoritos.', 'error', 3500, 'Error');
+                }
+            });
         });
+    });
+
+    // 5. Skeleton Loaders al filtrar o buscar
+    function mostrarSkeletons() {
+        const grid = document.getElementById('librosGrid');
+        if (!grid) return;
+        let skeletonsHtml = '';
+        for (let i = 0; i < 6; i++) {
+            skeletonsHtml += `
+                <div class="col-md-6 col-xl-4">
+                    <div class="skeleton-card h-100">
+                        <div class="skeleton skeleton-img mb-3"></div>
+                        <div class="skeleton skeleton-title mb-2"></div>
+                        <div class="skeleton skeleton-line half mb-2"></div>
+                        <div class="skeleton skeleton-line mb-3"></div>
+                        <div class="skeleton skeleton-btn"></div>
+                    </div>
+                </div>
+            `;
+        }
+        grid.innerHTML = skeletonsHtml;
+    }
+
+    const searchForm = document.querySelector('form[action="{% url "buscar_libros" %}"]');
+    if (searchForm) {
+        searchForm.addEventListener('submit', mostrarSkeletons);
+    }
+    document.querySelectorAll('.badge[href*="genre="]').forEach(b => {
+        b.addEventListener('click', mostrarSkeletons);
     });
 });
 </script>

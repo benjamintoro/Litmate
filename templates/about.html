@@ -16,65 +16,71 @@
         </div>
     </div>
 </header>
-<main class="mb-4  border border-dark rounded p-2 m-5">
-    <div class="container px-4 px-lg-5">
-        <br class="row gx-4 gx-lg-5 justify-content-center">
-        <p class="lead mb-4">
-          Nuestro proyecto nace con la misión de <strong>conectar lectores de todo el mundo</strong>
-          con la información más completa y actualizada sobre libros, autores y tendencias literarias.
-        </p>
-        <p class="mb-4">
-          Creamos esta plataforma como un emprendimiento tecnológico que
-          combina <strong>gestión de información literaria</strong> con <strong>inteligencia artificial</strong>.
-          A través de un chatbot innovador, ayudamos a los usuarios a descubrir nuevas lecturas
-          según sus gustos, encontrar libros a partir de recuerdos o descripciones, y acceder a datos
-          complementarios de autores y géneros.
-        </p>
-        <p class="mb-4">
-          Además, integramos un <strong>módulo de enlaces externos</strong> a diversas librerías en línea,
-          facilitando la comparación de precios y la compra directa de los títulos que más te interesen.
-          De esta forma, no solo centralizamos la información, sino que <strong>creamos un puente
-          entre la exploración literaria y la adquisición del libro</strong>.
-        </p>
-        <p class="fw-semibold">
-          Nuestra finalidad: <span class="text-primary">democratizar el acceso a la lectura
-          y mejorar la experiencia digital de los lectores en todo el mundo.</span>
-        </p>
-    </div>
-    <hr>
-    <section class="page-section bg-light" id="team">
-        <div class="container px-4 px-lg-5">
-            <div class="text-center">
-                <h2 class="section-heading text-uppercase">Nuestro Equipo</h2>
-                <h3 class="section-subheading text-muted">La mente detrás de LitMate</h3>
+
+<main class="mb-5">
+    <div class="container px-4 px-lg-5 py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <p class="lead mb-4" style="font-family: 'Playfair Display', serif; font-size: 1.25rem; line-height: 1.8; color: #2c2c2c;">
+                    Nuestro proyecto nace con la misión de <strong>conectar lectores de todo el mundo</strong>
+                    con la información más completa y actualizada sobre libros, autores y tendencias literarias.
+                </p>
+                <p class="mb-4" style="line-height: 1.8; color: #6b6b6b;">
+                    Creamos esta plataforma como un emprendimiento tecnológico que
+                    combina <strong style="color: #2c2c2c;">gestión de información literaria</strong> con <strong style="color: #2c2c2c;">inteligencia artificial</strong>.
+                    A través de un chatbot innovador, ayudamos a los usuarios a descubrir nuevas lecturas
+                    según sus gustos, encontrar libros a partir de recuerdos o descripciones, y acceder a datos
+                    complementarios de autores y géneros.
+                </p>
+                <p class="mb-4" style="line-height: 1.8; color: #6b6b6b;">
+                    Además, integramos un <strong style="color: #2c2c2c;">módulo de enlaces externos</strong> a diversas librerías en línea,
+                    facilitando la comparación de precios y la compra directa de los títulos que más te interesen.
+                    De esta forma, no solo centralizamos la información, sino que <strong style="color: #2c2c2c;">creamos un puente
+                    entre la exploración literaria y la adquisición del libro</strong>.
+                </p>
+                <p style="color: #2c2c2c;">
+                    Nuestra finalidad: <span style="color: #b08d57; font-weight: 500;">democratizar el acceso a la lectura
+                    y mejorar la experiencia digital de los lectores en todo el mundo.</span>
+                </p>
             </div>
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'assets/img/team/3.jpg' %}" alt="René Muñoz" />
-                        <h4>René Muñoz</h4>
-                        <p class="text-muted">Desarrollador</p>
+        </div>
+    </div>
+
+    <hr class="mx-auto" style="width: 60px; border-top: 2px solid #e8e5e0;">
+
+    <section class="py-5" id="team">
+        <div class="container px-4 px-lg-5">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold" style="font-family: 'Playfair Display', serif;">Nuestro Equipo</h2>
+                <p class="text-muted">La mente detrás de LitMate</p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="team-member text-center">
+                        <img class="mx-auto rounded-circle" src="{% static 'assets/img/team/3.jpg' %}" alt="René Muñoz" style="width: 120px; height: 120px; object-fit: cover;" />
+                        <h4 class="mt-3 mb-1" style="font-size: 1rem;">René Muñoz</h4>
+                        <p class="text-muted small">Desarrollador</p>
                     </div>
                 </div>
-                <div class="col-lg-3">
-                    <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'assets/img/team/3.jpg' %}" alt="Benjamin Toro" />
-                        <h4>Benjamin Toro</h4>
-                        <p class="text-muted">Desarrollador</p>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="team-member text-center">
+                        <img class="mx-auto rounded-circle" src="{% static 'assets/img/team/3.jpg' %}" alt="Benjamin Toro" style="width: 120px; height: 120px; object-fit: cover;" />
+                        <h4 class="mt-3 mb-1" style="font-size: 1rem;">Benjamin Toro</h4>
+                        <p class="text-muted small">Desarrollador</p>
                     </div>
                 </div>
-                <div class="col-lg-3">
-                    <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'assets/img/team/sebastian.jpg' %}" alt="Sebastian Lillo" />
-                        <h4>Sebastian Lillo</h4>
-                        <p class="text-muted">Desarrollador</p>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="team-member text-center">
+                        <img class="mx-auto rounded-circle" src="{% static 'assets/img/team/sebastian.jpg' %}" alt="Sebastian Lillo" style="width: 120px; height: 120px; object-fit: cover;" />
+                        <h4 class="mt-3 mb-1" style="font-size: 1rem;">Sebastian Lillo</h4>
+                        <p class="text-muted small">Desarrollador</p>
                     </div>
                 </div>
-                <div class="col-lg-3">
-                    <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="{% static 'assets/img/team/jp.jpg' %}" alt="Juan Pablo Molina" />
-                        <h4>Juan Pablo Molina</h4>
-                        <p class="text-muted">Desarrollador</p>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="team-member text-center">
+                        <img class="mx-auto rounded-circle" src="{% static 'assets/img/team/jp.jpg' %}" alt="Juan Pablo Molina" style="width: 120px; height: 120px; object-fit: cover;" />
+                        <h4 class="mt-3 mb-1" style="font-size: 1rem;">Juan Pablo Molina</h4>
+                        <p class="text-muted small">Desarrollador</p>
                     </div>
                 </div>
             </div>

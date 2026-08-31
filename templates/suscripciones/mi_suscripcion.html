@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mi Suscripción - LitMate{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('{% static "assets/img/libreria.jpg" %}')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="page-heading text-center">
+                    <h1>Mi Suscripción</h1>
+                    <span class="subheading">Gestiona tu plan, privilegios y comprobantes de pago</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="container px-4 px-lg-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            
+            <!-- Estado del Plan Actual -->
+            <div class="card border-0 shadow-sm mb-5 p-4 p-md-5" style="border-radius: 16px; border: 1px solid #e2e8f0 !important;">
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-3 border-bottom gap-2">
+                    <div class="d-flex align-items-center">
+                        <div class="feature-icon text-white rounded-circle me-3 d-flex align-items-center justify-content-center shadow-sm" style="width: 54px; height: 54px; background: linear-gradient(135deg, #0085A1 0%, #005f73 100%);">
+                            {% if suscripcion.plan.slug == 'lector-vip' %}
+                                <i class="fas fa-gem fa-lg"></i>
+                            {% elif suscripcion.plan.slug == 'lector-pro' %}
+                                <i class="fas fa-robot fa-lg"></i>
+                            {% else %}
+                                <i class="fas fa-id-card fa-lg"></i>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <h4 class="fw-bold mb-0 text-dark">Membresía LitMate</h4>
+                            <span class="text-muted small">Usuario: <strong>{{ user.username }}</strong> ({{ user.email }})</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        {% if suscripcion and suscripcion.es_valida %}
+                            {% if suscripcion.plan.slug == 'lector-vip' %}
+                                <span class="badge bg-warning text-dark rounded-pill px-3 py-2 fw-bold shadow-sm"><i class="fas fa-crown me-1"></i> VIP ACTIVO</span>
+                            {% elif suscripcion.plan.slug == 'lector-pro' %}
+                                <span class="badge bg-primary text-white rounded-pill px-3 py-2 fw-bold shadow-sm"><i class="fas fa-star me-1"></i> PRO ACTIVO</span>
+                            {% else %}
+                                <span class="badge bg-success rounded-pill px-3 py-2 fw-bold"><i class="fas fa-check-circle me-1"></i> GRIS / GRATIS</span>
+                            {% endif %}
+                        {% else %}
+                            <span class="badge bg-secondary rounded-pill px-3 py-2">Sin Suscripción Activa</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if suscripcion %}
+                    <div class="row g-3 mb-4">
+                        <div class="col-sm-6 col-md-3">
+                            <div class="p-3 bg-light rounded" style="border-radius: 12px !important; border: 1px solid #edf2f7;">
+                                <div class="text-muted small">Plan Actual</div>
+                                <div class="fw-bold fs-6 text-dark text-truncate">{{ suscripcion.plan.nombre }}</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="p-3 bg-light rounded" style="border-radius: 12px !important; border: 1px solid #edf2f7;">
+                                <div class="text-muted small">Precio</div>
+                                <div class="fw-bold fs-6 text-dark">${{ suscripcion.plan.precio|floatformat:0 }} {{ suscripcion.plan.moneda }}</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="p-3 bg-light rounded" style="border-radius: 12px !important; border: 1px solid #edf2f7;">
+                                <div class="text-muted small">Consultas Asistente IA</div>
+                                <div class="fw-bold fs-6 text-dark">
+                                    {% if suscripcion.plan.limite_consultas_ia_diarias == 0 %}
+                                        <span class="text-primary"><i class="fas fa-infinity me-1"></i> Ilimitadas</span>
+                                    {% else %}
+                                        {{ suscripcion.plan.limite_consultas_ia_diarias }}/día
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="p-3 bg-light rounded" style="border-radius: 12px !important; border: 1px solid #edf2f7;">
+                                <div class="text-muted small">Vigencia / Renovación</div>
+                                <div class="fw-bold fs-6 text-dark">
+                                    {% if suscripcion.fecha_fin %}
+                                        {{ suscripcion.fecha_fin|date:"d/m/Y" }}
+                                    {% else %}
+                                        <span class="text-success">Permanente</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botones de Acción de Suscripción -->
+                    <div class="d-flex flex-wrap gap-2 justify-content-between align-items-center pt-2">
+                        <div class="d-flex flex-wrap gap-2">
+                            <a href="{% url 'suscripciones:planes' %}" class="btn btn-primary rounded-pill px-4 text-uppercase fw-bold shadow-sm">
+                                <i class="fas fa-arrow-up me-1"></i> Cambiar / Mejorar Plan
+                            </a>
+                            <a href="{% url 'chatbot_page' %}" class="btn btn-outline-primary rounded-pill px-4 text-uppercase fw-bold">
+                                <i class="fas fa-robot me-1"></i> Ir al Asistente IA
+                            </a>
+                        </div>
+
+                        {% if suscripcion.plan.precio > 0 and suscripcion.auto_renovar %}
+                        <form method="post" action="{% url 'suscripciones:cancelar_suscripcion' %}" onsubmit="return confirm('¿Estás seguro de que deseas desactivar la renovación automática?');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-link text-muted small text-decoration-none">
+                                <i class="fas fa-times-circle text-danger me-1"></i> Desactivar renovación
+                            </button>
+                        </form>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-4">
+                        <p class="text-muted mb-4">No tienes una membresía activa en este momento.</p>
+                        <a href="{% url 'suscripciones:planes' %}" class="btn btn-primary rounded-pill px-4 text-uppercase fw-bold">
+                            Explorar Planes
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Historial de Pagos y Comprobantes -->
+            <div class="card border-0 shadow-sm p-4 p-md-5" style="border-radius: 16px; border: 1px solid #e2e8f0 !important;">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h4 class="fw-bold mb-0 text-dark"><i class="fas fa-receipt text-primary me-2"></i>Historial de Pagos</h4>
+                        <span class="small text-muted">Comprobantes y recibos de transacciones electrónicas</span>
+                    </div>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light small text-uppercase text-muted">
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Referencia / Código</th>
+                                <th>Plan</th>
+                                <th>Monto</th>
+                                <th>Método</th>
+                                <th>Estado</th>
+                                <th class="text-end">Comprobante</th>
+                            </tr>
+                        </thead>
+                        <tbody class="small">
+                            {% for pago in pagos %}
+                            <tr>
+                                <td>{{ pago.fecha_pago|date:"d/m/Y H:i" }}</td>
+                                <td class="font-monospace text-muted">{{ pago.referencia_transaccion|default:"TXN-LEGACY"|truncatechars:18 }}</td>
+                                <td class="fw-bold text-dark">{{ pago.plan.nombre|default:"Suscripción" }}</td>
+                                <td class="fw-bold">${{ pago.monto|floatformat:0 }} {{ pago.moneda }}</td>
+                                <td><span class="text-capitalize">{{ pago.metodo_pago }}</span></td>
+                                <td>
+                                    <span class="badge bg-{% if pago.estado == 'completado' %}success{% elif pago.estado == 'pendiente' %}warning text-dark{% else %}danger{% endif %} rounded-pill">
+                                        {{ pago.get_estado_display }}
+                                    </span>
+                                </td>
+                                <td class="text-end">
+                                    {% if pago.referencia_transaccion %}
+                                    <a href="{% url 'suscripciones:pago_exitoso' pago.referencia_transaccion %}" class="btn btn-outline-primary btn-sm rounded-pill px-3" title="Ver Comprobante">
+                                        <i class="fas fa-file-invoice me-1"></i> Recibo
+                                    </a>
+                                    {% else %}
+                                    <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="7" class="text-center text-muted py-4">
+                                    No hay pagos registrados aún en tu cuenta.
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

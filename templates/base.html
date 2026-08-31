@@ -9,7 +9,43 @@
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" />
-    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link href="{% static 'css/styles.css' %}?v=3.1" rel="stylesheet" />
+    <link href="{% static 'css/litmate-minimal.css' %}?v=3.1" rel="stylesheet" />
+    <link href="{% static 'css/dark-mode.css' %}?v=3.1" rel="stylesheet" />
+    <script>
+        // Anti-flash: aplica el tema guardado antes de que se pinte la página
+        (function(){
+            var t = localStorage.getItem('litmate_theme');
+            if (t === 'dark') {
+                document.documentElement.classList.add('dark-mode');
+            }
+        })();
+        // Función global de toggle
+        function toggleDarkMode() {
+            var html = document.documentElement;
+            var isDark = html.classList.contains('dark-mode');
+            if (isDark) {
+                html.classList.remove('dark-mode');
+                localStorage.setItem('litmate_theme', 'light');
+            } else {
+                html.classList.add('dark-mode');
+                localStorage.setItem('litmate_theme', 'dark');
+            }
+            // Actualizar icono
+            var moonEl = document.getElementById('theme-moon');
+            var sunEl = document.getElementById('theme-sun');
+            if (moonEl && sunEl) {
+                if (html.classList.contains('dark-mode')) {
+                    moonEl.style.display = 'none';
+                    sunEl.style.display = 'inline';
+                } else {
+                    moonEl.style.display = 'inline';
+                    sunEl.style.display = 'none';
+                }
+            }
+        }
+    </script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
@@ -19,12 +55,13 @@
                 Menu <i class="fas fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                <ul class="navbar-nav ms-auto py-4 py-lg-0 align-items-lg-center">
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'index' %}">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'about' %}">Sobre Nosotros</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'post' %}">Post</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'buscar_libros' %}">Explorar</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'chatbot_page' %}">Asistente IA</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'suscripciones:planes' %}">Planes</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'contact' %}">Contacto</a></li>
                     
                     {% if user.is_authenticated %}
@@ -34,6 +71,7 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="{% url 'perfil' %}">Mi Perfil</a></li>
+                                <li><a class="dropdown-item" href="{% url 'suscripciones:mi_suscripcion' %}">Mi Suscripción</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
                                     <form action="{% url 'logout' %}" method="post">
@@ -47,16 +85,34 @@
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'login' %}">Ingresar</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'register' %}">Registrarse</a></li>
                     {% endif %}
+
+                    <!-- Botón Búsqueda Global Spotlight (Solo Lupa) -->
+                    <li class="nav-item ms-lg-2 my-2 my-lg-0">
+                        <button type="button" id="navCmdSearchBtn" class="nav-search-btn" title="Buscar en LitMate (Ctrl + K)" aria-label="Buscar en LitMate (Ctrl + K)">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </li>
+
+                    <!-- Botón Modo Oscuro -->
+                    <li class="nav-item ms-lg-2 my-2 my-lg-0">
+                        <button type="button" id="themeToggleBtn" onclick="toggleDarkMode()" title="Cambiar tema" aria-label="Cambiar tema de color">
+                            <i class="fas fa-moon" id="theme-moon"></i>
+                            <i class="fas fa-sun" id="theme-sun" style="display:none;"></i>
+                        </button>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
     {% if messages %}
-        <div class="container mt-3 position-fixed top-0 start-50 translate-middle-x" style="z-index: 1050; padding-top: 80px;">
+        <div class="position-fixed top-0 start-50 translate-middle-x mt-4" style="z-index: 2000; width: 90%; max-width: 550px; pointer-events: none;">
             {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow" role="alert">
-                    {{ message }}
+                <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show shadow-lg border-0" role="alert" style="pointer-events: auto; border-radius: 12px; backdrop-filter: blur(8px);">
+                    <div class="d-flex align-items-center">
+                        <i class="fas {% if message.tags == 'success' %}fa-check-circle text-success{% elif message.tags == 'error' or message.tags == 'danger' %}fa-exclamation-circle text-danger{% else %}fa-info-circle text-primary{% endif %} fa-lg me-2"></i>
+                        <div>{{ message }}</div>
+                    </div>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             {% endfor %}
@@ -65,44 +121,555 @@
 
     {% block content %}{% endblock %}
 
-    <footer class="border-top">
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
-                    <ul class="list-inline text-center">
-                        <li class="list-inline-item">
-                            <a href="#!">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fas fa-circle fa-stack-2x"></i>
-                                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#!">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fas fa-circle fa-stack-2x"></i>
-                                    <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="https://github.com/StartBootstrap/startbootstrap-clean-blog" target="_blank">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fas fa-circle fa-stack-2x"></i>
-                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
+    <!-- FOOTER PROFESIONAL LITMATE -->
+    <footer style="background: #0a0e14; border-top: 1px solid #1a1f2b;">
+
+        <!-- Sección Principal -->
+        <div class="container px-4 px-lg-5 pt-5 pb-4">
+            <div class="row g-4">
+
+                <!-- Columna 1: Marca -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="fw-bold text-white mb-3" style="letter-spacing: -0.3px;">Lit<span style="color: #c9a96e;">Mate</span></h5>
+                    <p style="color: #7a8599; font-size: 0.85rem; line-height: 1.7;">
+                        Nuestra misión es ayudar a los lectores a descubrir el libro perfecto para sus gustos, comparar precios y potenciar su experiencia literaria con inteligencia artificial.
+                    </p>
+                    <a href="https://instagram.com" target="_blank" class="d-inline-flex align-items-center gap-2 text-decoration-none px-3 py-1 rounded-pill" style="border: 1px solid #2a3040; color: #c0c8d8; font-size: 0.82rem; transition: border-color 0.2s;">
+                        <i class="fab fa-instagram"></i> Instagram
+                    </a>
+                </div>
+
+                <!-- Columna 2: Navega -->
+                <div class="col-lg-2 col-md-6 col-6">
+                    <h6 class="text-uppercase fw-bold mb-3" style="color: #e2e8f0; font-size: 0.78rem; letter-spacing: 1px;">Navega</h6>
+                    <ul class="list-unstyled d-flex flex-column gap-2" style="font-size: 0.85rem;">
+                        <li><a href="{% url 'index' %}" class="footer-link">Inicio</a></li>
+                        <li><a href="{% url 'buscar_libros' %}" class="footer-link">Explorar Libros</a></li>
+                        <li><a href="{% url 'chatbot' %}" class="footer-link">Asistente IA</a></li>
+                        <li><a href="{% url 'post' %}" class="footer-link">Publicaciones</a></li>
+                        <li><a href="{% url 'about' %}" class="footer-link">Sobre Nosotros</a></li>
                     </ul>
-                    <div class="small text-center text-muted fst-italic">Copyright &copy; LitMate 2025</div>
+                </div>
+
+                <!-- Columna 3: Membresías -->
+                <div class="col-lg-2 col-md-6 col-6">
+                    <h6 class="text-uppercase fw-bold mb-3" style="color: #e2e8f0; font-size: 0.78rem; letter-spacing: 1px;">Membresías</h6>
+                    <ul class="list-unstyled d-flex flex-column gap-2" style="font-size: 0.85rem;">
+                        <li><a href="{% url 'suscripciones:planes' %}" class="footer-link">Planes y Precios</a></li>
+                        <li><a href="{% url 'suscripciones:checkout' 'lector-pro' %}" class="footer-link">Lector Pro</a></li>
+                        <li><a href="{% url 'suscripciones:checkout' 'lector-vip' %}" class="footer-link">Lector VIP</a></li>
+                    </ul>
+                </div>
+
+                <!-- Columna 4: Legal -->
+                <div class="col-lg-2 col-md-6 col-6">
+                    <h6 class="text-uppercase fw-bold mb-3" style="color: #e2e8f0; font-size: 0.78rem; letter-spacing: 1px;">Legal</h6>
+                    <ul class="list-unstyled d-flex flex-column gap-2" style="font-size: 0.85rem;">
+                        <li><a href="{% url 'terminos' %}" class="footer-link">Términos y condiciones</a></li>
+                        <li><a href="{% url 'privacidad' %}" class="footer-link">Política de privacidad</a></li>
+                        <li><a href="{% url 'cookies' %}" class="footer-link">Política de cookies</a></li>
+                    </ul>
+                </div>
+
+                <!-- Columna 5: Contacto -->
+                <div class="col-lg-3 col-md-6 col-6">
+                    <h6 class="text-uppercase fw-bold mb-3" style="color: #e2e8f0; font-size: 0.78rem; letter-spacing: 1px;">Contacto</h6>
+                    <ul class="list-unstyled d-flex flex-column gap-2" style="font-size: 0.85rem;">
+                        <li><a href="{% url 'contact' %}" class="footer-link">Formulario de contacto</a></li>
+                        <li><a href="mailto:litmateproject@gmail.com" class="footer-link">litmateproject@gmail.com</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Barra Inferior -->
+        <div style="border-top: 1px solid #1a1f2b;">
+            <div class="container px-4 px-lg-5 py-3 d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+                <div style="color: #4a5568; font-size: 0.78rem;">
+                    &copy; TODOS LOS DERECHOS RESERVADOS<br>
+                    <span style="font-size: 0.72rem;">LitMate, Santiago de Chile</span>
+                </div>
+                <div class="d-flex gap-3" style="font-size: 0.78rem;">
+                    <a href="{% url 'terminos' %}" class="footer-link">Términos y condiciones</a>
+                    <a href="{% url 'cookies' %}" class="footer-link">Política de cookies</a>
+                    <a href="{% url 'privacidad' %}" class="footer-link">Política de privacidad</a>
                 </div>
             </div>
         </div>
+
     </footer>
+
+    <!-- BANNER INFERIOR DE COOKIES (Allow Cookies) -->
+    <div id="cookieConsentBanner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Consentimiento de cookies" style="display: none;">
+        <div class="cookie-banner-container">
+            <div class="cookie-banner-content">
+                <div class="cookie-icon-wrapper">
+                    <i class="fas fa-cookie-bite"></i>
+                </div>
+                <div class="cookie-banner-text">
+                    <h6 class="cookie-banner-title">Valoramos tu privacidad y experiencia</h6>
+                    <p class="cookie-banner-desc">
+                        Utilizamos cookies propias y de terceros para personalizar tu experiencia literaria, recordar tus preferencias (como el modo oscuro), analizar el tráfico y mejorar las recomendaciones. Puedes consultar más detalles en nuestra <a href="{% url 'cookies' %}" class="cookie-policy-link">Política de Cookies</a>.
+                    </p>
+                </div>
+            </div>
+            <div class="cookie-banner-actions">
+                <button type="button" id="btnRejectCookies" class="btn btn-cookie-secondary">Solo necesarias</button>
+                <button type="button" id="btnAcceptCookies" class="btn btn-cookie-primary">
+                    <i class="fas fa-check me-1"></i> Aceptar todas
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENEDOR DE NOTIFICACIONES TOAST (In-App) -->
+    <div id="litmateToastContainer" class="litmate-toast-container" aria-live="polite" aria-atomic="true"></div>
+
+    <!-- MODAL DE BÚSQUEDA GLOBAL / COMMAND PALETTE (Ctrl + K) -->
+    <div id="cmdPaletteModal" class="cmd-palette-backdrop" style="display: none;">
+        <div class="cmd-palette-dialog" role="dialog" aria-modal="true" aria-label="Búsqueda Global">
+            <div class="cmd-palette-header">
+                <i class="fas fa-search cmd-palette-search-icon"></i>
+                <input type="text" id="cmdPaletteInput" class="cmd-palette-input" placeholder="Buscar libros, autores, páginas en LitMate..." autocomplete="off" spellcheck="false">
+                <button type="button" id="cmdPaletteClear" class="cmd-palette-clear-btn" style="display: none;" title="Limpiar">
+                    <i class="fas fa-times"></i>
+                </button>
+                <span class="cmd-palette-esc-badge"><kbd>ESC</kbd></span>
+            </div>
+            <div id="cmdPaletteBody" class="cmd-palette-body">
+                <div id="cmdPaletteLoading" style="display: none; padding: 1.5rem; text-align: center; color: var(--lm-accent);">
+                    <div class="spinner-border spinner-border-sm" role="status"></div>
+                    <span class="ms-2 small">Buscando en catálogo e IA...</span>
+                </div>
+                <div id="cmdPaletteResults" class="cmd-palette-results">
+                    <!-- Dinámico -->
+                </div>
+            </div>
+            <div class="cmd-palette-footer">
+                <div class="cmd-footer-shortcuts">
+                    <span><kbd>↑</kbd> <kbd>↓</kbd> Navegar</span>
+                    <span><kbd>↵</kbd> Seleccionar</span>
+                    <span><kbd>ESC</kbd> Cerrar</span>
+                </div>
+                <span class="cmd-footer-brand"><i class="fas fa-bolt me-1"></i> LitMate Spotlight</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTÓN VOLVER ARRIBA (Scroll to Top) -->
+    <button type="button" id="scrollToTopBtn" class="scroll-to-top-btn" title="Volver arriba" aria-label="Volver arriba">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <style>
+        .footer-link {
+            color: #7a8599;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .footer-link:hover {
+            color: #e2e8f0;
+        }
+    </style>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{% static 'js/scripts.js' %}"></script>
+    <script>
+        // Sincronizar icono del botón al cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            var isDark = document.documentElement.classList.contains('dark-mode');
+            var moonEl = document.getElementById('theme-moon');
+            var sunEl = document.getElementById('theme-sun');
+            if (moonEl && sunEl) {
+                moonEl.style.display = isDark ? 'none' : 'inline';
+                sunEl.style.display = isDark ? 'inline' : 'none';
+            }
+
+            // Auto-cerrar alertas
+            setTimeout(function() {
+                document.querySelectorAll('.alert-dismissible').forEach(function(alertEl) {
+                    try {
+                        var bsAlert = bootstrap.Alert.getOrCreateInstance(alertEl);
+                        bsAlert.close();
+                    } catch (e) {
+                        alertEl.style.transition = 'opacity 0.5s ease';
+                        alertEl.style.opacity = '0';
+                        setTimeout(function() { alertEl.remove(); }, 500);
+                    }
+                });
+            }, 4500);
+        });
+
+        // =====================================================================
+        // 1. SISTEMA GLOBAL DE NOTIFICACIONES TOAST
+        // =====================================================================
+        window.showToast = function(message, type = 'success', duration = 3500, title = '') {
+            const container = document.getElementById('litmateToastContainer');
+            if (!container) return;
+
+            const toast = document.createElement('div');
+            toast.className = `litmate-toast toast-${type}`;
+
+            let iconClass = 'fa-circle-check';
+            let defaultTitle = 'Éxito';
+            if (type === 'error') {
+                iconClass = 'fa-circle-xmark';
+                defaultTitle = 'Atención';
+            } else if (type === 'warning') {
+                iconClass = 'fa-triangle-exclamation';
+                defaultTitle = 'Aviso';
+            } else if (type === 'info') {
+                iconClass = 'fa-circle-info';
+                defaultTitle = 'Información';
+            }
+
+            toast.innerHTML = `
+                <i class="fas ${iconClass} litmate-toast-icon"></i>
+                <div class="litmate-toast-content">
+                    <div class="litmate-toast-title">${title || defaultTitle}</div>
+                    <p class="litmate-toast-message">${message}</p>
+                </div>
+                <button type="button" class="litmate-toast-close" aria-label="Cerrar">&times;</button>
+                <div class="litmate-toast-progress"></div>
+            `;
+
+            container.appendChild(toast);
+
+            // Trigger animation
+            requestAnimationFrame(() => {
+                toast.classList.add('show');
+            });
+
+            // Progress bar animation
+            const progressBar = toast.querySelector('.litmate-toast-progress');
+            if (progressBar && duration > 0) {
+                progressBar.style.transition = `transform ${duration}ms linear`;
+                requestAnimationFrame(() => {
+                    progressBar.style.transform = 'scaleX(0)';
+                });
+            }
+
+            // Close logic
+            let timer = null;
+            const removeToast = () => {
+                if (timer) clearTimeout(timer);
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    toast.remove();
+                }, 400);
+            };
+
+            const closeBtn = toast.querySelector('.litmate-toast-close');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', removeToast);
+            }
+
+            if (duration > 0) {
+                timer = setTimeout(removeToast, duration);
+            }
+        };
+
+        // Auto-convertir mensajes de Django a Toasts
+        document.addEventListener('DOMContentLoaded', function() {
+            {% if messages %}
+                {% for message in messages %}
+                    let msgType = 'info';
+                    {% if message.tags == 'success' %}
+                        msgType = 'success';
+                    {% elif message.tags == 'error' or message.tags == 'danger' %}
+                        msgType = 'error';
+                    {% elif message.tags == 'warning' %}
+                        msgType = 'warning';
+                    {% endif %}
+                    window.showToast("{{ message|escapejs }}", msgType, 4000);
+                {% endfor %}
+            {% endif %}
+        });
+
+        // =====================================================================
+        // 2. BOTÓN VOLVER ARRIBA (Scroll to Top)
+        // =====================================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollBtn = document.getElementById('scrollToTopBtn');
+            if (scrollBtn) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 280) {
+                        scrollBtn.classList.add('visible');
+                    } else {
+                        scrollBtn.classList.remove('visible');
+                    }
+                }, { passive: true });
+
+                scrollBtn.addEventListener('click', function() {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+        });
+
+        // =====================================================================
+        // 3. COMMAND PALETTE / SPOTLIGHT SEARCH (Ctrl + K)
+        // =====================================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('cmdPaletteModal');
+            const input = document.getElementById('cmdPaletteInput');
+            const resultsContainer = document.getElementById('cmdPaletteResults');
+            const loadingIndicator = document.getElementById('cmdPaletteLoading');
+            const clearBtn = document.getElementById('cmdPaletteClear');
+            const triggerBtn = document.getElementById('navCmdSearchBtn');
+
+            let searchTimeout = null;
+            let currentResults = [];
+            let selectedIndex = -1;
+
+            function openPalette() {
+                if (!modal) return;
+                modal.style.display = 'flex';
+                requestAnimationFrame(() => {
+                    modal.classList.add('show');
+                    input.focus();
+                });
+                if (!input.value.trim()) {
+                    fetchResults('');
+                }
+            }
+
+            function closePalette() {
+                if (!modal) return;
+                modal.classList.remove('show');
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                    if (input) input.value = '';
+                    if (clearBtn) clearBtn.style.display = 'none';
+                }, 250);
+            }
+
+            if (triggerBtn) triggerBtn.addEventListener('click', openPalette);
+
+            // Teclas de acceso directo globales (Ctrl+K, Cmd+K, Escape)
+            document.addEventListener('keydown', function(e) {
+                if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
+                    e.preventDefault();
+                    if (modal && modal.classList.contains('show')) {
+                        closePalette();
+                    } else {
+                        openPalette();
+                    }
+                } else if (e.key === 'Escape' && modal && modal.classList.contains('show')) {
+                    e.preventDefault();
+                    closePalette();
+                }
+            });
+
+            // Cerrar al hacer clic en el backdrop
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        closePalette();
+                    }
+                });
+            }
+
+            if (clearBtn) {
+                clearBtn.addEventListener('click', function() {
+                    input.value = '';
+                    clearBtn.style.display = 'none';
+                    input.focus();
+                    fetchResults('');
+                });
+            }
+
+            // Input debounce search
+            if (input) {
+                input.addEventListener('input', function() {
+                    const q = input.value.trim();
+                    if (clearBtn) {
+                        clearBtn.style.display = q ? 'block' : 'none';
+                    }
+                    if (searchTimeout) clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(() => {
+                        fetchResults(q);
+                    }, 180);
+                });
+
+                // Navegación por teclado (Flechas y Enter)
+                input.addEventListener('keydown', function(e) {
+                    const items = resultsContainer.querySelectorAll('.cmd-item');
+                    if (items.length === 0) return;
+
+                    if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        selectedIndex = (selectedIndex + 1) % items.length;
+                        updateActiveItem(items);
+                    } else if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        selectedIndex = (selectedIndex - 1 + items.length) % items.length;
+                        updateActiveItem(items);
+                    } else if (e.key === 'Enter') {
+                        e.preventDefault();
+                        if (selectedIndex >= 0 && items[selectedIndex]) {
+                            items[selectedIndex].click();
+                        } else if (input.value.trim()) {
+                            window.location.href = `/libros/?q=${encodeURIComponent(input.value.trim())}`;
+                        }
+                    }
+                });
+            }
+
+            function updateActiveItem(items) {
+                items.forEach((item, idx) => {
+                    if (idx === selectedIndex) {
+                        item.classList.add('active');
+                        item.scrollIntoView({ block: 'nearest' });
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+            }
+
+            function fetchResults(q) {
+                if (loadingIndicator) loadingIndicator.style.display = 'block';
+                if (resultsContainer) resultsContainer.style.opacity = '0.5';
+
+                fetch(`/api/quick-search/?q=${encodeURIComponent(q)}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (loadingIndicator) loadingIndicator.style.display = 'none';
+                        if (resultsContainer) resultsContainer.style.opacity = '1';
+                        renderResults(data, q);
+                    })
+                    .catch(err => {
+                        if (loadingIndicator) loadingIndicator.style.display = 'none';
+                        if (resultsContainer) resultsContainer.style.opacity = '1';
+                        console.error('Quick search error:', err);
+                    });
+            }
+
+            function renderResults(data, q) {
+                selectedIndex = -1;
+                let html = '';
+
+                // Atajos
+                if (data.shortcuts && data.shortcuts.length > 0) {
+                    html += `<div class="cmd-palette-section-title">${q ? 'Secciones y Atajos' : 'Acceso Rápido'}</div>`;
+                    data.shortcuts.forEach(s => {
+                        html += `
+                            <a href="${s.url}" class="cmd-item">
+                                <div class="cmd-item-icon">
+                                    <i class="fas ${s.icon}"></i>
+                                </div>
+                                <div class="cmd-item-details">
+                                    <div class="cmd-item-title">${s.title}</div>
+                                    <div class="cmd-item-desc">${s.desc}</div>
+                                </div>
+                                <span class="cmd-item-badge">${s.category}</span>
+                            </a>
+                        `;
+                    });
+                }
+
+                // Libros
+                if (data.books && data.books.length > 0) {
+                    html += `<div class="cmd-palette-section-title mt-2">Libros Coincidentes</div>`;
+                    data.books.forEach(b => {
+                        const thumb = b.portada ? `<img src="${b.portada}" class="cmd-item-thumb" alt="${b.titulo}">` : `<div class="cmd-item-icon"><i class="fas fa-book"></i></div>`;
+                        html += `
+                            <a href="${b.url}" class="cmd-item">
+                                ${thumb}
+                                <div class="cmd-item-details">
+                                    <div class="cmd-item-title">${b.titulo}</div>
+                                    <div class="cmd-item-desc">${b.autor} • <span class="text-accent">${b.genero}</span></div>
+                                </div>
+                                <span class="cmd-item-badge text-success">${b.precio}</span>
+                            </a>
+                        `;
+                    });
+                }
+
+                if (!html) {
+                    html = `
+                        <div class="text-center py-4 text-muted">
+                            <i class="fas fa-search-minus fa-2x mb-2 d-block opacity-50"></i>
+                            <div class="small fw-semibold">No se encontraron resultados para "${q}"</div>
+                            <div class="small text-muted mt-1">Presiona Enter para buscar en todo el catálogo de libros.</div>
+                        </div>
+                    `;
+                }
+
+                resultsContainer.innerHTML = html;
+            }
+        });
+
+        // =====================================================================
+        // 4. GESTIÓN DE CONSENTIMIENTO DE COOKIES
+        // =====================================================================
+        (function() {
+            function getCookie(name) {
+                let matches = document.cookie.match(new RegExp(
+                    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+                ));
+                return matches ? decodeURIComponent(matches[1]) : undefined;
+            }
+
+            function setCookie(name, value, days) {
+                let expires = "";
+                if (days) {
+                    let date = new Date();
+                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                    expires = "; expires=" + date.toUTCString();
+                }
+                document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Lax";
+            }
+
+            function checkCookieConsent() {
+                const consentStorage = localStorage.getItem('litmate_cookies_consent');
+                const consentCookie = getCookie('litmate_cookies_consent');
+
+                // Si no existe ni en localStorage ni en cookies (primera visita o cookies borradas)
+                if (!consentStorage && !consentCookie) {
+                    const banner = document.getElementById('cookieConsentBanner');
+                    if (banner) {
+                        banner.style.display = 'block';
+                        setTimeout(function() {
+                            banner.classList.add('show');
+                        }, 300);
+                    }
+                }
+            }
+
+            function dismissBanner(consentValue) {
+                localStorage.setItem('litmate_cookies_consent', consentValue);
+                setCookie('litmate_cookies_consent', consentValue, 365); // 1 año
+
+                const banner = document.getElementById('cookieConsentBanner');
+                if (banner) {
+                    banner.classList.remove('show');
+                    setTimeout(function() {
+                        banner.style.display = 'none';
+                    }, 500);
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                checkCookieConsent();
+
+                const btnAccept = document.getElementById('btnAcceptCookies');
+                const btnReject = document.getElementById('btnRejectCookies');
+
+                if (btnAccept) {
+                    btnAccept.addEventListener('click', function() {
+                        dismissBanner('accepted');
+                    });
+                }
+
+                if (btnReject) {
+                    btnReject.addEventListener('click', function() {
+                        dismissBanner('necessary');
+                    });
+                }
+            });
+        })();
+    </script>
     {% block scripts %}{% endblock %}
 </body>
 </html>

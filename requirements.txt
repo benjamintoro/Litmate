@@ -1,14 +1,25 @@
-django
+# --- Framework Principal y API ---
+Django
 djangorestframework
+
+# --- Bases de Datos (MySQL y MongoDB) ---
+pymysql
+mysqlclient
 pymongo
 djongo
+
+# --- Inteligencia Artificial y LLM ---
+groq
+pinecone-client
 sentence-transformers
 torch
 transformers
-pinecone
-pymysql
-tqdm
+huggingface_hub
+
+# --- Utilidades y Herramientas Externas ---
+Pillow
 requests
 googlesearch-python
-huggingface_hub
 python-dotenv
+tqdm
+certifi

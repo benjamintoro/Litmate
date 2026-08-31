@@ -1,0 +1,493 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Checkout Seguro - Suscripción {{ plan.nombre }} - LitMate{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('{% static "assets/img/libreria.jpg" %}'); margin-bottom: 2rem;">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7 text-center">
+                <div class="page-heading">
+                    <span class="badge bg-primary text-white text-uppercase px-3 py-2 rounded-pill mb-2 fw-bold shadow-sm" style="font-size: 0.8rem;">
+                        <i class="fas fa-lock me-1"></i> Pasarela de Pago Segura
+                    </span>
+                    <h1>Finalizar Suscripción</h1>
+                    <span class="subheading">Contrata tu membresía <strong>{{ plan.nombre }}</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Checkout Container -->
+<div class="container px-4 px-lg-5 mb-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        
+        <!-- Columna Izquierda: Formulario de Pago y Grid de Métodos -->
+        <div class="col-lg-7 mb-4">
+            <div class="card border-0 shadow-sm p-4 p-md-5" style="border-radius: 18px; border: 1px solid #e2e8f0 !important; background: #ffffff;">
+                
+                <div class="d-flex align-items-center mb-4 pb-3 border-bottom">
+                    <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-3 shadow-sm" style="width: 44px; height: 44px; background: linear-gradient(135deg, #0085A1 0%, #005f73 100%) !important;">
+                        <i class="fas fa-shield-alt fa-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold mb-0 text-dark">Checkout Seguro</h4>
+                        <span class="small text-muted"><i class="fas fa-check-circle text-success me-1"></i> Conexión cifrada SSL de 256 bits</span>
+                    </div>
+                </div>
+
+                <form method="post" action="{% url 'suscripciones:iniciar_pago' %}" id="checkoutForm">
+                    {% csrf_token %}
+                    <input type="hidden" name="plan_id" value="{{ plan.id }}">
+
+                    <!-- Datos del Titular -->
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="badge bg-primary text-white rounded-circle me-2 d-flex align-items-center justify-content-center" style="width: 22px; height: 22px; font-size: 0.75rem;">1</span>
+                        <h6 class="fw-bold text-dark mb-0">Datos del Titular</h6>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold text-muted">Nombre Completo</label>
+                            <input type="text" class="form-control" name="card_name" id="cardNameInput" 
+                                   value="{% if user.get_full_name %}{{ user.get_full_name }}{% else %}{{ user.username }}{% endif %}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold text-muted">Correo Electrónico</label>
+                            <input type="email" class="form-control" name="buyer_email" value="{{ user.email }}" required readonly style="background-color: #f8fafb;">
+                        </div>
+                    </div>
+
+                    <!-- Elige tu método de pago -->
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="badge bg-primary text-white rounded-circle me-2 d-flex align-items-center justify-content-center" style="width: 22px; height: 22px; font-size: 0.75rem;">2</span>
+                        <h6 class="fw-bold text-dark mb-0">Elige tu método de pago</h6>
+                    </div>
+
+                    <!-- Grid de Métodos Limpio -->
+                    <div class="payment-methods-grid mb-3">
+                        
+                        <!-- 1. VISA -->
+                        <label class="payment-grid-card active cursor-pointer" for="pay_visa" data-name="Tarjeta Visa" data-method="visa" data-type="card" data-desc="Pago directo con tarjeta Visa de débito o crédito.">
+                            <input type="radio" name="metodo_pago" id="pay_visa" value="visa" class="d-none" checked>
+                            <div class="card-inner">
+                                <img src="{% static 'assets/img/payments/visa.png' %}" alt="Visa" class="payment-logo img-fluid" style="max-height: 28px; object-fit: contain;">
+                            </div>
+                        </label>
+
+                        <!-- 2. MASTERCARD -->
+                        <label class="payment-grid-card cursor-pointer" for="pay_mastercard" data-name="Mastercard" data-method="mastercard" data-type="card" data-desc="Pago directo con tarjeta Mastercard de débito o crédito.">
+                            <input type="radio" name="metodo_pago" id="pay_mastercard" value="mastercard" class="d-none">
+                            <div class="card-inner">
+                                <img src="{% static 'assets/img/payments/mastercard.png' %}" alt="Mastercard" class="payment-logo img-fluid" style="max-height: 38px; object-fit: contain;">
+                            </div>
+                        </label>
+
+                        <!-- 3. WEBPAY PLUS (Transbank) -->
+                        <label class="payment-grid-card cursor-pointer" for="pay_webpay" data-name="Transbank Webpay Plus" data-method="webpay_plus" data-type="gateway" data-desc="Serás redirigido al portal oficial seguro de Transbank Webpay en Chile.">
+                            <input type="radio" name="metodo_pago" id="pay_webpay" value="webpay_plus" class="d-none">
+                            <div class="card-inner">
+                                <img src="{% static 'assets/img/payments/webpay.png' %}" alt="Webpay Plus" class="payment-logo img-fluid" style="max-height: 36px; object-fit: contain;">
+                            </div>
+                        </label>
+
+                        <!-- 4. GOOGLE PAY -->
+                        <label class="payment-grid-card cursor-pointer" for="pay_gpay" data-name="Google Pay" data-method="google_pay" data-type="gateway" data-desc="Pago rápido y protegido con tu billetera de Google Pay.">
+                            <input type="radio" name="metodo_pago" id="pay_gpay" value="google_pay" class="d-none">
+                            <div class="card-inner">
+                                <img src="{% static 'assets/img/payments/gpay.png' %}" alt="Google Pay" class="payment-logo img-fluid" style="max-height: 30px; object-fit: contain;">
+                            </div>
+                        </label>
+
+                        <!-- 5. APPLE PAY -->
+                        <label class="payment-grid-card cursor-pointer" for="pay_applepay" data-name="Apple Pay" data-method="apple_pay" data-type="gateway" data-desc="Pago protegido con Apple Pay en tus dispositivos compatibles.">
+                            <input type="radio" name="metodo_pago" id="pay_applepay" value="apple_pay" class="d-none">
+                            <div class="card-inner">
+                                <img src="{% static 'assets/img/payments/applepay.png' %}" alt="Apple Pay" class="payment-logo img-fluid" style="max-height: 32px; object-fit: contain;">
+                            </div>
+                        </label>
+
+                        <!-- 6. PAYPAL -->
+                        <label class="payment-grid-card cursor-pointer" for="pay_paypal" data-name="PayPal" data-method="paypal" data-type="gateway" data-desc="Serás redirigido a PayPal para autorizar el cobro en dólares (USD).">
+                            <input type="radio" name="metodo_pago" id="pay_paypal" value="paypal" class="d-none">
+                            <div class="card-inner">
+                                <img src="{% static 'assets/img/payments/paypal.png' %}" alt="PayPal" class="payment-logo img-fluid" style="max-height: 38px; object-fit: contain;">
+                            </div>
+                        </label>
+
+                        <!-- 7. MERCADO PAGO -->
+                        <label class="payment-grid-card cursor-pointer" for="pay_mp" data-name="Mercado Pago" data-method="mercado_pago" data-type="gateway" data-desc="Serás redirigido a Mercado Pago para abonar con saldo o tarjetas.">
+                            <input type="radio" name="metodo_pago" id="pay_mp" value="mercado_pago" class="d-none">
+                            <div class="card-inner">
+                                <img src="{% static 'assets/img/payments/mercadopago.png' %}" alt="Mercado Pago" class="payment-logo img-fluid" style="max-height: 34px; object-fit: contain;">
+                            </div>
+                        </label>
+
+                        <!-- 8. BANK TRANSFER -->
+                        <label class="payment-grid-card cursor-pointer" for="pay_transfer" data-name="Transferencia Bancaria" data-method="bank_transfer" data-type="gateway" data-desc="Transferencia electrónica directa a cuenta bancaria nacional en pesos chilenos.">
+                            <input type="radio" name="metodo_pago" id="pay_transfer" value="bank_transfer" class="d-none">
+                            <div class="card-inner">
+                                <img src="{% static 'assets/img/payments/banktransfer.png' %}" alt="Bank Transfer" class="payment-logo img-fluid" style="max-height: 38px; object-fit: contain;">
+                            </div>
+                        </label>
+
+                    </div>
+
+                    <!-- Botón de Información Interactivo con Popover Emergente (Rectángulo Rojo) -->
+                    <div class="position-relative d-inline-block mb-3">
+                        <button type="button" class="btn btn-sm rounded-pill px-3 py-1 shadow-sm d-inline-flex align-items-center gap-1 info-trigger-btn" id="infoTriggerBtn" aria-label="Información del método">
+                            <i class="fas fa-info-circle text-primary"></i>
+                        </button>
+
+                        <!-- Popover que emerge al presionar el botón -->
+                        <div class="info-popover-bubble shadow-lg" id="infoPopoverBubble">
+                            <div class="d-flex align-items-start gap-2">
+                                <i class="fas fa-info-circle text-primary mt-1"></i>
+                                <div>
+                                    <strong class="d-block text-dark small" id="infoPopoverTitle">Tarjeta Visa</strong>
+                                    <p class="mb-0 text-muted" style="font-size: 0.78rem;" id="infoPopoverDesc">
+                                        Pago directo con tarjeta Visa de débito o crédito.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FORMULARIO DE TARJETA (Solo para Visa y Mastercard) -->
+                    <div id="cardFormSection" class="mt-2 pt-3 border-top">
+                        <div class="d-flex align-items-center gap-2 mb-3">
+                            <i class="far fa-credit-card text-dark fs-5"></i>
+                            <h6 class="fw-bold text-dark mb-0">Nueva tarjeta de crédito o débito</h6>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small text-muted mb-1">Nombre y apellido impreso en la tarjeta</label>
+                            <input type="text" class="form-control" name="custom_card_holder" id="cardHolderField" 
+                                   value="{% if user.get_full_name %}{{ user.get_full_name }}{% else %}{{ user.username }}{% endif %}" placeholder="Ej: Benjamin Toro">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small text-muted mb-1">Número de la tarjeta</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control font-monospace" name="custom_card_number" id="cardNumberField" 
+                                       placeholder="•••• •••• •••• ••••" maxlength="19">
+                                <span class="input-group-text bg-white" id="cardTypeIcon"><i class="far fa-credit-card text-muted"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-6">
+                                <label class="form-label small text-muted mb-1">MM/AA</label>
+                                <input type="text" class="form-control font-monospace" name="custom_card_expiry" id="cardExpiryField" 
+                                       placeholder="MM/AA" maxlength="5">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small text-muted mb-1">CVC</label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control font-monospace" name="custom_card_cvc" id="cardCvcField" 
+                                           placeholder="CVC" maxlength="4">
+                                    <span class="input-group-text bg-white"><i class="fas fa-credit-card text-danger"></i></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small text-muted mb-1">Dirección de correo electrónico</label>
+                            <input type="email" class="form-control" value="{{ user.email }}" readonly style="background-color: #f8fafb;">
+                        </div>
+
+                        <p class="text-muted small mb-0" style="font-size: 0.78rem; line-height: 1.5;">
+                            Todos los campos son obligatorios.<br>
+                            Tu tarjeta se procesará con los más altos estándares de seguridad bancaria.
+                        </p>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <!-- Columna Derecha: Resumen Simplificado con Botón Compacto -->
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm p-4 sticky-top bg-white" style="border-radius: 18px; top: 100px; border: 1px solid #e2e8f0 !important;">
+                
+                <h5 class="fw-bold text-dark pb-3 border-bottom mb-3">Resumen de tu Suscripción</h5>
+
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div class="d-flex align-items-center">
+                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-3 shadow-sm" style="width: 44px; height: 44px; background: #0085A1 !important;">
+                            {% if plan.slug == 'lector-vip' %}
+                                <i class="fas fa-gem fa-lg"></i>
+                            {% elif plan.slug == 'lector-pro' %}
+                                <i class="fas fa-robot fa-lg"></i>
+                            {% else %}
+                                <i class="fas fa-book fa-lg"></i>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <h6 class="fw-bold mb-0 text-dark">{{ plan.nombre }}</h6>
+                            <span class="small text-muted">Facturación {{ plan.periodo }}</span>
+                        </div>
+                    </div>
+                    <span class="fw-bold text-dark fs-5">${{ plan.precio|floatformat:0 }} CLP</span>
+                </div>
+
+                <div class="py-2 border-top border-bottom my-3 small">
+                    <div class="d-flex justify-content-between text-muted mb-2">
+                        <span>Subtotal del Plan:</span>
+                        <span class="fw-semibold text-dark">${{ subtotal|floatformat:0 }} CLP</span>
+                    </div>
+                    <div class="d-flex justify-content-between text-muted mb-2">
+                        <span>Impuestos (IVA 19%):</span>
+                        <span class="fw-semibold text-dark">Incluido</span>
+                    </div>
+                    <div class="d-flex justify-content-between text-muted">
+                        <span>Equivalente USD (PayPal):</span>
+                        <span class="fw-semibold text-muted">~ ${{ total_usd }} USD</span>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="fw-bold text-dark fs-5">TOTAL:</span>
+                    <span class="h4 fw-bold text-primary mb-0">${{ total|floatformat:0 }} <small class="fs-6 text-muted">CLP</small></span>
+                </div>
+
+                <!-- Botón de Compra Compacto y Estilizado (Capitalize) -->
+                <div class="d-grid gap-2">
+                    <button type="submit" form="checkoutForm" class="btn btn-primary rounded-pill fw-semibold py-2 px-4 shadow-sm" id="btnSubmitPayment" style="background: linear-gradient(135deg, #0085A1 0%, #005f73 100%); border: none; font-size: 0.95rem;">
+                        <span id="btnSubmitText" class="text-capitalize">Comprar ahora</span>
+                    </button>
+                    <div class="text-center text-muted small mt-1" style="font-size: 0.78rem;">
+                        <i class="fas fa-lock text-dark me-1"></i> <span class="text-dark">Pago seguro</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    /* Grid de Métodos de Pago */
+    .payment-methods-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+    }
+    @media (max-width: 768px) {
+        .payment-methods-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    .payment-grid-card {
+        height: 74px;
+        background: #f4f5f7;
+        border: 2px solid transparent;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+        user-select: none;
+        position: relative;
+    }
+    .payment-grid-card:hover {
+        background: #ffffff;
+        border-color: #0085A1;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 18px rgba(0, 133, 161, 0.12);
+    }
+    .payment-grid-card.active {
+        background: #ffffff;
+        border-color: #0085A1;
+        box-shadow: 0 8px 22px rgba(0, 133, 161, 0.18);
+    }
+
+    .payment-grid-card .card-inner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        padding: 8px 12px;
+    }
+
+    .payment-logo {
+        max-width: 85%;
+        max-height: 38px;
+        object-fit: contain;
+    }
+
+    /* Botón de Información Interactivo con Popover */
+    .info-trigger-btn {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
+    .info-trigger-btn:hover, .info-trigger-btn.active {
+        background: #ffffff;
+        border-color: #0085A1;
+        box-shadow: 0 2px 8px rgba(0, 133, 161, 0.15);
+    }
+
+    .info-popover-bubble {
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        width: 290px;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 10px 14px;
+        z-index: 100;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-6px);
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+    }
+    .info-popover-bubble::before {
+        content: "";
+        position: absolute;
+        top: -6px;
+        left: 18px;
+        border-width: 0 6px 6px 6px;
+        border-style: solid;
+        border-color: transparent transparent #ffffff transparent;
+        filter: drop-shadow(0 -1px 1px rgba(0,0,0,0.06));
+    }
+    .info-popover-bubble.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const gridCards = document.querySelectorAll('.payment-grid-card');
+        const submitBtn = document.getElementById('btnSubmitPayment');
+        const btnSubmitText = document.getElementById('btnSubmitText');
+        const cardFormSection = document.getElementById('cardFormSection');
+        const cardNumberField = document.getElementById('cardNumberField');
+        const cardExpiryField = document.getElementById('cardExpiryField');
+        const cardTypeIcon = document.getElementById('cardTypeIcon');
+
+        const infoTriggerBtn = document.getElementById('infoTriggerBtn');
+        const infoPopoverBubble = document.getElementById('infoPopoverBubble');
+        const infoPopoverTitle = document.getElementById('infoPopoverTitle');
+        const infoPopoverDesc = document.getElementById('infoPopoverDesc');
+
+        let currentMethodName = 'Tarjeta Visa';
+        let currentMethodDesc = 'Pago directo con tarjeta Visa de débito o crédito.';
+
+        // Manejo del Popover al hacer clic en el botón (i)
+        if (infoTriggerBtn && infoPopoverBubble) {
+            infoTriggerBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                infoPopoverBubble.classList.toggle('show');
+                infoTriggerBtn.classList.toggle('active');
+            });
+
+            // Cerrar popover al hacer clic fuera
+            document.addEventListener('click', (e) => {
+                if (!infoPopoverBubble.contains(e.target) && !infoTriggerBtn.contains(e.target)) {
+                    infoPopoverBubble.classList.remove('show');
+                    infoTriggerBtn.classList.remove('active');
+                }
+            });
+        }
+
+        // Formateo automático de número de tarjeta
+        if (cardNumberField) {
+            cardNumberField.addEventListener('input', (e) => {
+                let val = e.target.value.replace(/\D/g, '');
+                let formatted = '';
+                for (let i = 0; i < val.length; i++) {
+                    if (i > 0 && i % 4 === 0) formatted += ' ';
+                    formatted += val[i];
+                }
+                e.target.value = formatted;
+
+                if (val.startsWith('4')) {
+                    cardTypeIcon.innerHTML = '<i class="fab fa-cc-visa text-primary fa-lg"></i>';
+                } else if (val.startsWith('5') || val.startsWith('2')) {
+                    cardTypeIcon.innerHTML = '<i class="fab fa-cc-mastercard text-warning fa-lg"></i>';
+                } else {
+                    cardTypeIcon.innerHTML = '<i class="far fa-credit-card text-muted"></i>';
+                }
+            });
+        }
+
+        // Formateo automático de fecha MM/AA
+        if (cardExpiryField) {
+            cardExpiryField.addEventListener('input', (e) => {
+                let val = e.target.value.replace(/\D/g, '');
+                if (val.length >= 2) {
+                    e.target.value = val.substring(0, 2) + '/' + val.substring(2, 4);
+                } else {
+                    e.target.value = val;
+                }
+            });
+        }
+
+        // Manejo de cambio de método
+        function updateSelection(card) {
+            gridCards.forEach(c => c.classList.remove('active'));
+            card.classList.add('active');
+
+            const radio = card.querySelector('input[type="radio"]');
+            if (radio) radio.checked = true;
+
+            const name = card.dataset.name;
+            const method = card.dataset.method;
+            const type = card.dataset.type;
+            const desc = card.dataset.desc;
+
+            // Actualizar datos del popover (i)
+            currentMethodName = name;
+            currentMethodDesc = desc;
+            if (infoPopoverTitle) infoPopoverTitle.textContent = name;
+            if (infoPopoverDesc) infoPopoverDesc.textContent = desc;
+
+            // Formulario SOLO para Visa y Mastercard
+            if (type === 'card') {
+                cardFormSection.style.display = 'block';
+                btnSubmitText.textContent = 'Comprar ahora';
+            } else {
+                cardFormSection.style.display = 'none';
+
+                if (method === 'paypal') {
+                    btnSubmitText.textContent = 'Continuar con PayPal';
+                } else if (method === 'mercado_pago') {
+                    btnSubmitText.textContent = 'Continuar con Mercado Pago';
+                } else if (method === 'webpay_plus') {
+                    btnSubmitText.textContent = 'Continuar con Webpay';
+                } else {
+                    btnSubmitText.textContent = `Continuar con ${name}`;
+                }
+            }
+        }
+
+        gridCards.forEach(card => {
+            card.addEventListener('click', function() {
+                updateSelection(this);
+            });
+        });
+
+        // Feedback al enviar formulario
+        const form = document.getElementById('checkoutForm');
+        if (form) {
+            form.addEventListener('submit', function() {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Procesando...';
+            });
+        }
+    });
+</script>
+{% endblock %}

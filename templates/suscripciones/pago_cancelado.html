@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Pago Cancelado o No Completado - LitMate{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('{% static "assets/img/libreria.jpg" %}'); margin-bottom: 2rem;">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7 text-center">
+                <div class="page-heading">
+                    <h1>Pago No Completado</h1>
+                    <span class="subheading">La transacción fue cancelada o rechazada</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container px-4 px-lg-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6 col-xl-5">
+            
+            <div class="card border-0 shadow-lg p-4 p-md-5 text-center" style="border-radius: 18px; border: 1px solid #e2e8f0 !important;">
+                
+                <div class="rounded-circle bg-warning-subtle text-warning d-inline-flex align-items-center justify-content-center mb-3 shadow-sm" style="width: 76px; height: 76px;">
+                    <i class="fas fa-exclamation-triangle fa-2x"></i>
+                </div>
+
+                <h3 class="fw-bold text-dark mb-2">Transacción Cancelada</h3>
+                
+                <p class="text-muted small mb-4" style="line-height: 1.7;">
+                    El proceso de pago no fue completado o fue cancelado en la pasarela. <strong>No se ha realizado ningún cobro a tu cuenta</strong>.
+                </p>
+
+                <div class="alert alert-light border small text-start mb-4" style="border-radius: 12px;">
+                    <div class="d-flex">
+                        <i class="fas fa-info-circle text-primary me-2 mt-1"></i>
+                        <div>
+                            <strong>¿Qué puedes hacer?</strong>
+                            <ul class="mb-0 ps-3 mt-1 text-muted">
+                                <li>Revisar si tu tarjeta tiene saldo o compras por internet habilitadas.</li>
+                                <li>Intentar con otro método (Webpay Plus, Mercado Pago o PayPal).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <a href="{% url 'suscripciones:planes' %}" class="btn btn-primary text-uppercase rounded-pill py-3 fw-bold shadow-sm">
+                        <i class="fas fa-redo me-2"></i> Intentar Nuevamente
+                    </a>
+                    <a href="{% url 'index' %}" class="btn btn-outline-secondary rounded-pill py-2 small">
+                        Volver a la Página Principal
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

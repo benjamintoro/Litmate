@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Política de Cookies - LitMate{% endblock %}
+
+{% block content %}
+<!-- Header Minimalista -->
+<header class="masthead mb-0" style="background-image: url('{% static "assets/img/about-bg.jpg" %}'); padding: 4.5rem 0 3.5rem 0;">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-9 text-center">
+                <div class="page-heading">
+                    <span class="text-uppercase small tracking-wider text-white-50 d-block mb-1" style="letter-spacing: 2px; font-size: 0.75rem;">Centro Legal &bull; LitMate</span>
+                    <h1 class="fw-bold mb-2">Política de Cookies</h1>
+                    <span class="subheading fs-6 text-white-50">Información sobre cookies y almacenamiento técnico</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Navegación Rápida entre Documentos -->
+<div class="border-bottom bg-white sticky-top shadow-sm" style="top: 0; z-index: 1020;">
+    <div class="container px-4 px-lg-5">
+        <div class="d-flex justify-content-center overflow-auto py-2 gap-2">
+            <a href="{% url 'terminos' %}" class="btn btn-sm rounded-pill px-3 py-1 text-secondary text-decoration-none hover-pill">
+                Términos y Condiciones
+            </a>
+            <a href="{% url 'privacidad' %}" class="btn btn-sm rounded-pill px-3 py-1 text-secondary text-decoration-none hover-pill">
+                Política de Privacidad
+            </a>
+            <a href="{% url 'cookies' %}" class="btn btn-sm rounded-pill px-3 py-1 fw-bold bg-dark text-white text-decoration-none">
+                Política de Cookies
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Contenido Principal -->
+<main class="py-5 bg-light">
+    <div class="container px-4 px-lg-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-9 col-xl-8">
+                
+                <div class="bg-white rounded-4 p-4 p-md-5 border" style="border-color: #e2e8f0 !important;">
+                    
+                    <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+                        <div>
+                            <h2 class="h5 fw-bold text-dark mb-0">Uso de Cookies y Tecnologías Similares</h2>
+                            <small class="text-muted">LitMate &bull; Transparencia Técnica</small>
+                        </div>
+                        <span class="text-muted small">Agosto 2026</span>
+                    </div>
+
+                    <!-- 1. ¿Qué son? -->
+                    <section class="mb-4">
+                        <h3 class="h6 fw-bold text-dark mb-2">1. ¿Qué son las Cookies?</h3>
+                        <p class="text-secondary small leading-relaxed mb-0">
+                            Una cookie es un pequeño archivo de texto que un sitio web almacena en tu navegador cuando lo visitas. Permite recordar tu sesión autenticada, preferencias de visualización y proteger los formularios contra ataques automatizados.
+                        </p>
+                    </section>
+
+                    <!-- 2. Cookies en LitMate -->
+                    <section class="mb-4">
+                        <h3 class="h6 fw-bold text-dark mb-2">2. Cookies que Utilizamos en LitMate</h3>
+                        <p class="text-secondary small leading-relaxed mb-3">
+                            Solo empleamos cookies técnicas y esenciales para el correcto y seguro funcionamiento de la plataforma:
+                        </p>
+
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered align-middle small mb-0" style="border-color: #e2e8f0;">
+                                <thead class="table-light">
+                                    <tr class="text-muted">
+                                        <th class="py-2 px-3">Cookie</th>
+                                        <th class="py-2 px-3">Tipo</th>
+                                        <th class="py-2 px-3">Duración</th>
+                                        <th class="py-2 px-3">Finalidad</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="px-3"><code>sessionid</code></td>
+                                        <td class="px-3"><span class="badge bg-dark text-white fw-normal">Esencial</span></td>
+                                        <td class="px-3 text-muted">2 semanas</td>
+                                        <td class="px-3 text-secondary">Mantiene tu sesión de usuario iniciada de forma segura.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-3"><code>csrftoken</code></td>
+                                        <td class="px-3"><span class="badge bg-secondary text-white fw-normal">Seguridad</span></td>
+                                        <td class="px-3 text-muted">1 año</td>
+                                        <td class="px-3 text-secondary">Protege formularios contra ataques Cross-Site Request Forgery.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-3"><code>messages</code></td>
+                                        <td class="px-3"><span class="badge bg-light text-dark border fw-normal">Técnica</span></td>
+                                        <td class="px-3 text-muted">Sesión</td>
+                                        <td class="px-3 text-secondary">Muestra notificaciones y avisos temporales del sistema.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- 3. Cookies de Terceros -->
+                    <section class="mb-4">
+                        <h3 class="h6 fw-bold text-dark mb-2">3. Cookies de Pasarelas de Pago</h3>
+                        <p class="text-secondary small leading-relaxed mb-0">
+                            Al suscribirte a una membresía mediante <strong>Transbank Webpay Plus</strong>, <strong>Mercado Pago</strong> o <strong>PayPal</strong>, dichas entidades bancarias utilizan sus propias cookies técnicas para validar y procesar la transacción de forma segura y aislada.
+                        </p>
+                    </section>
+
+                    <!-- 4. Gestión y Desactivación -->
+                    <section class="mb-4">
+                        <h3 class="h6 fw-bold text-dark mb-2">4. Cómo Administrar o Desactivar Cookies</h3>
+                        <p class="text-secondary small leading-relaxed mb-2">
+                            Puedes bloquear o eliminar cookies en cualquier momento desde las opciones de privacidad de tu navegador web:
+                        </p>
+                        <ul class="text-secondary small ps-3 mb-2">
+                            <li class="mb-1"><strong>Google Chrome:</strong> Configuración &rarr; Privacidad y seguridad &rarr; Cookies y otros datos de sitios.</li>
+                            <li class="mb-1"><strong>Mozilla Firefox:</strong> Ajustes &rarr; Privacidad &amp; Seguridad &rarr; Cookies y datos del sitio.</li>
+                            <li class="mb-1"><strong>Apple Safari:</strong> Preferencias &rarr; Privacidad &rarr; Administrar datos de sitios web.</li>
+                            <li class="mb-1"><strong>Microsoft Edge:</strong> Configuración &rarr; Cookies y permisos del sitio &rarr; Administrar cookies.</li>
+                        </ul>
+                        <div class="p-3 rounded-3 mb-0" style="background: #f8fafc; border-left: 3px solid #64748b;">
+                            <p class="text-secondary small mb-0">
+                                <strong>Aviso:</strong> Si deshabilitas cookies esenciales como <code>sessionid</code> y <code>csrftoken</code>, no podrás iniciar sesión ni procesar compras en la plataforma.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Contacto -->
+                    <div class="pt-3 border-top d-flex flex-wrap justify-content-between align-items-center gap-2">
+                        <span class="text-muted small">Consultas de cookies: <a href="mailto:litmateproject@gmail.com" class="text-decoration-none text-dark fw-semibold">litmateproject@gmail.com</a></span>
+                        <a href="{% url 'contact' %}" class="btn btn-outline-dark btn-sm rounded-pill px-3">Contacto</a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+<style>
+    .hover-pill {
+        transition: all 0.2s ease;
+    }
+    .hover-pill:hover {
+        background: #f1f5f9;
+        color: #0f172a !important;
+    }
+    .leading-relaxed {
+        line-height: 1.7;
+    }
+</style>
+{% endblock %}

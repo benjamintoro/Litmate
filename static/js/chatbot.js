@@ -1,4 +1,6 @@
-
+/**
+ * LitMate AI Chatbot - Lógica Original del Asistente Literario
+ */
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -10,8 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let resetTimer = null;
 
-    
+    // --- 1. AVATAR Y EMOCIONES ---
     function setAvatar(file) {
+        if (!avatar) return;
         avatar.src = `/static/assets/img/avatar/${file}?v=${Date.now()}`;
     }
 
@@ -32,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
         resetToDefault(7000);
     }
 
-    
     function normalizeText(str) {
         return str
             .normalize("NFD")
@@ -44,7 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
             .toLowerCase();
     }
 
-    
     const genreKeywords = {
         fantasia: ["fantasia","magia","magico","dragon","dragones","elfo","elfos","orcos","hechizo","hechicero","mago","criatura","espada","medieval","mitologia"],
         terror: ["terror","horror","miedo","espanto","fantasma","demonio","espiritu","bruja","sombras","pesadilla","sangre","sangriento"],
@@ -54,10 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
         scifi: ["ciencia ficcion","sci fi","espacio","nave","robot","androide","futuro","distopia","apocalipsis","tecnologia","inteligencia artificial"]
     };
 
-    
     function detectGenreSmart(message) {
         const msg = normalizeText(message);
-
         for (const genre in genreKeywords) {
             for (const word of genreKeywords[genre]) {
                 const normalizedWord = normalizeText(word);
@@ -93,7 +92,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return matrix[b.length][a.length];
     }
 
-
     function applyGenreEmotion(genre) {
         switch (genre) {
             case "fantasia": setAvatar("sorprendida.png"); break;
@@ -106,7 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         resetToDefault(15000);
     }
-
 
     function applyBackendEmotion(text) {
         const msg = normalizeText(text);
@@ -144,7 +141,6 @@ document.addEventListener('DOMContentLoaded', () => {
         resetToDefault();
     }
 
-    
     function isSocialMessage(text) {
         const msg = normalizeText(text);
         return (
@@ -156,7 +152,27 @@ document.addEventListener('DOMContentLoaded', () => {
         );
     }
 
-   
+    // --- 2. FORMATO DE TEXTO ESTRUCTURADO (SIN * NI #) ---
+    function formatMessageText(text) {
+        if (!text) return '';
+        let formatted = text
+            // Escapar HTML peligroso
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            // Convertir cualquier **texto** en "texto" y limpiar asteriscos / hashtags
+            .replace(/\*\*(.*?)\*\*/g, '"$1"')
+            .replace(/\*(.*?)\*/g, '$1')
+            .replace(/^[ \t]*#+[ \t]*/gm, '')
+            .replace(/[\*#]/g, '')
+            // Enlaces a librerías
+            .replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color: #0085a1; font-weight: 600; text-decoration: underline;">$1</a>')
+            // Saltos de línea
+            .replace(/\n/g, '<br>');
+
+        return formatted;
+    }
+
+    // --- 3. ENVIAR MENSAJE ---
     async function sendMessage(e) {
         e.preventDefault();
         const userMessage = chatInput.value.trim();
@@ -201,12 +217,15 @@ document.addEventListener('DOMContentLoaded', () => {
             onError();
         } finally {
             sendBtn.disabled = false;
+            chatInput.focus();
         }
     }
 
-    chatForm.addEventListener('submit', sendMessage);
+    if (chatForm) {
+        chatForm.addEventListener('submit', sendMessage);
+    }
 
-  
+    // --- 4. HELPERS ---
     function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -225,12 +244,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('chat-message', sender);
 
-        const formattedMessage = message
-            .replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>')
-            .replace(/\n/g, '<br>');
-
         const p = document.createElement('p');
-        p.innerHTML = formattedMessage;
+        p.innerHTML = formatMessageText(message);
         messageDiv.appendChild(p);
 
         chatBody.appendChild(messageDiv);
@@ -249,6 +264,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function hideTypingIndicator() {
         const ind = document.getElementById('typing-indicator');
         if (ind) ind.remove();
+    }
+
+    // Scroll inicial
+    if (chatBody) {
+        chatBody.scrollTop = chatBody.scrollHeight;
     }
 
 });
