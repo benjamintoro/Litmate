@@ -22,12 +22,12 @@
 <div class="container px-4 px-lg-5 mb-5">
     <div class="row justify-content-center">
         <div class="col-md-7 col-lg-6 col-xl-5">
-            <div class="card border-0 shadow-lg hover-animate" style="border-radius: 15px;">
+            <div class="card border-0 shadow-lg hover-animate auth-card">
                 <div class="card-body p-4 p-md-5">
                     
                     <div class="text-center mb-4">
-                        <div class="feature-icon text-white rounded-circle mb-3 mx-auto d-flex align-items-center justify-content-center shadow" style="width: 65px; height: 65px; background: linear-gradient(45deg, #0085A1, #005f73);">
-                            <i class="fas fa-user-lock fa-lg"></i>
+                        <div class="feature-icon rounded-circle auth-header-icon shadow">
+                            <i class="iconoir-lock fa-lg"></i>
                         </div>
                         <h3 class="h4 fw-bold">Bienvenido a LitMate</h3>
                         <p class="text-muted small">Ingresa con tu nombre de usuario o correo</p>
@@ -35,7 +35,7 @@
 
                     {% if form.non_field_errors %}
                         <div class="alert alert-danger alert-dismissible fade show small" role="alert">
-                            <i class="fas fa-exclamation-circle me-1"></i>
+                            <i class="iconoir-warning-triangle me-1"></i>
                             {% for error in form.non_field_errors %}
                                 {{ error }}
                             {% endfor %}
@@ -55,7 +55,7 @@
                             <span>Continuar con Google</span>
                         </a>
                         <a href="{% url 'social_login' 'github' %}{% if next %}?next={{ next }}{% endif %}" class="btn btn-social btn-github">
-                            <i class="fab fa-github social-icon"></i>
+                            <i class="iconoir-github social-icon"></i>
                             <span>Continuar con GitHub</span>
                         </a>
                     </div>
@@ -72,7 +72,7 @@
                         {% endif %}
 
                         <!-- Campo Honeypot Anti-Spam -->
-                        <div class="hp-field" style="display:none !important; position:absolute; left:-9999px;" aria-hidden="true" tabindex="-1">
+                        <div class="hp-field" aria-hidden="true" tabindex="-1">
                             <input type="text" name="website_url_check" value="" autocomplete="off">
                         </div>
 
@@ -80,10 +80,10 @@
                         <div class="mb-3">
                             <label class="form-label fw-bold small text-muted">Usuario o Correo Electrónico</label>
                             <div class="input-group">
-                                <span class="input-group-text bg-light text-muted border-end-0" style="border-radius: 10px 0 0 10px;">
-                                    <i class="fas fa-user"></i>
+                                <span class="input-group-text bg-light text-muted border-end-0 auth-addon-left">
+                                    <i class="iconoir-user"></i>
                                 </span>
-                                <input type="text" name="username_or_email" class="form-control border-start-0" placeholder="Ej: lector o usuario@correo.com" value="{{ form.username_or_email.value|default:'' }}" required autocomplete="username" style="border-radius: 0 10px 10px 0;">
+                                <input type="text" name="username_or_email" class="form-control border-start-0 auth-input-right" placeholder="Ej: lector o usuario@correo.com" value="{{ form.username_or_email.value|default:'' }}" required autocomplete="username">
                             </div>
                             {% if form.username_or_email.errors %}
                                 <div class="text-danger small mt-1">{{ form.username_or_email.errors.0 }}</div>
@@ -94,12 +94,12 @@
                         <div class="mb-3">
                             <label class="form-label fw-bold small text-muted">Contraseña</label>
                             <div class="input-group">
-                                <span class="input-group-text bg-light text-muted border-end-0" style="border-radius: 10px 0 0 10px;">
-                                    <i class="fas fa-lock"></i>
+                                <span class="input-group-text bg-light text-muted border-end-0 auth-addon-left">
+                                    <i class="iconoir-lock"></i>
                                 </span>
                                 <input type="password" name="password" id="loginPasswordInput" class="form-control border-start-0 border-end-0" placeholder="Ingresa tu contraseña" required autocomplete="current-password">
-                                <button type="button" class="btn btn-outline-secondary border-start-0 bg-light text-muted" id="toggleLoginPassword" style="border-radius: 0 10px 10px 0;">
-                                    <i class="fas fa-eye" id="loginEyeIcon"></i>
+                                <button type="button" class="btn btn-outline-secondary border-start-0 bg-light text-muted auth-addon-right" id="toggleLoginPassword">
+                                    <i class="iconoir-eye" id="loginEyeIcon"></i>
                                 </button>
                             </div>
                             {% if form.password.errors %}
@@ -140,16 +140,6 @@
     </div>
 </div>
 
-<style>
-    .hover-animate {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .hover-animate:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 1rem 3rem rgba(0,0,0,.15)!important;
-    }
-</style>
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const toggleBtn = document.getElementById('toggleLoginPassword');
@@ -160,8 +150,8 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleBtn.addEventListener('click', function() {
             const isPassword = pwdInput.type === 'password';
             pwdInput.type = isPassword ? 'text' : 'password';
-            eyeIcon.classList.toggle('fa-eye', !isPassword);
-            eyeIcon.classList.toggle('fa-eye-slash', isPassword);
+            eyeIcon.classList.toggle('iconoir-eye', !isPassword);
+            eyeIcon.classList.toggle('iconoir-eye-closed', isPassword);
         });
     }
 });

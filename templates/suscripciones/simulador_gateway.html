@@ -10,7 +10,7 @@
             <div class="col-md-10 col-lg-8 col-xl-7 text-center">
                 <div class="page-heading">
                     <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold text-uppercase mb-2 shadow-sm">
-                        <i class="fas fa-flask me-1"></i> Entorno de Desarrollo Sandbox
+                        <i class="iconoir-flask me-1"></i> Entorno de Desarrollo Sandbox
                     </span>
                     <h1>Simulador de Pasarela</h1>
                     <span class="subheading">Prueba los flujos de autorización y respuesta de APIs de pago</span>
@@ -24,30 +24,30 @@
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
             
-            <div class="card border-0 shadow-lg p-4 p-md-5" style="border-radius: 18px; border: 1px solid #cbd5e1 !important;">
+            <div class="card border-0 shadow-lg p-4 p-md-5 receipt-card">
                 
                 <!-- Encabezado del Proveedor -->
                 <div class="d-flex align-items-center justify-content-between pb-3 mb-4 border-bottom">
                     <div class="d-flex align-items-center">
                         {% if provider == 'webpay' %}
-                            <div class="rounded-circle bg-danger text-white d-flex align-items-center justify-content-center me-3 shadow-sm" style="width: 50px; height: 50px;">
-                                <i class="fas fa-shopping-cart fa-lg"></i>
+                            <div class="rounded-circle bg-danger text-white d-flex align-items-center justify-content-center me-3 shadow-sm gateway-icon-circle">
+                                <i class="iconoir-credit-card fa-lg"></i>
                             </div>
                             <div>
                                 <h5 class="fw-bold mb-0 text-dark">Transbank Webpay Plus</h5>
                                 <span class="badge bg-danger-subtle text-danger small">Sandbox Oficial Chile</span>
                             </div>
                         {% elif provider == 'mercadopago' %}
-                            <div class="rounded-circle bg-info text-dark d-flex align-items-center justify-content-center me-3 shadow-sm" style="width: 50px; height: 50px;">
-                                <i class="fas fa-bolt fa-lg text-primary"></i>
+                            <div class="rounded-circle bg-info text-dark d-flex align-items-center justify-content-center me-3 shadow-sm gateway-icon-circle">
+                                <i class="iconoir-flash fa-lg text-primary"></i>
                             </div>
                             <div>
                                 <h5 class="fw-bold mb-0 text-dark">Mercado Pago</h5>
                                 <span class="badge bg-info-subtle text-info small">Checkout Pro Sandbox</span>
                             </div>
                         {% else %}
-                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-3 shadow-sm" style="width: 50px; height: 50px;">
-                                <i class="fab fa-paypal fa-lg"></i>
+                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-3 shadow-sm gateway-icon-circle">
+                                <i class="iconoir-wallet fa-lg"></i>
                             </div>
                             <div>
                                 <h5 class="fw-bold mb-0 text-dark">PayPal</h5>
@@ -55,18 +55,18 @@
                             </div>
                         {% endif %}
                     </div>
-                    <span class="badge bg-success rounded-pill px-3 py-2"><i class="fas fa-wifi me-1"></i> API Lista</span>
+                    <span class="badge bg-success rounded-pill px-3 py-2"><i class="iconoir-check me-1"></i> API Lista</span>
                 </div>
 
                 <!-- Detalle de la Transacción en Curso -->
-                <div class="bg-light p-3 rounded-3 mb-4 small" style="border-radius: 12px !important; border: 1px dashed #cbd5e1;">
+                <div class="bg-light p-3 rounded-3 mb-4 small receipt-box">
                     <div class="d-flex justify-content-between mb-2">
                         <span class="text-muted">Monto a Cobrar:</span>
                         <strong class="text-dark fs-6">${{ amount }} CLP {% if amount_usd %}(≈ ${{ amount_usd }} USD){% endif %}</strong>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <span class="text-muted">Token / Order ID:</span>
-                        <span class="font-monospace text-dark text-truncate" style="max-width: 200px;">{{ token }}</span>
+                        <span class="font-monospace text-dark text-truncate gateway-token-text">{{ token }}</span>
                     </div>
                     {% if buy_order %}
                     <div class="d-flex justify-content-between mb-1">
@@ -76,7 +76,7 @@
                     {% endif %}
                 </div>
 
-                <h6 class="fw-bold text-dark mb-3 small text-uppercase"><i class="fas fa-play-circle text-primary me-1"></i> Selecciona el resultado a simular:</h6>
+                <h6 class="fw-bold text-dark mb-3 small text-uppercase"><i class="iconoir-play text-primary me-1"></i> Selecciona el resultado a simular:</h6>
 
                 <!-- Botones de Acción de Simulación -->
                 <div class="d-grid gap-3 mb-4">
@@ -87,35 +87,35 @@
                             {% csrf_token %}
                             <input type="hidden" name="token_ws" value="{{ token }}">
                             <button type="submit" class="btn btn-success btn-lg rounded-pill fw-bold text-uppercase w-100 shadow-sm">
-                                <i class="fas fa-check-circle me-2"></i> Simular Pago Aprobado (Éxito)
+                                <i class="iconoir-check-circle me-2"></i> Simular Pago Aprobado (Éxito)
                             </button>
                         </form>
 
                         <!-- Rechazo Webpay Plus -->
                         <a href="{% url 'suscripciones:pago_cancelado' %}" class="btn btn-outline-danger rounded-pill fw-bold py-2 text-uppercase">
-                            <i class="fas fa-times-circle me-2"></i> Simular Pago Rechazado
+                            <i class="iconoir-cancel me-2"></i> Simular Pago Rechazado
                         </a>
 
                     {% elif provider == 'mercadopago' %}
                         <!-- Éxito Mercado Pago -->
                         <a href="{% url 'suscripciones:mercadopago_callback' %}?collection_status=approved&payment_id={{ token }}&external_reference={{ ref }}" class="btn btn-success btn-lg rounded-pill fw-bold text-uppercase shadow-sm">
-                            <i class="fas fa-check-circle me-2"></i> Simular Pago Aprobado (Acreditado)
+                            <i class="iconoir-check-circle me-2"></i> Simular Pago Aprobado (Acreditado)
                         </a>
 
                         <!-- Rechazo Mercado Pago -->
                         <a href="{% url 'suscripciones:pago_cancelado' %}" class="btn btn-outline-danger rounded-pill fw-bold py-2 text-uppercase">
-                            <i class="fas fa-times-circle me-2"></i> Simular Pago Rechazado
+                            <i class="iconoir-cancel me-2"></i> Simular Pago Rechazado
                         </a>
 
                     {% else %}
                         <!-- Éxito PayPal -->
                         <a href="{% url 'suscripciones:paypal_callback' %}?token={{ token }}&PayerID=MOCK_PAYER_123" class="btn btn-success btn-lg rounded-pill fw-bold text-uppercase shadow-sm">
-                            <i class="fas fa-check-circle me-2"></i> Simular Pago Aprobado en PayPal
+                            <i class="iconoir-check-circle me-2"></i> Simular Pago Aprobado en PayPal
                         </a>
 
                         <!-- Cancelación PayPal -->
                         <a href="{% url 'suscripciones:pago_cancelado' %}" class="btn btn-outline-danger rounded-pill fw-bold py-2 text-uppercase">
-                            <i class="fas fa-times-circle me-2"></i> Simular Cancelación por el Usuario
+                            <i class="iconoir-cancel me-2"></i> Simular Cancelación por el Usuario
                         </a>
                     {% endif %}
 
@@ -123,7 +123,7 @@
 
                 <div class="text-center border-top pt-3">
                     <a href="{% url 'suscripciones:checkout' 'lector-vip' %}" class="text-muted small text-decoration-none">
-                        <i class="fas fa-arrow-left me-1"></i> Cancelar y volver al Checkout
+                        <i class="iconoir-arrow-left me-1"></i> Cancelar y volver al Checkout
                     </a>
                 </div>
 

@@ -1,0 +1,308 @@
+/* =====================================================================
+   LitMate — Subscriptions, Plans, Checkout & Payments
+   ===================================================================== */
+
+/* 1. Tarjetas de Checkout y Métodos de Pago */
+.checkout-card {
+  border-radius: 18px !important;
+  border: 1px solid var(--lm-border, #e2e8f0) !important;
+  background: #ffffff;
+}
+
+.checkout-header-icon {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  background: linear-gradient(135deg, var(--lm-teal, #227D8E) 0%, var(--lm-teal-hover, #1b6472) 100%) !important;
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+}
+
+.checkout-step-badge {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  font-size: 0.75rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.5rem;
+  background-color: var(--lm-teal, #227D8E);
+  color: #ffffff;
+}
+
+.checkout-readonly-input {
+  background-color: #f8fafb !important;
+}
+
+.checkout-sticky-card {
+  border-radius: 18px !important;
+  top: 100px;
+  border: 1px solid var(--lm-border, #BDB59D) !important;
+  background: #ffffff;
+}
+
+.checkout-summary-icon {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  background: var(--lm-teal, #227D8E) !important;
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+}
+
+.checkout-btn-submit {
+  background: linear-gradient(135deg, var(--lm-teal, #227D8E) 0%, var(--lm-teal-hover, #1b6472) 100%) !important;
+  border: none !important;
+  font-size: 0.95rem;
+}
+
+.checkout-micro-text {
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.checkout-header-badge {
+  font-size: 0.8rem;
+}
+
+/* 2. Grid de Métodos de Pago */
+.payment-methods-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 768px) {
+  .payment-methods-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.payment-grid-card {
+  height: 74px;
+  background: #f4f5f7;
+  border: 2px solid transparent;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  position: relative;
+}
+
+.payment-grid-card:hover {
+  background: #ffffff;
+  border-color: var(--lm-teal, #227D8E);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(34, 125, 142, 0.15);
+}
+
+.payment-grid-card.active {
+  background: #ffffff;
+  border-color: var(--lm-teal, #227D8E);
+  box-shadow: 0 8px 22px rgba(34, 125, 142, 0.22);
+}
+
+.payment-grid-card .card-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 8px 12px;
+}
+
+.payment-logo {
+  max-width: 85%;
+  max-height: 38px;
+  object-fit: contain;
+}
+
+/* 3. Popover de Información */
+.info-trigger-btn {
+  background: #f8fafc;
+  border: 1px solid var(--lm-border, #BDB59D);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.info-trigger-btn:hover,
+.info-trigger-btn.active {
+  background: #ffffff;
+  border-color: var(--lm-teal, #227D8E);
+  box-shadow: 0 2px 8px rgba(34, 125, 142, 0.2);
+}
+
+.info-popover-bubble {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 290px;
+  background: #ffffff;
+  border: 1px solid var(--lm-border, #BDB59D);
+  border-radius: 12px;
+  padding: 10px 14px;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+.info-popover-bubble::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 18px;
+  border-width: 0 6px 6px 6px;
+  border-style: solid;
+  border-color: transparent transparent #ffffff transparent;
+  filter: drop-shadow(0 -1px 1px rgba(0, 0, 0, 0.06));
+}
+
+.info-popover-bubble.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* 4. Planes de Suscripción (planes.html) */
+.plan-badge-recommended {
+  font-size: 0.72rem;
+  background-color: var(--lm-ochre, #936B36);
+  color: #ffffff;
+  border: none;
+}
+
+.plan-price-amount {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  color: var(--lm-shadow, #0B0C0A);
+}
+
+.plan-divider {
+  width: 40px;
+  border-top: 1px solid var(--lm-border, #BDB59D);
+}
+
+.plan-check-icon {
+  color: var(--lm-teal, #227D8E);
+}
+
+.plan-check-icon-muted {
+  color: #cccccc;
+}
+
+/* 5. Mi Suscripción (mi_suscripcion.html) */
+.subscription-header-icon {
+  width: 54px;
+  height: 54px;
+  min-width: 54px;
+  background: linear-gradient(135deg, var(--lm-teal, #227D8E) 0%, var(--lm-dark-wood, #3B2818) 100%);
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.subscription-metric-card {
+  border-radius: 12px !important;
+  border: 1px solid #edf2f7;
+  background: #f8fafc;
+}
+
+/* 6. Comprobante de Pago Exitoso & Cancelado */
+.receipt-card {
+  border-radius: 18px !important;
+  border: 1px solid var(--lm-border, #BDB59D) !important;
+}
+
+.receipt-success-icon {
+  width: 76px;
+  height: 76px;
+  background: var(--lm-teal, #227D8E);
+  color: #ffffff;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.receipt-detail-box {
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 14px;
+}
+
+.cancelled-warning-icon {
+  width: 76px;
+  height: 76px;
+}
+
+/* 7. Entorno Sandbox y Redirección Webpay */
+.sandbox-card {
+  border-radius: 18px !important;
+  border: 1px solid #cbd5e1 !important;
+}
+
+.sandbox-icon {
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sandbox-details-box {
+  border-radius: 12px !important;
+  border: 1px dashed #cbd5e1;
+}
+
+.sandbox-token-text {
+  max-width: 200px;
+}
+
+.webpay-redirect-card {
+  max-width: 500px;
+  border-radius: 16px !important;
+}
+
+.webpay-spinner {
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+/* 8. Estilos de Impresión */
+@media print {
+  header.masthead,
+  footer,
+  .navbar,
+  .btn,
+  .scroll-to-top-btn,
+  .cookie-banner {
+    display: none !important;
+  }
+
+  #receiptCard,
+  .receipt-card {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+}
+

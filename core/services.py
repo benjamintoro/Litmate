@@ -30,7 +30,7 @@ def generar_enlaces_tiendas(titulo, autor, google_id=None, precio_base=None):
             'url': f"https://www.buscalibre.cl/libros/search?q={query_plus}",
             'badge': 'Más Popular',
             'badge_class': 'bg-success',
-            'icono': 'fa-shopping-bag'
+            'icono': 'iconoir-shopping-bag'
         },
         {
             'tienda': 'Google Play Books',
@@ -41,7 +41,7 @@ def generar_enlaces_tiendas(titulo, autor, google_id=None, precio_base=None):
             'url': f"https://books.google.com/books?id={google_id}" if google_id else f"https://play.google.com/store/search?q={query_plus}&c=books",
             'badge': 'Digital',
             'badge_class': 'bg-primary',
-            'icono': 'fa-google'
+            'icono': 'iconoir-google'
         },
         {
             'tienda': 'Amazon Kindle / Libros',
@@ -52,7 +52,7 @@ def generar_enlaces_tiendas(titulo, autor, google_id=None, precio_base=None):
             'url': f"https://www.amazon.com/s?k={query_plus}&i=stripbooks",
             'badge': 'Internacional',
             'badge_class': 'bg-warning text-dark',
-            'icono': 'fa-amazon'
+            'icono': 'iconoir-open-book'
         },
         {
             'tienda': 'Feria Chilena del Libro',
@@ -63,7 +63,7 @@ def generar_enlaces_tiendas(titulo, autor, google_id=None, precio_base=None):
             'url': f"https://www.feriachilenadellibro.cl/catalogsearch/result/?q={query_plus}",
             'badge': 'Local',
             'badge_class': 'bg-secondary',
-            'icono': 'fa-store'
+            'icono': 'iconoir-shop'
         }
     ]
 

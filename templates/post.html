@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Artículos - LitMate{% endblock %}
+{% block title %}Artículos & Novedades - LitMate{% endblock %}
 
 {% block content %}
 <header class="masthead" style="background-image: url({% static 'assets/img/libreria.jpg' %})">
     <div class="container position-relative px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
-                <div class="post-heading">
+                <div class="page-heading">
                     <h1>Innovación en una librería</h1>
-                    <h2 class="subheading">Cuando sientes que no puedas encontrar tu libro favorito de la infancia, solo habla con nuestro chatbot y lo encontrarás</h2>
+                    <span class="subheading">Cuando sientes que no puedas encontrar tu libro favorito de la infancia, solo habla con nuestro chatbot y lo encontrarás</span>
                 </div>
             </div>
         </div>
@@ -18,72 +18,121 @@
 </header>
 
 <article class="mb-5">
-    <div class="container px-4 px-lg-5 py-4">
+    <div class="container px-4 px-lg-5 py-5">
         <div class="row justify-content-center">
-            <div class="col-lg-8">
+            <div class="col-lg-9 col-xl-8">
                 
-                <h2 class="fw-bold mb-3" style="font-family: 'Playfair Display', serif; font-size: 1.6rem; color: #2c2c2c;">Inteligencia artificial y su influencia</h2>
-                
-                <p style="line-height: 1.8; color: #6b6b6b; font-size: 1rem;">
-                    Nosotros decidimos crear una página con inteligencia artificial, porque sabemos que la IA y los chatbots están avanzando a grandes pasos, ayudando y siendo útiles para todo tipo de tareas cotidianas en el día a día.
-                </p>
-                
-                <p class="mb-4" style="line-height: 1.8; color: #6b6b6b; font-size: 0.95rem;">
-                    Acá contamos con varios artículos con los cuales nos inspiramos a poder crear esta página con un chatbot e IA.
-                </p>
-
-                <hr class="my-4" style="border-top: 1px solid #e8e5e0;">
-
-                <!-- Artículo 1 -->
-                <div class="mb-4 pb-4" style="border-bottom: 1px solid #f0eeeb;">
-                    <h3 style="font-size: 1.05rem; font-weight: 600;">
-                        <a href="https://www.wired.com/story/why-read-books-when-you-can-use-chatbots-to-talk-to-them-instead/" target="_blank" style="color: #b08d57; text-decoration: none;">
-                            WIRED – "¿Por qué leer libros cuando puedes usar chatbots para hablar con ellos?"
-                        </a>
-                    </h3>
-                    <p class="mt-2 mb-0" style="line-height: 1.8; color: #6b6b6b; font-size: 0.92rem;">
-                        Este artículo presenta Book AI, una app que convierte un libro en un chatbot "consciente" del contenido. Permite interactuar con el libro haciéndolo más accesible y dinámico — ideal para aclarar conceptos o discutir temas profundos— utilizando técnicas como RAG (Retrieval-Augmented Generation) para mantener respuestas fieles a la fuente.
+                <!-- Encabezado de Sección -->
+                <div class="text-center mb-5">
+                    <h2 class="fw-bold display-6 mb-2">Artículos y Fuentes de Inspiración</h2>
+                    <p class="text-muted lead fs-6 mt-2">
+                        En LitMate integramos modelos de lenguaje y visión computacional para enriquecer la experiencia de descubrimiento y recomendación literaria. Aquí exploramos las investigaciones y artículos que fundamentan nuestra tecnología.
                     </p>
+                    <hr class="my-4 mx-auto plan-hero-divider">
                 </div>
 
-                <!-- Artículo 2 -->
-                <div class="mb-4 pb-4" style="border-bottom: 1px solid #f0eeeb;">
-                    <h3 style="font-size: 1.05rem; font-weight: 600;">
-                        <a href="https://www.voguebusiness.com/story/technology/how-generative-ai-will-upend-online-search?utm_source" target="_blank" style="color: #b08d57; text-decoration: none;">
-                            Vogue Business - "Cómo la IA generativa revolucionará las búsquedas en línea"
+                <!-- Artículo 1: WIRED -->
+                <div class="editorial-card">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="editorial-source-badge editorial-source-wired">
+                            <i class="iconoir-journal me-1"></i> WIRED Magazine
+                        </span>
+                        <span class="text-muted small">Tecnología & IA</span>
+                    </div>
+                    <h3 class="editorial-article-title">
+                        <a href="https://www.wired.com/story/why-read-books-when-you-can-use-chatbots-to-talk-to-them-instead/" target="_blank" rel="noopener noreferrer">
+                            "¿Por qué leer libros cuando puedes usar chatbots para hablar con ellos?"
                         </a>
                     </h3>
-                    <p class="mt-2 mb-0" style="line-height: 1.8; color: #6b6b6b; font-size: 0.92rem;">
-                        Analiza cómo la IA generativa mejora la experiencia de búsqueda en e-commerce, permitiendo preguntas por voz o texto más naturales, con recomendaciones más relevantes. Este enfoque cambia la forma en que los usuarios descubren productos y contenido, haciéndolo menos rígido que los buscadores tradicionales.
+                    <p class="editorial-article-desc">
+                        Este artículo presenta Book AI, una aplicación que convierte obras literarias en chatbots conscientes de su contenido. Permite interactuar con los libros haciéndolos dinámicos y accesibles mediante técnicas de <strong>RAG (Retrieval-Augmented Generation)</strong>, manteniendo respuestas fieles a la obra original y evitando alucinaciones.
                     </p>
+                    <div class="pt-2 border-top mt-3 d-flex justify-content-between align-items-center">
+                        <span class="badge bg-light text-dark border">Enfoque: RAG & Asistentes</span>
+                        <a href="https://www.wired.com/story/why-read-books-when-you-can-use-chatbots-to-talk-to-them-instead/" target="_blank" rel="noopener noreferrer" class="editorial-read-btn">
+                            Leer artículo completo en WIRED <i class="iconoir-open-new-window"></i>
+                        </a>
+                    </div>
                 </div>
 
-                <!-- Artículo 3 -->
-                <div class="mb-4 pb-4" style="border-bottom: 1px solid #f0eeeb;">
-                    <h3 style="font-size: 1.05rem; font-weight: 600;">
-                        <a href="https://www.reuters.com/business/retail-consumer/ai-influenced-shopping-boosts-online-holiday-sales-salesforce-data-shows-2025-01-06/?utm_source" target="_blank" style="color: #b08d57; text-decoration: none;">
-                            Reuters – "Las compras impulsadas por IA impulsan las ventas navideñas online"
+                <!-- Artículo 2: Vogue Business -->
+                <div class="editorial-card">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="editorial-source-badge editorial-source-vogue">
+                            <i class="iconoir-search me-1"></i> Vogue Business
+                        </span>
+                        <span class="text-muted small">E-Commerce & Búsqueda</span>
+                    </div>
+                    <h3 class="editorial-article-title">
+                        <a href="https://www.voguebusiness.com/story/technology/how-generative-ai-will-upend-online-search?utm_source" target="_blank" rel="noopener noreferrer">
+                            "Cómo la IA generativa revolucionará las búsquedas y el descubrimiento en línea"
                         </a>
                     </h3>
-                    <p class="mt-2 mb-0" style="line-height: 1.8; color: #6b6b6b; font-size: 0.92rem;">
-                        Durante la temporada navideña 2024, el uso de chatbots y asistentes virtuales impulsados por IA aumentó las ventas en EE. UU. en casi un 4 %, con un uso de chatbots un 42 % mayor que el año anterior. Refleja cómo esta tecnología puede mover decisiones de compra con eficacia.
+                    <p class="editorial-article-desc">
+                        Analiza cómo los algoritmos generativos transforman las experiencias de búsqueda en el comercio electrónico, permitiendo consultas semánticas en lenguaje natural con recomendaciones hiperpersonalizadas, reemplazando la rigidez de los motores de búsqueda convencionales.
                     </p>
+                    <div class="pt-2 border-top mt-3 d-flex justify-content-between align-items-center">
+                        <span class="badge bg-light text-dark border">Enfoque: Búsqueda Semántica</span>
+                        <a href="https://www.voguebusiness.com/story/technology/how-generative-ai-will-upend-online-search?utm_source" target="_blank" rel="noopener noreferrer" class="editorial-read-btn">
+                            Leer artículo en Vogue Business <i class="iconoir-open-new-window"></i>
+                        </a>
+                    </div>
                 </div>
 
-                <!-- Artículo 4 -->
-                <div class="mb-4">
-                    <h3 style="font-size: 1.05rem; font-weight: 600;">
-                        <a href="https://www.searchengineguidelines.com/news/the-role-of-chatbots-in-website-performance-who-loves-them-who-hates-them-and-how-they-impact-seo/?utm_source=" target="_blank" style="color: #b08d57; text-decoration: none;">
-                            SearchEngineGuidelines – "El papel de los chatbots en el rendimiento del sitio web"
+                <!-- Artículo 3: Reuters -->
+                <div class="editorial-card">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="editorial-source-badge editorial-source-reuters">
+                            <i class="iconoir-graph-up me-1"></i> Reuters News
+                        </span>
+                        <span class="text-muted small">Tendencias Globales</span>
+                    </div>
+                    <h3 class="editorial-article-title">
+                        <a href="https://www.reuters.com/business/retail-consumer/ai-influenced-shopping-boosts-online-holiday-sales-salesforce-data-shows-2025-01-06/?utm_source" target="_blank" rel="noopener noreferrer">
+                            "Las compras impulsadas por IA incrementan el volumen de ventas online"
                         </a>
                     </h3>
-                    <p class="mt-2 mb-0" style="line-height: 1.8; color: #6b6b6b; font-size: 0.92rem;">
-                        Destaca cómo los chatbots mejoran la atención al cliente (respuestas instantáneas, disponibilidad 24/7, soporte en varios idiomas), generan leads, personalizan recomendaciones, y aportan insights útiles para mejorar el SEO y la estrategia de contenido.
+                    <p class="editorial-article-desc">
+                        Datos del mercado internacional muestran que el uso de asistentes inteligentes para la orientación de compras incrementó el tráfico y la conversión efectiva, reflejando cómo la orientación conversacional empodera a los usuarios para tomar decisiones de compra acertadas.
                     </p>
+                    <div class="pt-2 border-top mt-3 d-flex justify-content-between align-items-center">
+                        <span class="badge bg-light text-dark border">Enfoque: Conversión & Asistencia</span>
+                        <a href="https://www.reuters.com/business/retail-consumer/ai-influenced-shopping-boosts-online-holiday-sales-salesforce-data-shows-2025-01-06/?utm_source" target="_blank" rel="noopener noreferrer" class="editorial-read-btn">
+                            Leer reporte en Reuters <i class="iconoir-open-new-window"></i>
+                        </a>
+                    </div>
                 </div>
 
-                <div class="text-center mt-4">
-                    <img class="img-fluid" src="{% static 'assets/img/evolucion-inteligencia-artificial.jpg' %}" alt="Evolución de la IA" style="border-radius: 10px; border: 1px solid #e8e5e0;" />
+                <!-- Artículo 4: SearchEngineGuidelines -->
+                <div class="editorial-card">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="editorial-source-badge editorial-source-seg">
+                            <i class="iconoir-open-book me-1"></i> Search Engine Guidelines
+                        </span>
+                        <span class="text-muted small">Rendimiento Web</span>
+                    </div>
+                    <h3 class="editorial-article-title">
+                        <a href="https://www.searchengineguidelines.com/news/the-role-of-chatbots-in-website-performance-who-loves-them-who-hates-them-and-how-they-impact-seo/?utm_source=" target="_blank" rel="noopener noreferrer">
+                            "El rol de los chatbots en el rendimiento web y la experiencia de usuario"
+                        </a>
+                    </h3>
+                    <p class="editorial-article-desc">
+                        Destaca cómo los chatbots optimizan la atención al usuario mediante respuestas instantáneas 24/7, soporte multilenguaje y recomendaciones personalizadas que mejoran el compromiso del visitante y el tiempo de permanencia en la plataforma.
+                    </p>
+                    <div class="pt-2 border-top mt-3 d-flex justify-content-between align-items-center">
+                        <span class="badge bg-light text-dark border">Enfoque: UX & Rendimiento</span>
+                        <a href="https://www.searchengineguidelines.com/news/the-role-of-chatbots-in-website-performance-who-loves-them-who-hates-them-and-how-they-impact-seo/?utm_source=" target="_blank" rel="noopener noreferrer" class="editorial-read-btn">
+                            Leer análisis en SearchEngineGuidelines <i class="iconoir-open-new-window"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Imagen Hero / Evolución -->
+                <div class="text-center mt-5">
+                    <div class="editorial-hero-image-box">
+                        <img class="img-fluid w-100" src="{% static 'assets/img/evolucion-inteligencia-artificial.jpg' %}" alt="Evolución de la IA en la literatura" />
+                    </div>
+                    <small class="text-muted d-block mt-2">La constante evolución de los modelos de IA hacia experiencias de lectura enriquecidas.</small>
                 </div>
 
             </div>

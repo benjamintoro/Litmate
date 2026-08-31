@@ -24,16 +24,16 @@
         <div class="col-lg-9">
             
             <!-- Estado del Plan Actual -->
-            <div class="card border-0 shadow-sm mb-5 p-4 p-md-5" style="border-radius: 16px; border: 1px solid #e2e8f0 !important;">
+            <div class="card border-0 shadow-sm mb-5 p-4 p-md-5 subscription-card">
                 <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-3 border-bottom gap-2">
                     <div class="d-flex align-items-center">
-                        <div class="feature-icon text-white rounded-circle me-3 d-flex align-items-center justify-content-center shadow-sm" style="width: 54px; height: 54px; background: linear-gradient(135deg, #0085A1 0%, #005f73 100%);">
+                        <div class="feature-icon rounded-circle me-3 d-flex align-items-center justify-content-center shadow-sm subscription-avatar-icon">
                             {% if suscripcion.plan.slug == 'lector-vip' %}
-                                <i class="fas fa-gem fa-lg"></i>
+                                <i class="iconoir-crown fa-lg"></i>
                             {% elif suscripcion.plan.slug == 'lector-pro' %}
-                                <i class="fas fa-robot fa-lg"></i>
+                                <i class="iconoir-sparks fa-lg"></i>
                             {% else %}
-                                <i class="fas fa-id-card fa-lg"></i>
+                                <i class="iconoir-user fa-lg"></i>
                             {% endif %}
                         </div>
                         <div>
@@ -45,11 +45,11 @@
                     <div>
                         {% if suscripcion and suscripcion.es_valida %}
                             {% if suscripcion.plan.slug == 'lector-vip' %}
-                                <span class="badge bg-warning text-dark rounded-pill px-3 py-2 fw-bold shadow-sm"><i class="fas fa-crown me-1"></i> VIP ACTIVO</span>
+                                <span class="badge bg-warning text-dark rounded-pill px-3 py-2 fw-bold shadow-sm"><i class="iconoir-crown me-1"></i> VIP ACTIVO</span>
                             {% elif suscripcion.plan.slug == 'lector-pro' %}
-                                <span class="badge bg-primary text-white rounded-pill px-3 py-2 fw-bold shadow-sm"><i class="fas fa-star me-1"></i> PRO ACTIVO</span>
+                                <span class="badge bg-primary text-white rounded-pill px-3 py-2 fw-bold shadow-sm"><i class="iconoir-star me-1"></i> PRO ACTIVO</span>
                             {% else %}
-                                <span class="badge bg-success rounded-pill px-3 py-2 fw-bold"><i class="fas fa-check-circle me-1"></i> GRIS / GRATIS</span>
+                                <span class="badge bg-success rounded-pill px-3 py-2 fw-bold"><i class="iconoir-check-circle me-1"></i> GRIS / GRATIS</span>
                             {% endif %}
                         {% else %}
                             <span class="badge bg-secondary rounded-pill px-3 py-2">Sin Suscripción Activa</span>
@@ -60,23 +60,23 @@
                 {% if suscripcion %}
                     <div class="row g-3 mb-4">
                         <div class="col-sm-6 col-md-3">
-                            <div class="p-3 bg-light rounded" style="border-radius: 12px !important; border: 1px solid #edf2f7;">
+                            <div class="p-3 bg-light rounded subscription-stat-box">
                                 <div class="text-muted small">Plan Actual</div>
                                 <div class="fw-bold fs-6 text-dark text-truncate">{{ suscripcion.plan.nombre }}</div>
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-3">
-                            <div class="p-3 bg-light rounded" style="border-radius: 12px !important; border: 1px solid #edf2f7;">
+                            <div class="p-3 bg-light rounded subscription-stat-box">
                                 <div class="text-muted small">Precio</div>
                                 <div class="fw-bold fs-6 text-dark">${{ suscripcion.plan.precio|floatformat:0 }} {{ suscripcion.plan.moneda }}</div>
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-3">
-                            <div class="p-3 bg-light rounded" style="border-radius: 12px !important; border: 1px solid #edf2f7;">
+                            <div class="p-3 bg-light rounded subscription-stat-box">
                                 <div class="text-muted small">Consultas Asistente IA</div>
                                 <div class="fw-bold fs-6 text-dark">
                                     {% if suscripcion.plan.limite_consultas_ia_diarias == 0 %}
-                                        <span class="text-primary"><i class="fas fa-infinity me-1"></i> Ilimitadas</span>
+                                        <span class="text-primary"><i class="iconoir-infinite me-1"></i> Ilimitadas</span>
                                     {% else %}
                                         {{ suscripcion.plan.limite_consultas_ia_diarias }}/día
                                     {% endif %}
@@ -84,7 +84,7 @@
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-3">
-                            <div class="p-3 bg-light rounded" style="border-radius: 12px !important; border: 1px solid #edf2f7;">
+                            <div class="p-3 bg-light rounded subscription-stat-box">
                                 <div class="text-muted small">Vigencia / Renovación</div>
                                 <div class="fw-bold fs-6 text-dark">
                                     {% if suscripcion.fecha_fin %}
@@ -101,10 +101,10 @@
                     <div class="d-flex flex-wrap gap-2 justify-content-between align-items-center pt-2">
                         <div class="d-flex flex-wrap gap-2">
                             <a href="{% url 'suscripciones:planes' %}" class="btn btn-primary rounded-pill px-4 text-uppercase fw-bold shadow-sm">
-                                <i class="fas fa-arrow-up me-1"></i> Cambiar / Mejorar Plan
+                                <i class="iconoir-arrow-up me-1"></i> Cambiar / Mejorar Plan
                             </a>
                             <a href="{% url 'chatbot_page' %}" class="btn btn-outline-primary rounded-pill px-4 text-uppercase fw-bold">
-                                <i class="fas fa-robot me-1"></i> Ir al Asistente IA
+                                <i class="iconoir-sparks me-1"></i> Ir al Asistente IA
                             </a>
                         </div>
 
@@ -112,7 +112,7 @@
                         <form method="post" action="{% url 'suscripciones:cancelar_suscripcion' %}" onsubmit="return confirm('¿Estás seguro de que deseas desactivar la renovación automática?');">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-link text-muted small text-decoration-none">
-                                <i class="fas fa-times-circle text-danger me-1"></i> Desactivar renovación
+                                <i class="iconoir-cancel text-danger me-1"></i> Desactivar renovación
                             </button>
                         </form>
                         {% endif %}
@@ -128,10 +128,10 @@
             </div>
 
             <!-- Historial de Pagos y Comprobantes -->
-            <div class="card border-0 shadow-sm p-4 p-md-5" style="border-radius: 16px; border: 1px solid #e2e8f0 !important;">
+            <div class="card border-0 shadow-sm p-4 p-md-5 subscription-card">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
-                        <h4 class="fw-bold mb-0 text-dark"><i class="fas fa-receipt text-primary me-2"></i>Historial de Pagos</h4>
+                        <h4 class="fw-bold mb-0 text-dark"><i class="iconoir-page text-primary me-2"></i>Historial de Pagos</h4>
                         <span class="small text-muted">Comprobantes y recibos de transacciones electrónicas</span>
                     </div>
                 </div>
@@ -165,7 +165,7 @@
                                 <td class="text-end">
                                     {% if pago.referencia_transaccion %}
                                     <a href="{% url 'suscripciones:pago_exitoso' pago.referencia_transaccion %}" class="btn btn-outline-primary btn-sm rounded-pill px-3" title="Ver Comprobante">
-                                        <i class="fas fa-file-invoice me-1"></i> Recibo
+                                        <i class="iconoir-page me-1"></i> Recibo
                                     </a>
                                     {% else %}
                                     <span class="text-muted">-</span>

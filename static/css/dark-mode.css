@@ -7,19 +7,25 @@
 /* --- BASE --- */
 html.dark-mode,
 html.dark-mode body {
-  background-color: #111111 !important;
+  background-color: var(--lm-shadow, #0B0C0A) !important;
   color: #d4d4d4 !important;
 }
 
 /* --- CSS VARIABLES OVERRIDE --- */
 html.dark-mode {
-  --lm-text: #d4d4d4;
-  --lm-text-soft: #8a8a8a;
-  --lm-bg-warm: #1a1a1a;
-  --lm-border: #2a2a2a;
-  --lm-card-bg: #171717;
-  --lm-accent: #c9a96e;
-  --lm-accent-hover: #dbb978;
+  --lm-text: #e6e4df;
+  --lm-text-soft: #a8a399;
+  --lm-bg-warm: #141614;
+  --lm-border: #2c2f2b;
+  --lm-card-bg: #161816;
+  --lm-accent: #2eb0c8;
+  --lm-accent-hover: #4dc5dc;
+  --lm-teal: #2eb0c8;
+  --lm-teal-hover: #4dc5dc;
+  --lm-shadow: #0B0C0A;
+  --lm-ochre: #b58648;
+  --lm-parchment: #4a473e;
+  --lm-oxide-red: #b3392d;
 }
 
 /* --- NAVBAR --- */
@@ -704,10 +710,18 @@ html.dark-mode .cmd-item.active {
   color: #c9a96e !important;
 }
 html.dark-mode .cmd-item-icon {
-  background: #202020 !important;
-  border-color: #2e2e2e !important;
-  color: #c9a96e !important;
+  background: #1e211b !important;
+  border-color: #3b3f35 !important;
+  color: var(--lm-teal, #2eb0c8) !important;
 }
+
+html.dark-mode .cmd-item:hover .cmd-item-icon,
+html.dark-mode .cmd-item.active .cmd-item-icon {
+  background: var(--lm-teal, #227D8E) !important;
+  border-color: var(--lm-teal, #227D8E) !important;
+  color: #ffffff !important;
+}
+
 html.dark-mode .cmd-item-thumb {
   border-color: #2e2e2e !important;
 }
@@ -718,19 +732,6 @@ html.dark-mode .cmd-item-badge {
   background: #222 !important;
   border-color: #333 !important;
   color: #888 !important;
-}
-html.dark-mode .cmd-palette-footer {
-  border-top-color: #2a2a2a !important;
-  background: #131313 !important;
-  color: #777 !important;
-}
-html.dark-mode .cmd-footer-shortcuts kbd {
-  background: #222 !important;
-  border-color: #333 !important;
-  color: #aaa !important;
-}
-html.dark-mode .cmd-footer-brand {
-  color: #c9a96e !important;
 }
 
 /* --- 3. SCROLL TO TOP (Dark Mode) --- */
@@ -789,8 +790,597 @@ html.dark-mode .auth-divider span {
   color: #777777 !important;
 }
 
+/* --- 6. BOOKS & CATALOG (Dark Mode) --- */
+html.dark-mode .book-search-card {
+  border-color: #2a2a2a !important;
+  background: #171717 !important;
+}
 
+html.dark-mode .book-card-cover {
+  background: #1b1b1b !important;
+}
 
+html.dark-mode .book-demo-box,
+html.dark-mode .book-info-alert,
+html.dark-mode .book-empty-card {
+  background: #1a1a1a !important;
+  border-color: #2a2a2a !important;
+}
 
+html.dark-mode .book-demo-text {
+  color: #d4d4d4 !important;
+}
 
+html.dark-mode .book-modal-content {
+  background: #171717 !important;
+  color: #d4d4d4 !important;
+}
+
+html.dark-mode .book-modal-title,
+html.dark-mode .book-history-title {
+  color: #f0f0f0 !important;
+}
+
+html.dark-mode .book-meta-value {
+  color: #e0e0e0 !important;
+}
+
+html.dark-mode .book-modal-btn-close {
+  border-color: #2a2a2a !important;
+  color: #aaaaaa !important;
+}
+
+html.dark-mode .book-modal-btn-buy {
+  background: #c9a96e !important;
+  color: #111111 !important;
+}
+
+/* --- 7. SUBSCRIPTIONS & CHECKOUT (Dark Mode) --- */
+html.dark-mode .checkout-card,
+html.dark-mode .checkout-sticky-card,
+html.dark-mode .receipt-card,
+html.dark-mode .sandbox-card,
+html.dark-mode .webpay-redirect-card {
+  background: #171717 !important;
+  border-color: #2a2a2a !important;
+}
+
+html.dark-mode .payment-grid-card {
+  background: #1e1e1e !important;
+  border-color: #2a2a2a !important;
+}
+
+html.dark-mode .payment-grid-card:hover,
+html.dark-mode .payment-grid-card.active {
+  background: #242424 !important;
+  border-color: #c9a96e !important;
+}
+
+html.dark-mode .info-popover-bubble {
+  background: #1e1e1e !important;
+  border-color: #2e2e2e !important;
+  color: #d4d4d4 !important;
+}
+
+html.dark-mode .info-popover-bubble::before {
+  border-color: transparent transparent #1e1e1e transparent !important;
+}
+
+html.dark-mode .info-trigger-btn {
+  background: #1e1e1e !important;
+  border-color: #2a2a2a !important;
+}
+
+html.dark-mode .subscription-metric-card,
+html.dark-mode .receipt-detail-box,
+html.dark-mode .sandbox-details-box {
+  background: #1a1a1a !important;
+  border-color: #2a2a2a !important;
+}
+
+html.dark-mode .plan-price-amount {
+  color: #e0e0e0 !important;
+}
+
+/* --- 8. PAGES & ERRORS (Dark Mode) --- */
+html.dark-mode .about-lead,
+html.dark-mode .about-highlight,
+html.dark-mode .post-heading-title,
+html.dark-mode .contact-info-label {
+  color: #e0e0e0 !important;
+}
+
+html.dark-mode .legal-notice-box {
+  background: #1a1a1a !important;
+  border-left-color: #4a5568 !important;
+}
+
+html.dark-mode .error-search-tip {
+  background: #1a1a1a !important;
+  border-color: #2a2a2a !important;
+}
+
+html.dark-mode .error-search-kbd {
+  background: #222222 !important;
+  border-color: #333333 !important;
+  color: #aaaaaa !important;
+}
+
+/* --- 9. CARRUSEL 3D COVERFLOW & EDITORIAL (Dark Mode) --- */
+html.dark-mode .coverflow-section {
+  background: transparent !important;
+  border-top-color: rgba(255, 255, 255, 0.08) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+html.dark-mode .about-mission-card {
+  background: #161816 !important;
+  border-color: #2c2f2b !important;
+}
+
+html.dark-mode .about-mission-card h5 {
+  color: #ffffff !important;
+}
+
+html.dark-mode .about-mission-card p {
+  color: #a8a399 !important;
+}
+
+html.dark-mode .coverflow-heading {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+html.dark-mode .coverflow-subheading {
+  color: #a8a399 !important;
+}
+
+html.dark-mode .coverflow-dot.active {
+  background: var(--lm-teal, #2eb0c8) !important;
+  box-shadow: 0 0 10px rgba(46, 176, 200, 0.6) !important;
+}
+
+/* --- 10. CATÁLOGO DE LIBROS & BUSCADOR MINIMALISTA (Dark Mode) --- */
+html.dark-mode .book-search-card {
+  background-color: #131411 !important;
+  border-color: #2c2e28 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+}
+
+html.dark-mode .search-input-wrapper {
+  background-color: #1a1c18 !important;
+  border-color: #33372e !important;
+}
+
+html.dark-mode .search-input-wrapper:focus-within {
+  border-color: var(--lm-teal, #2eb0c8) !important;
+  box-shadow: 0 0 0 3px rgba(46, 176, 200, 0.2) !important;
+}
+
+html.dark-mode .book-main-search-input {
+  color: #ffffff !important;
+}
+
+html.dark-mode .book-main-search-input::placeholder {
+  color: #73716b !important;
+}
+
+html.dark-mode .btn-clear-search {
+  background-color: #1f221c !important;
+  border-color: #33372e !important;
+  color: #a8a399 !important;
+}
+
+html.dark-mode .book-filter-input,
+html.dark-mode .book-filter-select {
+  background-color: #1a1c18 !important;
+  border-color: #33372e !important;
+  color: #e0ded8 !important;
+}
+
+html.dark-mode .book-filter-input:focus,
+html.dark-mode .book-filter-select:focus {
+  border-color: var(--lm-teal, #2eb0c8) !important;
+  color: #ffffff !important;
+}
+
+html.dark-mode .genre-pill {
+  background-color: #1a1c18 !important;
+  border-color: #33372e !important;
+  color: #b0aba0 !important;
+}
+
+html.dark-mode .genre-pill:hover {
+  background-color: rgba(34, 125, 142, 0.18) !important;
+  border-color: var(--lm-teal, #2eb0c8) !important;
+  color: #ffffff !important;
+}
+
+html.dark-mode .genre-pill.active {
+  background-color: #c9a96e !important;
+  border-color: #c9a96e !important;
+  color: #0B0C0A !important;
+  font-weight: 700 !important;
+}
+
+html.dark-mode .book-card {
+  background-color: #141613 !important;
+  border-color: #282b25 !important;
+}
+
+html.dark-mode .book-card:hover {
+  border-color: var(--lm-teal, #2eb0c8) !important;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6) !important;
+}
+
+html.dark-mode .book-card-cover {
+  background-color: #0f100e !important;
+  border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+html.dark-mode .book-cover-img {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6) !important;
+}
+
+html.dark-mode .book-card-title {
+  color: #ffffff !important;
+}
+
+html.dark-mode .book-card-title:hover {
+  color: var(--lm-teal, #2eb0c8) !important;
+}
+
+html.dark-mode .book-card-author {
+  color: #c9a96e !important;
+}
+
+html.dark-mode .book-card-meta-row {
+  border-top-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+html.dark-mode .book-card-genre-text {
+  color: #8e8a80 !important;
+}
+
+html.dark-mode .book-card-price {
+  color: var(--lm-teal, #2eb0c8) !important;
+}
+
+html.dark-mode .btn-book-explore {
+  background-color: #1e211b !important;
+  border-color: #3b3f35 !important;
+  color: #ffffff !important;
+}
+
+html.dark-mode .btn-book-explore:hover {
+  background-color: var(--lm-teal, #227D8E) !important;
+  border-color: var(--lm-teal, #227D8E) !important;
+  color: #ffffff !important;
+}
+
+html.dark-mode .book-empty-card {
+  background-color: #141613 !important;
+  border-color: #282b25 !important;
+}
+
+html.dark-mode .coverflow-item {
+  background: #111111 !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6) !important;
+}
+
+html.dark-mode .coverflow-item img {
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+html.dark-mode .coverflow-item[data-pos="0"] {
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(46, 176, 200, 0.25) !important;
+}
+
+html.dark-mode .coverflow-btn {
+  background: #1c1d1a !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+}
+
+html.dark-mode .coverflow-btn:hover {
+  background: var(--lm-teal, #2eb0c8) !important;
+  border-color: var(--lm-teal, #2eb0c8) !important;
+  color: #ffffff !important;
+}
+
+html.dark-mode .coverflow-active-title {
+  color: #ffffff !important;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+html.dark-mode .coverflow-active-author {
+  color: #c9a96e !important;
+}
+
+html.dark-mode .coverflow-rating-badge {
+  background: #1c1d1a !important;
+  color: #ffffff !important;
+  border-color: #333333 !important;
+}
+
+html.dark-mode .coverflow-price-badge {
+  background: rgba(46, 176, 200, 0.15) !important;
+  color: var(--lm-teal, #2eb0c8) !important;
+  border-color: rgba(46, 176, 200, 0.4) !important;
+}
+
+html.dark-mode .coverflow-dot {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+html.dark-mode .coverflow-dot.active {
+  background: var(--lm-teal, #2eb0c8) !important;
+}
+
+html.dark-mode .editorial-card {
+  background: #161816 !important;
+  border-color: #2c2f2b !important;
+}
+
+html.dark-mode .editorial-article-title a {
+  color: #f0ede6 !important;
+}
+
+html.dark-mode .editorial-article-title a:hover {
+  color: var(--lm-teal, #2eb0c8) !important;
+}
+
+html.dark-mode .editorial-article-desc {
+  color: #a8a399 !important;
+}
+
+html.dark-mode .team-card-interactive {
+  background: #161816 !important;
+  border-color: #2c2f2b !important;
+}
+
+html.dark-mode .team-member-name {
+  color: #f0ede6 !important;
+}
+
+html.dark-mode .team-modal-content {
+  background: #161816 !important;
+  color: #e6e4df !important;
+}
+
+html.dark-mode .team-modal-content .modal-header,
+html.dark-mode .team-modal-content .modal-footer {
+  background: #121412 !important;
+  border-color: #2c2f2b !important;
+}
+
+html.dark-mode .team-modal-quote {
+  background: #1e201e !important;
+  border-left-color: var(--lm-teal, #2eb0c8) !important;
+  color: #d4d4d4 !important;
+}
+
+/* --- 11. DASHBOARD MI PERFIL (Dark Mode) --- */
+html.dark-mode .profile-nav-tabs {
+  border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+html.dark-mode .profile-nav-tabs .nav-link {
+  color: #c5c0b5 !important;
+}
+
+html.dark-mode .profile-nav-tabs .nav-link:hover {
+  background: rgba(34, 125, 142, 0.2) !important;
+  color: #ffffff !important;
+}
+
+html.dark-mode .profile-nav-tabs .nav-link.active {
+  background: #252822 !important;
+  color: #ffffff !important;
+  border-color: #3b3f35 !important;
+}
+
+html.dark-mode .btn-library-filter {
+  background: #191b17 !important;
+  border-color: #33372e !important;
+  color: #c5c0b5 !important;
+}
+
+html.dark-mode .btn-library-filter.active {
+  background: #c9a96e !important;
+  border-color: #c9a96e !important;
+  color: #0B0C0A !important;
+}
+
+html.dark-mode .custom-list-card {
+  background: #161816 !important;
+  border-color: #2c2f2b !important;
+}
+
+html.dark-mode .custom-list-card:hover {
+  border-color: var(--lm-teal, #2eb0c8) !important;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5) !important;
+}
+
+html.dark-mode .custom-list-title {
+  color: #ffffff !important;
+}
+
+html.dark-mode .radar-header-banner {
+  background: #131513 !important;
+  border-color: #2c2f2b !important;
+}
+
+html.dark-mode .price-radar-card {
+  background: #161816 !important;
+  border-color: #2c2f2b !important;
+}
+
+html.dark-mode .price-radar-card:hover {
+  border-color: var(--lm-teal, #2eb0c8) !important;
+}
+
+html.dark-mode .price-radar-title {
+  color: #ffffff !important;
+}
+
+html.dark-mode .price-store-chip {
+  background: #1e201c !important;
+  border-color: #33372e !important;
+}
+
+html.dark-mode .store-chip-name {
+  color: #e0ded8 !important;
+}
+
+html.dark-mode .stats-card,
+html.dark-mode .prefs-card {
+  background: #161816 !important;
+  border-color: #2c2f2b !important;
+  color: #e6e4df !important;
+}
+
+html.dark-mode .stats-card h3,
+html.dark-mode .stats-card h4,
+html.dark-mode .prefs-card h4 {
+  color: #ffffff !important;
+}
+
+html.dark-mode .reading-progress-track {
+  background: #252822 !important;
+}
+
+html.dark-mode .new-list-modal-content {
+  background: #161816 !important;
+  color: #e6e4df !important;
+  border: 1.5px solid #2c2f2b !important;
+}
+
+html.dark-mode .new-list-modal-content .form-control {
+  background: #1f221c !important;
+  border-color: #33372e !important;
+  color: #ffffff !important;
+}
+
+html.dark-mode .book-library-manage-box {
+  background: #191b17 !important;
+  border-color: #2c2f2b !important;
+}
+
+html.dark-mode .btn-list-chip-inactive {
+  background: #131513 !important;
+  border-color: #33372e !important;
+  color: #d4d4d4 !important;
+}
+
+html.dark-mode .custom-list-books-box {
+  background: #131513 !important;
+  border-color: #2c2f2b !important;
+}
+
+html.dark-mode .custom-list-books-box .bg-white {
+  background: #191b17 !important;
+  border-color: #2c2f2b !important;
+}
+
+html.dark-mode .custom-list-books-box .text-dark {
+  color: #ffffff !important;
+}
+
+html.dark-mode .custom-panel-modal-content {
+  background: #161816 !important;
+  color: #e6e4df !important;
+  border-color: #2c2f2b !important;
+}
+
+html.dark-mode .select-reading-row,
+html.dark-mode .select-list-row {
+  background: #191b17 !important;
+  border-color: #2c2f2b !important;
+  color: #e0ded8 !important;
+}
+
+html.dark-mode .select-reading-row:hover,
+html.dark-mode .select-list-row:hover {
+  background: rgba(34, 125, 142, 0.2) !important;
+  border-color: var(--lm-teal, #2eb0c8) !important;
+}
+
+html.dark-mode .reading-row-active,
+html.dark-mode .list-row-active {
+  background: rgba(34, 125, 142, 0.25) !important;
+  border-color: var(--lm-teal, #2eb0c8) !important;
+}
+
+html.dark-mode .custom-radio-circle {
+  background: #191b17 !important;
+  border-color: #454940 !important;
+}
+
+html.dark-mode .custom-radio-circle.radio-checked {
+  background: var(--lm-teal, #2eb0c8) !important;
+  border-color: var(--lm-teal, #2eb0c8) !important;
+  box-shadow: inset 0 0 0 3px #161816 !important;
+}
+
+html.dark-mode .form-control-panel {
+  background: #191b17 !important;
+  border-color: #2c2f2b !important;
+  color: #ffffff !important;
+}
+
+html.dark-mode .select-list-count {
+  color: #8c8880 !important;
+}
+
+html.dark-mode .badge-add-to-list {
+  background: rgba(34, 125, 142, 0.25) !important;
+  color: #5ed6ea !important;
+  border-color: rgba(34, 125, 142, 0.5) !important;
+}
+
+html.dark-mode .stats-status-card {
+  background: #161816 !important;
+  border-color: #2c2f2b !important;
+}
+
+html.dark-mode .stats-status-card .text-dark {
+  color: #ffffff !important;
+}
+
+html.dark-mode #addToListBookTitle {
+  color: #ffffff !important;
+}
+
+html.dark-mode .badge-status-leyendo {
+  background: rgba(34, 125, 142, 0.3) !important;
+  color: #5ed6ea !important;
+  border-color: rgba(34, 125, 142, 0.6) !important;
+}
+
+html.dark-mode .badge-status-planeo {
+  background: rgba(147, 107, 54, 0.3) !important;
+  color: #e6b772 !important;
+  border-color: rgba(147, 107, 54, 0.6) !important;
+}
+
+html.dark-mode .badge-status-completado {
+  background: rgba(46, 125, 50, 0.3) !important;
+  color: #81c784 !important;
+  border-color: rgba(46, 125, 50, 0.6) !important;
+}
+
+html.dark-mode .btn-genre-selectable {
+  background: #191b17 !important;
+  border-color: #2c2f2b !important;
+  color: #d4d4d4 !important;
+}
+
+html.dark-mode .btn-genre-selected {
+  background: rgba(34, 125, 142, 0.25) !important;
+  border-color: var(--lm-teal, #2eb0c8) !important;
+  color: #5ed6ea !important;
+}
 

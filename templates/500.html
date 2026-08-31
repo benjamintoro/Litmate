@@ -4,14 +4,14 @@
 {% block title %}500 - Error del Servidor · LitMate{% endblock %}
 
 {% block content %}
-<header class="masthead" style="background-image: url('{% static "assets/img/home-bg.jpg" %}'); min-height: 260px; padding-top: 5rem; padding-bottom: 3rem;">
+<header class="masthead error-masthead" style="background-image: url('{% static "assets/img/home-bg.jpg" %}');">
     <div class="container position-relative px-4 px-lg-5">
         <div class="row justify-content-center text-center">
             <div class="col-md-10 col-lg-8">
-                <span class="badge rounded-pill px-3 py-2 mb-3 shadow-sm bg-danger text-white" style="font-size: 0.85rem; letter-spacing: 0.05em;">
+                <span class="badge rounded-pill px-3 py-2 mb-3 shadow-sm bg-danger text-white error-badge-500">
                     ERROR 500
                 </span>
-                <h1 style="font-family: 'Playfair Display', serif; font-size: 2.4rem;">Error interno del servidor</h1>
+                <h1 class="error-heading-title">Error interno del servidor</h1>
             </div>
         </div>
     </div>
@@ -20,25 +20,25 @@
 <div class="container px-4 px-lg-5 my-5">
     <div class="row justify-content-center">
         <div class="col-lg-8 col-xl-7 text-center">
-            <div class="card border-0 shadow-lg p-4 p-md-5" style="border-radius: 20px;">
-                <div class="feature-icon rounded-circle mb-4 mx-auto d-flex align-items-center justify-content-center shadow-sm" style="width: 80px; height: 80px; background: rgba(220, 53, 69, 0.12); color: #dc3545; font-size: 2rem;">
-                    <i class="fas fa-server"></i>
+            <div class="card border-0 shadow-lg p-4 p-md-5 error-card">
+                <div class="feature-icon rounded-circle mb-4 mx-auto d-flex align-items-center justify-content-center shadow-sm error-icon-circle-500">
+                    <i class="iconoir-server"></i>
                 </div>
 
-                <h2 class="h4 fw-bold mb-2" style="font-family: 'Playfair Display', serif;">Ocurrió una interrupción temporal</h2>
-                <p class="text-muted mb-4" style="font-size: 0.95rem; line-height: 1.7;">
+                <h2 class="h4 fw-bold mb-2 error-subheading-title">Ocurrió una interrupción temporal</h2>
+                <p class="text-muted mb-4 error-desc">
                     Nuestros servidores han registrado este incidente automáticamente y nuestro equipo técnico ya está al tanto para resolverlo.
                 </p>
 
                 <div class="d-flex flex-wrap justify-content-center gap-3">
-                    <button type="button" onclick="window.location.reload();" class="btn btn-primary px-4 py-2" style="border-radius: 10px;">
-                        <i class="fas fa-redo-alt me-2"></i> Reintentar Cargar
+                    <button type="button" onclick="window.location.reload();" class="btn btn-primary px-4 py-2 error-action-btn">
+                        <i class="iconoir-refresh me-2"></i> Reintentar Cargar
                     </button>
-                    <a href="{% url 'index' %}" class="btn btn-outline-primary px-4 py-2" style="border-radius: 10px;">
-                        <i class="fas fa-home me-2"></i> Ir al Inicio
+                    <a href="{% url 'index' %}" class="btn btn-outline-primary px-4 py-2 error-action-btn">
+                        <i class="iconoir-home me-2"></i> Ir al Inicio
                     </a>
-                    <a href="{% url 'contact' %}" class="btn btn-outline-secondary px-4 py-2" style="border-radius: 10px;">
-                        <i class="fas fa-envelope me-2"></i> Informar a Soporte
+                    <a href="{% url 'contact' %}" class="btn btn-outline-secondary px-4 py-2 error-action-btn">
+                        <i class="iconoir-mail me-2"></i> Informar a Soporte
                     </a>
                 </div>
             </div>

@@ -22,12 +22,12 @@
 <div class="container px-4 px-lg-5 mb-5">
     <div class="row justify-content-center">
         <div class="col-md-9 col-lg-7 col-xl-6">
-            <div class="card border-0 shadow-lg hover-animate" style="border-radius: 15px;">
+            <div class="card border-0 shadow-lg hover-animate auth-card">
                 <div class="card-body p-4 p-md-5">
 
                     <div class="text-center mb-4">
-                        <div class="feature-icon text-white rounded-circle mb-3 mx-auto d-flex align-items-center justify-content-center shadow" style="width: 65px; height: 65px; background: linear-gradient(45deg, #0085A1, #005f73);">
-                            <i class="fas fa-user-plus fa-lg"></i>
+                        <div class="feature-icon rounded-circle auth-header-icon shadow">
+                            <i class="iconoir-user fa-lg"></i>
                         </div>
                         <h3 class="h4 fw-bold">Crea tu Cuenta Gratis</h3>
                         <p class="text-muted small">Únete a nuestra comunidad de lectores y accede al Asistente IA</p>
@@ -35,7 +35,7 @@
 
                     {% if form.non_field_errors %}
                         <div class="alert alert-danger alert-dismissible fade show small" role="alert">
-                            <i class="fas fa-exclamation-circle me-1"></i>
+                            <i class="iconoir-warning-triangle me-1"></i>
                             {% for error in form.non_field_errors %}
                                 {{ error }}
                             {% endfor %}
@@ -55,7 +55,7 @@
                             <span>Registrarse con Google</span>
                         </a>
                         <a href="{% url 'social_login' 'github' %}" class="btn btn-social btn-github">
-                            <i class="fab fa-github social-icon"></i>
+                            <i class="iconoir-github social-icon"></i>
                             <span>Registrarse con GitHub</span>
                         </a>
                     </div>
@@ -69,7 +69,7 @@
                         {% csrf_token %}
 
                         <!-- Campo Honeypot Anti-Spam -->
-                        <div class="hp-field" style="display:none !important; position:absolute; left:-9999px;" aria-hidden="true" tabindex="-1">
+                        <div class="hp-field" aria-hidden="true" tabindex="-1">
                             <input type="text" name="website_url_check" value="" autocomplete="off">
                         </div>
 
@@ -77,14 +77,14 @@
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold small text-muted">Nombre</label>
-                                <input type="text" name="first_name" class="form-control" placeholder="Tu nombre" value="{{ form.first_name.value|default:'' }}" style="border-radius: 10px;">
+                                <input type="text" name="first_name" class="form-control auth-input-rounded" placeholder="Tu nombre" value="{{ form.first_name.value|default:'' }}">
                                 {% if form.first_name.errors %}
                                     <div class="text-danger small mt-1">{{ form.first_name.errors.0 }}</div>
                                 {% endif %}
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-bold small text-muted">Apellido</label>
-                                <input type="text" name="last_name" class="form-control" placeholder="Tu apellido" value="{{ form.last_name.value|default:'' }}" style="border-radius: 10px;">
+                                <input type="text" name="last_name" class="form-control auth-input-rounded" placeholder="Tu apellido" value="{{ form.last_name.value|default:'' }}">
                                 {% if form.last_name.errors %}
                                     <div class="text-danger small mt-1">{{ form.last_name.errors.0 }}</div>
                                 {% endif %}
@@ -95,10 +95,10 @@
                         <div class="mb-3">
                             <label class="form-label fw-bold small text-muted">Nombre de Usuario <span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <span class="input-group-text bg-light text-muted border-end-0" style="border-radius: 10px 0 0 10px;">
-                                    <i class="fas fa-id-badge"></i>
+                                <span class="input-group-text bg-light text-muted border-end-0 auth-addon-left">
+                                    <i class="iconoir-user"></i>
                                 </span>
-                                <input type="text" name="username" class="form-control border-start-0" placeholder="Ej: lector_apasionado" value="{{ form.username.value|default:'' }}" required autocomplete="username" style="border-radius: 0 10px 10px 0;">
+                                <input type="text" name="username" class="form-control border-start-0 auth-input-right" placeholder="Ej: lector_apasionado" value="{{ form.username.value|default:'' }}" required autocomplete="username">
                             </div>
                             {% if form.username.errors %}
                                 <div class="text-danger small mt-1">{{ form.username.errors.0 }}</div>
@@ -109,10 +109,10 @@
                         <div class="mb-3">
                             <label class="form-label fw-bold small text-muted">Correo Electrónico <span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <span class="input-group-text bg-light text-muted border-end-0" style="border-radius: 10px 0 0 10px;">
-                                    <i class="fas fa-envelope"></i>
+                                <span class="input-group-text bg-light text-muted border-end-0 auth-addon-left">
+                                    <i class="iconoir-mail"></i>
                                 </span>
-                                <input type="email" name="email" class="form-control border-start-0" placeholder="nombre@correo.com" value="{{ form.email.value|default:'' }}" required autocomplete="email" style="border-radius: 0 10px 10px 0;">
+                                <input type="email" name="email" class="form-control border-start-0 auth-input-right" placeholder="nombre@correo.com" value="{{ form.email.value|default:'' }}" required autocomplete="email">
                             </div>
                             {% if form.email.errors %}
                                 <div class="text-danger small mt-1">{{ form.email.errors.0 }}</div>
@@ -123,19 +123,19 @@
                         <div class="mb-3">
                             <label class="form-label fw-bold small text-muted">Contraseña <span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <span class="input-group-text bg-light text-muted border-end-0" style="border-radius: 10px 0 0 10px;">
-                                    <i class="fas fa-lock"></i>
+                                <span class="input-group-text bg-light text-muted border-end-0 auth-addon-left">
+                                    <i class="iconoir-lock"></i>
                                 </span>
                                 <input type="password" name="password" id="registerPasswordInput" class="form-control border-start-0 border-end-0" placeholder="Mínimo 8 caracteres" required autocomplete="new-password">
-                                <button type="button" class="btn btn-outline-secondary border-start-0 bg-light text-muted" id="toggleRegPassword" style="border-radius: 0 10px 10px 0;">
-                                    <i class="fas fa-eye" id="regEyeIcon"></i>
+                                <button type="button" class="btn btn-outline-secondary border-start-0 bg-light text-muted auth-addon-right" id="toggleRegPassword">
+                                    <i class="iconoir-eye" id="regEyeIcon"></i>
                                 </button>
                             </div>
                             <!-- Barra de seguridad -->
-                            <div class="progress mt-2" style="height: 5px; border-radius: 5px;">
-                                <div id="pwdStrengthBar" class="progress-bar bg-danger" role="progressbar" style="width: 0%;"></div>
+                            <div class="progress mt-2 auth-pwd-progress">
+                                <div id="pwdStrengthBar" class="progress-bar bg-danger" role="progressbar"></div>
                             </div>
-                            <div id="pwdStrengthText" class="small text-muted mt-1" style="font-size: 0.8rem;">Mínimo 8 caracteres recomendados</div>
+                            <div id="pwdStrengthText" class="small text-muted mt-1">Mínimo 8 caracteres recomendados</div>
                             {% if form.password.errors %}
                                 <div class="text-danger small mt-1">{{ form.password.errors.0 }}</div>
                             {% endif %}
@@ -145,12 +145,12 @@
                         <div class="mb-4">
                             <label class="form-label fw-bold small text-muted">Confirmar Contraseña <span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <span class="input-group-text bg-light text-muted border-end-0" style="border-radius: 10px 0 0 10px;">
-                                    <i class="fas fa-check-double"></i>
+                                <span class="input-group-text bg-light text-muted border-end-0 auth-addon-left">
+                                    <i class="iconoir-check"></i>
                                 </span>
                                 <input type="password" name="password_confirm" id="registerPasswordConfirmInput" class="form-control border-start-0 border-end-0" placeholder="Repite tu contraseña" required autocomplete="new-password">
-                                <button type="button" class="btn btn-outline-secondary border-start-0 bg-light text-muted" id="toggleRegPasswordConfirm" style="border-radius: 0 10px 10px 0;">
-                                    <i class="fas fa-eye" id="regEyeConfirmIcon"></i>
+                                <button type="button" class="btn btn-outline-secondary border-start-0 bg-light text-muted auth-addon-right" id="toggleRegPasswordConfirm">
+                                    <i class="iconoir-eye" id="regEyeConfirmIcon"></i>
                                 </button>
                             </div>
                             {% if form.password_confirm.errors %}
@@ -159,8 +159,8 @@
                         </div>
 
                         <!-- Beneficios de bienvenida -->
-                        <div class="bg-light p-3 rounded mb-4 small text-muted border" style="border-radius: 10px!important;">
-                            <div class="fw-bold text-dark mb-1"><i class="fas fa-gift text-primary me-1"></i> Incluye con tu registro:</div>
+                        <div class="bg-light p-3 rounded mb-4 small text-muted border auth-info-card">
+                            <div class="fw-bold text-dark mb-1"><i class="iconoir-gift text-primary me-1"></i> Incluye con tu registro:</div>
                             <ul class="mb-0 ps-3">
                                 <li>Membresía Gratuita activada al instante.</li>
                                 <li>Consultas y recomendaciones con el Asistente IA.</li>
@@ -188,16 +188,6 @@
     </div>
 </div>
 
-<style>
-    .hover-animate {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .hover-animate:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 1rem 3rem rgba(0,0,0,.15)!important;
-    }
-</style>
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const toggleRegBtn = document.getElementById('toggleRegPassword');
@@ -208,8 +198,8 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleRegBtn.addEventListener('click', function() {
             const isPassword = pwdInput.type === 'password';
             pwdInput.type = isPassword ? 'text' : 'password';
-            regEye.classList.toggle('fa-eye', !isPassword);
-            regEye.classList.toggle('fa-eye-slash', isPassword);
+            regEye.classList.toggle('iconoir-eye', !isPassword);
+            regEye.classList.toggle('iconoir-eye-closed', isPassword);
         });
     }
 
@@ -221,8 +211,8 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleConfirmBtn.addEventListener('click', function() {
             const isPassword = pwdConfirmInput.type === 'password';
             pwdConfirmInput.type = isPassword ? 'text' : 'password';
-            regEyeConfirm.classList.toggle('fa-eye', !isPassword);
-            regEyeConfirm.classList.toggle('fa-eye-slash', isPassword);
+            regEyeConfirm.classList.toggle('iconoir-eye', !isPassword);
+            regEyeConfirm.classList.toggle('iconoir-eye-closed', isPassword);
         });
     }
 

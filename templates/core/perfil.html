@@ -1,73 +1,825 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Perfil de {{ user.username }}{% endblock %}
+{% block title %}Mi Perfil & Biblioteca — LitMate{% endblock %}
 
 {% block content %}
-<header class="masthead" style="background-image: url('{% static 'assets/img/post-bg.jpg' %}')">
+<!-- CABECERA DE PERFIL EDITORIAL -->
+<header class="masthead profile-masthead" style="background-image: url('{% static 'assets/img/post-bg.jpg' %}');">
     <div class="container position-relative px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-7">
-                <div class="page-heading">
-                    {% if user.perfil.imagen %}
-                        <img src="{{ user.perfil.imagen.url }}" class="rounded-circle mb-3 border border-4 border-white" style="width: 150px; height: 150px; object-fit: cover;">
-                    {% endif %}
-                    <h1>{{ user.username }}</h1>
+            <div class="col-lg-10 col-xl-9">
+                <div class="profile-hero-card">
+                    <div class="profile-avatar-wrapper">
+                        {% if user.perfil.imagen and user.perfil.imagen.name != 'default.jpg' and 'default' not in user.perfil.imagen.name %}
+                            <img src="{{ user.perfil.imagen.url }}" class="profile-avatar-img" alt="Foto de perfil de {{ user.username }}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="profile-avatar-monogram" style="display: none;">
+                                <span>{{ user.username|slice:":1"|upper }}</span>
+                            </div>
+                        {% else %}
+                            <div class="profile-avatar-monogram">
+                                <span>{{ user.username|slice:":1"|upper }}</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="profile-hero-info">
+                        <div class="d-flex align-items-center gap-2 flex-wrap mb-1">
+                            <h1 class="profile-username mb-0">{{ user.username }}</h1>
+                            <span class="profile-role-badge">
+                                <i class="iconoir-spark me-1"></i> Lector LitMate
+                            </span>
+                        </div>
+                        <p class="profile-bio mb-2">{{ user.perfil.biografia|default:"Explorando mundos a través de las páginas." }}</p>
+                        <div class="profile-hero-meta">
+                            <span><i class="iconoir-mail me-1"></i>{{ user.email }}</span>
+                            {% if user.perfil.pais %}
+                            <span><i class="iconoir-globe me-1"></i>{{ user.perfil.pais }}</span>
+                            {% endif %}
+                            <span><i class="iconoir-calendar me-1"></i>Miembro desde {{ user.date_joined|date:"M Y" }}</span>
+                        </div>
+                    </div>
+                    <div class="profile-hero-actions">
+                        <a href="{% url 'editar_perfil' %}" class="btn btn-profile-edit">
+                            <i class="iconoir-edit-pencil me-1"></i> Editar Perfil
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
+<!-- CONTENEDOR PRINCIPAL DEL DASHBOARD (4 PESTAÑAS) -->
 <div class="container px-4 px-lg-5 my-5">
-    <div class="row">
-        <div class="col-md-4 mb-4">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Sobre mí</h5>
-                    <p class="text-muted">{{ user.perfil.biografia|default:"Sin descripción." }}</p>
-                    <hr>
-                    <ul class="list-unstyled">
-                        <li><strong>Email:</strong> {{ user.email }}</li>
-                        {% if user.perfil.telefono %}
-                            <li><strong>Tel:</strong> {{ user.perfil.telefono }}</li>
-                        {% endif %}
-                    </ul>
-                    <div class="d-grid">
-                        <a href="{% url 'editar_perfil' %}" class="btn btn-outline-primary">Editar Perfil</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-11 col-xl-10">
 
-        <div class="col-md-8">
-            <h3 class="mb-4">Mis Libros Favoritos</h3>
-            {% if favoritos %}
-            <div class="row row-cols-1 row-cols-md-2 g-4">
-                {% for fav in favoritos %}
-                <div class="col">
-                    <div class="card h-100 border-0 shadow-sm">
-                        <div class="row g-0 h-100">
-                            <div class="col-4">
-                                <img src="{{ fav.imagen_url|default:'#' }}" class="img-fluid rounded-start h-100" style="object-fit: cover;" alt="Portada">
-                            </div>
-                            <div class="col-8">
-                                <div class="card-body">
-                                    <h6 class="card-title">{{ fav.titulo|truncatechars:40 }}</h6>
-                                    <p class="card-text small">{{ fav.autores }}</p>
-                                    <a href="{% url 'eliminar_favorito' fav.id %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Eliminar?')">
-                                        <i class="fas fa-trash"></i> Eliminar
-                                    </a>
+            <!-- SELECTOR DE PESTAÑAS (TABS) -->
+            <ul class="nav nav-pills profile-nav-tabs mb-4 justify-content-center justify-content-md-start" id="profileTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="tab-biblioteca" data-bs-toggle="pill" data-bs-target="#content-biblioteca" type="button" role="tab" aria-selected="true">
+                        <i class="iconoir-book-stack me-2"></i> Mi Biblioteca
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tab-radar" data-bs-toggle="pill" data-bs-target="#content-radar" type="button" role="tab" aria-selected="false">
+                        <i class="iconoir-bell-notification me-2"></i> Radar / Alertas
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tab-stats" data-bs-toggle="pill" data-bs-target="#content-stats" type="button" role="tab" aria-selected="false">
+                        <i class="iconoir-stats-report me-2"></i> Estadísticas
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tab-historial" data-bs-toggle="pill" data-bs-target="#content-historial" type="button" role="tab" aria-selected="false">
+                        <i class="iconoir-search me-2"></i> Historial de Búsqueda
+                    </button>
+                </li>
+            </ul>
+
+            <!-- CONTENIDO DE LAS PESTAÑAS -->
+            <div class="tab-content" id="profileTabsContent">
+
+                <!-- ======================================================= -->
+                <!-- PESTAÑA 1: MI BIBLIOTECA -->
+                <!-- ======================================================= -->
+                <div class="tab-pane fade show active" id="content-biblioteca" role="tabpanel" aria-labelledby="tab-biblioteca">
+                    
+                    <!-- Sub-barra de acciones: Filtros y Botón Nueva Lista -->
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4 pb-2 border-bottom">
+                        <div class="d-flex flex-wrap gap-2">
+                            <button type="button" class="btn btn-library-filter active" data-filter="all">
+                                Todos ({{ favoritos|length }})
+                            </button>
+                            <button type="button" class="btn btn-library-filter" data-filter="favoritos">
+                                <i class="iconoir-heart me-1 text-danger"></i> Favoritos ({{ favoritos|length }})
+                            </button>
+                            <button type="button" class="btn btn-library-filter" data-filter="listas">
+                                <i class="iconoir-list me-1"></i> Mis Listas ({{ listas|length }})
+                            </button>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="button" class="btn btn-new-list" data-bs-toggle="modal" data-bs-target="#modalNuevaLista">
+                                <i class="iconoir-plus me-1"></i> Nueva Lista
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Cuadrícula de Libros Favoritos -->
+                    <div class="library-section mb-5" id="sectionFavoritos">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="library-section-heading mb-0">
+                                <i class="iconoir-bookmark-book me-2 text-teal"></i> Libros Guardados en Favoritos
+                            </h4>
+                        </div>
+                        
+                        {% if favoritos %}
+                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+                            {% for fav in favoritos %}
+                            <div class="col library-item-card" data-category="favoritos">
+                                <div class="book-card h-100">
+                                    <div class="book-card-cover">
+                                        <img src="{{ fav.imagen_url|default:'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=400' }}" 
+                                             class="book-cover-img" 
+                                             alt="Portada de {{ fav.titulo }}"
+                                             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=400';">
+                                    </div>
+                                    <div class="book-card-body">
+                                        <h5 class="book-card-title text-truncate" title="{{ fav.titulo }}">{{ fav.titulo }}</h5>
+                                        <p class="book-card-author text-truncate">{{ fav.autores }}</p>
+                                        
+                                        <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top">
+                                            <a href="{% url 'buscar_libros' %}?q={{ fav.titulo|urlencode }}" class="btn btn-sm btn-outline-dark rounded-pill px-3">
+                                                <i class="iconoir-open-book me-1"></i> Ver Ficha
+                                            </a>
+                                            <a href="{% url 'eliminar_favorito' fav.id %}" class="btn btn-sm btn-outline-danger rounded-circle btn-icon-only" title="Eliminar de favoritos" onclick="return confirm('¿Deseas quitar este libro de favoritos?')">
+                                                <i class="iconoir-trash"></i>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <div class="empty-library-box text-center p-5" id="noFavoritesEmptyBox">
+                            <i class="iconoir-book-stack fa-3x mb-3 text-muted"></i>
+                            <h5 class="fw-bold">Aún no has guardado libros en tus favoritos</h5>
+                            <p class="text-muted small">Explora el catálogo o pregúntale al Asistente de IA para descubrir títulos y añadirlos a tu biblioteca.</p>
+                            <a href="{% url 'buscar_libros' %}" class="btn btn-primary rounded-pill px-4 mt-2">
+                                <i class="iconoir-search me-1"></i> Explorar Catálogo
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Sección de Listas Personalizadas -->
+                    <div class="library-section" id="sectionListas">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="library-section-heading mb-0">
+                                <i class="iconoir-playlist me-2 text-ochre"></i> Mis Listas Personalizadas
+                            </h4>
+                        </div>
+
+                        <div class="row g-4" id="customListsContainer">
+                            {% for lista in listas %}
+                            <div class="col-md-6 col-lg-6" id="listaCard-{{ lista.id }}">
+                                <div class="custom-list-card">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <span class="custom-list-badge">
+                                            <i class="iconoir-list me-1"></i> Lista Personalizada
+                                        </span>
+                                        <button type="button" class="btn-delete-list" onclick="eliminarLista({{ lista.id }}, '{{ lista.nombre|escapejs }}')" title="Eliminar lista completa">
+                                            <i class="iconoir-xmark"></i>
+                                        </button>
+                                    </div>
+                                    <h5 class="custom-list-title mb-1">{{ lista.nombre }}</h5>
+                                    <p class="custom-list-desc text-muted mb-3">{{ lista.descripcion|default:"Lista temática creada en LitMate." }}</p>
+
+                                    <!-- Libros contenidos en esta lista -->
+                                    <div class="custom-list-books-box p-2 mb-3 rounded bg-light border">
+                                        <span class="d-block small fw-bold text-uppercase text-muted mb-2">Libros en esta lista ({{ lista.elementos.count }}):</span>
+                                        {% if lista.elementos.all %}
+                                        <div class="d-flex flex-column gap-2">
+                                            {% for elem in lista.elementos.all %}
+                                            <div class="d-flex justify-content-between align-items-center bg-white p-2 rounded border" id="elemRow-{{ elem.id }}">
+                                                <div class="d-flex align-items-center gap-2 overflow-hidden">
+                                                    <img src="{{ elem.imagen_url|default:'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=400' }}" alt="{{ elem.titulo }}" style="width: 32px; height: 44px; object-fit: cover; border-radius: 4px; flex-shrink: 0;" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=400';">
+                                                    <div class="text-truncate">
+                                                        <div class="d-flex align-items-center gap-2 flex-wrap mb-1">
+                                                            <a href="{% url 'buscar_libros' %}?q={{ elem.titulo|urlencode }}" class="text-dark fw-bold small text-decoration-none text-truncate d-inline-block">{{ elem.titulo }}</a>
+                                                            {% if elem.estado_lectura == 'leyendo' %}
+                                                            <span class="badge-status-pill badge-status-leyendo">Leyendo</span>
+                                                            {% elif elem.estado_lectura == 'completado' %}
+                                                            <span class="badge-status-pill badge-status-completado">Completado</span>
+                                                            {% else %}
+                                                            <span class="badge-status-pill badge-status-planeo">Planeo</span>
+                                                            {% endif %}
+                                                        </div>
+                                                        <span class="text-muted small text-truncate d-block" style="font-size: 0.75rem;">{{ elem.autores }}</span>
+                                                    </div>
+                                                </div>
+                                                <button type="button" class="btn btn-sm btn-link text-danger p-0 ms-2" onclick="quitarLibroDeLista({{ elem.id }}, '{{ elem.titulo|escapejs }}')" title="Quitar de esta lista">
+                                                    <i class="iconoir-trash"></i>
+                                                </button>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        <p class="text-muted small fst-italic mb-0">Esta lista aún no tiene libros. Ve a <a href="{% url 'buscar_libros' %}" class="text-teal fw-bold">Explorar Libros</a> y añade libros desde la ficha.</p>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="custom-list-footer d-flex justify-content-between align-items-center">
+                                        <span class="small text-muted"><i class="iconoir-calendar me-1"></i>Creada el {{ lista.fecha_creacion|date:"d M Y" }}</span>
+                                        <span class="small fw-semibold text-muted">{{ lista.elementos.count }} libros</span>
+                                    </div>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <div class="col-12" id="noListsMsg">
+                                <div class="empty-list-prompt p-4 text-center rounded-3">
+                                    <i class="iconoir-folder-plus fa-2x mb-2 text-muted"></i>
+                                    <h6 class="fw-bold mb-1">Crea tu primera lista temática</h6>
+                                    <p class="text-muted small mb-3">Agrupa lecturas por temas desde aquí o directamente desde la pestaña de <strong>Explorar Libros</strong>.</p>
+                                    <button type="button" class="btn btn-sm btn-outline-dark rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#modalNuevaLista">
+                                        <i class="iconoir-plus me-1"></i> Crear Lista
+                                    </button>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ======================================================= -->
+                <!-- PESTAÑA 2: RADAR / ALERTAS DE PRECIOS -->
+                <!-- ======================================================= -->
+                <div class="tab-pane fade" id="content-radar" role="tabpanel" aria-labelledby="tab-radar">
+                    
+                    <div class="radar-header-banner p-4 mb-4 rounded-3">
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                            <div>
+                                <h4 class="fw-bold mb-1"><i class="iconoir-bell-notification me-2 text-teal"></i>Radar de Precios y Oportunidades</h4>
+                                <p class="text-muted small mb-0">Comparamos en tiempo real el precio de tus libros guardados en las principales librerías asociadas.</p>
+                            </div>
+                            <div>
+                                <span class="badge bg-success px-3 py-2 rounded-pill font-monospace">
+                                    <i class="iconoir-check-circle me-1"></i> Monitoreo Activo
+                                </span>
                             </div>
                         </div>
                     </div>
+
+                    <div class="row g-4">
+                        {% for item in radar_libros %}
+                        <div class="col-12">
+                            <div class="price-radar-card">
+                                <div class="price-radar-cover">
+                                    <img src="{{ item.portada }}" alt="{{ item.titulo }}" class="price-radar-img" onerror="this.onerror=null; this.src='https://covers.openlibrary.org/b/id/8231856-L.jpg';">
+                                </div>
+                                <div class="price-radar-details">
+                                    <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-1">
+                                        <h5 class="price-radar-title mb-0">{{ item.titulo }}</h5>
+                                        <span class="price-radar-discount badge">{{ item.descuento }} Oportunidad</span>
+                                    </div>
+                                    <p class="price-radar-author text-muted small mb-3">{{ item.autor }}</p>
+
+                                    <!-- Tiendas comparadas -->
+                                    <div class="price-radar-stores">
+                                        {% for t in item.tiendas %}
+                                        <div class="price-store-chip {% if t.es_mejor %}store-chip-best{% endif %}">
+                                            <span class="store-chip-name">{{ t.nombre }}</span>
+                                            <span class="store-chip-price">{{ t.precio }}</span>
+                                            {% if t.es_mejor %}
+                                            <span class="store-chip-badge">Mejor Precio</span>
+                                            {% endif %}
+                                            <a href="{{ t.url }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-store-go">
+                                                Comprar <i class="iconoir-open-new-window ms-1"></i>
+                                            </a>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
                 </div>
-                {% endfor %}
+
+                <!-- ======================================================= -->
+                <!-- PESTAÑA 3: ESTADÍSTICAS DE LECTURA -->
+                <!-- ======================================================= -->
+                <div class="tab-pane fade" id="content-stats" role="tabpanel" aria-labelledby="tab-stats">
+                    
+                    <!-- Fila 1: Meta y Géneros -->
+                    <div class="row g-4 mb-4">
+                        
+                        <!-- Tarjeta 1: Meta Anual de Lectura -->
+                        <div class="col-md-7 col-lg-8">
+                            <div class="stats-card h-100">
+                                <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-2">
+                                    <div>
+                                        <span class="text-uppercase small fw-bold text-muted">Reto de Lectura 2026</span>
+                                        <h3 class="fw-bold mb-0">Meta Anual de Libros</h3>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="stats-goal-badge">{{ progreso_meta_pct }}% Completado</span>
+                                        <button type="button" class="btn btn-sm btn-outline-dark rounded-pill px-3 fw-semibold" data-bs-toggle="modal" data-bs-target="#modalAjustarPreferencias">
+                                            <i class="iconoir-edit-pencil me-1"></i> Personalizar
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="reading-progress-track mb-3">
+                                    <div class="reading-progress-fill" style="width: {{ progreso_meta_pct }}%;"></div>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center text-muted small">
+                                    <span><strong>{{ total_leidos_count }}</strong> libros completados</span>
+                                    <span>Objetivo: <strong>{{ meta_anual }}</strong> libros / año</span>
+                                </div>
+
+                                <hr class="my-4">
+
+                                <div class="row text-center g-2">
+                                    <div class="col-4">
+                                        <div class="p-2 rounded bg-light">
+                                            <span class="d-block text-muted small">Páginas Leídas</span>
+                                            <strong class="fs-5 text-dark">{{ paginas_leidas }}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="p-2 rounded bg-light">
+                                            <span class="d-block text-muted small">Horas Estimadas</span>
+                                            <strong class="fs-5 text-dark">~{{ tiempo_lectura_horas }}h</strong>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="p-2 rounded bg-light">
+                                            <span class="d-block text-muted small">En Biblioteca</span>
+                                            <strong class="fs-5 text-teal">{{ total_guardados }}</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tarjeta 2: Distribución por Géneros -->
+                        <div class="col-md-5 col-lg-4">
+                            <div class="stats-card h-100">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <span class="text-uppercase small fw-bold text-muted d-block">Perfil Temático</span>
+                                        <h4 class="fw-bold mb-0">Géneros Preferidos</h4>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-outline-dark rounded-circle btn-icon-only" data-bs-toggle="modal" data-bs-target="#modalAjustarPreferencias" title="Cambiar géneros preferidos">
+                                        <i class="iconoir-edit-pencil"></i>
+                                    </button>
+                                </div>
+                                <p class="text-muted small mb-3">Tus intereses configurados para análisis y recomendaciones:</p>
+
+                                <div class="genre-stats-list d-flex flex-column gap-3">
+                                    {% for g in generos_stats %}
+                                    <div class="genre-stat-item">
+                                        <div class="d-flex justify-content-between small fw-semibold mb-1">
+                                            <span>{{ g.nombre }}</span>
+                                            <span>{{ g.porcentaje }}%</span>
+                                        </div>
+                                        <div class="progress" style="height: 7px;">
+                                            <div class="progress-bar" role="progressbar" style="width: {{ g.porcentaje }}%; background-color: {{ g.color }};" aria-valuenow="{{ g.porcentaje }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    {% empty %}
+                                    <span class="text-muted small fst-italic">Selecciona tus géneros preferidos en "Personalizar".</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Fila 2: Desglose por Estados de Lectura -->
+                    <div class="row g-3">
+                        <div class="col-6 col-md-3">
+                            <div class="p-3 rounded-3 border bg-white text-center h-100 shadow-sm stats-status-card">
+                                <div class="d-inline-flex p-2 rounded-circle bg-primary-subtle text-primary mb-2">
+                                    <i class="iconoir-open-book fs-4"></i>
+                                </div>
+                                <h4 class="fw-bold mb-0 text-dark">{{ libros_leyendo_count }}</h4>
+                                <span class="small text-muted fw-semibold">Leyendo Actualmente</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="p-3 rounded-3 border bg-white text-center h-100 shadow-sm stats-status-card">
+                                <div class="d-inline-flex p-2 rounded-circle bg-warning-subtle text-warning-emphasis mb-2">
+                                    <i class="iconoir-clock fs-4"></i>
+                                </div>
+                                <h4 class="fw-bold mb-0 text-dark">{{ libros_planeo_count }}</h4>
+                                <span class="small text-muted fw-semibold">Planeo / Por Leer</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="p-3 rounded-3 border bg-white text-center h-100 shadow-sm stats-status-card">
+                                <div class="d-inline-flex p-2 rounded-circle bg-success-subtle text-success mb-2">
+                                    <i class="iconoir-check-circle fs-4"></i>
+                                </div>
+                                <h4 class="fw-bold mb-0 text-dark">{{ libros_leidos_count }}</h4>
+                                <span class="small text-muted fw-semibold">Libros Completados</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="p-3 rounded-3 border bg-white text-center h-100 shadow-sm stats-status-card">
+                                <div class="d-inline-flex p-2 rounded-circle bg-info-subtle text-info-emphasis mb-2">
+                                    <i class="iconoir-playlist fs-4"></i>
+                                </div>
+                                <h4 class="fw-bold mb-0 text-dark">{{ listas|length }}</h4>
+                                <span class="small text-muted fw-semibold">Listas Personalizadas</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ======================================================= -->
+                <!-- PESTAÑA 4: HISTORIAL DE BÚSQUEDA -->
+                <!-- ======================================================= -->
+                <div class="tab-pane fade" id="content-historial" role="tabpanel" aria-labelledby="tab-historial">
+                    
+                    <div class="prefs-card p-4 p-md-5">
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4 pb-2 border-bottom">
+                            <div>
+                                <h4 class="fw-bold mb-1"><i class="iconoir-search me-2 text-teal"></i>Historial de Búsqueda</h4>
+                                <p class="text-muted small mb-0">Tus búsquedas recientes en el catálogo y accesos rápidos a descubrimientos.</p>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-sm btn-outline-danger rounded-pill px-3" onclick="limpiarHistorialBusqueda()">
+                                    <i class="iconoir-trash me-1"></i> Limpiar Historial
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="row g-3" id="historialListContainer">
+                            {% for item in historial_busquedas %}
+                            <div class="col-md-6">
+                                <div class="d-flex justify-content-between align-items-center p-3 rounded-3 border bg-light h-100">
+                                    <div class="overflow-hidden me-2">
+                                        <strong class="text-dark text-truncate d-block">{{ item.query }}</strong>
+                                        <span class="text-muted small d-block" style="font-size: 0.78rem;">
+                                            {{ item.fecha }} • {{ item.total }} resultados
+                                        </span>
+                                    </div>
+                                    <a href="{% url 'buscar_libros' %}?q={{ item.query|urlencode }}" class="btn btn-sm btn-outline-dark rounded-pill px-3 text-nowrap">
+                                        Buscar
+                                    </a>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <div class="col-12 text-center p-5 text-muted">
+                                <i class="iconoir-search fa-2x mb-2"></i>
+                                <h6>No tienes búsquedas registradas aún</h6>
+                                <p class="small">Cuando busques autores, títulos o géneros en el explorador, aparecerán aquí para acceso rápido.</p>
+                                <a href="{% url 'buscar_libros' %}" class="btn btn-sm btn-primary rounded-pill px-4 mt-2">Ir a Explorar Libros</a>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Atajos a géneros populares -->
+                        <div class="mt-4 pt-4 border-top">
+                            <span class="small fw-bold text-uppercase text-muted d-block mb-2">Exploraciones Populares:</span>
+                            <div class="d-flex flex-wrap gap-2">
+                                <a href="{% url 'buscar_libros' %}?q=Ciencia+Ficci%C3%B3n" class="btn btn-sm btn-library-filter">Ciencia Ficción</a>
+                                <a href="{% url 'buscar_libros' %}?q=Fantas%C3%ADa" class="btn btn-sm btn-library-filter">Fantasía Épica</a>
+                                <a href="{% url 'buscar_libros' %}?q=Cl%C3%A1sicos" class="btn btn-sm btn-library-filter">Literatura Clásica</a>
+                                <a href="{% url 'buscar_libros' %}?q=Misterio" class="btn btn-sm btn-library-filter">Misterio & Suspenso</a>
+                                <a href="{% url 'buscar_libros' %}?q=Desarrollo+Personal" class="btn btn-sm btn-library-filter">Desarrollo Personal</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
-            {% else %}
-                <div class="alert alert-light border">Aún no tienes favoritos.</div>
-            {% endif %}
+
         </div>
     </div>
 </div>
+
+<!-- ======================================================= -->
+<!-- MODAL: CREAR NUEVA LISTA PERSONALIZADA -->
+<!-- ======================================================= -->
+<div class="modal fade" id="modalNuevaLista" tabindex="-1" aria-labelledby="modalNuevaListaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content new-list-modal-content">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold" id="modalNuevaListaLabel">
+                    <i class="iconoir-folder-plus me-2 text-teal"></i> Nueva Lista de Lectura
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <form id="formCrearLista">
+                {% csrf_token %}
+                <div class="modal-body py-4">
+                    <div class="mb-3">
+                        <label for="nombreListaInput" class="form-label fw-bold small">Nombre *</label>
+                        <input type="text" class="form-control" id="nombreListaInput" placeholder="Mi lista de series favoritas" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="descListaInput" class="form-label fw-bold small">Descripción</label>
+                        <textarea class="form-control" id="descListaInput" rows="3" placeholder="Una breve descripción de tu lista"></textarea>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="publicaListaInput">
+                        <label class="form-check-label small text-muted" for="publicaListaInput">
+                            ¿Es pública?
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0 d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-outline-secondary rounded-pill px-3" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold" id="btnCrearListaSubmit">
+                        Crear Lista
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ======================================================= -->
+<!-- MODAL: PERSONALIZAR OBJETIVO ANUAL Y GÉNEROS FAVORITOS -->
+<!-- ======================================================= -->
+<div class="modal fade" id="modalAjustarPreferencias" tabindex="-1" aria-labelledby="modalAjustarPreferenciasLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content custom-panel-modal-content p-2">
+            <div class="modal-header border-0 pb-1">
+                <h5 class="modal-title fw-bold" id="modalAjustarPreferenciasLabel">
+                    <i class="iconoir-stats-report me-2 text-teal"></i> Personalizar Estadísticas & Reto
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <form id="formPreferenciasStats">
+                {% csrf_token %}
+                <div class="modal-body py-3">
+                    
+                    <!-- 1. Meta Anual -->
+                    <div class="mb-4">
+                        <label for="metaAnualInput" class="form-label fw-bold small text-uppercase" style="letter-spacing: 0.5px;">Tu Meta Anual de Lectura</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control form-control-panel" id="metaAnualInput" min="1" max="200" value="{{ meta_anual }}" required>
+                            <span class="input-group-text bg-light fw-semibold text-muted">libros / año</span>
+                        </div>
+                        <span class="small text-muted d-block mt-1">Este objetivo calcula tu barra de progreso anual del 2026.</span>
+                    </div>
+
+                    <!-- 2. Géneros Preferidos -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-uppercase d-block" style="letter-spacing: 0.5px;">Tus Géneros Literarios Preferidos</label>
+                        <span class="small text-muted d-block mb-2">Haz clic para seleccionar tus temas de interés (hasta 4 para el gráfico temático):</span>
+                        <div class="d-flex flex-wrap gap-2" id="genresSelectorContainer">
+                            {% for g in generos_disponibles %}
+                            <button type="button" class="btn btn-sm btn-genre-selectable {% if g in generos_seleccionados %}btn-genre-selected{% endif %}" data-genre="{{ g }}" onclick="toggleGenreSelection(this)">
+                                <i class="{% if g in generos_seleccionados %}iconoir-check-circle text-teal{% else %}iconoir-plus-circle{% endif %} me-1"></i> {{ g }}
+                            </button>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer border-0 pt-0 d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-outline-secondary rounded-pill px-3" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold" id="btnGuardarPrefsSubmit">
+                        Guardar Preferencias
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- SCRIPTS DE INTERACCIÓN AJAX DE PERFIL -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // 1. Filtros rápidos de biblioteca
+    const filterBtns = document.querySelectorAll('.btn-library-filter');
+    const sectionFavoritos = document.getElementById('sectionFavoritos');
+    const sectionListas = document.getElementById('sectionListas');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const filter = this.dataset.filter;
+
+            if (filter === 'all') {
+                if (sectionFavoritos) sectionFavoritos.style.display = 'block';
+                if (sectionListas) sectionListas.style.display = 'block';
+            } else if (filter === 'favoritos') {
+                if (sectionFavoritos) sectionFavoritos.style.display = 'block';
+                if (sectionListas) sectionListas.style.display = 'none';
+            } else if (filter === 'listas') {
+                if (sectionFavoritos) sectionFavoritos.style.display = 'none';
+                if (sectionListas) sectionListas.style.display = 'block';
+            }
+        });
+    });
+
+    // 2. Creación de Nueva Lista vía Modal
+    const formCrearLista = document.getElementById('formCrearLista');
+    if (formCrearLista) {
+        formCrearLista.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nombre = document.getElementById('nombreListaInput').value.trim();
+            const descripcion = document.getElementById('descListaInput').value.trim();
+            const submitBtn = document.getElementById('btnCrearListaSubmit');
+
+            if (!nombre) {
+                if (window.showToast) window.showToast('El nombre de la lista es obligatorio', 'warning');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Creando...';
+
+            fetch("{% url 'crear_lista_api' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ nombre: nombre, descripcion: descripcion })
+            })
+            .then(res => res.json())
+            .then(data => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="iconoir-check me-1"></i> Crear Lista';
+                
+                if (data.status === 'ok') {
+                    // Cerrar modal
+                    const modalEl = document.getElementById('modalNuevaLista');
+                    const modalInstance = bootstrap.Modal.getInstance(modalEl);
+                    if (modalInstance) modalInstance.hide();
+                    formCrearLista.reset();
+
+                    // Mensaje toast
+                    if (window.showToast) window.showToast(data.msg, 'success');
+
+                    // Agregar tarjeta al contenedor dinámicamente
+                    const container = document.getElementById('customListsContainer');
+                    const noMsg = document.getElementById('noListsMsg');
+                    if (noMsg) noMsg.remove();
+
+                    const newCard = document.createElement('div');
+                    newCard.className = 'col-md-6 col-lg-6';
+                    newCard.id = `listaCard-${data.id}`;
+                    newCard.innerHTML = `
+                        <div class="custom-list-card">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <span class="custom-list-badge"><i class="iconoir-list me-1"></i> Lista Personalizada</span>
+                                <button type="button" class="btn-delete-list" onclick="eliminarLista(${data.id}, '${data.nombre}')" title="Eliminar lista">
+                                    <i class="iconoir-xmark"></i>
+                                </button>
+                            </div>
+                            <h5 class="custom-list-title mb-1">${data.nombre}</h5>
+                            <p class="custom-list-desc text-muted mb-3">${data.descripcion || 'Lista temática creada en LitMate.'}</p>
+                            <div class="custom-list-books-box p-2 mb-3 rounded bg-light border">
+                                <span class="d-block small fw-bold text-uppercase text-muted mb-2">Libros en esta lista (0):</span>
+                                <p class="text-muted small fst-italic mb-0">Esta lista aún no tiene libros. Ve a <a href="{% url 'buscar_libros' %}" class="text-teal fw-bold">Explorar Libros</a> y haz clic en <em>"Añadir a lista"</em>.</p>
+                            </div>
+                            <div class="custom-list-footer">
+                                <a href="{% url 'buscar_libros' %}" class="btn btn-sm btn-outline-dark rounded-pill px-3">
+                                    <i class="iconoir-plus me-1"></i> Añadir Libros
+                                </a>
+                                <span class="small text-muted">Recién creada</span>
+                            </div>
+                        </div>
+                    `;
+                    container.prepend(newCard);
+                } else {
+                    if (window.showToast) window.showToast(data.msg || 'Error al crear la lista', 'error');
+                }
+            })
+            .catch(err => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="iconoir-check me-1"></i> Crear Lista';
+                if (window.showToast) window.showToast('Error de conexión con el servidor', 'error');
+            });
+        });
+    }
+
+    // 3. Función Global para Eliminar Lista
+    window.eliminarLista = function(id, nombre) {
+        if (!confirm(`¿Estás seguro de eliminar la lista "${nombre}" y todos sus libros asociados?`)) return;
+
+        fetch(`/api/listas/eliminar/${id}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'ok') {
+                const card = document.getElementById(`listaCard-${id}`);
+                if (card) card.remove();
+                if (window.showToast) window.showToast(data.msg, 'success');
+            } else {
+                if (window.showToast) window.showToast(data.msg || 'Error al eliminar', 'error');
+            }
+        })
+        .catch(err => {
+            if (window.showToast) window.showToast('Error de conexión', 'error');
+        });
+    };
+
+    // 4. Quitar un libro individual de una lista
+    window.quitarLibroDeLista = function(elemId, titulo) {
+        if (!confirm(`¿Deseas quitar "${titulo}" de esta lista?`)) return;
+
+        fetch(`/api/listas/quitar-libro/${elemId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'ok') {
+                const row = document.getElementById(`elemRow-${elemId}`);
+                if (row) row.remove();
+                if (window.showToast) window.showToast(data.msg, 'success');
+            } else {
+                if (window.showToast) window.showToast(data.msg || 'No se pudo quitar el libro', 'error');
+            }
+        });
+    };
+
+    // 5. Limpiar historial de búsqueda
+    window.limpiarHistorialBusqueda = function() {
+        if (!confirm('¿Deseas limpiar tu historial de búsquedas recientes?')) return;
+
+        fetch("{% url 'limpiar_historial_busqueda_api' %}", {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'ok') {
+                const container = document.getElementById('historialListContainer');
+                if (container) {
+                    container.innerHTML = `
+                        <div class="col-12 text-center p-5 text-muted">
+                            <i class="iconoir-search fa-2x mb-2"></i>
+                            <h6>Historial limpio</h6>
+                            <p class="small">Tus próximas búsquedas en el catálogo aparecerán aquí.</p>
+                            <a href="{% url 'buscar_libros' %}" class="btn btn-sm btn-primary rounded-pill px-4 mt-2">Ir a Explorar Libros</a>
+                        </div>
+                    `;
+                }
+                if (window.showToast) window.showToast(data.msg, 'success');
+            }
+        });
+    };
+
+    // 6. Toggle Selección de Géneros y Guardar Preferencias de Estadísticas
+    window.toggleGenreSelection = function(btn) {
+        const isSelected = btn.classList.contains('btn-genre-selected');
+        const icon = btn.querySelector('i');
+        if (isSelected) {
+            btn.classList.remove('btn-genre-selected');
+            if (icon) icon.className = 'iconoir-plus-circle me-1';
+        } else {
+            btn.classList.add('btn-genre-selected');
+            if (icon) icon.className = 'iconoir-check-circle text-teal me-1';
+        }
+    };
+
+    const formPrefs = document.getElementById('formPreferenciasStats');
+    if (formPrefs) {
+        formPrefs.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const meta = document.getElementById('metaAnualInput').value;
+            const selectedGenres = Array.from(document.querySelectorAll('.btn-genre-selected')).map(b => b.dataset.genre);
+            const submitBtn = document.getElementById('btnGuardarPrefsSubmit');
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'Guardando...';
+
+            fetch("{% url 'actualizar_preferencias_stats_api' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    meta_anual: meta,
+                    generos: selectedGenres
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Guardar Preferencias';
+                if (data.status === 'ok') {
+                    if (window.showToast) window.showToast(data.msg, 'success');
+                    setTimeout(() => window.location.reload(), 500);
+                } else {
+                    if (window.showToast) window.showToast(data.msg || 'Error al guardar', 'error');
+                }
+            })
+            .catch(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Guardar Preferencias';
+                if (window.showToast) window.showToast('Error de conexión', 'error');
+            });
+        });
+    }
+
+});
+</script>
 {% endblock %}

@@ -1,0 +1,120 @@
+/* =====================================================================
+   LitMate — Authentication & Account Styles (login, register, password reset)
+   ===================================================================== */
+
+/* 1. Tarjetas de Autenticación */
+.auth-card {
+  border-radius: 15px !important;
+  border: none !important;
+  box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.08) !important;
+}
+
+.auth-card-compact {
+  border-radius: 16px !important;
+  border: 1px solid var(--lm-border, #e2e8f0) !important;
+}
+
+/* 2. Iconos de Cabecera */
+.auth-header-icon {
+  width: 65px;
+  height: 65px;
+  background: linear-gradient(135deg, var(--lm-teal, #227D8E) 0%, var(--lm-teal-hover, #1b6472) 100%);
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  box-shadow: 0 4px 14px rgba(34, 125, 142, 0.35);
+}
+
+.auth-header-icon-key {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, var(--lm-teal, #227D8E) 0%, var(--lm-dark-wood, #3B2818) 100%);
+  color: #ffffff;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 14px rgba(34, 125, 142, 0.35);
+}
+
+.auth-header-icon-success {
+  width: 72px;
+  height: 72px;
+  background: rgba(34, 125, 142, 0.15);
+  color: var(--lm-teal, #227D8E);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.auth-header-icon-warning {
+  width: 72px;
+  height: 72px;
+  background: rgba(147, 107, 54, 0.15);
+  color: var(--lm-ochre, #936B36);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.auth-header-icon-danger {
+  width: 72px;
+  height: 72px;
+  background: rgba(140, 43, 34, 0.15);
+  color: var(--lm-oxide-red, #8C2B22);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+/* 3. Inputs y Grupos de Formulario */
+.auth-addon-left {
+  border-radius: 10px 0 0 10px !important;
+}
+
+.auth-addon-right {
+  border-radius: 0 10px 10px 0 !important;
+}
+
+.auth-input-rounded {
+  border-radius: 10px !important;
+}
+
+.auth-input-right {
+  border-radius: 0 10px 10px 0 !important;
+}
+
+.auth-info-card {
+  border-radius: 10px !important;
+  line-height: 1.7;
+}
+
+/* 4. Utilidades Comunes de Auth */
+.hover-animate {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-animate:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.14) !important;
+}
+
+.hp-field {
+  display: none !important;
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
+
