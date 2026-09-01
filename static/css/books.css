@@ -1,0 +1,445 @@
+/* =====================================================================
+   LitMate — Books & Catalog Styles (buscar_libros.html) - Minimal & Serio
+   ===================================================================== */
+
+/* 1. Tarjeta de Búsqueda y Filtros */
+.book-search-card {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1.5px solid var(--lm-border, #BDB59D) !important;
+  box-shadow: 0 4px 20px rgba(11, 12, 10, 0.05) !important;
+}
+
+.search-input-wrapper {
+  display: flex;
+  align-items: stretch;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1.5px solid var(--lm-border, #BDB59D);
+  background: #ffffff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-input-wrapper:focus-within {
+  border-color: var(--lm-teal, #227D8E);
+  box-shadow: 0 0 0 3px rgba(34, 125, 142, 0.15);
+}
+
+.book-main-search-input {
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  background: transparent;
+  color: var(--lm-shadow, #0B0C0A);
+  flex-grow: 1;
+}
+
+.book-main-search-input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.btn-search-action {
+  background: var(--lm-teal, #227D8E);
+  color: #ffffff;
+  border: none;
+  padding: 0 1.75rem;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s ease;
+}
+
+.btn-search-action:hover {
+  background: #1b6472;
+  color: #ffffff;
+}
+
+.btn-clear-search {
+  border: none;
+  border-left: 1px solid var(--lm-border, #BDB59D);
+  background: #fafafa;
+  color: var(--lm-text-soft, #666);
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.btn-clear-search:hover {
+  background: #f0f0f0;
+  color: var(--lm-shadow, #0B0C0A);
+}
+
+.book-filter-input,
+.book-filter-select {
+  border: 1.5px solid var(--lm-border, #BDB59D) !important;
+  border-radius: 8px !important;
+  padding: 0.45rem 0.75rem !important;
+  color: var(--lm-shadow, #0B0C0A) !important;
+  background-color: #ffffff;
+}
+
+.book-filter-input:focus,
+.book-filter-select:focus {
+  border-color: var(--lm-teal, #227D8E) !important;
+  box-shadow: 0 0 0 2px rgba(34, 125, 142, 0.15) !important;
+}
+
+.genre-pill {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border: 1.5px solid var(--lm-border, #BDB59D) !important;
+  border-radius: 50px;
+  padding: 0.35rem 0.95rem !important;
+  color: var(--lm-shadow, #0B0C0A);
+  background: #ffffff;
+  text-decoration: none;
+  transition: all 0.2s ease !important;
+}
+
+.genre-pill:hover {
+  border-color: var(--lm-teal, #227D8E) !important;
+  color: var(--lm-teal, #227D8E) !important;
+  background: rgba(34, 125, 142, 0.05);
+}
+
+.genre-pill.active {
+  background-color: var(--lm-shadow, #0B0C0A) !important;
+  border-color: var(--lm-shadow, #0B0C0A) !important;
+  color: #ffffff !important;
+}
+
+/* 2. Grid de Libros y Tarjetas de Catálogo (Minimalista) */
+.book-card {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1.5px solid var(--lm-border, #BDB59D) !important;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.book-card:hover {
+  border-color: var(--lm-teal, #227D8E) !important;
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(11, 12, 10, 0.08) !important;
+}
+
+.book-card-cover {
+  background: #fbf9f6;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  padding: 1.25rem;
+  border-bottom: 1px solid rgba(189, 181, 157, 0.35);
+}
+
+.book-cover-img {
+  max-height: 190px;
+  max-width: 135px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid rgba(189, 181, 157, 0.7);
+  box-shadow: 0 6px 16px rgba(11, 12, 10, 0.16);
+  transition: transform 0.25s ease;
+}
+
+.book-card:hover .book-cover-img {
+  transform: scale(1.04);
+}
+
+.book-card-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.book-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: var(--lm-shadow, #0B0C0A);
+  margin-bottom: 0.3rem;
+  line-height: 1.35;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.book-card-title:hover {
+  color: var(--lm-teal, #227D8E);
+}
+
+.book-card-author {
+  color: var(--lm-dark-wood, #3B2818);
+  font-size: 0.88rem;
+  margin-bottom: 0.85rem;
+  font-weight: 500;
+}
+
+.book-card-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(189, 181, 157, 0.3);
+  margin-bottom: 0.85rem;
+}
+
+.book-card-genre-text {
+  font-size: 0.75rem;
+  color: var(--lm-text-soft, #6b6357);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.book-card-price {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--lm-teal, #227D8E);
+}
+
+.book-card-rating {
+  color: var(--lm-ochre, #936B36);
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+.btn-book-explore {
+  background: var(--lm-shadow, #0B0C0A);
+  color: #ffffff;
+  border: 1.5px solid var(--lm-shadow, #0B0C0A);
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.45rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.btn-book-explore:hover {
+  background: var(--lm-teal, #227D8E);
+  border-color: var(--lm-teal, #227D8E);
+  color: #ffffff;
+}
+
+.btn-fav {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid rgba(140, 43, 34, 0.4) !important;
+  color: var(--lm-oxide-red, #8C2B22) !important;
+  transition: all 0.2s ease;
+}
+
+.btn-fav:hover {
+  background: var(--lm-oxide-red, #8C2B22) !important;
+  color: #ffffff !important;
+  border-color: var(--lm-oxide-red, #8C2B22) !important;
+}
+
+.book-empty-card {
+  border-radius: 15px;
+  border: 1.5px solid var(--lm-border, #BDB59D);
+}
+
+/* 3. Modal Interactivo: Demo & Comparador */
+.book-modal-content {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+}
+
+.book-modal-genre {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--lm-teal, #227D8E);
+  background: rgba(34, 125, 142, 0.12);
+  border-radius: 4px;
+}
+
+.book-modal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+}
+
+.book-modal-author {
+  color: #8a8a8a;
+  font-size: 0.85rem;
+}
+
+.book-modal-close {
+  opacity: 0.4;
+}
+
+.book-modal-img {
+  max-height: 190px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--lm-border, #BDB59D);
+}
+
+.book-meta-grid {
+  font-size: 0.82rem;
+}
+
+.book-meta-label {
+  color: #8a8a8a;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.book-meta-value {
+  color: var(--lm-shadow, #0B0C0A);
+  font-weight: 500;
+}
+
+.book-meta-rating {
+  color: var(--lm-ochre, #936B36);
+  font-weight: 600;
+}
+
+.book-section-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #8a8a8a;
+  font-weight: 600;
+}
+
+.book-synopsis-full {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: #555;
+}
+
+.book-demo-box {
+  background: var(--lm-bg-warm, #fcfbf9);
+  border-radius: 10px;
+  border: 1px solid var(--lm-border, #BDB59D);
+}
+
+.book-demo-quote-icon {
+  color: var(--lm-teal, #227D8E);
+  font-size: 0.9rem;
+}
+
+.book-demo-text {
+  white-space: pre-line;
+  line-height: 1.8;
+  color: #444;
+  font-size: 0.9rem;
+}
+
+.book-status-row {
+  border-top: 1px solid var(--lm-border, #BDB59D);
+}
+
+.book-status-label {
+  font-size: 0.82rem;
+  color: #8a8a8a;
+}
+
+.book-status-btn {
+  font-size: 0.78rem;
+  border-color: var(--lm-border, #BDB59D);
+}
+
+.book-info-alert {
+  background: var(--lm-bg-warm, #fcfbf9);
+  border-radius: 8px;
+  border: 1px solid var(--lm-border, #BDB59D);
+  font-size: 0.82rem;
+  color: #8a8a8a;
+}
+
+.book-info-icon {
+  color: var(--lm-teal, #227D8E);
+}
+
+.book-stores-table {
+  font-size: 0.88rem;
+}
+
+.book-stores-table thead tr {
+  border-bottom: 2px solid var(--lm-border, #BDB59D);
+}
+
+.book-stores-th {
+  font-weight: 600;
+  color: #8a8a8a;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.book-store-badge {
+  font-size: 0.7rem;
+}
+
+.book-store-btn-icon {
+  font-size: 0.75rem;
+}
+
+.book-history-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  color: var(--lm-shadow, #0B0C0A);
+}
+
+.book-history-subtitle {
+  color: #8a8a8a;
+  font-size: 0.8rem;
+}
+
+.book-history-select {
+  width: auto;
+  font-size: 0.82rem;
+}
+
+.book-chart-wrapper {
+  position: relative;
+  height: 280px;
+}
+
+.book-modal-btn-close {
+  background: transparent;
+  border: 1px solid var(--lm-border, #BDB59D);
+  color: var(--lm-text-soft, #4a453e);
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+
+.book-modal-btn-buy {
+  background: var(--lm-teal, #227D8E);
+  color: #ffffff;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+
+.book-modal-btn-buy:hover {
+  background: var(--lm-teal-hover, #1b6472);
+  color: #ffffff;
+}
+

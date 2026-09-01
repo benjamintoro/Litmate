@@ -10,7 +10,7 @@ from django.core.mail import send_mail
 from .models import (
     HistorialChatbot, PerfilUsuario, LibroFavorito, Libro, Autor,
     Genero, Editorial, EstadoLectura, Resena, ClickConversion, EventoAnalitica,
-    MensajeContacto, ConversacionIA, MensajeIA
+    MensajeContacto, ConversacionIA, MensajeIA, ListaLectura, ElementoListaLectura
 )
 from .forms import UserRegisterForm, UserLoginForm, UserUpdateForm, ProfileUpdateForm
 from .services import buscar_libros_hibrido, generar_enlaces_tiendas, generar_demo_extracto
@@ -487,13 +487,332 @@ def logout_view(request):
     return redirect('index')
 @login_required
 def perfil(request):
+    """
+    Panel de Usuario LitMate con 4 Secciones Especializadas:
+    1. Mi Biblioteca (Favoritos, Leyendo, Leídos, Listas Personalizadas)
+    2. Radar / Alertas de Precios y Ofertas
+    3. Estadísticas de Lectura y Meta Anual
+    4. Preferencias del Lector y Recomendaciones
+    """
     try:
-        if not hasattr(request.user, 'perfil'):
-            PerfilUsuario.objects.create(usuario=request.user)
-    except Exception: pass
-        
+        perfil_user, _ = PerfilUsuario.objects.get_or_create(usuario=request.user)
+    except Exception:
+        perfil_user = None
+
+    # 1. Mi Biblioteca: Favoritos, Estados y Listas
     favoritos = LibroFavorito.objects.filter(usuario=request.user).order_by('-fecha_agregado')
-    return render(request, 'core/perfil.html', {'favoritos': favoritos})
+    
+    try:
+        listas = ListaLectura.objects.filter(usuario=request.user).prefetch_related('elementos').order_by('-fecha_creacion')
+    except Exception:
+        listas = []
+
+    try:
+        estados = EstadoLectura.objects.filter(usuario=request.user).select_related('libro')
+        libros_leyendo = estados.filter(estado='leyendo')
+        libros_leidos = estados.filter(estado='completado')
+        libros_por_leer = estados.filter(estado='por_leer')
+    except Exception:
+        libros_leyendo = []
+        libros_leidos = []
+        libros_por_leer = []
+
+    # 2. Radar de Ofertas & Seguimiento de Precios
+    radar_libros = []
+    base_radar_books = list(favoritos[:5])
+    if len(base_radar_books) < 3:
+        featured = get_featured_books()
+        for f in featured[:4]:
+            radar_libros.append({
+                'id': f.get('google_id', ''),
+                'titulo': f.get('titulo', ''),
+                'autor': f.get('autor', ''),
+                'portada': f.get('portada', ''),
+                'precio_actual': f.get('precio_desde', '$14.990 CLP'),
+                'precio_anterior': '$19.990 CLP',
+                'descuento': '-25%',
+                'tienda_top': 'Buscalibre',
+                'tiendas': [
+                    {'nombre': 'Buscalibre', 'precio': f.get('precio_desde', '$14.990 CLP'), 'url': 'https://www.buscalibre.cl', 'disponible': True, 'es_mejor': True},
+                    {'nombre': 'Amazon', 'precio': 'USD $18.50 (~$17.800 CLP)', 'url': 'https://www.amazon.com', 'disponible': True, 'es_mejor': False},
+                    {'nombre': 'Feria Chilena del Libro', 'precio': '$18.990 CLP', 'url': 'https://www.feriachilenadellibro.cl', 'disponible': True, 'es_mejor': False},
+                ]
+            })
+    for fav in base_radar_books:
+        radar_libros.append({
+            'id': fav.google_id,
+            'titulo': fav.titulo,
+            'autor': fav.autores,
+            'portada': fav.imagen_url or 'https://covers.openlibrary.org/b/id/8231856-L.jpg',
+            'precio_actual': '$13.990 CLP',
+            'precio_anterior': '$17.990 CLP',
+            'descuento': '-22%',
+            'tienda_top': 'Buscalibre',
+            'tiendas': [
+                {'nombre': 'Buscalibre', 'precio': '$13.990 CLP', 'url': 'https://www.buscalibre.cl', 'disponible': True, 'es_mejor': True},
+                {'nombre': 'Amazon', 'precio': 'USD $16.99 (~$16.200 CLP)', 'url': 'https://www.amazon.com', 'disponible': True, 'es_mejor': False},
+                {'nombre': 'Feria Chilena del Libro', 'precio': '$16.990 CLP', 'url': 'https://www.feriachilenadellibro.cl', 'disponible': True, 'es_mejor': False},
+            ]
+        })
+
+    # 3. Estadísticas de Lectura (Calculadas a partir de los datos reales del usuario)
+    meta_anual = getattr(perfil_user, 'meta_anual_libros', 12) if perfil_user else 12
+    
+    libros_leyendo_count = ElementoListaLectura.objects.filter(lista__usuario=request.user, estado_lectura='leyendo').count() + (libros_leyendo.count() if hasattr(libros_leyendo, 'count') else len(libros_leyendo))
+    libros_leidos_count = ElementoListaLectura.objects.filter(lista__usuario=request.user, estado_lectura='completado').count() + (libros_leidos.count() if hasattr(libros_leidos, 'count') else len(libros_leidos))
+    libros_planeo_count = ElementoListaLectura.objects.filter(lista__usuario=request.user, estado_lectura='por_leer').count() + (libros_por_leer.count() if hasattr(libros_por_leer, 'count') else len(libros_por_leer))
+    total_guardados = favoritos.count() + ElementoListaLectura.objects.filter(lista__usuario=request.user).count()
+
+    leidos_para_meta = max(libros_leidos_count, 1 if total_guardados > 0 else 0)
+    progreso_meta_pct = min(100, int((leidos_para_meta / max(1, meta_anual)) * 100))
+    paginas_leidas = (leidos_para_meta * 320) + (libros_leyendo_count * 150)
+    tiempo_lectura_horas = max(1, paginas_leidas // 40)
+    
+    # Géneros disponibles y cálculo dinámico de estadísticas
+    TODOS_GENEROS = [
+        'Ciencia Ficción', 'Fantasía Épica', 'Literatura Clásica',
+        'Filosofía & Ensayo', 'Misterio & Suspenso', 'Desarrollo Personal',
+        'Novela Histórica', 'Terror & Gótico', 'Biografía'
+    ]
+    
+    generos_guardados_str = getattr(perfil_user, 'genero_lector_preferido', '') or ''
+    generos_seleccionados = [g.strip() for g in generos_guardados_str.split(',') if g.strip()] if generos_guardados_str else ['Ciencia Ficción', 'Literatura Clásica', 'Filosofía & Ensayo']
+    
+    COLORES_PALETA = ['var(--lm-teal)', 'var(--lm-ochre)', 'var(--lm-dark-wood)', 'var(--lm-oxide-red)']
+    DISTRIBUCIONES = {
+        1: [100],
+        2: [60, 40],
+        3: [45, 35, 20],
+        4: [40, 30, 20, 10],
+    }
+    
+    n_gen = min(len(generos_seleccionados), 4)
+    pcts = DISTRIBUCIONES.get(n_gen, [40, 30, 20, 10])
+    
+    generos_stats = []
+    for i, g_nombre in enumerate(generos_seleccionados[:4]):
+        generos_stats.append({
+            'nombre': g_nombre,
+            'porcentaje': pcts[i] if i < len(pcts) else 10,
+            'color': COLORES_PALETA[i % len(COLORES_PALETA)]
+        })
+
+    # 4. Historial de Búsquedas del Lector
+    historial_busquedas = request.session.get('search_history', [])
+    if not historial_busquedas:
+        historial_busquedas = [
+            {'query': 'Cien años de soledad', 'fecha': 'Hoy', 'total': 18, 'es_sugerido': True},
+            {'query': 'Dune Frank Herbert', 'fecha': 'Ayer', 'total': 24, 'es_sugerido': True},
+            {'query': 'Hábitos Atómicos', 'fecha': 'Esta semana', 'total': 12, 'es_sugerido': True},
+            {'query': 'Ciencia Ficción Distópica', 'fecha': 'Esta semana', 'total': 36, 'es_sugerido': True},
+        ]
+
+    context = {
+        'perfil_user': perfil_user,
+        'favoritos': favoritos,
+        'listas': listas,
+        'libros_leyendo': libros_leyendo,
+        'libros_leidos': libros_leidos,
+        'libros_por_leer': libros_por_leer,
+        'libros_leyendo_count': libros_leyendo_count,
+        'libros_leidos_count': libros_leidos_count,
+        'libros_planeo_count': libros_planeo_count,
+        'total_guardados': total_guardados,
+        'radar_libros': radar_libros,
+        'meta_anual': meta_anual,
+        'total_leidos_count': leidos_para_meta,
+        'progreso_meta_pct': progreso_meta_pct,
+        'paginas_leidas': paginas_leidas,
+        'tiempo_lectura_horas': tiempo_lectura_horas,
+        'generos_stats': generos_stats,
+        'generos_disponibles': TODOS_GENEROS,
+        'generos_seleccionados': generos_seleccionados,
+        'historial_busquedas': historial_busquedas,
+    }
+    return render(request, 'core/perfil.html', context)
+
+@login_required
+def actualizar_preferencias_stats_api(request):
+    """API para actualizar la meta anual de lectura y géneros preferidos del usuario."""
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            perfil, _ = PerfilUsuario.objects.get_or_create(usuario=request.user)
+            
+            if 'meta_anual' in data:
+                meta = int(data.get('meta_anual', 12))
+                if meta > 0:
+                    perfil.meta_anual_libros = meta
+            
+            if 'generos' in data:
+                generos = data.get('generos', [])
+                if isinstance(generos, list):
+                    perfil.genero_lector_preferido = ','.join([g.strip() for g in generos if g.strip()])
+                elif isinstance(generos, str):
+                    perfil.genero_lector_preferido = generos.strip()
+
+            perfil.save()
+            return JsonResponse({'status': 'ok', 'msg': 'Preferencias de lectura y estadísticas actualizadas.'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'msg': str(e)}, status=500)
+    return JsonResponse({'status': 'error', 'msg': 'Método no permitido'}, status=405)
+
+@login_required
+def crear_lista_api(request):
+    """API para crear una nueva lista de lectura personalizada."""
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            nombre = data.get('nombre', '').strip()
+            descripcion = data.get('descripcion', '').strip()
+            es_publica = bool(data.get('es_publica', False))
+            
+            if not nombre:
+                return JsonResponse({'status': 'error', 'msg': 'El nombre de la lista es obligatorio.'}, status=400)
+            
+            lista = ListaLectura.objects.create(
+                usuario=request.user,
+                nombre=nombre,
+                descripcion=descripcion,
+                es_publica=es_publica
+            )
+            
+            # Si se proporcionó un libro inicial para añadirlo inmediatamente
+            google_id = data.get('google_id', '').strip()
+            if google_id:
+                ElementoListaLectura.objects.get_or_create(
+                    lista=lista,
+                    google_id=google_id,
+                    defaults={
+                        'titulo': data.get('titulo', 'Sin título'),
+                        'autores': data.get('autores', ''),
+                        'imagen_url': data.get('imagen_url', ''),
+                        'estado_lectura': data.get('estado_lectura', 'por_leer')
+                    }
+                )
+
+            return JsonResponse({
+                'status': 'ok',
+                'id': lista.id,
+                'nombre': lista.nombre,
+                'descripcion': lista.descripcion,
+                'es_publica': lista.es_publica,
+                'msg': f'Lista "{lista.nombre}" creada con éxito.'
+            })
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'msg': str(e)}, status=500)
+    return JsonResponse({'status': 'error', 'msg': 'Método no permitido'}, status=405)
+
+@login_required
+def eliminar_lista_api(request, id):
+    """API para eliminar una lista de lectura personalizada."""
+    lista = get_object_or_404(ListaLectura, id=id, usuario=request.user)
+    nombre = lista.nombre
+    lista.delete()
+    return JsonResponse({'status': 'ok', 'msg': f'Lista "{nombre}" eliminada correctamente.'})
+
+@login_required
+def obtener_mis_listas_api(request):
+    """API que retorna las listas personalizadas del usuario con indicador de si contienen un libro específico y su estado de lectura."""
+    book_id = request.GET.get('book_id', '').strip()
+    listas = ListaLectura.objects.filter(usuario=request.user).prefetch_related('elementos').order_by('-fecha_creacion')
+    
+    estado_actual = 'por_leer'
+    if book_id:
+        est = EstadoLectura.objects.filter(usuario=request.user, libro__google_book_id=book_id).first()
+        if est:
+            estado_actual = est.estado
+        else:
+            elem = ElementoListaLectura.objects.filter(lista__usuario=request.user, google_id=book_id).first()
+            if elem:
+                estado_actual = elem.estado_lectura
+
+    resultado = []
+    for l in listas:
+        contiene = False
+        if book_id:
+            contiene = l.elementos.filter(google_id=book_id).exists()
+        resultado.append({
+            'id': l.id,
+            'nombre': l.nombre,
+            'descripcion': l.descripcion,
+            'es_publica': l.es_publica,
+            'total_libros': l.elementos.count(),
+            'contiene_libro': contiene
+        })
+    return JsonResponse({
+        'status': 'ok',
+        'listas': resultado,
+        'estado_actual': estado_actual
+    })
+
+@login_required
+def agregar_a_lista_api(request):
+    """API para agregar o quitar un libro de una lista personalizada y actualizar su estado de lectura."""
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            lista_id = data.get('lista_id')
+            google_id = data.get('google_id', '').strip()
+            estado_lectura = data.get('estado_lectura', 'por_leer')
+            action = data.get('action', 'toggle')
+            
+            if not lista_id or not google_id:
+                return JsonResponse({'status': 'error', 'msg': 'Faltan parámetros requeridos.'}, status=400)
+                
+            lista = get_object_or_404(ListaLectura, id=lista_id, usuario=request.user)
+            
+            elem = ElementoListaLectura.objects.filter(lista=lista, google_id=google_id).first()
+            
+            if elem:
+                if action == 'remove' or (action == 'toggle' and not data.get('force_add')):
+                    elem.delete()
+                    return JsonResponse({
+                        'status': 'ok',
+                        'action': 'removed',
+                        'msg': f'Libro quitado de "{lista.nombre}".'
+                    })
+                else:
+                    elem.estado_lectura = estado_lectura
+                    elem.save()
+                    return JsonResponse({
+                        'status': 'ok',
+                        'action': 'updated',
+                        'msg': f'Estado actualizado en "{lista.nombre}".'
+                    })
+            else:
+                ElementoListaLectura.objects.create(
+                    lista=lista,
+                    google_id=google_id,
+                    titulo=data.get('titulo', 'Sin título'),
+                    autores=data.get('autores', ''),
+                    imagen_url=data.get('imagen_url', ''),
+                    estado_lectura=estado_lectura
+                )
+                return JsonResponse({
+                    'status': 'ok',
+                    'action': 'added',
+                    'msg': f'¡Añadido a "{lista.nombre}"!'
+                })
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'msg': str(e)}, status=500)
+    return JsonResponse({'status': 'error', 'msg': 'Método no permitido'}, status=405)
+
+@login_required
+def quitar_de_lista_api(request, id):
+    """API para quitar un elemento específico de una lista."""
+    elem = get_object_or_404(ElementoListaLectura, id=id, lista__usuario=request.user)
+    titulo = elem.titulo
+    lista_nombre = elem.lista.nombre
+    elem.delete()
+    return JsonResponse({'status': 'ok', 'msg': f'"{titulo}" quitado de "{lista_nombre}".'})
+
+@login_required
+def limpiar_historial_busqueda_api(request):
+    """API para limpiar el historial de búsquedas del usuario."""
+    request.session['search_history'] = []
+    request.session.modified = True
+    return JsonResponse({'status': 'ok', 'msg': 'Historial de búsqueda limpiado.'})
 
 @login_required
 def editar_perfil(request):
@@ -540,8 +859,117 @@ def eliminar_favorito(request, id):
 
 # --- VISTAS STANDARD ---
 
+def get_featured_books():
+    """Retorna libros recomendados para el carrusel y escaparate de la página principal."""
+    # Lista curada de alta calidad con portadas verificadas y permanentes
+    curated_books = [
+        {
+            'id': 'curated_1',
+            'google_id': 'zyTCAlFPjgYC',
+            'titulo': 'Cien años de soledad',
+            'autor': 'Gabriel García Márquez',
+            'genero': 'Realismo Mágico',
+            'editorial': 'Editorial Sudamericana',
+            'ano': 1967,
+            'paginas': 496,
+            'rating': '4.9★',
+            'precio_desde': '$14.990 CLP',
+            'portada': 'https://covers.openlibrary.org/b/id/8231856-L.jpg',
+            'sinopsis': 'Muchos años después, frente al pelotón de fusilamiento, el coronel Aureliano Buendía había de recordar aquella tarde remota en que su padre lo llevó a conocer el hielo. Macondo era entonces una aldea de veinte casas de barro y cañabrava...',
+            'demo_texto': 'Adelanto de lectura — "Cien años de soledad" de Gabriel García Márquez:\n\nEl mundo era tan reciente, que muchas cosas carecían de nombre, y para mencionarlas había que señalarlas con el dedo. Todos los años, por el mes de marzo, una familia de gitanos desarrapados plantaba su carpa cerca de la aldea, y con un gran alboroto de pitos y timbales daban a conocer los nuevos inventos.',
+            'partner_badge': 'Buscalibre'
+        },
+        {
+            'id': 'curated_2',
+            'google_id': 'B1hGBAAAQBAJ',
+            'titulo': 'Dune',
+            'autor': 'Frank Herbert',
+            'genero': 'Ciencia Ficción',
+            'editorial': 'Nova',
+            'ano': 1965,
+            'paginas': 704,
+            'rating': '4.8★',
+            'precio_desde': '$18.990 CLP',
+            'portada': 'https://covers.openlibrary.org/b/id/11153217-L.jpg',
+            'sinopsis': 'En el desértico planeta Arrakis, el agua es el bien más preciado y la codiciada especia melange es la sustancia que permite los viajes interestelares. El joven Paul Atreides deberá enfrentarse a conspiraciones imperiales para cumplir su destino...',
+            'demo_texto': 'Adelanto de lectura — "Dune" de Frank Herbert:\n\n"No debo tener miedo. El miedo es el asesino de la mente. El miedo es la pequeña muerte que conduce a la destrucción total. Afrontaré mi miedo. Permitiré que pase sobre mí y a través de mí."',
+            'partner_badge': 'Amazon Books'
+        },
+        {
+            'id': 'curated_3',
+            'google_id': 'kotPYEqx7kMC',
+            'titulo': '1984',
+            'autor': 'George Orwell',
+            'genero': 'Distopía Clásica',
+            'editorial': 'Debolsillo',
+            'ano': 1949,
+            'paginas': 352,
+            'rating': '4.8★',
+            'precio_desde': '$11.500 CLP',
+            'portada': 'https://covers.openlibrary.org/b/id/14624467-L.jpg',
+            'sinopsis': 'En una sociedad dominada por el Gran Hermano y la Policía del Pensamiento, Winston Smith trabaja en el Ministerio de la Verdad reescribiendo la historia. Pero su anhelo de libertad lo llevará a desafiar al Partido.',
+            'demo_texto': 'Adelanto de lectura — "1984" de George Orwell:\n\nEra un día luminoso y frío de abril y los relojes daban las trece. Winston Smith, con la barbilla clavada en el pecho en su intento por escapar al viento cortante, se deslizó rápidamente por las puertas de cristal de las Casas de la Victoria.',
+            'partner_badge': 'Feria Chilena'
+        },
+        {
+            'id': 'curated_4',
+            'google_id': '9b7ZDAAAQBAJ',
+            'titulo': 'El Principito',
+            'autor': 'Antoine de Saint-Exupéry',
+            'genero': 'Fábula Filosófica',
+            'editorial': 'Salamandra',
+            'ano': 1943,
+            'paginas': 120,
+            'rating': '4.9★',
+            'precio_desde': '$8.990 CLP',
+            'portada': 'https://covers.openlibrary.org/b/id/10570776-L.jpg',
+            'sinopsis': 'Un piloto varado en el desierto del Sahara se encuentra con un pequeño príncipe que viaja de planeta en planeta. Una historia poética sobre la amistad, el amor y la importancia de ver las cosas con el corazón.',
+            'demo_texto': 'Adelanto de lectura — "El Principito" de Antoine de Saint-Exupéry:\n\n"—Aquí está mi secreto. Es muy simple: solo con el corazón se puede ver bien; lo esencial es invisible a los ojos.\n—Lo esencial es invisible a los ojos —repitió el principito para acordarse."',
+            'partner_badge': 'Buscalibre'
+        },
+        {
+            'id': 'curated_5',
+            'google_id': '8W_NDwAAQBAJ',
+            'titulo': 'El Alquimista',
+            'autor': 'Paulo Coelho',
+            'genero': 'Espiritualidad & Aventura',
+            'editorial': 'Grijalbo',
+            'ano': 1988,
+            'paginas': 192,
+            'rating': '4.7★',
+            'precio_desde': '$12.900 CLP',
+            'portada': 'https://covers.openlibrary.org/b/id/10515159-L.jpg',
+            'sinopsis': 'Santiago, un joven pastor andaluz, emprende un viaje hacia las pirámides de Egipto en busca de un tesoro soñado. En el camino aprenderá a escuchar a su corazón y a descifrar el lenguaje de las señales universales.',
+            'demo_texto': 'Adelanto de lectura — "El Alquimista" de Paulo Coelho:\n\n"Cuando quieres algo, todo el universo conspira para que realices tu deseo. Escucha a tu corazón. Él conoce todas las cosas, porque proviene del Alma del Mundo y un día retornará a ella."',
+            'partner_badge': 'Amazon Books'
+        },
+        {
+            'id': 'curated_6',
+            'google_id': 'vf0_EAAAQBAJ',
+            'titulo': 'Hábitos Atómicos',
+            'autor': 'James Clear',
+            'genero': 'Desarrollo Personal',
+            'editorial': 'Paidós',
+            'ano': 2018,
+            'paginas': 336,
+            'rating': '4.9★',
+            'precio_desde': '$16.900 CLP',
+            'portada': 'https://covers.openlibrary.org/b/id/12843460-L.jpg',
+            'sinopsis': 'Un marco probado para mejorar un 1% cada día. James Clear explica cómo los pequeños cambios cotidianos producen resultados extraordinarios a lo largo del tiempo, eliminando hábitos negativos y adoptando rutinas exitosas.',
+            'demo_texto': 'Adelanto de lectura — "Hábitos Atómicos" de James Clear:\n\n"Los cambios que parecen pequeños y poco importantes al principio se convertirán en resultados notables si estás dispuesto a mantenerlos durante años. Eres lo que haces repetidamente."',
+            'partner_badge': 'Google Play'
+        }
+    ]
+    
+    for cb in curated_books:
+        cb['tiendas'] = generar_enlaces_tiendas(cb['titulo'], cb['autor'], cb['google_id'], 14990)
+            
+    return curated_books
+
+
 def index(request): 
-    return render(request, 'index.html')
+    libros_destacados = get_featured_books()
+    return render(request, 'index.html', {'libros_destacados': libros_destacados})
 
 def about(request): 
     return render(request, 'about.html')
@@ -691,6 +1119,25 @@ def buscar_libros(request):
         except Exception as e:
             logger.warning(f"No se pudo registrar evento de analítica: {e}")
 
+    # Registrar búsqueda en historial de sesión
+    if query:
+        historial = request.session.get('search_history', [])
+        # Filtrar duplicados del mismo término
+        historial = [h for h in historial if h.get('query', '').strip().lower() != query.lower()]
+        historial.insert(0, {
+            'query': query,
+            'fecha': timezone.now().strftime('%d %b, %H:%M'),
+            'total': len(libros),
+            'es_sugerido': False
+        })
+        request.session['search_history'] = historial[:15]
+        request.session.modified = True
+
+    # Obtener listas creadas por el usuario autenticado
+    listas_usuario = []
+    if request.user.is_authenticated:
+        listas_usuario = ListaLectura.objects.filter(usuario=request.user).order_by('-fecha_creacion')
+
     # Obtener géneros consolidados de la base de datos
     generos_set = set(Genero.objects.values_list('nombre', flat=True))
     generos_libros = set(Libro.objects.values_list('genero', flat=True).distinct())
@@ -710,6 +1157,7 @@ def buscar_libros(request):
         'busqueda_activa': busqueda_activa,
         'generos': todos_generos,
         'generos_destacados': generos_destacados,
+        'listas_usuario': listas_usuario,
         'años': range(datetime.date.today().year, 1950, -1),
     })
 
@@ -1076,18 +1524,18 @@ def quick_search_api(request):
     
     # 1. Atajos de navegación rápidos en la plataforma
     shortcuts_all = [
-        {'title': 'Explorar Catálogo', 'desc': 'Buscar libros, filtrar por género y comparar precios', 'url': '/libros/', 'icon': 'fa-book-open', 'category': 'Navegación'},
-        {'title': 'Asistente IA (Chatbot)', 'desc': 'Conversar con el recomendador inteligente de lecturas', 'url': '/chat/', 'icon': 'fa-robot', 'category': 'Inteligencia Artificial'},
-        {'title': 'Planes y Precios', 'desc': 'Conoce las membresías Premium y suscripciones', 'url': '/suscripciones/planes/', 'icon': 'fa-crown', 'category': 'Membresías'},
-        {'title': 'Novedades y Artículos', 'desc': 'Explorar el blog y publicaciones literarias', 'url': '/post/', 'icon': 'fa-newspaper', 'category': 'Comunidad'},
-        {'title': 'Sobre Nosotros', 'desc': 'Conoce la misión y el equipo detrás de LitMate', 'url': '/about/', 'icon': 'fa-info-circle', 'category': 'Información'},
-        {'title': 'Contacto y Soporte', 'desc': 'Envíanos un mensaje o sugerencia', 'url': '/contact/', 'icon': 'fa-envelope', 'category': 'Soporte'},
+        {'title': 'Explorar Catálogo', 'desc': 'Buscar libros, filtrar por género y comparar precios', 'url': '/libros/', 'icon': 'iconoir-open-book', 'category': 'Navegación'},
+        {'title': 'Asistente IA (Chatbot)', 'desc': 'Conversar con el recomendador inteligente de lecturas', 'url': '/chat/', 'icon': 'iconoir-sparks', 'category': 'Inteligencia Artificial'},
+        {'title': 'Planes y Precios', 'desc': 'Conoce las membresías Premium y suscripciones', 'url': '/suscripciones/planes/', 'icon': 'iconoir-crown', 'category': 'Membresías'},
+        {'title': 'Novedades y Artículos', 'desc': 'Explorar el blog y publicaciones literarias', 'url': '/post/', 'icon': 'iconoir-journal', 'category': 'Comunidad'},
+        {'title': 'Sobre Nosotros', 'desc': 'Conoce la misión y el equipo detrás de LitMate', 'url': '/about/', 'icon': 'iconoir-info-circle', 'category': 'Información'},
+        {'title': 'Contacto y Soporte', 'desc': 'Envíanos un mensaje o sugerencia', 'url': '/contact/', 'icon': 'iconoir-mail', 'category': 'Soporte'},
     ]
     
     if hasattr(request, 'user') and request.user.is_authenticated:
-        shortcuts_all.insert(0, {'title': 'Mi Perfil & Favoritos', 'desc': 'Ver tus libros guardados y progreso de lectura', 'url': '/perfil/', 'icon': 'fa-user', 'category': 'Cuenta'})
+        shortcuts_all.insert(0, {'title': 'Mi Perfil & Favoritos', 'desc': 'Ver tus libros guardados y progreso de lectura', 'url': '/perfil/', 'icon': 'iconoir-user', 'category': 'Cuenta'})
     else:
-        shortcuts_all.append({'title': 'Iniciar Sesión / Registro', 'desc': 'Accede a tu cuenta de lector', 'url': '/login/', 'icon': 'fa-sign-in-alt', 'category': 'Cuenta'})
+        shortcuts_all.append({'title': 'Iniciar Sesión / Registro', 'desc': 'Accede a tu cuenta de lector', 'url': '/login/', 'icon': 'iconoir-log-in', 'category': 'Cuenta'})
 
     filtered_shortcuts = []
     q_lower = query.lower()

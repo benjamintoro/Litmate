@@ -24,24 +24,26 @@
     <!-- Buscador -->
     <div class="row justify-content-center mb-4">
         <div class="col-lg-11">
-            <div class="card border-0 shadow-sm" style="border-radius: 12px; border: 1px solid #e9ecef !important;">
+            <div class="card border-0 shadow-sm book-search-card">
                 <div class="card-body p-3 p-md-4">
                     <form method="get" action="{% url 'buscar_libros' %}" id="searchForm">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text bg-white border-end-0 text-muted"><i class="fas fa-search"></i></span>
-                            <input type="text" class="form-control border-start-0 ps-0" name="q" placeholder="Buscar título, autor o palabra clave..." value="{{ valores_busqueda.q }}">
-                            <button class="btn btn-primary px-4" type="submit">Buscar</button>
+                        <div class="search-input-wrapper mb-3">
+                            <input type="text" class="form-control book-main-search-input" name="q" placeholder="Buscar por título, autor o palabra clave..." value="{{ valores_busqueda.q }}">
+                            <button class="btn btn-search-action" type="submit">
+                                <i class="iconoir-search"></i>
+                                <span>Buscar</span>
+                            </button>
                             {% if busqueda_activa %}
-                            <a href="{% url 'buscar_libros' %}" class="btn btn-outline-secondary px-3"><i class="fas fa-times"></i></a>
+                            <a href="{% url 'buscar_libros' %}" class="btn btn-clear-search" title="Limpiar búsqueda"><i class="iconoir-xmark"></i></a>
                             {% endif %}
                         </div>
 
                         <div class="row g-2">
                             <div class="col-md-3 col-6">
-                                <input type="text" class="form-control form-control-sm" name="author" placeholder="Autor..." value="{{ valores_busqueda.author }}">
+                                <input type="text" class="form-control form-control-sm book-filter-input" name="author" placeholder="Autor..." value="{{ valores_busqueda.author }}">
                             </div>
                             <div class="col-md-3 col-6">
-                                <select class="form-select form-select-sm" name="genre">
+                                <select class="form-select form-select-sm book-filter-select" name="genre">
                                     <option value="">Género</option>
                                     {% for g in generos %}
                                         <option value="{{ g }}" {% if valores_busqueda.genre == g %}selected{% endif %}>{{ g }}</option>
@@ -49,7 +51,7 @@
                                 </select>
                             </div>
                             <div class="col-md-3 col-6">
-                                <select class="form-select form-select-sm" name="year">
+                                <select class="form-select form-select-sm book-filter-select" name="year">
                                     <option value="">Año</option>
                                     {% for año in años %}
                                         <option value="{{ año }}" {% if valores_busqueda.year == año|stringformat:"s" %}selected{% endif %}>{{ año }}</option>
@@ -57,7 +59,7 @@
                                 </select>
                             </div>
                             <div class="col-md-3 col-6">
-                                <select class="form-select form-select-sm" name="order" onchange="this.form.submit()">
+                                <select class="form-select form-select-sm book-filter-select" name="order" onchange="this.form.submit()">
                                     <option value="" {% if not valores_busqueda.order %}selected{% endif %}>Relevancia</option>
                                     <option value="rating" {% if valores_busqueda.order == 'rating' %}selected{% endif %}>Mejor Calificados</option>
                                     <option value="popular" {% if valores_busqueda.order == 'popular' %}selected{% endif %}>Más Populares</option>
@@ -69,11 +71,11 @@
 
                         <!-- Géneros Rápidos -->
                         <div class="mt-3 pt-2 border-top d-flex flex-wrap gap-2">
-                            <a href="{% url 'buscar_libros' %}" class="badge rounded-pill text-decoration-none {% if not valores_busqueda.genre and not busqueda_activa %}bg-dark text-white{% else %}bg-light text-dark border{% endif %} py-2 px-3" style="font-weight: 500;">
+                            <a href="{% url 'buscar_libros' %}" class="genre-pill {% if not valores_busqueda.genre and not busqueda_activa %}active{% endif %}">
                                 Todos
                             </a>
                             {% for gd in generos_destacados %}
-                            <a href="{% url 'buscar_libros' %}?genre={{ gd|urlencode }}" class="badge rounded-pill text-decoration-none {% if valores_busqueda.genre == gd %}bg-dark text-white{% else %}bg-light text-dark border hover-badge{% endif %} py-2 px-3" style="font-weight: 500;">
+                            <a href="{% url 'buscar_libros' %}?genre={{ gd|urlencode }}" class="genre-pill {% if valores_busqueda.genre == gd %}active{% endif %}">
                                 {{ gd }}
                             </a>
                             {% endfor %}
@@ -100,9 +102,8 @@
             <div class="row g-4" id="librosGrid">
                 {% for libro in libros %}
                 <div class="col-md-6 col-xl-4">
-                    <div class="card h-100 border-0 shadow hover-animate" style="border-radius: 14px; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s;">
-                        <div class="position-relative text-center p-3 cursor-pointer btn-ver-demo" 
-                             style="background: #fbfbfb; min-height: 200px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
+                    <div class="book-card h-100">
+                        <div class="book-card-cover btn-ver-demo" 
                              data-bs-toggle="modal" 
                              data-bs-target="#demoModal"
                              data-book-id="{{ libro.id }}"
@@ -118,19 +119,14 @@
                              data-calificacion="{{ libro.calificacion }}"
                              data-resenas="{{ libro.total_resenas }}">
                             {% if libro.imagen %}
-                                <img src="{{ libro.imagen }}" alt="{{ libro.titulo }}" style="max-height: 180px; max-width: 130px; object-fit: cover; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+                                <img src="{{ libro.imagen }}" alt="{{ libro.titulo }}" class="book-cover-img" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=400';">
                             {% else %}
-                                <div class="text-muted p-4"><i class="fas fa-book fa-3x mb-2 text-primary"></i><br><small>Portada en preparación</small></div>
+                                <div class="text-muted p-4"><i class="iconoir-book fa-3x mb-2 text-primary"></i><br><small>Portada</small></div>
                             {% endif %}
-                            
-                            <span class="position-absolute top-0 start-0 m-2 badge bg-primary rounded-pill small">
-                                {{ libro.genero|truncatechars:18 }}
-                            </span>
                         </div>
 
-                        <div class="card-body p-3 d-flex flex-column">
-                            <h5 class="card-title fw-bold fs-6 mb-1 text-dark text-truncate cursor-pointer btn-ver-demo" 
-                                style="cursor: pointer;"
+                        <div class="book-card-body">
+                            <h5 class="book-card-title text-truncate btn-ver-demo" 
                                 title="{{ libro.titulo }}"
                                 data-bs-toggle="modal" 
                                 data-bs-target="#demoModal"
@@ -148,71 +144,52 @@
                                 data-resenas="{{ libro.total_resenas }}">
                                 {{ libro.titulo }}
                             </h5>
-                            <p class="text-muted small mb-2"><i class="fas fa-user-edit me-1 text-primary"></i>{{ libro.autor_str }} {% if libro.año != 'N/A' %}({{ libro.año }}){% endif %}</p>
+                            <p class="book-card-author text-truncate">{{ libro.autor_str }} {% if libro.año != 'N/A' %}<span class="text-muted fw-normal">({{ libro.año }})</span>{% endif %}</p>
                             
-                            <!-- Rating -->
-                            <div class="d-flex align-items-center mb-2">
-                                <div class="text-warning small me-1">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="small text-muted fw-bold">{{ libro.calificacion }}</span>
+                            <div class="book-card-meta-row">
+                                <span class="book-card-genre-text">{{ libro.genero|truncatechars:20 }}</span>
+                                <span class="book-card-rating"><i class="iconoir-star-solid text-warning me-1"></i>{{ libro.calificacion }}</span>
                             </div>
 
-                            <p class="card-text small text-secondary flex-grow-1 mb-3" style="line-height: 1.4;">
-                                {{ libro.sinopsis|truncatewords:16 }}
-                            </p>
-
-                            <!-- Precio Referencial y Tienda -->
-                            <div class="p-2 mb-3 rounded bg-light d-flex justify-content-between align-items-center" style="border-radius: 8px!important;">
-                                <div class="small">
-                                    <span class="text-muted d-block" style="font-size: 0.75rem;">Mejor Precio Ref:</span>
-                                    <strong class="text-success fs-6">{{ libro.precio_desde }}</strong>
+                            <div class="d-flex align-items-center justify-content-between pt-1">
+                                <span class="book-card-price">{{ libro.precio_desde }}</span>
+                                <div class="d-flex gap-2">
+                                    {% if user.is_authenticated %}
+                                    <button type="button" class="btn btn-outline-danger btn-sm rounded-circle btn-fav" 
+                                            title="Guardar en Favoritos"
+                                            data-google-id="{{ libro.id }}"
+                                            data-titulo="{{ libro.titulo }}"
+                                            data-autores="{{ libro.autor_str }}"
+                                            data-imagen="{{ libro.imagen }}">
+                                        <i class="iconoir-heart"></i>
+                                    </button>
+                                    {% endif %}
+                                    <button type="button" class="btn btn-book-explore btn-ver-demo" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#demoModal"
+                                            data-book-id="{{ libro.id }}"
+                                            data-titulo="{{ libro.titulo }}"
+                                            data-autor="{{ libro.autor_str }}"
+                                            data-editorial="{{ libro.editorial }}"
+                                            data-genero="{{ libro.genero }}"
+                                            data-paginas="{{ libro.paginas }}"
+                                            data-ano="{{ libro.año }}"
+                                            data-imagen="{{ libro.imagen }}"
+                                            data-sinopsis="{{ libro.sinopsis }}"
+                                            data-demo="{{ libro.demo_extracto }}"
+                                            data-calificacion="{{ libro.calificacion }}"
+                                            data-resenas="{{ libro.total_resenas }}">
+                                        <i class="iconoir-open-book me-1"></i> Ver Ficha
+                                    </button>
                                 </div>
-                                <span class="badge bg-white text-dark border small"><i class="fas fa-store text-primary me-1"></i>Buscalibre</span>
-                            </div>
-
-                            <!-- Botones de Acción -->
-                            <div class="d-flex gap-2">
-                                <button type="button" class="btn btn-primary btn-sm rounded-pill flex-grow-1 btn-ver-demo" 
-                                        data-bs-toggle="modal" 
-                                        data-bs-target="#demoModal"
-                                        data-book-id="{{ libro.id }}"
-                                        data-titulo="{{ libro.titulo }}"
-                                        data-autor="{{ libro.autor_str }}"
-                                        data-editorial="{{ libro.editorial }}"
-                                        data-genero="{{ libro.genero }}"
-                                        data-paginas="{{ libro.paginas }}"
-                                        data-ano="{{ libro.año }}"
-                                        data-imagen="{{ libro.imagen }}"
-                                        data-sinopsis="{{ libro.sinopsis }}"
-                                        data-demo="{{ libro.demo_extracto }}"
-                                        data-calificacion="{{ libro.calificacion }}"
-                                        data-resenas="{{ libro.total_resenas }}">
-                                    <i class="fas fa-book-open me-1"></i> Ver Demo & Precios
-                                </button>
-
-                                {% if user.is_authenticated %}
-                                <button type="button" class="btn btn-outline-danger btn-sm rounded-circle btn-fav" 
-                                        title="Guardar en Favoritos"
-                                        data-google-id="{{ libro.id }}"
-                                        data-titulo="{{ libro.titulo }}"
-                                        data-autores="{{ libro.autor_str }}"
-                                        data-imagen="{{ libro.imagen }}">
-                                    <i class="far fa-heart"></i>
-                                </button>
-                                {% endif %}
                             </div>
                         </div>
                     </div>
                 </div>
                 {% empty %}
                 <div class="col-12 text-center py-5">
-                    <div class="card border-0 shadow-sm p-5" style="border-radius: 15px;">
-                        <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                    <div class="card border-0 shadow-sm p-5 book-empty-card">
+                        <i class="iconoir-search fa-3x text-muted mb-3"></i>
                         <h4 class="fw-bold">No se encontraron libros con los filtros seleccionados</h4>
                         <p class="text-muted">Prueba buscando por palabras clave generales o revisa nuestro catálogo completo.</p>
                         <div>
@@ -229,16 +206,16 @@
 <!-- MODAL INTERACTIVO: DEMO DE LECTURA Y COMPARADOR DE PRECIOS -->
 <div class="modal fade" id="demoModal" tabindex="-1" aria-labelledby="demoModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content border-0" style="border-radius: 12px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.12);">
+        <div class="modal-content border-0 book-modal-content">
             
             <!-- Header limpio -->
             <div class="modal-header border-0 pb-2 pt-4 px-4">
                 <div>
-                    <span class="d-inline-block px-2 py-1 mb-2" id="modalGenero" style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: #b08d57; background: rgba(176,141,87,0.1); border-radius: 4px;">Género</span>
-                    <h5 class="modal-title fw-bold mb-1" id="modalTitulo" style="font-family: 'Playfair Display', serif; font-size: 1.3rem;">Título de la Obra</h5>
-                    <p class="mb-0" style="color: #8a8a8a; font-size: 0.85rem;"><span id="modalAutor">Autor</span></p>
+                    <span class="d-inline-block px-2 py-1 mb-2 book-modal-genre" id="modalGenero">Género</span>
+                    <h5 class="modal-title fw-bold mb-1 book-modal-title" id="modalTitulo">Título de la Obra</h5>
+                    <p class="mb-0 book-modal-author"><span id="modalAutor">Autor</span></p>
                 </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar" style="opacity: 0.4;"></button>
+                <button type="button" class="btn-close book-modal-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
 
             <!-- Navegación por Pestañas -->
@@ -269,71 +246,69 @@
                     <div class="tab-pane fade show active" id="tab-demo" role="tabpanel">
                         <div class="row g-4 mb-4">
                             <div class="col-sm-3 text-center">
-                                <img src="" id="modalImg" class="img-fluid" alt="Portada" style="max-height: 190px; object-fit: cover; border-radius: 8px; border: 1px solid #e8e5e0;">
+                                <img src="" id="modalImg" class="img-fluid book-modal-img" alt="Portada">
                             </div>
                             <div class="col-sm-9">
-                                <div class="row g-3 mb-3" style="font-size: 0.82rem;">
+                                <div class="row g-3 mb-3 book-meta-grid">
                                     <div class="col-6">
-                                        <span style="color: #8a8a8a; display: block; margin-bottom: 2px;">Editorial</span>
-                                        <span style="color: #2c2c2c; font-weight: 500;" id="modalEditorial">-</span>
+                                        <span class="book-meta-label">Editorial</span>
+                                        <span class="book-meta-value" id="modalEditorial">-</span>
                                     </div>
                                     <div class="col-6">
-                                        <span style="color: #8a8a8a; display: block; margin-bottom: 2px;">Año</span>
-                                        <span style="color: #2c2c2c; font-weight: 500;" id="modalAno">-</span>
+                                        <span class="book-meta-label">Año</span>
+                                        <span class="book-meta-value" id="modalAno">-</span>
                                     </div>
                                     <div class="col-6">
-                                        <span style="color: #8a8a8a; display: block; margin-bottom: 2px;">Páginas</span>
-                                        <span style="color: #2c2c2c; font-weight: 500;" id="modalPaginas">-</span>
+                                        <span class="book-meta-label">Páginas</span>
+                                        <span class="book-meta-value" id="modalPaginas">-</span>
                                     </div>
                                     <div class="col-6">
-                                        <span style="color: #8a8a8a; display: block; margin-bottom: 2px;">Valoración</span>
-                                        <span style="color: #b08d57; font-weight: 600;" id="modalRating">4.8★</span>
+                                        <span class="book-meta-label">Valoración</span>
+                                        <span class="book-meta-rating" id="modalRating">4.8★</span>
                                     </div>
                                 </div>
                                 <div>
-                                    <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #8a8a8a; font-weight: 600;">Sinopsis</span>
-                                    <p class="mt-1" id="modalSinopsis" style="font-size: 0.88rem; line-height: 1.7; color: #555;"></p>
+                                    <span class="book-section-label">Sinopsis</span>
+                                    <p class="mt-1 book-synopsis-full" id="modalSinopsis"></p>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Demo de Lectura -->
-                        <div class="p-4" style="background: #faf9f7; border-radius: 10px; border: 1px solid #e8e5e0;">
+                        <div class="p-4 book-demo-box">
                             <div class="d-flex align-items-center mb-3">
-                                <i class="fas fa-quote-left me-2" style="color: #b08d57; font-size: 0.9rem;"></i>
-                                <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #8a8a8a; font-weight: 600;">Fragmento de Muestra</span>
+                                <i class="iconoir-quote me-2 book-demo-quote-icon"></i>
+                                <span class="book-section-label">Fragmento de Muestra</span>
                             </div>
-                            <p class="mb-0 fst-italic" id="modalDemoTexto" style="white-space: pre-line; line-height: 1.8; color: #444; font-size: 0.9rem;"></p>
+                            <p class="mb-0 fst-italic book-demo-text" id="modalDemoTexto"></p>
                         </div>
 
-                        <!-- Selector de Estado de Lectura para usuarios logueados -->
+                        <!-- Acceso limpio a Biblioteca / Listas -->
                         {% if user.is_authenticated %}
-                        <div class="mt-4 pt-3 d-flex justify-content-between align-items-center" style="border-top: 1px solid #e8e5e0;">
-                            <span style="font-size: 0.82rem; color: #8a8a8a;">¿Estás leyendo este libro?</span>
-                            <div class="btn-group btn-group-sm" role="group">
-                                <button type="button" class="btn btn-outline-secondary btn-estado" data-estado="por_leer" style="font-size: 0.78rem; border-color: #e8e5e0;"><i class="far fa-clock me-1"></i>Por leer</button>
-                                <button type="button" class="btn btn-outline-secondary btn-estado" data-estado="leyendo" style="font-size: 0.78rem; border-color: #e8e5e0;"><i class="fas fa-book-open me-1"></i>Leyendo</button>
-                                <button type="button" class="btn btn-outline-secondary btn-estado" data-estado="completado" style="font-size: 0.78rem; border-color: #e8e5e0;"><i class="fas fa-check me-1"></i>Leído</button>
-                            </div>
+                        <div class="mt-4 pt-3 border-top d-flex justify-content-between align-items-center flex-wrap gap-2">
+                            <span class="text-muted small"><i class="iconoir-book-stack me-1 text-teal"></i> Guarda este libro en tu colección personal:</span>
+                            <button type="button" class="btn btn-outline-dark rounded-pill px-4 btn-sm fw-bold" onclick="abrirModalAgregarListaDirecto()">
+                                <i class="iconoir-bookmark-book me-1"></i> Agregar a lista / Estado
+                            </button>
                         </div>
                         {% endif %}
                     </div>
 
                     <!-- PESTAÑA 2: COMPARADOR DE PRECIOS EN TIENDAS -->
                     <div class="tab-pane fade" id="tab-tiendas" role="tabpanel">
-                        <div class="p-3 mb-3" style="background: #faf9f7; border-radius: 8px; border: 1px solid #e8e5e0; font-size: 0.82rem; color: #8a8a8a;">
-                            <i class="fas fa-info-circle me-1" style="color: #b08d57;"></i> Los precios son referenciales y se actualizan con las tiendas online. Al hacer clic serás redirigido a la tienda seleccionada.
+                        <div class="p-3 mb-3 book-info-alert">
+                            <i class="iconoir-info-circle me-1 book-info-icon"></i> Los precios son referenciales y se actualizan con las tiendas online. Al hacer clic serás redirigido a la tienda seleccionada.
                         </div>
 
                         <div class="table-responsive">
-                            <table class="table align-middle mb-0" style="font-size: 0.88rem;">
+                            <table class="table align-middle mb-0 book-stores-table">
                                 <thead>
-                                    <tr style="border-bottom: 2px solid #e8e5e0;">
-                                        <th style="font-weight: 600; color: #8a8a8a; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">Tienda</th>
-                                        <th style="font-weight: 600; color: #8a8a8a; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">Formato</th>
-                                        <th style="font-weight: 600; color: #8a8a8a; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">Disponibilidad</th>
-                                        <th style="font-weight: 600; color: #8a8a8a; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">Precio Aprox.</th>
-                                        <th class="text-end" style="font-weight: 600; color: #8a8a8a; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">Acción</th>
+                                    <tr>
+                                        <th class="book-stores-th">Tienda</th>
+                                        <th class="book-stores-th">Formato</th>
+                                        <th class="book-stores-th">Disponibilidad</th>
+                                        <th class="book-stores-th">Precio Aprox.</th>
+                                        <th class="text-end book-stores-th">Acción</th>
                                     </tr>
                                 </thead>
                                 <tbody id="modalTiendasBody">
@@ -347,20 +322,20 @@
                     <div class="tab-pane fade" id="tab-historial" role="tabpanel">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <div>
-                                <h6 class="fw-bold mb-0" style="font-family: 'Playfair Display', serif; font-size: 1rem; color: #2c2c2c;">Historial de Precios</h6>
-                                <span style="color: #8a8a8a; font-size: 0.8rem;">Evolución de precios en los últimos 6 meses</span>
+                                <h6 class="fw-bold mb-0 book-history-title">Historial de Precios</h6>
+                                <span class="book-history-subtitle">Evolución de precios en los últimos 6 meses</span>
                             </div>
-                            <select class="form-select form-select-sm" id="chartPeriodSelect" style="width: auto; font-size: 0.82rem;">
+                            <select class="form-select form-select-sm book-history-select" id="chartPeriodSelect">
                                 <option value="6">Últimos 6 meses</option>
                                 <option value="3">Últimos 3 meses</option>
                                 <option value="12">Último año</option>
                             </select>
                         </div>
-                        <div class="position-relative" style="height: 280px;">
+                        <div class="book-chart-wrapper">
                             <canvas id="priceHistoryChart"></canvas>
                         </div>
-                        <div class="mt-3 p-3" style="background: #faf9f7; border-radius: 8px; border: 1px solid #e8e5e0; font-size: 0.8rem; color: #8a8a8a;">
-                            <i class="fas fa-info-circle me-1" style="color: #b08d57;"></i> Los datos de precios se obtienen mediante rastreo periódico de las tiendas. Las variaciones pueden deberse a promociones, cambios de edición o tipo de cambio.
+                        <div class="mt-3 p-3 book-info-alert">
+                            <i class="iconoir-info-circle me-1 book-info-icon"></i> Los datos de precios se obtienen mediante rastreo periódico de las tiendas. Las variaciones pueden deberse a promociones, cambios de edición o tipo de cambio.
                         </div>
                     </div>
 
@@ -369,12 +344,107 @@
 
             <!-- Footer limpio -->
             <div class="modal-footer border-0 px-4 py-3">
-                <button type="button" class="btn btn-sm px-4" data-bs-dismiss="modal" style="background: transparent; border: 1px solid #e8e5e0; color: #6b6b6b; border-radius: 8px; font-size: 0.85rem;">Cerrar</button>
-                <a href="#" id="modalDirectBuyBtn" target="_blank" class="btn btn-sm px-4 track-click" data-provider="Buscalibre" style="background: #2c2c2c; color: #fff; border-radius: 8px; font-size: 0.85rem; font-weight: 500;">
-                    <i class="fas fa-shopping-bag me-1"></i> Comprar en Buscalibre
+                <button type="button" class="btn btn-sm px-4 book-modal-btn-close" data-bs-dismiss="modal">Cerrar</button>
+                <a href="#" id="modalDirectBuyBtn" target="_blank" class="btn btn-sm px-4 track-click book-modal-btn-buy" data-provider="Buscalibre">
+                    <i class="iconoir-shopping-bag me-1"></i> Comprar en Buscalibre
                 </a>
             </div>
 
+        </div>
+    </div>
+</div>
+
+<!-- ======================================================= -->
+<!-- MODAL: [TÍTULO]: AGREGAR A LISTA (FOTO 2) -->
+<!-- ======================================================= -->
+<div class="modal fade" id="modalAgregarALista" tabindex="-1" aria-labelledby="modalAgregarAListaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-add-to-list-dialog">
+        <div class="modal-content custom-panel-modal-content">
+            <div class="modal-header border-0 pb-1 align-items-start">
+                <div class="pe-3 overflow-hidden flex-grow-1">
+                    <span class="badge badge-add-to-list small fw-bold text-uppercase mb-1">Agregar a lista</span>
+                    <h5 class="modal-title fw-bold fs-6 mb-0 text-truncate text-dark" id="addToListBookTitle">Libro</h5>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body py-3">
+                
+                <!-- SECCIÓN 1: ESTADO DE LECTURA -->
+                <span class="d-block small fw-bold text-uppercase text-muted mb-2" style="letter-spacing: 0.5px;">ESTADO DE LECTURA</span>
+                <div class="d-flex flex-column gap-2 mb-4" id="readingStateOptionsList">
+                    <div class="select-reading-row" id="row-leyendo" onclick="seleccionarEstadoLecturaModal('leyendo')">
+                        <div class="custom-radio-circle" id="radio-leyendo"></div>
+                        <span class="select-reading-label">Leyendo</span>
+                    </div>
+                    <div class="select-reading-row" id="row-por_leer" onclick="seleccionarEstadoLecturaModal('por_leer')">
+                        <div class="custom-radio-circle" id="radio-por_leer"></div>
+                        <span class="select-reading-label">Planeo</span>
+                    </div>
+                    <div class="select-reading-row" id="row-completado" onclick="seleccionarEstadoLecturaModal('completado')">
+                        <div class="custom-radio-circle" id="radio-completado"></div>
+                        <span class="select-reading-label">Completado</span>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 2: MIS LISTAS -->
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="small fw-bold text-uppercase text-muted" style="letter-spacing: 0.5px;">MIS LISTAS</span>
+                    <button type="button" class="btn btn-sm btn-link text-teal p-0 text-decoration-none fw-bold" onclick="abrirModalNuevaListaDesdeLibro()">
+                        <i class="iconoir-plus me-1"></i> Nueva Lista
+                    </button>
+                </div>
+
+                <div class="d-flex flex-column gap-2 mb-3" id="userListsModalList">
+                    <!-- Inyectado dinámicamente -->
+                </div>
+
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-outline-secondary w-100 rounded-pill fw-bold" data-bs-dismiss="modal">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ======================================================= -->
+<!-- MODAL: NUEVA LISTA (FOTO 1) -->
+<!-- ======================================================= -->
+<div class="modal fade" id="modalNuevaListaLibro" tabindex="-1" aria-labelledby="modalNuevaListaLibroLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content custom-panel-modal-content">
+            <div class="modal-header border-0 pb-1">
+                <h5 class="modal-title fw-bold" id="modalNuevaListaLibroLabel">
+                    Nueva Lista
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <form id="formCrearListaLibro">
+                {% csrf_token %}
+                <div class="modal-body py-3">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small">Nombre *</label>
+                        <input type="text" class="form-control" id="nombreNuevaListaLibro" placeholder="Mi lista de series favoritas" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small">Descripción</label>
+                        <textarea class="form-control" id="descNuevaListaLibro" rows="3" placeholder="Una breve descripción de tu lista"></textarea>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="publicaNuevaListaLibro">
+                        <label class="form-check-label small text-muted" for="publicaNuevaListaLibro">
+                            ¿Es pública?
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0 d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-outline-secondary rounded-pill px-3" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold" id="btnCrearListaLibroSubmit">
+                        Crear Lista
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -436,7 +506,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     disp: 'En stock • Envío rápido',
                     precio: '$14.990 CLP',
                     url: `https://www.buscalibre.cl/libros/search?q=${encodeURIComponent(currentBookData.titulo + ' ' + currentBookData.autor)}`,
-                    icono: 'fa-shopping-bag',
+                    icono: 'iconoir-shopping-bag',
                     badge: 'Recomendado'
                 },
                 {
@@ -445,7 +515,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     disp: 'Descarga instantánea',
                     precio: '$9.990 CLP',
                     url: `https://play.google.com/store/search?q=${encodeURIComponent(currentBookData.titulo + ' ' + currentBookData.autor)}&c=books`,
-                    icono: 'fa-google',
+                    icono: 'iconoir-google',
                     badge: 'Digital'
                 },
                 {
@@ -454,7 +524,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     disp: 'Envío Internacional',
                     precio: '$16.500 CLP',
                     url: `https://www.amazon.com/s?k=${encodeURIComponent(currentBookData.titulo + ' ' + currentBookData.autor)}&i=stripbooks`,
-                    icono: 'fa-amazon',
+                    icono: 'iconoir-open-book',
                     badge: 'Importado'
                 },
                 {
@@ -463,7 +533,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     disp: 'Retiro en Tienda',
                     precio: '$15.900 CLP',
                     url: `https://www.feriachilenadellibro.cl/catalogsearch/result/?q=${encodeURIComponent(currentBookData.titulo + ' ' + currentBookData.autor)}`,
-                    icono: 'fa-store',
+                    icono: 'iconoir-shop',
                     badge: 'Nacional'
                 }
             ];
@@ -473,16 +543,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 tiendasHtml += `
                     <tr>
                         <td>
-                            <i class="fas ${t.icono} text-primary me-2"></i><strong>${t.nombre}</strong>
-                            <span class="badge bg-light text-dark border ms-1" style="font-size: 0.7rem;">${t.badge}</span>
+                            <i class="${t.icono} text-primary me-2"></i><strong>${t.nombre}</strong>
+                            <span class="badge bg-light text-dark border ms-1 book-store-badge">${t.badge}</span>
                         </td>
                         <td><small class="text-muted">${t.formato}</small></td>
                         <td><span class="badge bg-success-subtle text-success small">${t.disp}</span></td>
                         <td><strong class="text-dark">${t.precio}</strong></td>
                         <td class="text-end">
                             <a href="${t.url}" target="_blank" class="btn btn-outline-primary btn-sm rounded-pill px-3 track-click"
-                               data-provider="${t.nombre}" data-titulo="${currentBookData.titulo}" data-url="${t.url}">
-                                Ir a la tienda <i class="fas fa-external-link-alt ms-1" style="font-size: 0.75rem;"></i>
+                                data-provider="${t.nombre}" data-titulo="${currentBookData.titulo}" data-url="${t.url}">
+                                Ir a la tienda <i class="iconoir-open-new-window ms-1 book-store-btn-icon"></i>
                             </a>
                         </td>
                     </tr>
@@ -498,6 +568,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Generar gráfico de historial de precios
             renderPriceChart(currentBookData.titulo, tiendas);
+
+            // Cargar estado de listas del usuario para este libro
+            cargarListasUsuarioModal(currentBookData.id);
         });
     }
 
@@ -706,7 +779,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 if (data.status === 'ok') {
                     this.classList.replace('btn-outline-danger', 'btn-danger');
-                    this.innerHTML = '<i class="fas fa-heart"></i>';
+                    this.innerHTML = '<i class="iconoir-heart"></i>';
                     if (window.showToast) {
                         window.showToast('¡Libro añadido a tus favoritos!', 'success', 3000, 'Favoritos');
                     }
@@ -720,14 +793,220 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 }
             })
-            .catch(error => {
-                console.error('Error:', error);
+            .catch(err => {
+                console.error('Error favorito:', err);
                 if (window.showToast) {
-                    window.showToast('Error de red al guardar en favoritos.', 'error', 3500, 'Error');
+                    window.showToast('Hubo un problema de conexión.', 'error', 3500, 'Error');
                 }
             });
         });
     });
+
+    // 5. Gestión del Modal Dedicado "Agregar a lista" (Foto 2) y "Nueva Lista" (Foto 1)
+    let currentReadingState = 'por_leer';
+
+    window.abrirModalAgregarListaDirecto = function() {
+        const titleEl = document.getElementById('addToListBookTitle');
+        if (titleEl && currentBookData.titulo) {
+            titleEl.textContent = currentBookData.titulo;
+        }
+
+        const modalEl = document.getElementById('modalAgregarALista');
+        if (!modalEl) return;
+        const modalInstance = new bootstrap.Modal(modalEl);
+        modalInstance.show();
+
+        cargarListasModalDedicado(currentBookData.id);
+    };
+
+    function cargarListasModalDedicado(bookId) {
+        const container = document.getElementById('userListsModalList');
+        if (!container) return;
+
+        container.innerHTML = '<span class="text-muted small fst-italic p-2">Cargando tus listas...</span>';
+
+        fetch(`/api/listas/obtener/?book_id=${encodeURIComponent(bookId || '')}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'ok') {
+                    // Marcar estado de lectura
+                    currentReadingState = data.estado_actual || 'por_leer';
+                    actualizarUIEstadoLectura(currentReadingState);
+
+                    // Renderizar listas
+                    if (data.listas.length === 0) {
+                        container.innerHTML = `
+                            <div class="p-3 text-center rounded border bg-light">
+                                <span class="text-muted small d-block mb-2">Aún no tienes listas creadas.</span>
+                                <button type="button" class="btn btn-sm btn-outline-dark rounded-pill px-3" onclick="abrirModalNuevaListaDesdeLibro()">
+                                    <i class="iconoir-plus me-1"></i> Crear mi primera lista
+                                </button>
+                            </div>
+                        `;
+                        return;
+                    }
+
+                    let html = '';
+                    data.listas.forEach(l => {
+                        const isChecked = l.contiene_libro;
+                        const activeClass = isChecked ? 'list-row-active' : '';
+                        const checkClass = isChecked ? 'radio-checked' : '';
+                        html += `
+                            <div class="select-list-row ${activeClass}" id="listRow-${l.id}" onclick="toggleLibroEnListaRow(${l.id})">
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="custom-radio-circle ${checkClass}" id="listCircle-${l.id}"></div>
+                                    <span class="select-list-name fw-semibold">${l.nombre}</span>
+                                </div>
+                                <span class="select-list-count text-muted small" id="listCount-${l.id}">
+                                    ${l.total_libros}/50
+                                </span>
+                            </div>
+                        `;
+                    });
+                    container.innerHTML = html;
+                }
+            })
+            .catch(() => {
+                container.innerHTML = '<span class="text-danger small p-2">Inicia sesión para gestionar tus listas.</span>';
+            });
+    }
+
+    function actualizarUIEstadoLectura(estado) {
+        document.querySelectorAll('.select-reading-row').forEach(row => row.classList.remove('reading-row-active'));
+        document.querySelectorAll('.custom-radio-circle').forEach(c => {
+            if (c.id.startsWith('radio-')) c.classList.remove('radio-checked');
+        });
+
+        const activeRow = document.getElementById(`row-${estado}`);
+        const activeRadio = document.getElementById(`radio-${estado}`);
+        if (activeRow) activeRow.classList.add('reading-row-active');
+        if (activeRadio) activeRadio.classList.add('radio-checked');
+    }
+
+    window.seleccionarEstadoLecturaModal = function(estado) {
+        currentReadingState = estado;
+        actualizarUIEstadoLectura(estado);
+
+        // Guardar estado en base de datos
+        fetch("{% url 'actualizar_estado_lectura' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                google_id: currentBookData.id,
+                titulo: currentBookData.titulo,
+                autor: currentBookData.autor,
+                sinopsis: currentBookData.sinopsis,
+                imagen_url: currentBookData.imagen,
+                estado: estado
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'ok') {
+                const labels = {'leyendo': 'Leyendo', 'por_leer': 'Planeo', 'completado': 'Completado'};
+                if (window.showToast) window.showToast(`Marcado como "${labels[estado] || estado}"`, 'success');
+            }
+        });
+    };
+
+    window.toggleLibroEnListaRow = function(listaId) {
+        fetch("{% url 'agregar_a_lista_api' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                lista_id: listaId,
+                google_id: currentBookData.id,
+                titulo: currentBookData.titulo,
+                autores: currentBookData.autor,
+                imagen_url: currentBookData.imagen,
+                estado_lectura: currentReadingState,
+                action: 'toggle'
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'ok') {
+                const row = document.getElementById(`listRow-${listaId}`);
+                const circle = document.getElementById(`listCircle-${listaId}`);
+                if (data.action === 'added') {
+                    if (row) row.classList.add('list-row-active');
+                    if (circle) circle.classList.add('radio-checked');
+                } else {
+                    if (row) row.classList.remove('list-row-active');
+                    if (circle) circle.classList.remove('radio-checked');
+                }
+                cargarListasModalDedicado(currentBookData.id);
+                if (window.showToast) window.showToast(data.msg, 'success');
+            }
+        });
+    };
+
+    window.abrirModalNuevaListaDesdeLibro = function() {
+        const modalAdd = bootstrap.Modal.getInstance(document.getElementById('modalAgregarALista'));
+        if (modalAdd) modalAdd.hide();
+
+        const modalNueva = new bootstrap.Modal(document.getElementById('modalNuevaListaLibro'));
+        modalNueva.show();
+    };
+
+    const formCrearListaLibro = document.getElementById('formCrearListaLibro');
+    if (formCrearListaLibro) {
+        formCrearListaLibro.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nombre = document.getElementById('nombreNuevaListaLibro').value.trim();
+            const desc = document.getElementById('descNuevaListaLibro').value.trim();
+            const publica = document.getElementById('publicaNuevaListaLibro').checked;
+            const submitBtn = document.getElementById('btnCrearListaLibroSubmit');
+
+            if (!nombre) return;
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'Creando...';
+
+            fetch("{% url 'crear_lista_api' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    nombre: nombre,
+                    descripcion: desc,
+                    es_publica: publica,
+                    google_id: currentBookData.id,
+                    titulo: currentBookData.titulo,
+                    autores: currentBookData.autor,
+                    imagen_url: currentBookData.imagen,
+                    estado_lectura: currentReadingState
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Crear Lista';
+                if (data.status === 'ok') {
+                    formCrearListaLibro.reset();
+                    const modalNueva = bootstrap.Modal.getInstance(document.getElementById('modalNuevaListaLibro'));
+                    if (modalNueva) modalNueva.hide();
+
+                    abrirModalAgregarListaDirecto();
+                    if (window.showToast) window.showToast(data.msg, 'success');
+                } else {
+                    if (window.showToast) window.showToast(data.msg || 'Error al crear lista', 'error');
+                }
+            })
+            .catch(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Crear Lista';
+            });
+        });
+    }
 
     // 5. Skeleton Loaders al filtrar o buscar
     function mostrarSkeletons() {

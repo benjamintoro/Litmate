@@ -104,6 +104,9 @@ class PerfilUsuario(models.Model):
     fecha_nacimiento = models.DateField(null=True, blank=True)
     imagen = models.ImageField(default='default.jpg', upload_to='profile_pics')
     biografia = models.TextField(blank=True, null=True, verbose_name='Sobre mí')
+    meta_anual_libros = models.IntegerField(default=12, help_text="Meta anual de libros a leer")
+    tiendas_favoritas = models.CharField(max_length=255, default='buscalibre,amazon,fch', blank=True)
+    alertas_precio_activas = models.BooleanField(default=True)
     fecha_registro = models.DateTimeField(auto_now_add=True)
     ultima_conexion = models.DateTimeField(auto_now=True)
 
@@ -113,6 +116,49 @@ class PerfilUsuario(models.Model):
 
     def __str__(self):
         return f'Perfil de {self.usuario.username}'
+
+
+class ListaLectura(models.Model):
+    """Listas personalizadas creadas por el usuario (ej: 'Mis clásicos para el invierno', 'Libros de Ciencia Ficción')."""
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='listas_lectura')
+    nombre = models.CharField(max_length=150)
+    descripcion = models.TextField(blank=True, default='')
+    es_publica = models.BooleanField(default=False)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    fecha_actualizacion = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = 'Lista de Lectura'
+        verbose_name_plural = 'Listas de Lectura'
+        ordering = ['-fecha_creacion']
+
+    def __str__(self):
+        return f"{self.nombre} ({self.usuario.username})"
+
+
+class ElementoListaLectura(models.Model):
+    """Libros pertenecientes a una lista personalizada."""
+    ESTADO_CHOICES = (
+        ('por_leer', 'Planeo / Por leer'),
+        ('leyendo', 'Leyendo'),
+        ('completado', 'Completado / Leído'),
+    )
+    lista = models.ForeignKey(ListaLectura, on_delete=models.CASCADE, related_name='elementos')
+    google_id = models.CharField(max_length=100)
+    titulo = models.CharField(max_length=255)
+    autores = models.CharField(max_length=255, blank=True, default='')
+    imagen_url = models.URLField(max_length=500, blank=True, null=True)
+    estado_lectura = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='por_leer')
+    nota_personal = models.CharField(max_length=255, blank=True, default='')
+    fecha_agregado = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Elemento de Lista'
+        verbose_name_plural = 'Elementos de Listas'
+        unique_together = ('lista', 'google_id')
+
+    def __str__(self):
+        return f"{self.titulo} en {self.lista.nombre} ({self.estado_lectura})"
 
 
 class Resena(models.Model):

@@ -4,6 +4,7 @@
 {% block title %}Inicio - LitMate{% endblock %}
 
 {% block content %}
+<!-- Masthead Limpio -->
 <header class="masthead" style="background-image: url('{% static "assets/img/home-bg.jpg" %}')">
     <div class="container position-relative px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -17,63 +18,475 @@
     </div>
 </header>
 
-<div class="container px-4 px-lg-5 mb-5">
+<!-- SECCIÓN 1: CARRUSEL 3D COVERFLOW DE PORTADAS (RECOMENDACIONES & AFILIADOS) -->
+<section class="coverflow-section">
+    <div class="container px-4 px-lg-5">
+        
+        <div class="text-center mb-4">
+            <h2 class="coverflow-heading mb-2">Lecturas Recomendadas</h2>
+            <p class="coverflow-subheading mb-0">Explora las portadas, lee fragmentos de muestra y adquiere tu edición en nuestras librerías asociadas</p>
+        </div>
+
+        <!-- Escenario 3D Coverflow -->
+        <div class="coverflow-stage-wrapper">
+            
+            <!-- Botón Anterior -->
+            <button class="coverflow-btn coverflow-btn-prev" id="coverflowPrevBtn" aria-label="Libro anterior">
+                <i class="iconoir-arrow-left"></i>
+            </button>
+
+            <!-- Contenedor de Tarjetas 3D (Solo Portadas) -->
+            <div class="coverflow-stage" id="coverflowStage">
+                {% for libro in libros_destacados %}
+                <div class="coverflow-item"
+                     data-index="{{ forloop.counter0 }}"
+                     data-titulo="{{ libro.titulo }}"
+                     data-autor="{{ libro.autor }}"
+                     data-genero="{{ libro.genero }}"
+                     data-editorial="{{ libro.editorial }}"
+                     data-ano="{{ libro.ano }}"
+                     data-paginas="{{ libro.paginas }}"
+                     data-rating="{{ libro.rating }}"
+                     data-precio="{{ libro.precio_desde }}"
+                     data-portada="{{ libro.portada }}"
+                     data-sinopsis="{{ libro.sinopsis }}"
+                     data-demo="{{ libro.demo_texto }}"
+                     data-partner="{{ libro.partner_badge }}"
+                     data-google-id="{{ libro.google_id }}">
+                    <img src="{{ libro.portada }}" alt="Portada de {{ libro.titulo }}" loading="lazy" onerror="this.onerror=null; this.src='https://covers.openlibrary.org/b/id/8231856-L.jpg';" />
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Botón Siguiente -->
+            <button class="coverflow-btn coverflow-btn-next" id="coverflowNextBtn" aria-label="Siguiente libro">
+                <i class="iconoir-arrow-right"></i>
+            </button>
+
+        </div>
+
+        <!-- Información del Libro Activo en el Centro -->
+        <div class="coverflow-active-info">
+            <h3 class="coverflow-active-title" id="coverflowActiveTitle">Título del Libro</h3>
+            <p class="coverflow-active-author" id="coverflowActiveAuthor">Autor del Libro</p>
+            <div class="coverflow-active-actions">
+                <span class="coverflow-rating-badge" id="coverflowActiveRating">
+                    <i class="iconoir-star-solid text-warning me-1"></i> 4.9★
+                </span>
+                <span class="coverflow-price-badge" id="coverflowActivePrice">
+                    Desde $14.990 CLP
+                </span>
+                <button type="button" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm" id="coverflowOpenModalBtn">
+                    <i class="iconoir-open-book me-1"></i> Ver Demo & Precios
+                </button>
+            </div>
+        </div>
+
+        <!-- Indicadores de Puntos -->
+        <div class="coverflow-dots" id="coverflowDots"></div>
+
+    </div>
+</section>
+
+<!-- SECCIÓN 2: PILARES DE LITMATE (ICONOS CORREGIDOS EN CÍRCULOS PERFECTOS) -->
+<div class="container px-4 px-lg-5 my-5 py-4">
     
-    <div class="row justify-content-center text-center mb-5 mt-5">
+    <div class="row justify-content-center text-center mb-5">
         <div class="col-lg-7">
-            <h2 class="fw-bold" style="font-family: 'Playfair Display', serif; font-size: 2rem;">Bienvenido a la nueva era de la lectura</h2>
-            <p class="text-muted" style="font-size: 1.05rem; line-height: 1.8;">LitMate combina la inmensidad de los libros con la inteligencia artificial para ofrecerte una experiencia única.</p>
-            <hr class="my-4 mx-auto" style="width: 60px; border-top: 2px solid #e8e5e0; opacity: 1;">
+            <h2 class="fw-bold plan-hero-title">Bienvenido a la nueva era de la lectura</h2>
+            <p class="text-muted plan-hero-desc">LitMate combina la inmensidad del catálogo literario mundial con inteligencia artificial para ofrecerte una experiencia única.</p>
+            <hr class="my-4 mx-auto plan-hero-divider">
         </div>
     </div>
 
     <div class="row gx-4 gx-lg-5">
         
+        <!-- Tarjeta 1: Explora Libros -->
         <div class="col-md-4 mb-4">
-            <div class="card h-100 border-0">
-                <div class="card-body text-center p-4">
-                    <div class="feature-icon rounded-circle mb-3 mx-auto d-flex align-items-center justify-content-center" style="width: 64px; height: 64px;">
-                        <i class="fas fa-search fa-lg"></i>
-                    </div>
-                    <h3 class="h5 fw-bold mt-3">Explora Libros</h3>
-                    <p class="text-muted small">Accede a una biblioteca infinita conectada a Google Books. Busca por título, autor o género y guarda tus favoritos.</p>
+            <div class="card h-100 p-4 text-center">
+                <div class="feature-icon mb-3 mx-auto">
+                    <i class="iconoir-search"></i>
                 </div>
-                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent text-center">
-                    <a class="btn btn-outline-primary px-4" href="{% url 'buscar_libros' %}">Buscar ahora</a>
+                <h3 class="h5 fw-bold mt-2">Explora Libros</h3>
+                <p class="text-muted small">Accede a una biblioteca conectada con Google Books. Filtra por género, busca por recuerdos de trama y compara precios de librerías asociadas.</p>
+                <div class="mt-auto pt-3">
+                    <a class="btn btn-outline-primary rounded-pill px-4 w-100" href="{% url 'buscar_libros' %}">Buscar ahora</a>
                 </div>
             </div>
         </div>
 
+        <!-- Tarjeta 2: Asistente IA -->
         <div class="col-md-4 mb-4">
-            <div class="card h-100 border-0">
-                <div class="card-body text-center p-4">
-                    <div class="feature-icon rounded-circle mb-3 mx-auto d-flex align-items-center justify-content-center" style="width: 64px; height: 64px;">
-                        <i class="fas fa-robot fa-lg"></i>
-                    </div>
-                    <h3 class="h5 fw-bold mt-3">Asistente IA</h3>
-                    <p class="text-muted small">¿No sabes qué leer? Habla con nuestro Chatbot inteligente y recibe recomendaciones personalizadas al instante.</p>
+            <div class="card h-100 p-4 text-center">
+                <div class="feature-icon mb-3 mx-auto">
+                    <i class="iconoir-sparks"></i>
                 </div>
-                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent text-center">
-                    <a class="btn btn-outline-primary px-4" href="{% url 'chatbot_page' %}">Probar Chatbot</a>
+                <h3 class="h5 fw-bold mt-2">Asistente IA</h3>
+                <p class="text-muted small">¿Recuerdas solo fragmentos de una historia? Conversa con nuestro chatbot literario para encontrar ese título y obtener recomendaciones exactas.</p>
+                <div class="mt-auto pt-3">
+                    <a class="btn btn-outline-primary rounded-pill px-4 w-100" href="{% url 'chatbot_page' %}">Probar Chatbot</a>
                 </div>
             </div>
         </div>
 
+        <!-- Tarjeta 3: Novedades & Artículos -->
         <div class="col-md-4 mb-4">
-            <div class="card h-100 border-0">
-                <div class="card-body text-center p-4">
-                    <div class="feature-icon rounded-circle mb-3 mx-auto d-flex align-items-center justify-content-center" style="width: 64px; height: 64px;">
-                        <i class="fas fa-newspaper fa-lg"></i>
-                    </div>
-                    <h3 class="h5 fw-bold mt-3">Novedades</h3>
-                    <p class="text-muted small">Descubre artículos sobre el futuro de la lectura y mantente al día con las últimas noticias del mundo literario.</p>
+            <div class="card h-100 p-4 text-center">
+                <div class="feature-icon mb-3 mx-auto">
+                    <i class="iconoir-journal"></i>
                 </div>
-                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent text-center">
-                    <a class="btn btn-outline-primary px-4" href="{% url 'post' %}">Leer Blog</a>
+                <h3 class="h5 fw-bold mt-2">Novedades</h3>
+                <p class="text-muted small">Descubre publicaciones sobre el impacto de la inteligencia artificial en la literatura y mantente al día con las últimas noticias culturales.</p>
+                <div class="mt-auto pt-3">
+                    <a class="btn btn-outline-primary rounded-pill px-4 w-100" href="{% url 'post' %}">Leer Artículos</a>
                 </div>
             </div>
         </div>
 
     </div>
 </div>
+
+<!-- MODAL DEMO DE LECTURA Y TIENDAS ASOCIADAS (INICIO) -->
+<div class="modal fade" id="homeBookModal" tabindex="-1" aria-labelledby="homeBookModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content book-modal-content border-0 shadow-lg">
+            
+            <!-- Header Modal -->
+            <div class="modal-header border-bottom px-4 py-3" style="background: var(--lm-parchment-soft);">
+                <div>
+                    <span class="badge px-2 py-1 book-modal-genre mb-1" id="homeModalGenero">Ficción</span>
+                    <h5 class="modal-title fw-bold book-modal-title mb-0" id="homeModalTitulo">Título del Libro</h5>
+                    <span class="book-modal-author" id="homeModalAutor">Autor</span>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <!-- Pestañas de Navegación -->
+            <div class="border-bottom bg-light px-4">
+                <ul class="nav nav-tabs border-0" id="homeBookTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active fw-bold small py-3" id="home-tab-info-btn" data-bs-toggle="tab" data-bs-target="#home-tab-info" type="button" role="tab">
+                            <i class="iconoir-open-book me-1"></i> Ficha & Muestra Demo
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link fw-bold small py-3" id="home-tab-tiendas-btn" data-bs-toggle="tab" data-bs-target="#home-tab-tiendas" type="button" role="tab">
+                            <i class="iconoir-shopping-bag me-1"></i> Comparar Precios en Tiendas
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Cuerpo Modal -->
+            <div class="modal-body p-4">
+                <div class="tab-content">
+                    
+                    <!-- PESTAÑA 1: FICHA & FRAGMENTO DEMO -->
+                    <div class="tab-pane fade show active" id="home-tab-info" role="tabpanel">
+                        <div class="row mb-4">
+                            <div class="col-sm-3 text-center mb-3 mb-sm-0">
+                                <img src="" id="homeModalImg" class="img-fluid book-modal-img" alt="Portada">
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="row g-3 mb-3 book-meta-grid">
+                                    <div class="col-6">
+                                        <span class="book-meta-label">Editorial</span>
+                                        <span class="book-meta-value" id="homeModalEditorial">-</span>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="book-meta-label">Año</span>
+                                        <span class="book-meta-value" id="homeModalAno">-</span>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="book-meta-label">Páginas</span>
+                                        <span class="book-meta-value" id="homeModalPaginas">-</span>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="book-meta-label">Valoración</span>
+                                        <span class="book-meta-rating" id="homeModalRating">4.8★</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="book-section-label fw-bold small text-uppercase text-muted">Sinopsis</span>
+                                    <p class="mt-1 book-synopsis-full small text-muted" id="homeModalSinopsis" style="line-height: 1.6;"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Demo de Lectura -->
+                        <div class="p-4 book-demo-box rounded-3" style="background: var(--lm-parchment-soft); border: 1.5px solid var(--lm-border);">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="iconoir-quote me-2 text-primary"></i>
+                                <span class="fw-bold small text-uppercase" style="color: var(--lm-shadow);">Fragmento de Muestra</span>
+                            </div>
+                            <p class="mb-0 fst-italic small text-dark" id="homeModalDemoTexto" style="line-height: 1.7;"></p>
+                        </div>
+                    </div>
+
+                    <!-- PESTAÑA 2: COMPARADOR DE TIENDAS ASOCIADAS -->
+                    <div class="tab-pane fade" id="home-tab-tiendas" role="tabpanel">
+                        <div class="p-3 mb-3 book-info-alert rounded-3 small" style="background: rgba(34, 125, 142, 0.08); border: 1px solid rgba(34, 125, 142, 0.2); color: var(--lm-shadow);">
+                            <i class="iconoir-info-circle me-1 text-primary"></i> Al hacer clic en una tienda serás redirigido directamente a su plataforma de compra con nuestro enlace oficial.
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table align-middle mb-0 book-stores-table">
+                                <thead>
+                                    <tr>
+                                        <th>Tienda</th>
+                                        <th>Formato</th>
+                                        <th>Disponibilidad</th>
+                                        <th>Precio Aprox.</th>
+                                        <th class="text-end">Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="homeModalTiendasBody">
+                                    <!-- Inyectado por JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Footer Modal -->
+            <div class="modal-footer border-top px-4 py-3 bg-light d-flex justify-content-between">
+                <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">Cerrar</button>
+                <a href="#" id="homeModalDirectBuyBtn" target="_blank" rel="noopener noreferrer" class="btn btn-primary rounded-pill px-4 fw-bold">
+                    <i class="iconoir-shopping-bag me-1"></i> Comprar en Buscalibre
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- SCRIPT 3D COVERFLOW INTERACTIVO -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const items = Array.from(document.querySelectorAll('.coverflow-item'));
+    const prevBtn = document.getElementById('coverflowPrevBtn');
+    const nextBtn = document.getElementById('coverflowNextBtn');
+    const dotsContainer = document.getElementById('coverflowDots');
+    const openModalBtn = document.getElementById('coverflowOpenModalBtn');
+    const homeModalEl = document.getElementById('homeBookModal');
+    
+    if (!items.length) return;
+
+    let currentIndex = 0;
+    const total = items.length;
+
+    // Crear dots
+    dotsContainer.innerHTML = '';
+    items.forEach((_, idx) => {
+        const dot = document.createElement('button');
+        dot.className = `coverflow-dot ${idx === 0 ? 'active' : ''}`;
+        dot.setAttribute('aria-label', `Ir al libro ${idx + 1}`);
+        dot.addEventListener('click', () => updateCoverflow(idx));
+        dotsContainer.appendChild(dot);
+    });
+
+    function updateCoverflow(newIndex) {
+        // Normalizar índice cíclico
+        currentIndex = (newIndex + total) % total;
+
+        items.forEach((item, idx) => {
+            let diff = idx - currentIndex;
+            
+            // Ajustar distancia más corta en bucle cíclico
+            if (diff > total / 2) diff -= total;
+            if (diff < -total / 2) diff += total;
+
+            if (diff === 0) {
+                item.setAttribute('data-pos', '0');
+            } else if (diff === 1) {
+                item.setAttribute('data-pos', '1');
+            } else if (diff === -1) {
+                item.setAttribute('data-pos', '-1');
+            } else if (diff === 2) {
+                item.setAttribute('data-pos', '2');
+            } else if (diff === -2) {
+                item.setAttribute('data-pos', '-2');
+            } else {
+                item.setAttribute('data-pos', 'hidden');
+            }
+        });
+
+        // Actualizar dots
+        const dots = dotsContainer.querySelectorAll('.coverflow-dot');
+        dots.forEach((d, i) => d.classList.toggle('active', i === currentIndex));
+
+        // Actualizar información del libro activo
+        const activeItem = items[currentIndex];
+        if (activeItem) {
+            document.getElementById('coverflowActiveTitle').textContent = activeItem.getAttribute('data-titulo') || '';
+            document.getElementById('coverflowActiveAuthor').textContent = activeItem.getAttribute('data-autor') || '';
+            document.getElementById('coverflowActiveRating').innerHTML = `<i class="iconoir-star-solid text-warning me-1"></i> ${activeItem.getAttribute('data-rating') || '4.8★'}`;
+            document.getElementById('coverflowActivePrice').textContent = `Desde ${activeItem.getAttribute('data-precio') || '$14.990 CLP'}`;
+        }
+    }
+
+    // Navegación con botones
+    if (prevBtn) prevBtn.addEventListener('click', () => updateCoverflow(currentIndex - 1));
+    if (nextBtn) nextBtn.addEventListener('click', () => updateCoverflow(currentIndex + 1));
+
+    // Clic en los items: si es el central abre modal, si es lateral lo centra
+    items.forEach((item, idx) => {
+        item.addEventListener('click', () => {
+            if (idx === currentIndex) {
+                openModalForBook(item);
+            } else {
+                updateCoverflow(idx);
+            }
+        });
+    });
+
+    // Botón de acción principal
+    if (openModalBtn) {
+        openModalBtn.addEventListener('click', () => {
+            const activeItem = items[currentIndex];
+            if (activeItem) openModalForBook(activeItem);
+        });
+    }
+
+    // Función para abrir el modal con los datos del libro seleccionado
+    function openModalForBook(item) {
+        if (!homeModalEl || !window.bootstrap) return;
+
+        const titulo = item.getAttribute('data-titulo') || '';
+        const autor = item.getAttribute('data-autor') || '';
+        const genero = item.getAttribute('data-genero') || 'Literatura';
+        const editorial = item.getAttribute('data-editorial') || 'Editorial Destacada';
+        const ano = item.getAttribute('data-ano') || '2023';
+        const paginas = item.getAttribute('data-paginas') || '320';
+        const rating = item.getAttribute('data-rating') || '4.8★';
+        const portada = item.getAttribute('data-portada') || '';
+        const sinopsis = item.getAttribute('data-sinopsis') || '';
+        const demo = item.getAttribute('data-demo') || '';
+
+        document.getElementById('homeModalTitulo').textContent = titulo;
+        document.getElementById('homeModalAutor').textContent = autor;
+        document.getElementById('homeModalGenero').textContent = genero;
+        document.getElementById('homeModalEditorial').textContent = editorial;
+        document.getElementById('homeModalAno').textContent = ano;
+        document.getElementById('homeModalPaginas').textContent = `${paginas} págs.`;
+        document.getElementById('homeModalRating').textContent = rating;
+        document.getElementById('homeModalSinopsis').textContent = sinopsis;
+        document.getElementById('homeModalDemoTexto').textContent = demo;
+
+        const imgEl = document.getElementById('homeModalImg');
+        if (portada) {
+            imgEl.src = portada;
+            imgEl.style.display = 'block';
+        } else {
+            imgEl.style.display = 'none';
+        }
+
+        // Generar lista de tiendas asociadas
+        const tiendas = [
+            {
+                nombre: 'Buscalibre Chile',
+                formato: 'Físico (Tapa Blanda)',
+                disp: 'En stock • Envío 24-48h',
+                precio: '$14.990 CLP',
+                url: `https://www.buscalibre.cl/libros/search?q=${encodeURIComponent(titulo + ' ' + autor)}`,
+                icono: 'iconoir-shopping-bag',
+                badge: 'Recomendado'
+            },
+            {
+                nombre: 'Google Play Books',
+                formato: 'eBook Digital',
+                disp: 'Descarga Inmediata',
+                precio: '$9.990 CLP',
+                url: `https://play.google.com/store/search?q=${encodeURIComponent(titulo + ' ' + autor)}&c=books`,
+                icono: 'iconoir-google',
+                badge: 'Digital'
+            },
+            {
+                nombre: 'Amazon Books / Kindle',
+                formato: 'Físico / Kindle',
+                disp: 'Envío Internacional',
+                precio: '$16.500 CLP',
+                url: `https://www.amazon.com/s?k=${encodeURIComponent(titulo + ' ' + autor)}&i=stripbooks`,
+                icono: 'iconoir-open-book',
+                badge: 'Internacional'
+            },
+            {
+                nombre: 'Feria Chilena del Libro',
+                formato: 'Físico (Librería)',
+                disp: 'Retiro en Tienda',
+                precio: '$15.900 CLP',
+                url: `https://www.feriachilenadellibro.cl/catalogsearch/result/?q=${encodeURIComponent(titulo + ' ' + autor)}`,
+                icono: 'iconoir-shop',
+                badge: 'Local'
+            }
+        ];
+
+        let html = '';
+        tiendas.forEach(t => {
+            html += `
+                <tr>
+                    <td>
+                        <i class="${t.icono} text-primary me-2"></i><strong>${t.nombre}</strong>
+                        <span class="badge bg-light text-dark border ms-1" style="font-size: 0.7rem;">${t.badge}</span>
+                    </td>
+                    <td><small class="text-muted">${t.formato}</small></td>
+                    <td><span class="badge bg-success-subtle text-success small">${t.disp}</span></td>
+                    <td><strong class="text-dark">${t.precio}</strong></td>
+                    <td class="text-end">
+                        <a href="${t.url}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                            Ir a la tienda <i class="iconoir-open-new-window ms-1"></i>
+                        </a>
+                    </td>
+                </tr>
+            `;
+        });
+        document.getElementById('homeModalTiendasBody').innerHTML = html;
+
+        // Botón directo
+        const buyBtn = document.getElementById('homeModalDirectBuyBtn');
+        buyBtn.href = tiendas[0].url;
+        buyBtn.innerHTML = `<i class="iconoir-shopping-bag me-1"></i> Comprar en ${tiendas[0].nombre}`;
+
+        // Reset tab
+        const tabBtn = document.getElementById('home-tab-info-btn');
+        if (tabBtn) {
+            const tab = new bootstrap.Tab(tabBtn);
+            tab.show();
+        }
+
+        const modalInstance = bootstrap.Modal.getOrCreateInstance(homeModalEl);
+        modalInstance.show();
+    }
+
+    // Soporte para gestos táctiles (Swipe)
+    let touchStartX = 0;
+    const stageEl = document.getElementById('coverflowStage');
+    if (stageEl) {
+        stageEl.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        stageEl.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].screenX;
+            const diffX = touchStartX - touchEndX;
+            if (Math.abs(diffX) > 45) {
+                if (diffX > 0) updateCoverflow(currentIndex + 1);
+                else updateCoverflow(currentIndex - 1);
+            }
+        }, { passive: true });
+    }
+
+    // Soporte teclado (flechas)
+    document.addEventListener('keydown', (e) => {
+        if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
+        if (e.key === 'ArrowLeft') updateCoverflow(currentIndex - 1);
+        if (e.key === 'ArrowRight') updateCoverflow(currentIndex + 1);
+    });
+
+    // Inicializar carrusel
+    updateCoverflow(0);
+});
+</script>
 {% endblock %}

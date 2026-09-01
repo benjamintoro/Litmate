@@ -5,12 +5,12 @@
 
 {% block content %}
 <!-- Header Minimalista -->
-<header class="masthead mb-0" style="background-image: url('{% static "assets/img/about-bg.jpg" %}'); padding: 4.5rem 0 3.5rem 0;">
+<header class="masthead mb-0 legal-header" style="background-image: url('{% static "assets/img/about-bg.jpg" %}');">
     <div class="container position-relative px-4 px-lg-5">
         <div class="row justify-content-center">
             <div class="col-lg-9 text-center">
                 <div class="page-heading">
-                    <span class="text-uppercase small tracking-wider text-white-50 d-block mb-1" style="letter-spacing: 2px; font-size: 0.75rem;">Centro Legal &bull; LitMate</span>
+                    <span class="text-uppercase small tracking-wider text-white-50 d-block mb-1 legal-header-tag">Centro Legal &bull; LitMate</span>
                     <h1 class="fw-bold mb-2">Política de Privacidad</h1>
                     <span class="subheading fs-6 text-white-50">Tratamiento, seguridad y protección de tus datos personales</span>
                 </div>
@@ -20,7 +20,7 @@
 </header>
 
 <!-- Navegación Rápida entre Documentos -->
-<div class="border-bottom bg-white sticky-top shadow-sm" style="top: 0; z-index: 1020;">
+<div class="border-bottom bg-white sticky-top shadow-sm legal-nav-bar">
     <div class="container px-4 px-lg-5">
         <div class="d-flex justify-content-center overflow-auto py-2 gap-2">
             <a href="{% url 'terminos' %}" class="btn btn-sm rounded-pill px-3 py-1 text-secondary text-decoration-none hover-pill">
@@ -42,7 +42,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-9 col-xl-8">
                 
-                <div class="bg-white rounded-4 p-4 p-md-5 border" style="border-color: #e2e8f0 !important;">
+                <div class="bg-white rounded-4 p-4 p-md-5 border legal-card">
                     
                     <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
                         <div>
@@ -89,7 +89,7 @@
                     <!-- 4. No Divulgación -->
                     <section class="mb-4">
                         <h3 class="h6 fw-bold text-dark mb-2">4. No Venta ni Comercialización de Datos</h3>
-                        <div class="p-3 rounded-3 mb-0" style="background: #f8fafc; border-left: 3px solid #00a6c6;">
+                        <div class="p-3 rounded-3 mb-0 legal-notice-info">
                             <p class="text-secondary small mb-0">
                                 <strong>Garantía de Confidencialidad:</strong> LitMate <strong>nunca vende, arrienda ni comercializa</strong> los datos personales o historiales de lectura de sus usuarios a empresas publicitarias o terceros.
                             </p>
@@ -124,17 +124,4 @@
         </div>
     </div>
 </main>
-
-<style>
-    .hover-pill {
-        transition: all 0.2s ease;
-    }
-    .hover-pill:hover {
-        background: #f1f5f9;
-        color: #0f172a !important;
-    }
-    .leading-relaxed {
-        line-height: 1.7;
-    }
-</style>
 {% endblock %}

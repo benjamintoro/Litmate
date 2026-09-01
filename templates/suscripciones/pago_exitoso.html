@@ -24,21 +24,21 @@
         <div class="col-lg-8">
             
             <!-- Tarjeta Principal del Comprobante -->
-            <div class="card border-0 shadow-lg p-4 p-md-5" style="border-radius: 18px; border: 1px solid #e2e8f0 !important;" id="receiptCard">
+            <div class="card border-0 shadow-lg p-4 p-md-5 receipt-card" id="receiptCard">
                 
                 <!-- Encabezado de Éxito -->
                 <div class="text-center mb-4 pb-3 border-bottom">
-                    <div class="rounded-circle bg-success text-white d-inline-flex align-items-center justify-content-center mb-3 shadow" style="width: 76px; height: 76px;">
-                        <i class="fas fa-check fa-3x"></i>
+                    <div class="rounded-circle bg-success text-white d-inline-flex align-items-center justify-content-center mb-3 shadow receipt-success-icon">
+                        <i class="iconoir-check fa-3x"></i>
                     </div>
                     <h3 class="fw-bold text-dark mb-1">¡Gracias por unirte a LitMate {{ plan.nombre }}!</h3>
                     <p class="text-muted">Hemos enviado la confirmación y el recibo a <strong>{{ user.email }}</strong></p>
                 </div>
 
                 <!-- Detalle de la Transacción -->
-                <div class="bg-light p-4 rounded-3 mb-4" style="border: 1px dashed #cbd5e1; border-radius: 14px;">
+                <div class="bg-light p-4 rounded-3 mb-4 receipt-box">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="badge bg-primary px-3 py-2 rounded-pill"><i class="fas fa-receipt me-1"></i> COMPROBANTE OFICIAL</span>
+                        <span class="badge bg-primary px-3 py-2 rounded-pill"><i class="iconoir-page me-1"></i> COMPROBANTE OFICIAL</span>
                         <span class="text-muted small">Fecha: {{ pago.fecha_pago|date:"d/m/Y H:i" }}</span>
                     </div>
 
@@ -49,7 +49,7 @@
                         </div>
                         <div class="col-sm-6">
                             <span class="text-muted d-block">Método de Pago:</span>
-                            <strong class="text-capitalize text-dark"><i class="fas fa-credit-card text-primary me-1"></i> {{ pago.get_metodo_pago_display|default:pago.metodo_pago }}</strong>
+                            <strong class="text-capitalize text-dark"><i class="iconoir-credit-card text-primary me-1"></i> {{ pago.get_metodo_pago_display|default:pago.metodo_pago }}</strong>
                         </div>
                         <div class="col-sm-6">
                             <span class="text-muted d-block">Titular de la Cuenta:</span>
@@ -61,7 +61,7 @@
                         </div>
                         <div class="col-sm-6">
                             <span class="text-muted d-block">Vigencia de Suscripción:</span>
-                            <strong class="text-success"><i class="fas fa-calendar-check me-1"></i> Activa hasta {{ suscripcion.fecha_fin|date:"d/m/Y"|default:"Indefinida" }}</strong>
+                            <strong class="text-success"><i class="iconoir-calendar me-1"></i> Activa hasta {{ suscripcion.fecha_fin|date:"d/m/Y"|default:"Indefinida" }}</strong>
                         </div>
                         <div class="col-sm-6">
                             <span class="text-muted d-block">Monto Pagado:</span>
@@ -73,16 +73,16 @@
                 <!-- Botones de Acción Inmediata -->
                 <div class="d-flex flex-wrap gap-2 justify-content-center pt-2">
                     <a href="{% url 'chatbot_page' %}" class="btn btn-primary rounded-pill px-4 py-2 fw-bold text-uppercase shadow-sm">
-                        <i class="fas fa-robot me-1"></i> Probar Asistente IA
+                        <i class="iconoir-sparks me-1"></i> Probar Asistente IA
                     </a>
                     <a href="{% url 'buscar_libros' %}" class="btn btn-outline-primary rounded-pill px-4 py-2 fw-bold text-uppercase">
-                        <i class="fas fa-search me-1"></i> Explorar Libros
+                        <i class="iconoir-search me-1"></i> Explorar Libros
                     </a>
                     <a href="{% url 'suscripciones:mi_suscripcion' %}" class="btn btn-outline-secondary rounded-pill px-4 py-2">
-                        <i class="fas fa-user-circle me-1"></i> Mi Suscripción
+                        <i class="iconoir-user me-1"></i> Mi Suscripción
                     </a>
                     <button onclick="window.print()" class="btn btn-light border rounded-pill px-3 py-2 text-muted" title="Imprimir comprobante">
-                        <i class="fas fa-print me-1"></i> Imprimir
+                        <i class="iconoir-printer me-1"></i> Imprimir
                     </button>
                 </div>
 
@@ -91,17 +91,4 @@
         </div>
     </div>
 </div>
-
-<style>
-    @media print {
-        header.masthead, footer, .navbar, .btn {
-            display: none !important;
-        }
-        #receiptCard {
-            border: none !important;
-            box-shadow: none !important;
-            padding: 0 !important;
-        }
-    }
-</style>
 {% endblock %}

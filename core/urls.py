@@ -49,6 +49,13 @@ urlpatterns = [
     path('favoritos/agregar/', views.agregar_favorito, name='agregar_favorito'),
     path('favoritos/eliminar/<int:id>/', views.eliminar_favorito, name='eliminar_favorito'),
     path('api/estado-lectura/', views.actualizar_estado_lectura, name='actualizar_estado_lectura'),
+    path('api/listas/crear/', views.crear_lista_api, name='crear_lista_api'),
+    path('api/listas/eliminar/<int:id>/', views.eliminar_lista_api, name='eliminar_lista_api'),
+    path('api/listas/obtener/', views.obtener_mis_listas_api, name='obtener_mis_listas_api'),
+    path('api/listas/agregar-libro/', views.agregar_a_lista_api, name='agregar_a_lista_api'),
+    path('api/listas/quitar-libro/<int:id>/', views.quitar_de_lista_api, name='quitar_de_lista_api'),
+    path('api/historial/limpiar/', views.limpiar_historial_busqueda_api, name='limpiar_historial_busqueda_api'),
+    path('api/perfil/preferencias-stats/', views.actualizar_preferencias_stats_api, name='actualizar_preferencias_stats_api'),
 
     # --- Comparador y Demo de Libros (Librerías / Afiliados) ---
     path('api/track-conversion/', views.track_conversion_click, name='track_conversion'),
