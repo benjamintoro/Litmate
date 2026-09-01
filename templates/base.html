@@ -122,20 +122,6 @@
         </div>
     </nav>
 
-    {% if messages %}
-        <div class="position-fixed top-0 start-50 translate-middle-x mt-4 global-messages-container">
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show shadow-lg border-0 global-message-alert" role="alert">
-                    <div class="d-flex align-items-center">
-                        <i class="{% if message.tags == 'success' %}iconoir-check-circle text-success{% elif message.tags == 'error' or message.tags == 'danger' %}iconoir-warning-triangle text-danger{% else %}iconoir-info-circle text-primary{% endif %} fa-lg me-2"></i>
-                        <div>{{ message }}</div>
-                    </div>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-
     {% block content %}{% endblock %}
 
     <!-- FOOTER PROFESIONAL LITMATE -->

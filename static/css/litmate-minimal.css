@@ -51,27 +51,10 @@ header.masthead .container {
   z-index: 2;
 }
 
-/* Recuadro oscuro translúcido ÚNICAMENTE para post-heading */
-/* Encabezados estándar (Inicio, Buscar Libros, Sobre Nosotros, Contacto, Post, etc.) */
+/* Encabezados estándar transparentes (Inicio, Buscar Libros, Sobre Nosotros, Contacto, Post, etc.) */
 header.masthead .page-heading,
 header.masthead .site-heading,
 header.masthead .post-heading {
-  background: rgba(11, 12, 10, 0.72) !important;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 18px !important;
-  padding: 2.5rem 2.75rem !important;
-  border: 1.5px solid rgba(189, 181, 157, 0.35) !important;
-  box-shadow: 0 16px 36px rgba(11, 12, 10, 0.5) !important;
-  color: #ffffff !important;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 900px;
-}
-
-/* Encabezados estándar (Inicio, Buscar Libros, Sobre Nosotros, Contacto, etc.) */
-header.masthead .page-heading,
-header.masthead .site-heading {
   background: transparent !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
