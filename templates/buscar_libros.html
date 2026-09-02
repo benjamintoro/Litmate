@@ -485,7 +485,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('modalGenero').textContent = currentBookData.genero;
             document.getElementById('modalEditorial').textContent = currentBookData.editorial || 'Editorial Internacional';
             document.getElementById('modalAno').textContent = currentBookData.ano || 'N/A';
-            document.getElementById('modalPaginas').textContent = (currentBookData.paginas || '300') + ' páginas';
+            document.getElementById('modalPaginas').textContent = (currentBookData.paginas || '300') + ' págs.';
             document.getElementById('modalRating').textContent = (currentBookData.calificacion || '4.8') + '★ (' + (currentBookData.resenas || '10') + ' reseñas)';
             document.getElementById('modalSinopsis').textContent = currentBookData.sinopsis || 'Sinopsis disponible al consultar el libro.';
             document.getElementById('modalDemoTexto').textContent = currentBookData.demo || 'Fragmento de lectura disponible.';
@@ -496,6 +496,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 modalImg.style.display = 'block';
             } else {
                 modalImg.style.display = 'none';
+            }
+
+            // Reset tab activa a Resumen & Demo
+            const tabBtn = document.getElementById('demo-tab');
+            if (tabBtn && window.bootstrap) {
+                const tab = bootstrap.Tab.getOrCreateInstance(tabBtn);
+                tab.show();
             }
 
             // Generar tabla de tiendas y precios online
@@ -534,7 +541,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     precio: '$15.900 CLP',
                     url: `https://www.feriachilenadellibro.cl/catalogsearch/result/?q=${encodeURIComponent(currentBookData.titulo + ' ' + currentBookData.autor)}`,
                     icono: 'iconoir-shop',
-                    badge: 'Nacional'
+                    badge: 'Local'
                 }
             ];
 
@@ -544,15 +551,15 @@ document.addEventListener('DOMContentLoaded', function () {
                     <tr>
                         <td>
                             <i class="${t.icono} text-primary me-2"></i><strong>${t.nombre}</strong>
-                            <span class="badge bg-light text-dark border ms-1 book-store-badge">${t.badge}</span>
+                            <span class="badge bg-light text-dark border ms-1" style="font-size: 0.7rem;">${t.badge}</span>
                         </td>
                         <td><small class="text-muted">${t.formato}</small></td>
                         <td><span class="badge bg-success-subtle text-success small">${t.disp}</span></td>
                         <td><strong class="text-dark">${t.precio}</strong></td>
                         <td class="text-end">
-                            <a href="${t.url}" target="_blank" class="btn btn-outline-primary btn-sm rounded-pill px-3 track-click"
+                            <a href="${t.url}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm rounded-pill px-3 track-click"
                                 data-provider="${t.nombre}" data-titulo="${currentBookData.titulo}" data-url="${t.url}">
-                                Ir a la tienda <i class="iconoir-open-new-window ms-1 book-store-btn-icon"></i>
+                                Ir a la tienda <i class="iconoir-open-new-window ms-1"></i>
                             </a>
                         </td>
                     </tr>
@@ -565,6 +572,7 @@ document.addEventListener('DOMContentLoaded', function () {
             mainBuyBtn.href = tiendas[0].url;
             mainBuyBtn.dataset.titulo = currentBookData.titulo;
             mainBuyBtn.dataset.url = tiendas[0].url;
+            mainBuyBtn.innerHTML = `<i class="iconoir-shopping-bag me-1"></i> Comprar en ${tiendas[0].nombre}`;
 
             // Generar gráfico de historial de precios
             renderPriceChart(currentBookData.titulo, tiendas);
@@ -574,7 +582,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Función para generar historial de precios simulado con seed determinista
+    // Historial de precios simulado
     function hashCode(str) {
         let hash = 0;
         for (let i = 0; i < str.length; i++) {
@@ -589,7 +597,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const prices = [];
         let current = basePrice;
         for (let i = 0; i < months; i++) {
-            // Variación determinista basada en seed + mes
             const variation = ((seed * (i + 1) * 7919) % 2000 - 1000) / 100;
             current = Math.max(basePrice * 0.75, Math.min(basePrice * 1.3, basePrice + variation * 100));
             prices.push(Math.round(current));
@@ -608,16 +615,17 @@ document.addEventListener('DOMContentLoaded', function () {
         return labels;
     }
 
+    let priceChartInstance = null;
     function renderPriceChart(titulo, tiendas) {
         const ctx = document.getElementById('priceHistoryChart');
         if (!ctx) return;
 
-        if (priceChart) {
-            priceChart.destroy();
+        if (priceChartInstance) {
+            priceChartInstance.destroy();
         }
 
         const periodSelect = document.getElementById('chartPeriodSelect');
-        const months = parseInt(periodSelect.value) || 6;
+        const months = parseInt(periodSelect ? periodSelect.value : 6) || 6;
         const labels = getMonthLabels(months);
 
         const basePrices = [14990, 9990, 16500, 15900];
@@ -640,7 +648,7 @@ document.addEventListener('DOMContentLoaded', function () {
             pointHoverRadius: 5
         }));
 
-        priceChart = new Chart(ctx, {
+        priceChartInstance = new Chart(ctx, {
             type: 'line',
             data: { labels, datasets },
             options: {
@@ -652,24 +660,12 @@ document.addEventListener('DOMContentLoaded', function () {
                         display: true,
                         position: 'bottom',
                         labels: { usePointStyle: true, pointStyle: 'circle', padding: 16, font: { size: 11 } }
-                    },
-                    tooltip: {
-                        backgroundColor: '#1a202c',
-                        titleFont: { size: 12 },
-                        bodyFont: { size: 11 },
-                        padding: 10,
-                        cornerRadius: 8,
-                        callbacks: {
-                            label: function(context) {
-                                return context.dataset.label + ': $' + context.raw.toLocaleString('es-CL') + ' CLP';
-                            }
-                        }
                     }
                 },
                 scales: {
                     y: {
                         beginAtZero: false,
-                        grid: { color: '#f0f0f0' },
+                        grid: { color: 'rgba(255, 255, 255, 0.08)' },
                         ticks: {
                             font: { size: 10 },
                             callback: function(value) { return '$' + (value / 1000).toFixed(1) + 'k'; }
@@ -683,10 +679,11 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // Actualizar al cambiar período
-        periodSelect.onchange = function() {
-            renderPriceChart(currentBookData.titulo, tiendas);
-        };
+        if (periodSelect) {
+            periodSelect.onchange = function() {
+                renderPriceChart(titulo, tiendas);
+            };
+        }
     }
 
     // 2. Tracking de Conversión (Afiliados / Redirección)

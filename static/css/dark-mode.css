@@ -409,26 +409,31 @@ html.dark-mode .modal-header .btn-close:hover {
   opacity: 1;
 }
 
-html.dark-mode #modalTitulo {
+html.dark-mode #modalTitulo,
+html.dark-mode #homeModalTitulo {
   color: #f0f0f0 !important;
 }
 
-html.dark-mode #modalAutor {
+html.dark-mode #modalAutor,
+html.dark-mode #homeModalAutor {
   color: #8a8a8a !important;
 }
 
-html.dark-mode #modalGenero {
+html.dark-mode #modalGenero,
+html.dark-mode #homeModalGenero {
   color: #c9a96e !important;
   background: rgba(201, 169, 110, 0.15) !important;
 }
 
 /* Modal Tabs Navigation */
 html.dark-mode .modal-tabs-wrapper,
+html.dark-mode .modal .bg-light,
 html.dark-mode .modal .bg-white {
-  background-color: #171717 !important;
+  background-color: #1a1a1a !important;
 }
 
 html.dark-mode #modalTab,
+html.dark-mode #homeBookTabs,
 html.dark-mode .modal-tabs-nav,
 html.dark-mode .modal .nav {
   border-bottom: 1px solid #2a2a2a !important;
@@ -436,11 +441,13 @@ html.dark-mode .modal .nav {
 }
 
 html.dark-mode #modalTab .nav-link,
+html.dark-mode #homeBookTabs .nav-link,
 html.dark-mode .modal-tabs-nav .nav-link,
 html.dark-mode .modal .nav-link,
-html.dark-mode #demo-tab,
-html.dark-mode #tiendas-tab,
-html.dark-mode #historial-tab {
+html.dark-mode #tab-demo-btn,
+html.dark-mode #tab-tiendas-btn,
+html.dark-mode #home-tab-info-btn,
+html.dark-mode #home-tab-tiendas-btn {
   color: #c9a96e !important;
   opacity: 0.8;
   background: transparent !important;
@@ -451,22 +458,26 @@ html.dark-mode #historial-tab {
 }
 
 html.dark-mode #modalTab .nav-link:hover,
+html.dark-mode #homeBookTabs .nav-link:hover,
 html.dark-mode .modal-tabs-nav .nav-link:hover,
 html.dark-mode .modal .nav-link:hover,
-html.dark-mode #demo-tab:hover,
-html.dark-mode #tiendas-tab:hover,
-html.dark-mode #historial-tab:hover {
+html.dark-mode #tab-demo-btn:hover,
+html.dark-mode #tab-tiendas-btn:hover,
+html.dark-mode #home-tab-info-btn:hover,
+html.dark-mode #home-tab-tiendas-btn:hover {
   color: #ffffff !important;
   opacity: 1 !important;
   background: rgba(201, 169, 110, 0.12) !important;
 }
 
 html.dark-mode #modalTab .nav-link.active,
+html.dark-mode #homeBookTabs .nav-link.active,
 html.dark-mode .modal-tabs-nav .nav-link.active,
 html.dark-mode .modal .nav-link.active,
-html.dark-mode #demo-tab.active,
-html.dark-mode #tiendas-tab.active,
-html.dark-mode #historial-tab.active {
+html.dark-mode #tab-demo-btn.active,
+html.dark-mode #tab-tiendas-btn.active,
+html.dark-mode #home-tab-info-btn.active,
+html.dark-mode #home-tab-tiendas-btn.active {
   color: #c9a96e !important;
   opacity: 1 !important;
   background: transparent !important;
@@ -480,25 +491,31 @@ html.dark-mode .modal-body {
 }
 
 html.dark-mode .modal-body #modalEditorial,
+html.dark-mode .modal-body #homeModalEditorial,
 html.dark-mode .modal-body #modalAno,
-html.dark-mode .modal-body #modalPaginas {
+html.dark-mode .modal-body #homeModalAno,
+html.dark-mode .modal-body #modalPaginas,
+html.dark-mode .modal-body #homeModalPaginas {
   color: #e0e0e0 !important;
 }
 
-html.dark-mode .modal-body #modalRating {
+html.dark-mode .modal-body #modalRating,
+html.dark-mode .modal-body #homeModalRating {
   color: #c9a96e !important;
 }
 
-html.dark-mode .modal-body #modalSinopsis {
+html.dark-mode .modal-body #modalSinopsis,
+html.dark-mode .modal-body #homeModalSinopsis {
   color: #b0b0b0 !important;
 }
 
-html.dark-mode .modal-body #modalDemoTexto {
+html.dark-mode .modal-body #modalDemoTexto,
+html.dark-mode .modal-body #homeModalDemoTexto {
   color: #d4d4d4 !important;
 }
 
-html.dark-mode .modal-body div[style*="background: #faf9f7"],
-html.dark-mode .modal-body div[style*="background:#faf9f7"] {
+html.dark-mode .modal-body .book-demo-box,
+html.dark-mode .modal-body div[style*="background: var(--lm-parchment-soft)"] {
   background-color: #1e1e1e !important;
   border-color: #2a2a2a !important;
 }
@@ -520,13 +537,15 @@ html.dark-mode .modal-footer .btn[data-bs-dismiss="modal"]:hover {
   background-color: #1e1e1e !important;
 }
 
-html.dark-mode #modalDirectBuyBtn {
+html.dark-mode #modalDirectBuyBtn,
+html.dark-mode #homeModalDirectBuyBtn {
   background: #c9a96e !important;
   color: #111 !important;
   border: 1px solid #c9a96e !important;
 }
 
-html.dark-mode #modalDirectBuyBtn:hover {
+html.dark-mode #modalDirectBuyBtn:hover,
+html.dark-mode #homeModalDirectBuyBtn:hover {
   background: #dbb978 !important;
   border-color: #dbb978 !important;
   color: #000 !important;

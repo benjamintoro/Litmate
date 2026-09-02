@@ -348,8 +348,12 @@
 
 .coverflow-item {
   position: absolute;
+  top: 50%;
+  left: 50%;
   width: 245px;
   height: 365px;
+  margin-top: -182.5px;
+  margin-left: -122.5px;
   border-radius: 16px;
   cursor: pointer;
   transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1),
@@ -546,6 +550,8 @@
   .coverflow-item {
     width: 175px;
     height: 260px;
+    margin-top: -130px;
+    margin-left: -87.5px;
   }
   .coverflow-item[data-pos="1"] {
     transform: translateX(105px) translateZ(-30px) scale(0.85) rotateY(-18deg);

@@ -46,7 +46,7 @@ CATALOGO_COMPLETO = [
         "paginas": 240,
         "fecha_pub": "1950-10-16",
         "sinopsis": "Cuatro hermanos descubren un ropero mágico que conduce al gélido mundo de Narnia, atrapado en un invierno eterno por la temible Bruja Blanca. Con la ayuda del gran león Aslan, lucharán por liberar el reino.",
-        "portada": "https://covers.openlibrary.org/b/id/10531580-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/8441376-L.jpg",
         "calificacion": 4.9,
         "resenas": 184
     },
@@ -76,7 +76,7 @@ CATALOGO_COMPLETO = [
         "paginas": 288,
         "fecha_pub": "1952-09-15",
         "sinopsis": "Lucy, Edmund y su primo Eustace son absorbidos por un cuadro mágico que los lleva a bordo del barco el Viajero del Alba. Acompañarán al Rey Caspian en una travesía marítima hacia los confines orientales del mundo.",
-        "portada": "https://covers.openlibrary.org/b/id/8235122-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/9184719-L.jpg",
         "calificacion": 4.8,
         "resenas": 145
     },
@@ -106,7 +106,7 @@ CATALOGO_COMPLETO = [
         "paginas": 256,
         "fecha_pub": "1954-09-06",
         "sinopsis": "Un joven esclavo llamado Shasta y un caballo parlante llamado Bree planean su audaz escape de las tierras del sur de Calormen hacia la libertad y la magia de Narnia.",
-        "portada": "https://covers.openlibrary.org/b/id/8235124-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/9184792-L.jpg",
         "calificacion": 4.7,
         "resenas": 110
     },
@@ -156,7 +156,7 @@ CATALOGO_COMPLETO = [
         "paginas": 256,
         "fecha_pub": "1997-06-26",
         "sinopsis": "Harry Potter descubre en su undécimo cumpleaños que es un mago huérfano con un gran destino y es admitido en el Colegio Hogwarts de Magia y Hechicería.",
-        "portada": "https://covers.openlibrary.org/b/id/10522079-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/13966854-L.jpg",
         "calificacion": 4.9,
         "resenas": 450
     },
@@ -171,7 +171,7 @@ CATALOGO_COMPLETO = [
         "paginas": 288,
         "fecha_pub": "1998-07-02",
         "sinopsis": "En su segundo año escolar, mensajes misteriosos en las paredes anuncian que la mítica Cámara de los Secretos ha sido abierta, liberando un monstruo letal.",
-        "portada": "https://covers.openlibrary.org/b/id/10522085-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/13966851-L.jpg",
         "calificacion": 4.8,
         "resenas": 380
     },
@@ -186,7 +186,7 @@ CATALOGO_COMPLETO = [
         "paginas": 360,
         "fecha_pub": "1999-07-08",
         "sinopsis": "Sirius Black, un peligroso homicida y seguidor de Voldemort, escapa de la prisión de Azkaban y todos temen que venga en busca de Harry.",
-        "portada": "https://covers.openlibrary.org/b/id/10522090-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/14631819-L.jpg",
         "calificacion": 4.9,
         "resenas": 490
     },
@@ -201,7 +201,7 @@ CATALOGO_COMPLETO = [
         "paginas": 640,
         "fecha_pub": "2000-07-08",
         "sinopsis": "Hogwarts alberga el legendario Torneo de los Tres Magos. Harry es seleccionado misteriosamente como cuarto campeón en pruebas mortales.",
-        "portada": "https://covers.openlibrary.org/b/id/10522095-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/1048813-L.jpg",
         "calificacion": 4.9,
         "resenas": 410
     },
@@ -216,7 +216,7 @@ CATALOGO_COMPLETO = [
         "paginas": 896,
         "fecha_pub": "2003-06-21",
         "sinopsis": "El Ministerio de Magia niega el regreso de Lord Voldemort, mientras Harry y Dumbledore forman la resistencia clandestina de la Orden del Fénix.",
-        "portada": "https://covers.openlibrary.org/b/id/10522100-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/15158666-L.jpg",
         "calificacion": 4.8,
         "resenas": 370
     },
@@ -231,7 +231,7 @@ CATALOGO_COMPLETO = [
         "paginas": 608,
         "fecha_pub": "2005-07-16",
         "sinopsis": "Harry descubre un viejo libro de pociones perteneciente al misterioso 'Príncipe Mestizo' y junto a Dumbledore desentraña los secretos del pasado de Voldemort.",
-        "portada": "https://covers.openlibrary.org/b/id/10522105-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/9393000-L.jpg",
         "calificacion": 4.9,
         "resenas": 395
     },
@@ -246,7 +246,7 @@ CATALOGO_COMPLETO = [
         "paginas": 704,
         "fecha_pub": "2007-07-21",
         "sinopsis": "La gran conclusión de la saga donde Harry, Ron y Hermione buscan y destruyen los Horrocruxes restantes en la definitiva batalla de Hogwarts.",
-        "portada": "https://covers.openlibrary.org/b/id/10522110-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/14171609-L.jpg",
         "calificacion": 4.9,
         "resenas": 520
     },
@@ -266,7 +266,7 @@ CATALOGO_COMPLETO = [
         "paginas": 310,
         "fecha_pub": "1937-09-21",
         "sinopsis": "Bilbo Bolsón es un hobbit pacífico que es reclutado por el mago Gandalf y trece enanos para recuperar el tesoro custodiado por el dragón Smaug.",
-        "portada": "https://covers.openlibrary.org/b/id/8406786-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/10472492-L.jpg",
         "calificacion": 4.9,
         "resenas": 340
     },
@@ -281,7 +281,7 @@ CATALOGO_COMPLETO = [
         "paginas": 464,
         "fecha_pub": "1954-11-11",
         "sinopsis": "La Comunidad se ha dividido: Frodo y Sam avanzan hacia Mordor guiados por Gollum, mientras Aragorn, Legolas y Gimli defienden el reino de Rohan.",
-        "portada": "https://covers.openlibrary.org/b/id/8231991-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/14627564-L.jpg",
         "calificacion": 4.9,
         "resenas": 290
     },
@@ -296,7 +296,7 @@ CATALOGO_COMPLETO = [
         "paginas": 528,
         "fecha_pub": "1955-10-20",
         "sinopsis": "La batalla definitiva por la Tierra Media estalla ante los muros de Minas Tirith, mientras Frodo y Sam alcanzan la cima del Monte del Destino.",
-        "portada": "https://covers.openlibrary.org/b/id/8231993-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/14627062-L.jpg",
         "calificacion": 5.0,
         "resenas": 380
     },
@@ -311,7 +311,7 @@ CATALOGO_COMPLETO = [
         "paginas": 448,
         "fecha_pub": "1977-09-15",
         "sinopsis": "La mitología y génesis de la Tierra Media: la creación del mundo por Ilúvatar, la rebelión de Melkor y las guerras de las joyas Silmarils.",
-        "portada": "https://covers.openlibrary.org/b/id/8231996-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/14627042-L.jpg",
         "calificacion": 4.8,
         "resenas": 210
     },
@@ -331,7 +331,7 @@ CATALOGO_COMPLETO = [
         "paginas": 800,
         "fecha_pub": "1996-08-01",
         "sinopsis": "En Poniente, una tierra donde los veranos duran décadas y los inviernos pueden durar toda una vida, las grandes casas nobles conspiran por el Trono de Hierro.",
-        "portada": "https://covers.openlibrary.org/b/id/8231856-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/7274185-L.jpg",
         "calificacion": 4.9,
         "resenas": 410
     },
@@ -346,7 +346,7 @@ CATALOGO_COMPLETO = [
         "paginas": 928,
         "fecha_pub": "1998-11-16",
         "sinopsis": "La Guerra de los Cinco Reyes desgarra los Siete Reinos, mientras un cometa rojo cruza los cielos anunciando sangre y fuego.",
-        "portada": "https://covers.openlibrary.org/b/id/8231858-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/8231751-L.jpg",
         "calificacion": 4.8,
         "resenas": 320
     },
@@ -361,7 +361,7 @@ CATALOGO_COMPLETO = [
         "paginas": 1152,
         "fecha_pub": "2000-08-08",
         "sinopsis": "Las traiciones alcanzan su clímax sangriento con la Boda Roja, mientras Daenerys Targaryen marcha liberando ciudades esclavas en Essos.",
-        "portada": "https://covers.openlibrary.org/b/id/8231860-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/15124196-L.jpg",
         "calificacion": 5.0,
         "resenas": 480
     },
@@ -381,7 +381,7 @@ CATALOGO_COMPLETO = [
         "paginas": 672,
         "fecha_pub": "2006-07-17",
         "sinopsis": "Durante mil años la ceniza ha caído del cielo y los skaa han vivido como esclavos del tirano inmortal Lord Legislador. Kelsier y Vin planean lo impensable: derrocar a un dios.",
-        "portada": "https://covers.openlibrary.org/b/id/8232001-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/14658160-L.jpg",
         "calificacion": 4.9,
         "resenas": 360
     },
@@ -396,7 +396,7 @@ CATALOGO_COMPLETO = [
         "paginas": 1200,
         "fecha_pub": "2010-08-31",
         "sinopsis": "En el azotado mundo de Roshar, Kaladin un esclavo quebrado, Dalinar un noble atormentado por visiones y Shallan una erudita buscan salvar el mundo del regreso de los Desoladores.",
-        "portada": "https://covers.openlibrary.org/b/id/8232004-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/14658316-L.jpg",
         "calificacion": 5.0,
         "resenas": 490
     },
@@ -416,7 +416,7 @@ CATALOGO_COMPLETO = [
         "paginas": 288,
         "fecha_pub": "2005-06-28",
         "sinopsis": "Percy Jackson descubre que su verdadero padre es el dios Poseidón y es acusado injustamente de haber robado el rayo maestro de Zeus.",
-        "portada": "https://covers.openlibrary.org/b/id/8234567-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/7239831-L.jpg",
         "calificacion": 4.8,
         "resenas": 310
     },
@@ -432,7 +432,7 @@ CATALOGO_COMPLETO = [
         "paginas": 400,
         "fecha_pub": "2008-09-14",
         "sinopsis": "En las ruinas de lo que fue Norteamérica, doce distritos deben enviar a un chico y una chica a competir en los Juegos del Hambre, un torneo televisado a muerte.",
-        "portada": "https://covers.openlibrary.org/b/id/8234589-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/12646537-L.jpg",
         "calificacion": 4.9,
         "resenas": 470
     },
@@ -452,7 +452,7 @@ CATALOGO_COMPLETO = [
         "paginas": 1504,
         "fecha_pub": "1986-09-15",
         "sinopsis": "Siete amigos de la infancia en el pueblo de Derry se enfrentan a una entidad demoníaca ancestral que adopta la forma de sus mayores pesadillas.",
-        "portada": "https://covers.openlibrary.org/b/id/8235678-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/8569284-L.jpg",
         "calificacion": 4.9,
         "resenas": 510
     },
@@ -467,7 +467,7 @@ CATALOGO_COMPLETO = [
         "paginas": 688,
         "fecha_pub": "1977-01-28",
         "sinopsis": "Jack Torrance acepta el trabajo de cuidador de invierno en el aislado Hotel Overlook, donde fuerzas sobrenaturales acechan a su hijo Danny y lo empujan a la locura.",
-        "portada": "https://covers.openlibrary.org/b/id/8235680-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/3950093-L.jpg",
         "calificacion": 4.9,
         "resenas": 430
     },
@@ -482,7 +482,7 @@ CATALOGO_COMPLETO = [
         "paginas": 400,
         "fecha_pub": "1987-06-08",
         "sinopsis": "Paul Sheldon, un escritor de novelas románticas de éxito, sufre un accidente de coche y despierta en la casa de Annie Wilkes, su fanática número uno.",
-        "portada": "https://covers.openlibrary.org/b/id/8235682-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/8259296-L.jpg",
         "calificacion": 4.8,
         "resenas": 280
     },
@@ -502,7 +502,7 @@ CATALOGO_COMPLETO = [
         "paginas": 496,
         "fecha_pub": "1982-10-01",
         "sinopsis": "La saga de cuatro generaciones de la familia Trueba a través de las transformaciones sociales y políticas de un país latinoamericano, con el realismo mágico y la clarividencia de Clara.",
-        "portada": "https://covers.openlibrary.org/b/id/8236111-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/3205226-L.jpg",
         "calificacion": 4.9,
         "resenas": 320
     },
@@ -518,7 +518,7 @@ CATALOGO_COMPLETO = [
         "paginas": 736,
         "fecha_pub": "1963-06-28",
         "sinopsis": "La contranovela que revolucionó la literatura: la búsqueda existencial de Horacio Oliveira en París y Buenos Aires, con múltiples órdenes de lectura.",
-        "portada": "https://covers.openlibrary.org/b/id/8236115-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/1047466-L.jpg",
         "calificacion": 4.7,
         "resenas": 240
     },
@@ -534,7 +534,7 @@ CATALOGO_COMPLETO = [
         "paginas": 1376,
         "fecha_pub": "1605-01-16",
         "sinopsis": "Las aventuras del ingenioso hidalgo Don Quijote y su escudero Sancho Panza por los caminos de La Mancha en busca de justicia, honor y su amada Dulcinea.",
-        "portada": "https://covers.openlibrary.org/b/id/8236120-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/13478610-L.jpg",
         "calificacion": 4.9,
         "resenas": 450
     },
@@ -550,7 +550,7 @@ CATALOGO_COMPLETO = [
         "paginas": 96,
         "fecha_pub": "1943-04-06",
         "sinopsis": "Un piloto varado en el desierto del Sahara conoce a un pequeño príncipe venido del asteroide B 612, quien le enseña que 'lo esencial es invisible a los ojos'.",
-        "portada": "https://covers.openlibrary.org/b/id/8236130-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/13499066-L.jpg",
         "calificacion": 5.0,
         "resenas": 600
     },
@@ -566,7 +566,7 @@ CATALOGO_COMPLETO = [
         "paginas": 288,
         "fecha_pub": "1932-02-01",
         "sinopsis": "Una visión distópica de una sociedad futura donde la tecnología reproductiva, el condicionamiento psicológico y las drogas eliminan las penas pero también la libertad y la humanidad.",
-        "portada": "https://covers.openlibrary.org/b/id/8236140-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/8231823-L.jpg",
         "calificacion": 4.8,
         "resenas": 310
     },
@@ -582,7 +582,7 @@ CATALOGO_COMPLETO = [
         "paginas": 256,
         "fecha_pub": "1953-10-19",
         "sinopsis": "Guy Montag es un bombero cuya misión es quemar libros prohibidos por el Estado. Al conocer a una joven rebelde, empieza a cuestionar el régimen y a salvar obras maestras.",
-        "portada": "https://covers.openlibrary.org/b/id/8236150-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/12993656-L.jpg",
         "calificacion": 4.9,
         "resenas": 360
     },
@@ -598,7 +598,7 @@ CATALOGO_COMPLETO = [
         "paginas": 576,
         "fecha_pub": "2001-05-01",
         "sinopsis": "En la Barcelona de 1945, el joven Daniel Sempere es conducido al secreto Cementerio de los Libros Olvidados, donde elige un misterioso libro que cambiará su vida para siempre.",
-        "portada": "https://covers.openlibrary.org/b/id/8236160-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/10107644-L.jpg",
         "calificacion": 5.0,
         "resenas": 480
     },
@@ -614,7 +614,7 @@ CATALOGO_COMPLETO = [
         "paginas": 624,
         "fecha_pub": "2003-03-18",
         "sinopsis": "El profesor Robert Langdon investiga el asesinato del conservador del Museo del Louvre, descubriendo una conspiración de dos mil años oculta en las pinturas de Leonardo da Vinci.",
-        "portada": "https://covers.openlibrary.org/b/id/8236170-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/9255229-L.jpg",
         "calificacion": 4.7,
         "resenas": 390
     },
@@ -634,7 +634,7 @@ CATALOGO_COMPLETO = [
         "paginas": 336,
         "fecha_pub": "2018-10-16",
         "sinopsis": "Un método probado y práctico para crear buenos hábitos, romper los malos y lograr cambios extraordinarios mediante mejoras del 1% cada día.",
-        "portada": "https://covers.openlibrary.org/b/id/10531585-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/12539702-L.jpg",
         "calificacion": 4.9,
         "resenas": 460
     },
@@ -650,7 +650,7 @@ CATALOGO_COMPLETO = [
         "paginas": 168,
         "fecha_pub": "1946-01-01",
         "sinopsis": "El conmovedor testimonio del psiquiatra Viktor Frankl sobre su supervivencia en los campos de concentración nazis y cómo encontrar un propósito de vida en las peores circunstancias.",
-        "portada": "https://covers.openlibrary.org/b/id/10531590-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/8516506-L.jpg",
         "calificacion": 5.0,
         "resenas": 520
     },
@@ -666,7 +666,7 @@ CATALOGO_COMPLETO = [
         "paginas": 496,
         "fecha_pub": "2011-09-04",
         "sinopsis": "Una fascinante exploración de la historia de la humanidad, desde los primeros homínidos hasta las revoluciones cognitiva, agrícola y científica del siglo XXI.",
-        "portada": "https://covers.openlibrary.org/b/id/10531595-L.jpg",
+        "portada": "https://covers.openlibrary.org/b/id/8634250-L.jpg",
         "calificacion": 4.9,
         "resenas": 490
     }
