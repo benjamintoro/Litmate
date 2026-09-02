@@ -51,7 +51,7 @@ LIBROS_SEED_DATA = [
         "google_id": "eJ42AQAAIAAJ",
         "paginas": 471,
         "sinopsis": "La obra cumbre del realismo mágico narra la historia de la familia Buendía a lo largo de siete generaciones en el mítico pueblo de Macondo.",
-        "portada": "https://books.google.com/books/content?id=eJ42AQAAIAAJ&printsec=frontcover&img=1&zoom=1"
+        "portada": "https://covers.openlibrary.org/b/id/12627383-L.jpg"
     },
     {
         "titulo": "1984",
@@ -63,7 +63,7 @@ LIBROS_SEED_DATA = [
         "google_id": "kotPYEqx7kMC",
         "paginas": 328,
         "sinopsis": "En una sociedad totalitaria vigilada constantemente por el Gran Hermano, Winston Smith lucha por mantener su individualidad y pensamiento crítico.",
-        "portada": "https://books.google.com/books/content?id=kotPYEqx7kMC&printsec=frontcover&img=1&zoom=1"
+        "portada": "https://covers.openlibrary.org/b/id/8745958-L.jpg"
     },
     {
         "titulo": "Dune",
@@ -75,7 +75,7 @@ LIBROS_SEED_DATA = [
         "google_id": "B1hSGwAACAAJ",
         "paginas": 688,
         "sinopsis": "En el desértico planeta Arrakis, el joven Paul Atreides se ve envuelto en una lucha de poder intergaláctica por el control de la especia melange.",
-        "portada": "https://books.google.com/books/content?id=B1hSGwAACAAJ&printsec=frontcover&img=1&zoom=1"
+        "portada": "https://covers.openlibrary.org/b/id/11481354-L.jpg"
     },
     {
         "titulo": "El Señor de los Anillos: La Comunidad del Anillo",
@@ -87,7 +87,7 @@ LIBROS_SEED_DATA = [
         "google_id": "a381AAAAQBAJ",
         "paginas": 423,
         "sinopsis": "Frodo Bolsón emprende una peligrosa travesía para destruir el Anillo Único en los fuegos del Monte del Destino y salvar la Tierra Media.",
-        "portada": "https://books.google.com/books/content?id=a381AAAAQBAJ&printsec=frontcover&img=1&zoom=1"
+        "portada": "https://covers.openlibrary.org/b/id/14627060-L.jpg"
     },
     {
         "titulo": "Ficciones",
@@ -99,7 +99,7 @@ LIBROS_SEED_DATA = [
         "google_id": "vS9vDwAAQBAJ",
         "paginas": 224,
         "sinopsis": "Una de las colecciones de relatos más influyentes del siglo XX, explorando laberintos, bibliotecas infinitas, espejos y la naturaleza del tiempo.",
-        "portada": "https://books.google.com/books/content?id=vS9vDwAAQBAJ&printsec=frontcover&img=1&zoom=1"
+        "portada": "https://covers.openlibrary.org/b/id/10832290-L.jpg"
     },
     {
         "titulo": "El Aleph",
@@ -111,7 +111,7 @@ LIBROS_SEED_DATA = [
         "google_id": "m9dYAAAAMAAJ",
         "paginas": 208,
         "sinopsis": "Cuentos magistrales que exploran el infinito, los enigmas ontológicos y el punto en el espacio que contiene todos los puntos del universo.",
-        "portada": "https://books.google.com/books/content?id=m9dYAAAAMAAJ&printsec=frontcover&img=1&zoom=1"
+        "portada": "https://covers.openlibrary.org/b/id/14408958-L.jpg"
     },
     {
         "titulo": "Sapiens: De animales a dioses",
@@ -123,7 +123,7 @@ LIBROS_SEED_DATA = [
         "google_id": "1yE_BQAAQBAJ",
         "paginas": 496,
         "sinopsis": "Un fascinante recorrido por la historia de la humanidad, desde los primeros homínidos hasta las revoluciones cognitiva, agrícola y científica.",
-        "portada": "https://books.google.com/books/content?id=1yE_BQAAQBAJ&printsec=frontcover&img=1&zoom=1"
+        "portada": "https://covers.openlibrary.org/b/id/8634250-L.jpg"
     },
     {
         "titulo": "El Resplandor",
@@ -135,7 +135,7 @@ LIBROS_SEED_DATA = [
         "google_id": "v4yvDwAAQBAJ",
         "paginas": 656,
         "sinopsis": "Jack Torrance acepta el trabajo de cuidador de invierno en el siniestro y aislado Hotel Overlook, donde fuerzas oscuras amenazan a su familia.",
-        "portada": "https://books.google.com/books/content?id=v4yvDwAAQBAJ&printsec=frontcover&img=1&zoom=1"
+        "portada": "https://covers.openlibrary.org/b/id/3950093-L.jpg"
     },
     {
         "titulo": "Tokio Blues (Norwegian Wood)",
@@ -159,7 +159,7 @@ LIBROS_SEED_DATA = [
         "google_id": "f29wDwAAQBAJ",
         "paginas": 328,
         "sinopsis": "Una guía práctica basada en la ciencia del comportamiento para construir pequeños cambios que generan transformaciones extraordinarias.",
-        "portada": "https://books.google.com/books/content?id=f29wDwAAQBAJ&printsec=frontcover&img=1&zoom=1"
+        "portada": "https://covers.openlibrary.org/b/id/12539702-L.jpg"
     },
     {
         "titulo": "La casa de los espíritus",
@@ -171,7 +171,7 @@ LIBROS_SEED_DATA = [
         "google_id": "K38_BQAAQBAJ",
         "paginas": 490,
         "sinopsis": "La saga de cuatro generaciones de la familia Trueba y las convulsiones sociales y políticas de un país latinoamericano innominado.",
-        "portada": "https://books.google.com/books/content?id=K38_BQAAQBAJ&printsec=frontcover&img=1&zoom=1"
+        "portada": "https://covers.openlibrary.org/b/id/3205226-L.jpg"
     },
     {
         "titulo": "Rayuela",
@@ -183,7 +183,7 @@ LIBROS_SEED_DATA = [
         "google_id": "O381AAAAQBAJ",
         "paginas": 736,
         "sinopsis": "Una antinovela revolucionaria que invita al lector a seguir múltiples órdenes de lectura siguiendo las andanzas de Horacio Oliveira y La Maga.",
-        "portada": "https://books.google.com/books/content?id=O381AAAAQBAJ&printsec=frontcover&img=1&zoom=1"
+        "portada": "https://covers.openlibrary.org/b/id/1047466-L.jpg"
     },
     {
         "titulo": "Fundación",
@@ -195,7 +195,7 @@ LIBROS_SEED_DATA = [
         "google_id": "zC5kDwAAQBAJ",
         "paginas": 256,
         "sinopsis": "Hari Seldon utiliza la psicohistoria para prever la caída del Imperio Galáctico y funda una colonia para preservar el conocimiento humano.",
-        "portada": "https://books.google.com/books/content?id=zC5kDwAAQBAJ&printsec=frontcover&img=1&zoom=1"
+        "portada": "https://covers.openlibrary.org/b/id/14612610-L.jpg"
     },
     {
         "titulo": "El Código Da Vinci",
@@ -207,7 +207,7 @@ LIBROS_SEED_DATA = [
         "google_id": "p3Y2AQAAIAAJ",
         "paginas": 624,
         "sinopsis": "Robert Langdon y Sophie Neveu descifran enigmas artísticos e históricos ocultos en las obras de Leonardo da Vinci para resolver un asesinato.",
-        "portada": "https://books.google.com/books/content?id=p3Y2AQAAIAAJ&printsec=frontcover&img=1&zoom=1"
+        "portada": "https://covers.openlibrary.org/b/id/9255229-L.jpg"
     },
     {
         "titulo": "Inteligencia Artificial: 101 cosas que debes saber",
@@ -219,7 +219,7 @@ LIBROS_SEED_DATA = [
         "google_id": "R49wDwAAQBAJ",
         "paginas": 240,
         "sinopsis": "Un compendio accesible y riguroso sobre cómo la inteligencia artificial, los algoritmos y el aprendizaje automático están transformando el mundo.",
-        "portada": "https://books.google.com/books/content?id=R49wDwAAQBAJ&printsec=frontcover&img=1&zoom=1"
+        "portada": "https://covers.openlibrary.org/b/id/8571056-L.jpg"
     },
     {
         "titulo": "Cosmos",
@@ -231,7 +231,7 @@ LIBROS_SEED_DATA = [
         "google_id": "m9dYAAAAMAA1",
         "paginas": 396,
         "sinopsis": "Un viaje inolvidable a través de 15.000 millones de años de evolución cósmica y científica relatado con una elocuencia incomparable.",
-        "portada": "https://books.google.com/books/content?id=m9dYAAAAMAA1&printsec=frontcover&img=1&zoom=1"
+        "portada": "https://covers.openlibrary.org/b/id/8283901-L.jpg"
     },
     {
         "titulo": "Crimen y Castigo",
@@ -243,7 +243,7 @@ LIBROS_SEED_DATA = [
         "google_id": "q3Y2AQAAIAAJ",
         "paginas": 672,
         "sinopsis": "El dilema moral y psicológico del joven estudiante Raskólnikov tras cometer un asesinato justificado bajo sus propias teorías filosóficas.",
-        "portada": "https://books.google.com/books/content?id=q3Y2AQAAIAAJ&printsec=frontcover&img=1&zoom=1"
+        "portada": "https://covers.openlibrary.org/b/id/12328823-L.jpg"
     },
     {
         "titulo": "Orgullo y Prejuicio",
@@ -255,7 +255,7 @@ LIBROS_SEED_DATA = [
         "google_id": "r3Y2AQAAIAAJ",
         "paginas": 448,
         "sinopsis": "La ingeniosa Elizabeth Bennet y el aristócrata Fitzwilliam Darcy deben superar sus prejuicios y malentendidos sociales para encontrarse.",
-        "portada": "https://books.google.com/books/content?id=r3Y2AQAAIAAJ&printsec=frontcover&img=1&zoom=1"
+        "portada": "https://covers.openlibrary.org/b/id/14348537-L.jpg"
     },
     {
         "titulo": "El Silmarillion",
@@ -267,7 +267,7 @@ LIBROS_SEED_DATA = [
         "google_id": "s3Y2AQAAIAAJ",
         "paginas": 480,
         "sinopsis": "Los mitos y leyendas de la Primera Edad de la Tierra Media: la creación de Eä, los Silmarils y la rebelión de los Noldor.",
-        "portada": "https://books.google.com/books/content?id=s3Y2AQAAIAAJ&printsec=frontcover&img=1&zoom=1"
+        "portada": "https://covers.openlibrary.org/b/id/14627042-L.jpg"
     },
     {
         "titulo": "El nombre de la rosa",
@@ -279,7 +279,7 @@ LIBROS_SEED_DATA = [
         "google_id": "t3Y2AQAAIAAJ",
         "paginas": 544,
         "sinopsis": "Fray Guillermo de Baskerville investiga una serie de misteriosas muertes ocurridas en una remota y enigmática abadía benedictina en el siglo XIV.",
-        "portada": "https://books.google.com/books/content?id=t3Y2AQAAIAAJ&printsec=frontcover&img=1&zoom=1"
+        "portada": "https://covers.openlibrary.org/b/id/8598263-L.jpg"
     }
 ]
 

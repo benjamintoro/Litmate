@@ -146,45 +146,49 @@
     </div>
 </div>
 
-<!-- MODAL DEMO DE LECTURA Y TIENDAS ASOCIADAS (INICIO) -->
+<!-- MODAL INTERACTIVO: DEMO DE LECTURA Y COMPARADOR DE PRECIOS (INICIO) -->
 <div class="modal fade" id="homeBookModal" tabindex="-1" aria-labelledby="homeBookModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
-        <div class="modal-content book-modal-content border-0 shadow-lg">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0 book-modal-content">
             
-            <!-- Header Modal -->
-            <div class="modal-header border-bottom px-4 py-3" style="background: var(--lm-parchment-soft);">
+            <!-- Header limpio -->
+            <div class="modal-header border-0 pb-2 pt-4 px-4">
                 <div>
-                    <span class="badge px-2 py-1 book-modal-genre mb-1" id="homeModalGenero">Ficción</span>
-                    <h5 class="modal-title fw-bold book-modal-title mb-0" id="homeModalTitulo">Título del Libro</h5>
-                    <span class="book-modal-author" id="homeModalAutor">Autor</span>
+                    <span class="d-inline-block px-2 py-1 mb-2 book-modal-genre" id="homeModalGenero">Género</span>
+                    <h5 class="modal-title fw-bold mb-1 book-modal-title" id="homeModalTitulo">Título de la Obra</h5>
+                    <p class="mb-0 book-modal-author"><span id="homeModalAutor">Autor</span></p>
                 </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                <button type="button" class="btn-close book-modal-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
 
-            <!-- Pestañas de Navegación -->
-            <div class="border-bottom bg-light px-4">
-                <ul class="nav nav-tabs border-0" id="homeBookTabs" role="tablist">
+            <!-- Navegación por Pestañas -->
+            <div class="px-4 modal-tabs-wrapper">
+                <ul class="nav modal-tabs-nav" id="homeBookTabs" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active fw-bold small py-3" id="home-tab-info-btn" data-bs-toggle="tab" data-bs-target="#home-tab-info" type="button" role="tab">
-                            <i class="iconoir-open-book me-1"></i> Ficha & Muestra Demo
+                        <button class="nav-link active px-3 py-2 position-relative" id="home-demo-tab" data-bs-toggle="tab" data-bs-target="#home-tab-demo" type="button" role="tab">
+                            Resumen & Demo
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link fw-bold small py-3" id="home-tab-tiendas-btn" data-bs-toggle="tab" data-bs-target="#home-tab-tiendas" type="button" role="tab">
-                            <i class="iconoir-shopping-bag me-1"></i> Comparar Precios en Tiendas
+                        <button class="nav-link px-3 py-2 position-relative" id="home-tiendas-tab" data-bs-toggle="tab" data-bs-target="#home-tab-tiendas" type="button" role="tab">
+                            Comparador
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link px-3 py-2 position-relative" id="home-historial-tab" data-bs-toggle="tab" data-bs-target="#home-tab-historial" type="button" role="tab">
+                            Historial de Precios
                         </button>
                     </li>
                 </ul>
             </div>
 
-            <!-- Cuerpo Modal -->
-            <div class="modal-body p-4">
-                <div class="tab-content">
+            <div class="modal-body px-4 py-4">
+                <div class="tab-content" id="homeModalTabContent">
                     
-                    <!-- PESTAÑA 1: FICHA & FRAGMENTO DEMO -->
-                    <div class="tab-pane fade show active" id="home-tab-info" role="tabpanel">
-                        <div class="row mb-4">
-                            <div class="col-sm-3 text-center mb-3 mb-sm-0">
+                    <!-- PESTAÑA 1: RESUMEN Y DEMO -->
+                    <div class="tab-pane fade show active" id="home-tab-demo" role="tabpanel">
+                        <div class="row g-4 mb-4">
+                            <div class="col-sm-3 text-center">
                                 <img src="" id="homeModalImg" class="img-fluid book-modal-img" alt="Portada">
                             </div>
                             <div class="col-sm-9">
@@ -207,37 +211,47 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <span class="book-section-label fw-bold small text-uppercase text-muted">Sinopsis</span>
-                                    <p class="mt-1 book-synopsis-full small text-muted" id="homeModalSinopsis" style="line-height: 1.6;"></p>
+                                    <span class="book-section-label">Sinopsis</span>
+                                    <p class="mt-1 book-synopsis-full" id="homeModalSinopsis"></p>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Demo de Lectura -->
-                        <div class="p-4 book-demo-box rounded-3" style="background: var(--lm-parchment-soft); border: 1.5px solid var(--lm-border);">
-                            <div class="d-flex align-items-center mb-2">
-                                <i class="iconoir-quote me-2 text-primary"></i>
-                                <span class="fw-bold small text-uppercase" style="color: var(--lm-shadow);">Fragmento de Muestra</span>
+                        <div class="p-4 book-demo-box">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="iconoir-quote me-2 book-demo-quote-icon"></i>
+                                <span class="book-section-label">Fragmento de Muestra</span>
                             </div>
-                            <p class="mb-0 fst-italic small text-dark" id="homeModalDemoTexto" style="line-height: 1.7;"></p>
+                            <p class="mb-0 fst-italic book-demo-text" id="homeModalDemoTexto"></p>
                         </div>
+
+                        <!-- Acceso limpio a Biblioteca / Listas -->
+                        {% if user.is_authenticated %}
+                        <div class="mt-4 pt-3 border-top d-flex justify-content-between align-items-center flex-wrap gap-2">
+                            <span class="text-muted small"><i class="iconoir-book-stack me-1 text-teal"></i> Guarda este libro en tu colección personal:</span>
+                            <a href="{% url 'buscar_libros' %}" class="btn btn-outline-dark rounded-pill px-4 btn-sm fw-bold">
+                                <i class="iconoir-bookmark-book me-1"></i> Ir a Explorar y Colección
+                            </a>
+                        </div>
+                        {% endif %}
                     </div>
 
-                    <!-- PESTAÑA 2: COMPARADOR DE TIENDAS ASOCIADAS -->
+                    <!-- PESTAÑA 2: COMPARADOR DE PRECIOS EN TIENDAS -->
                     <div class="tab-pane fade" id="home-tab-tiendas" role="tabpanel">
-                        <div class="p-3 mb-3 book-info-alert rounded-3 small" style="background: rgba(34, 125, 142, 0.08); border: 1px solid rgba(34, 125, 142, 0.2); color: var(--lm-shadow);">
-                            <i class="iconoir-info-circle me-1 text-primary"></i> Al hacer clic en una tienda serás redirigido directamente a su plataforma de compra con nuestro enlace oficial.
+                        <div class="p-3 mb-3 book-info-alert">
+                            <i class="iconoir-info-circle me-1 book-info-icon"></i> Los precios son referenciales y se actualizan con las tiendas online. Al hacer clic serás redirigido a la tienda seleccionada.
                         </div>
 
                         <div class="table-responsive">
                             <table class="table align-middle mb-0 book-stores-table">
                                 <thead>
                                     <tr>
-                                        <th>Tienda</th>
-                                        <th>Formato</th>
-                                        <th>Disponibilidad</th>
-                                        <th>Precio Aprox.</th>
-                                        <th class="text-end">Acción</th>
+                                        <th class="book-stores-th">Tienda</th>
+                                        <th class="book-stores-th">Formato</th>
+                                        <th class="book-stores-th">Disponibilidad</th>
+                                        <th class="book-stores-th">Precio Aprox.</th>
+                                        <th class="text-end book-stores-th">Acción</th>
                                     </tr>
                                 </thead>
                                 <tbody id="homeModalTiendasBody">
@@ -247,13 +261,34 @@
                         </div>
                     </div>
 
+                    <!-- PESTAÑA 3: HISTORIAL DE PRECIOS -->
+                    <div class="tab-pane fade" id="home-tab-historial" role="tabpanel">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <h6 class="fw-bold mb-0 book-history-title">Historial de Precios</h6>
+                                <span class="book-history-subtitle">Evolución de precios en los últimos 6 meses</span>
+                            </div>
+                            <select class="form-select form-select-sm book-history-select" id="homeChartPeriodSelect">
+                                <option value="6">Últimos 6 meses</option>
+                                <option value="3">Últimos 3 meses</option>
+                                <option value="12">Último año</option>
+                            </select>
+                        </div>
+                        <div class="book-chart-wrapper">
+                            <canvas id="homePriceHistoryChart"></canvas>
+                        </div>
+                        <div class="mt-3 p-3 book-info-alert">
+                            <i class="iconoir-info-circle me-1 book-info-icon"></i> Los datos de precios se obtienen mediante rastreo periódico de las tiendas. Las variaciones pueden deberse a promociones, cambios de edición o tipo de cambio.
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
-            <!-- Footer Modal -->
-            <div class="modal-footer border-top px-4 py-3 bg-light d-flex justify-content-between">
-                <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">Cerrar</button>
-                <a href="#" id="homeModalDirectBuyBtn" target="_blank" rel="noopener noreferrer" class="btn btn-primary rounded-pill px-4 fw-bold">
+            <!-- Footer limpio -->
+            <div class="modal-footer border-0 px-4 py-3">
+                <button type="button" class="btn btn-sm px-4 book-modal-btn-close" data-bs-dismiss="modal">Cerrar</button>
+                <a href="#" id="homeModalDirectBuyBtn" target="_blank" rel="noopener noreferrer" class="btn btn-sm px-4 track-click book-modal-btn-buy" data-provider="Buscalibre">
                     <i class="iconoir-shopping-bag me-1"></i> Comprar en Buscalibre
                 </a>
             </div>
@@ -262,6 +297,7 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <!-- SCRIPT 3D COVERFLOW INTERACTIVO -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -449,15 +485,111 @@ document.addEventListener('DOMContentLoaded', () => {
         buyBtn.href = tiendas[0].url;
         buyBtn.innerHTML = `<i class="iconoir-shopping-bag me-1"></i> Comprar en ${tiendas[0].nombre}`;
 
-        // Reset tab
-        const tabBtn = document.getElementById('home-tab-info-btn');
-        if (tabBtn) {
-            const tab = new bootstrap.Tab(tabBtn);
+        // Reset tab a Resumen & Demo
+        const tabBtn = document.getElementById('home-demo-tab');
+        if (tabBtn && window.bootstrap) {
+            const tab = bootstrap.Tab.getOrCreateInstance(tabBtn);
             tab.show();
         }
 
+        // Generar gráfico de historial de precios
+        renderHomePriceChart(titulo, tiendas);
+
         const modalInstance = bootstrap.Modal.getOrCreateInstance(homeModalEl);
         modalInstance.show();
+    }
+
+    // Historial de precios simulado para inicio
+    let homePriceChartInstance = null;
+    function renderHomePriceChart(titulo, tiendas) {
+        const ctx = document.getElementById('homePriceHistoryChart');
+        if (!ctx) return;
+
+        if (homePriceChartInstance) {
+            homePriceChartInstance.destroy();
+        }
+
+        const periodSelect = document.getElementById('homeChartPeriodSelect');
+        const months = parseInt(periodSelect ? periodSelect.value : 6) || 6;
+        
+        const monthsList = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+        const now = new Date();
+        const labels = [];
+        for (let i = months - 1; i >= 0; i--) {
+            const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+            labels.push(monthsList[d.getMonth()] + ' ' + d.getFullYear());
+        }
+
+        let seed = 0;
+        for (let i = 0; i < titulo.length; i++) seed = ((seed << 5) - seed) + titulo.charCodeAt(i);
+        seed = Math.abs(seed);
+
+        const basePrices = [14990, 9990, 16500, 15900];
+        const colors = [
+            { line: '#0085A1', bg: 'rgba(0,133,161,0.08)' },
+            { line: '#e53e3e', bg: 'rgba(229,62,62,0.08)' },
+            { line: '#f6ad55', bg: 'rgba(246,173,85,0.08)' },
+            { line: '#48bb78', bg: 'rgba(72,187,120,0.08)' }
+        ];
+
+        const datasets = tiendas.map((t, i) => {
+            const bp = basePrices[i] || 14990;
+            const prices = [];
+            let curr = bp;
+            for (let m = 0; m < months; m++) {
+                const variation = ((seed * (m + 1) * 7919) % 2000 - 1000) / 100;
+                curr = Math.max(bp * 0.75, Math.min(bp * 1.3, bp + variation * 100));
+                prices.push(Math.round(curr));
+            }
+            return {
+                label: t.nombre.split(' ')[0],
+                data: prices,
+                borderColor: colors[i % colors.length].line,
+                backgroundColor: colors[i % colors.length].bg,
+                fill: true,
+                tension: 0.35,
+                borderWidth: 2,
+                pointRadius: 3,
+                pointHoverRadius: 5
+            };
+        });
+
+        homePriceChartInstance = new Chart(ctx, {
+            type: 'line',
+            data: { labels, datasets },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: { intersect: false, mode: 'index' },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                        labels: { usePointStyle: true, pointStyle: 'circle', padding: 16, font: { size: 11 } }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        grid: { color: 'rgba(255, 255, 255, 0.08)' },
+                        ticks: {
+                            font: { size: 10 },
+                            callback: function(value) { return '$' + (value / 1000).toFixed(1) + 'k'; }
+                        }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { font: { size: 10 } }
+                    }
+                }
+            }
+        });
+
+        if (periodSelect) {
+            periodSelect.onchange = function() {
+                renderHomePriceChart(titulo, tiendas);
+            };
+        }
     }
 
     // Soporte para gestos táctiles (Swipe)

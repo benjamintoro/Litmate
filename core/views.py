@@ -874,7 +874,7 @@ def get_featured_books():
             'paginas': 496,
             'rating': '4.9★',
             'precio_desde': '$14.990 CLP',
-            'portada': 'https://covers.openlibrary.org/b/id/8231856-L.jpg',
+            'portada': 'https://covers.openlibrary.org/b/id/12627383-L.jpg',
             'sinopsis': 'Muchos años después, frente al pelotón de fusilamiento, el coronel Aureliano Buendía había de recordar aquella tarde remota en que su padre lo llevó a conocer el hielo. Macondo era entonces una aldea de veinte casas de barro y cañabrava...',
             'demo_texto': 'Adelanto de lectura — "Cien años de soledad" de Gabriel García Márquez:\n\nEl mundo era tan reciente, que muchas cosas carecían de nombre, y para mencionarlas había que señalarlas con el dedo. Todos los años, por el mes de marzo, una familia de gitanos desarrapados plantaba su carpa cerca de la aldea, y con un gran alboroto de pitos y timbales daban a conocer los nuevos inventos.',
             'partner_badge': 'Buscalibre'
@@ -890,7 +890,7 @@ def get_featured_books():
             'paginas': 704,
             'rating': '4.8★',
             'precio_desde': '$18.990 CLP',
-            'portada': 'https://covers.openlibrary.org/b/id/11153217-L.jpg',
+            'portada': 'https://covers.openlibrary.org/b/id/11481354-L.jpg',
             'sinopsis': 'En el desértico planeta Arrakis, el agua es el bien más preciado y la codiciada especia melange es la sustancia que permite los viajes interestelares. El joven Paul Atreides deberá enfrentarse a conspiraciones imperiales para cumplir su destino...',
             'demo_texto': 'Adelanto de lectura — "Dune" de Frank Herbert:\n\n"No debo tener miedo. El miedo es el asesino de la mente. El miedo es la pequeña muerte que conduce a la destrucción total. Afrontaré mi miedo. Permitiré que pase sobre mí y a través de mí."',
             'partner_badge': 'Amazon Books'
@@ -906,7 +906,7 @@ def get_featured_books():
             'paginas': 352,
             'rating': '4.8★',
             'precio_desde': '$11.500 CLP',
-            'portada': 'https://covers.openlibrary.org/b/id/14624467-L.jpg',
+            'portada': 'https://covers.openlibrary.org/b/id/8745958-L.jpg',
             'sinopsis': 'En una sociedad dominada por el Gran Hermano y la Policía del Pensamiento, Winston Smith trabaja en el Ministerio de la Verdad reescribiendo la historia. Pero su anhelo de libertad lo llevará a desafiar al Partido.',
             'demo_texto': 'Adelanto de lectura — "1984" de George Orwell:\n\nEra un día luminoso y frío de abril y los relojes daban las trece. Winston Smith, con la barbilla clavada en el pecho en su intento por escapar al viento cortante, se deslizó rápidamente por las puertas de cristal de las Casas de la Victoria.',
             'partner_badge': 'Feria Chilena'
@@ -954,7 +954,7 @@ def get_featured_books():
             'paginas': 336,
             'rating': '4.9★',
             'precio_desde': '$16.900 CLP',
-            'portada': 'https://covers.openlibrary.org/b/id/12843460-L.jpg',
+            'portada': 'https://covers.openlibrary.org/b/id/12539702-L.jpg',
             'sinopsis': 'Un marco probado para mejorar un 1% cada día. James Clear explica cómo los pequeños cambios cotidianos producen resultados extraordinarios a lo largo del tiempo, eliminando hábitos negativos y adoptando rutinas exitosas.',
             'demo_texto': 'Adelanto de lectura — "Hábitos Atómicos" de James Clear:\n\n"Los cambios que parecen pequeños y poco importantes al principio se convertirán en resultados notables si estás dispuesto a mantenerlos durante años. Eres lo que haces repetidamente."',
             'partner_badge': 'Google Play'
