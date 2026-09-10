@@ -1201,3 +1201,136 @@ html.dark-mode #mainNav .navbar-logo-light {
   transform: scale(1.03);
 }
 
+/* =====================================================================
+   WIDGET DE PERFIL EN NAVBAR (BOTÓN PERFIL CON AVATAR Y CHEVRON)
+   ===================================================================== */
+#mainNav .nav-profile-item {
+  position: relative;
+}
+
+#mainNav .nav-profile-trigger {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  cursor: pointer;
+  padding: 0.5rem 0.5rem !important;
+  background: transparent !important;
+  border: none !important;
+  transition: opacity 0.2s ease-in-out;
+  text-decoration: none !important;
+  color: #ffffff !important;
+}
+
+#mainNav .nav-profile-trigger::after {
+  display: none !important;
+}
+
+#mainNav .nav-profile-trigger:hover,
+#mainNav .nav-profile-trigger:focus,
+#mainNav .nav-profile-item.show .nav-profile-trigger {
+  background: transparent !important;
+  opacity: 0.85;
+  color: #ffffff !important;
+}
+
+html:not(.dark-mode) #mainNav.is-fixed .nav-profile-trigger {
+  background: transparent !important;
+  border: none !important;
+  color: #212529 !important;
+}
+
+html:not(.dark-mode) #mainNav.is-fixed .nav-profile-trigger:hover,
+html:not(.dark-mode) #mainNav.is-fixed .nav-profile-item.show .nav-profile-trigger {
+  background: transparent !important;
+  color: #e28722 !important;
+}
+
+.nav-profile-avatar-badge {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-color: #e28722;
+  color: #1a1a1a;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.nav-profile-avatar-badge svg {
+  width: 14px;
+  height: 14px;
+}
+
+.nav-profile-avatar-img {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid #e28722;
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.nav-profile-label {
+  font-size: 0.92rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.01em !important;
+  text-transform: none !important;
+  line-height: 1;
+}
+
+.nav-profile-chevron {
+  color: #e28722 !important;
+  stroke: #e28722 !important;
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+}
+
+#mainNav .nav-profile-item.show .nav-profile-chevron {
+  transform: rotate(180deg);
+}
+
+.nav-profile-menu {
+  min-width: 230px !important;
+  padding: 0.5rem 0 !important;
+  margin-top: 0.5rem !important;
+  border-radius: 14px !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background: #1e1e24 !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35) !important;
+}
+
+html:not(.dark-mode) .nav-profile-menu {
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12) !important;
+}
+
+.nav-profile-menu .dropdown-item {
+  font-size: 0.88rem !important;
+  font-weight: 500 !important;
+  padding: 0.55rem 1rem !important;
+  color: #e0e0e0 !important;
+  transition: all 0.15s ease;
+}
+
+html:not(.dark-mode) .nav-profile-menu .dropdown-item {
+  color: #333333 !important;
+}
+
+.nav-profile-menu .dropdown-item:hover {
+  background: rgba(226, 135, 34, 0.12) !important;
+  color: #e28722 !important;
+}
+
+.nav-profile-menu-header {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+html.dark-mode .nav-profile-menu-header {
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+
