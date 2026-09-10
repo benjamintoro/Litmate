@@ -1403,3 +1403,14 @@ html.dark-mode .btn-genre-selected {
   color: #5ed6ea !important;
 }
 
+/* --- LOGO EN MODO OSCURO --- */
+html.dark-mode #mainNav .navbar-logo-dark,
+html.dark-mode #mainNav.is-fixed .navbar-logo-dark {
+  display: none !important;
+}
+html.dark-mode #mainNav .navbar-logo-light,
+html.dark-mode #mainNav.is-fixed .navbar-logo-light {
+  display: inline-block !important;
+}
+
+

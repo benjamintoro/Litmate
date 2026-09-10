@@ -1150,3 +1150,54 @@ a {
   -webkit-backdrop-filter: blur(8px);
   box-shadow: 0 8px 24px rgba(11, 12, 10, 0.25);
 }
+
+/* --- BRAND LOGOS (Navbar & Footer) --- */
+.navbar-logo {
+  height: 40px !important;
+  width: auto !important;
+  max-height: 40px !important;
+  object-fit: contain;
+  vertical-align: middle;
+  transition: opacity 0.25s ease, transform 0.2s ease;
+}
+
+.navbar-brand:hover .navbar-logo {
+  transform: scale(1.04);
+}
+
+/* Modo Light por defecto: muestra logo oscuro (litmate_navbar-logo.png) */
+html:not(.dark-mode) #mainNav .navbar-logo-dark {
+  display: inline-block !important;
+}
+html:not(.dark-mode) #mainNav .navbar-logo-light {
+  display: none !important;
+}
+
+/* Modo Oscuro: muestra logo claro (litmate_navbar-logo-light.png) */
+html.dark-mode #mainNav .navbar-logo-dark {
+  display: none !important;
+}
+html.dark-mode #mainNav .navbar-logo-light {
+  display: inline-block !important;
+}
+
+/* Footer logo */
+.footer-logo {
+  height: 40px !important;
+  width: auto !important;
+  max-height: 40px !important;
+  object-fit: contain;
+  display: inline-block;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.footer-brand-link {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.footer-brand-link:hover .footer-logo {
+  opacity: 0.9;
+  transform: scale(1.03);
+}
+
