@@ -18,11 +18,13 @@ from .security import ratelimit, check_honeypot, get_client_ip
 from django.utils.text import slugify
 from suscripciones.models import PlanSuscripcion, SuscripcionUsuario
 from django.db import IntegrityError
+from django.urls import reverse
 from django.utils import timezone
 from decimal import Decimal
 import json
 import re
 import requests
+import secrets
 import datetime
 import logging
 import random
@@ -257,9 +259,8 @@ def login_view(request):
 
 def social_login_start(request, provider):
     """
-    Inicia el flujo de autenticación social con Google o GitHub.
-    Si las credenciales no están configuradas en .env o se activa el modo demo,
-    inicia sesión con una cuenta de prueba para desarrollo rápido.
+    Inicia el flujo de autenticación social OAuth2 con Google o GitHub.
+    Verifica las credenciales en .env y redirige al consentimiento oficial del proveedor.
     """
     if request.user.is_authenticated:
         return redirect('index')
@@ -268,43 +269,72 @@ def social_login_start(request, provider):
     next_url = request.GET.get('next', 'index')
     request.session['social_auth_next'] = next_url
 
-    host = request.get_host()
-    scheme = request.scheme
-    redirect_uri = f"{scheme}://{host}/auth/social/{provider}/callback/"
+    # Generar token CSRF (state) para seguridad OAuth2
+    state = secrets.token_urlsafe(24)
+    request.session['oauth_state'] = state
+
+    # Construir redirect_uri absoluta respetando el host y puerto activo
+    redirect_uri = request.build_absolute_uri(reverse('social_login_callback', kwargs={'provider': provider}))
 
     # 1. Google OAuth
     if provider == 'google':
-        client_id = getattr(settings, 'GOOGLE_CLIENT_ID', '')
-        if client_id and not request.GET.get('demo'):
-            google_auth_url = (
-                f"https://accounts.google.com/o/oauth2/v2/auth?"
-                f"client_id={client_id}&"
-                f"redirect_uri={redirect_uri}&"
-                f"response_type=code&"
-                f"scope=openid%20email%20profile&"
-                f"access_type=offline&"
-                f"prompt=select_account"
+        client_id = getattr(settings, 'GOOGLE_CLIENT_ID', '').strip()
+        client_secret = getattr(settings, 'GOOGLE_CLIENT_SECRET', '').strip()
+
+        # Validación de credenciales configuradas
+        if not client_id or not client_secret or client_id.startswith('tu_'):
+            if request.GET.get('demo') == '1':
+                return _social_login_demo_mock(request, provider)
+            messages.warning(
+                request,
+                'Para iniciar sesión real con Google, debes configurar GOOGLE_CLIENT_ID y GOOGLE_CLIENT_SECRET en tu archivo .env.'
             )
-            return redirect(google_auth_url)
+            referer = request.META.get('HTTP_REFERER')
+            return redirect(referer if referer else 'login')
+
+        google_auth_url = (
+            f"https://accounts.google.com/o/oauth2/v2/auth?"
+            f"client_id={client_id}&"
+            f"redirect_uri={redirect_uri}&"
+            f"response_type=code&"
+            f"scope=openid%20email%20profile&"
+            f"access_type=offline&"
+            f"prompt=select_account&"
+            f"state={state}"
+        )
+        return redirect(google_auth_url)
 
     # 2. GitHub OAuth
     elif provider == 'github':
-        client_id = getattr(settings, 'GITHUB_CLIENT_ID', '')
-        if client_id and not request.GET.get('demo'):
-            github_auth_url = (
-                f"https://github.com/login/oauth/authorize?"
-                f"client_id={client_id}&"
-                f"redirect_uri={redirect_uri}&"
-                f"scope=user:email"
-            )
-            return redirect(github_auth_url)
+        client_id = getattr(settings, 'GITHUB_CLIENT_ID', '').strip()
+        client_secret = getattr(settings, 'GITHUB_CLIENT_SECRET', '').strip()
 
-    # 3. Fallback / Modo Demo Seguro para Desarrollo
-    return _social_login_demo_mock(request, provider)
+        # Validación de credenciales configuradas
+        if not client_id or not client_secret or client_id.startswith('tu_'):
+            if request.GET.get('demo') == '1':
+                return _social_login_demo_mock(request, provider)
+            messages.warning(
+                request,
+                'Para iniciar sesión real con GitHub, debes configurar GITHUB_CLIENT_ID y GITHUB_CLIENT_SECRET en tu archivo .env.'
+            )
+            referer = request.META.get('HTTP_REFERER')
+            return redirect(referer if referer else 'login')
+
+        github_auth_url = (
+            f"https://github.com/login/oauth/authorize?"
+            f"client_id={client_id}&"
+            f"redirect_uri={redirect_uri}&"
+            f"scope=read:user%20user:email&"
+            f"state={state}"
+        )
+        return redirect(github_auth_url)
+
+    messages.error(request, f'Proveedor de autenticación "{provider}" no válido.')
+    return redirect('login')
 
 
 def _social_login_demo_mock(request, provider):
-    """Genera/autentica una cuenta de demostración cuando no hay credenciales OAuth de producción."""
+    """Genera/autentica una cuenta de demostración cuando se solicita expresamente el modo demo."""
     from django.contrib.auth.models import User
 
     if provider == 'google':
@@ -312,13 +342,13 @@ def _social_login_demo_mock(request, provider):
         email = 'lector.google@litmate.com'
         first_name = 'Lector'
         last_name = 'Google'
-        bio = 'Lector apasionado conectado a través de Google.'
+        bio = 'Lector apasionado conectado a través de Google Demo.'
     else:
         username = 'github_dev'
         email = 'dev.github@litmate.com'
         first_name = 'Dev'
         last_name = 'GitHub'
-        bio = 'Desarrollador y lector conectado a través de GitHub.'
+        bio = 'Desarrollador y lector conectado a través de GitHub Demo.'
 
     user, created = User.objects.get_or_create(
         username=username,
@@ -350,9 +380,10 @@ def _social_login_demo_mock(request, provider):
             defaults={'plan': plan_gratis, 'estado': 'activa'}
         )
 
+    user.backend = 'django.contrib.auth.backends.ModelBackend'
     login(request, user)
     provider_name = 'Google' if provider == 'google' else 'GitHub'
-    messages.success(request, f'¡Inicio de sesión exitoso con {provider_name}! Bienvenido a LitMate, {first_name}.')
+    messages.success(request, f'¡Inicio de sesión en Modo Demo con {provider_name}! Bienvenido a LitMate, {first_name}.')
 
     next_url = request.session.pop('social_auth_next', 'index')
     if next_url and url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}):
@@ -361,104 +392,228 @@ def _social_login_demo_mock(request, provider):
 
 
 def social_login_callback(request, provider):
-    """Recibe el código de autorización de Google o GitHub y autentica al usuario."""
-    code = request.GET.get('code')
-    if not code:
-        messages.error(request, f'No se pudo completar la autenticación con {provider.title()}.')
-        return redirect('login')
-
+    """
+    Recibe el código de autorización de Google o GitHub, intercambia el token,
+    obtiene los datos del perfil y autentica o crea al usuario en LitMate.
+    """
     from django.contrib.auth.models import User
     provider = provider.lower()
-    host = request.get_host()
-    scheme = request.scheme
-    redirect_uri = f"{scheme}://{host}/auth/social/{provider}/callback/"
+
+    # Manejo de cancelación o error devuelto por el proveedor
+    error = request.GET.get('error')
+    if error:
+        error_desc = request.GET.get('error_description', '')
+        logger.warning(f"OAuth cancelado o error ({provider}): {error} - {error_desc}")
+        messages.info(request, f'Has cancelado el inicio de sesión con {provider.title()}.')
+        return redirect('login')
+
+    code = request.GET.get('code')
+    if not code:
+        messages.error(request, f'No se recibió código de autorización de {provider.title()}.')
+        return redirect('login')
+
+    # Validar state CSRF si estaba guardado en la sesión
+    returned_state = request.GET.get('state')
+    session_state = request.session.pop('oauth_state', None)
+    if session_state and returned_state and session_state != returned_state:
+        logger.warning(f"Validación CSRF fallida en OAuth ({provider}).")
+        messages.error(request, 'Error de validación de seguridad (CSRF). Por favor intenta de nuevo.')
+        return redirect('login')
+
+    redirect_uri = request.build_absolute_uri(reverse('social_login_callback', kwargs={'provider': provider}))
 
     try:
         if provider == 'google':
+            client_id = getattr(settings, 'GOOGLE_CLIENT_ID', '').strip()
+            client_secret = getattr(settings, 'GOOGLE_CLIENT_SECRET', '').strip()
+            if not client_id or not client_secret:
+                messages.error(request, 'Las credenciales de Google OAuth no están configuradas.')
+                return redirect('login')
+
             token_url = "https://oauth2.googleapis.com/token"
             token_data = {
                 'code': code,
-                'client_id': settings.GOOGLE_CLIENT_ID,
-                'client_secret': settings.GOOGLE_CLIENT_SECRET,
+                'client_id': client_id,
+                'client_secret': client_secret,
                 'redirect_uri': redirect_uri,
                 'grant_type': 'authorization_code'
             }
-            token_res = requests.post(token_url, data=token_data, timeout=8).json()
+            res = requests.post(token_url, data=token_data, timeout=10)
+            token_res = res.json()
             access_token = token_res.get('access_token')
 
             if not access_token:
-                messages.error(request, 'Error al obtener token de acceso de Google.')
+                err_desc = token_res.get('error_description') or token_res.get('error') or 'Token de acceso no recibido.'
+                logger.error(f"Error Google OAuth token: {token_res}")
+                messages.error(request, f'Error al autenticar con Google: {err_desc}')
                 return redirect('login')
 
-            user_info = requests.get(
+            user_info_res = requests.get(
                 "https://www.googleapis.com/oauth2/v2/userinfo",
                 headers={'Authorization': f"Bearer {access_token}"},
-                timeout=8
-            ).json()
+                timeout=10
+            )
+            user_info = user_info_res.json()
 
-            email = user_info.get('email')
-            first_name = user_info.get('given_name', 'Lector')
-            last_name = user_info.get('family_name', 'Google')
-            google_id = user_info.get('id', '')
-            username = f"google_{google_id[:10]}" if google_id else email.split('@')[0]
+            email = (user_info.get('email') or '').strip().lower()
+            if not email:
+                messages.error(request, 'Google no proporcionó una dirección de correo válida.')
+                return redirect('login')
+
+            first_name = (user_info.get('given_name') or '').strip()
+            last_name = (user_info.get('family_name') or '').strip()
+            google_id = str(user_info.get('id', ''))
+            login_name = ''
+            social_avatar = user_info.get('picture', '')
 
         elif provider == 'github':
+            client_id = getattr(settings, 'GITHUB_CLIENT_ID', '').strip()
+            client_secret = getattr(settings, 'GITHUB_CLIENT_SECRET', '').strip()
+            if not client_id or not client_secret:
+                messages.error(request, 'Las credenciales de GitHub OAuth no están configuradas.')
+                return redirect('login')
+
             token_url = "https://github.com/login/oauth/access_token"
             token_data = {
-                'client_id': settings.GITHUB_CLIENT_ID,
-                'client_secret': settings.GITHUB_CLIENT_SECRET,
+                'client_id': client_id,
+                'client_secret': client_secret,
                 'code': code,
                 'redirect_uri': redirect_uri
             }
-            token_res = requests.post(token_url, data=token_data, headers={'Accept': 'application/json'}, timeout=8).json()
+            res = requests.post(token_url, data=token_data, headers={'Accept': 'application/json'}, timeout=10)
+            token_res = res.json()
             access_token = token_res.get('access_token')
 
             if not access_token:
-                messages.error(request, 'Error al obtener token de acceso de GitHub.')
+                err_desc = token_res.get('error_description') or token_res.get('error') or 'Token de acceso no recibido.'
+                logger.error(f"Error GitHub OAuth token: {token_res}")
+                messages.error(request, f'Error al autenticar con GitHub: {err_desc}')
                 return redirect('login')
 
-            user_info = requests.get(
+            user_res = requests.get(
                 "https://api.github.com/user",
-                headers={'Authorization': f"token {access_token}"},
-                timeout=8
-            ).json()
+                headers={'Authorization': f"token {access_token}", 'Accept': 'application/json'},
+                timeout=10
+            )
+            user_info = user_res.json()
 
             github_id = str(user_info.get('id', ''))
-            username = user_info.get('login') or f"gh_{github_id}"
-            first_name = user_info.get('name') or username
-            last_name = ""
-            email = user_info.get('email')
+            login_name = (user_info.get('login') or '').strip()
+            raw_name = (user_info.get('name') or '').strip()
+            if raw_name:
+                name_parts = raw_name.split(' ', 1)
+                first_name = name_parts[0]
+                last_name = name_parts[1] if len(name_parts) > 1 else ''
+            else:
+                first_name = login_name or 'Lector'
+                last_name = ''
 
+            email = (user_info.get('email') or '').strip().lower()
             if not email:
                 emails_res = requests.get(
                     "https://api.github.com/user/emails",
-                    headers={'Authorization': f"token {access_token}"},
-                    timeout=8
-                ).json()
-                if isinstance(emails_res, list) and emails_res:
-                    email = emails_res[0].get('email')
-                else:
-                    email = f"{username}@users.noreply.github.com"
+                    headers={'Authorization': f"token {access_token}", 'Accept': 'application/json'},
+                    timeout=10
+                )
+                if emails_res.status_code == 200:
+                    emails_data = emails_res.json()
+                    if isinstance(emails_data, list):
+                        for e in emails_data:
+                            if e.get('primary') and e.get('verified'):
+                                email = (e.get('email') or '').strip().lower()
+                                break
+                        if not email and emails_data:
+                            email = (emails_data[0].get('email') or '').strip().lower()
+
+            if not email:
+                email = f"{login_name or github_id}@users.noreply.github.com"
+            google_id = ''
+            social_avatar = user_info.get('avatar_url', '')
         else:
             return redirect('login')
 
-        # Buscar usuario por email o username
-        user = User.objects.filter(email=email).first() or User.objects.filter(username=username).first()
+        # 1. Vincular o buscar usuario por correo (prioritario)
+        user = None
+        if email and not email.endswith('@users.noreply.github.com'):
+            user = User.objects.filter(email__iexact=email).first()
+
+        # 2. Si no existe por correo, verificar por nombre de usuario del proveedor
+        if not user and login_name:
+            user = User.objects.filter(username__iexact=login_name).first()
+
+        # 3. Si sigue sin existir, creamos una nueva cuenta con username único
         if not user:
+            raw_base = login_name if (provider == 'github' and login_name) else (
+                f"google_{google_id[:8]}" if google_id else email.split('@')[0]
+            )
+            base_username = re.sub(r'[^\w.@+-]', '_', raw_base)[:20]
+            if not base_username:
+                base_username = f"user_{provider}"
+
+            candidate_username = base_username
+            suffix = 1
+            while User.objects.filter(username__iexact=candidate_username).exists():
+                candidate_username = f"{base_username}_{suffix}"
+                suffix += 1
+
             user = User.objects.create(
-                username=username,
+                username=candidate_username,
                 email=email,
                 first_name=first_name,
                 last_name=last_name
             )
             user.set_unusable_password()
             user.save()
+        else:
+            # Actualizar nombres si estaban vacíos
+            updated = False
+            if not user.first_name and first_name:
+                user.first_name = first_name
+                updated = True
+            if not user.last_name and last_name:
+                user.last_name = last_name
+                updated = True
+            if not user.email and email:
+                user.email = email
+                updated = True
+            if updated:
+                user.save()
 
-        # Perfil y suscripción
-        PerfilUsuario.objects.get_or_create(
+        # 4. Asegurar PerfilUsuario
+        full_name = f"{user.first_name} {user.last_name}".strip() or user.username
+        perfil, created = PerfilUsuario.objects.get_or_create(
             usuario=user,
-            defaults={'nombre': f"{first_name} {last_name}".strip(), 'correo': email}
+            defaults={
+                'nombre': full_name,
+                'correo': email
+            }
         )
+        if not created:
+            save_perfil = False
+            if not perfil.nombre and full_name:
+                perfil.nombre = full_name
+                save_perfil = True
+            if not perfil.correo and email:
+                if not PerfilUsuario.objects.filter(correo__iexact=email).exclude(id=perfil.id).exists():
+                    perfil.correo = email
+                    save_perfil = True
+            if save_perfil:
+                try:
+                    perfil.save()
+                except Exception as e:
+                    logger.warning(f"No se pudo actualizar email en perfil: {e}")
+
+        # Guardar foto social de perfil (Google / GitHub) si no tiene una personalizada
+        if social_avatar and (not perfil.imagen or perfil.imagen.name == 'default.jpg' or 'default' in str(perfil.imagen.name)):
+            try:
+                from django.core.files.base import ContentFile
+                img_res = requests.get(social_avatar, timeout=6)
+                if img_res.status_code == 200:
+                    perfil.imagen.save(f"user_{user.id}_avatar.jpg", ContentFile(img_res.content), save=True)
+            except Exception as img_err:
+                logger.warning(f"No se pudo guardar la imagen de perfil social: {img_err}")
+
+        # 5. Asegurar suscripción con plan gratuito si no existe
         plan_gratis = PlanSuscripcion.objects.filter(slug='gratis').first() or PlanSuscripcion.objects.filter(precio=0, activo=True).first()
         if plan_gratis:
             SuscripcionUsuario.objects.get_or_create(
@@ -466,8 +621,13 @@ def social_login_callback(request, provider):
                 defaults={'plan': plan_gratis, 'estado': 'activa'}
             )
 
+        # 6. Autenticar en la sesión
+        user.backend = 'django.contrib.auth.backends.ModelBackend'
         login(request, user)
-        messages.success(request, f'¡Bienvenido a LitMate, {first_name}!')
+
+        display_name = user.first_name if user.first_name else user.username
+        provider_display = 'Google' if provider == 'google' else 'GitHub'
+        messages.success(request, f'¡Inicio de sesión exitoso con {provider_display}! Bienvenido a LitMate, {display_name}.')
 
         next_url = request.session.pop('social_auth_next', 'index')
         if next_url and url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}):
@@ -475,8 +635,8 @@ def social_login_callback(request, provider):
         return redirect('index')
 
     except Exception as e:
-        logger.error(f"Error en social_login_callback ({provider}): {e}")
-        messages.error(request, f'Ocurrió un error al procesar el inicio de sesión con {provider.title()}.')
+        logger.error(f"Error en social_login_callback ({provider}): {e}", exc_info=True)
+        messages.error(request, f'Ocurrió un error inesperado al procesar el inicio de sesión con {provider.title()}.')
         return redirect('login')
 
 
