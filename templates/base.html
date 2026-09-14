@@ -79,6 +79,7 @@
                 }
             }
             syncNavbarLogo();
+            window.dispatchEvent(new CustomEvent('litmateThemeChanged', { detail: { isDark: html.classList.contains('dark-mode') } }));
         }
 
         document.addEventListener('DOMContentLoaded', function() {

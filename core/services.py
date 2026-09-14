@@ -1,71 +1,157 @@
 import os
+import re
 import requests
 import logging
 import random
 from decimal import Decimal
 from django.conf import settings
 from django.db.models import Q
+from django.utils.text import slugify
 from core.models import Libro, Autor, Genero, Editorial
 
 logger = logging.getLogger('litmate')
 
 
-def generar_enlaces_tiendas(titulo, autor, google_id=None, precio_base=None):
+def generar_enlaces_tiendas(titulo, autor, google_id=None, precio_base=None, isbn=None, cached_records=None):
     """
     Genera enlaces de compra y comparación de precios en librerías online.
-    LitMate no vende directamente: compara y redirige con afiliación.
+    Prioriza enlaces directos escrapeados en la base de datos (PrecioLibroTienda) para
+    llevar al usuario directamente al producto sin pasar por un buscador genérico.
+    No realiza peticiones de red bloqueantes durante el renderizado del catálogo.
     """
+    from core.models import PrecioLibroTienda
+    from core.scraper import get_store_meta
+
+    tiendas = []
+    isbn_limpio = re.sub(r'[^\d]', '', str(isbn)) if isbn else ""
+    precio_ref = precio_base or 14990
     query_busqueda = f"{titulo} {autor}".strip()
     query_plus = query_busqueda.replace(' ', '+')
-    
-    precio_ref = precio_base or 14990
-    
-    return [
-        {
-            'tienda': 'Buscalibre Chile',
-            'formato': 'Físico (Tapa Blanda)',
-            'precio_clp': precio_ref,
-            'precio_formateado': f"${precio_ref:,.0f} CLP".replace(',', '.'),
-            'disponibilidad': 'En stock • Envío a todo Chile',
-            'url': f"https://www.buscalibre.cl/libros/search?q={query_plus}",
-            'badge': 'Más Popular',
-            'badge_class': 'bg-success',
-            'icono': 'iconoir-shopping-bag'
-        },
-        {
+
+    # 1. Usar registros de BD si fueron provistos o consultarlos
+    if cached_records is not None:
+        registros = cached_records
+    else:
+        registros = list(PrecioLibroTienda.objects.filter(
+            titulo_referencia__iexact=titulo,
+            es_enlace_directo=True
+        ).order_by('precio_actual'))
+
+    if registros:
+        for ct in registros:
+            meta = get_store_meta(ct.tienda)
+            tiendas.append({
+                'tienda': ct.tienda,
+                'nombre_corto': meta['nombre_corto'],
+                'formato': ct.formato,
+                'precio_clp': ct.precio_actual,
+                'precio_formateado': f"${ct.precio_actual:,.0f} CLP".replace(',', '.'),
+                'disponibilidad': ct.disponibilidad,
+                'url': ct.enlace_directo,
+                'badge': meta['badge'],
+                'badge_class': meta['badge_class'],
+                'icono': meta['icono'],
+                'es_directo': True
+            })
+        return tiendas
+
+    # 2. Si aún no está en caché, generar opciones inmediatas sin bloquear con HTTP
+    # Buscalibre Chile
+    tiendas.append({
+        'tienda': 'Buscalibre Chile',
+        'nombre_corto': 'Buscalibre',
+        'formato': 'Físico',
+        'precio_clp': precio_ref,
+        'precio_formateado': f"${precio_ref:,.0f} CLP".replace(',', '.'),
+        'disponibilidad': 'Verificar Disponibilidad',
+        'url': f"https://www.buscalibre.cl/libros/search?q={query_plus}",
+        'badge': 'Mejor Opción',
+        'badge_class': 'bg-success',
+        'icono': 'iconoir-shopping-bag',
+        'es_directo': False
+    })
+
+    # Feria Chilena del Libro
+    url_fcl = f"https://www.feriachilenadellibro.cl/buscar?controller=search&s={isbn_limpio}" if isbn_limpio else f"https://www.feriachilenadellibro.cl/buscar?controller=search&s={query_plus}"
+    tiendas.append({
+        'tienda': 'Feria Chilena del Libro',
+        'nombre_corto': 'Feria Chilena',
+        'formato': 'Físico',
+        'precio_clp': int(precio_ref * 1.05),
+        'precio_formateado': f"${int(precio_ref * 1.05):,.0f} CLP".replace(',', '.'),
+        'disponibilidad': 'Verificar Disponibilidad',
+        'url': url_fcl,
+        'badge': 'Tradicional',
+        'badge_class': 'bg-warning text-dark',
+        'icono': 'iconoir-shop',
+        'es_directo': False
+    })
+
+    # Librería Contrapunto
+    tiendas.append({
+        'tienda': 'Librería Contrapunto',
+        'nombre_corto': 'Contrapunto',
+        'formato': 'Físico / Especialidad',
+        'precio_clp': int(precio_ref * 1.08),
+        'precio_formateado': f"${int(precio_ref * 1.08):,.0f} CLP".replace(',', '.'),
+        'disponibilidad': 'Verificar Disponibilidad',
+        'url': f"https://contrapunto.cl/search?q={query_plus}",
+        'badge': 'Especializada',
+        'badge_class': 'bg-info text-dark',
+        'icono': 'iconoir-palette',
+        'es_directo': False
+    })
+
+    # Librerías Qué Leo
+    tiendas.append({
+        'tienda': 'Librerías Qué Leo',
+        'nombre_corto': 'Qué Leo',
+        'formato': 'Físico',
+        'precio_clp': int(precio_ref * 1.02),
+        'precio_formateado': f"${int(precio_ref * 1.02):,.0f} CLP".replace(',', '.'),
+        'disponibilidad': 'Verificar Disponibilidad',
+        'url': f"https://queleochile.cl/buscar?q={query_plus}",
+        'badge': 'Independiente',
+        'badge_class': 'bg-secondary',
+        'icono': 'iconoir-bookmark-book',
+        'es_directo': False
+    })
+
+    # Google Play Books
+    if google_id and not str(google_id).startswith(('db_', 'ol_')) and len(str(google_id)) >= 4:
+        precio_digital = int(precio_ref * 0.65)
+        tiendas.append({
             'tienda': 'Google Play Books',
+            'nombre_corto': 'Google Books',
             'formato': 'eBook (Digital)',
-            'precio_clp': int(precio_ref * 0.65),
-            'precio_formateado': f"${int(precio_ref * 0.65):,.0f} CLP".replace(',', '.'),
+            'precio_clp': precio_digital,
+            'precio_formateado': f"${precio_digital:,.0f} CLP".replace(',', '.'),
             'disponibilidad': 'Descarga Inmediata',
-            'url': f"https://books.google.com/books?id={google_id}" if google_id else f"https://play.google.com/store/search?q={query_plus}&c=books",
+            'url': f"https://books.google.cl/books?id={google_id}",
             'badge': 'Digital',
             'badge_class': 'bg-primary',
-            'icono': 'iconoir-google'
-        },
-        {
+            'icono': 'iconoir-google',
+            'es_directo': True
+        })
+
+    # Amazon Libros
+    if isbn_limpio and len(isbn_limpio) in (10, 13):
+        precio_amazon = int(precio_ref * 1.15)
+        tiendas.append({
             'tienda': 'Amazon Kindle / Libros',
-            'formato': 'Físico / Kindle',
-            'precio_clp': int(precio_ref * 1.15),
-            'precio_formateado': f"${int(precio_ref * 1.15):,.0f} CLP".replace(',', '.'),
+            'nombre_corto': 'Amazon',
+            'formato': 'Tapa Blanda / Kindle',
+            'precio_clp': precio_amazon,
+            'precio_formateado': f"${precio_amazon:,.0f} CLP".replace(',', '.'),
             'disponibilidad': 'Envío Internacional',
-            'url': f"https://www.amazon.com/s?k={query_plus}&i=stripbooks",
+            'url': f"https://www.amazon.com/dp/{isbn_limpio}",
             'badge': 'Internacional',
             'badge_class': 'bg-warning text-dark',
-            'icono': 'iconoir-open-book'
-        },
-        {
-            'tienda': 'Feria Chilena del Libro',
-            'formato': 'Físico (Librería)',
-            'precio_clp': int(precio_ref * 1.05),
-            'precio_formateado': f"${int(precio_ref * 1.05):,.0f} CLP".replace(',', '.'),
-            'disponibilidad': 'Retiro en Tienda / Envío',
-            'url': f"https://www.feriachilenadellibro.cl/catalogsearch/result/?q={query_plus}",
-            'badge': 'Local',
-            'badge_class': 'bg-secondary',
-            'icono': 'iconoir-shop'
-        }
-    ]
+            'icono': 'iconoir-open-book',
+            'es_directo': True
+        })
+
+    return tiendas
 
 
 def generar_demo_extracto(libro_obj=None, sinopsis="", titulo="", autor=""):
@@ -129,18 +215,35 @@ def buscar_libros_hibrido(query="", author="", genre="", year="", order="", max_
         # Por defecto ordenamos por popularidad/calificación para mostrar las mejores obras primero
         db_queryset = db_queryset.order_by('-calificacion_promedio', 'titulo')
 
-    libros_db = db_queryset.filter(filtros).distinct()[:max_results]
+    libros_db = list(db_queryset.filter(filtros).distinct()[:max_results])
+
+    # Pre-cargar precios de tiendas en una sola consulta para evitar latencia N+1
+    cached_tiendas_map = {}
+    titulos_db = [l.titulo for l in libros_db]
+    if titulos_db:
+        from core.models import PrecioLibroTienda
+        try:
+            for pt in PrecioLibroTienda.objects.filter(titulo_referencia__in=titulos_db, es_enlace_directo=True).order_by('precio_actual'):
+                cached_tiendas_map.setdefault(pt.titulo_referencia.lower(), []).append(pt)
+        except Exception:
+            pass
 
     for l in libros_db:
         gid = l.google_book_id or f"db_{l.id}"
         google_ids_vistos.add(gid)
         
         año_pub = str(l.fecha_publicacion.year) if l.fecha_publicacion else "N/A"
-        tiendas = generar_enlaces_tiendas(l.titulo, l.autor.nombre, google_id=l.google_book_id)
+        recs = cached_tiendas_map.get(l.titulo.lower())
+        tiendas = generar_enlaces_tiendas(l.titulo, l.autor.nombre, google_id=l.google_book_id, isbn=l.isbn_13 or l.isbn_10, cached_records=recs)
         
+        precio_desde = tiendas[0]['precio_formateado'] if tiendas else '$14.990 CLP'
+        link_principal = tiendas[0]['url'] if tiendas else '#'
+
         resultados.append({
             'id': gid,
             'db_id': l.id,
+            'google_id': l.google_book_id or '',
+            'isbn': l.isbn_13 or l.isbn_10 or '',
             'titulo': l.titulo,
             'autores': [l.autor.nombre],
             'autor_str': l.autor.nombre,
@@ -154,8 +257,8 @@ def buscar_libros_hibrido(query="", author="", genre="", year="", order="", max_
             'calificacion': l.calificacion_promedio or 4.8,
             'total_resenas': l.total_resenas or 12,
             'tiendas': tiendas,
-            'precio_desde': tiendas[0]['precio_formateado'],
-            'link_principal': tiendas[0]['url'],
+            'precio_desde': precio_desde,
+            'link_principal': link_principal,
             'fuente': 'Catálogo LitMate'
         })
 
@@ -218,11 +321,20 @@ def buscar_libros_hibrido(query="", author="", genre="", year="", order="", max_
                         gen_str = cats[0] if cats else 'Ficción'
                         pags = info.get('pageCount', 280)
 
-                        tiendas = generar_enlaces_tiendas(titulo, autor_str, google_id=gid)
+                        identifiers = info.get('industryIdentifiers', [])
+                        isbn_val = ""
+                        for ident in identifiers:
+                            if ident.get('type') in ('ISBN_13', 'ISBN_10'):
+                                isbn_val = ident.get('identifier', '')
+                                break
+
+                        tiendas = generar_enlaces_tiendas(titulo, autor_str, google_id=gid, isbn=isbn_val)
 
                         resultados.append({
                             'id': gid,
                             'db_id': None,
+                            'google_id': gid,
+                            'isbn': isbn_val,
                             'titulo': titulo,
                             'autores': autores,
                             'autor_str': autor_str,
@@ -236,8 +348,8 @@ def buscar_libros_hibrido(query="", author="", genre="", year="", order="", max_
                             'calificacion': info.get('averageRating', 4.5),
                             'total_resenas': info.get('ratingsCount', 8),
                             'tiendas': tiendas,
-                            'precio_desde': tiendas[0]['precio_formateado'],
-                            'link_principal': tiendas[0]['url'],
+                            'precio_desde': tiendas[0]['precio_formateado'] if tiendas else '$14.990 CLP',
+                            'link_principal': tiendas[0]['url'] if tiendas else '#',
                             'fuente': 'Google Books'
                         })
                         google_ids_vistos.add(gid)

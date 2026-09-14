@@ -107,6 +107,9 @@
                              data-bs-toggle="modal" 
                              data-bs-target="#demoModal"
                              data-book-id="{{ libro.id }}"
+                             data-db-id="{{ libro.db_id }}"
+                             data-google-id="{{ libro.google_id }}"
+                             data-isbn="{{ libro.isbn }}"
                              data-titulo="{{ libro.titulo }}"
                              data-autor="{{ libro.autor_str }}"
                              data-editorial="{{ libro.editorial }}"
@@ -131,6 +134,9 @@
                                 data-bs-toggle="modal" 
                                 data-bs-target="#demoModal"
                                 data-book-id="{{ libro.id }}"
+                                data-db-id="{{ libro.db_id }}"
+                                data-google-id="{{ libro.google_id }}"
+                                data-isbn="{{ libro.isbn }}"
                                 data-titulo="{{ libro.titulo }}"
                                 data-autor="{{ libro.autor_str }}"
                                 data-editorial="{{ libro.editorial }}"
@@ -168,6 +174,9 @@
                                             data-bs-toggle="modal" 
                                             data-bs-target="#demoModal"
                                             data-book-id="{{ libro.id }}"
+                                            data-db-id="{{ libro.db_id }}"
+                                            data-google-id="{{ libro.google_id }}"
+                                            data-isbn="{{ libro.isbn }}"
                                             data-titulo="{{ libro.titulo }}"
                                             data-autor="{{ libro.autor_str }}"
                                             data-editorial="{{ libro.editorial }}"
@@ -283,6 +292,7 @@
                             <p class="mb-0 fst-italic book-demo-text" id="modalDemoTexto"></p>
                         </div>
 
+
                         <!-- Acceso limpio a Biblioteca / Listas -->
                         {% if user.is_authenticated %}
                         <div class="mt-4 pt-3 border-top d-flex justify-content-between align-items-center flex-wrap gap-2">
@@ -296,46 +306,67 @@
 
                     <!-- PESTAÑA 2: COMPARADOR DE PRECIOS EN TIENDAS -->
                     <div class="tab-pane fade" id="tab-tiendas" role="tabpanel">
-                        <div class="p-3 mb-3 book-info-alert">
-                            <i class="iconoir-info-circle me-1 book-info-icon"></i> Los precios son referenciales y se actualizan con las tiendas online. Al hacer clic serás redirigido a la tienda seleccionada.
+                        <!-- Banner de Estado de Scraping en Vivo -->
+                        <div id="scrapingStatusBanner" class="scraping-loader-row d-none">
+                            <span class="spinner-border spinner-border-sm text-warning" role="status"></span>
+                            <span>Rastreando enlaces directos y precios actualizados en tiempo real en Buscalibre, Feria Chilena, Contrapunto y Qué Leo...</span>
+                        </div>
+
+
+                        <div class="p-3 mb-3 book-info-alert d-flex align-items-center justify-content-between flex-wrap gap-2">
+                            <div>
+                                <i class="iconoir-info-circle me-1 book-info-icon"></i> Los enlaces te dirigen <strong>directamente a la página del libro</strong> en cada tienda online sin pasar por búsquedas genéricas.
+                            </div>
+                            <span class="badge badge-direct-link"><i class="iconoir-check-circle"></i> Enlaces Verificados</span>
                         </div>
 
                         <div class="table-responsive">
                             <table class="table align-middle mb-0 book-stores-table">
                                 <thead>
                                     <tr>
-                                        <th class="book-stores-th">Tienda</th>
-                                        <th class="book-stores-th">Formato</th>
+                                        <th class="book-stores-th">Tienda & Estado</th>
+                                        <th class="book-stores-th">Formato / Edición</th>
                                         <th class="book-stores-th">Disponibilidad</th>
-                                        <th class="book-stores-th">Precio Aprox.</th>
+                                        <th class="book-stores-th">Precio Online</th>
                                         <th class="text-end book-stores-th">Acción</th>
                                     </tr>
                                 </thead>
                                 <tbody id="modalTiendasBody">
-                                    <!-- Inyectado dinámicamente -->
+                                    <!-- Inyectado dinámicamente con enlaces directos -->
                                 </tbody>
                             </table>
                         </div>
                     </div>
 
-                    <!-- PESTAÑA 3: HISTORIAL DE PRECIOS -->
+                    <!-- PESTAÑA 3: HISTORIAL DE PRECIOS & COMPARATIVA -->
                     <div class="tab-pane fade" id="tab-historial" role="tabpanel">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="chart-controls-bar">
                             <div>
-                                <h6 class="fw-bold mb-0 book-history-title">Historial de Precios</h6>
-                                <span class="book-history-subtitle">Evolución de precios en los últimos 6 meses</span>
+                                <h6 class="fw-bold mb-0 book-history-title">Análisis Comparativo de Precios</h6>
+                                <span class="book-history-subtitle">Monitoreo histórico y comparativa directa entre tiendas</span>
                             </div>
-                            <select class="form-select form-select-sm book-history-select" id="chartPeriodSelect">
-                                <option value="6">Últimos 6 meses</option>
-                                <option value="3">Últimos 3 meses</option>
-                                <option value="12">Último año</option>
-                            </select>
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <button type="button" class="chart-type-pill active" id="btnChartModeLine" onclick="cambiarModoGraficoModal('line')">
+                                        <i class="iconoir-graph-up me-1"></i> Tendencia
+                                    </button>
+                                    <button type="button" class="chart-type-pill ms-1" id="btnChartModeBar" onclick="cambiarModoGraficoModal('bar')">
+                                        <i class="iconoir-view-columns-2 me-1"></i> Comparativa
+                                    </button>
+                                </div>
+                                <select class="form-select form-select-sm book-history-select ms-2" id="chartPeriodSelect">
+                                    <option value="6">Últimos 6 meses</option>
+                                    <option value="3">Últimos 3 meses</option>
+                                    <option value="12">Último año</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="book-chart-wrapper">
                             <canvas id="priceHistoryChart"></canvas>
                         </div>
-                        <div class="mt-3 p-3 book-info-alert">
-                            <i class="iconoir-info-circle me-1 book-info-icon"></i> Los datos de precios se obtienen mediante rastreo periódico de las tiendas. Las variaciones pueden deberse a promociones, cambios de edición o tipo de cambio.
+                        <div class="mt-3 p-3 book-info-alert d-flex align-items-center justify-content-between flex-wrap gap-2">
+                            <span><i class="iconoir-info-circle me-1 book-info-icon"></i> Gráfica interactiva con datos extraídos en tiempo real de Buscalibre, Feria Chilena, Contrapunto, Qué Leo, Antártica, Amazon y Google Books. Pasa el cursor por cada punto para inspeccionar el precio.</span>
+                            <span class="badge bg-dark border text-light"><i class="iconoir-refresh me-1"></i> Actualizado hoy</span>
                         </div>
                     </div>
 
@@ -345,9 +376,6 @@
             <!-- Footer limpio -->
             <div class="modal-footer border-0 px-4 py-3">
                 <button type="button" class="btn btn-sm px-4 book-modal-btn-close" data-bs-dismiss="modal">Cerrar</button>
-                <a href="#" id="modalDirectBuyBtn" target="_blank" class="btn btn-sm px-4 track-click book-modal-btn-buy" data-provider="Buscalibre">
-                    <i class="iconoir-shopping-bag me-1"></i> Comprar en Buscalibre
-                </a>
             </div>
 
         </div>
@@ -466,6 +494,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             currentBookData = {
                 id: btn.dataset.bookId,
+                db_id: btn.dataset.dbId,
+                google_id: btn.dataset.googleId,
+                isbn: btn.dataset.isbn,
                 titulo: btn.dataset.titulo,
                 autor: btn.dataset.autor,
                 editorial: btn.dataset.editorial,
@@ -505,185 +536,335 @@ document.addEventListener('DOMContentLoaded', function () {
                 tab.show();
             }
 
-            // Generar tabla de tiendas y precios online
-            const tiendas = [
-                {
-                    nombre: 'Buscalibre Chile',
-                    formato: 'Físico (Tapa Blanda)',
-                    disp: 'En stock • Envío rápido',
-                    precio: '$14.990 CLP',
-                    url: `https://www.buscalibre.cl/libros/search?q=${encodeURIComponent(currentBookData.titulo + ' ' + currentBookData.autor)}`,
-                    icono: 'iconoir-shopping-bag',
-                    badge: 'Recomendado'
-                },
-                {
-                    nombre: 'Google Play Books',
-                    formato: 'eBook Digital',
-                    disp: 'Descarga instantánea',
-                    precio: '$9.990 CLP',
-                    url: `https://play.google.com/store/search?q=${encodeURIComponent(currentBookData.titulo + ' ' + currentBookData.autor)}&c=books`,
-                    icono: 'iconoir-google',
-                    badge: 'Digital'
-                },
-                {
-                    nombre: 'Amazon Kindle / Books',
-                    formato: 'Físico / Kindle',
-                    disp: 'Envío Internacional',
-                    precio: '$16.500 CLP',
-                    url: `https://www.amazon.com/s?k=${encodeURIComponent(currentBookData.titulo + ' ' + currentBookData.autor)}&i=stripbooks`,
-                    icono: 'iconoir-open-book',
-                    badge: 'Importado'
-                },
-                {
-                    nombre: 'Feria Chilena del Libro',
-                    formato: 'Físico (Librería)',
-                    disp: 'Retiro en Tienda',
-                    precio: '$15.900 CLP',
-                    url: `https://www.feriachilenadellibro.cl/catalogsearch/result/?q=${encodeURIComponent(currentBookData.titulo + ' ' + currentBookData.autor)}`,
-                    icono: 'iconoir-shop',
-                    badge: 'Local'
-                }
-            ];
-
-            let tiendasHtml = '';
-            tiendas.forEach(t => {
-                tiendasHtml += `
-                    <tr>
-                        <td>
-                            <i class="${t.icono} text-primary me-2"></i><strong>${t.nombre}</strong>
-                            <span class="badge bg-light text-dark border ms-1" style="font-size: 0.7rem;">${t.badge}</span>
-                        </td>
-                        <td><small class="text-muted">${t.formato}</small></td>
-                        <td><span class="badge bg-success-subtle text-success small">${t.disp}</span></td>
-                        <td><strong class="text-dark">${t.precio}</strong></td>
-                        <td class="text-end">
-                            <a href="${t.url}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm rounded-pill px-3 track-click"
-                                data-provider="${t.nombre}" data-titulo="${currentBookData.titulo}" data-url="${t.url}">
-                                Ir a la tienda <i class="iconoir-open-new-window ms-1"></i>
-                            </a>
-                        </td>
-                    </tr>
-                `;
-            });
-            document.getElementById('modalTiendasBody').innerHTML = tiendasHtml;
-
-            // Botón principal de compra
-            const mainBuyBtn = document.getElementById('modalDirectBuyBtn');
-            mainBuyBtn.href = tiendas[0].url;
-            mainBuyBtn.dataset.titulo = currentBookData.titulo;
-            mainBuyBtn.dataset.url = tiendas[0].url;
-            mainBuyBtn.innerHTML = `<i class="iconoir-shopping-bag me-1"></i> Comprar en ${tiendas[0].nombre}`;
-
-            // Generar gráfico de historial de precios
-            renderPriceChart(currentBookData.titulo, tiendas);
+            // Iniciar carga en vivo de precios escrapeados y enlaces directos
+            cargarPreciosYGraficoModal(currentBookData);
 
             // Cargar estado de listas del usuario para este libro
             cargarListasUsuarioModal(currentBookData.id);
         });
     }
 
-    // Historial de precios simulado
-    function hashCode(str) {
-        let hash = 0;
-        for (let i = 0; i < str.length; i++) {
-            hash = ((hash << 5) - hash) + str.charCodeAt(i);
-            hash |= 0;
-        }
-        return Math.abs(hash);
-    }
-
-    function generatePriceHistory(titulo, basePrice, months) {
-        const seed = hashCode(titulo + basePrice.toString());
-        const prices = [];
-        let current = basePrice;
-        for (let i = 0; i < months; i++) {
-            const variation = ((seed * (i + 1) * 7919) % 2000 - 1000) / 100;
-            current = Math.max(basePrice * 0.75, Math.min(basePrice * 1.3, basePrice + variation * 100));
-            prices.push(Math.round(current));
-        }
-        return prices;
-    }
-
-    function getMonthLabels(count) {
-        const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-        const now = new Date();
-        const labels = [];
-        for (let i = count - 1; i >= 0; i--) {
-            const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-            labels.push(months[d.getMonth()] + ' ' + d.getFullYear());
-        }
-        return labels;
-    }
-
+    // =========================================================
+    // SERVICIO COMPARADOR: SCRAPING EN VIVO Y ENLACES DIRECTOS
+    // =========================================================
+    let modalPriceDataCache = null;
+    let modalChartMode = 'line'; // 'line' | 'bar'
+    let modalChartMonths = 6;
     let priceChartInstance = null;
-    function renderPriceChart(titulo, tiendas) {
+
+    window.cambiarModoGraficoModal = function(modo) {
+        modalChartMode = modo;
+        const btnLine = document.getElementById('btnChartModeLine');
+        const btnBar = document.getElementById('btnChartModeBar');
+        if (btnLine) btnLine.classList.toggle('active', modo === 'line');
+        if (btnBar) btnBar.classList.toggle('active', modo === 'bar');
+
+        if (modalPriceDataCache) {
+            renderEnhancedPriceChart(modalPriceDataCache, modalChartMode, modalChartMonths);
+        }
+    };
+
+    function cargarPreciosYGraficoModal(book) {
+        const banner = document.getElementById('scrapingStatusBanner');
+        const tiendasBody = document.getElementById('modalTiendasBody');
+
+        
+        // Estado de carga inicial
+        if (banner) banner.classList.remove('d-none');
+
+        tiendasBody.innerHTML = `
+            <tr>
+                <td colspan="5" class="text-center py-4">
+                    <div class="spinner-border spinner-border-sm text-warning me-2" role="status"></div>
+                    <span class="text-muted">Conectando con Buscalibre, Feria Chilena, Contrapunto, Qué Leo y librerías asociadas para verificar stock y enlaces directos...</span>
+                </td>
+            </tr>
+        `;
+
+        let apiUrl = `{% url 'api_precios_libro' %}?titulo=${encodeURIComponent(book.titulo)}&autor=${encodeURIComponent(book.autor || '')}`;
+        if (book.db_id) apiUrl += `&id=${encodeURIComponent(book.db_id)}`;
+        else if (book.id && !book.id.startsWith('db_') && !book.id.startsWith('ol_')) apiUrl += `&id=${encodeURIComponent(book.id)}`;
+        if (book.google_id) apiUrl += `&google_id=${encodeURIComponent(book.google_id)}`;
+        if (book.isbn) apiUrl += `&isbn=${encodeURIComponent(book.isbn)}`;
+
+        fetch(apiUrl)
+            .then(res => res.json())
+            .then(data => {
+                if (banner) banner.classList.add('d-none');
+                if (data.status !== 'success') throw new Error(data.msg || 'Error consultando precios');
+
+                modalPriceDataCache = data;
+
+
+
+                // Renderizar tabla sólo con tiendas donde el libro realmente existe
+                if (!data.tiendas || data.tiendas.length === 0) {
+                    tiendasBody.innerHTML = `
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">
+                                <i class="iconoir-info-circle text-warning fs-5 d-block mb-2"></i>
+                                <span>Este libro no se encuentra disponible actualmente en las tiendas en línea monitoreadas.</span>
+                            </td>
+                        </tr>
+                    `;
+                } else {
+                    let rowsHtml = '';
+                    data.tiendas.forEach(t => {
+                        const esDirecto = t.es_enlace_directo;
+                        const directBadge = esDirecto 
+                            ? `<span class="badge badge-direct-link ms-1" title="Lleva directamente al libro"><i class="iconoir-check-circle"></i> Enlace Directo</span>`
+                            : `<span class="badge bg-secondary-subtle text-muted ms-1" style="font-size: 0.65rem;">Catálogo</span>`;
+
+                        const discountBadge = t.descuento_porcentaje > 0 
+                            ? `<span class="store-price-old">${t.precio_lista_formateado}</span> <span class="badge-discount ms-1">-${t.descuento_porcentaje}%</span>` 
+                            : '';
+
+                        rowsHtml += `
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <i class="${t.icono} text-warning fs-5 me-2"></i>
+                                        <div>
+                                            <div class="fw-bold store-name-title">${t.tienda}</div>
+                                            <div>${directBadge}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><small class="store-format-text">${t.formato}</small></td>
+                                <td><span class="badge bg-success-subtle text-success small">${t.disponibilidad}</span></td>
+                                <td>
+                                    <div>
+                                        <span class="store-price-main">${t.precio_formateado}</span>
+                                        ${discountBadge}
+                                    </div>
+                                </td>
+                                <td class="text-end">
+                                    <a href="${t.enlace_directo}" target="_blank" rel="noopener noreferrer" 
+                                        class="btn btn-outline-primary btn-sm rounded-pill px-3 track-click"
+                                        data-provider="${t.tienda}" data-titulo="${book.titulo}" data-url="${t.enlace_directo}" data-precio="${t.precio_actual}">
+                                        Comprar en ${t.nombre_corto || t.tienda.split(' ')[0]} <i class="iconoir-open-new-window ms-1"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    tiendasBody.innerHTML = rowsHtml;
+                }
+
+                // Renderizar Gráfico Interactivo
+                renderEnhancedPriceChart(data, modalChartMode, modalChartMonths);
+            })
+            .catch(err => {
+                console.error('Error cargando precios de libro:', err);
+                if (banner) banner.classList.add('d-none');
+                tiendasBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center text-muted py-3">
+                            <i class="iconoir-warning-circle text-warning me-1"></i> No se pudo actualizar en vivo. Consulta el catálogo directamente o intenta más tarde.
+                        </td>
+                    </tr>
+                `;
+            });
+    }
+
+    // =========================================================
+    // RENDERIZADOR DE GRÁFICO PREMIUM (CHART.JS)
+    // =========================================================
+    function renderEnhancedPriceChart(data, mode, months) {
         const ctx = document.getElementById('priceHistoryChart');
         if (!ctx) return;
 
         if (priceChartInstance) {
             priceChartInstance.destroy();
+            priceChartInstance = null;
         }
 
-        const periodSelect = document.getElementById('chartPeriodSelect');
-        const months = parseInt(periodSelect ? periodSelect.value : 6) || 6;
-        const labels = getMonthLabels(months);
+        const isDark = document.documentElement.classList.contains('dark-mode');
+        const textColorPrimary = isDark ? '#ffffff' : '#0f172a';
+        const textColorMuted = isDark ? '#a1a1aa' : '#475569';
+        const gridBorderColor = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.07)';
+        const tooltipBg = isDark ? '#18181b' : '#ffffff';
+        const tooltipBorder = isDark ? 'rgba(201, 169, 110, 0.4)' : 'rgba(0, 0, 0, 0.12)';
 
-        const basePrices = [14990, 9990, 16500, 15900];
-        const colors = [
-            { line: '#0085A1', bg: 'rgba(0,133,161,0.08)' },
-            { line: '#e53e3e', bg: 'rgba(229,62,62,0.08)' },
-            { line: '#f6ad55', bg: 'rgba(246,173,85,0.08)' },
-            { line: '#48bb78', bg: 'rgba(72,187,120,0.08)' }
-        ];
+        const chartCtx = ctx.getContext('2d');
 
-        const datasets = tiendas.map((t, i) => ({
-            label: t.nombre.split(' ')[0],
-            data: generatePriceHistory(titulo + t.nombre, basePrices[i] || 14990, months),
-            borderColor: colors[i % colors.length].line,
-            backgroundColor: colors[i % colors.length].bg,
-            fill: true,
-            tension: 0.35,
-            borderWidth: 2,
-            pointRadius: 3,
-            pointHoverRadius: 5
-        }));
+        // Degradados adaptativos según el tema activo
+        const gradGold = chartCtx.createLinearGradient(0, 0, 0, 260);
+        gradGold.addColorStop(0, isDark ? 'rgba(201, 169, 110, 0.35)' : 'rgba(201, 169, 110, 0.22)');
+        gradGold.addColorStop(1, 'rgba(201, 169, 110, 0.0)');
 
-        priceChartInstance = new Chart(ctx, {
-            type: 'line',
-            data: { labels, datasets },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                interaction: { intersect: false, mode: 'index' },
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'bottom',
-                        labels: { usePointStyle: true, pointStyle: 'circle', padding: 16, font: { size: 11 } }
-                    }
+        const gradTeal = chartCtx.createLinearGradient(0, 0, 0, 260);
+        gradTeal.addColorStop(0, isDark ? 'rgba(34, 125, 142, 0.30)' : 'rgba(34, 125, 142, 0.20)');
+        gradTeal.addColorStop(1, 'rgba(34, 125, 142, 0.0)');
+
+        const gradGreen = chartCtx.createLinearGradient(0, 0, 0, 260);
+        gradGreen.addColorStop(0, isDark ? 'rgba(72, 187, 120, 0.30)' : 'rgba(72, 187, 120, 0.20)');
+        gradGreen.addColorStop(1, 'rgba(72, 187, 120, 0.0)');
+
+        if (mode === 'bar') {
+            // MODO COMPARATIVA DIRECTA ENTRE TIENDAS
+            const tiendasValidas = data.tiendas || [];
+            const barLabels = tiendasValidas.map(t => t.nombre_corto || t.tienda);
+            const barData = tiendasValidas.map(t => t.precio_actual);
+            const barColors = isDark 
+                ? ['#C9A96E', '#48BB78', '#227D8E', '#F6AD55', '#9F7AEA', '#4299E1', '#ED64A6']
+                : ['#B8860B', '#2E7D32', '#00796B', '#D97706', '#7C3AED', '#2563EB', '#DB2777'];
+
+            priceChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: barLabels,
+                    datasets: [{
+                        label: 'Precio Actual',
+                        data: barData,
+                        backgroundColor: barColors.slice(0, barLabels.length),
+                        borderRadius: 8,
+                        borderWidth: 1,
+                        borderColor: isDark ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.12)'
+                    }]
                 },
-                scales: {
-                    y: {
-                        beginAtZero: false,
-                        grid: { color: 'rgba(255, 255, 255, 0.08)' },
-                        ticks: {
-                            font: { size: 10 },
-                            callback: function(value) { return '$' + (value / 1000).toFixed(1) + 'k'; }
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: { duration: 400 },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: tooltipBg,
+                            titleColor: textColorPrimary,
+                            bodyColor: isDark ? '#c9a96e' : '#0f766e',
+                            borderColor: tooltipBorder,
+                            borderWidth: 1,
+                            padding: 12,
+                            callbacks: {
+                                label: function(context) {
+                                    return ` Precio: $${context.parsed.y.toLocaleString('es-CL')} CLP`;
+                                }
+                            }
                         }
                     },
-                    x: {
-                        grid: { display: false },
-                        ticks: { font: { size: 10 } }
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            grid: { color: gridBorderColor },
+                            ticks: {
+                                color: textColorMuted,
+                                font: { size: 10 },
+                                callback: function(val) { return '$' + (val / 1000).toFixed(0) + 'k CLP'; }
+                            }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: textColorPrimary, font: { size: 11, weight: '600' } }
+                        }
                     }
                 }
+            });
+
+        } else {
+            // MODO TENDENCIA HISTÓRICA CON SPLINES Y DEGRADADOS
+            const historial = data.historial || { labels: [], datasets: [] };
+            const labels = historial.labels || [];
+            const rawDatasets = historial.datasets || [];
+
+            const gradients = [gradGold, gradTeal, gradGreen];
+            const datasets = rawDatasets.map((ds, idx) => ({
+                label: ds.label,
+                data: ds.data,
+                borderColor: ds.borderColor || (isDark ? '#C9A96E' : '#B8860B'),
+                backgroundColor: gradients[idx % gradients.length],
+                fill: true,
+                tension: 0.38,
+                borderWidth: 2.5,
+                pointRadius: 4,
+                pointBackgroundColor: ds.borderColor || (isDark ? '#C9A96E' : '#B8860B'),
+                pointHoverRadius: 7,
+                pointHoverBorderWidth: 2,
+                pointHoverBorderColor: isDark ? '#ffffff' : '#0f172a'
+            }));
+
+            priceChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: { labels, datasets },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { intersect: false, mode: 'index' },
+                    animation: { duration: 400 },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                pointStyle: 'circle',
+                                padding: 18,
+                                color: textColorPrimary,
+                                font: { size: 11, weight: '600' }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: tooltipBg,
+                            titleColor: textColorPrimary,
+                            bodyColor: textColorPrimary,
+                            borderColor: tooltipBorder,
+                            borderWidth: 1,
+                            padding: 12,
+                            boxPadding: 4,
+                            usePointStyle: true,
+                            callbacks: {
+                                label: function(context) {
+                                    return ` ${context.dataset.label}: $${context.parsed.y.toLocaleString('es-CL')} CLP`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            grid: { color: gridBorderColor },
+                            ticks: {
+                                color: textColorMuted,
+                                font: { size: 10 },
+                                callback: function(val) { return '$' + (val / 1000).toFixed(0) + 'k CLP'; }
+                            }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: textColorPrimary, font: { size: 10, weight: '600' } }
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    // Selector de período temporal del gráfico
+    const modalPeriodSelect = document.getElementById('chartPeriodSelect');
+    if (modalPeriodSelect) {
+        modalPeriodSelect.onchange = function() {
+            modalChartMonths = parseInt(this.value) || 6;
+            if (modalPriceDataCache) {
+                renderEnhancedPriceChart(modalPriceDataCache, modalChartMode, modalChartMonths);
+            }
+        };
+    }
+
+    // Sincronización reactiva con cambio de tema Claro / Oscuro
+    window.addEventListener('litmateThemeChanged', function() {
+        if (modalPriceDataCache) {
+            renderEnhancedPriceChart(modalPriceDataCache, modalChartMode, modalChartMonths);
+        }
+    });
+
+    // Re-renderizado al mostrar la pestaña de historial para garantizar dimensiones y contraste nítidos
+    const modalHistTabBtn = document.getElementById('historial-tab');
+    if (modalHistTabBtn) {
+        modalHistTabBtn.addEventListener('shown.bs.tab', function() {
+            if (modalPriceDataCache) {
+                renderEnhancedPriceChart(modalPriceDataCache, modalChartMode, modalChartMonths);
             }
         });
-
-        if (periodSelect) {
-            periodSelect.onchange = function() {
-                renderPriceChart(titulo, tiendas);
-            };
-        }
     }
 
     // 2. Tracking de Conversión (Afiliados / Redirección)

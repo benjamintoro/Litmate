@@ -6,8 +6,10 @@ ENV/
 
 # Variables de entorno y credenciales
 .env
+env
 .env.local
 .env.*.local
+
 
 # Bytecode y caches de Python
 __pycache__/
