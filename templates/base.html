@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="light">
 <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-X2MN3MZSX6"></script>
@@ -23,19 +23,22 @@
     <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-    <link href="{% static 'css/styles.css' %}?v=3.4" rel="stylesheet" />
-    <link href="{% static 'css/litmate-minimal.css' %}?v=3.4" rel="stylesheet" />
-    <link href="{% static 'css/books.css' %}?v=3.4" rel="stylesheet" />
-    <link href="{% static 'css/auth.css' %}?v=3.4" rel="stylesheet" />
-    <link href="{% static 'css/subscriptions.css' %}?v=3.4" rel="stylesheet" />
-    <link href="{% static 'css/pages.css' %}?v=3.4" rel="stylesheet" />
-    <link href="{% static 'css/dark-mode.css' %}?v=3.4" rel="stylesheet" />
+    <link href="{% static 'css/styles.css' %}?v=4.0" rel="stylesheet" />
+    <link href="{% static 'css/litmate-minimal.css' %}?v=4.0" rel="stylesheet" />
+    <link href="{% static 'css/books.css' %}?v=4.0" rel="stylesheet" />
+    <link href="{% static 'css/auth.css' %}?v=4.0" rel="stylesheet" />
+    <link href="{% static 'css/subscriptions.css' %}?v=4.0" rel="stylesheet" />
+    <link href="{% static 'css/pages.css' %}?v=4.0" rel="stylesheet" />
+    <link href="{% static 'css/dark-mode.css' %}?v=4.0" rel="stylesheet" />
     <script>
         // Anti-flash: aplica el tema guardado antes de que se pinte la página
         (function(){
             var t = localStorage.getItem('litmate_theme');
             if (t === 'dark') {
                 document.documentElement.classList.add('dark-mode');
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
             }
         })();
 
@@ -55,15 +58,17 @@
             }
         }
 
-        // Función global de toggle
-        function toggleDarkMode() {
+        // Lógica interna de cambio de tema
+        function performThemeToggle() {
             var html = document.documentElement;
             var isDark = html.classList.contains('dark-mode');
             if (isDark) {
                 html.classList.remove('dark-mode');
+                html.setAttribute('data-theme', 'light');
                 localStorage.setItem('litmate_theme', 'light');
             } else {
                 html.classList.add('dark-mode');
+                html.setAttribute('data-theme', 'dark');
                 localStorage.setItem('litmate_theme', 'dark');
             }
             // Actualizar icono luna/sol
@@ -81,6 +86,25 @@
             syncNavbarLogo();
             window.dispatchEvent(new CustomEvent('litmateThemeChanged', { detail: { isDark: html.classList.contains('dark-mode') } }));
         }
+
+        // Función global de toggle con View Transitions API y fallback condicional
+        function toggleDarkMode() {
+            if (!document.startViewTransition) {
+                performThemeToggle();
+                return;
+            }
+            document.startViewTransition(function() {
+                performThemeToggle();
+            });
+        }
+
+        // Helper global reutilizable para animaciones con View Transitions API
+        window.litmateTransition = function(callback) {
+            if (document.startViewTransition) {
+                return document.startViewTransition(callback);
+            }
+            callback();
+        };
 
         document.addEventListener('DOMContentLoaded', function() {
             syncNavbarLogo();
@@ -116,11 +140,20 @@
                     <!-- Widget de Perfil (Avatar Icono + Perfil + Chevron) -->
                     <li class="nav-item dropdown nav-profile-item">
                         <a class="nav-link nav-profile-trigger" href="#" id="navProfileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="nav-profile-avatar-badge">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                                </svg>
-                            </span>
+                            {% if user.is_authenticated and user.perfil and user.perfil.imagen and user.perfil.imagen.name != 'default.jpg' and 'default' not in user.perfil.imagen.name %}
+                                <img src="{{ user.perfil.imagen.url }}" alt="{{ user.username }}" class="nav-profile-avatar-img" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='inline-flex';">
+                                <span class="nav-profile-avatar-badge" style="display: none;">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                    </svg>
+                                </span>
+                            {% else %}
+                                <span class="nav-profile-avatar-badge">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                    </svg>
+                                </span>
+                            {% endif %}
                             <span class="nav-profile-label">Perfil</span>
                             <svg class="nav-profile-chevron" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M6 9l6 6 6-6"/>
@@ -130,7 +163,7 @@
                             {% if user.is_authenticated %}
                                 <li class="nav-profile-menu-header px-3 py-2 border-bottom">
                                     <div class="d-flex align-items-center gap-2">
-                                        {% if user.perfil.imagen and user.perfil.imagen.name != 'default.jpg' and 'default' not in user.perfil.imagen.name %}
+                                        {% if user.perfil and user.perfil.imagen and user.perfil.imagen.name != 'default.jpg' and 'default' not in user.perfil.imagen.name %}
                                             <img src="{{ user.perfil.imagen.url }}" alt="{{ user.username }}" class="rounded-circle flex-shrink-0" style="width: 38px; height: 38px; min-width: 38px; min-height: 38px; object-fit: cover; border-radius: 50%; border: 2px solid #e28722;">
                                         {% else %}
                                             <div class="rounded-circle flex-shrink-0 d-flex align-items-center justify-content-center" style="width: 38px; height: 38px; min-width: 38px; min-height: 38px; border-radius: 50%; background-color: #8e44ad; color: #ffffff; font-weight: 700; font-size: 1.05rem; border: 2px solid #e28722;">

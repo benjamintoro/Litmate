@@ -5,78 +5,100 @@
    ============================================ */
 
 /* --- BASE --- */
+:root[data-theme="dark"],
 html.dark-mode,
-html.dark-mode body {
-  background-color: var(--lm-shadow, #0B0C0A) !important;
-  color: #d4d4d4 !important;
+:root.dark-mode {
+  --bg-body: #0f0c06;
+  --bg-body-gradient: radial-gradient(at 85% 85%, rgba(45, 39, 32, 0.5) 0px, transparent 60%);
+  --bg-surface: #201d13;
+  --bg-surface-subtle: #2d2720;
+  --border-color: #4b4835;
+  --text-primary: #f5f6f3;
+  --text-secondary: #dad7cd;
+  --accent-gold: #b0aa96;
+  --accent-hover: #dad7cd;
+
+  /* Mapeo retrocompatible */
+  --lm-text: var(--text-primary);
+  --lm-text-soft: var(--text-secondary);
+  --lm-card-bg: var(--bg-surface);
+  --lm-border: var(--border-color);
+  --lm-accent: var(--accent-gold);
+  --lm-accent-hover: var(--accent-hover);
+  --lm-bg-warm: var(--bg-surface-subtle);
+  --lm-shadow: #0f0c06;
+  --lm-teal: var(--accent-gold);
+  --lm-teal-hover: var(--accent-hover);
+  --lm-ochre: var(--accent-gold);
+  --lm-parchment: var(--text-secondary);
+  --lm-parchment-soft: var(--bg-surface-subtle);
 }
 
-/* --- CSS VARIABLES OVERRIDE --- */
-html.dark-mode {
-  --lm-text: #e6e4df;
-  --lm-text-soft: #a8a399;
-  --lm-bg-warm: #141614;
-  --lm-border: #2c2f2b;
-  --lm-card-bg: #161816;
-  --lm-accent: #2eb0c8;
-  --lm-accent-hover: #4dc5dc;
-  --lm-teal: #2eb0c8;
-  --lm-teal-hover: #4dc5dc;
-  --lm-shadow: #0B0C0A;
-  --lm-ochre: #b58648;
-  --lm-parchment: #4a473e;
-  --lm-oxide-red: #b3392d;
+html.dark-mode,
+html.dark-mode body,
+:root[data-theme="dark"] body {
+  background-color: var(--bg-body) !important;
+  background-image: var(--bg-body-gradient) !important;
+  background-attachment: fixed !important;
+  color: var(--text-primary) !important;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 /* --- NAVBAR --- */
 html.dark-mode #mainNav {
   background-color: #111111 !important;
-  border-bottom-color: #2a2a2a !important;
+  border-bottom-color: var(--border-color) !important;
 }
 
 html.dark-mode #mainNav .navbar-brand {
-  color: #e0e0e0 !important;
+  color: var(--text-primary) !important;
 }
 
 html.dark-mode #mainNav .navbar-nav > li.nav-item > a.nav-link {
-  color: #b0b0b0 !important;
+  color: var(--text-secondary) !important;
 }
 
 html.dark-mode #mainNav .navbar-nav > li.nav-item > a.nav-link:hover {
-  color: #fff !important;
+  color: var(--accent-gold) !important;
 }
 
 html.dark-mode #mainNav.is-fixed {
-  background-color: rgba(17, 17, 17, 0.95) !important;
-  border-bottom-color: #2a2a2a !important;
+  background-color: rgba(15, 12, 6, 0.88) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
 }
 
 html.dark-mode #mainNav.is-fixed .navbar-brand {
-  color: #e0e0e0 !important;
+  color: var(--text-primary) !important;
 }
 
 html.dark-mode #mainNav.is-fixed .navbar-nav > li.nav-item > a {
-  color: #b0b0b0 !important;
+  color: var(--text-primary) !important;
 }
 
 html.dark-mode #mainNav.is-fixed .navbar-nav > li.nav-item > a:hover {
-  color: #c9a96e !important;
+  color: var(--accent-gold) !important;
 }
 
 html.dark-mode .navbar-toggler {
-  color: #b0b0b0 !important;
-  border-color: #2a2a2a !important;
+  color: var(--text-secondary) !important;
+  border-color: var(--border-color) !important;
 }
 
 /* --- CARDS --- */
 html.dark-mode .card {
-  background: #171717 !important;
-  border-color: #2a2a2a !important;
+  background: var(--bg-surface) !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25) !important;
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease !important;
 }
 
 html.dark-mode .card:hover {
-  border-color: #3a3a3a !important;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.3) !important;
+  border-color: var(--accent-gold) !important;
+  transform: translateY(-4px) !important;
+  box-shadow: 0 12px 30px rgba(176, 170, 150, 0.18), 0 0 16px rgba(176, 170, 150, 0.12) !important;
 }
 
 html.dark-mode .card-body,
@@ -88,17 +110,30 @@ html.dark-mode .card h3,
 html.dark-mode .card h5,
 html.dark-mode .card .h4,
 html.dark-mode .card .h5 {
-  color: #e0e0e0 !important;
+  color: var(--text-primary) !important;
 }
 
 /* --- FEATURE ICONS --- */
-html.dark-mode .feature-icon {
-  background: #1e1e1e !important;
-  border-color: #2a2a2a !important;
+html.dark-mode .feature-icon,
+html.dark-mode .plan-feature-icon,
+html.dark-mode .home-feature-icon {
+  background: var(--bg-surface-subtle) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--accent-gold) !important;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s ease !important;
 }
 
-html.dark-mode .feature-icon i {
-  color: #c9a96e !important;
+html.dark-mode .card:hover .feature-icon,
+html.dark-mode .card:hover .plan-feature-icon,
+html.dark-mode .card:hover .home-feature-icon {
+  transform: scale(1.06);
+  border-color: var(--accent-gold) !important;
+}
+
+html.dark-mode .feature-icon i,
+html.dark-mode .plan-feature-icon i,
+html.dark-mode .home-feature-icon i {
+  color: var(--accent-gold) !important;
 }
 
 /* --- BUTTONS --- */
@@ -305,6 +340,7 @@ html.dark-mode .bg-white {
 
 html.dark-mode main {
   background-color: #111111 !important;
+  background-color: transparent !important;
 }
 
 /* --- LEGAL PAGES --- */
@@ -355,49 +391,19 @@ html.dark-mode ::selection {
   color: #fff;
 }
 
-/* --- TOGGLE BUTTON --- */
-#themeToggleBtn {
-  width: 36px;
-  height: 36px;
-  border: 1px solid #e8e5e0;
-  background: transparent;
-  color: #6b6b6b;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 0.9rem;
-  padding: 0;
-}
-
-#themeToggleBtn:hover {
-  border-color: #ccc;
-  color: #2c2c2c;
-}
-
-html.dark-mode #themeToggleBtn {
-  border-color: #2a2a2a;
-  color: #c9a96e;
-}
-
-html.dark-mode #themeToggleBtn:hover {
-  border-color: #3a3a3a;
-  color: #dbb978;
-}
+/* --- TOGGLE BUTTON (Ver estilos unificados con .nav-search-btn en Sección 2) --- */
 
 /* --- MODAL (Detalles de Libro / Demo / Comparador) --- */
 html.dark-mode .modal-content {
-  background-color: #171717 !important;
-  border: 1px solid #2a2a2a !important;
-  color: #d4d4d4 !important;
+  background-color: var(--bg-surface) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-primary) !important;
   box-shadow: 0 20px 60px rgba(0,0,0,0.6) !important;
 }
 
 html.dark-mode .modal-header {
-  background-color: #171717 !important;
-  border-bottom: 1px solid #2a2a2a !important;
+  background-color: var(--bg-surface) !important;
+  border-bottom: 1px solid var(--border-color) !important;
 }
 
 html.dark-mode .modal-header .btn-close {
@@ -673,17 +679,43 @@ html.dark-mode .litmate-toast.toast-info .litmate-toast-icon {
 /* --- 2. COMMAND PALETTE & NAVBAR ICON BUTTONS (Dark Mode) --- */
 html.dark-mode .nav-search-btn,
 html.dark-mode #themeToggleBtn {
-  background: #1a1a1a !important;
-  border-color: #2e2e2e !important;
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  min-height: 38px !important;
+  border-radius: 50% !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1.5px solid rgba(201, 169, 110, 0.45) !important;
   color: #c9a96e !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+html.dark-mode .nav-search-btn i,
+html.dark-mode #themeToggleBtn i {
+  font-size: 1.1rem !important;
+  line-height: 1 !important;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.6)) !important;
 }
 
 html.dark-mode .nav-search-btn:hover,
 html.dark-mode #themeToggleBtn:hover {
-  border-color: #c9a96e !important;
+  border-color: #dbb978 !important;
   color: #dbb978 !important;
-  background: #242424 !important;
-  box-shadow: 0 0 12px rgba(201, 169, 110, 0.2) !important;
+  background: rgba(201, 169, 110, 0.22) !important;
+  box-shadow: 0 0 14px rgba(201, 169, 110, 0.35) !important;
+  transform: translateY(-1px) scale(1.08) !important;
+}
+
+html.dark-mode #mainNav.is-fixed .nav-search-btn,
+html.dark-mode #mainNav.is-fixed #themeToggleBtn {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(201, 169, 110, 0.4) !important;
+  color: #c9a96e !important;
 }
 
 html.dark-mode .cmd-palette-backdrop {
@@ -982,6 +1014,35 @@ html.dark-mode .book-main-search-input {
 
 html.dark-mode .book-main-search-input::placeholder {
   color: #73716b !important;
+}
+
+html.dark-mode .btn-search-action,
+:root[data-theme="dark"] .btn-search-action {
+  background-color: var(--accent-gold, #c9a96e) !important;
+  color: #0f0c06 !important;
+  font-weight: 700 !important;
+}
+
+html.dark-mode .btn-search-action i,
+html.dark-mode .btn-search-action span,
+:root[data-theme="dark"] .btn-search-action i,
+:root[data-theme="dark"] .btn-search-action span {
+  color: #0f0c06 !important;
+}
+
+html.dark-mode .btn-search-action:hover,
+html.dark-mode .btn-search-action:focus,
+:root[data-theme="dark"] .btn-search-action:hover,
+:root[data-theme="dark"] .btn-search-action:focus {
+  background-color: #dbb978 !important;
+  color: #000000 !important;
+}
+
+html.dark-mode .btn-search-action:hover i,
+html.dark-mode .btn-search-action:hover span,
+:root[data-theme="dark"] .btn-search-action:hover i,
+:root[data-theme="dark"] .btn-search-action:hover span {
+  color: #000000 !important;
 }
 
 html.dark-mode .btn-clear-search {

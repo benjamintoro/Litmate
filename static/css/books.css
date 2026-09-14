@@ -42,19 +42,20 @@
 }
 
 .btn-search-action {
-  background: var(--lm-teal, #227D8E);
+  background: var(--accent-gold, #948c71);
   color: #ffffff;
   border: none;
   padding: 0 1.75rem;
   font-size: 0.95rem;
+  font-weight: 600;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .btn-search-action:hover {
-  background: #1b6472;
+  background: var(--accent-gold-hover, #5f5d46);
   color: #ffffff;
 }
 

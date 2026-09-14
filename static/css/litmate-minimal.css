@@ -8,31 +8,79 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
 
 :root {
-  /* --- PALETA DE COLORES LITMATE --- */
-  --lm-teal: #227D8E;        /* DEEP TEAL: Acento brillante / Azul cerceta */
-  --lm-teal-hover: #1b6472;
-  --lm-shadow: #0B0C0A;      /* SHADOW: Negro carbón */
-  --lm-dark-wood: #3B2818;   /* DARK WOOD: Pardo / Café biblioteca */
-  --lm-ochre: #936B36;       /* OCHRE: Mostaza vintage */
-  --lm-parchment: #BDB59D;   /* PARCHMENT: Blanco hueso envejecido */
-  --lm-parchment-soft: #f4f2eb;
-  --lm-oxide-red: #8C2B22;   /* OXIDE RED: Carmín envejecido */
-
-  /* Mapeo Semántico */
-  --lm-accent: var(--lm-teal);
-  --lm-accent-hover: var(--lm-teal-hover);
-  --lm-text: var(--lm-shadow);
-  --lm-text-soft: #4a453e;
-  --lm-bg-warm: #fcfbf9;
-  --lm-border: var(--lm-parchment);
-  --lm-card-bg: #ffffff;
-  --lm-radius: 12px;
+  /* --- ESCALA CROMÁTICA EDITORIAL POR TOKENS (LitMate Editorial) --- */
+  --lm-color-50:  #fafbf8;
+  --lm-color-100: #f5f6f3;
+  --lm-color-200: #eae7e1;
+  --lm-color-300: #dad7cd;
+  --lm-color-400: #b0aa96;
+  --lm-color-500: #948c71;
+  --lm-color-600: #5f5d46;
+  --lm-color-700: #4b4835;
+  --lm-color-800: #2d2720;
+  --lm-color-900: #201d13;
+  --lm-color-950: #0f0c06;
 }
 
-/* --- ESTILO DE CABECERAS (MASTHEAD) --- */
+/* Modo Claro por Defecto y Selector Estándar data-theme="light" */
+:root,
+:root[data-theme="light"] {
+  --bg-body: #fafbf8;
+  --bg-body-gradient: radial-gradient(at 15% 15%, rgba(218, 215, 205, 0.4) 0px, transparent 60%);
+  --bg-surface: #ffffff;
+  --bg-surface-subtle: #f5f6f3;
+  --border-color: #eae7e1;
+  --text-primary: #201d13;
+  --text-secondary: #5f5d46;
+  --accent-gold: #948c71;
+  --accent-hover: #5f5d46;
+
+  /* Mapeo retrocompatible con componentes previos */
+  --lm-text: var(--text-primary);
+  --lm-text-soft: var(--text-secondary);
+  --lm-card-bg: var(--bg-surface);
+  --lm-border: var(--border-color);
+  --lm-accent: var(--accent-gold);
+  --lm-accent-hover: var(--accent-hover);
+  --lm-bg-warm: var(--bg-surface-subtle);
+  --lm-shadow: var(--text-primary);
+  --lm-teal: var(--accent-gold);
+  --lm-teal-hover: var(--accent-hover);
+  --lm-ochre: var(--accent-gold);
+  --lm-parchment: var(--lm-color-300);
+  --lm-parchment-soft: var(--bg-surface-subtle);
+  --lm-radius: 14px;
+}
+
+/* Fondo global y transiciones fluidas de color */
+body {
+  background-color: var(--bg-body) !important;
+  background-image: var(--bg-body-gradient) !important;
+  background-attachment: fixed !important;
+  color: var(--text-primary) !important;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.card,
+.modal-content,
+.navbar,
+.footer-main,
+.coverflow-section,
+.plan-card,
+input,
+select,
+textarea,
+.badge {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease !important;
+}
+
+/* --- ESTILO DE CABECERAS (MASTHEAD) CON VELO DEGRADADO HACIA --BG-BODY --- */
+/* --- ESTILO DE CABECERAS (MASTHEAD) SIN FRANJAS NI CORTES BRUSCOS --- */
 header.masthead {
   position: relative;
-  background-color: var(--lm-shadow) !important;
+  margin-bottom: 0 !important;
+  background-color: var(--lm-color-950, #0f0c06) !important;
+  transition: background-color 0.3s ease;
 }
 
 header.masthead:before {
@@ -42,8 +90,17 @@ header.masthead:before {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(11, 12, 10, 0.45);
+  background: linear-gradient(180deg, rgba(15, 12, 6, 0.42) 0%, rgba(15, 12, 6, 0.52) 55%, var(--bg-body) 100%) !important;
+  background: rgba(11, 12, 10, 0.45) !important;
   z-index: 1;
+  pointer-events: none;
+}
+
+/* Conexión continua de main con el fondo editorial y sin franjas antes del footer */
+main,
+main.mb-5 {
+  margin-bottom: 0 !important;
+  background-color: transparent !important;
 }
 
 header.masthead .container {
@@ -102,19 +159,19 @@ header.masthead .container .subheading {
   color: var(--lm-text-soft) !important;
 }
 
-/* --- CARDS MINIMALISTAS CON BORDES ENSANCHADOS --- */
+/* --- TARJETAS EDITORIALES Y DE FUNCIONALIDADES --- */
 .card {
-  background: var(--lm-card-bg) !important;
-  border: 1.5px solid var(--lm-border) !important;
-  border-radius: var(--lm-radius) !important;
-  box-shadow: none !important;
-  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease !important;
+  background: var(--bg-surface) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--lm-radius, 14px) !important;
+  box-shadow: 0 4px 16px rgba(45, 39, 32, 0.04) !important;
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease !important;
 }
 
 .card:hover {
-  border-color: var(--lm-teal) !important;
+  border-color: var(--accent-gold) !important;
   transform: translateY(-4px) !important;
-  box-shadow: 0 10px 28px rgba(11, 12, 10, 0.09) !important;
+  box-shadow: 0 12px 30px rgba(148, 140, 113, 0.2), 0 0 18px rgba(148, 140, 113, 0.15) !important;
 }
 
 /* --- FEATURE ICONS (Círculos perfectos sin deformación / óvalos) --- */
@@ -136,17 +193,25 @@ header.masthead .container .subheading {
   flex-shrink: 0 !important;
   margin-left: auto;
   margin-right: auto;
-  background: var(--lm-parchment-soft) !important;
-  color: var(--lm-teal) !important;
-  border: 1.5px solid var(--lm-border) !important;
-  box-shadow: none !important;
+  background: var(--bg-surface-subtle) !important;
+  color: var(--accent-gold) !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: 0 2px 8px rgba(45, 39, 32, 0.05) !important;
   font-size: 1.5rem;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s ease !important;
+}
+
+.card:hover .feature-icon,
+.card:hover .plan-feature-icon,
+.card:hover .home-feature-icon {
+  transform: scale(1.06);
+  border-color: var(--accent-gold) !important;
 }
 
 .feature-icon i,
 .plan-feature-icon i,
 .home-feature-icon i {
-  color: var(--lm-teal) !important;
+  color: var(--accent-gold) !important;
   font-size: 1.6rem;
   line-height: 1;
 }
@@ -599,27 +664,124 @@ a {
   width: 38px;
   height: 38px;
   min-width: 38px;
-  border-radius: 50%;
+  min-height: 38px;
+  border-radius: 50% !important;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.04);
-  border: 1px solid var(--lm-border, #e8e5e0);
-  color: var(--lm-text-soft, #555555);
-  font-size: 0.95rem;
+  /* Estado por defecto sobre el hero masthead (Modo Claro transparente con alto contraste) */
+  background: rgba(255, 255, 255, 0.22);
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+  font-size: 1.05rem;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   cursor: pointer;
   padding: 0;
   margin: 0;
   line-height: 1;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-search-btn i,
+#themeToggleBtn i {
+  font-size: 1.1rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.45));
+  transition: transform 0.2s ease;
 }
 
 .nav-search-btn:hover,
 #themeToggleBtn:hover {
-  background: rgba(0, 0, 0, 0.08);
-  color: var(--lm-accent, #b08d57);
-  border-color: var(--lm-accent, #b08d57);
-  transform: translateY(-1px) scale(1.06);
+  background: rgba(255, 255, 255, 0.35);
+  border-color: #ffffff;
+  color: #ffffff;
+  transform: translateY(-1px) scale(1.08);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+/* Modo claro con navbar fija al hacer scroll (fondo blanco de la barra) */
+html:not(.dark-mode) #mainNav.is-fixed .nav-search-btn,
+html:not(.dark-mode) #mainNav.is-fixed #themeToggleBtn {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.18);
+  color: #212529;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+html:not(.dark-mode) #mainNav.is-fixed .nav-search-btn i,
+html:not(.dark-mode) #mainNav.is-fixed #themeToggleBtn i {
+  filter: none;
+}
+
+html:not(.dark-mode) #mainNav.is-fixed .nav-search-btn:hover,
+html:not(.dark-mode) #mainNav.is-fixed #themeToggleBtn:hover {
+  background: rgba(226, 135, 34, 0.12);
+  border-color: #e28722;
+  color: #e28722;
+  transform: translateY(-1px) scale(1.08);
+  box-shadow: 0 3px 10px rgba(226, 135, 34, 0.22);
+}
+
+/* Modo claro en dispositivos móviles (< 992px) donde la navbar tiene fondo blanco */
+@media (max-width: 991.98px) {
+  html:not(.dark-mode) #mainNav:not(.is-fixed) .nav-search-btn,
+  html:not(.dark-mode) #mainNav:not(.is-fixed) #themeToggleBtn {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.18);
+    color: #212529;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  html:not(.dark-mode) #mainNav:not(.is-fixed) .nav-search-btn i,
+  html:not(.dark-mode) #mainNav:not(.is-fixed) #themeToggleBtn i {
+    filter: none;
+  }
+
+  html:not(.dark-mode) #mainNav:not(.is-fixed) .nav-search-btn:hover,
+  html:not(.dark-mode) #mainNav:not(.is-fixed) #themeToggleBtn:hover {
+    background: rgba(226, 135, 34, 0.12);
+    border-color: #e28722;
+    color: #e28722;
+  }
+}
+
+/* --- NAVBAR EDITORIAL: FONDO CON TRANSPARENCIA, BLUR Y BORDE INFERIOR --- */
+html:not(.dark-mode) #mainNav.is-fixed {
+  background-color: rgba(250, 251, 248, 0.88) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  box-shadow: 0 4px 20px rgba(45, 39, 32, 0.05) !important;
+}
+
+html:not(.dark-mode) #mainNav.is-fixed .navbar-brand {
+  color: var(--text-primary) !important;
+}
+
+html:not(.dark-mode) #mainNav.is-fixed .navbar-nav > li.nav-item > a {
+  color: var(--text-primary) !important;
+}
+
+html:not(.dark-mode) #mainNav.is-fixed .navbar-nav > li.nav-item > a:hover {
+  color: var(--accent-gold) !important;
+}
+
+@media (max-width: 991.98px) {
+  html:not(.dark-mode) #mainNav {
+    background-color: rgba(250, 251, 248, 0.95) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+  }
 }
 
 /* --- 2. NOTIFICACIONES TOAST (In-App) --- */
@@ -1064,8 +1226,9 @@ a {
    GLOBAL FOOTER & SYSTEM MESSAGES
    ===================================================================== */
 .footer-main {
-  background: var(--lm-shadow);
-  border-top: 1px solid rgba(189, 181, 157, 0.2);
+  background: var(--lm-color-950, #0f0c06) !important;
+  border-top: 1px solid var(--bg-surface-subtle) !important;
+  border-top: 1px solid var(--border-color) !important;
 }
 
 .footer-brand-title {
@@ -1073,31 +1236,31 @@ a {
 }
 
 .footer-brand-highlight {
-  color: var(--lm-teal);
+  color: var(--accent-gold);
 }
 
 .footer-brand-desc {
-  color: var(--lm-parchment);
+  color: var(--text-secondary);
   font-size: 0.85rem;
   line-height: 1.7;
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
 .footer-social-btn {
-  border: 1px solid rgba(189, 181, 157, 0.25);
-  color: var(--lm-parchment);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
   font-size: 0.85rem;
   transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
 }
 
 .footer-social-btn:hover {
-  border-color: var(--lm-teal);
-  background: rgba(34, 125, 142, 0.15);
+  border-color: var(--accent-gold);
+  background: rgba(148, 140, 113, 0.15);
   color: #ffffff;
 }
 
 .footer-heading {
-  color: #e2e8f0;
+  color: var(--lm-color-300, #dad7cd);
   font-size: 0.78rem;
   letter-spacing: 1px;
 }
@@ -1248,6 +1411,10 @@ html:not(.dark-mode) #mainNav.is-fixed .nav-profile-item.show .nav-profile-trigg
 .nav-profile-avatar-badge {
   width: 26px;
   height: 26px;
+  min-width: 26px;
+  min-height: 26px;
+  max-width: 26px;
+  max-height: 26px;
   border-radius: 50%;
   background-color: #e28722;
   color: #1a1a1a;
@@ -1261,16 +1428,24 @@ html:not(.dark-mode) #mainNav.is-fixed .nav-profile-item.show .nav-profile-trigg
 .nav-profile-avatar-badge svg {
   width: 14px;
   height: 14px;
+  display: block;
+  fill: currentColor;
 }
 
 .nav-profile-avatar-img {
   width: 26px;
   height: 26px;
+  min-width: 26px;
+  min-height: 26px;
+  max-width: 26px;
+  max-height: 26px;
   border-radius: 50%;
   object-fit: cover;
   border: 1.5px solid #e28722;
   flex-shrink: 0;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .nav-profile-label {
@@ -1332,5 +1507,54 @@ html:not(.dark-mode) .nav-profile-menu .dropdown-item {
 html.dark-mode .nav-profile-menu-header {
   border-bottom-color: rgba(255, 255, 255, 0.08) !important;
 }
+
+/* =====================================================================
+   VIEW TRANSITIONS API (Transiciones suaves de tema Claro/Oscuro & Vistas)
+   ===================================================================== */
+@keyframes lm-theme-fade-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.995);
+  }
+}
+
+@keyframes lm-theme-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(1.005);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+::view-transition-old(root) {
+  animation: 0.35s cubic-bezier(0.4, 0, 0.2, 1) both lm-theme-fade-out;
+}
+
+::view-transition-new(root) {
+  animation: 0.35s cubic-bezier(0.4, 0, 0.2, 1) both lm-theme-fade-in;
+}
+
+::view-transition-old(profile-tab-content),
+::view-transition-new(profile-tab-content) {
+  animation-duration: 0.25s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root),
+  ::view-transition-old(profile-tab-content),
+  ::view-transition-new(profile-tab-content) {
+    animation-duration: 0.001s !important;
+  }
+}
+
 
 

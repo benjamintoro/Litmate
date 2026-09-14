@@ -283,45 +283,52 @@
 
 /* 5. Carrusel 3D Coverflow de Portadas en Home (index.html) - Adaptativo y Unificado */
 .coverflow-section {
-  background: transparent;
+  background: var(--bg-surface-subtle) !important;
   padding: 3.5rem 0 3rem;
   position: relative;
   overflow: hidden;
-  transition: background 0.3s ease;
+  border: none !important;
+  box-shadow: 0 12px 36px rgba(45, 39, 32, 0.06) !important;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+html.dark-mode .coverflow-section {
+  background: var(--bg-surface-subtle) !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4) !important;
 }
 
 .about-mission-card {
-  background: #faf9f6;
-  border: 1.5px solid var(--lm-border, #BDB59D);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
   border-radius: 14px;
   padding: 1.75rem 2rem;
   margin: 2rem 0;
   text-align: center;
-  transition: background 0.3s ease, border-color 0.3s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .about-mission-card h5 {
-  color: var(--lm-shadow, #0B0C0A);
+  color: var(--text-primary);
   font-weight: 700;
   margin-bottom: 0.5rem;
 }
 
 .about-mission-card p {
-  color: var(--lm-text-soft, #5a554e);
+  color: var(--text-secondary);
   margin-bottom: 0;
   line-height: 1.6;
 }
 
 .coverflow-heading {
   font-family: 'Playfair Display', serif;
-  color: var(--lm-shadow, #0B0C0A);
+  color: var(--text-primary) !important;
   font-size: 2.2rem;
   font-weight: 700;
   letter-spacing: -0.01em;
 }
 
 .coverflow-subheading {
-  color: var(--lm-text-soft, #6b6357);
+  color: var(--text-secondary) !important;
   font-size: 1rem;
   max-width: 650px;
   margin-left: auto;
@@ -678,8 +685,21 @@
    6. DASHBOARD MI PERFIL (4 PESTAÑAS)
    ===================================================================== */
 .profile-masthead {
-  padding: 5rem 0 3.5rem !important;
-  margin-bottom: 0 !important;
+  min-height: 480px !important;
+  height: 480px !important;
+  padding: 0 !important;
+  margin-bottom: 3rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+@media (max-width: 991.98px) {
+  .profile-masthead {
+    min-height: auto !important;
+    height: auto !important;
+    padding: 6rem 0 3rem !important;
+  }
 }
 
 .profile-hero-card {

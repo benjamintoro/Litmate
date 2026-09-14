@@ -179,30 +179,58 @@
 }
 
 /* 4. Planes de Suscripción (planes.html) */
+.plan-card {
+  background: var(--bg-surface) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 16px rgba(45, 39, 32, 0.04) !important;
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.plan-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 12px 30px rgba(148, 140, 113, 0.15) !important;
+}
+
+/* Tarjeta recomendada destacada con borde tenue --accent-gold */
+.plan-card:has(.plan-badge-recommended),
+.plan-card.is-recommended {
+  border: 1.5px solid var(--accent-gold) !important;
+  box-shadow: 0 8px 24px rgba(148, 140, 113, 0.16) !important;
+}
+
+.plan-card:has(.plan-badge-recommended):hover,
+.plan-card.is-recommended:hover {
+  border-color: var(--accent-gold) !important;
+  box-shadow: 0 14px 34px rgba(148, 140, 113, 0.25) !important;
+}
+
 .plan-badge-recommended {
   font-size: 0.72rem;
-  background-color: var(--lm-ochre, #936B36);
-  color: #ffffff;
+  background-color: var(--accent-gold) !important;
+  color: #ffffff !important;
   border: none;
+  box-shadow: 0 2px 8px rgba(148, 140, 113, 0.3);
 }
 
 .plan-price-amount {
   font-family: 'Playfair Display', serif;
   font-size: 2.2rem;
-  color: var(--lm-shadow, #0B0C0A);
+  color: var(--text-primary) !important;
 }
 
 .plan-divider {
   width: 40px;
-  border-top: 1px solid var(--lm-border, #BDB59D);
+  border-top: 1px solid var(--border-color) !important;
 }
 
 .plan-check-icon {
-  color: var(--lm-teal, #227D8E);
+  color: var(--accent-gold) !important;
 }
 
 .plan-check-icon-muted {
-  color: #cccccc;
+  color: var(--lm-color-400, #b0aa96);
+  opacity: 0.6;
 }
 
 /* 5. Mi Suscripción (mi_suscripcion.html) */
