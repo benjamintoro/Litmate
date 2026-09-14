@@ -418,3 +418,63 @@ class MensajeContacto(models.Model):
 
     def __str__(self):
         return f"Mensaje de {self.nombre} ({self.email}) - {self.fecha_envio.strftime('%Y-%m-%d %H:%M')}"
+
+
+# =====================================================================
+# --- 6. SCRAPING, PRECIOS DE TIENDAS E HISTORIAL COMPARATIVO ---
+# =====================================================================
+
+class PrecioLibroTienda(models.Model):
+    """
+    Caché y persistencia de precios y enlaces directos escrapeados por tienda.
+    Permite acceso ultra-rápido y evita saturar las tiendas externas.
+    """
+    libro = models.ForeignKey(Libro, on_delete=models.CASCADE, null=True, blank=True, related_name='precios_tiendas')
+    google_book_id = models.CharField(max_length=100, blank=True, null=True, db_index=True)
+    titulo_referencia = models.CharField(max_length=255, db_index=True)
+    autor_referencia = models.CharField(max_length=255, blank=True, default='')
+    isbn = models.CharField(max_length=20, blank=True, null=True, db_index=True)
+    
+    tienda = models.CharField(max_length=100)
+    enlace_directo = models.URLField(max_length=800)
+    precio_actual = models.IntegerField(default=0, help_text="Precio en CLP")
+    precio_lista = models.IntegerField(default=0, help_text="Precio de lista original en CLP")
+    descuento_porcentaje = models.IntegerField(default=0)
+    formato = models.CharField(max_length=150, blank=True, default='Físico')
+    disponibilidad = models.CharField(max_length=200, blank=True, default='En stock')
+    es_enlace_directo = models.BooleanField(default=True, help_text="Indica si lleva a la página exacta del libro")
+    
+    fecha_actualizacion = models.DateTimeField(auto_now=True)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Precio de Libro en Tienda'
+        verbose_name_plural = 'Precios de Libros en Tiendas'
+        indexes = [
+            models.Index(fields=['titulo_referencia', 'tienda']),
+            models.Index(fields=['google_book_id', 'tienda']),
+        ]
+
+    def __str__(self):
+        return f"{self.tienda}: {self.titulo_referencia} - ${self.precio_actual} CLP"
+
+
+class HistorialPrecioLibro(models.Model):
+    """
+    Registro cronológico de variación de precios por libro y tienda.
+    Alimenta los gráficos interactivos de tendencias de compra.
+    """
+    libro = models.ForeignKey(Libro, on_delete=models.CASCADE, null=True, blank=True, related_name='historial_precios')
+    google_book_id = models.CharField(max_length=100, blank=True, null=True, db_index=True)
+    titulo_referencia = models.CharField(max_length=255, db_index=True)
+    tienda = models.CharField(max_length=100)
+    precio = models.IntegerField(help_text="Precio registrado en CLP")
+    fecha_registro = models.DateTimeField(default=timezone.now, db_index=True)
+
+    class Meta:
+        verbose_name = 'Historial de Precio de Libro'
+        verbose_name_plural = 'Historiales de Precios de Libros'
+        ordering = ['-fecha_registro']
+
+    def __str__(self):
+        return f"{self.tienda} - {self.titulo_referencia}: ${self.precio} CLP ({self.fecha_registro.strftime('%d/%m/%Y')})"

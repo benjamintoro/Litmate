@@ -59,6 +59,7 @@ urlpatterns = [
 
     # --- Comparador y Demo de Libros (Librerías / Afiliados) ---
     path('api/track-conversion/', views.track_conversion_click, name='track_conversion'),
+    path('api/libro/precios/', views.api_precios_libro, name='api_precios_libro'),
     path('api/libro-demo/<str:book_id>/', views.detalle_libro_demo, name='detalle_libro_demo'),
     path('api/quick-search/', views.quick_search_api, name='quick_search_api'),
 

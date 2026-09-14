@@ -1026,6 +1026,7 @@ def get_featured_books():
         {
             'id': 'curated_1',
             'google_id': 'zyTCAlFPjgYC',
+            'isbn': '9788437604947',
             'titulo': 'Cien años de soledad',
             'autor': 'Gabriel García Márquez',
             'genero': 'Realismo Mágico',
@@ -1042,6 +1043,7 @@ def get_featured_books():
         {
             'id': 'curated_2',
             'google_id': 'B1hGBAAAQBAJ',
+            'isbn': '9788466353779',
             'titulo': 'Dune',
             'autor': 'Frank Herbert',
             'genero': 'Ciencia Ficción',
@@ -1053,11 +1055,12 @@ def get_featured_books():
             'portada': 'https://covers.openlibrary.org/b/id/11481354-L.jpg',
             'sinopsis': 'En el desértico planeta Arrakis, el agua es el bien más preciado y la codiciada especia melange es la sustancia que permite los viajes interestelares. El joven Paul Atreides deberá enfrentarse a conspiraciones imperiales para cumplir su destino...',
             'demo_texto': 'Adelanto de lectura — "Dune" de Frank Herbert:\n\n"No debo tener miedo. El miedo es el asesino de la mente. El miedo es la pequeña muerte que conduce a la destrucción total. Afrontaré mi miedo. Permitiré que pase sobre mí y a través de mí."',
-            'partner_badge': 'Amazon Books'
+            'partner_badge': 'Buscalibre'
         },
         {
             'id': 'curated_3',
             'google_id': 'kotPYEqx7kMC',
+            'isbn': '9788499890944',
             'titulo': '1984',
             'autor': 'George Orwell',
             'genero': 'Distopía Clásica',
@@ -1069,11 +1072,12 @@ def get_featured_books():
             'portada': 'https://covers.openlibrary.org/b/id/8745958-L.jpg',
             'sinopsis': 'En una sociedad dominada por el Gran Hermano y la Policía del Pensamiento, Winston Smith trabaja en el Ministerio de la Verdad reescribiendo la historia. Pero su anhelo de libertad lo llevará a desafiar al Partido.',
             'demo_texto': 'Adelanto de lectura — "1984" de George Orwell:\n\nEra un día luminoso y frío de abril y los relojes daban las trece. Winston Smith, con la barbilla clavada en el pecho en su intento por escapar al viento cortante, se deslizó rápidamente por las puertas de cristal de las Casas de la Victoria.',
-            'partner_badge': 'Feria Chilena'
+            'partner_badge': 'Buscalibre'
         },
         {
             'id': 'curated_4',
             'google_id': '9b7ZDAAAQBAJ',
+            'isbn': '9788498381498',
             'titulo': 'El Principito',
             'autor': 'Antoine de Saint-Exupéry',
             'genero': 'Fábula Filosófica',
@@ -1090,6 +1094,7 @@ def get_featured_books():
         {
             'id': 'curated_5',
             'google_id': '8W_NDwAAQBAJ',
+            'isbn': '9780062511409',
             'titulo': 'El Alquimista',
             'autor': 'Paulo Coelho',
             'genero': 'Espiritualidad & Aventura',
@@ -1101,11 +1106,12 @@ def get_featured_books():
             'portada': 'https://covers.openlibrary.org/b/id/10515159-L.jpg',
             'sinopsis': 'Santiago, un joven pastor andaluz, emprende un viaje hacia las pirámides de Egipto en busca de un tesoro soñado. En el camino aprenderá a escuchar a su corazón y a descifrar el lenguaje de las señales universales.',
             'demo_texto': 'Adelanto de lectura — "El Alquimista" de Paulo Coelho:\n\n"Cuando quieres algo, todo el universo conspira para que realices tu deseo. Escucha a tu corazón. Él conoce todas las cosas, porque proviene del Alma del Mundo y un día retornará a ella."',
-            'partner_badge': 'Amazon Books'
+            'partner_badge': 'Buscalibre'
         },
         {
             'id': 'curated_6',
             'google_id': 'vf0_EAAAQBAJ',
+            'isbn': '9788418118036',
             'titulo': 'Hábitos Atómicos',
             'autor': 'James Clear',
             'genero': 'Desarrollo Personal',
@@ -1117,12 +1123,48 @@ def get_featured_books():
             'portada': 'https://covers.openlibrary.org/b/id/12539702-L.jpg',
             'sinopsis': 'Un marco probado para mejorar un 1% cada día. James Clear explica cómo los pequeños cambios cotidianos producen resultados extraordinarios a lo largo del tiempo, eliminando hábitos negativos y adoptando rutinas exitosas.',
             'demo_texto': 'Adelanto de lectura — "Hábitos Atómicos" de James Clear:\n\n"Los cambios que parecen pequeños y poco importantes al principio se convertirán en resultados notables si estás dispuesto a mantenerlos durante años. Eres lo que haces repetidamente."',
-            'partner_badge': 'Google Play'
+            'partner_badge': 'Buscalibre'
         }
     ]
     
+    # Enriquecer con scraping real de tiendas
+    from core.models import PrecioLibroTienda
+    from core.scraper import obtener_datos_comparador_libro
+
     for cb in curated_books:
-        cb['tiendas'] = generar_enlaces_tiendas(cb['titulo'], cb['autor'], cb['google_id'], 14990)
+        precios_bd = list(PrecioLibroTienda.objects.filter(titulo_referencia__iexact=cb['titulo'], es_enlace_directo=True))
+        if not precios_bd:
+            try:
+                res_scraper = obtener_datos_comparador_libro(
+                    titulo=cb['titulo'],
+                    autor=cb['autor'],
+                    google_id=cb.get('google_id'),
+                    isbn=cb.get('isbn')
+                )
+                if res_scraper.get('tiendas'):
+                    precios_bd = list(PrecioLibroTienda.objects.filter(titulo_referencia__iexact=cb['titulo'], es_enlace_directo=True))
+            except Exception as e:
+                logger.warning(f"Error scraping libro recomendado {cb['titulo']}: {e}")
+
+        if precios_bd:
+            precio_min = min(p.precio_actual for p in precios_bd if p.precio_actual > 0)
+            cb['precio_desde'] = f"${precio_min:,.0f} CLP".replace(',', '.')
+            tienda_min = min(precios_bd, key=lambda p: p.precio_actual)
+            cb['partner_badge'] = tienda_min.tienda.split(' ')[0]
+            cb['tiendas'] = [
+                {
+                    'tienda': p.tienda,
+                    'precio_clp': p.precio_actual,
+                    'precio_formateado': f"${p.precio_actual:,.0f} CLP".replace(',', '.'),
+                    'formato': p.formato,
+                    'disponibilidad': p.disponibilidad,
+                    'url': p.enlace_directo,
+                    'es_directo': True
+                }
+                for p in precios_bd
+            ]
+        else:
+            cb['tiendas'] = generar_enlaces_tiendas(cb['titulo'], cb['autor'], cb['google_id'], 14990, isbn=cb.get('isbn'))
             
     return curated_books
 
@@ -1358,6 +1400,46 @@ def track_conversion_click(request):
     except Exception as e:
         logger.error(f"Error registrando conversión: {e}")
         return JsonResponse({'status': 'error', 'msg': str(e)}, status=400)
+
+
+@csrf_exempt
+def api_precios_libro(request):
+    """
+    Endpoint para consultar precios escrapeados y enlaces directos de un libro.
+    Soporta parámetros GET o POST: libro_id, titulo, autor, google_id, isbn, force.
+    """
+    if request.method == 'POST':
+        try:
+            body_data = json.loads(request.body) if request.body else {}
+        except Exception:
+            body_data = request.POST.dict()
+    else:
+        body_data = request.GET.dict()
+
+    libro_id = body_data.get('libro_id') or body_data.get('id')
+    titulo = body_data.get('titulo', '').strip()
+    autor = body_data.get('autor', '').strip()
+    google_id = body_data.get('google_id', '').strip()
+    isbn = body_data.get('isbn', '').strip()
+    force_refresh = str(body_data.get('force', '')).lower() in ('true', '1')
+
+    if not libro_id and not titulo and not google_id:
+        return JsonResponse({'status': 'error', 'msg': 'Faltan parámetros de búsqueda (libro_id, titulo o google_id)'}, status=400)
+
+    try:
+        from core.scraper import obtener_datos_comparador_libro
+        datos = obtener_datos_comparador_libro(
+            libro_id=libro_id,
+            titulo=titulo,
+            autor=autor,
+            google_id=google_id,
+            isbn=isbn,
+            force_refresh=force_refresh
+        )
+        return JsonResponse(datos)
+    except Exception as e:
+        logger.error(f"Error en api_precios_libro: {e}")
+        return JsonResponse({'status': 'error', 'msg': str(e)}, status=500)
 
 
 @csrf_exempt
