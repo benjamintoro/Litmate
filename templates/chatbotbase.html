@@ -37,6 +37,9 @@
                         <form id="chat-form">
                             {% csrf_token %}
                             <input type="text" id="chat-input" placeholder="Pregúntame sobre un libro..." autocomplete="off">
+                            <button type="button" id="mic-btn" class="mic-btn" aria-label="Habla con tu voz">
+                                <i class="iconoir-mic"></i>
+                            </button>
                             <button type="submit" id="send-btn"><i class="iconoir-send"></i></button>
                         </form>
                     </div>
