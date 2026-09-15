@@ -820,6 +820,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // 7. Transición suave de pestañas con View Transitions API
+    const profileTabBtns = document.querySelectorAll('#profileTabs button[data-bs-toggle="pill"]');
+    profileTabBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            if (window.litmateTransition && !this.classList.contains('active')) {
+                const targetSelector = this.getAttribute('data-bs-target');
+                const targetPane = document.querySelector(targetSelector);
+                if (targetPane) {
+                    targetPane.style.viewTransitionName = 'profile-tab-content';
+                }
+            }
+        });
+    });
+
 });
 </script>
 {% endblock %}

@@ -9,6 +9,7 @@
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <div class="page-heading">
                     <h1>Editar Perfil</h1>
+                    <span class="subheading">Actualiza tu información personal y foto de perfil</span>
                 </div>
             </div>
         </div>
@@ -26,6 +27,25 @@
                         {{ u_form.as_p }}
                         <hr>
                         <h5 class="mb-3">Datos de Perfil</h5>
+                        <div class="d-flex align-items-center gap-3 mb-3 p-3 bg-light rounded-3 border">
+                            <div class="position-relative flex-shrink-0">
+                                {% if user.perfil and user.perfil.imagen and user.perfil.imagen.name != 'default.jpg' and 'default' not in user.perfil.imagen.name %}
+                                    <img id="avatar-preview" src="{{ user.perfil.imagen.url }}" alt="{{ user.username }}" class="rounded-circle" style="width: 72px; height: 72px; object-fit: cover; border: 2.5px solid #e28722;">
+                                    <div id="avatar-preview-fallback" class="rounded-circle align-items-center justify-content-center" style="width: 72px; height: 72px; background: linear-gradient(135deg, #227D8E 0%, #3B2818 100%); color: #fff; font-size: 1.8rem; font-weight: 700; border: 2.5px solid #e28722; display: none;">
+                                        {{ user.username|slice:":1"|upper }}
+                                    </div>
+                                {% else %}
+                                    <div id="avatar-preview-fallback" class="rounded-circle d-flex align-items-center justify-content-center" style="width: 72px; height: 72px; background: linear-gradient(135deg, #227D8E 0%, #3B2818 100%); color: #fff; font-size: 1.8rem; font-weight: 700; border: 2.5px solid #e28722;">
+                                        {{ user.username|slice:":1"|upper }}
+                                    </div>
+                                    <img id="avatar-preview" src="" alt="Vista previa" class="rounded-circle" style="width: 72px; height: 72px; object-fit: cover; border: 2.5px solid #e28722; display: none;">
+                                {% endif %}
+                            </div>
+                            <div>
+                                <div class="fw-bold mb-1">Foto de perfil actual</div>
+                                <div class="text-muted small">Tu foto se mostrará en tu perfil y en la barra de navegación. Selecciona una nueva imagen abajo para actualizarla.</div>
+                            </div>
+                        </div>
                         {{ p_form.as_p }}
                         <div class="d-grid mt-4">
                             <button type="submit" class="btn btn-primary">Guardar Cambios</button>
@@ -37,4 +57,25 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const fileInput = document.getElementById('id_imagen');
+    const previewImg = document.getElementById('avatar-preview');
+    const fallback = document.getElementById('avatar-preview-fallback');
+    if (fileInput && previewImg) {
+        fileInput.addEventListener('change', function(e) {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    previewImg.src = evt.target.result;
+                    previewImg.style.display = 'block';
+                    if (fallback) fallback.style.display = 'none';
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+    }
+});
+</script>
 {% endblock %}

@@ -977,9 +977,10 @@ def limpiar_historial_busqueda_api(request):
 
 @login_required
 def editar_perfil(request):
+    perfil, _ = PerfilUsuario.objects.get_or_create(usuario=request.user)
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
-        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.perfil)
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=perfil)
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
@@ -987,7 +988,7 @@ def editar_perfil(request):
             return redirect('perfil')
     else:
         u_form = UserUpdateForm(instance=request.user)
-        p_form = ProfileUpdateForm(instance=request.user.perfil)
+        p_form = ProfileUpdateForm(instance=perfil)
     return render(request, 'core/editar_perfil.html', {'u_form': u_form, 'p_form': p_form})
 
 @csrf_exempt
