@@ -1,5 +1,5 @@
 /**
- * LitMate AI Chatbot - Integración completa con Streaming SSE, Micrófono en Vivo y Text-to-Speech (TTS)
+ * LitMate AI Chatbot - Integración Streaming SSE, Memoria de Hilo y Tarjetas Interactivas
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -15,33 +15,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let resetTimer = null;
 
-// =====================================================================
-    // 1. SÍNTESIS DE VOZ (Text-to-Speech con estados visuales dinámicos)
+    function scrollToBottom() {
+        if (!chatBody) return;
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    // =====================================================================
+    // 1. SÍNTESIS DE VOZ (TTS)
     // =====================================================================
     let ttsEnabled = true;
-    let isSpeaking = false;
 
     function updateTTSUI(speaking = false) {
         if (!ttsToggleBtn || !ttsIcon) return;
-        isSpeaking = speaking;
-
         if (!ttsEnabled) {
-            // Estado: Silenciado / Muteado
             ttsIcon.className = 'fa-solid fa-volume-xmark';
-            ttsToggleBtn.title = 'Voz silenciada (clic para activar)';
-            ttsToggleBtn.style.backgroundColor = '#6c757d'; // Gris apagado
+            ttsToggleBtn.title = 'Voz silenciada';
+            ttsToggleBtn.style.backgroundColor = '#6c757d';
             ttsToggleBtn.classList.remove('speaking-pulse');
         } else if (speaking) {
-            // Estado: La monita está hablando en este momento
             ttsIcon.className = 'fa-solid fa-volume-high';
-            ttsToggleBtn.title = 'Hablando... (clic para silenciar)';
-            ttsToggleBtn.style.backgroundColor = '#227D8E'; // Verde/azul acento activo
+            ttsToggleBtn.title = 'Hablando...';
+            ttsToggleBtn.style.backgroundColor = '#227D8E';
             ttsToggleBtn.classList.add('speaking-pulse');
         } else {
-            // Estado: En espera / Listo para hablar
             ttsIcon.className = 'fa-solid fa-volume-low';
-            ttsToggleBtn.title = 'Voz activada (en espera)';
-            ttsToggleBtn.style.backgroundColor = '#3b2818'; // Café base
+            ttsToggleBtn.title = 'Voz activada';
+            ttsToggleBtn.style.backgroundColor = '#3b2818';
             ttsToggleBtn.classList.remove('speaking-pulse');
         }
     }
@@ -49,7 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function cleanTextForSpeech(text) {
         if (!text) return '';
         return text
-            .replace(/https?:\/\/\S+/gi, '') // Omite enlaces
+            .replace(/<think>[\s\S]*?<\/think>/gi, '')
+            .replace(/\[LIBRO:.*?\]?/gi, '')
+            .replace(/https?:\/\/\S+/gi, '')
             .replace(/[*#_~`\[\]()<>]/g, '')
             .replace(/"/g, '')
             .replace(/\s+/g, ' ')
@@ -57,15 +58,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function stopSpeaking() {
-        if ('speechSynthesis' in window) {
-            window.speechSynthesis.cancel();
-        }
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
         updateTTSUI(false);
     }
 
     function speakText(text) {
         if (!ttsEnabled || !('speechSynthesis' in window)) return;
-
         stopSpeaking();
 
         const cleanText = cleanTextForSpeech(text);
@@ -73,48 +71,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const utterance = new SpeechSynthesisUtterance(cleanText);
         utterance.lang = 'es-CL';
-        utterance.pitch = 1.45; // Tono agudo/kawaii
-        utterance.rate = 1.12;  // Fluido y alegre
+        utterance.pitch = 1.45;
+        utterance.rate = 1.12;
         utterance.volume = 1.0;
 
         const voices = window.speechSynthesis.getVoices();
-        const femaleVoiceNames = [
-            'sabina', 'paulina', 'dalia', 'monica', 'helena', 
-            'laura', 'sofia', 'paloma', 'jimena', 'francisca', 
-            'google español', 'natural'
-        ];
+        const preferredVoice = voices.find(v => v.lang === 'es-CL') ||
+                               voices.find(v => v.lang.startsWith('es-419')) ||
+                               voices.find(v => v.lang.startsWith('es'));
+        if (preferredVoice) utterance.voice = preferredVoice;
 
-        let preferredVoice = voices.find(v => 
-            v.lang.startsWith('es') && 
-            femaleVoiceNames.some(name => v.name.toLowerCase().includes(name))
-        );
-
-        if (!preferredVoice) {
-            preferredVoice = voices.find(v => v.lang === 'es-CL') ||
-                             voices.find(v => v.lang === 'es-MX') ||
-                             voices.find(v => v.lang.startsWith('es-419')) ||
-                             voices.find(v => v.lang.startsWith('es'));
-        }
-
-        if (preferredVoice) {
-            utterance.voice = preferredVoice;
-        }
-
-        // Mientras empieza a hablar
         utterance.onstart = () => {
             updateTTSUI(true);
-            if (avatar && !avatar.src.includes('sin conexion')) {
-                avatar.src = '/static/assets/img/avatar/feliz.png?v=' + Date.now();
-            }
+            setAvatar("feliz.png");
         };
 
-        // Al terminar de hablar
         utterance.onend = () => {
             updateTTSUI(false);
             resetToDefault(4000);
         };
 
-        // En caso de error o interrupción
         utterance.onerror = () => {
             updateTTSUI(false);
             resetToDefault(1000);
@@ -124,25 +100,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if ('speechSynthesis' in window) {
-        window.speechSynthesis.onvoiceschanged = () => {
-            window.speechSynthesis.getVoices();
-        };
+        window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
     }
 
-    // Toggle al hacer clic manual sobre el botón
     if (ttsToggleBtn && ttsIcon) {
         ttsToggleBtn.addEventListener('click', (e) => {
             e.preventDefault();
             ttsEnabled = !ttsEnabled;
-            if (!ttsEnabled) {
-                stopSpeaking();
-            } else {
-                updateTTSUI(false);
-            }
+            if (!ttsEnabled) stopSpeaking();
+            else updateTTSUI(false);
         });
     }
+
     // =====================================================================
-    // 2. MICRÓFONO DE VOZ (Web Speech API)
+    // 2. MICRÓFONO
     // =====================================================================
     const SpeechRecognitionConstructor = window.SpeechRecognition || window.webkitSpeechRecognition;
     let recognition = null;
@@ -154,7 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!micBtn) return;
         micBtn.classList.remove('listening', 'error');
         micBtn.title = 'Hablar con micrófono';
-        micBtn.setAttribute('aria-label', 'Habla con tu voz');
         micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i>';
         if (chatInput && chatInput.placeholder.includes('Escuchando')) {
             chatInput.placeholder = 'Pregúntame sobre un libro...';
@@ -164,34 +134,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function setMicListeningUI() {
         if (!micBtn) return;
         micBtn.classList.add('listening');
-        micBtn.classList.remove('error');
-        micBtn.title = 'Detener grabación (Stop)';
-        micBtn.setAttribute('aria-label', 'Detener grabación');
+        micBtn.title = 'Detener grabación';
         micBtn.innerHTML = '<i class="fa-solid fa-stop"></i>';
-        if (chatInput) {
-            chatInput.placeholder = 'Escuchando... habla ahora (clic en ■ para parar)';
-        }
-    }
-
-    function setMicErrorUI(message = 'No se pudo usar el micrófono') {
-        if (!micBtn) return;
-        micBtn.classList.add('error');
-        micBtn.classList.remove('listening');
-        micBtn.title = message;
-        micBtn.setAttribute('aria-label', message);
-        micBtn.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
-        if (chatInput) {
-            chatInput.placeholder = 'Permiso de micrófono requerido';
-        }
-    }
-
-    function stopListeningAndFinish() {
-        if (!isListening || !recognition) return;
-        try {
-            recognition.stop();
-        } catch (error) {
-            // Ya finalizado
-        }
+        if (chatInput) chatInput.placeholder = 'Escuchando... habla ahora';
     }
 
     if (micBtn && SpeechRecognitionConstructor) {
@@ -202,40 +147,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
         micBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            e.stopPropagation();
-
             stopSpeaking();
-
             if (isListening) {
-                stopListeningAndFinish();
+                try { recognition.stop(); } catch(err) {}
                 return;
             }
-
             try {
                 baseText = chatInput && chatInput.value.trim() ? chatInput.value.trim() + ' ' : '';
                 finalTranscript = '';
                 recognition.start();
-            } catch (error) {
-                setMicErrorUI('El micrófono ya está activo');
-            }
+            } catch (error) {}
         });
 
         recognition.onstart = () => {
             isListening = true;
             setMicListeningUI();
-            if (avatar) {
-                avatar.src = '/static/assets/img/avatar/pensativa.png?v=' + Date.now();
-            }
+            setAvatar("pensativa.png");
         };
 
         recognition.onresult = (event) => {
             let interimTranscript = '';
             for (let i = event.resultIndex; i < event.results.length; ++i) {
-                if (event.results[i].isFinal) {
-                    finalTranscript += event.results[i][0].transcript + ' ';
-                } else {
-                    interimTranscript += event.results[i][0].transcript;
-                }
+                if (event.results[i].isFinal) finalTranscript += event.results[i][0].transcript + ' ';
+                else interimTranscript += event.results[i][0].transcript;
             }
             if (chatInput) {
                 chatInput.value = baseText + finalTranscript + interimTranscript;
@@ -243,37 +177,21 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        recognition.onerror = (event) => {
-            isListening = false;
-            console.error('Error reconocimiento de voz:', event.error);
-            setMicErrorUI(event.error);
-            if (avatar) {
-                avatar.src = '/static/assets/img/avatar/sin conexion.png?v=' + Date.now();
-            }
-        };
-
         recognition.onend = () => {
             isListening = false;
             resetMicUI();
-            if (chatInput) {
-                chatInput.focus();
-            }
         };
-    } else if (micBtn) {
-        micBtn.disabled = true;
-        micBtn.title = 'Reconocimiento de voz no disponible en este navegador';
-        micBtn.innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
     }
 
     // =====================================================================
-    // 3. AVATAR Y EXPRESIONES
+    // 3. EXPRESIONES DEL AVATAR
     // =====================================================================
     function setAvatar(file) {
         if (!avatar) return;
-        avatar.src = `/static/assets/img/avatar/${file}?v=${Date.now()}`;
+        avatar.src = `/static/assets/img/avatar/${file}?v=` + Date.now();
     }
 
-    function resetToDefault(delay = 15000) {
+    function resetToDefault(delay = 12000) {
         if (resetTimer) clearTimeout(resetTimer);
         resetTimer = setTimeout(() => {
             setAvatar("cuerpo.jpg");
@@ -290,96 +208,142 @@ document.addEventListener('DOMContentLoaded', () => {
         resetToDefault(7000);
     }
 
-    function normalizeText(str) {
-        return str
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .replace(/[^a-zA-Z0-9\s]/g, "")
-            .replace(/\s+/g, " ")
-            .trim()
-            .toLowerCase();
-    }
-
-    const genreKeywords = {
-        fantasia: ["fantasia", "magia", "dragon", "dragones", "elfo", "elfos", "orco", "hechizo", "mago", "medieval"],
-        terror: ["terror", "horror", "miedo", "fantasma", "demonio", "pesadilla", "sangre"],
-        accion: ["guerra", "militar", "batalla", "soldado", "armas", "combate", "accion"],
-        romance: ["romance", "amor", "pareja", "enamorar", "relacion", "corazon", "beso"],
-        drama: ["drama", "dramatico", "tragedia", "triste", "perdida", "llorar"],
-        scifi: ["ciencia ficcion", "sci fi", "espacio", "nave", "robot", "futuro", "distopia", "apocalipsis"]
-    };
-
-    function detectGenreSmart(message) {
-        const msg = normalizeText(message);
-        for (const genre in genreKeywords) {
-            for (const word of genreKeywords[genre]) {
-                if (msg.includes(word)) return genre;
-            }
-        }
-        return "none";
-    }
-
-    function applyGenreEmotion(genre) {
-        switch (genre) {
-            case "fantasia": setAvatar("sorprendida.png"); break;
-            case "terror": setAvatar("miedo.png"); break;
-            case "accion": setAvatar("enojo.png"); break;
-            case "romance": setAvatar("feliz.png"); break;
-            case "drama": setAvatar("triste.png"); break;
-            case "scifi": setAvatar("sorprendida.png"); break;
-            default: setAvatar("cuerpo.jpg");
-        }
-        resetToDefault(15000);
-    }
-
-    function applyBackendEmotion(text) {
-        const msg = normalizeText(text);
-        if (msg.includes("hola") || msg.includes("buenas")) {
-            setAvatar("feliz.png");
-            resetToDefault();
-            return;
-        }
-        if (msg.includes("gracias") || msg.includes("placer")) {
-            setAvatar("agradecida.png");
-            resetToDefault();
-            return;
-        }
-        if (msg.includes("no encontre") || msg.includes("error")) {
-            setAvatar("triste.png");
-            resetToDefault();
-            return;
-        }
-        resetToDefault();
-    }
-
-    function isSocialMessage(text) {
-        const msg = normalizeText(text);
-        return (
-            msg.includes("como estas") ||
-            msg.includes("que tal") ||
-            msg.includes("hola") ||
-            msg.includes("gracias")
-        );
+    function applySmartEmotion(text, isSocial = false, genre = "none") {
+        const msg = text.toLowerCase();
+        if (isSocial || msg.includes("gracias")) setAvatar("agradecida.png");
+        else if (genre === "terror" || msg.includes("miedo") || msg.includes("horror")) setAvatar("miedo.png");
+        else if (genre === "accion" || msg.includes("guerra")) setAvatar("enojo.png");
+        else if (genre === "drama" || msg.includes("triste")) setAvatar("triste.png");
+        else if (genre === "fantasia" || msg.includes("increible")) setAvatar("sorprendida.png");
+        else if (msg.includes("hola") || msg.includes("recomiendo")) setAvatar("feliz.png");
+        else setAvatar("cuerpo.jpg");
+        resetToDefault(12000);
     }
 
     // =====================================================================
-    // 4. FORMATEO DE TEXTO
+    // 4. RESOLUTOR ROBUSTO DE PORTADAS REALES
+    // =====================================================================
+    async function resolveBookCovers() {
+        const containers = document.querySelectorAll('.chatbot-book-thumb-container:not([data-resolved])');
+        
+        for (const cont of containers) {
+            cont.setAttribute('data-resolved', 'true');
+            const img = cont.querySelector('.chatbot-book-thumb');
+            const placeholder = cont.querySelector('.chatbot-book-placeholder');
+            
+            const title = decodeURIComponent(cont.getAttribute('data-title') || '').trim();
+            const author = decodeURIComponent(cont.getAttribute('data-author') || '').trim();
+            if (!title) continue;
+
+            let coverLoaded = false;
+
+            // 1. Google Books API
+            try {
+                const q = encodeURIComponent(`intitle:${title} inauthor:${author}`);
+                const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${q}&maxResults=1`);
+                if (res.ok) {
+                    const data = await res.json();
+                    const thumb = data?.items?.[0]?.volumeInfo?.imageLinks?.thumbnail ||
+                                  data?.items?.[0]?.volumeInfo?.imageLinks?.smallThumbnail;
+                    if (thumb) {
+                        img.src = thumb.replace('http:', 'https:');
+                        img.onload = () => {
+                            img.style.display = 'block';
+                            if (placeholder) placeholder.style.display = 'none';
+                        };
+                        coverLoaded = true;
+                    }
+                }
+            } catch (e) {}
+
+            // 2. Open Library API (respaldo si Google Books no tiene)
+            if (!coverLoaded) {
+                try {
+                    const olRes = await fetch(`https://openlibrary.org/search.json?title=${encodeURIComponent(title)}&author=${encodeURIComponent(author)}&limit=1`);
+                    if (olRes.ok) {
+                        const olData = await olRes.json();
+                        const coverId = olData?.docs?.[0]?.cover_i;
+                        if (coverId) {
+                            img.src = `https://covers.openlibrary.org/b/id/${coverId}-M.jpg`;
+                            img.onload = () => {
+                                img.style.display = 'block';
+                                if (placeholder) placeholder.style.display = 'none';
+                            };
+                            coverLoaded = true;
+                        }
+                    }
+                } catch (e) {}
+            }
+
+            // 3. Si no hay portada en ninguna API, mostramos la carátula estilizada de respaldo
+            if (!coverLoaded) {
+                img.style.display = 'none';
+                if (placeholder) placeholder.style.display = 'flex';
+            }
+        }
+        scrollToBottom();
+    }
+
+    // =====================================================================
+    // 5. PARSER DE MENSAJES Y TARJETAS
     // =====================================================================
     function formatMessageText(text) {
         if (!text) return '';
-        return text
+
+        // Eliminar bloques de pensamiento <think> si provienen de DeepSeek-R1
+        let cleaned = text.replace(/<think>[\s\S]*?<\/think>/gi, '');
+        cleaned = cleaned.replace(/Enlace de compra:\s*https?:\/\/\S+/gi, '');
+        cleaned = cleaned.replace(/https?:\/\/(www\.)?buscalibre\.cl\/\S+/gi, '');
+
+        let formatted = cleaned
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;")
             .replace(/\*\*(.*?)\*\*/g, '"$1"')
             .replace(/\*(.*?)\*/g, '$1')
             .replace(/^[ \t]*#+[ \t]*/gm, '')
-            .replace(/[\*#]/g, '')
-            .replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color: #0085a1; font-weight: 600; text-decoration: underline;">$1</a>')
-            .replace(/\n/g, '<br>');
+            .replace(/[\*#]/g, '');
+
+        formatted = formatted.replace(/\[LIBRO:\s*([^\]\n\r]+)\]?/gi, (match, content) => {
+            const cleanContent = content.replace(/[\]]/g, '').trim();
+            const parts = cleanContent.split('|').map(p => p.trim());
+
+            const titulo = (parts[0] || 'Libro recomendado').replace(/["']/g, '');
+            const autor = (parts[1] || 'Autor').replace(/["']/g, '');
+            
+            let rawPrecio = parts[2] || '$14.990 CLP';
+            let precio = rawPrecio.replace(/[^\d.,$A-Za-z\s]/g, '').trim();
+            if (!precio.includes('$')) precio = '$' + precio;
+
+            const searchUrl = `https://www.buscalibre.cl/libros/search?q=${encodeURIComponent(titulo + ' ' + autor)}`;
+
+            return `
+                <div class="chatbot-book-card">
+                    <div class="chatbot-book-thumb-container" data-title="${encodeURIComponent(titulo)}" data-author="${encodeURIComponent(autor)}">
+                        <img src="" alt="${titulo}" class="chatbot-book-thumb" style="display:none;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="chatbot-book-placeholder">
+                            <i class="fa-solid fa-book-bookmark book-spine-icon"></i>
+                            <span class="book-spine-title">${titulo}</span>
+                        </div>
+                    </div>
+                    <div class="chatbot-book-info">
+                        <div class="chatbot-book-title" title="${titulo}">${titulo}</div>
+                        <div class="chatbot-book-author">${autor}</div>
+                        <div class="chatbot-book-price">${precio}</div>
+                    </div>
+                    <div class="chatbot-book-actions">
+                        <a href="${searchUrl}" target="_blank" rel="noopener noreferrer" class="chatbot-book-btn">
+                            Ver / Comprar
+                        </a>
+                    </div>
+                </div>
+            `;
+        });
+
+        return formatted.replace(/\n/g, '<br>');
     }
 
     // =====================================================================
-    // 5. ENVÍO CON STREAMING EN TIEMPO REAL (SSE)
+    // 6. STREAMING SSE Y MEMORIA
     // =====================================================================
     async function sendMessage(e) {
         if (e) {
@@ -392,9 +356,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         stopSpeaking();
 
-        const genreDetected = detectGenreSmart(userMessage);
-        const socialDetected = isSocialMessage(userMessage);
-
         appendMessage(userMessage, 'user');
         chatInput.value = '';
         if (sendBtn) sendBtn.disabled = true;
@@ -404,10 +365,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const botMessageDiv = document.createElement('div');
         botMessageDiv.classList.add('chat-message', 'bot');
         const botParagraph = document.createElement('p');
-        botParagraph.innerHTML = '<span class="typing-indicator" style="display:inline-block; margin:0;"><span></span><span></span><span></span></span>';
+        botParagraph.innerHTML = '<span class="spinner-border spinner-border-sm text-secondary"></span>';
         botMessageDiv.appendChild(botParagraph);
         chatBody.appendChild(botMessageDiv);
-        chatBody.scrollTop = chatBody.scrollHeight;
+        scrollToBottom();
 
         let accumulatedText = "";
         let isFirstToken = true;
@@ -422,91 +383,62 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ message: userMessage }),
             });
 
-            if (!response.ok) {
-                throw new Error(`HTTP Error ${response.status}`);
-            }
+            if (!response.ok) throw new Error(`HTTP Error ${response.status}`);
 
-            const contentType = response.headers.get("content-type") || "";
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder("utf-8");
+            let buffer = "";
 
-            if (contentType.includes("application/json")) {
-                const json = await response.json();
-                accumulatedText = json.response || json.error || "No se obtuvo respuesta.";
-                botParagraph.innerHTML = formatMessageText(accumulatedText);
-                chatBody.scrollTop = chatBody.scrollHeight;
-            } else {
-                const reader = response.body.getReader();
-                const decoder = new TextDecoder("utf-8");
-                let buffer = "";
+            while (true) {
+                const { value, done } = await reader.read();
+                if (done) break;
 
-                while (true) {
-                    const { value, done } = await reader.read();
-                    if (done) break;
+                buffer += decoder.decode(value, { stream: true });
+                const events = buffer.split("\n\n");
+                buffer = events.pop();
 
-                    buffer += decoder.decode(value, { stream: true });
-                    const events = buffer.split("\n\n");
-                    buffer = events.pop();
-
-                    for (const ev of events) {
-                        const lines = ev.split("\n");
-                        for (const line of lines) {
-                            const trimmed = line.trim();
-                            if (trimmed.startsWith("data: ")) {
-                                const dataStr = trimmed.slice(6).trim();
-                                if (dataStr === "[DONE]") {
-                                    break;
-                                }
-                                try {
-                                    const parsed = JSON.parse(dataStr);
-                                    if (parsed.token) {
-                                        if (isFirstToken) {
-                                            botParagraph.innerHTML = "";
-                                            isFirstToken = false;
-                                        }
-                                        accumulatedText += parsed.token;
-                                        botParagraph.innerHTML = formatMessageText(accumulatedText);
-                                        chatBody.scrollTop = chatBody.scrollHeight;
+                for (const ev of events) {
+                    const lines = ev.split("\n");
+                    for (const line of lines) {
+                        const trimmed = line.trim();
+                        if (trimmed.startsWith("data: ")) {
+                            const dataStr = trimmed.slice(6).trim();
+                            if (dataStr === "[DONE]") break;
+                            try {
+                                const parsed = JSON.parse(dataStr);
+                                if (parsed.token) {
+                                    if (isFirstToken) {
+                                        botParagraph.innerHTML = "";
+                                        isFirstToken = false;
                                     }
-                                } catch (parseErr) {
-                                    // Chunk parcial ignorado
+                                    accumulatedText += parsed.token;
+                                    botParagraph.innerHTML = formatMessageText(accumulatedText);
+                                    scrollToBottom();
                                 }
-                            }
+                            } catch (parseErr) {}
                         }
                     }
                 }
             }
 
-            // Expresión final del avatar
-            if (socialDetected) {
-                setAvatar("agradecida.png");
-                resetToDefault();
-            } else if (genreDetected !== "none") {
-                applyGenreEmotion(genreDetected);
-            } else {
-                applyBackendEmotion(accumulatedText);
-            }
-
-            // Leer respuesta completa en voz alta
+            resolveBookCovers();
+            applySmartEmotion(accumulatedText);
             speakText(accumulatedText);
 
         } catch (error) {
-            console.error("Error en chat streaming:", error);
             botParagraph.innerHTML = 'Lo siento, ocurrió un problema al conectar con el asistente.';
             onError();
         } finally {
             if (sendBtn) sendBtn.disabled = false;
             if (chatInput) chatInput.focus();
+            scrollToBottom();
         }
 
         return false;
     }
 
-    if (chatForm) {
-        chatForm.addEventListener('submit', sendMessage);
-    }
+    if (chatForm) chatForm.addEventListener('submit', sendMessage);
 
-    // =====================================================================
-    // 6. UTILIDADES
-    // =====================================================================
     function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -529,10 +461,7 @@ document.addEventListener('DOMContentLoaded', () => {
         p.innerHTML = formatMessageText(message);
         messageDiv.appendChild(p);
         chatBody.appendChild(messageDiv);
-        chatBody.scrollTop = chatBody.scrollHeight;
-    }
-
-    if (chatBody) {
-        chatBody.scrollTop = chatBody.scrollHeight;
+        scrollToBottom();
+        resolveBookCovers();
     }
 });

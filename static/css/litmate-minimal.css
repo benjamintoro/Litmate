@@ -1333,4 +1333,198 @@ html.dark-mode .nav-profile-menu-header {
   border-bottom-color: rgba(255, 255, 255, 0.08) !important;
 }
 
+/* Corrección de contenedor y scroll del chat */
+#chat-body-page {
+    overflow-y: auto !important;
+    scroll-behavior: smooth !important;
+    max-height: 520px !important;
+    padding-bottom: 20px !important;
+}
 
+/* Tarjeta interactiva compacta y limpia */
+.chatbot-book-card {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 12px !important;
+    background: #18181f !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 10px !important;
+    padding: 10px 14px !important;
+    margin: 10px 0 !important;
+    box-sizing: border-box !important;
+}
+
+.chatbot-book-thumb {
+    width: 48px !important;
+    height: 68px !important;
+    object-fit: cover !important;
+    border-radius: 4px !important;
+    flex-shrink: 0 !important;
+    background-color: #262633 !important;
+}
+
+.chatbot-book-info {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+}
+
+.chatbot-book-title {
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    color: #f8fafc !important;
+    margin: 0 !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+}
+
+.chatbot-book-author {
+    font-size: 0.78rem !important;
+    color: #94a3b8 !important;
+    margin: 2px 0 !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+}
+
+.chatbot-book-price {
+    font-size: 0.84rem !important;
+    font-weight: 700 !important;
+    color: #227D8E !important;
+}
+
+.chatbot-book-actions {
+    flex-shrink: 0 !important;
+    margin-left: 8px !important;
+}
+
+.chatbot-book-btn {
+    background-color: #227D8E !important;
+    color: #ffffff !important;
+    font-size: 0.78rem !important;
+    font-weight: 600 !important;
+    padding: 6px 12px !important;
+    border-radius: 6px !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+}
+
+/* Tarjeta interactiva de recomendación */
+.chatbot-book-card {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    background: #1e1e24 !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 12px !important;
+    padding: 10px 14px !important;
+    margin: 10px 0 !important;
+    box-sizing: border-box !important;
+}
+
+/* Contenedor de portada con soporte de respaldo elegante */
+.chatbot-book-thumb-container {
+    width: 50px !important;
+    height: 72px !important;
+    flex-shrink: 0 !important;
+    border-radius: 6px !important;
+    overflow: hidden !important;
+    position: relative !important;
+}
+
+.chatbot-book-thumb {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}
+
+/* Portada alternativa con degradado y título en lugar de un cuadro negro */
+.chatbot-book-placeholder {
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(145deg, #1e3a47 0%, #0f172a 100%) !important;
+    border-left: 4px solid #227D8E !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 4px !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+}
+
+.book-spine-icon {
+    font-size: 0.85rem !important;
+    color: #227D8E !important;
+    margin-bottom: 3px !important;
+}
+
+.book-spine-title {
+    font-size: 0.55rem !important;
+    color: #e2e8f0 !important;
+    line-height: 1.1 !important;
+    font-weight: 600 !important;
+    overflow: hidden !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 3 !important;
+    -webkit-box-orient: vertical !important;
+}
+
+/* Información de texto del libro */
+.chatbot-book-info {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-width: 0 !important;
+}
+
+.chatbot-book-title {
+    font-size: 0.92rem !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.chatbot-book-author {
+    font-size: 0.8rem !important;
+    color: #94a3b8 !important;
+    margin: 2px 0 3px 0 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.chatbot-book-price {
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    color: #227D8E !important;
+}
+
+/* Botón Ver / Comprar */
+.chatbot-book-actions {
+    flex-shrink: 0 !important;
+}
+
+.chatbot-book-btn {
+    background-color: #227D8E !important;
+    color: #ffffff !important;
+    font-size: 0.78rem !important;
+    font-weight: 600 !important;
+    padding: 7px 13px !important;
+    border-radius: 8px !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    transition: background-color 0.2s ease !important;
+}
+
+.chatbot-book-btn:hover {
+    background-color: #1a626f !important;
+    color: #ffffff !important;
+}

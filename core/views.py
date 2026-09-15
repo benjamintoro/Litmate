@@ -1606,12 +1606,62 @@ def extraer_palabras_clave_busqueda(query):
 
 import time
 
+# =====================================================================
+# BÚSQUEDA WEB EN TIEMPO REAL (GROUNDING ESTILO GOOGLE AI OVERVIEW)
+# =====================================================================
+def buscar_informacion_web_en_vivo(query):
+    """
+    Realiza una búsqueda web en tiempo real consultando Wikipedia y DuckDuckGo
+    sin requerir API Keys pagadas. Extrae títulos, resúmenes y contexto factual
+    para alimentar a la IA cuando el catálogo local no tiene la respuesta exacta.
+    """
+    snippets = []
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    }
+
+    # 1. Búsqueda semántica en Wikipedia API (Resúmenes de libros, autores y crímenes históricos)
+    try:
+        wiki_url = f"https://es.wikipedia.org/w/api.php?action=opensearch&search={requests.utils.quote(query + ' libro')}&limit=3&namespace=0&format=json"
+        res_wiki = requests.get(wiki_url, headers=headers, timeout=4)
+        if res_wiki.ok:
+            data_wiki = res_wiki.json()
+            titulos = data_wiki[1] if len(data_wiki) > 1 else []
+            descripciones = data_wiki[2] if len(data_wiki) > 2 else []
+            for tit, desc in zip(titulos, descripciones):
+                if desc and len(desc) > 30 and not "desambiguación" in desc.lower():
+                    snippets.append(f"Wikipedia ({tit}): {desc[:280]}")
+    except Exception as e:
+        logger.warning(f"Error búsqueda Wikipedia: {e}")
+
+    # 2. Búsqueda web abierta en DuckDuckGo HTML (Para capturar novelas, ficción y crímenes reales)
+    try:
+        ddg_url = f"https://html.duckduckgo.com/html/?q={requests.utils.quote(query + ' libros recomendados sinopsis')}"
+        res_ddg = requests.get(ddg_url, headers=headers, timeout=4)
+        if res_ddg.ok:
+            # Extraer los resúmenes limpios de los primeros 3 resultados
+            raw_snippets = re.findall(r'<a class="result__snippet[^>]*>(.*?)</a>', res_ddg.text, re.DOTALL)
+            for snip in raw_snippets[:3]:
+                texto_limpio = re.sub(r'<[^>]+>', '', snip)
+                texto_limpio = re.sub(r'\s+', ' ', texto_limpio).strip()
+                if len(texto_limpio) > 40:
+                    snippets.append(f"Web: {texto_limpio[:250]}")
+    except Exception as e:
+        logger.warning(f"Error búsqueda DuckDuckGo: {e}")
+
+    return "\n".join(snippets[:4])
+
+
+# =====================================================================
+# ENDPOINT PRINCIPAL DEL CHATBOT CON STREAMING Y GROUNDING WEB
+# =====================================================================
 @csrf_exempt
 @ratelimit(limit=30, period=60, key_prefix='chatbot_query', json_response=True)
 def chatbot_query(request):
     """
-    Endpoint del Asistente Literario LitMate con StreamingHttpResponse (SSE).
-    Envía tokens palabra por palabra reduciendo la latencia percibida a menos de 300 ms.
+    Endpoint del Asistente Literario LitMate con Streaming SSE.
+    Combina catálogo interno, búsqueda web en vivo en tiempo real (Google AI style)
+    y selector prioritario de modelos LLM.
     """
     if request.method != 'POST':
         return JsonResponse({'error': 'Método no permitido'}, status=405)
@@ -1623,7 +1673,6 @@ def chatbot_query(request):
         if not user_message:
             return JsonResponse({'response': "¡Hola! ¿En qué lectura u obra puedo ayudarte hoy?"})
 
-        # Asegurar clave de sesión antes de que comience el stream HTTP
         if not request.session.session_key:
             request.session.save()
 
@@ -1631,67 +1680,82 @@ def chatbot_query(request):
         contexto_extra = ""
         libros_sugeridos = []
 
-        msg_limpio = user_message.lower()
-        palabras_comunes = ['hola', 'buenos dias', 'buenas tardes', 'buenas noches', 'que tal', 'hey', 'como estas']
-        es_saludo = any(saludo in msg_limpio for saludo in palabras_comunes) and len(user_message) < 25
+        msg_limpio = user_message.lower().strip()
+        
+        # Detección de saludos iniciales
+        saludos = ['hola', 'buenos dias', 'buenas tardes', 'buenas noches', 'que tal', 'hey', 'saludos']
+        es_saludo = any(msg_limpio == s or msg_limpio.startswith(s + ' ') for s in saludos) and len(user_message) < 25
 
-        if not es_saludo:
+        # Detección de confirmaciones cortas o continuidad de hilo
+        palabras_continuacion = [
+            'si', 'sí', 'claro', 'por favor', 'ok', 'dale', 'bueno', 'vale', 'no',
+            'resumen', 'analisis', 'análisis', 'detalle', 'detalles', 'mas', 'más',
+            'el primero', 'el segundo', 'el tercero', 'profundiza', 'cuentame', 'cuéntame'
+        ]
+        es_continuacion = any(
+            msg_limpio == p or msg_limpio.startswith(p + ' ') or msg_limpio.startswith('si ')
+            for p in palabras_continuacion
+        ) or (len(msg_limpio.split()) <= 2 and len(msg_limpio) <= 12)
+
+        # Si es una búsqueda temática real, activar Grounding en catálogo y en la web en vivo
+        if not es_saludo and not es_continuacion:
             query_busqueda = extraer_palabras_clave_busqueda(user_message)
-            libros_sugeridos = buscar_libros_hibrido(query=query_busqueda, max_results=4)
-            if libros_sugeridos:
-                contexto_extra += "Libros reales registrados en el catálogo de LitMate y librerías:\n"
-                for b in libros_sugeridos:
-                    tiendas_str = ", ".join([f"{t['tienda']} ({t['precio_formateado']})" for t in b.get('tiendas', [])[:2]])
-                    contexto_extra += (
-                        f"- Título: \"{b['titulo']}\" de {b['autor_str']}. Género: {b['genero']}. "
-                        f"Sinopsis: {b['sinopsis'][:240]}... "
-                        f"Precio referencia: {b.get('precio_desde', '$14.990 CLP')}. Tiendas: {tiendas_str}. Link directo: {b.get('link_principal')}\n"
-                    )
 
-            # Búsqueda vectorial semántica (si Pinecone está activo)
+            # 1. Catálogo local
+            libros_sugeridos = buscar_libros_hibrido(query=query_busqueda, max_results=3)
+            if libros_sugeridos:
+                contexto_extra += "Obras disponibles en catálogo LitMate:\n"
+                for b in libros_sugeridos:
+                    contexto_extra += f"- \"{b['titulo']}\" de {b['autor_str']}. Precio: {b.get('precio_desde', '$14.990 CLP')}.\n"
+
+            # 2. Búsqueda Web en Vivo (Grounding)
+            datos_web = buscar_informacion_web_en_vivo(query_busqueda)
+            if datos_web:
+                contexto_extra += f"\nResultados de búsqueda web en tiempo real (Google AI Grounding):\n{datos_web}\n"
+
+            # 3. Embeddings en Pinecone (si está activo)
             embedding_model, pinecone_index = get_ai_resources()
             if pinecone_index and embedding_model:
                 try:
                     query_embedding = embedding_model.encode(query_busqueda).tolist()
                     search_results = pinecone_index.query(vector=query_embedding, top_k=2, include_metadata=True)
                     if search_results.get('matches'):
-                        contexto_extra += "\nCoincidencias semánticas adicionales:\n"
                         for match in search_results.get('matches', []):
                             if match.get('score', 0) > getattr(settings, 'LITMATE_SCORE_THRESHOLD', 0.30):
                                 meta = match.get('metadata', {})
-                                contexto_extra += f"- {meta.get('title', 'Libro')}: {meta.get('text', '')[:120]}...\n"
+                                contexto_extra += f"- {meta.get('title', 'Libro')}: {meta.get('text', '')[:100]}...\n"
                 except Exception as e:
-                    logger.warning(f"Búsqueda Pinecone no disponible: {e}")
+                    logger.warning(f"Búsqueda Pinecone: {e}")
 
         user_info = ""
         if hasattr(request, 'user') and request.user.is_authenticated:
             nombre = request.user.first_name or request.user.username
-            user_info = f"El usuario se llama {nombre}."
-            if hasattr(request.user, 'perfil') and request.user.perfil.genero_lector_preferido:
-                user_info += f" Su género literario preferido es: {request.user.perfil.genero_lector_preferido}."
+            user_info = f"Nombre del usuario: {nombre}."
 
         api_key = os.getenv('GROQ_API_KEY') or getattr(settings, 'GROQ_API_KEY', '')
 
         system_prompt = (
-            "Eres LitMate, un asistente virtual experto, apasionado y riguroso sobre el mundo de los libros.\n"
-            "Tu misión es guiar al lector, responder con profundidad y precisión factual, recomendar obras reales y ayudarlo a encontrar o recordar libros.\n\n"
-            "DIRECTRICES DE PRECISIÓN Y ANTI-ALUCINACIÓN (ESTRICTAS Y OBLIGATORIAS):\n"
-            "1. PROHIBICIÓN ABSOLUTA DE INVENTAR LIBROS: NUNCA inventes títulos de libros, autores ni tramas ficticias. Todos los libros que menciones deben ser obras reales existentes y verificables.\n"
-            "2. CUANDO EL USUARIO BUSCA RECORDAR UN LIBRO:\n"
-            "   a) Si tienes certeza de la obra real: Nómbrala con su título y autor verdadero, explicando por qué coincide con sus pistas.\n"
-            "   b) Si hay varias opciones posibles: Preséntalas con claridad (\"Podría tratarse de alguna de estas obras:\").\n"
-            "   c) Si las pistas son muy vagas: Actúa en 'Modo Detective Literario', haciendo 2 preguntas amables de descarte.\n"
-            "3. PROHIBIDO USAR ASTERISCOS (*) Y NUMERALES (#): No uses asteriscos (*) ni almohadillas/numerales (#). No uses markdown como #, ##, **palabra** ni *palabra*.\n"
-            "4. FORMATO DE TÍTULOS: Escribe siempre los títulos de libros entre comillas dobles (ejemplo: \"Cien años de soledad\" de Gabriel García Márquez).\n"
-            "5. ENLACES: Enumera con números (1., 2.) o guiones (-). Para cada libro recomendado, incluye en su propia línea el enlace directo de compra:\n"
-            "   https://www.buscalibre.cl/libros/search?q=TITULO+AUTOR (reemplazando espacios por '+').\n"
-            "6. TONO: Amable, culto, entusiasta y honesto. Responde siempre en español."
+            "Eres LitMate, un asistente literario de vanguardia. Te comportas como un motor de búsqueda literario inteligente con visión general (estilo Google AI Overview).\n\n"
+            "DIRECTRICES DE RESPUESTA Y GROUNDING:\n"
+            "1. USO DE BÚSQUEDA WEB: Utiliza la información de búsqueda web en tiempo real proporcionada para recomendar libros reales, exactos y canónicos de la temática solicitada (por ejemplo, si piden crímenes o asesinatos en Rusia, usa obras como 'Crimen y castigo' de Dostoyevski, 'El niño 44' de Tom Rob Smith o crónicas sobre Andréi Chikatilo).\n"
+            "2. FORMATO AI OVERVIEW (CUANDO PIDEN RECOMENDACIONES):\n"
+            "   - Inicia con una síntesis directa categorizando las opciones (ej: Ficción y Novela Negra vs. Crónica y Asesinos Reales).\n"
+            "   - Breve descripción de cada obra recomendada (1 o 2 líneas explicando por qué se ajusta a lo que pidió).\n"
+            "   - AL FINAL, incluye obligatoriamente las 3 tarjetas de libros en líneas separadas con este formato exacto:\n"
+            "     [LIBRO: Título del libro | Nombre del Autor | $14.990 CLP]\n"
+            "   - Cierra con una frase breve invitando a profundizar o pedir un resumen de cualquiera de ellos.\n"
+            "3. MEMORIA CONVERSACIONAL: Si el usuario responde con 'sí', 'cuéntame más', 'el primero' o hace una pregunta de seguimiento, NO pongas tarjetas [LIBRO:...]; profundiza en el análisis de la obra que eligió con rigor literario.\n"
+            "4. PROHIBICIONES ESTRICTAS:\n"
+            "   - NUNCA digas que no puedes proporcionar imágenes con derechos de autor (el frontend web se encarga de mostrar las portadas).\n"
+            "   - No uses asteriscos (*) ni numerales (#).\n"
+            "   - No escribas enlaces URL en tu texto explicativo.\n"
+            "   - Títulos siempre entre comillas dobles. Habla siempre en español."
         )
 
         if user_info:
-            system_prompt += f"\n\nContexto del usuario: {user_info}"
+            system_prompt += f"\n\nPerfil del usuario: {user_info}"
         if contexto_extra:
-            system_prompt += f"\n\nCatálogo de referencia para responder con máxima precisión:\n{contexto_extra}"
+            system_prompt += f"\n\nContexto factual y búsqueda en vivo:\n{contexto_extra}"
 
         mensajes_payload = [{"role": "system", "content": system_prompt}]
         for m_hist in historial:
@@ -1706,9 +1770,16 @@ def chatbot_query(request):
             if api_key:
                 try:
                     client = Groq(api_key=api_key)
+
                     modelos_candidatos = [
                         "llama-3.3-70b-versatile",
-                        "llama-3.1-8b-instant"
+                        "deepseek-r1-distill-llama-70b",
+                        "qwen-2.5-32b",
+                        "llama-3.1-8b-instant",
+                        "openai/gpt-oss-120b",
+                        "openai/gpt-oss-20b",
+                        "groq/compound",
+                        "qwen/qwen3.6-27b"
                     ]
 
                     for modelo in modelos_candidatos:
@@ -1716,47 +1787,49 @@ def chatbot_query(request):
                             stream_response = client.chat.completions.create(
                                 messages=mensajes_payload,
                                 model=modelo,
-                                temperature=0.25,
-                                max_tokens=1200,
+                                temperature=0.35,
+                                max_tokens=1800,
                                 stream=True
                             )
+                            
+                            in_think_block = False
+
                             for chunk in stream_response:
                                 delta = chunk.choices[0].delta.content or ""
                                 if delta:
+                                    if "<think>" in delta:
+                                        in_think_block = True
+                                        delta = delta.split("<think>")[0]
+                                    if "</think>" in delta:
+                                        in_think_block = False
+                                        delta = delta.split("</think>")[-1]
+
+                                    if in_think_block or not delta:
+                                        continue
+
                                     stream_started = True
                                     clean_delta = delta.replace('*', '').replace('#', '')
                                     full_content.append(clean_delta)
                                     yield f"data: {json.dumps({'token': clean_delta})}\n\n"
+                            
                             if stream_started:
                                 break
                         except Exception as mod_err:
-                            logger.warning(f"Error streaming modelo {modelo}: {mod_err}")
+                            logger.warning(f"Error con modelo {modelo}: {mod_err}")
                 except Exception as client_err:
                     logger.error(f"Error cliente Groq: {client_err}")
 
-            # Fallback en caso de que la API externa no esté disponible
             if not stream_started:
-                if libros_sugeridos:
-                    l = libros_sugeridos[0]
-                    fallback_text = (
-                        f"¡Te recomiendo \"{l['titulo']}\" de {l['autor_str']}!\n\n"
-                        f"Es una obra destacada del género {l['genero']}. {l['sinopsis'][:260]}...\n\n"
-                        f"Puedes encontrarlo aquí:\n{l.get('link_principal')}"
-                    )
-                elif es_saludo:
-                    fallback_text = "¡Hola! Qué gusto saludarte. Soy LitMate, tu compañero de lectura. ¿Buscas alguna novela en específico, un autor favorito o recomendaciones por género?"
+                if es_saludo:
+                    fallback_text = "¡Hola! Qué gusto saludarte. Soy LitMate, tu compañera de lectura. ¿Qué temática o libro te gustaría explorar hoy?"
                 else:
-                    fallback_text = (
-                        f"No encontré ese libro exacto de inmediato, pero puedes explorar nuestro catálogo aquí:\n\n"
-                        f"https://www.buscalibre.cl/libros/search?q={requests.utils.quote(user_message)}"
-                    )
+                    fallback_text = "Disculpa, tuve un problema momentáneo de conexión con la IA. ¿Podrías repetir tu última pregunta?"
 
                 for palabra in fallback_text.split(" "):
                     yield f"data: {json.dumps({'token': palabra + ' '})}\n\n"
                     time.sleep(0.015)
                 full_content.append(fallback_text)
 
-            # Persistencia de memoria conversacional
             respuesta_completa = limpiar_simbolos_markdown("".join(full_content))
             guardar_historial_sesion(request, user_message, respuesta_completa)
             yield "data: [DONE]\n\n"
@@ -1768,7 +1841,7 @@ def chatbot_query(request):
 
     except Exception as e:
         logger.error(f"Error en chatbot_query: {e}")
-        return JsonResponse({'response': "Tuve un pequeño lapso de memoria. ¿Me repites tu consulta sobre libros?"}, status=500)
+        return JsonResponse({'response': "Ocurrió un error inesperado al procesar tu consulta."}, status=500)
 
 
 def quick_search_api(request):
