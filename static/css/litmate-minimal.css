@@ -1753,3 +1753,72 @@ html.dark-mode .nav-profile-menu-header {
     background-color: #1a626f !important;
     color: #ffffff !important;
 }
+
+/* Contenedor con perspectiva 3D */
+#chat-character-page {
+    perspective: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Respiración base suave y transición fluida */
+#chat-character-page img {
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease-out, filter 0.3s ease;
+    animation: idleBreathing 4.5s ease-in-out infinite;
+    will-change: transform;
+}
+
+/* Ciclo orgánico de respiración y flotación */
+@keyframes idleBreathing {
+    0%, 100% {
+        transform: translateY(0px) scale(1);
+    }
+    50% {
+        transform: translateY(-5px) scale(1.012);
+    }
+}
+
+/* Animación activa cuando el bot está hablando */
+#chat-character-page img.speaking-active {
+    animation: speakingBounce 0.4s ease-in-out infinite alternate !important;
+    filter: drop-shadow(0 0 16px rgba(34, 125, 142, 0.45));
+}
+
+@keyframes speakingBounce {
+    0% {
+        transform: translateY(-2px) scale(1);
+    }
+    100% {
+        transform: translateY(-7px) scale(1.018);
+    }
+}
+
+/* Tarjeta de alerta de cuota diaria */
+.quota-warning-box {
+    background: #252019 !important;
+    border: 1px solid #d97706 !important;
+    border-radius: 10px !important;
+    padding: 14px 16px !important;
+    margin: 8px 0 !important;
+    color: #fef3c7 !important;
+}
+
+.quota-warning-box strong {
+    color: #fbbf24 !important;
+    font-size: 0.92rem !important;
+}
+
+.quota-warning-box .btn-primary {
+    background-color: #227D8E !important;
+    border-color: #227D8E !important;
+    font-weight: 600 !important;
+    border-radius: 6px !important;
+    padding: 6px 14px !important;
+    font-size: 0.8rem !important;
+}
+
+.quota-warning-box .btn-primary:hover {
+    background-color: #1a626f !important;
+}

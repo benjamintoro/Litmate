@@ -13,6 +13,7 @@ from .models import (
     Genero, Editorial, EstadoLectura, Resena, ClickConversion, EventoAnalitica,
     MensajeContacto, ConversacionIA, MensajeIA, ListaLectura, ElementoListaLectura
 )
+from .quotas import verificar_y_consumir_cuota, estado_cuota_usuario
 from .forms import UserRegisterForm, UserLoginForm, UserUpdateForm, ProfileUpdateForm
 from .services import buscar_libros_hibrido, generar_enlaces_tiendas, generar_demo_extracto
 from .security import ratelimit, check_honeypot, get_client_ip
@@ -1673,7 +1674,21 @@ def chatbot_query(request):
 
         if not user_message:
             return JsonResponse({'response': "¡Hola! ¿En qué lectura u obra puedo ayudarte hoy?"})
-
+        # =====================================================================
+        # CONTROL DE CUOTA DIARIA POR PLAN
+        # =====================================================================
+        cuota_ok, info_cuota = verificar_y_consumir_cuota(request)
+        if not cuota_ok:
+            mensaje_bloqueo = (
+                f"Has alcanzado el límite diario de consultas de tu {info_cuota['plan']} "
+                f"({info_cuota['limite']} mensajes al día). Tu cuota se reiniciará a la medianoche. "
+                "Para obtener consultas ilimitadas y análisis literarios avanzados, mejora tu suscripción."
+            )
+            return JsonResponse({
+                'error': 'quota_exceeded',
+                'response': mensaje_bloqueo,
+                'info_cuota': info_cuota
+            }, status=429)
         if not request.session.session_key:
             request.session.save()
 
@@ -1929,3 +1944,12 @@ def test_error_view(request, code):
     template_name = f"{code}.html"
     status_code = int(code) if str(code).isdigit() else 200
     return render(request, template_name, {'retry_after': 45}, status=status_code)
+
+#cuotas
+
+def api_estado_cuota(request):
+    """
+    API pública/autenticada para mostrar los mensajes restantes del usuario en la interfaz.
+    """
+    info = estado_cuota_usuario(request)
+    return JsonResponse({'status': 'ok', 'cuota': info})

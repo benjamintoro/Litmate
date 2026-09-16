@@ -346,45 +346,87 @@ document.addEventListener('DOMContentLoaded', () => {
     // 6. STREAMING SSE Y MEMORIA
     // =====================================================================
     async function sendMessage(e) {
-        if (e) {
-            e.preventDefault();
-            e.stopPropagation();
+    if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    const userMessage = chatInput ? chatInput.value.trim() : '';
+    if (!userMessage) return false;
+
+    stopSpeaking();
+
+    appendMessage(userMessage, 'user');
+    chatInput.value = '';
+    if (sendBtn) sendBtn.disabled = true;
+
+    beforeSend();
+
+    const botMessageDiv = document.createElement('div');
+    botMessageDiv.classList.add('chat-message', 'bot');
+    const botParagraph = document.createElement('p');
+    botParagraph.innerHTML = '<span class="spinner-border spinner-border-sm text-secondary"></span>';
+    botMessageDiv.appendChild(botParagraph);
+    chatBody.appendChild(botMessageDiv);
+    scrollToBottom();
+
+    let accumulatedText = "";
+    let isFirstToken = true;
+
+    try {
+        const response = await fetch("/chatbot_query/", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+            body: JSON.stringify({ message: userMessage }),
+        });
+
+        // 1. Manejo de límite diario alcanzado (HTTP 429 - Quota Exceeded)
+        if (response.status === 429) {
+            let dataError = {};
+            try {
+                dataError = await response.json();
+            } catch (jsonErr) {
+                dataError = { response: 'Has alcanzado el límite diario de mensajes permitidos para tu plan actual.' };
+            }
+
+            const mensajeCuota = dataError.response || 'Has alcanzado el límite diario de consultas de tu plan.';
+            const planNombre = (dataError.info_cuota && dataError.info_cuota.plan) ? dataError.info_cuota.plan : 'Plan Actual';
+
+            botParagraph.innerHTML = `
+                <div class="quota-warning-box">
+                    <i class="fa-solid fa-hourglass-end text-warning me-2"></i>
+                    <strong>Límite diario alcanzado (${planNombre})</strong>
+                    <p class="mt-2 mb-3 small text-muted">${mensajeCuota}</p>
+                    <a href="/suscripciones/planes/" class="btn btn-sm btn-primary chatbot-upgrade-btn">
+                        <i class="fa-solid fa-crown me-1"></i> Mejorar mi Membresía
+                    </a>
+                </div>
+            `;
+
+            setAvatar("triste.png");
+            resetToDefault(7000);
+            scrollToBottom();
+            return false;
         }
 
-        const userMessage = chatInput ? chatInput.value.trim() : '';
-        if (!userMessage) return false;
+        // 2. Control de otros errores HTTP
+        if (!response.ok) {
+            throw new Error(`HTTP Error ${response.status}`);
+        }
 
-        stopSpeaking();
+        const contentType = response.headers.get("content-type") || "";
 
-        appendMessage(userMessage, 'user');
-        chatInput.value = '';
-        if (sendBtn) sendBtn.disabled = true;
-
-        beforeSend();
-
-        const botMessageDiv = document.createElement('div');
-        botMessageDiv.classList.add('chat-message', 'bot');
-        const botParagraph = document.createElement('p');
-        botParagraph.innerHTML = '<span class="spinner-border spinner-border-sm text-secondary"></span>';
-        botMessageDiv.appendChild(botParagraph);
-        chatBody.appendChild(botMessageDiv);
-        scrollToBottom();
-
-        let accumulatedText = "";
-        let isFirstToken = true;
-
-        try {
-            const response = await fetch("/chatbot_query/", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCookie('csrftoken'),
-                },
-                body: JSON.stringify({ message: userMessage }),
-            });
-
-            if (!response.ok) throw new Error(`HTTP Error ${response.status}`);
-
+        // 3. Respuesta JSON directa (en caso de fallback síncrono)
+        if (contentType.includes("application/json")) {
+            const json = await response.json();
+            accumulatedText = json.response || json.error || "No se obtuvo respuesta.";
+            botParagraph.innerHTML = formatMessageText(accumulatedText);
+            scrollToBottom();
+        } else {
+            // 4. Procesamiento de Streaming SSE
             const reader = response.body.getReader();
             const decoder = new TextDecoder("utf-8");
             let buffer = "";
@@ -420,22 +462,24 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             }
-
-            resolveBookCovers();
-            applySmartEmotion(accumulatedText);
-            speakText(accumulatedText);
-
-        } catch (error) {
-            botParagraph.innerHTML = 'Lo siento, ocurrió un problema al conectar con el asistente.';
-            onError();
-        } finally {
-            if (sendBtn) sendBtn.disabled = false;
-            if (chatInput) chatInput.focus();
-            scrollToBottom();
         }
 
-        return false;
+        resolveBookCovers();
+        applySmartEmotion(accumulatedText);
+        speakText(accumulatedText);
+
+    } catch (error) {
+        console.error("Error en chatbot query:", error);
+        botParagraph.innerHTML = 'Lo siento, ocurrió un problema al conectar con el asistente.';
+        onError();
+    } finally {
+        if (sendBtn) sendBtn.disabled = false;
+        if (chatInput) chatInput.focus();
+        scrollToBottom();
     }
+
+    return false;
+}
 
     if (chatForm) chatForm.addEventListener('submit', sendMessage);
 
@@ -464,4 +508,21 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollToBottom();
         resolveBookCovers();
     }
+
+    // Parallax 2.5D: El avatar sigue suavemente la posición del cursor
+    const avatarWrapper = document.querySelector("#chat-character-page");
+    if (avatarWrapper && avatar) {
+        document.addEventListener('mousemove', (e) => {
+            const { innerWidth, innerHeight } = window;
+            const x = (e.clientX / innerWidth - 0.5) * 14; // Grados de inclinación
+            const y = (e.clientY / innerHeight - 0.5) * -14;
+            
+            avatar.style.transform = `perspective(600px) rotateY(${x}deg) rotateX(${y}deg)`;
+        });
+
+        document.addEventListener('mouseleave', () => {
+            avatar.style.transform = 'perspective(600px) rotateY(0deg) rotateX(0deg)';
+        });
+    }
 });
+
