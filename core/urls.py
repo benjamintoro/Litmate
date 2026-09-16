@@ -69,4 +69,6 @@ urlpatterns = [
 
     # --- Previsualización de Páginas de Error (404, 500, 403, 429) ---
     path('test-error/<str:code>/', views.test_error_view, name='test_error'),
+    path('api/cuota-ia/', views.api_estado_cuota, name='api_estado_cuota'),
+    path('api/miku-tts/', views.api_miku_tts, name='api_miku_tts'),
 ]

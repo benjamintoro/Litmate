@@ -1753,3 +1753,139 @@ html.dark-mode .nav-profile-menu-header {
     background-color: #1a626f !important;
     color: #ffffff !important;
 }
+
+/* Contenedor con perspectiva 3D */
+#chat-character-page {
+    perspective: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Respiración base suave y transición fluida */
+#chat-character-page img {
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease-out, filter 0.3s ease;
+    animation: idleBreathing 4.5s ease-in-out infinite;
+    will-change: transform;
+}
+
+/* Ciclo orgánico de respiración y flotación */
+@keyframes idleBreathing {
+    0%, 100% {
+        transform: translateY(0px) scale(1);
+    }
+    50% {
+        transform: translateY(-5px) scale(1.012);
+    }
+}
+
+/* Animación activa cuando el bot está hablando */
+#chat-character-page img.speaking-active {
+    animation: speakingBounce 0.4s ease-in-out infinite alternate !important;
+    filter: drop-shadow(0 0 16px rgba(34, 125, 142, 0.45));
+}
+
+@keyframes speakingBounce {
+    0% {
+        transform: translateY(-2px) scale(1);
+    }
+    100% {
+        transform: translateY(-7px) scale(1.018);
+    }
+}
+
+/* Tarjeta de alerta de cuota diaria */
+.quota-warning-box {
+    background: #252019 !important;
+    border: 1px solid #d97706 !important;
+    border-radius: 10px !important;
+    padding: 14px 16px !important;
+    margin: 8px 0 !important;
+    color: #fef3c7 !important;
+}
+
+.quota-warning-box strong {
+    color: #fbbf24 !important;
+    font-size: 0.92rem !important;
+}
+
+.quota-warning-box .btn-primary {
+    background-color: #227D8E !important;
+    border-color: #227D8E !important;
+    font-weight: 600 !important;
+    border-radius: 6px !important;
+    padding: 6px 14px !important;
+    font-size: 0.8rem !important;
+}
+
+.quota-warning-box .btn-primary:hover {
+    background-color: #1a626f !important;
+}
+
+/* Contenedor del botón de voz y popup */
+.tts-volume-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Popup flotante que aparece en hover */
+.tts-volume-popup {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    background: #181820;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 10px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 999;
+}
+
+/* Flechita inferior del popup */
+.tts-volume-popup::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: #181820 transparent transparent transparent;
+}
+
+/* Mostrar al hacer hover sobre el wrapper */
+.tts-volume-wrapper:hover .tts-volume-popup,
+.tts-volume-popup:hover {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Etiqueta de porcentaje de volumen */
+.tts-volume-value {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #94a3b8;
+    user-select: none;
+}
+
+/* Deslizador vertical */
+#tts-volume-slider {
+    -webkit-appearance: slider-vertical;
+    writing-mode: bt-lr;
+    width: 6px;
+    height: 90px;
+    cursor: pointer;
+    accent-color: #227D8E;
+}

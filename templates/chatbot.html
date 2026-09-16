@@ -37,13 +37,24 @@
                         <form id="chat-form" onsubmit="event.preventDefault();">
                             {% csrf_token %}
                             <input type="text" id="chat-input" placeholder="Pregúntame sobre un libro..." autocomplete="off">
-                            <button type="button" id="tts-toggle-btn" class="mic-btn" title="Silenciar / Activar voz" style="background-color: #3b2818; margin-right: 6px;" aria-label="Silenciar o activar voz">
-                                <i class="fa-solid fa-volume-high" id="tts-icon"></i>
-                            </button>
+
+                            <!-- Control de Voz con Deslizador de Volumen Flotante -->
+                            <div class="tts-volume-wrapper" style="margin-right: 6px;">
+                                <div class="tts-volume-popup">
+                                    <span class="tts-volume-value" id="tts-volume-label">100%</span>
+                                    <input type="range" id="tts-volume-slider" min="0" max="1" step="0.05" value="1">
+                                </div>
+                                <button type="button" id="tts-toggle-btn" class="mic-btn" title="Silenciar / Activar voz" style="background-color: #3b2818;" aria-label="Silenciar o activar voz">
+                                    <i class="fa-solid fa-volume-high" id="tts-icon"></i>
+                                </button>
+                            </div>
+
                             <button type="button" id="mic-btn" class="mic-btn" aria-label="Habla con tu voz">
                                 <i class="fa-solid fa-microphone"></i>
                             </button>
-                            <button type="submit" id="send-btn" aria-label="Enviar"><i class="fa-solid fa-paper-plane"></i></button>
+                            <button type="submit" id="send-btn" aria-label="Enviar">
+                                <i class="fa-solid fa-paper-plane"></i>
+                            </button>
                         </form>
                     </div>
 
