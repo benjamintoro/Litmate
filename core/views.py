@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from .services_voice import obtener_audio_miku
 from django.http import JsonResponse, StreamingHttpResponse
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -1788,14 +1789,12 @@ def chatbot_query(request):
                     client = Groq(api_key=api_key)
 
                     modelos_candidatos = [
-                        "llama-3.3-70b-versatile",
-                        "deepseek-r1-distill-llama-70b",
-                        "qwen-2.5-32b",
-                        "llama-3.1-8b-instant",
                         "openai/gpt-oss-120b",
                         "openai/gpt-oss-20b",
                         "groq/compound",
-                        "qwen/qwen3.6-27b"
+                        "qwen/qwen3.6-27b",
+                        "gemma2-9b-it",
+                        "llama-3.2-3b-preview"
                     ]
 
                     for modelo in modelos_candidatos:
@@ -1953,3 +1952,37 @@ def api_estado_cuota(request):
     """
     info = estado_cuota_usuario(request)
     return JsonResponse({'status': 'ok', 'cuota': info})
+
+    from .services_voice import obtener_audio_miku
+
+@csrf_exempt
+def api_miku_tts(request):
+    """
+    Endpoint que recibe el texto del bot y devuelve la URL del audio generado con voz de Miku.
+    """
+    if request.method not in ['POST', 'GET']:
+        return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+    try:
+        from .services_voice import obtener_audio_miku
+    except ImportError as e:
+        logger.error(f"No se pudo importar services_voice: {e}")
+        return JsonResponse({'error': 'Módulo de voz no disponible'}, status=500)
+
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            texto = data.get('text', '').strip()
+        except Exception:
+            texto = request.POST.get('text', '').strip()
+    else:
+        texto = request.GET.get('text', '').strip()
+
+    if not texto:
+        return JsonResponse({'error': 'Texto no proporcionado'}, status=400)
+
+    audio_url = obtener_audio_miku(texto)
+    if audio_url:
+        return JsonResponse({'status': 'ok', 'audio_url': audio_url})
+
+    return JsonResponse({'error': 'No se pudo sintetizar el audio'}, status=500)
