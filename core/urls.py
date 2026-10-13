@@ -1,22 +1,24 @@
 from django.urls import path, reverse_lazy
 from django.contrib.auth import views as auth_views
 from . import views
+from . import literary_ai_views
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 urlpatterns = [
     # --- Vistas Generales ---
-    path('', views.index, name='index'),
-    path('about/', views.about, name='about'),
-    path('post/', views.post, name='post'),
-    path('contact/', views.contact, name='contact'),
-    path('terminos-y-condiciones/', views.terminos_condiciones, name='terminos'),
-    path('politica-de-privacidad/', views.politica_privacidad, name='privacidad'),
-    path('politica-de-cookies/', views.politica_cookies, name='cookies'),
+    path('', ensure_csrf_cookie(views.index), name='index'),
+    path('about/', ensure_csrf_cookie(views.about), name='about'),
+    path('post/', ensure_csrf_cookie(views.post), name='post'),
+    path('contact/', ensure_csrf_cookie(views.contact), name='contact'),
+    path('terminos-y-condiciones/', ensure_csrf_cookie(views.terminos_condiciones), name='terminos'),
+    path('politica-de-privacidad/', ensure_csrf_cookie(views.politica_privacidad), name='privacidad'),
+    path('politica-de-cookies/', ensure_csrf_cookie(views.politica_cookies), name='cookies'),
     
     # --- Funcionalidades Principales (IA y Búsqueda) ---
     path('libros/', views.buscar_libros, name='buscar_libros'),
-    path('chat/', views.chatbot_page, name='chatbot_page'),
-    path('chatbot/', views.chatbot_page, name='chatbot'),
-    path('chatbot_query/', views.chatbot_query, name='chatbot_query'),
+    path('chat/', literary_ai_views.chatbot_page, name='chatbot_page'),
+    path('chatbot/', literary_ai_views.chatbot_page, name='chatbot'),
+    path('chatbot_query/', literary_ai_views.chatbot_query, name='chatbot_query'),
     
     # --- Autenticación y Registro ---
     path('registro/', views.register, name='register'),
@@ -70,5 +72,5 @@ urlpatterns = [
     # --- Previsualización de Páginas de Error (404, 500, 403, 429) ---
     path('test-error/<str:code>/', views.test_error_view, name='test_error'),
     path('api/cuota-ia/', views.api_estado_cuota, name='api_estado_cuota'),
-    path('api/miku-tts/', views.api_miku_tts, name='api_miku_tts'),
+    path('api/miku-tts/', literary_ai_views.voice_query, name='api_miku_tts'),
 ]

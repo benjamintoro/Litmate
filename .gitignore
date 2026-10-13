@@ -30,6 +30,11 @@ media/
 *.log
 logs/
 
+# Archivos temporales de pruebas IA (nunca son la base del proyecto)
+.test-tmp/
+.testtmp/
+reportes/
+
 # Editores y entornos de desarrollo
 .vscode/
 .idea/

@@ -27,16 +27,16 @@
                 </div>
 
                 <div id="chat-main-page">
-                    <div id="chat-body-page">
+                    <div id="chat-body-page" role="log" aria-label="Conversación con LitMate">
                         <div class="chat-message bot">
-                            <p>¡Hola! Soy tu asistente LitMate. ¿Qué libro te gustaría encontrar o sobre qué tema te gustaría leer hoy?</p>
+                            <p>¡Hola! Soy LitMate. Cuéntame qué te apetece leer, pregúntame por un libro o comparte un pasaje: podemos descubrir historias y conversar sobre sus ideas, autores y personajes.</p>
                         </div>
                     </div>
 
                     <div id="chat-footer-page">
                         <form id="chat-form" onsubmit="event.preventDefault();">
                             {% csrf_token %}
-                            <input type="text" id="chat-input" placeholder="Pregúntame sobre un libro..." autocomplete="off">
+                            <input type="text" id="chat-input" placeholder="Pregúntame sobre un libro..." autocomplete="off" maxlength="6000">
 
                             <!-- Control de Voz con Deslizador de Volumen Flotante -->
                             <div class="tts-volume-wrapper" style="margin-right: 6px;">
@@ -67,5 +67,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'js/chatbot.js' %}"></script>
+<script src="{% static 'js/chatbot.js' %}?v=chat-v5"></script>
 {% endblock %}

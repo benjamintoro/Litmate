@@ -30,6 +30,7 @@
     <link href="{% static 'css/subscriptions.css' %}?v=4.0" rel="stylesheet" />
     <link href="{% static 'css/pages.css' %}?v=4.0" rel="stylesheet" />
     <link href="{% static 'css/dark-mode.css' %}?v=4.0" rel="stylesheet" />
+    <link href="{% static 'css/chat-books.css' %}?v=chat-v5" rel="stylesheet" />
     <script>
         // Anti-flash: aplica el tema guardado antes de que se pinte la página
         (function(){
@@ -257,9 +258,9 @@
                 </div>
             </div>
 
-            <div id="floating-chat-body">
+            <div id="floating-chat-body" role="log" aria-label="Conversación con LitMate">
                 <div class="chat-message bot">
-                    <p>¡Hola! Soy tu asistente LitMate. ¿Te ayudo a buscar o comparar algún libro de esta página?</p>
+                    <p>¡Hola! Soy LitMate. Cuéntame qué te apetece leer o qué libro tienes en mente; lo exploramos juntos.</p>
                 </div>
             </div>
 
@@ -736,8 +737,9 @@
     </script>
 
     <!-- CARGA CONDICIONAL DEL SCRIPT DEL WIDGET FLOTANTE -->
+    <script src="{% static 'js/litmate_safe.js' %}?v=chat-v5"></script>
     {% if request.path != '/chat/' and request.path != '/chatbot/' %}
-    <script src="{% static 'js/floating_chat.js' %}"></script>
+    <script src="{% static 'js/floating_chat.js' %}?v=chat-v5"></script>
     {% endif %}
 
     {% block scripts %}{% endblock %}

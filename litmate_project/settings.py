@@ -196,34 +196,7 @@ LOGGING = {
     },
 }
 
-# --- CLAVES DE API Y CONFIGURACIÓN DE IA ---
-# Estas variables permiten la integración futura con el asistente virtual [cite: 42, 43]
-PINECONE_API_KEY = os.getenv('PINECONE_API_KEY')
-PINECONE_ENVIRONMENT = os.getenv('PINECONE_ENVIRONMENT', 'us-east-1')
-HF_TOKEN = os.getenv('HF_TOKEN')
-LITMATE_SCORE_THRESHOLD = 0.35
 
-# --- CACHE (Para Rate Limiting y Optimización) ---
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'litmate-rate-limiting-cache',
-    }
-}
-
-# --- SOCIAL AUTHENTICATION (OAUTH2) ---
-GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID', '')
-GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET', '')
-GITHUB_CLIENT_ID = os.getenv('GITHUB_CLIENT_ID', '')
-GITHUB_CLIENT_SECRET = os.getenv('GITHUB_CLIENT_SECRET', '')
-
-# --- PASARELA MERCADO PAGO ---
-MERCADOPAGO_ACCESS_TOKEN = os.getenv('MERCADOPAGO_ACCESS_TOKEN', '')
-MERCADOPAGO_PUBLIC_KEY = os.getenv('MERCADOPAGO_PUBLIC_KEY', '')
-
-# --- GOOGLE ANALYTICS ---
-GOOGLE_ANALYTICS_ID = os.getenv('GOOGLE_ANALYTICS_ID', '')
-
-# Desactivar la validación estricta de versión de MySQL (requerido para TiDB Cloud / MySQL 8.0)
-from django.db.backends.base.base import BaseDatabaseWrapper
-BaseDatabaseWrapper.check_database_version_supported = lambda self: None
+# Asistente IA: configuracion centralizada; no cambia los otros modulos.
+from .ai_settings import apply_ai_settings
+apply_ai_settings(globals(), BASE_DIR)

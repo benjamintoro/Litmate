@@ -1,0 +1,15 @@
+services:
+  searxng:
+    image: docker.io/searxng/searxng:latest
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:8080"
+    environment:
+      SEARXNG_BASE_URL: "http://127.0.0.1:8080/"
+      SEARXNG_SECRET: "${LITMATE_SEARCH_SECRET:?Ejecuta python iniciar_buscador.py}"
+    volumes:
+      - ./searxng:/etc/searxng:rw
+      - litmate_search_cache:/var/cache/searxng:rw
+
+volumes:
+  litmate_search_cache:

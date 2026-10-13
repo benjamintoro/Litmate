@@ -1,0 +1,51 @@
+"""Una única configuración para búsqueda Google Books, IA local y RAG."""
+import os
+from pathlib import Path
+
+
+def apply_ai_settings(target, base_dir):
+    def flag(name, default=True):
+        return os.getenv(name, str(default)).lower() in {'1', 'true', 'yes', 'on'}
+    model = os.getenv('LITMATE_LOCAL_MODEL', 'qwen3.5:9b-q4_K_M').strip()
+    target.update(
+        LITMATE_AI_PROVIDER='ollama-local', LITMATE_AI_USE_PINECONE=False,
+        LITMATE_OLLAMA_URL=os.getenv('LITMATE_OLLAMA_URL', 'http://127.0.0.1:11434'),
+        LITMATE_LOCAL_MODEL=model,
+        LITMATE_LOCAL_GUARD_MODEL=os.getenv('LITMATE_LOCAL_GUARD_MODEL', model).strip(),
+        LITMATE_LOCAL_TIMEOUT=int(os.getenv('LITMATE_LOCAL_TIMEOUT', '240')),
+        LITMATE_LOCAL_CONTEXT=int(os.getenv('LITMATE_LOCAL_CONTEXT', '16384')),
+        LITMATE_LOCAL_THINKING=flag('LITMATE_LOCAL_THINKING', False),
+        LITMATE_LOCAL_ANSWER_TOKENS=int(os.getenv('LITMATE_LOCAL_ANSWER_TOKENS', '3072')),
+        LITMATE_AI_TOTAL_TIMEOUT=int(os.getenv('LITMATE_AI_TOTAL_TIMEOUT', '360')),
+        LITMATE_AI_QUALITY_CHECKS=flag('LITMATE_AI_QUALITY_CHECKS'),
+        LITMATE_AI_FAST_RECOMMENDATIONS=flag('LITMATE_AI_FAST_RECOMMENDATIONS'),
+        LITMATE_AI_SEARCH_BUDGET=int(os.getenv('LITMATE_AI_SEARCH_BUDGET', '4')),
+        LITMATE_AI_REQUESTS_PER_MINUTE=int(os.getenv('LITMATE_AI_REQUESTS_PER_MINUTE', '20')),
+        LITMATE_USE_EXISTING_QUOTAS=flag('LITMATE_USE_EXISTING_QUOTAS', False),
+        LITMATE_AI_CATALOG_FALLBACK=flag('LITMATE_AI_CATALOG_FALLBACK'),
+        LITMATE_AI_REQUIRE_BOOK_SOURCES=flag('LITMATE_AI_REQUIRE_BOOK_SOURCES'),
+        LITMATE_AI_BIBLIOGRAPHIC_FAST_PATH=flag('LITMATE_AI_BIBLIOGRAPHIC_FAST_PATH'),
+        LITMATE_AI_PUBLIC_DETAILS_FAST_PATH=flag('LITMATE_AI_PUBLIC_DETAILS_FAST_PATH'),
+        LITMATE_AI_USE_OPENLIBRARY=flag('LITMATE_AI_USE_OPENLIBRARY'),
+        LITMATE_AI_USE_WEB=flag('LITMATE_AI_USE_WEB'),
+        LITMATE_AI_USE_SEARXNG=flag('LITMATE_AI_USE_SEARXNG', False),
+        LITMATE_SEARXNG_URL=os.getenv('LITMATE_SEARXNG_URL', 'http://127.0.0.1:8080'),
+        LITMATE_BOOKS_CONTACT=os.getenv('LITMATE_BOOKS_CONTACT', '').strip(),
+        LITMATE_RAG_DB=Path(os.getenv('LITMATE_RAG_DB', str(Path(base_dir) / 'data' / 'litmate_rag.sqlite3'))),
+        LITMATE_RAG_SEMANTIC=flag('LITMATE_RAG_SEMANTIC'),
+        LITMATE_EMBED_MODEL=os.getenv('LITMATE_EMBED_MODEL', 'embeddinggemma:latest').strip(),
+        LITMATE_EMBED_TIMEOUT=int(os.getenv('LITMATE_EMBED_TIMEOUT', '60')),
+        LITMATE_RAG_MIN_SIMILARITY=float(os.getenv('LITMATE_RAG_MIN_SIMILARITY', '0.35')),
+        LITMATE_USE_GOOGLE_BOOKS_API=flag('LITMATE_USE_GOOGLE_BOOKS_API'),
+        GOOGLE_BOOKS_API_KEY=os.getenv('GOOGLE_BOOKS_API_KEY', '').strip(),
+        GOOGLE_BOOKS_TIMEOUT=int(os.getenv('GOOGLE_BOOKS_TIMEOUT', '8')),
+        GOOGLE_BOOKS_LANGUAGE=os.getenv('GOOGLE_BOOKS_LANGUAGE', '').strip(),
+        LITMATE_AI_LOCK_BACKEND=os.getenv('LITMATE_AI_LOCK_BACKEND', 'sqlite').strip().lower(),
+        LITMATE_AI_RUNTIME_DB=Path(os.getenv('LITMATE_AI_RUNTIME_DB', str(Path(base_dir) / 'data' / 'litmate_ia_runtime.sqlite3'))),
+        LITMATE_TTS_ENABLED=flag('LITMATE_TTS_ENABLED', False),
+        LITMATE_TTS_TIMEOUT_SECONDS=int(os.getenv('LITMATE_TTS_TIMEOUT_SECONDS', '20')),
+    )
+    cache_url = os.getenv('CACHE_URL', '').strip()
+    if cache_url:
+        target['CACHES'] = {'default': {'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+                                     'LOCATION': cache_url}}
