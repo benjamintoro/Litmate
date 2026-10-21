@@ -5,6 +5,7 @@ from .literary_ai import (ChatResult, canonical_sources, clean_text, normalized,
                          sanitized_history)
 from .literary_quality import resolve_followup_books
 from .books_google import public_query
+from .literary_identity import same_work, title_matches, resolve_followup_context
 
 
 def character_answer(message, history, search_books, search_public):
@@ -14,10 +15,13 @@ def character_answer(message, history, search_books, search_public):
             or not re.search(r'\b(?:personajes?|protagonistas?)\b', value)
             or re.search(r'\b(?:compara|analiza|interpreta|simbolismo|evolucion|spoilers?|final|muere|resume)\b', value)
             or re.search(r'\b(?:paginas?|isbn|autor|editorial|publicacion|clima|temperatura|impuestos|codigo|receta)\b', request)
-            or not re.match(r'^(?:quienes|cuales|dime|dame|describe|personajes|hablame)', value)):
+            or not re.match(r'^(?:y\s+)?(?:quienes|cuales|dime|dame|describe|personajes|hablame|sus personajes|los personajes)', value)):
         return None
     history = sanitized_history(history)
-    selected = resolve_followup_books(message, history)
+    context = resolve_followup_context(message, history)
+    if context['ambiguous']:
+        return None
+    selected = context['books']
     quoted = re.findall(r'[«“\"]([^»”\"\n]{2,180})[»”\"]', message)
     if selected:
         query = selected[0]['title']
@@ -33,16 +37,22 @@ def character_answer(message, history, search_books, search_public):
         return None
     try:
         book_query = query + (' ' + selected[0]['author'] if selected else '')
-        found = canonical_sources(search_books(book_query))
+        remembered = [source for turn in reversed(history) for source in turn.get('sources', [])
+                      if isinstance(source, dict) and selected and same_work(source, selected[0])]
+        reusable = [source for source in remembered if source.get('character_facts')]
+        found = canonical_sources(remembered if reusable else search_books(book_query))
         books = [book for book in found if book['kind'] == 'book'
-                 and book['source'] in {'Google Books API', 'Catálogo LitMate', 'Open Library'}
-                 and normalized(book['title']) == normalized(query) and book['author'] != 'Autor no informado'
+                 and book['source'] in {'Google Books API', 'Catálogo LitMate', 'Open Library',
+                                       'Conocimiento literario local', 'Biblioteca literaria local'}
+                 and title_matches(query, book) and book['author'] != 'Autor no informado'
                  and (not selected or normalized(book['author']) == normalized(selected[0]['author']))]
         if not books:
             return None
         unique_author = len({normalized(book['author']) for book in books}) == 1
         author_query = ' ' + books[0]['author'] if unique_author else ''
-        raw_public = search_public('"' + query.replace('"', ' ') + '"' + author_query + ' personajes')
+        local_facts = [source for source in found if source.get('kind') == 'web'
+                       and source.get('character_facts') and any(same_work(source, book) for book in books)]
+        raw_public = reusable or local_facts or search_public('"' + query.replace('"', ' ') + '"' + author_query + ' personajes')
         # No fusiona dos registros de una misma página antes de detectar una
         # identidad contradictoria: debe poder volver al diálogo normal.
         public = [source for item in (raw_public if isinstance(raw_public, list) else [])[:8]
@@ -53,19 +63,22 @@ def character_answer(message, history, search_books, search_public):
     matches = []
     for book in books:
         for source in public:
-            identity = normalized(source.get('identity_text', ''))
-            adaptation = re.search(r'\b(?:pelicula|serie de television|adaptacion|film|movie)\b', identity)
-            novel = re.search(r'\b(?:novela|libro|novel|book)\b', identity)
             if (source['kind'] == 'web' and trusted_url(source['url']) and source.get('character_facts')
-                    and normalized(source['title']) in {normalized(book['title']), normalized(book['title']) + ' (novela)',
-                                                        'anexo:personajes de ' + normalized(book['title'])}
-                    and normalized(book['author']) in identity
-                    and not (adaptation and (not novel or adaptation.start() < novel.start()))):
+                    and same_work(source, book)):
                 matches.append((book, source))
     if not matches or len({normalized(book['author']) for book, _ in matches}) != 1:
         return None
     book, source = matches[0]
-    facts = [fact for fact in source['character_facts'] if not forbidden_output(fact['role'])][:5]
+    # La ruta rápida tampoco elige silenciosamente la primera página cuando
+    # los hechos estructurados recibidos se contradicen sobre esta misma obra.
+    from .literary_identity import bind_source
+    from .literary_research import assess_evidence
+    relevant = [bind_source(page, book) for page in public if same_work(page, book)]
+    if assess_evidence(message, [book, *relevant], [book], 'analysis')['contradictory']:
+        return None
+    description = normalized(source.get('description', ''))
+    facts = [fact for fact in source['character_facts'] if not forbidden_output(fact['role'])
+             and normalized(fact['name']) in description and normalized(fact['role']) in description][:5]
     if len(facts) < 2:
         return None
     sources = canonical_sources([book, source])

@@ -266,14 +266,16 @@ class FreeRetrievalTests(SimpleTestCase):
             self.assertEqual(search_google('libros de guerra'), [])
         fetch.assert_not_called()
 
-    def test_searx_uses_local_google_and_duckduckgo_without_key(self):
+    def test_searx_uses_only_allowed_free_engines_without_google_or_keys(self):
         raw = {'results': [{'title': WEB['title'], 'content': WEB['description'], 'url': WEB['url']},
                            {'title': 'Malicioso', 'content': 'x', 'url': 'http://127.0.0.1/admin'}]}
         with patch('core.literary_search.read_json_url', return_value=raw) as fetch:
             result = search_searx('libros de guerra')
         args, kwargs = fetch.call_args
         self.assertTrue(args[0].startswith('http://127.0.0.1:8080/search?'))
-        self.assertIn('engines=google%2Cduckduckgo', args[0])
+        self.assertIn('engines=wikipedia%2Copenlibrary%2Cmwmbl', args[0])
+        self.assertNotIn('google', args[0])
+        self.assertNotIn('duckduckgo', args[0])
         self.assertNotIn('key=', args[0])
         self.assertTrue(kwargs['local'])
         self.assertEqual(len(result), 1)
@@ -312,7 +314,7 @@ class FreeRetrievalTests(SimpleTestCase):
             second = retrieve_web('novela')
         self.assertEqual(first, second)
         self.assertEqual(wiki.call_count, 1)
-        self.assertEqual(searx.call_count, 2)
+        self.assertEqual(searx.call_count, 1)
 
 
 class LocalRAGTests(SimpleTestCase):

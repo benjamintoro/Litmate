@@ -113,17 +113,15 @@ class ProviderSchemaRegressionTests(TestCase):
     def test_grounding_title_and_author_does_not_constrain_response_text(self):
         client = OllamaJSON()
         client._models['test-model'] = SHOW
-        response = {'done': True, 'done_reason': 'stop', 'message': {'content': json.dumps(DRAFT)}}
+        response = {'done': True, 'done_reason': 'stop', 'message': {'content': json.dumps({**DRAFT, 'books': [1]})}}
         context = {'sources': [{**BOOK, 'id': 1, 'kind': 'book'}], 'require_book_sources': True}
         with patch('core.local_llm.read_json_url', return_value=response) as fetch:
-            client('answer', 'JSON', context, 'test-model')
+            parsed = client('answer', 'JSON', context, 'test-model')
         schema = fetch.call_args.kwargs['payload']['format']
         items = schema['properties']['books']['items']
         self.assertNotIn('properties', items)
-        properties = items['anyOf'][0]['properties']
-        self.assertEqual(properties['title']['const'], BOOK['title'])
-        self.assertEqual(properties['author']['const'], BOOK['author'])
-        self.assertEqual(properties['source_id']['const'], 1)
+        self.assertEqual(items, {'type': 'integer', 'enum': [1]})
+        self.assertEqual(parsed['books'], [{'title': BOOK['title'], 'author': BOOK['author'], 'source_id': 1}])
         self.assertNotIn('enum', schema['properties']['text'])
         self.assertNotIn('enum', ANSWER_SCHEMA['properties']['text'])
 
@@ -131,14 +129,14 @@ class ProviderSchemaRegressionTests(TestCase):
         client = OllamaJSON()
         client._models['test-model'] = SHOW
         second = {'title': '1984', 'author': 'George Orwell', 'id': 2, 'kind': 'book'}
-        response = {'done': True, 'done_reason': 'stop', 'message': {'content': json.dumps(DRAFT)}}
+        response = {'done': True, 'done_reason': 'stop', 'message': {'content': json.dumps({**DRAFT, 'books': [1, 2]})}}
         context = {'sources': [{**BOOK, 'id': 1, 'kind': 'book'}, second], 'require_book_sources': True}
         with patch('core.local_llm.read_json_url', return_value=response) as fetch:
-            client('answer', 'JSON', context, 'test-model')
+            parsed = client('answer', 'JSON', context, 'test-model')
         schema = fetch.call_args.kwargs['payload']['format']
         items = schema['properties']['books']['items']
-        allowed = {tuple(option['properties'][name]['const'] for name in ('title', 'author', 'source_id'))
-                   for option in items['anyOf']}
+        allowed = {tuple(book[name] for name in ('title', 'author', 'source_id'))
+                   for book in parsed['books']}
         self.assertEqual(allowed, {(BOOK['title'], BOOK['author'], 1), ('1984', 'George Orwell', 2)})
         self.assertNotIn((BOOK['title'], 'George Orwell', 2), allowed)
         self.assertNotIn(('1984', BOOK['author'], 1), allowed)

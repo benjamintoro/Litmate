@@ -2,7 +2,7 @@
 import json
 import time
 from .ai_budget import budget_timeout, check_budget
-from urllib.parse import urlsplit
+from urllib.parse import urlsplit, urlunsplit
 from urllib.request import (HTTPRedirectHandler, ProxyHandler, Request,
                             build_opener, urlopen)
 
@@ -27,6 +27,18 @@ def local_origin(value):
 
 
 def read_json_url(url, *, payload=None, headers=None, timeout=8, local=False):
+    if not local:
+        if payload is not None:
+            raise ValueError('external_post_disabled')
+        from .literary_web import read_public_json
+        return read_public_json(url, headers=headers, timeout=budget_timeout(timeout))
+    # local=True no constituye por sí solo autorización para una dirección
+    # externa. Fija localhost a loopback y conserva únicamente ruta/consulta.
+    parsed = urlsplit(str(url or ''))
+    if parsed.fragment:
+        raise ValueError('Servicio local sin fragmentos')
+    origin = local_origin(urlunsplit((parsed.scheme, parsed.netloc, '', '', '')))
+    url = origin + (parsed.path or '/') + ('?' + parsed.query if parsed.query else '')
     body = json.dumps(payload, ensure_ascii=False).encode('utf-8') if payload is not None else None
     request = Request(url, data=body, headers=headers or {},
                       method='POST' if body is not None else 'GET')

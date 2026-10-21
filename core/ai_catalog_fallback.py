@@ -1,9 +1,208 @@
 """Respuesta bibliográfica honesta cuando el modelo generativo no está disponible."""
 import re
+import unicodedata
+from urllib.parse import parse_qs, urlsplit
 from django.conf import settings
 from .books_google import public_query, rank_book_sources, source_synopsis, get_volume, volume_source, BooksUnavailable
 from .literary_ai import (ChatResult, canonical_sources, has_excerpt, looks_literary,
                          obvious_rejection, requires_exact_text, sanitized_history, normalized)
+
+
+_TOPIC_LABELS = {
+    'history': 'historia', 'art': 'arte', 'philosophy': 'filosofía',
+    'architecture': 'arquitectura', 'poetry': 'poesía', 'cooking': 'cocina',
+    'science fiction': 'ciencia ficción', 'fantasy': 'fantasía', 'horror': 'terror',
+    'mystery': 'misterio', 'romance': 'romance', 'fiction': 'ficción',
+    'south korea': 'Corea del Sur', 'north korea': 'Corea del Norte', 'korea': 'Corea',
+    'japan': 'Japón', 'china': 'China', 'chile': 'Chile', 'peru': 'Perú',
+    'mexico': 'México', 'spain': 'España', 'italy': 'Italia',
+    'france': 'Francia',
+}
+
+
+def _topic_catalogue_origin(source):
+    """Solo fichas de recuperadores conocidos, nunca etiquetas de páginas web."""
+    if source.get('kind') != 'book' or source.get('injection_detected'):
+        return False
+    from .literary_ai import forbidden_output
+    from .literary_identity import work_identity
+    if not work_identity(source):
+        return False
+    identity = source['title'] + ' ' + source['author']
+    if (obvious_rejection(identity) or forbidden_output(identity)
+            or re.search(r'\b(?:password|contraseña|api[ _-]?key|bearer|token secreto)\b|@', identity, re.I)):
+        return False
+    origins = str(source.get('source', '')).split(' / ')
+    # El catálogo propio aporta su clave, sin necesitar un enlace externo.
+    if 'Catálogo LitMate' in origins and re.fullmatch(r'db_[1-9]\d*', str(source.get('book_id', ''))):
+        return True
+    url = urlsplit(source.get('url', ''))
+    host, path = url.hostname or '', url.path
+    if 'Open Library' in origins:
+        return host == 'openlibrary.org' and bool(re.fullmatch(r'/works/OL\d+W/?', path))
+    if 'Google Books API' in origins:
+        identifier = str(source.get('book_id', ''))
+        return bool(re.fullmatch(r'[A-Za-z0-9_-]{1,100}', identifier)
+                    and parse_qs(url.query).get('id') == [identifier]
+                    and (host in {'books.google.com', 'books.google.es', 'books.google.cl',
+                                  'books.google.com.ar', 'books.google.com.mx', 'play.google.com'}))
+    if 'Wikidata' in origins:
+        return host in {'www.wikidata.org', 'wikidata.org'} and bool(re.fullmatch(r'/wiki/Q\d+', path))
+    if 'CiNii Books' in origins:
+        return host == 'ci.nii.ac.jp' and bool(re.fullmatch(r'/ncid/[A-Za-z0-9]+/?', path))
+    return False
+
+
+def _topic_catalogue_proof(source, facets):
+    """Localiza una prueba literal de las materias; el título nunca basta.
+
+    Las categorías estructuradas confirman la materia, y el pasaje de la ficha
+    conserva un respaldo literal auditable. No fabrica una descripción a partir
+    de etiquetas ni utiliza sinopsis de otra obra.
+    """
+    categories = source.get('categories')
+    if not isinstance(categories, list) or not all(isinstance(item, str) for item in categories):
+        return ''
+    description = str(source.get('description') or '')
+    # Los offsets se calculan en texto literal: NFD puede cambiar su longitud.
+    # Buscar cada término contra subcadenas conserva tildes y Unicode originales.
+    category_text = normalized(' '.join(categories))
+    for facet in facets:
+        terms = [term for term in facet[2] if re.search(
+            r'(?<!\w)' + re.escape(normalized(term)) + r'(?!\w)', category_text)]
+        if not terms:
+            return ''
+    text, offsets = [], []
+    for position, character in enumerate(description):
+        # normalized() elimina espacios exteriores; usarlo sobre cada carácter
+        # uniría «Science Fiction» y haría desaparecer el límite entre palabras.
+        # Aquí se conserva el espacio y su posición literal en la prueba.
+        chunk = ''.join(part for part in unicodedata.normalize(
+            'NFD', unicodedata.normalize('NFKC', character))
+            if unicodedata.category(part) not in {'Mn', 'Cf'}).lower()
+        text.append(chunk)
+        offsets.extend([position] * len(chunk))
+    text = ''.join(text)
+    # La tabla conserva los offsets originales aunque una tilde o un carácter
+    # Unicode produzca una longitud distinta durante la normalización.
+    occurrences = []
+    for index, facet in enumerate(facets):
+        for term in facet[2]:
+            for match in re.finditer(r'(?<!\w)' + re.escape(normalized(term)) + r'(?!\w)', text):
+                occurrences.append((offsets[match.start()], offsets[match.end() - 1] + 1, index))
+    if not occurrences:
+        return ''
+    occurrences.sort()
+    for first, _, _ in occurrences:
+        covered, end = set(), first
+        for start, stop, index in occurrences:
+            if start < first:
+                continue
+            if stop - first > 260:
+                break
+            covered.add(index)
+            end = max(end, stop)
+            if len(covered) == len(facets):
+                begin = max(0, first - 20)
+                return description[begin:min(len(description), max(end + 20, begin + 8))][:300]
+    return ''
+
+
+def grounded_topic_fallback(message, sources):
+    """Recomendación limitada a materias verificadas, sin HTTP ni otro modelo.
+
+    Es una respuesta nueva y auditable a partir de las fichas recuperadas, no
+    una aprobación del borrador que falló. Las preguntas de contenido y filtros
+    que este respaldo no sabe comprobar continúan por su recorrido habitual.
+    """
+    from .books_google import book_topic_profile, topic_matches
+    from .literary_ai import (requested_book_count, validate_draft,
+                             validate_recommendation_text)
+    from .literary_evidence import validate_evidence
+    from .literary_identity import same_work
+    from .literary_quality import required_fact_statements, validate_audit
+    from .literary_research import evidence_requirements, is_topic_recommendation
+    if (not isinstance(message, str) or obvious_rejection(message) or has_excerpt(message)
+            or requires_exact_text(message) or not is_topic_recommendation(message)
+            or evidence_requirements(message, 'recommend') != ['recommendation']):
+        return None
+    value = normalized(message)
+    # Este respaldo no sustituye una petición adicional ni promete filtros que
+    # no haya comprobado: idioma, publicación, autor concreto o exclusiones.
+    if re.search(r'\b(?:siglos?|epoca|publicad\w*|escrit\w* por|del autor|de la autora|'
+                 r'idioma|en (?:espanol|ingles|frances|aleman|japones|portugues)|'
+                 r'sin|excepto|excluy\w*|no quiero|no sean)\b|\b(?:1\d{3}|20\d{2})\b|'
+                 r'\b(?:y|pero|ademas|tambien)\s+(?:dime|cuentame|explica|describe|'
+                 r'calcula|crea|escribe|haz|que|quien|cuanto|como|donde|cual)\b', value):
+        return None
+    if re.search(r'[.;!?]\s+\S', message):
+        return None
+    count_token = re.search(r'\b(\d+|cero|seis|siete|ocho|nueve|diez)\s+(?:libros?|obras?|novelas?|titulos?|opciones?)\b', value)
+    if count_token and (not count_token.group(1).isdigit() or not 1 <= int(count_token.group(1)) <= 5):
+        return None
+    profile = book_topic_profile(message)
+    facets = (*profile['subjects'], *profile['places'])
+    if not profile['structured'] or not facets or any(row[0] not in _TOPIC_LABELS for row in facets):
+        return None
+    # «... de Orwell» puede ser una autoría solicitada, no otra materia.
+    # Dejarla al recorrido completo en vez de ignorar silenciosamente el filtro.
+    known_words = {word for row in facets for term in row[2] for word in re.findall(r'\w+', normalized(term))}
+    possible_author = re.findall(r'\b(?:de|por)\s+([A-ZÁÉÍÓÚÑ][a-záéíóúñ]{2,})\b', message)
+    if any(normalized(name) not in known_words for name in possible_author):
+        return None
+    requested = requested_book_count(message)
+    limit = requested or 3
+    different_authors = bool(re.search(r'\b(?:distintos?|diferentes?) (?:autores?|artistas?)\b', value))
+    chosen, proofs = [], []
+    for source in canonical_sources(sources, 8):
+        if (not _topic_catalogue_origin(source) or not topic_matches(source, message)
+                or any(same_work(source, prior) for prior in chosen)
+                or (different_authors and any(normalized(source['author']) == normalized(prior['author'])
+                                               for prior in chosen))):
+            continue
+        proof = _topic_catalogue_proof(source, facets)
+        if not proof:
+            continue
+        chosen.append(source)
+        proofs.append(proof)
+        if len(chosen) == limit:
+            break
+    if not chosen or (requested and len(chosen) != requested):
+        return None
+    chosen = canonical_sources(chosen, 5)
+    subjects = [('el ' if row[0] in {'art', 'horror', 'mystery', 'romance'} else 'la ')
+                + _TOPIC_LABELS[row[0]] for row in profile['subjects']]
+    scope = ', '.join(subjects[:-1]) + ' y ' + subjects[-1] if len(subjects) > 1 else subjects[0]
+    if profile['places']:
+        scope += ' de ' + _TOPIC_LABELS[profile['places'][0][0]]
+    lines, claims, books = ['¡Buen tema!'], [], []
+    for number, (source, proof) in enumerate(zip(chosen, proofs), 1):
+        statement = f'**{source["title"]} — {source["author"]}**: Una opción para explorar {scope}.'
+        # No simplificar títulos ni omitir frases para caber en la auditoría.
+        if len(statement) > 400 or required_fact_statements(statement) != [statement]:
+            return None
+        lines.append(f'{number}. {statement}')
+        claims.append({'statement': statement, 'verdict': 'supported',
+                       'source_id': source['id'], 'evidence': proof})
+        books.append({'title': source['title'], 'author': source['author'], 'source_id': source['id']})
+    lines.append('¿Por cuál te gustaría empezar?')
+    draft = {'status': 'answer', 'basis': 'sources', 'text': '\n\n'.join(lines),
+             'citations': [source['id'] for source in chosen], 'needs_web': False, 'books': books}
+    plan = {'questions': [message], 'search_queries': [], 'needs_contents': False,
+            'needs_fresh_sources': False, 'spoilers_requested': False}
+    audit = {'decision': 'approve', 'only_books': True,
+             'coverage': [{'question_id': 1, 'status': 'answered'}],
+             'claims': claims, 'search_queries': [], 'issues': []}
+    try:
+        validate_draft(draft, chosen)
+        validate_recommendation_text(draft, chosen)
+        validate_evidence(draft, chosen, message)
+        validate_audit(audit, plan, draft, chosen, message, strict_facts=True)
+    except (ValueError, TypeError):
+        return None
+    return ChatResult(draft['text'], 'answered', True, chosen, books, 'sources', 'recommend',
+                      {'grounded_catalog_fallback': True, 'catalogue_topics_only': True,
+                       'bibliographic_results': len(chosen), 'catalog_fallback_audit': audit})
 
 
 def catalog_fallback(message, history, search, *, failure_reason=''):

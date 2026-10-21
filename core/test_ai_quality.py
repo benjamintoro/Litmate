@@ -265,8 +265,17 @@ class QualityPipelineTests(unittest.TestCase):
         self.assertEqual(llm.records, [])
 
     def test_programming_and_cooking_book_recommendations_still_reach_answer(self):
-        for message in ['Recomienda libros de cocina', 'Recomienda libros de programación']:
-            bot, _ = self.make()
+        cases = [('Recomienda libros de cocina', {'title': 'Cocina en casa',
+                  'author': 'Autora de prueba', 'description': 'Un libro de recetas y técnicas de cocina.',
+                  'categories': ['Cooking']}),
+                 ('Recomienda libros de programación', {'title': 'Programación con Python',
+                  'author': 'Autor de prueba', 'description': 'Un libro para aprender programación.',
+                  'categories': ['Programming']})]
+        for message, book in cases:
+            # La prueba de ámbito debe ofrecer una ficha de la materia pedida;
+            # recomendar Remarque para cocina ya no es una salida válida.
+            llm = QualityLLM(answer=knowledge(book), plan={**PLAN, 'questions': [message]})
+            bot = LiteraryAssistant(llm, Mock(return_value=[book]), quality_checks=True)
             self.assertEqual(bot.reply(message).status, 'answered')
 
 

@@ -1,8 +1,9 @@
 use_default_settings:
   engines:
     keep_only:
-      - google
-      - duckduckgo
+      - wikipedia
+      - openlibrary
+      - mwmbl
 
 general:
   instance_name: "LitMate búsqueda local"
@@ -21,11 +22,18 @@ search:
     - json
 
 engines:
-  - name: google
+  # Sólo motores sin claves ni facturación, con interfaces públicas de consulta.
+  # No añadir Google/HTML ni proveedores comerciales para resolver bloqueos.
+  - name: wikipedia
     disabled: false
-  - name: duckduckgo
+  - name: openlibrary
+    engine: openlibrary
+    categories: [general, books]
+    disabled: false
+  - name: mwmbl
     disabled: false
 
 outgoing:
-  request_timeout: 8.0
-  max_request_timeout: 12.0
+  request_timeout: 4.0
+  max_request_timeout: 6.0
+  retries: 0

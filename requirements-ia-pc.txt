@@ -11,5 +11,8 @@ edge-tts>=7,<8
 groq>=0.30,<2
 numpy>=2,<3
 pypdf>=6,<7
+# Extracción de páginas públicas: gratuitas, sin cliente ni facturación remota.
+trafilatura==2.3.1
+beautifulsoup4==4.15.0
 # Sólo se usa cuando eliges CACHE_URL y LITMATE_AI_LOCK_BACKEND=redis.
 redis>=5,<7

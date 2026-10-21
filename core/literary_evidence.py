@@ -12,6 +12,29 @@ def _user_excerpt(message):
     return _text(user_excerpt(message))
 
 
+def _attributed_recollection(quote, answer, message):
+    """Citar lo que recuerda el lector no certifica las palabras de una novela.
+
+    Exige tanto la coincidencia con su mensaje como una atribución inmediata;
+    una afirmación posterior de literalidad o presencia en el libro la invalida.
+    """
+    if not quote or _text(quote).casefold() not in _text(message).casefold():
+        return False
+    position = answer.find(quote)
+    if position < 0:
+        return False
+    before = re.split(r'[.!?\n]', answer[:position])[-1][-140:]
+    after = re.split(r'[.!?\n]', answer[position + len(quote):])[0]
+    if re.search(r'(?i)\b(?:cita|literal|textual|original|exacta)\b', before):
+        return False
+    attributed = re.search(r'(?i)\b(?:tu recuerdo(?: de(?: que)?)?|lo que recuerdas|'
+                           r'(?:la )?(?:idea|frase) que recuerdas|seg[uú]n recuerdas)'
+                           r'\s*[,;:\x27«“"]?\s*$', before)
+    certified = re.search(r'(?i)\b(?:aparece|figura|se lee|dice|escribe|original|'
+                          r'literal|textual|mandamiento)\b', after)
+    return bool(attributed and not certified)
+
+
 def exact_context_available(message, sources):
     """Una página del PDF no se presenta como la página de una edición impresa."""
     value = unicodedata.normalize('NFD', message.lower())
@@ -40,17 +63,19 @@ def validate_evidence(draft, sources, message):
     exact_quote = bool(re.search(r'\bcita(?:s)?\s+(?:textual(?:es)?|exacta(?:s)?)\b|\btextualmente\b',
                                 message, re.I))
     quotes = [next(part for part in group if part) for group in re.findall(
-        r'«([^»\n]+)»|“([^”\n]+)”|"([^"\n]+)"', draft['text'])]
+        r'«([^»\n]+)»|“([^”\n]+)”|"([^"\n]+)"|‘([^’\n]+)’|(?:^|(?<=[\s(]))\x27([^\x27\n]+)\x27(?=$|[\s.,;:!?])', draft['text'])]
     # Títulos y términos breves entre comillas no son necesariamente citas.
     # Una frase de tres palabras sí exige evidencia, aunque no se pidiera citar.
-    book_titles = {_text(s.get('title', '')) for s in sources if s.get('kind') == 'book'}
-    book_titles.update(_text(book.get('title', '')) for book in draft.get('books', [])
+    book_titles = {_text(s.get('title', '')).casefold() for s in sources if s.get('kind') == 'book'}
+    book_titles.update(_text(book.get('title', '')).casefold() for book in draft.get('books', [])
                        if isinstance(book, dict))
-    relevant = [q for q in quotes if exact_quote or (len(q.split()) >= 3 and _text(q) not in book_titles)]
+    relevant = [q for q in quotes if exact_quote or (len(q.split()) >= 3 and _text(q).casefold() not in book_titles)]
     if exact_quote and not relevant:
         raise ValueError('La cita solicitada debe aparecer entre comillas y provenir de un texto recibido; si falta, acláralo.')
     web_words = {}
     for quote in relevant:
+        if not exact_quote and _attributed_recollection(quote, draft['text'], message):
+            continue
         quote = _text(quote)
         if quote and user_excerpt and quote in user_excerpt:
             continue
@@ -58,6 +83,12 @@ def validate_evidence(draft, sources, message):
         if not matches:
             raise ValueError('Una cita textual no coincide con ningún fragmento recibido: quítala o solicita el texto.')
         source = next((s for s in matches if s.get('kind') == 'excerpt'), matches[0])
+        if re.search(r'\bresumen\s+(?:factual\s+)?original\b', str(source.get('read_mode', '')).lower()):
+            # Una redacción propia para identificar una obra no prueba la
+            # literalidad de la frase en una traducción de la novela.
+            if not re.search(r'(?i)par[aá]frasis|parafrase|no .{0,30}cita textual|'
+                             r'sin .{0,30}(?:edici[oó]n|traducci[oó]n|literalidad).{0,20}confirm', draft['text']):
+                raise ValueError('La fuente es un resumen original, no una cita de la novela. Presenta la frase como recuerdo o paráfrasis, sin certificar su literalidad.')
         if source.get('kind') == 'web':
             web_words[source['id']] = web_words.get(source['id'], 0) + len(quote.split())
             if web_words[source['id']] > 25:

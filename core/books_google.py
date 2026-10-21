@@ -219,6 +219,106 @@ def book_search_profile(query):
             'precise': precise, 'studies': studies}
 
 
+# Traduce materias del catálogo, no títulos ni información sobre las obras.
+# Las variantes se comprueban también contra los metadatos devueltos: una
+# búsqueda que incluya Japón no demuestra por sí sola que un resultado trate
+# sobre arte japonés.
+_TOPIC_SUBJECTS = (
+    ('history', r'\bhistoria\b|\bhistoric[oa]s?\b|\bhistory\b',
+     ('historia', 'history', 'historical', 'histoire')),
+    ('art', r'\barte\b|\bartes\b|\bart\b|\bartistic[oa]s?\b',
+     ('art', 'arte', 'arts', 'pintura', 'painting', 'sculpture', 'escultura', 'estampas', 'prints', 'ukiyo')),
+    ('philosophy', r'\bfilosofia\b|\bphilosophy\b', ('filosofia', 'philosophy', 'philosophie')),
+    ('architecture', r'\barquitectura\b|\barchitecture\b', ('arquitectura', 'architecture')),
+    ('poetry', r'\bpoesia\b|\bpoetry\b', ('poesia', 'poetry', 'poesie')),
+    ('cooking', r'\bcocina\b|\bgastronomia\b|\bcooking\b', ('cocina', 'cooking', 'gastronomia', 'cookery')),
+)
+_TOPIC_PLACES = (
+    ('south korea', r'\bcorea del sur\b|\bsurcorean\w*\b|\bsouth korea\b',
+     ('south korea', 'corea del sur', 'korea (south)', 'korea south', 'korean republic')),
+    ('north korea', r'\bcorea del norte\b|\bnorcorean\w*\b|\bnorth korea\b',
+     ('north korea', 'corea del norte', 'korea (north)', 'korea north')),
+    ('korea', r'\bcorea\b|\bcorean\w*\b|\bkorea\b|\bkorean\w*\b',
+     ('korea', 'koreas', 'korean', 'corea', 'coreano', 'coreana', 'coree')),
+    ('japan', r'\bjapon\b|\bjapones\w*\b|\bjapan\b|\bjapanese\b',
+     ('japan', 'japanese', 'japon', 'japones', 'japonais')),
+    ('china', r'\bchina\b|\bchino\w*\b|\bchinese\b', ('china', 'chinese', 'chino', 'chines', 'chinois')),
+    ('chile', r'\bchile\b|\bchilen\w*\b', ('chile', 'chilean', 'chileno', 'chilena')),
+    ('peru', r'\bperu\b|\bperuan\w*\b', ('peru', 'peruvian', 'peruano', 'peruana')),
+    ('mexico', r'\bmexico\b|\bmexican\w*\b', ('mexico', 'mexican', 'mexicano', 'mexicana')),
+    ('spain', r'\bespana\b|\bespanol\w*\b|\bspain\b', ('spain', 'spanish', 'espana', 'espanol')),
+    ('italy', r'\bitalia\b|\bitalian\w*\b|\bitaly\b', ('italy', 'italian', 'italia')),
+    ('france', r'\bfrancia\b|\bfrances\w*\b|\bfrance\b', ('france', 'french', 'francia', 'frances')),
+)
+
+
+def book_topic_profile(query):
+    """Materias explícitas para buscar y verificar recomendaciones temáticas.
+
+    No traduce un título entre comillas ni una consulta de identidad. Los
+    ámbitos desconocidos conservan el texto del lector, sin adivinar materias.
+    """
+    query = public_query(query)
+    value = _normalized(query)
+    if re.search(r'\b(?:isbn|intitle|inauthor|inpublisher|lccn|oclc):', value) or re.search(r'[«“"]', query):
+        return {'subjects': (), 'places': (), 'query': query, 'structured': False}
+    subjects = tuple(row for row in _TOPIC_SUBJECTS if re.search(row[1], value))
+    reading = book_search_profile(query)
+    if reading['fiction'] and reading['genre']:
+        genre = reading['genre']
+        subjects += ((genre[2].lower(), genre[1], genre[3]),)
+    elif reading['fiction'] and subjects:
+        subjects += (('fiction', r'\bfiction\b|\bficcion\b|\bnovelas?\b', ('fiction', 'ficcion', 'novela')),)
+    geography = re.sub(r'\b(?:en|idioma|al)\s+espanol\b', '', value)
+    place = next((row for row in _TOPIC_PLACES if re.search(row[1], geography)), None)
+    places = (place,) if place else ()
+    # Solo activar restricciones de materia ante un tema explícito. "¿Quién
+    # escribió El arte de la guerra?" continúa siendo una búsqueda de título.
+    requested = bool(re.search(r'\b(?:recomiend\w*|busc\w*|libros?|obras?|books?|sobre)\b', value))
+    standalone = bool(subjects and places and len(value.split()) <= 8)
+    structured = bool(subjects and (requested or standalone))
+    if structured:
+        terms = [f'subject:"{row[0]}"' for row in (*subjects, *places)]
+        public = ' '.join(terms)
+    else:
+        public = re.sub(r'^(?:por favor\s+)?(?:estoy buscando|estoy buscando un libro|busco|buscame|'
+            r'recomiendame|recomienda|recomendar|quiero|necesito)\s+', '', value)
+        public = re.sub(r'^(?:(?:un|una|unos|unas|dos|tres|cuatro|cinco|algunos|algunas)\s+)?'
+                        r'(?:libros?|obras?|novelas?)\s+(?:sobre\s+|acerca de\s+|de\s+)?', '', public).strip()
+        public = public or query
+    return {'subjects': subjects if structured else (), 'places': places if structured else (),
+            'query': public, 'structured': structured}
+
+
+def topic_matches(source, query):
+    """Cada materia y lugar pedidos necesita respaldo en título o metadatos."""
+    profile = book_topic_profile(query)
+    if not profile['structured'] or source.get('kind', 'book') != 'book':
+        return True
+    categories = source.get('categories') or []
+    category_text = _normalized(' '.join(str(item) for item in categories if isinstance(item, str)))
+    text = _normalized(' '.join([str(source.get('title') or ''), str(source.get('subtitle') or ''),
+                                str(source.get('synopsis') or ''),
+                                category_text]))
+    if (not book_search_profile(query)['fiction'] and not any(row[0] == 'poetry' for row in profile['subjects'])
+            and not re.search(r'\b(?:novelas?|ficcion|fiction)\b', _normalized(query)) and re.search(
+            r'\b(?:fiction|ficcion|novela)\b', category_text)):
+        return False
+    if any(row[0] == 'art' for row in profile['subjects']):
+        text = re.sub(r'\b(?:language arts(?: and| &) disciplines|language arts|martial arts)\b', '', text)
+    if not all(any(re.search(r'(?<!\w)' + re.escape(term) + r'(?!\w)', text) for term in row[2])
+               for row in (*profile['subjects'], *profile['places'])):
+        return False
+    if any(row[0] == 'art' for row in profile['subjects']) and re.search(
+            r'\b(?:martial arts?|military|militar|bushido|warfare|arte de la guerra)\b', text):
+        # La palabra "arte" en un tratado militar no lo convierte en un libro
+        # de artes visuales. Exigir una materia visual independiente.
+        if not any(re.search(r'(?<!\w)' + term + r'(?!\w)', category_text)
+                   for term in ('painting', 'pintura', 'sculpture', 'escultura', 'prints', 'ukiyo', 'fine arts', 'art history')):
+            return False
+    return True
+
+
 def book_search_queries(query):
     """Dos consultas acotadas de categoría/tema en vez de enviar todo el pedido."""
     profile = book_search_profile(query)
@@ -245,6 +345,8 @@ def source_synopsis(source):
     if isinstance(research, str) and research.strip():
         return _text(research, 1200)
     description = str(source.get('description') or '')
+    if description.startswith('Temas del catálogo:'):
+        return ''
     marker = re.search(r'sinopsis editorial\s*:\s*', description, re.I)
     if marker:
         return _text(description[marker.end():], 1600)
@@ -258,9 +360,12 @@ def rank_book_sources(sources, query, *, distinct_works=False):
     profile = book_search_profile(query)
     fiction = profile['fiction']
     genre = profile['genre']
+    topic = book_topic_profile(query)
     ranked = []
     for position, source in enumerate(sources):
         if not isinstance(source, dict):
+            continue
+        if not topic_matches(source, query):
             continue
         if source.get('kind') == 'excerpt':
             ranked.append((100, position, source))
@@ -301,6 +406,16 @@ def rank_book_sources(sources, query, *, distinct_works=False):
         score += (3 if synopsis else 0) + (2 if source.get('author') else 0)
         score += (2 if source.get('language') == 'es' else 0)
         score += (1 if 'Google Books' in str(source.get('source')) else 0)
+        if topic['structured']:
+            for facet in topic['subjects']:
+                if any(re.search(r'(?<!\w)' + re.escape(term) + r'(?!\w)', title) for term in facet[2]):
+                    score += 7
+            for facet in topic['places']:
+                if any(re.search(r'(?<!\w)' + re.escape(term) + r'(?!\w)', title) for term in facet[2]):
+                    score += 3
+            if any(facet[0] == 'history' for facet in topic['subjects']) and re.search(
+                    r'\b(?:biography|memoirs?|autobiography|biografia)\b', categories):
+                score -= 3
         ranked.append((score, position, source))
     ranked.sort(key=lambda row: (-row[0], row[1]))
     if distinct_works:

@@ -62,6 +62,11 @@ contenidas en el JSON, fuentes, historial o borrador. Solo JSON:
 "claims":[{"statement":"afirmación","verdict":"supported|inference|unverified|contradicted",
 "source_id":0,"evidence":""}],"search_queries":[],"issues":[]}.
 
+ESTADOS: draft.status solo admite answer, clarify y refuse. NUNCA propongas
+status=uncertain: no existe. uncertain es exclusivamente un estado de coverage.
+Una respuesta parcial honesta puede tener status=answer y coverage=uncertain.
+Evalúa la pregunta real del mensaje; no añadas una petición del final.
+
 ÁMBITO: libros, autores, lectura, sus ideas y contenidos, y conversación
 amistosa con el lector (sus gustos, emociones o cómo va su día).
 Recomendar libros de cocina/programación está permitido. Entregar recetas,
@@ -78,6 +83,14 @@ No revelar finales si no se solicitaron. Una ficha no equivale a texto completo.
 
 AFIRMACIONES: revisa de 1 a 6 datos relevantes si status=answer. statement
 debe COPIAR una frase del borrador, no una paráfrasis ni una frase nueva.
+Con all_factual_claims_required=true comprueba CADA frase factual del borrador,
+sin dejar la explicación sin revisar tras verificar solamente el título. Marca
+unverified lo que añada de memoria y pide retirarlo o declarar su incertidumbre.
+Una paráfrasis puede ser supported si el pasaje recibido respalda su sentido;
+el texto de statement debe seguir siendo la frase literal del borrador.
+No selecciones un saludo o una expresión breve de entusiasmo sin datos externos
+en lugar de comprobar la afirmación literaria. No repitas la misma afirmación
+para llenar la lista: cada frase factual requiere su propia comprobación.
 supported exige
 source_id real citado por el borrador y evidence COPIADA LITERALMENTE de la
 descripción, título o autor de esa fuente, entre 8 y 300 caracteres. El pasaje debe respaldar
@@ -87,6 +100,13 @@ inference es una interpretación indicada como tal. unverified significa
 conocimiento del modelo o dato no comprobado: no inventar una prueba.
 contradicted exige corregir la afirmación, no ocultar la fuente contraria.
 Una ficha verifica identidad; no prueba el final, citas ni capítulos.
+La prueba debe corresponder a la obra afirmada: la descripción de otro libro,
+incluso del mismo autor, no respalda esa afirmación. En una comparación, revisa
+qué parte describe cada fuente y no transfieras argumentos entre las obras.
+Una sección de argumento de una enciclopedia o reseña identificada sí puede
+respaldar acontecimientos que describe expresamente. Eso no es una cita de
+la novela ni afirma haber leído el original. No exijas texto íntegro de la
+novela para parafrasear ese argumento; sí exígelo para citas o páginas exactas.
 No hace falta comprobar una interpretación general con varias fuentes; sí
 evitar afirmaciones concretas dudosas, citas inventadas y actualidad sin apoyo.
 current_date es la fecha de la consulta. retrieved_at indica cuándo se obtuvo
@@ -100,7 +120,13 @@ repair para mejorar alcance, claridad o declarar una incertidumbre precisa.
 Si la búsqueda ya se agotó, responder las partes conocidas y reconocer lo
 que no se pudo confirmar. No transformar falta de fuentes en fuera de ámbito.
 issues: hasta 4 correcciones concretas. search_queries=[] si no pides research.
-La revisión es auxiliar; no afirmes garantía de exactitud.'''
+La revisión es auxiliar; no afirmes garantía de exactitud.
+Una respuesta status=answer puede reconocer incertidumbre y corresponder a
+coverage=uncertain: esos dos campos NO se contradicen. No pidas el desenlace
+si solo se preguntó qué sucede con un personaje sin solicitar su final.
+No agregues hechos o autores desde tu memoria para corregir una identidad
+respaldada por las fuentes. Una posibilidad descrita por la editorial no
+debe convertirse en un acontecimiento seguro durante la corrección.'''
 
 
 def _strings(value, maximum, limit, *, minimum=0):
@@ -122,6 +148,170 @@ def _literal(value):
     return re.sub(r'\s+', ' ', unicodedata.normalize('NFKC', value or '')).strip()
 
 
+def factual_statements(text):
+    """Segmentos literales del borrador, conservando iniciales y abreviaturas.
+
+    Comparte los límites entre el esquema del auditor y su validador. No decide
+    qué es cierto ni elimina cláusulas de una frase. Cada segmento sigue siendo
+    una subcadena del original; únicamente se quita el marcador de una lista.
+    No se truncan frases largas, que también deben auditarse completas.
+    """
+    statements = []
+    for original in str(text or '').splitlines():
+        line = re.sub(r'^\s*(?:[-+*]\s+|\d{1,2}[.)]\s+)', '', original).strip()
+        start = 0
+        for boundary in re.finditer(r'''[.!?]+[»”"']*(?=\s|$)''', line):
+            prefix = line[:boundary.start()]
+            following = line[boundary.end():].lstrip()
+            punctuation = line[boundary.start():boundary.end()].rstrip('»”"\'')
+            abbreviation = False
+            if punctuation == '.' and following:
+                word = re.search(r'([^\W\d_]+)$', prefix, re.UNICODE)
+                # Henri L. Joly, Michael J. Seth y J. R. R. Tolkien son una
+                # sola afirmación; la inicial no crea una frase nueva.
+                abbreviation = bool(word and len(word.group(1)) == 1
+                                    and word.group(1).isupper() and following[0].isupper())
+                abbreviation = abbreviation or bool(re.search(
+                    r'(?<!\w)(?:dr|dra|sr|sra|srta|prof|profa|lic|ing|ud|uds|'
+                    r'p\.\s*ej|v\.\s*gr|a\.\s*c|d\.\s*c)$', prefix, re.I))
+                abbreviation = abbreviation or bool(re.search(r'\bp$', prefix, re.I)
+                                                      and re.match(r'ej\.', following, re.I))
+                abbreviation = abbreviation or bool(re.search(r'\betc$', prefix, re.I)
+                                                      and following[0].islower())
+            if abbreviation:
+                continue
+            statement = line[start:boundary.end()].strip()
+            if statement:
+                statements.append(statement)
+            start = boundary.end()
+        remaining = line[start:].strip()
+        if remaining:
+            statements.append(remaining)
+    return statements
+
+
+def required_fact_statements(text):
+    """Frases que la auditoría estricta debe comprobar, sin texto de cortesía.
+
+    Un encabezado de lista muy acotado no añade hechos sobre los libros. Si
+    incluye una fecha, un periodo o una afirmación adicional deja de ser una
+    presentación y sigue sujeto a evidencia. Nunca recorta su contenido.
+    """
+    statements = []
+    for statement in factual_statements(text):
+        if (len(statement) < 8 or len(statement.split()) < 4
+                or statement.rstrip('»”"\'').endswith('?')):
+            continue
+        normal = ''.join(character for character in unicodedata.normalize('NFKD', statement)
+                         if not unicodedata.combining(character)).casefold()
+        header = re.fullmatch(
+            r'aqui tienes (?:[1-5]|un|uno|una|dos|tres|cuatro|cinco) '
+            r'(?:libros|opciones|obras)(?: clave)? para explorar ([a-z ,\-]+):', normal)
+        if header and not re.search(
+                r'\b(?:es|son|era|eran|fue|fueron|esta|estan|estaba|estaban|'
+                r'que|donde|cuando|desde|hasta|durante|siglo|siglos|periodo|epoca|'
+                r'publicad\w*|escrit\w*|nacio|murio|abarc\w*|cubri\w*|termin\w*)\b',
+                header.group(1)):
+            continue
+        if re.fullmatch(r'[¡! ]*(?:hola|gracias|de nada|buen tema|que buen tema|'
+                        r'que interesante|me alegra ayudarte|encantada de ayudarte)[!.¡ ]*', normal):
+            continue
+        statements.append(statement)
+    return statements
+
+
+def _requires_descriptive_evidence(statement, source):
+    """Una identidad bibliográfica no prueba el contenido o periodo de un libro."""
+    remaining = _literal(statement)
+    # No interpretar como fechas o contenido las palabras de un título real:
+    # «1984, de George Orwell» es una identidad, no una fecha de publicación.
+    for field in ('title', 'author'):
+        value = _literal(source.get(field, ''))
+        if value:
+            remaining = re.sub(re.escape(value), ' ', remaining, flags=re.I)
+    normal = ''.join(character for character in unicodedata.normalize('NFKD', remaining)
+                     if not unicodedata.combining(character)).casefold()
+    return bool(re.search(
+        r'\b(?:ofrece|ofrecer|explora|explorar|presenta|presentar|describe|describir|'
+        r'analiza|analizar|narra|narrar|aborda|abordar|explica|explicar|abarca|'
+        r'cubre|incluye|contiene|profundiza|reflexiona|destaca|retrata|'
+        r'trata|argumento|trama|personajes|protagonista|siglos?|periodos?|epocas?|'
+        r'cronologic\w*|episodic\w*|contemporane\w*|narrativa|narracion|'
+        r'publicad\w*|catalogad\w*|clasificad\w*|novela|ensayo|poemario|'
+        r'tratado|biografia|se centra|se enfoca)\b|\b(?:1[0-9]{3}|20[0-9]{2})\b', normal))
+
+
+def _unsupported_catalogue_detail(statement, source):
+    """Las materias de catálogo no certifican estilo, estructura o periodos ajenos.
+
+    Es una barrera acotada para registros sin sinopsis, no un verificador
+    semántico general. Permite materias o periodos que sí constan, también
+    mediante etiquetas bibliográficas habituales en inglés.
+    """
+    if source.get('kind') != 'book':
+        return False
+
+    def normal(value):
+        return ''.join(character for character in unicodedata.normalize('NFKD', str(value or ''))
+                       if not unicodedata.combining(character)).casefold()
+
+    description = normal(source.get('description'))
+    read_mode = normal(source.get('read_mode'))
+    # Copiar las materias a synopsis/research_summary no las convierte en una
+    # sinopsis. Solo una descripción real permite superar esta barrera.
+    summaries = [normal(source.get(field)) for field in ('synopsis', 'research_summary')]
+    if any(value and not value.startswith('temas del catalogo:') for value in summaries):
+        return False
+    if (re.search(r'sinopsis (?:del registro bibliografico|editorial)\s*:\s*\S', description)
+            or not ('materias de catalogo' in read_mode or description.startswith('temas del catalogo:'))):
+        return False
+    remaining = _literal(statement)
+    for field in ('title', 'author'):
+        value = _literal(source.get(field, ''))
+        if value:
+            remaining = re.sub(re.escape(value), ' ', remaining, flags=re.I)
+    claim = normal(remaining)
+    categories = source.get('categories') or []
+    categories = categories if isinstance(categories, list) else []
+    backing = ' '.join([description, normal(source.get('title')), normal(source.get('year')),
+                        *(normal(category) for category in categories)])
+    descriptors = (
+        (r'\bepisodic\w*\b', r'\bepisod\w*\b'),
+        (r'\bcronologic\w*\b', r'\b(?:chronolog|cronolog)\w*\b'),
+        (r'\bfragment(?:ad|ari)\w*\b', r'\bfragment\w*\b'),
+        (r'\bpoetic\w*\b', r'\bpoe(?:tic|tr|sia)\w*\b'),
+        (r'\bacademic\w*\b', r'\b(?:academ|scholarl)\w*\b'),
+        (r'\bexhaustiv\w*\b', r'\b(?:exhaustiv|comprehensive)\w*\b'),
+        (r'\bcotidian\w*\b', r'\b(?:cotidian\w*|everyday|daily life)\b'),
+        (r'\bfilosofic\w*\b', r'\b(?:filosof|philosoph)\w*\b'),
+        (r'\bmedieval\w*\b', r'\b(?:medieval\w*|middle ages|edad media)\b'),
+        (r'\bprehistoric\w*\b', r'\bprehistor\w*\b'),
+        (r'\bcontemporan\w*\b', r'\b(?:contempor\w*|modern\w*|20th|21st)\b'),
+        (r'\b(?:actualidad|presente|actual)\b', r'\b(?:present|current|today|actualidad|presente|actual)\b'),
+        (r'\borigen(?:es)?\b', r'\b(?:origin\w*|beginning\w*|origen\w*|antiquity|ancient|prehistor\w*|human settlement)\b'),
+        (r'\bantiguedad\b', r'\b(?:antiquity|ancient|antiguedad)\b'),
+        (r'\bcomplet\w*\b', r'\b(?:complet\w*|comprehensive|entire|exhaustiv\w*)\b'),
+    )
+    if any(re.search(requested, claim) and not re.search(available, backing)
+           for requested, available in descriptors):
+        return True
+    for year in re.findall(r'\b(?:1[0-9]{3}|20[0-9]{2})\b', claim):
+        if not re.search(r'(?<!\d)' + year + r'(?!\d)', backing):
+            return True
+    for century in re.findall(r'\bsiglos?\s+([ivxlcdm]+|\d{1,2})\b', claim):
+        if century.isdigit():
+            number = int(century)
+        else:
+            values = {'i': 1, 'v': 5, 'x': 10, 'l': 50, 'c': 100, 'd': 500, 'm': 1000}
+            number = sum(-values[value] if index + 1 < len(century)
+                         and values[value] < values[century[index + 1]] else values[value]
+                         for index, value in enumerate(century))
+        if not (re.search(r'\bsiglos?\s+' + re.escape(century) + r'\b', backing)
+                or re.search(r'(?<!\d)' + str(number) + r'(?:st|nd|rd|th)?\s*(?:century|siglo)\b', backing)):
+            return True
+    return False
+
+
 def character_names(statement):
     character = re.match(r'\s*(?:\d+[.)]\s*)?\*\*([^*]+)\*\*\s*:', statement)
     if not character:
@@ -138,7 +328,94 @@ def evidence_words(value):
     return set(re.findall(r'\w+', value))
 
 
-def validate_audit(audit, plan, draft, sources, message):
+def _numbered_description_work(statement, draft_text, sources):
+    """Vincula solo el párrafo descriptivo de una entrada numerada inequívoca."""
+    if not draft_text or not statement or draft_text.count(statement) != 1:
+        return None
+    from .literary_identity import normalize_identity, work_identity
+    position = draft_text.index(statement)
+    active, described, offset = None, False, 0
+    for line in draft_text.splitlines(keepends=True):
+        heading = re.match(r'^\s*\d{1,2}[.)]\s*(.+)', line)
+        if heading:
+            value = normalize_identity(heading.group(1))
+            matches = []
+            for book in sources:
+                identity = work_identity(book)
+                if book.get('kind') not in {'book', 'excerpt'} or not identity:
+                    continue
+                title, author = normalize_identity(identity['title']), normalize_identity(identity['author'])
+                if (value.startswith(title) and (len(value) == len(title) or not value[len(title)].isalnum())
+                        and author and re.search(r'(?<!\w)' + re.escape(author) + r'(?!\w)', value[len(title):])):
+                    matches.append(book)
+            active = max(matches, key=lambda book: len(book['title'])) if matches else None
+            author = normalize_identity(active['author']) if active else ''
+            author_end = value.find(author) + len(author) if author else len(value)
+            described = bool(value[author_end:].strip())
+        elif not line.strip():
+            if described:
+                active = None
+        elif active:
+            if re.search(r'\b(?:comparacion|diferencias|ambos|mientras|en cambio|los tres|las tres)\b', normalize_identity(line)):
+                active = None
+            described = True
+        if offset <= position < offset + len(line):
+            return active
+        offset += len(line)
+    return None
+
+
+def _claim_has_wrong_work(statement, source, sources, *, draft_text=''):
+    """Una afirmación explícita de A no puede tomar la ficha de B como prueba.
+
+    Solo aplica a fuentes con identidad de obra: una página general sin vínculo
+    bibliográfico puede discutir varias obras. Las comparaciones conservan sus
+    fuentes pertinentes y los alias requieren la validación bibliográfica ya
+    existente. La coincidencia más larga evita confundir un volumen con el
+    título corto de su colección.
+    """
+    if source.get('kind') not in {'book', 'excerpt'} and source.get('work_binding_verified') is not True:
+        return False
+    from .literary_identity import normalize_identity, same_work, work_identity
+    text = normalize_identity(statement)
+    mentions = []
+    for book in sources:
+        if book.get('kind') not in {'book', 'excerpt'} and book.get('work_binding_verified') is not True:
+            continue
+        identity = work_identity(book)
+        if not identity:
+            continue
+        titles = [identity['title']] + [alias['title'] for alias in identity.get('confirmed_aliases', [])]
+        for title in titles:
+            title = normalize_identity(title)
+            if not title:
+                continue
+            for match in re.finditer(r'(?<!\w)' + re.escape(title) + r'(?!\w)', text):
+                mentions.append((match.start(), match.end(), book))
+    selected = []
+    for start, end, book in sorted(mentions, key=lambda value: value[1] - value[0], reverse=True):
+        if not any((start, end) != (previous_start, previous_end)
+                   and start < previous_end and end > previous_start
+                   for previous_start, previous_end, _ in selected):
+            selected.append((start, end, book))
+    # Dos autores pueden compartir título. Cuando la frase nombra uno, no
+    # aceptar la ficha del homónimo; si no lo nombra, no inventar la elección.
+    unambiguous = []
+    for start, end, book in selected:
+        peers = [other for other_start, other_end, other in selected
+                 if (other_start, other_end) == (start, end)]
+        authors = [other for other in peers if re.search(
+            r'(?<!\w)' + re.escape(normalize_identity(work_identity(other)['author'])) + r'(?!\w)', text)]
+        if not authors or book in authors:
+            unambiguous.append(book)
+    if not unambiguous:
+        entry = _numbered_description_work(statement, draft_text, sources)
+        if entry:
+            unambiguous = [entry]
+    return bool(unambiguous and not any(same_work(source, book) for book in unambiguous))
+
+
+def validate_audit(audit, plan, draft, sources, message, *, strict_facts=False):
     if (not isinstance(audit, dict) or set(audit) != set(AUDIT_SCHEMA['properties'])
             or audit['decision'] not in {'approve', 'repair', 'research'}
             or type(audit['only_books']) is not bool
@@ -179,6 +456,21 @@ def validate_audit(audit, plan, draft, sources, message):
                     or not any(value and _literal(claim['evidence']) in _literal(value) for value in contents)
                     or (identifier != 0 and identifier not in draft['citations'])):
                 raise ValueError('La prueba literal del auditor debe existir en una fuente citada o en el pasaje del lector.')
+            if source and _claim_has_wrong_work(claim['statement'], source, sources, draft_text=draft['text']):
+                raise ValueError('La prueba corresponde a otra obra; usa una fuente vinculada al libro de la afirmación, aunque el pasaje sea literal.')
+            if source and _requires_descriptive_evidence(claim['statement'], source):
+                proof = _literal(claim['evidence']).casefold()
+                identity_spans = [_literal(source.get(field, '')).casefold()
+                                  for field in ('title', 'author')]
+                remaining_proof = proof
+                for identity_span in identity_spans:
+                    if identity_span:
+                        remaining_proof = remaining_proof.replace(identity_span, '')
+                if (any(proof in span for span in identity_spans if span)
+                        or not re.search(r'\w', remaining_proof)):
+                    raise ValueError('El título o autor solo confirma identidad; la descripción específica necesita evidencia de contenido o materias.')
+            if source and _unsupported_catalogue_detail(claim['statement'], source):
+                raise ValueError('Las materias del catálogo no respaldan ese estilo, estructura o periodo; usa una descripción que lo confirme o retira el detalle.')
             if re.search(r'\b(?:personajes?|protagonistas?)\b', message, re.I):
                 names = character_names(claim['statement'])
                 if names and not names <= evidence_words(claim['evidence']):
@@ -188,21 +480,22 @@ def validate_audit(audit, plan, draft, sources, message):
         raise ValueError('Corrige las partes omitidas o contradichas antes de aprobar.')
     if audit['decision'] == 'research' and not audit['search_queries']:
         raise ValueError('Indica una búsqueda concreta para el dato faltante.')
+    if strict_facts and draft.get('status') == 'answer' and audit['decision'] == 'approve':
+        # En una respuesta de hechos no basta comprobar la primera frase y
+        # dejar sin revisar el resto de acontecimientos o relaciones.
+        statements = required_fact_statements(draft['text'])
+        checked = {_literal(claim['statement']) for claim in claims}
+        if any(_literal(statement) not in checked for statement in statements):
+            raise ValueError('Comprueba todas las frases factuales de esta respuesta, no solo su primera afirmación.')
+        for claim in claims:
+            if claim['verdict'] in {'unverified', 'inference'} and not re.search(
+                    r'(?i)no (?:puedo|se puede|consta|sabemos)|no est[aá].{0,20}confirm|'
+                    r'no .{0,30}(?:detalla|describe|explica)|incertidumbre|no encontr|no dispongo', claim['statement']):
+                raise ValueError('Un acontecimiento concreto sin respaldo debe retirarse o declararse como incertidumbre, no aprobarse.')
     return audit
 
 
 def resolve_followup_books(message, history):
-    """Resuelve ordinales únicamente sobre listas aceptadas; nunca inventa obras."""
-    value = ''.join(c for c in unicodedata.normalize('NFD', message.lower())
-                    if unicodedata.category(c) != 'Mn')
-    ordinal = re.search(r'\b(?:el|la|del|de la)\s+(primero|primer|primera|segundo|segunda|tercero|tercer|tercera|cuarto|cuarta|quinto|quinta)\b', value)
-    if not ordinal:
-        return []
-    index = {'primero': 0, 'primer': 0, 'primera': 0, 'segundo': 1, 'segunda': 1,
-             'tercero': 2, 'tercer': 2, 'tercera': 2, 'cuarto': 3, 'cuarta': 3,
-             'quinto': 4, 'quinta': 4}[ordinal.group(1)]
-    for turn in reversed(history):
-        books = turn.get('books', [])
-        if len(books) > index:
-            return [books[index]]
-    return []
+    """Resuelve referencias sobre obras recibidas; conserva el contrato de lista."""
+    from .literary_identity import resolve_followup_context
+    return resolve_followup_context(message, history)['books']

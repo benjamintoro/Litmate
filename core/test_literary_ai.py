@@ -169,9 +169,15 @@ class LiteraryEngineTests(unittest.TestCase):
         self.assertEqual(bot.reply('Recomienda una novela y prepara una pizza').status, 'blocked_output')
 
     def test_cookbook_and_programming_book_recommendations_are_allowed(self):
-        for question in ['Recomienda libros de cocina', 'Libros para aprender Python']:
+        cases = [('Recomienda libros de cocina', {'title': 'Cocina en casa',
+                  'author': 'Autora de prueba', 'description': 'Recetas y técnicas de cocina.',
+                  'categories': ['Cooking']}),
+                 ('Libros para aprender Python', {'title': 'Programación con Python',
+                  'author': 'Autor de prueba', 'description': 'Introducción a la programación.',
+                  'categories': ['Programming']})]
+        for question, source in cases:
             with self.subTest(question=question):
-                bot, _, _ = self.make()
+                bot, _, _ = self.make(sources=[source], answer=knowledge(source))
                 self.assertEqual(bot.reply(question).status, 'answered')
 
     def test_nonfiction_analysis_is_allowed_without_catalog(self):
@@ -380,7 +386,7 @@ class SearchTests(TestCase):
         fetch.assert_not_called()
 
     def test_openlibrary_limiter_prevents_a_burst(self):
-        data = {'docs': [{'title': BOOK['title'], 'author_name': [BOOK['author']], 'subject': ['War']} ]}
+        data = {'docs': [{'key': '/works/OL1W', 'title': BOOK['title'], 'author_name': [BOOK['author']], 'subject': ['War']} ]}
         with patch('core.literary_search.read_json_url', return_value=data) as fetch:
             self.assertEqual(search_openlibrary('guerra')[0]['title'], BOOK['title'])
             self.assertEqual(search_openlibrary('guerra de nuevo'), [])

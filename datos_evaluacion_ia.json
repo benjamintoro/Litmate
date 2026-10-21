@@ -1,0 +1,173 @@
+{
+  "version": 1,
+  "purpose": "Regresiones literarias verificables. Esta matriz no estima por sí sola la precisión general del asistente.",
+  "execution": {
+    "live": "Usar el mismo modelo local y el recorrido real de catálogo y búsqueda; conservar las respuestas y sus fuentes.",
+    "controlled": "Los escenarios con interrupción, resultados contradictorios o ausencia de resultados requieren fallos simulados y no se contabilizan como consultas reales exitosas.",
+    "safety": "SQLite aislado, sin cargar credenciales ni consultar usuarios o la base TiDB. Las consultas públicas no incluyen conversaciones privadas."
+  },
+  "review_criteria": [
+    "Clasifica correctamente la acción solicitada: recomendar por tema, identificar una obra o responder un detalle.",
+    "Mantiene tema, formato y restricciones entre turnos, incluidos aquellos cuya respuesta anterior falló.",
+    "Cambia de tema cuando el usuario lo pide explícitamente y no hereda restricciones incompatibles.",
+    "Cada título y autor recomendado se corresponden con una ficha real; una coincidencia genérica de palabras no basta para el tema solicitado.",
+    "Los detalles de argumento y personajes proceden de la obra concreta, sin mezclar otras entregas de la colección.",
+    "Distingue una página leída de un fragmento del buscador, y una sinopsis de un pasaje literal del libro.",
+    "Declara qué información no pudo verificar y evita inventar hechos, páginas, fuentes o citas.",
+    "El error de una herramienta no elimina el contexto ni produce recomendaciones aleatorias."
+  ],
+  "metrics": {
+    "separate_counts": ["solicitudes", "respuestas_publicadas", "respuestas_correctas", "respuestas_incorrectas", "aclaraciones_necesarias", "aclaraciones_innecesarias", "fallos_de_servicio"],
+    "publication_error_rate": "respuestas_incorrectas / respuestas_publicadas; reportar también el denominador y la cobertura para no ocultar errores mediante abstención.",
+    "coverage": "respuestas_correctas / solicitudes; no considerar un rechazo o una petición innecesaria de datos como éxito.",
+    "context_accuracy": "continuaciones que preservan correctamente el tema u obra / continuaciones evaluadas.",
+    "factual_review": "Revisión humana de los hechos y enlaces frente al contenido efectivamente recuperado; las aprobaciones del mismo modelo no constituyen una verificación independiente.",
+    "statistical_limit": "Con cero errores en 299 observaciones independientes y representativas, el límite superior unilateral del 95% bajo un modelo binomial es aproximadamente 0,997%. Un conjunto seleccionado de regresiones no cumple por sí mismo esa representatividad ni garantiza errores inferiores al 1%."
+  },
+  "cases": [
+    {
+      "id": "korea_history_basic",
+      "mode": "live",
+      "messages": [
+        {"text": "recomiendame libros sobre la historia de corea", "expected_intent": "recommend", "expected_topic": "historia de Corea"}
+      ],
+      "must": ["Ofrecer obras bibliográficamente confirmadas que traten de historia coreana.", "Explicar su enfoque sin pedir título, personaje o escena."],
+      "must_not": ["Sustituir Corea por otros países.", "Presentar novelas genéricas como respuesta suficiente.", "Afirmar una búsqueda realizada si no se efectuó."]
+    },
+    {
+      "id": "japanese_art_topic_not_identification",
+      "mode": "live",
+      "messages": [
+        {"text": "estoy buscando un libro sobre arte japones", "expected_intent": "recommend", "expected_topic": "arte japonés"}
+      ],
+      "must": ["Tratar el mensaje como búsqueda temática de lecturas.", "Relacionar los libros con arte de Japón mediante evidencia recuperada."],
+      "must_not": ["Pedir una escena o pasaje como si se intentara identificar un argumento recordado."]
+    },
+    {
+      "id": "screenshots_exact_conversation",
+      "mode": "live",
+      "messages": [
+        {"text": "recomiendame libros sobre la historia de corea", "expected_intent": "recommend", "expected_topic": "historia de Corea"},
+        {"text": "estoy buscando un libro sobre arte japones", "expected_intent": "recommend", "expected_topic": "arte japonés", "replaces_topic": true},
+        {"text": "obras de distintos artistas recomiendame cualquiera", "expected_intent": "recommend", "expected_topic": "arte japonés", "inherits_topic": true}
+      ],
+      "must": ["El tercer mensaje conserva la materia de arte japonés aunque se permita diversidad de artistas.", "Conservar las restricciones del lector incluso si la respuesta previa fue un fallo del servicio."],
+      "must_not": ["Interpretar cualquiera como permiso para elegir géneros ajenos al tema.", "Responder con El código Da Vinci, Fahrenheit 451 o El Aleph solo porque se perdió el tema."]
+    },
+    {
+      "id": "topic_request_wording_variations",
+      "mode": "live",
+      "messages": [
+        {"text": "Busco un libro sobre arte japonés", "expected_intent": "recommend", "expected_topic": "arte japonés"},
+        {"text": "Quisiera un manual que explique la historia de Corea", "expected_intent": "recommend", "expected_topic": "historia de Corea", "replaces_topic": true}
+      ],
+      "must": ["Distinguir busco un libro sobre un tema de busco un libro donde ocurre una escena.", "Respetar el cambio explícito de materia."],
+      "must_not": ["Activar identificación solo por la expresión busco un libro."]
+    },
+    {
+      "id": "explicit_topic_replacement",
+      "mode": "live",
+      "messages": [
+        {"text": "Recomiéndame un libro sobre arte japonés", "expected_intent": "recommend", "expected_topic": "arte japonés"},
+        {"text": "Ahora recomiéndame tres novelas de ciencia ficción", "expected_intent": "recommend", "expected_topic": "ciencia ficción", "replaces_topic": true}
+      ],
+      "must": ["Ofrecer novelas del género nuevo y contrastadas con el catálogo.", "Respetar tres obras distintas cuando existan tres coincidencias verificadas."],
+      "must_not": ["Obligar a que las novelas sigan tratando sobre arte japonés.", "Completar la cantidad con manuales escolares o libros sin relación."]
+    },
+    {
+      "id": "recommendation_ordinal_followup",
+      "mode": "live",
+      "messages": [
+        {"text": "Recomiéndame dos libros sobre historia de Corea y explica sus enfoques", "expected_intent": "recommend", "expected_topic": "historia de Corea"},
+        {"text": "Cuéntame más del segundo", "expected_intent": "summary", "expected_book": "segunda obra de la respuesta anterior", "inherits_work": true}
+      ],
+      "must": ["Resolver el ordinal mediante la lista anterior y sus fuentes.", "Consultar información adicional si la ficha no basta."],
+      "must_not": ["Cambiar el segundo libro por otro recuperado posteriormente.", "Inventar detalles para completar la explicación."]
+    },
+    {
+      "id": "papelucho_specific_work_and_det",
+      "mode": "live",
+      "messages": [
+        {"text": "Dime los personajes de Papelucho y el marciano", "expected_intent": "analysis", "expected_book": "Papelucho y el marciano / alias bibliográfico confirmado"},
+        {"text": "¿Y qué sucede con Det?", "expected_intent": "analysis", "expected_book": "misma obra del turno anterior", "inherits_work": true}
+      ],
+      "must": ["Reconocer únicamente alias confirmados por una fuente bibliográfica.", "Mantener la obra activa y recuperar evidencia de acontecimientos relativos a Det si las fichas no bastan.", "Aclarar si la lista de personajes recuperada es parcial."],
+      "must_not": ["Mezclar personajes de otros Papelucho o de una adaptación cinematográfica.", "Afirmar un desenlace específico a partir de una descripción genérica de la amistad."]
+    },
+    {
+      "id": "remembered_small_planet_and_rose",
+      "mode": "live",
+      "messages": [
+        {"text": "Recuerdo un libro donde un niño vive en un planeta pequeño y cuida una rosa", "expected_intent": "identify", "expected_book": "El principito", "expected_author": "Antoine de Saint-Exupéry"}
+      ],
+      "must": ["Relacionar el candidato con al menos las pistas verificadas del niño, el planeta y la rosa.", "Conservar la tarea de identificación y no crear una historia nueva."],
+      "must_not": ["Confundirlo con otra obra solo por contener planeta."]
+    },
+    {
+      "id": "remembered_animals_equal",
+      "mode": "live",
+      "messages": [
+        {"text": "Busco un libro que menciona que todos los animales son iguales", "expected_intent": "identify", "expected_book": "Rebelión en la granja", "expected_author": "George Orwell"}
+      ],
+      "must": ["Identificar la obra a partir de evidencia real.", "Tratar el texto recordado como pista, sin certificar traducción literal, página o edición."],
+      "must_not": ["Rechazar un título entre comillas solo por variación de mayúsculas.", "Añadir una cita extensa no presente en un pasaje verificado."]
+    },
+    {
+      "id": "vague_scene_needs_clue",
+      "mode": "live",
+      "messages": [
+        {"text": "Recuerdo una escena de un libro, pero no su título", "expected_intent": "identify", "expected_status": "clarification"}
+      ],
+      "must": ["Solicitar una pista concreta, como escena, personaje, lugar o época.", "Evitar gastar búsquedas con una descripción vacía."],
+      "must_not": ["Elegir una obra de manera arbitraria."]
+    },
+    {
+      "id": "nonfiction_books_allowed",
+      "mode": "live",
+      "messages": [
+        {"text": "Recomiéndame libros para aprender Python desde cero", "expected_intent": "recommend", "expected_topic": "libros introductorios de Python"}
+      ],
+      "must": ["Permitir la recomendación de no ficción.", "Comprobar títulos y autores y explicar qué nivel de lectura cubren."],
+      "must_not": ["Rechazar porque el tema del libro es programación.", "Responder escribiendo o ejecutando código en lugar de recomendar lecturas."]
+    },
+    {
+      "id": "mixed_practical_action_rejected",
+      "mode": "live",
+      "messages": [
+        {"text": "Recomiéndame libros de cocina y dame una receta", "expected_status": "rejected"}
+      ],
+      "must": ["Conservar la restricción vigente sobre acciones prácticas mezcladas con libros."],
+      "must_not": ["Usar la detección temática para saltarse un rechazo de ámbito."]
+    },
+    {
+      "id": "exact_quote_without_authorized_text",
+      "mode": "live",
+      "messages": [
+        {"text": "Dime la página exacta y la cita textual donde Det aparece en Papelucho y el marciano", "expected_intent": "analysis", "expected_status": "clarification"}
+      ],
+      "must": ["Solicitar una edición o un fragmento autorizado cuando falte texto literal verificable.", "Distinguir esa limitación de lo que sí se conoce sobre el argumento."],
+      "must_not": ["Inventar un número de página o convertir una sinopsis web en cita de la novela."]
+    },
+    {
+      "id": "search_offline_or_empty",
+      "mode": "controlled",
+      "conditions": ["SearXNG desconectado", "SearXNG sin resultados", "motor con límite temporal"],
+      "messages": [
+        {"text": "Busco un libro sobre arte japonés", "expected_intent": "recommend", "expected_topic": "arte japonés"},
+        {"text": "De distintos artistas, cualquiera", "expected_intent": "recommend", "expected_topic": "arte japonés", "inherits_topic": true}
+      ],
+      "must": ["Usar las otras fuentes gratuitas disponibles dentro del presupuesto.", "Conservar el tema aunque el turno no produzca una respuesta publicable.", "Si no hay fichas pertinentes, expresar la limitación sin inventar títulos."],
+      "must_not": ["Solicitar una escena en una petición temática.", "Reemplazar una búsqueda fallida por tres novelas genéricas.", "Reintentar sin límite o utilizar un proveedor de pago."]
+    },
+    {
+      "id": "contradiction_or_wrong_volume",
+      "mode": "controlled",
+      "conditions": ["Dos fuentes atribuyen acontecimientos incompatibles a Det", "Un resultado describe otra entrega de Papelucho o una película"],
+      "messages": [
+        {"text": "¿Qué sucede con Det en Papelucho y el marciano?", "expected_intent": "analysis", "expected_book": "Papelucho y el marciano"}
+      ],
+      "must": ["Excluir obras distintas y adaptaciones que no acrediten la novela concreta.", "Comparar las fuentes pertinentes y señalar contradicciones no resueltas.", "Mantener las comprobaciones de seguridad y de evidencia."],
+      "must_not": ["Aprobar hechos incompatibles como si estuvieran corroborados.", "Eliminar validadores para publicar un borrador rechazado."]
+    }
+  ]
+}

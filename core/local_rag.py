@@ -1,5 +1,6 @@
 """SQLite FTS5 + embeddings locales, con filtro por obra y reemplazo atómico."""
 import hashlib
+import json
 import logging
 import os
 import re
@@ -70,7 +71,7 @@ def _metadata(db):
         return {}
 
 
-def index_documents(folder, database, *, embedder=None, progress=None):
+def index_documents(folder, database, *, embedder=None, progress=None, metadata=None):
     folder, database = Path(folder).resolve(), Path(database).resolve()
     if not folder.is_dir():
         raise ValueError('No existe la carpeta de libros')
@@ -79,6 +80,9 @@ def index_documents(folder, database, *, embedder=None, progress=None):
     if not files:
         raise ValueError('Agrega archivos Titulo__Autor.pdf, .txt o .md')
     identity = embedder.identity() if embedder is not None else None
+    metadata = metadata or {}
+    if not isinstance(metadata, dict):
+        raise ValueError('Los metadatos deben relacionar nombres de archivo con fichas')
     database.parent.mkdir(parents=True, exist_ok=True)
     fd, staging = tempfile.mkstemp(prefix='litmate-rag-', suffix='.sqlite3', dir=database.parent)
     os.close(fd)
@@ -87,8 +91,8 @@ def index_documents(folder, database, *, embedder=None, progress=None):
     try:
         if identity and database.is_file():
             previous = sqlite3.connect(database.as_uri() + '?mode=ro', uri=True)
-            metadata = _metadata(previous)
-            if (metadata.get('model'), metadata.get('digest')) != identity:
+            previous_metadata = _metadata(previous)
+            if (previous_metadata.get('model'), previous_metadata.get('digest')) != identity:
                 previous.close()
                 previous = None
         with closing(sqlite3.connect(staging)) as db, db:
@@ -97,6 +101,7 @@ def index_documents(folder, database, *, embedder=None, progress=None):
                 'document_id UNINDEXED, chunk_id UNINDEXED,'
                 'tokenize="unicode61 remove_diacritics 2")')
             db.execute('CREATE TABLE documents (document_id TEXT PRIMARY KEY, title TEXT, author TEXT)')
+            db.execute('CREATE TABLE document_metadata (document_id TEXT PRIMARY KEY, record TEXT)')
             db.execute('CREATE TABLE rag_metadata (key TEXT PRIMARY KEY, value TEXT)')
             db.execute('CREATE TABLE rag_vectors (rowid INTEGER PRIMARY KEY, '
                        'chunk_id TEXT UNIQUE, dimension INTEGER, vector BLOB)')
@@ -138,6 +143,18 @@ def index_documents(folder, database, *, embedder=None, progress=None):
                                  for part in path.stem.split('__', 1))
                 if not title or not author:
                     raise ValueError('Falta título o autor: ' + path.name)
+                attributes = metadata.get(path.name, {})
+                if not isinstance(attributes, dict):
+                    raise ValueError('Metadatos inválidos: ' + path.name)
+                if attributes.get('kind', 'excerpt') != 'excerpt':
+                    # Un resumen propio no se convierte en texto de la novela,
+                    # ni concede permiso para citas o páginas de una edición.
+                    if (attributes.get('kind') not in {'book', 'web'}
+                            or attributes.get('indexing_authorized') is not True
+                            or not attributes.get('license') or not attributes.get('url')):
+                        raise ValueError('Las fichas necesitan autorización, licencia y fuente: ' + path.name)
+                    title = clean_text(attributes.get('work_title', title), 220)
+                    author = clean_text(attributes.get('work_author', author), 220)
                 if path.stat().st_size > 25_000_000:
                     raise ValueError('El archivo supera 25 MB: ' + path.name)
                 document_hash = hashlib.sha256()
@@ -149,6 +166,8 @@ def index_documents(folder, database, *, embedder=None, progress=None):
                 added = db.execute('INSERT OR IGNORE INTO documents VALUES (?,?,?)', (document_id, title, author))
                 if added.rowcount == 0:
                     continue
+                db.execute('INSERT INTO document_metadata VALUES (?,?)',
+                           (document_id, json.dumps(attributes, ensure_ascii=False)))
                 before, total_chars = count, 0
                 for locator, body in _pages(path):
                     total_chars += len(body)
@@ -305,9 +324,34 @@ def retrieve_fragments(query, database, maximum=4, *, embedder=None,
             content = normalized(body)
             if any(content == text or (len(content) > 100 and content in text) for text in seen_texts):
                 continue
-            selected.append({'title': title, 'author': author, 'description': body, 'kind': 'excerpt',
+            try:
+                metadata_row = db.execute('SELECT record FROM document_metadata WHERE document_id=?',
+                                          (document_id,)).fetchone()
+                attributes = json.loads(metadata_row[0]) if metadata_row else {}
+            except (sqlite3.OperationalError, ValueError, TypeError):
+                attributes = {}
+            source = {'title': title, 'author': author, 'description': body, 'kind': 'excerpt',
                 'source': 'Colección local: ' + filename, 'locator': locator,
-                'book_id': chunk_id, 'read_mode': 'fragmento recuperado'})
+                'book_id': chunk_id, 'read_mode': 'fragmento recuperado'}
+            if attributes:
+                for key in ('kind', 'source', 'url', 'license', 'work_id', 'work_title',
+                            'work_author', 'work_binding_verified', 'confirmed_aliases',
+                            'isbns', 'character_facts', 'character_scope', 'fact_topics',
+                            'literary_facts', 'fact_ids'):
+                    if key in attributes:
+                        source[key] = attributes[key]
+                if source['kind'] != 'excerpt':
+                    source.update(locator='ficha factual local', complete_work=False,
+                        read_mode='resumen original autorizado; no texto de la novela')
+                    source['literary_facts'] = [fact for fact in source.get('literary_facts', [])
+                        if isinstance(fact, dict) and fact.get('evidence')
+                        and fact['evidence'] in body]
+                    source['character_facts'] = [fact for fact in source.get('character_facts', [])
+                        if isinstance(fact, dict) and fact.get('name') and fact['name'] in body
+                        and fact.get('role') and fact['role'] in body]
+                    if source['kind'] == 'web':
+                        source['author'] = 'Fuente web'
+            selected.append(source)
             seen_texts.append(content)
             if len(selected) == maximum:
                 break

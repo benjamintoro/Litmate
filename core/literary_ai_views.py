@@ -17,6 +17,8 @@ from .literary_ai import (build_assistant, ChatResult, MAX_HISTORY, MAX_MESSAGE,
 from .quotas import verificar_y_consumir_cuota
 from .ai_concurrency import acquire, release, rate_increment
 from .ai_budget import request_budget, BudgetExpired
+from .literary_sources import bounded_research
+from .literary_conversation import resolve_topic_context, remember_topic
 
 logger = logging.getLogger('litmate')
 HISTORY_KEY = 'litmate_literary_chat_local_v1'
@@ -57,11 +59,28 @@ def rate_allowed(request):
         return False
 
 
-def remember(request, state, message, result, elapsed_ms, client):
+def remember(request, state, message, result, elapsed_ms, client, *, topic_context=None):
+    topic_changed = remember_topic(state, message, topic_context)
     if not result.remember:
+        if topic_changed:
+            # Guardar la petición permite continuar tras un fallo. No guardar el
+            # borrador rechazado como respuesta ni convertirlo en evidencia.
+            request.session[HISTORY_KEY] = state
+            request.session.modified = True
         return
+    from .literary_identity import work_identity
+    records = {source.get('id'): source for source in result.sources}
+    remembered_books = []
+    for book in result.books:
+        source = records.get(book.get('source_id'), book)
+        remembered_books.append({**book, **work_identity(source),
+                                'source': source.get('source', ''), 'url': source.get('url', '')})
     turn = {'accepted': True, 'question': message, 'answer': result.text[:5000],
-            'sources': result.sources[:4], 'books': result.books, 'basis': result.basis}
+            'sources': result.sources[:8], 'books': remembered_books, 'basis': result.basis}
+    if len(remembered_books) == 1:
+        state['active_work'] = work_identity(remembered_books[0])
+    elif remembered_books:
+        state.pop('active_work', None)
     state['turns'] = (state.get('turns', []) + [turn])[-MAX_HISTORY:]
     if request.user.is_authenticated:
         try:
@@ -93,6 +112,7 @@ def remember(request, state, message, result, elapsed_ms, client):
 
 @require_POST
 @csrf_protect
+@bounded_research
 def chatbot_query(request):
     if request.content_type != 'application/json':
         return JsonResponse({'response': 'Envía un mensaje JSON válido.'}, status=415)
@@ -122,6 +142,14 @@ def chatbot_query(request):
     if (not isinstance(state, dict) or state.get('owner') != owner
             or not isinstance(state.get('turns'), list)):
         state = {'owner': owner, 'turns': []}
+    topic_context = resolve_topic_context(message, state)
+    if remember_topic(state, message, topic_context):
+        # La intención del lector existe aunque falle el proveedor.
+        # Se conserva aparte del historial de respuestas aceptadas.
+        request.session[HISTORY_KEY] = state
+        request.session.modified = True
+    retrieval_message = (topic_context['query'] if topic_context.get('followup')
+                         and topic_context.get('intent') == 'recommend' else message)
     if (getattr(settings, 'LITMATE_AI_BIBLIOGRAPHIC_FAST_PATH', True)
             and not getattr(settings, 'LITMATE_USE_EXISTING_QUOTAS', False)):
         from .ai_catalog_fallback import bibliographic_answer
@@ -135,15 +163,16 @@ def chatbot_query(request):
                         and getattr(settings, 'LITMATE_AI_USE_WEB', True)):
                     from .ai_public_details import character_answer
                     from .literary_search import retrieve_books, retrieve_web
-                    direct = character_answer(message, state['turns'], retrieve_books, retrieve_web)
+                    direct = character_answer(retrieval_message, state['turns'], retrieve_books, retrieve_web)
                 if direct is None:
-                    direct = bibliographic_answer(message, state['turns'], search_google)
+                    direct = bibliographic_answer(retrieval_message, state['turns'], search_google)
         except BudgetExpired:
             direct = None
         if direct is not None:
             remember(request, state, message, direct, round((time.monotonic() - fast_start) * 1000),
                      SimpleNamespace(usage={}, provider='public-book-details' if direct.diagnostics.get(
-                         'public_details_fast_path') else 'google-books-metadata', calls=0))
+                         'public_details_fast_path') else 'google-books-metadata', calls=0),
+                     topic_context=topic_context)
             return stream_result(direct)
     # SQLite coordina los procesos de un PC; Redis permite compartir el lease entre máquinas.
     import uuid
@@ -163,9 +192,9 @@ def chatbot_query(request):
         except (TypeError, ValueError):
             return JsonResponse({'response': 'Revisa los valores de configuración de la IA local.'}, status=503)
         start = time.monotonic()
-        result = assistant.reply(message, state['turns'])
+        result = assistant.reply(message, state['turns'], topic_context=topic_context)
         if result.status == 'unavailable':
-            logger.warning('IA: respuesta pendiente (%s)',
+                logger.warning('IA: respuesta pendiente (%s)',
                            result.diagnostics.get('provider_error') or
                            result.diagnostics.get('validation_error') or 'quality_check_failed')
         if result.status == 'unavailable' and getattr(settings, 'LITMATE_AI_CATALOG_FALLBACK', True):
@@ -173,7 +202,7 @@ def chatbot_query(request):
             from .literary_search import search_google
             try:
                 with request_budget(getattr(client, 'deadline', start + 20)):
-                    fallback = catalog_fallback(message, state['turns'], search_google,
+                    fallback = catalog_fallback(retrieval_message, state['turns'], search_google,
                         failure_reason=result.diagnostics.get('provider_error', 'quality_check_failed'))
             except BudgetExpired:
                 fallback = None
@@ -186,7 +215,8 @@ def chatbot_query(request):
             if not quota_ok:
                 return JsonResponse({'error': 'quota_exceeded', 'info_cuota': quota_info,
                     'response': 'Has alcanzado tu límite diario de consultas.'}, status=429)
-        remember(request, state, message, result, round((time.monotonic()-start)*1000), client)
+        remember(request, state, message, result, round((time.monotonic()-start)*1000), client,
+                 topic_context=topic_context)
     finally:
         try:
             release(lock_key, owner_token)
