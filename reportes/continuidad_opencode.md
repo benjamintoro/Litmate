@@ -3,7 +3,8 @@
 Actualizado: 22 de octubre de 2026.
 Rama: `feature/cuotas-ia-chatbot`.
 Commits locales de esta sesión: `f12ee52` (seguridad), `057a687` (IA),
-`2f8708f` (evaluación) y el commit de documentación de este informe.
+`2f8708f` (evaluación), `147c75e` (informe anterior), `935f2cb` (chat acotado y
+respuestas verificadas rápidas) y `1f3a7b7` (métricas honestas de timeout).
 
 ## Objetivo general
 
@@ -12,7 +13,58 @@ conversacional, identificación por recuerdos parciales, investigación web
 verificable, menor latencia y protección contra invenciones, sin romper el
 diseño visual ni las funciones existentes.
 
-## Estado actual
+## Intervención actual — espera de cinco minutos y objetivo de diez segundos
+
+- Se preservó `147c75e` con la etiqueta local
+  `checkpoint/ia-antes-limite-10s-20261022`.
+- Había **25 s + hasta 360 s** de presupuestos sucesivos. Ahora el trabajo del
+  chat tiene un deadline único de **9 s** y el navegador corta la espera a los
+  **10 s**. No se han quitado auditorías para publicar antes de verificarlas.
+- El caso exacto de la captura ya devuelve tres libros, autores, explicaciones
+  y fuentes sin modelo: **0,080 s por HTTP/SSE real aislado** en la primera
+  comprobación. No es una medición en la cuenta ni la base MySQL del usuario.
+- Nuevos módulos: `core/ai_quick_answers.py`, `core/literary_language.py` y
+  `core/data/verified_readings.json`. Superposición factual de solo lectura;
+  no se importaron fichas a la base del usuario ni se ejecutaron migraciones.
+- `core/ai_budget.py` acota la espera incluso ante dependencias no cooperativas,
+  con dos slots sin cola ilimitada. Los trabajos tardíos mantienen su slot y
+  lease hasta terminar; sus respuestas no se publican ni se cobran.
+- Las rutas rápidas funcionan con cuotas activas. Se añadieron controles de
+  cantidad, autores distintos, nuevas opciones y de títulos con ordinales
+  («El segundo sexo» no es el segundo libro de la lista).
+- Se reutilizan hechos documentados para seguimientos de personajes y autorías;
+  las citas sin texto local piden el pasaje sin esperar al modelo. Las búsquedas
+  cortas usan FTS sin cargar un modelo de embeddings adicional.
+- Clientes principal/flotante comparten timeout y conservan diseño, tarjetas,
+  CSRF y renderizado seguro. Assets versionados `chat-v6`.
+- Última suite general ejecutada después de los arreglos:
+  **1119 pruebas core OK en 7,507 s**; **13 de pagos OK en 0,112 s**;
+  **198 comprobaciones JavaScript OK**.
+- La primera matriz HTTP real (`http_matriz_v1.json`) completó 46 turnos en
+  menos de 10 s (máximo 9,019 s), pero tuvo 27 `unavailable`, 9 `answered`,
+  4 aclaraciones, 3 rechazos y 3 HTTP 503. **No se considera una IA terminada.**
+- Se corrigieron autorías simples, aclaraciones innecesarias, seguimientos,
+  cierres tardíos y prioridad de una ficha propia aunque sea más breve.
+- Evaluación vigente: **`http_matriz_v4.json`**, tras el último arreglo, sin
+  cambios de código durante la ejecución. **46/46** completaron SSE en menos
+  de 10 s: p50 **0,0465 s**, p95 **9,017 s**, máximo **9,025 s**. Estados:
+  **21 answered, 17 unavailable, 5 clarification y 3 rejected**; cero HTTP 503.
+- En la matriz original son **17/42 respuestas publicadas**; las otras cuatro
+  corresponden al caso nuevo de la captura y sus variantes/seguimiento. No
+  comparar 21/46 con el antiguo 21/42 como si fueran la misma cobertura.
+- La consulta exacta reportada completó HTTP en **0,016 s** en la última matriz;
+  el seguimiento «Cuéntame más del segundo», **0,028 s**. Fuentes y libros
+  documentados, sin llamada al modelo. No es una medición sobre la sesión
+  MySQL del usuario.
+- Todos los turnos publicados pasan las comprobaciones mecánicas de términos;
+  no hay revisión factual independiente. `analisis_v4.json` mantiene exactitud
+  factual en `null`, y las inferencias de trabajos vencidos en desconocido.
+- Pendiente inmediato: estabilizar fuentes y aumentar cobertura de consultas
+  complejas **sin relajar auditorías ni fingir que un timeout es una respuesta
+  correcta**. El 9B aún no completa esas respuestas en este presupuesto.
+- Informe: `reportes/latencia_10s_20261022/INFORME.md`.
+
+## Estado histórico anterior a esta intervención
 
 - La suite offline completa de `core` pasa: **1078 pruebas OK** en 6.220 s.
 - Las pruebas de pagos pasan: **13 pruebas OK**.
@@ -33,14 +85,15 @@ diseño visual ni las funciones existentes.
 ## Fases
 
 - [x] Fase A — Preservación y diagnóstico.
-- [x] Fase B — Auditoría, fechas, premios, publicación y biografía.
-- [x] Fase C — Memoria, correcciones, cambio de tema y referencias al libro
-  anterior; hay pruebas de pipeline y de conversación.
-- [x] Fase D — Ruta factual simple y reducción de llamadas; la latencia de
-  consultas complejas, el streaming progresivo y el precalentamiento siguen
-  pendientes.
+- [ ] Fase B — Hay arreglos de auditoría, fechas, premios y biografía; falta
+  certificar la calidad factual de todas las respuestas y ampliar cobertura.
+- [ ] Fase C — Memoria y referencias implementadas; investigación autónoma y
+  estabilidad de fuentes siguen parciales.
+- [ ] Fase D — Rutas rápidas y presupuesto interactivo implementados; completar
+  razonamiento complejo verificado en diez segundos sigue pendiente.
 - [x] Fase E — Cuotas, pagos, OAuth, CSRF y settings de producción.
-- [x] Fase F — Evaluación final v2 y comparación honesta con la línea base.
+- [ ] Fase F — Evaluaciones técnicas ejecutadas; revisión factual independiente
+  y cumplimiento integral de la misión todavía pendientes.
 
 ## Cambios principales
 
@@ -168,14 +221,19 @@ analizador sólo comprobaba términos obligatorios y prohibidos.
 
 ## Próximos pasos
 
-1. Revisar manualmente las respuestas publicadas de final3 y completar la
-   revisión factual independiente que la matriz deja en `null`.
-2. Medir el endpoint HTTP real con streaming y distinguir latencia de
-   recuperación de fuentes de latencia del modelo.
-3. Mejorar la estabilidad de búsqueda y reintentos sin convertir una búsqueda
+1. Revisar las 21 respuestas publicadas en la matriz HTTP v4 y completar una
+   revisión factual independiente; no basta el estado ni los términos.
+2. Reproducir las 17 abstenciones, especialmente investigación reciente,
+   comparaciones, fragmentos y análisis largos. Evaluar un modelo/transportes
+   más ligeros con las mismas fuentes y pruebas de calidad antes de cambiar
+   el 9B. No resolver el problema desactivando verificaciones.
+3. Mejorar la estabilidad de búsqueda y reintentos/caché sin convertir una búsqueda
    vacía en una recomendación inventada.
-4. Decidir si los casos de seguridad/ambigüedad deben actualizar
-   `expected_status` en la matriz para no penalizar abstenciones correctas.
-5. Evaluar una segunda reparación acotada para respuestas largas: hoy una
+4. Medir sesión/historial en un MySQL **aislado**, sin escribir en la cuenta
+   real. El benchmark HTTP ya incluye CSRF y SSE, pero usa SQLite temporal;
+   no demuestra el coste del middleware ni la persistencia en MySQL remoto.
+5. Decidir criterios de estado de seguridad/ambigüedad antes de otra evaluación,
+   sin alterar expectativas para ocultar fallos de servicio.
+6. Evaluar una segunda reparación acotada para respuestas largas: hoy una
    respuesta con datos concretos no respaldados puede terminar en
    `unavailable` en lugar de una versión corregida.

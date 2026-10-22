@@ -1,0 +1,38 @@
+[
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "context": 8192,
+    "num_predict": 64,
+    "test": "raw_definition_not_audited_pipeline",
+    "error": "TimeoutError",
+    "seconds": 10.018
+  },
+  {
+    "model": "litmate-qwen35-text:9b-q4_K_M",
+    "context": 8192,
+    "num_predict": 64,
+    "test": "raw_definition_not_audited_pipeline",
+    "done": true,
+    "reason": "stop",
+    "answer": "Una metáfora es una figura retórica que establece una comparación directa entre dos elementos distintos sin utilizar conectores explícitos como \"como\" o \"parecido a\".",
+    "load_ms": 4420.162,
+    "prompt_ms": 275.661,
+    "eval_ms": 3008.779,
+    "eval_tokens": 37,
+    "seconds": 7.824
+  },
+  {
+    "model": "qwen3.5:4b",
+    "context": 8192,
+    "num_predict": 64,
+    "test": "raw_definition_not_audited_pipeline",
+    "done": true,
+    "reason": "stop",
+    "answer": "La metáfora es una figura retórica que establece una identidad directa entre dos elementos distintos sin utilizar nexos comparativos, sugiriendo así una semejanza o relación conceptual a través de la sustitución de un término por otro.",
+    "load_ms": 4726.226,
+    "prompt_ms": 226.737,
+    "eval_ms": 2361.931,
+    "eval_tokens": 51,
+    "seconds": 7.452
+  }
+]
