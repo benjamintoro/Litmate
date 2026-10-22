@@ -296,7 +296,8 @@ class OllamaJSON:
                         'items': {'type': 'string', 'minLength': 1, 'maxLength': length},
                     }
                 draft_text = str((data.get('draft') or {}).get('text', ''))
-                from .literary_quality import factual_statements, required_fact_statements
+                from .literary_quality import (MAX_AUDIT_CLAIMS, NORMAL_AUDIT_CLAIMS,
+                    factual_statements, required_fact_statements)
                 strict_fact_audit = bool(data.get('all_factual_claims_required')
                                          or data.get('specific_factual_question'))
                 # Una lista con enum + minItems permite repetir c1 y omitir c2.
@@ -304,6 +305,12 @@ class OllamaJSON:
                 # propio. No se truncan hechos que el validador exigirá después.
                 statements = (required_fact_statements(draft_text) if strict_fact_audit else
                               [part for part in factual_statements(draft_text) if len(part) >= 8][:24])
+                if strict_fact_audit and len(statements) > MAX_AUDIT_CLAIMS:
+                    # No recortar frases: una respuesta con más hechos de los que
+                    # caben en una auditoría debe dividirse en lotes antes de
+                    # publicarse. El error explícito evita aprobar sólo una parte.
+                    self.last_error = 'auditoria_requiere_lotes'
+                    raise ProviderUnavailable(self.last_error)
                 evidence_by_source = {}
                 cited = set((data.get('draft') or {}).get('citations', []))
                 for source in data.get('sources', []):
@@ -350,13 +357,14 @@ class OllamaJSON:
                 }, 'required': ['statement', 'verdict', 'source_id', 'evidence'],
                     'additionalProperties': False})
                 schema['properties']['claims']['items'] = {'anyOf': alternatives}
-                schema['properties']['claims']['maxItems'] = 6
+                schema['properties']['claims']['maxItems'] = NORMAL_AUDIT_CLAIMS
                 # El validador ya exige una afirmación: pedir [] al modelo no
                 # puede producir una auditoría publicable para status=answer.
                 schema['properties']['claims']['minItems'] = 1 if (data.get('draft') or {}).get('status') == 'answer' else 0
                 if strict_fact_audit \
                         and (data.get('draft') or {}).get('status') == 'answer':
-                    schema['properties']['claims']['minItems'] = min(6, max(1, len(statements)))
+                    schema['properties']['claims']['minItems'] = min(
+                        NORMAL_AUDIT_CLAIMS, max(1, len(statements)))
                     if statements:
                         claim_slots = {'c' + str(index): statement
                                        for index, statement in enumerate(dict.fromkeys(statements), 1)}
@@ -467,41 +475,58 @@ class OllamaJSON:
             if stage == 'audit' and claim_slots is not None:
                 # El transporte compacto devuelve IDs, no pasajes repetidos.
                 output_tokens = 1536
-            content = self._fit_context(prompt, transport_data, output_tokens)
-            payload = {
-                'model': model, 'stream': False, 'format': schema, 'keep_alive': '10m',
-                'messages': [{'role': 'system', 'content': prompt},
-                             {'role': 'user', 'content': content}],
-                'options': {'temperature': 0.1 if answer_stage else 0,
-                            'num_ctx': self.context,
-                            'num_predict': output_tokens},
-            }
-            if 'thinking' in (info.get('capabilities') or []):
-                payload['think'] = self.thinking if answer_stage else False
-            self.calls += 1
-            result = read_json_url(local_origin(self.base_url) + '/api/chat',
-                payload=payload, headers={'Content-Type': 'application/json'},
-                timeout=self._remaining(), local=True)
-            # Métricas numéricas del proveedor local, sin mensajes ni fuentes.
-            # Distinguen carga, evaluación de entrada y generación; el tiempo
-            # de pared sigue incluyendo HTTP, validación y transporte.
-            for field in ('load_duration', 'prompt_eval_duration', 'eval_duration', 'total_duration'):
-                value = result.get(field)
-                if type(value) is int and 0 <= value <= 3600 * 1_000_000_000:
-                    self._inference_metrics[field.removesuffix('_duration') + '_ms'] = round(value / 1_000_000, 3)
-            for field in ('prompt_eval_count', 'eval_count'):
-                value = result.get(field)
-                if type(value) is int and 0 <= value <= 10_000_000:
-                    self._inference_metrics[field] = value
-            prompt_tokens, completion_tokens = result.get('prompt_eval_count', 0), result.get('eval_count', 0)
-            if type(prompt_tokens) is int and prompt_tokens >= 0:
-                self.usage['prompt_tokens'] += prompt_tokens
-            if type(completion_tokens) is int and completion_tokens >= 0:
-                self.usage['completion_tokens'] += completion_tokens
-            self.usage['total_tokens'] = self.usage['prompt_tokens'] + self.usage['completion_tokens']
-            if result.get('done') is not True or result.get('done_reason') != 'stop':
-                raise ProviderUnavailable('respuesta_local_incompleta')
-            raw = (result.get('message') or {}).get('content', '')
+            request_tokens = output_tokens
+            raw = ''
+            for request_attempt in range(2):
+                content = self._fit_context(prompt, transport_data, request_tokens)
+                payload = {
+                    'model': model, 'stream': False, 'format': schema, 'keep_alive': '10m',
+                    'messages': [{'role': 'system', 'content': prompt},
+                                 {'role': 'user', 'content': content}],
+                    'options': {'temperature': 0.1 if answer_stage else 0,
+                                'num_ctx': self.context,
+                                'num_predict': request_tokens},
+                }
+                if 'thinking' in (info.get('capabilities') or []):
+                    payload['think'] = self.thinking if answer_stage else False
+                self.calls += 1
+                result = read_json_url(local_origin(self.base_url) + '/api/chat',
+                    payload=payload, headers={'Content-Type': 'application/json'},
+                    timeout=self._remaining(), local=True)
+                # Métricas numéricas del proveedor local, sin mensajes ni fuentes.
+                # Distinguen carga, evaluación de entrada y generación; el tiempo
+                # de pared sigue incluyendo HTTP, validación y transporte.
+                for field in ('load_duration', 'prompt_eval_duration', 'eval_duration', 'total_duration'):
+                    value = result.get(field)
+                    if type(value) is int and 0 <= value <= 3600 * 1_000_000_000:
+                        self._inference_metrics[field.removesuffix('_duration') + '_ms'] = round(value / 1_000_000, 3)
+                for field in ('prompt_eval_count', 'eval_count'):
+                    value = result.get(field)
+                    if type(value) is int and 0 <= value <= 10_000_000:
+                        self._inference_metrics[field] = value
+                prompt_tokens, completion_tokens = result.get('prompt_eval_count', 0), result.get('eval_count', 0)
+                if type(prompt_tokens) is int and prompt_tokens >= 0:
+                    self.usage['prompt_tokens'] += prompt_tokens
+                if type(completion_tokens) is int and completion_tokens >= 0:
+                    self.usage['completion_tokens'] += completion_tokens
+                self.usage['total_tokens'] = self.usage['prompt_tokens'] + self.usage['completion_tokens']
+                if result.get('done') is not True:
+                    raise ProviderUnavailable('respuesta_local_incompleta')
+                done_reason = result.get('done_reason')
+                if done_reason not in {'stop', 'length'}:
+                    raise ProviderUnavailable('respuesta_local_incompleta')
+                raw = (result.get('message') or {}).get('content', '')
+                if done_reason == 'length':
+                    # Ollama agotó num_predict. Un JSON truncado no es una
+                    # respuesta publicable, pero tampoco equivale a una caída
+                    # del proveedor: se concede un único reintento con más
+                    # espacio antes de declarar el corte de forma explícita.
+                    if request_attempt == 0 and request_tokens < 4096:
+                        request_tokens = min(4096, max(request_tokens + 512, request_tokens * 2))
+                        continue
+                    self.last_error_detail = 'truncated_json_response'
+                    raise ProviderUnavailable('respuesta_local_truncada')
+                break
             try:
                 parsed = json.loads(raw)
             except json.JSONDecodeError:

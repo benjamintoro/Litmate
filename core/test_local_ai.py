@@ -88,10 +88,34 @@ class LocalProviderTests(unittest.TestCase):
         self.assertEqual(client.usage['total_tokens'], 60)
 
     def test_incomplete_output_and_string_done_are_never_published(self):
-        for result in (response(done=False), response(done='true'), response(done_reason='length')):
+        for result in (response(done=False), response(done='true')):
             client, fetch = self.client(result)
             with patch('core.local_llm.read_json_url', fetch), self.assertRaises(ProviderUnavailable):
                 client('answer', 'JSON', {}, 'qwen3.5:4b-q4_K_M')
+
+    def test_length_stop_is_retried_once_with_more_output_tokens(self):
+        first = response(message={'role': 'assistant', 'content': '{"status":"answer","text":"corte'},
+                         done_reason='length')
+        client = OllamaJSON()
+        with patch('core.local_llm.read_json_url',
+                   side_effect=[SHOW, first, response()]) as fetch:
+            self.assertEqual(client('answer', 'JSON', {}, 'qwen3.5:4b-q4_K_M'), DRAFT)
+        chats = [call for call in fetch.call_args_list if call.args[0].endswith('/api/chat')]
+        self.assertEqual(len(chats), 2)
+        self.assertGreater(chats[1].kwargs['payload']['options']['num_predict'],
+                           chats[0].kwargs['payload']['options']['num_predict'])
+        self.assertEqual(client.stage_timings[0]['status'], 'ok')
+
+    def test_truncated_output_after_retry_is_not_reported_as_a_provider_outage(self):
+        truncated = response(message={'role': 'assistant', 'content': '{"status":"answer","text":"corte'},
+                               done_reason='length')
+        client = OllamaJSON()
+        with patch('core.local_llm.read_json_url', side_effect=[SHOW, truncated, truncated]):
+            with self.assertRaises(ProviderUnavailable) as raised:
+                client('answer', 'JSON', {}, 'qwen3.5:4b-q4_K_M')
+        self.assertEqual(str(raised.exception), 'respuesta_local_truncada')
+        self.assertEqual(client.stage_timings[0]['status'], 'failed')
+        self.assertEqual(client.stage_timings[0]['failure_detail'], 'truncated_json_response')
 
     def test_malformed_content_returns_controlled_error(self):
         client, fetch = self.client(response(message={'content': '```json invalid'}))

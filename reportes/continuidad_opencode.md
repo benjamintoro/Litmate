@@ -2,7 +2,8 @@
 
 Actualizado: 22 de octubre de 2026.
 Rama: `feature/cuotas-ia-chatbot`.
-Checkpoint: pendiente de confirmar en el historial de Git.
+Checkpoint: `96d2587` (preservación del trabajo de Codex). Los cambios de la
+Fase B están en el árbol de trabajo y se guardarán en el siguiente commit.
 
 ## Objetivo general
 
@@ -28,7 +29,8 @@ diseño visual ni las funciones existentes.
 ## Fases
 
 - [x] Fase A — Preservación y diagnóstico.
-- [ ] Fase B — Errores de auditoría y precisión de la IA.
+- [x] Fase B — Errores de auditoría y precisión de la IA (A y B corregidos;
+  queda la revisión semántica y de recomendaciones).
 - [ ] Fase C — Memoria, razonamiento e investigación.
 - [ ] Fase D — Rendimiento y latencia.
 - [ ] Fase E — Cuotas, seguridad y mantenimiento.
@@ -39,7 +41,12 @@ diseño visual ni las funciones existentes.
 - `.\venv\Scripts\python.exe -B verificar_proyecto.py core.test_topic_task_boundaries`
   → 9 pruebas OK.
 - `.\venv\Scripts\python.exe -B verificar_proyecto.py core suscripciones`
-  → 1032 pruebas OK en 5.837 s; `System check identified no issues`.
+  → 1035 pruebas OK en 5.789 s; `System check identified no issues`.
+- Regresión nueva: auditoría estricta con 8 hechos, todos con slot y validación
+  `strict_facts=True`.
+- Regresión nueva: respuesta con `done_reason=length` reintenta una vez con más
+  `num_predict`; un segundo corte se informa como `respuesta_local_truncada`,
+  no como caída del proveedor.
 
 ## Decisiones técnicas
 
@@ -53,17 +60,16 @@ diseño visual ni las funciones existentes.
 
 ## Problemas pendientes conocidos
 
-1. Auditoría estricta con más de seis afirmaciones: el esquema puede exigir
-   todos los hechos y `validate_audit` rechaza más de seis.
-2. `done_reason='length'` se trata como fallo total; falta recuperación
-   controlada.
-3. Verificación semántica: la evidencia literal no garantiza implicación.
-4. Recomendaciones rápidas pueden omitir auditoría factual de trama.
-5. Latencia: llamadas secuenciales, guardián 9B, timeouts altos, ruta rápida de
+1. Verificación semántica: la evidencia literal no garantiza implicación.
+2. Recomendaciones rápidas pueden omitir auditoría factual de trama.
+3. Las respuestas con más de 24 hechos estrictos requieren auditoría por lotes;
+   hoy se rechazan de forma explícita (`auditoria_requiere_lotes`) en vez de
+   recortar afirmaciones en silencio.
+4. Latencia: llamadas secuenciales, guardián 9B, timeouts altos, ruta rápida de
    25 s, streaming no progresivo, precalentamiento no integrado.
-6. Cuotas desactivadas por defecto, acopladas a rutas rápidas, consumidas después
+5. Cuotas desactivadas por defecto, acopladas a rutas rápidas, consumidas después
    de inferir y con confianza en `X-Forwarded-For`.
-7. Seguridad: bypass de pagos, settings inseguros por defecto, login demo,
+6. Seguridad: bypass de pagos, settings inseguros por defecto, login demo,
    endpoints CSRF-exempt y dependencias legacy.
 
 ## Riesgos
@@ -75,7 +81,6 @@ diseño visual ni las funciones existentes.
 
 ## Próxima acción concreta
 
-Crear el checkpoint local y continuar con la Fase B: reproducir el fallo de
-más de seis afirmaciones con una prueba de regresión, corregir la
-incompatibilidad entre `local_llm.py` y `literary_quality.py`, y después
-corregir el manejo de `done_reason='length'`.
+Guardar la Fase B en un commit local y continuar con la Fase C/D: probar
+memoria multiturno y recomendaciones rápidas, medir latencia real y revisar la
+verificación semántica antes de pasar a cuotas y seguridad.

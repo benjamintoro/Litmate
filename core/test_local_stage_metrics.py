@@ -43,8 +43,10 @@ class LocalStageMetricsTests(SimpleTestCase):
     def test_incomplete_response_keeps_cost_metrics_without_becoming_success(self):
         client = OllamaJSON()
         incomplete = response(done_reason='length', eval_duration=123_000_000)
-        with patch('core.local_llm.read_json_url', side_effect=[SHOW, incomplete]):
-            with self.assertRaises(ProviderUnavailable):
+        with patch('core.local_llm.read_json_url', side_effect=[SHOW, incomplete, incomplete]):
+            with self.assertRaises(ProviderUnavailable) as raised:
                 client('answer', 'JSON', {}, 'local-test')
+        self.assertEqual(str(raised.exception), 'respuesta_local_truncada')
         self.assertEqual(client.stage_timings[0]['status'], 'failed')
         self.assertEqual(client.stage_timings[0]['eval_ms'], 123)
+        self.assertEqual(client.stage_timings[0]['failure_detail'], 'truncated_json_response')

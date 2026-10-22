@@ -7,6 +7,13 @@ import re
 import unicodedata
 
 
+# Una respuesta literaria detallada puede contener más de seis hechos. El
+# transporte estricto crea un campo por frase; el validador debe aceptar ese
+# mismo contrato sin recortar ni descartar afirmaciones en silencio.
+MAX_AUDIT_CLAIMS = 24
+NORMAL_AUDIT_CLAIMS = 6
+
+
 def obj(properties):
     return {'type': 'object', 'properties': properties,
             'required': list(properties), 'additionalProperties': False}
@@ -84,11 +91,13 @@ Evalúa sólo la afirmación literal del borrador: los finales, contradicciones 
 detalles adicionales presentes únicamente en una fuente no están afirmados por
 la respuesta. No atribuyas al borrador esos pasajes que no contiene.
 
-AFIRMACIONES: revisa de 1 a 6 datos relevantes si status=answer. statement
-debe COPIAR una frase del borrador, no una paráfrasis ni una frase nueva.
-Con all_factual_claims_required=true comprueba CADA frase factual del borrador,
-sin dejar la explicación sin revisar tras verificar solamente el título. Marca
-unverified lo que añada de memoria y pide retirarlo o declarar su incertidumbre.
+AFIRMACIONES: revisa de 1 a 6 datos relevantes si status=answer y la
+auditoría es normal. Con all_factual_claims_required=true comprueba CADA frase
+factual del borrador, sin dejar la explicación sin revisar tras verificar
+solamente el título; el máximo estricto es 24 y no se recorta la lista.
+statement debe COPIAR una frase del borrador, no una paráfrasis ni una frase
+nueva. Marca unverified lo que añada de memoria y pide retirarlo o declarar su
+incertidumbre.
 Una paráfrasis puede ser supported si el pasaje recibido respalda su sentido;
 el texto de statement debe seguir siendo la frase literal del borrador.
 No selecciones un saludo o una expresión breve de entusiasmo sin datos externos
@@ -480,8 +489,9 @@ def validate_audit(audit, plan, draft, sources, message, *, strict_facts=False):
             or {c['question_id'] for c in coverage} != set(range(1, len(coverage) + 1))):
         raise ValueError('Comprueba cada pregunta del plan, sin omitir ni duplicar ninguna.')
     claims = audit['claims']
-    if not isinstance(claims, list) or len(claims) > 6:
-        raise ValueError('Comprueba hasta seis afirmaciones relevantes.')
+    if not isinstance(claims, list) or len(claims) > MAX_AUDIT_CLAIMS:
+        raise ValueError(f'Comprueba hasta {MAX_AUDIT_CLAIMS} afirmaciones relevantes; '
+                         'no recortes ni omitas frases del borrador.')
     if draft['status'] == 'answer' and not claims:
         raise ValueError('Comprueba al menos una afirmación real del borrador antes de aprobar.')
     lookup = {s['id']: s for s in sources}

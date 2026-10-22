@@ -1615,7 +1615,7 @@ class LiteraryAssistant:
                             # Conserva esa señal para reparar; jamás la convierte
                             # en prueba ni sustituye validate_audit.
                             claims = audit_output.get('claims', []) if isinstance(audit_output, dict) else []
-                            for claim in claims[:6] if isinstance(claims, list) else []:
+                            for claim in claims if isinstance(claims, list) else []:
                                 if (isinstance(claim, dict) and claim.get('verdict') in
                                         {'unverified', 'inference', 'contradicted'}
                                         and isinstance(claim.get('statement'), str)
@@ -1634,7 +1634,7 @@ class LiteraryAssistant:
                             # Se reutiliza el validador, sin aprobar el conjunto
                             # ni convertir sus afirmaciones en conocimiento.
                             warned = {row['statement'] for row in rejected_claims}
-                            for claim in claims[:6] if isinstance(claims, list) else []:
+                            for claim in claims if isinstance(claims, list) else []:
                                 if (not isinstance(claim, dict) or not isinstance(claim.get('statement'), str)
                                         or not claim['statement'].strip() or claim['statement'] not in draft['text']
                                         or claim['statement'] in warned):

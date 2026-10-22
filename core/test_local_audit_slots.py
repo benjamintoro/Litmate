@@ -93,6 +93,33 @@ class StrictAuditSlotTests(SimpleTestCase):
         self.assertEqual(validate_audit(parsed, PLAN, context['draft'], SOURCES,
                                         context['message'], strict_facts=True), parsed)
 
+    def test_eight_strict_facts_are_all_audited_and_validated(self):
+        facts = [f'La biblioteca número {index} conserva recuerdos distintos.'
+                 for index in range(1, 9)]
+        sources = canonical_sources([{
+            'kind': 'book', 'title': 'Ocho catálogos de prueba',
+            'author': 'Autora ficticia de prueba', 'description': ' '.join(facts),
+            'source': 'Fixture controlado',
+        }])
+        context = self.context(sources=sources, draft={
+            'status': 'answer', 'basis': 'sources', 'text': ' '.join(facts),
+            'citations': [1], 'books': [], 'needs_web': False,
+        })
+        result = {
+            'decision': 'approve', 'only_books': True,
+            'coverage': [{'question_id': 1, 'status': 'answered'}],
+            'claims': {'c' + str(index): audit_claim(fact)
+                       for index, fact in enumerate(facts, 1)},
+            'search_queries': [], 'issues': [],
+        }
+        parsed, payload = self.run_audit(result, sources=sources, draft=context['draft'])
+        claims_schema = payload['format']['properties']['claims']
+        self.assertEqual(claims_schema['required'], [f'c{index}' for index in range(1, 9)])
+        self.assertEqual(len(parsed['claims']), 8)
+        self.assertEqual([claim['statement'] for claim in parsed['claims']], facts)
+        self.assertEqual(validate_audit(parsed, PLAN, context['draft'], sources,
+                                        context['message'], strict_facts=True), parsed)
+
     def test_transport_cannot_duplicate_first_claim_instead_of_checking_the_second(self):
         result = wire_audit()
         result['claims']['c2'] = copy.deepcopy(result['claims']['c1'])
