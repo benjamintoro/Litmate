@@ -415,6 +415,7 @@ class FastChatEndpointTests(TestCase):
             self.assertIn('límite de tiempo', text)
             self.assertNotIn('INVENTED', text)
             self.assertEqual(response['X-LitMate-Status'], 'unavailable')
+            self.assertNotIn('X-LitMate-Model-Calls', response)
             consume.assert_not_called()
             from .literary_ai_views import HISTORY_KEY
             self.assertEqual(self.client.session[HISTORY_KEY]['turns'], [])

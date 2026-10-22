@@ -304,7 +304,9 @@ def chatbot_query(request):
         result = ChatResult('Llegué al límite de tiempo sin completar la verificación de esta respuesta. '
                             'No voy a inventar los datos que faltan. Puedes volver a intentarlo.',
                             'unavailable', diagnostics={'provider_error': 'tiempo_total_agotado'})
-        client = SimpleNamespace(usage={}, provider='deadline', calls=0)
+        # El cliente del trabajo que venció no se devuelve al hilo HTTP. No
+        # inventar «cero inferencias»: el número real aquí es desconocido.
+        client = SimpleNamespace(usage={}, provider='deadline', calls=None)
     except (TypeError, ValueError):
         return JsonResponse({'response': 'Revisa los valores de configuración de la IA local.'}, status=503)
     # También las rutas rápidas respetan cuotas, sin desactivarse al habilitarlas.
@@ -320,7 +322,9 @@ def chatbot_query(request):
     response = stream_result(result)
     response['Server-Timing'] = f'chat;dur={elapsed_ms}'
     response['X-LitMate-Status'] = result.status
-    response['X-LitMate-Model-Calls'] = str(getattr(client, 'calls', 0))
+    calls = getattr(client, 'calls', None)
+    if type(calls) is int:
+        response['X-LitMate-Model-Calls'] = str(calls)
     return response
 
 
