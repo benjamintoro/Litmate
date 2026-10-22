@@ -121,6 +121,20 @@ class GroundedTopicFallbackTests(SimpleTestCase):
         self.assertIn('Una opción para explorar el arte de Japón', result.text)
         self.assertNotIn('personajes legendarios', result.text)
 
+    def test_space_recommendation_fallback_requires_both_documented_facets(self):
+        space = {**KOREA, 'title': 'Una nave lejana', 'author': 'Autora espacial',
+                 'description': 'Temas del catálogo: Space colonies, Science fiction, Fiction.',
+                 'categories': ['Space colonies', 'Science fiction', 'Fiction']}
+        result = grounded_topic_fallback('Recomiéndame un libro con temática espacial', [space])
+        self.assertIsNotNone(result)
+        self.assertIn('el espacio', result.text)
+        self.assertIn('ciencia ficción', result.text)
+        self.assertEqual(len(result.books), 1)
+        self.assertNotIn('trama', result.text.casefold())
+        terrestrial = {**space, 'description': 'Temas del catálogo: Science fiction, Fiction.',
+                       'categories': ['Science fiction', 'Fiction']}
+        self.assertIsNone(grounded_topic_fallback('Recomiéndame un libro con temática espacial', [terrestrial]))
+
     def test_explicit_quantity_cannot_be_filled_with_wrong_topic(self):
         self.assertIsNone(grounded_topic_fallback('Recomiéndame tres libros de historia de Corea',
                                                  [KOREA, CONCISE, JAPAN]))

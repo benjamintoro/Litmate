@@ -1,5 +1,7 @@
 # Asistente literario de LitMate
 
+Última revisión: [correcciones y resultados del 21 de octubre de 2026](INFORME_RESULTADOS_21_OCTUBRE.md), con mediciones reales, limitaciones y comandos de comprobación.
+
 LitMate conserva su personalidad, Qwen local, interfaz, recomendaciones, catálogo,
 tarjetas, voz y avatares. La investigación aporta evidencia al asistente actual.
 No requiere Groq, Pinecone, Tavily, Brave ni Gemini ni activa sustituciones de pago.

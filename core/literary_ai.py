@@ -373,7 +373,7 @@ Si falta evidencia, needs_web=true; si ya se investigó, responde lo confirmado
 y reconoce exactamente qué falta. status=answer permite incertidumbre parcial;
 clarify solo pide una pista útil ante una ambigüedad real. No inventes datos.
 
-Cita IDs reales que respalden cada dato; un snippet no prueba lectura completa.
+Cita question_evidence_source_ids para los hechos, además de la ficha.
 Citas exactas solo del texto original recibido, nunca de un resumen o memoria;
 máximo 25 palabras por fuente web. No inventes citas, páginas ni capítulos.
 basis=sources para datos recibidos; excerpt si solo analizas texto del lector.
@@ -410,6 +410,8 @@ los IDs realmente utilizados. Si require_book_sources=true no propongas obras
 sin ficha. basis=sources cuando usas solo datos recibidos. Sin prueba suficiente,
 pide una pista concreta o needs_web=true; si ya se investigó, reconoce qué falta.
 En reparación redacta desde sources y corrections, sin reconstruir lo rechazado.
+rejected_claims identifica frases rechazadas, nunca hechos nuevos: retíralas
+o expresa la incertidumbre, sin añadir otros acontecimientos de memoria.
 Responde las partes reales de plan; no agregues tareas. Rechaza únicamente
 acciones ajenas a lectura, libros o conversación amistosa, nunca por falta de datos.
 No publiques HTML, URLs ni listas técnicas de fuentes; el servidor añade enlaces
@@ -428,6 +430,9 @@ encajar con esa materia; «cualquiera» conserva el tema. Usa exclusivamente las
 fichas y pasajes recibidos. Elige requested_book_count obras; si falta ese dato,
 normalmente dos o tres. Copia título, autor y source_id exactos. No menciones
 otros libros como alternativas sin ficha.
+En el texto visible usa también el título canónico EXACTO y el autor de la
+ficha elegida. Un alias bibliográficamente confirmado puede ir después entre
+paréntesis; nunca sustituye ese título ni crea otra recomendación.
 
 Conserva el formato: una introducción breve y cálida, y una lista numerada de
 **Título — Autor** con una explicación corta de qué cubre y a quién le serviría.
@@ -441,6 +446,9 @@ Las materias del catálogo sí permiten recomendar por alcance, pero no prueban
 capítulos, técnicas, escenas ni detalles concretos del contenido. Si no hay una
 sinopsis, explica sencillamente el alcance que consta en título y materias,
 sin inventar un argumento. No traslades detalles de otro libro del mismo autor.
+El autor de un libro y los artistas estudiados son datos distintos. Si se piden
+artistas diferentes, no des por cumplido ese requisito por elegir autores distintos;
+usa los artistas documentados en las fuentes o reconoce ese límite concreto.
 No añadas fechas, periodos, técnicas o acontecimientos desde tu memoria. Cada
 afirmación específica debe estar respaldada por la descripción recibida y su ID.
 No hace falta disculparse por no tener la sinopsis para orientar una lectura.
@@ -450,6 +458,12 @@ bibliográfica de haber leído la obra completa. No copies más de 25 palabras d
 una misma página ni reproduzcas citas de una novela de memoria. Si faltan
 fichas pertinentes, pide needs_web=true; si la búsqueda ya terminó, reconoce
 qué falta sin recomendar otro tema ni pedir una escena de un libro olvidado.
+recommendation_evidence_sources relaciona fichas con pasajes web ya verificados
+de la misma obra. Si usas research_summary para explicar la trama, lee el pasaje
+de esa fuente web y cita su web_source_id además del ID de la ficha. La copia
+research_summary en una ficha no convierte sus materias en prueba de la trama.
+Si no hay un pasaje recibido y citado que la respalde, limita la explicación
+al alcance bibliográfico comprobado. No añadas referencias automáticamente.
 En reparación redacta desde sources y corrections, retirando lo no respaldado.
 No publiques HTML ni URLs y no realices tareas prácticas ajenas a la lectura.'''
 
@@ -489,8 +503,9 @@ def requested_book_count(message):
 def simple_research_plan(message, intent, *, followup=False, selected_books=()):
     """Conserva una tarea breve literal sin pedir al modelo que invente subtareas.
 
-    La clasificación y la auditoría siguen ejecutándose. Los pedidos compuestos,
-    comparaciones, fragmentos y tareas conceptuales conservan su plan completo.
+    La clasificación y la auditoría conservan sus controles. Una pregunta
+    literal sobre un personaje documentado puede usar la clasificación local;
+    pedidos compuestos, fragmentos y conceptos conservan su plan completo.
     """
     if (not isinstance(message, str) or has_excerpt(message) or requires_exact_text(message)
             or message.count('?') > 1 or re.search(r'[;\n\r]', message)
@@ -588,6 +603,35 @@ def recommendation_sources(sources, count, *, different_authors=False, excluded=
     return canonical_sources([source for source in sources
                               if (source['kind'] != 'book' or source['id'] in selected_ids)
                               and any(same_work(source, book) for book in chosen)])
+
+
+def recommendation_evidence_sources(sources):
+    """Relaciona IDs actuales sin crear vínculos ni convertir snippets en prueba.
+
+    El mapa es derivado: canonical_sources puede renumerar los IDs al añadir o
+    quitar fuentes. Debe recalcularse antes de redactar con ese nuevo conjunto.
+    La copia de una sinopsis en la ficha nunca sustituye su página de origen.
+    """
+    from .literary_identity import same_work
+    if not isinstance(sources, list):
+        return []
+    current = [source for source in sources if isinstance(source, dict)
+               and type(source.get('id')) is int and source['id'] > 0]
+    return [
+        {'book_source_id': book['id'], 'web_source_id': source['id']}
+        for book in current if book.get('kind') == 'book'
+        and book.get('research_summary') and book.get('synopsis_source_url')
+        for source in current if source.get('kind') == 'web'
+        and source.get('work_binding_verified') is True
+        and source.get('injection_detected') is not True
+        and source.get('read_mode') in {
+            'pasaje de página pública', 'extracto de introducción',
+            'pasaje de sección de artículo público'}
+        and isinstance(source.get('description'), str)
+        and len(source['description']) >= 60
+        and not normalized(source['description']).startswith('temas del catalogo:')
+        and source.get('url') == book['synopsis_source_url']
+        and same_work(source, book)]
 
 
 def distinct_work_records(records):
@@ -962,7 +1006,11 @@ class LiteraryAssistant:
     def reply(self, message, history=None, *, topic_context=None):
         from .ai_budget import request_budget, BudgetExpired
         started = time.monotonic()
-        deadline = getattr(self.llm, 'deadline', started + 360)
+        deadline = getattr(self.llm, 'deadline', None)
+        # Los dobles de prueba y algunos proveedores no exponen un deadline
+        # numérico. Nunca convertir ese caso en un presupuesto inválido.
+        if isinstance(deadline, bool) or not isinstance(deadline, (int, float)):
+            deadline = started + 360
         try:
             from .literary_sources import research_scope, research_snapshot
             with request_budget(deadline), research_scope(self.research_max_searches, self.research_timeout):
@@ -1063,12 +1111,20 @@ class LiteraryAssistant:
             if self.research_enabled and followup['ambiguous'] and not verified['books']:
                 return ChatResult('¿De cuál de las obras que comentamos quieres conocer ese detalle?',
                                   'clarification', diagnostics={**diagnostics, 'context_error': 'ambiguous_work'})
-            try:
-                route = validate_route(self.llm('route', ROUTER_PROMPT, route_data, self.guard_model))
-            except (ValueError, TypeError, KeyError):
-                diagnostics['route_rescue'] = True
-                route = validate_route(self.llm('route_rescue', ROUTE_RESCUE_PROMPT,
-                                                route_data, self.answer_model))
+            route = None
+            if self.research_enabled and self.quality_checks and not verified['books']:
+                from .ai_literal_followup import literal_followup_route
+                route = literal_followup_route(message, followup, history)
+                if route is not None:
+                    route = validate_route(route)
+                    diagnostics['literal_followup_route'] = True
+            if route is None:
+                try:
+                    route = validate_route(self.llm('route', ROUTER_PROMPT, route_data, self.guard_model))
+                except (ValueError, TypeError, KeyError):
+                    diagnostics['route_rescue'] = True
+                    route = validate_route(self.llm('route_rescue', ROUTE_RESCUE_PROMPT,
+                                                    route_data, self.answer_model))
             if (route['decision'] != 'allow' and not diagnostics['route_rescue']
                     and (looks_literary(message, history)
                          or route_data.get('local_identification_evidence', {}).get('candidates'))):
@@ -1326,7 +1382,7 @@ class LiteraryAssistant:
             if grounded_recommendation:
                 requested = requested_book_count(message) or 3
                 different_authors = bool(re.search(
-                    r'\b(?:distintos|diferentes|varios) (?:autores|artistas)\b', normalized(message)))
+                    r'\b(?:distintos|diferentes|varios) autores\b', normalized(message)))
                 more_options = bool(re.search(r'\b(?:otros?|otras?|mas|otra opcion)\b', normalized(message)))
                 excluded = [book for turn in previous_recommendations for book in turn.get('books', [])] if more_options else []
                 selected_sources = recommendation_sources(sources, requested,
@@ -1366,7 +1422,15 @@ class LiteraryAssistant:
                         'one_short_sentence_per_book': True,
                         'maximum_words_per_option': 40,
                         'external_facts_only_from_received_sources': True,
-                        'catalog_topics_are_not_a_synopsis': True}
+                        'catalog_topics_are_not_a_synopsis': True,
+                        'canonical_source_title_author': True}
+                    context['artist_diversity_requested'] = bool(re.search(
+                        r'\b(?:distintos?|diferentes?|varios) artistas?\b', normalized(message)))
+                    # Una sinopsis complementaria conserva su propia fuente.
+                    # La ficha sirve para la tarjeta y sus materias; la trama
+                    # debe citar el pasaje web recibido, nunca su copia auxiliar.
+                    # No crea vínculos ni convierte snippets en evidencia.
+                    context['recommendation_evidence_sources'] = recommendation_evidence_sources(sources)
                     context['requested_count_original'] = requested_book_count(message)
             if topic_context.get('subject'):
                 context.update({'requested_topic': topic_context['subject'],
@@ -1385,6 +1449,12 @@ class LiteraryAssistant:
                 context['specific_factual_question'] = any(requirement in
                     {'events', 'ending', 'relationships', 'scenes', 'character_detail'}
                     for requirement in evidence_state.get('requirements', []))
+                if context['specific_factual_question']:
+                    # La ficha y la evidencia de esta pregunta cumplen funciones
+                    # distintas. No se añaden citas después de la generación.
+                    context['question_evidence_source_ids'] = [source['id'] for source in sources
+                        if assess_evidence(retrieval_message, [source],
+                            selected_books or route['candidates'], route['intent'])['sufficient']]
             context['all_factual_claims_required'] = (route['intent'] == 'identify'
                 or context.get('specific_factual_question', False) or grounded_recommendation)
             if context['require_book_sources'] and not any(s['kind'] in {'book', 'excerpt'} for s in sources):
@@ -1403,9 +1473,10 @@ class LiteraryAssistant:
             if grounded_recommendation:
                 answer_prompt = TOPIC_RECOMMENDATION_PROMPT
                 answer_prompt += ('\nEl conjunto de fichas ya está acotado a las opciones pertinentes. '
-                    'No menciones libros adicionales de tu memoria. Comienza con un saludo '
-                    'breve sin datos, por ejemplo «¡Buen tema!», seguido de un salto de línea '
-                    'y la lista. No añadas otro encabezado «Aquí tienes...» antes de la lista.\n')
+                    'El campo text contiene la lista completa, con el título y autor de cada '
+                    'opción y su breve explicación. Un saludo por sí solo deja la petición '
+                    'sin responder; books y las tarjetas complementan esa lista. '
+                    'No menciones libros adicionales de tu memoria.\n')
                 if context.get('requested_book_count') == 1:
                     answer_prompt += ('\nEsta petición concreta requiere UN SOLO LIBRO. '
                         'El texto ofrece una única recomendación y books contiene esa misma obra. '
@@ -1422,6 +1493,10 @@ class LiteraryAssistant:
                 answer_prompt = IDENTIFICATION_PROMPT
             if context.get('specific_factual_question'):
                 answer_prompt = SHORT_FACTUAL_PROMPT
+            if context.get('all_factual_claims_required'):
+                answer_prompt += ('\nEn reparación rejected_claims son advertencias, nunca evidencia: '
+                    'retira esas frases o declara qué no está confirmado. Usa sources y '
+                    'corrections; no inventes sucesos para reemplazarlas.\n')
             draft = self.llm('answer', answer_prompt, context, self.answer_model)
             if (self.web_search and route['intent'] != 'conversation' and not web_attempted and not has_excerpt(message)
                     and isinstance(draft, dict) and draft.get('needs_web') is True):
@@ -1430,10 +1505,13 @@ class LiteraryAssistant:
                     queries=plan['search_queries'] if plan else None, seen=web_queries_seen)
                 context['sources'] = sources
                 context['web_search_completed'] = True
+                if grounded_recommendation:
+                    context['recommendation_evidence_sources'] = recommendation_evidence_sources(sources)
                 draft = self.llm('answer_web', answer_prompt, context, self.answer_model)
             research_used = False
             for attempt in range(3 if self.quality_checks else 2):
                 issues = []
+                rejected_claims = []
                 try:
                     # La ficha identifica la obra de las tarjetas aunque los roles
                     # se citen desde otra página. Completa sólo esa referencia de
@@ -1453,6 +1531,8 @@ class LiteraryAssistant:
                     validate_evidence(draft, sources, message)
                     if grounded_recommendation and draft['status'] == 'answer':
                         validate_recommendation_text(draft, sources)
+                        from .ai_recommendation_provenance import validate_recommendation_provenance
+                        validate_recommendation_provenance(draft, sources)
                     if (context.get('specific_factual_question') and draft['status'] == 'answer'
                             and not any(source['id'] in draft['citations'] and
                                         source['kind'] in {'web', 'excerpt'} for source in sources)):
@@ -1491,22 +1571,83 @@ class LiteraryAssistant:
                     if draft['basis'] == 'excerpt' and not (has_excerpt(message)
                             or any(source['kind'] == 'excerpt' for source in sources)):
                         raise ValueError('No hay un fragmento identificado; usa conocimiento o pide el texto con precisión.')
+                    assessment = context.get('evidence_assessment') or {}
+                    if (draft['status'] == 'answer' and context.get('specific_factual_question')
+                            and assessment.get('sufficient') and set(assessment.get('requirements', []))
+                                & {'events', 'scenes', 'ending'}):
+                        from .literary_research import assess_evidence
+                        cited_sources = [source for source in sources if source['id'] in draft['citations']]
+                        cited_assessment = assess_evidence(retrieval_message, cited_sources,
+                            selected_books or route['candidates'], route['intent'])
+                        if set(cited_assessment.get('missing', [])) & {'events', 'scenes', 'ending'}:
+                            raise ValueError('Cita el pasaje recibido que respalda esos acontecimientos, '
+                                'escenas o desenlace; una ficha general de la obra no sustituye esa evidencia.')
                 except ValueError as exc:
                     issues = [str(exc)]
                     diagnostics.setdefault('validation_issues', []).append({'stage': 'draft', 'issue': str(exc)[:500]})
+                if (issues and attempt == 0 and grounded_recommendation and not relation
+                        and isinstance(draft, dict) and draft.get('status') == 'answer'
+                        and normalized(draft.get('text', '')).strip(' ¡!¿?.') in
+                            {'buen tema', 'buena idea', 'claro', 'por supuesto', 'con gusto'}):
+                    # Un saludo sin recomendaciones no se publica. Si las
+                    # fichas ya permiten el respaldo validado, evita otra
+                    # inferencia que en las pruebas repetía el mismo saludo.
+                    from .ai_catalog_fallback import grounded_topic_fallback
+                    fallback_message = retrieval_message
+                    if requested_book_count(message):
+                        fallback_message += f', {requested_book_count(message)} libros'
+                    fallback = grounded_topic_fallback(fallback_message, sources)
+                    if fallback is not None:
+                        fallback.diagnostics = {**diagnostics, **fallback.diagnostics,
+                            'rejected_generation_preserved': True, 'early_grounded_fallback': True}
+                        return fallback
                 if not issues:
                     if self.quality_checks and plan:
                         research_remaining = bool(self.web_search and not has_excerpt(message)
                                                   and not research_used and web_rounds < 2)
+                        claims = []
                         try:
-                            audit = validate_audit(self.llm('audit', AUDIT_PROMPT,
+                            audit_output = self.llm('audit', AUDIT_PROMPT,
                                 {**context, 'draft': draft, 'research_remaining': research_remaining},
-                                self.guard_model), plan, draft, sources, message,
+                                self.guard_model)
+                            # El auditor puede señalar correctamente la frase
+                            # problemática y aun devolver decision=approve.
+                            # Conserva esa señal para reparar; jamás la convierte
+                            # en prueba ni sustituye validate_audit.
+                            claims = audit_output.get('claims', []) if isinstance(audit_output, dict) else []
+                            for claim in claims[:6] if isinstance(claims, list) else []:
+                                if (isinstance(claim, dict) and claim.get('verdict') in
+                                        {'unverified', 'inference', 'contradicted'}
+                                        and isinstance(claim.get('statement'), str)
+                                        and claim['statement'].strip()
+                                        and claim['statement'] in draft['text']):
+                                    rejected_claims.append({'statement': claim['statement'][:1000],
+                                        'verdict': claim['verdict'], 'action': 'remove_or_qualify'})
+                            audit = validate_audit(audit_output, plan, draft, sources, message,
                                 strict_facts=context.get('all_factual_claims_required', False))
                             diagnostics['coverage'] = audit['coverage']
                             diagnostics['claim_checks'] = len(audit['claims'])
                         except ValueError as exc:
                             diagnostics.setdefault('validation_issues', []).append({'stage': 'audit', 'issue': str(exc)[:500]})
+                            # Localiza también apoyos inválidos declarados como
+                            # supported: p. ej. materias usadas como trama.
+                            # Se reutiliza el validador, sin aprobar el conjunto
+                            # ni convertir sus afirmaciones en conocimiento.
+                            warned = {row['statement'] for row in rejected_claims}
+                            for claim in claims[:6] if isinstance(claims, list) else []:
+                                if (not isinstance(claim, dict) or not isinstance(claim.get('statement'), str)
+                                        or not claim['statement'].strip() or claim['statement'] not in draft['text']
+                                        or claim['statement'] in warned):
+                                    continue
+                                check = {'decision': 'repair', 'only_books': True,
+                                    'coverage': [{'question_id': index, 'status': 'uncertain'}
+                                        for index in range(1, len(plan['questions']) + 1)],
+                                    'claims': [claim], 'search_queries': [], 'issues': []}
+                                try:
+                                    validate_audit(check, plan, draft, sources, message, strict_facts=False)
+                                except ValueError:
+                                    rejected_claims.append({'statement': claim['statement'][:1000],
+                                        'verdict': 'invalid_support', 'action': 'verify_or_remove'})
                             audit = {'decision': 'repair', 'only_books': True,
                                      'issues': [str(exc)], 'search_queries': []}
                         if audit['only_books'] is not True:
@@ -1519,6 +1660,8 @@ class LiteraryAssistant:
                                 queries=audit['search_queries'], seen=web_queries_seen,
                                 prefer_new=True)
                             context.update({'sources': sources, 'web_search_completed': True})
+                            if grounded_recommendation:
+                                context['recommendation_evidence_sources'] = recommendation_evidence_sources(sources)
                             draft = self.llm('answer_web', answer_prompt,
                                 {**context, 'corrections': audit['issues'],
                                  'previous_draft': draft}, self.answer_model)
@@ -1540,9 +1683,15 @@ class LiteraryAssistant:
                 if diagnostics['repairs'] == 0 and attempt < (2 if self.quality_checks else 1):
                     diagnostics['repairs'] += 1
                     repair_context = {**context, 'corrections': issues}
+                    if rejected_claims:
+                        repair_context['rejected_claims'] = rejected_claims
+                        repair_context['corrections'] = [*issues,
+                            'Retira las frases de rejected_claims o declara precisamente la incertidumbre. '
+                            'Redacta desde sources; no añadas acontecimientos para reemplazarlas.']
                     # En identificación una cita rechazada no aporta evidencia.
                     # Reenviarla anclaba la reparación en la misma frase inventada.
-                    if route['intent'] != 'identify' and not grounded_recommendation:
+                    if (route['intent'] != 'identify' and not grounded_recommendation
+                            and not context.get('all_factual_claims_required')):
                         repair_context['previous_draft'] = draft
                     draft = self.llm('repair', answer_prompt,
                                      repair_context,

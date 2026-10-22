@@ -42,6 +42,9 @@ DISCOVERY_ONLY_DOMAINS = ('amazon.com', 'amazon.es', 'buscalibre.cl', 'buscalibr
                           'casadellibro.com', 'goodreads.com', 'barnesandnoble.com',
                           'gandhi.com.mx', 'worldcat.org', 'loc.gov',
                           'bibliotecanacional.gob.cl')
+# El descubrimiento de esta wiki no habilita acceso automatizado a Fandom.
+# Su API técnicamente pública no sustituye el permiso exigido por sus términos.
+DISCOVERY_ONLY_EXACT_HOSTS = ('lotr.fandom.com',)
 
 
 def _agent():
@@ -193,6 +196,117 @@ def _openlibrary_description(value):
         'sin descripcion', 'sin descripcion disponible'} else value
 
 
+def _openlibrary_edition_aliases(source, edition, *, evidence_url):
+    """Variantes publicadas en ediciones anidadas de Search API.
+
+    El subtítulo forma parte del alias si identifica una parte de la obra.
+    Solo una edición expresamente completa admite también el título corto.
+    Esto no transfiere sinopsis, autores, portadas ni argumentos entre obras.
+    """
+    if not isinstance(edition, dict):
+        return
+    work_id, edition_id = str(source.get('book_id', '')), str(edition.get('key', ''))
+    if (not re.fullmatch(r'/works/OL\d+W', work_id)
+            or not re.fullmatch(r'/books/OL\d+M', edition_id)
+            or not source.get('author') or source.get('author') == 'Autor no informado'):
+        return
+    if 'works' in edition:
+        works = edition['works']
+        keys = {item.get('key') for item in works if isinstance(item, dict)} if isinstance(works, list) else set()
+        if keys != {work_id}:
+            return
+    title = clean_text(edition.get('title'), 220) if isinstance(edition.get('title'), str) else ''
+    subtitle = clean_text(edition.get('subtitle'), 600) if isinstance(edition.get('subtitle'), str) else ''
+    original, translated = normalized(source.get('title')), normalized(title)
+    if not translated or translated == original:
+        return
+    # Una extensión del título en el mismo idioma puede ser otra entrega; el
+    # enlace de un catálogo colaborativo no autoriza borrar esa distinción.
+    if translated.startswith(original + ' ') or original.startswith(translated + ' '):
+        return
+    complete = bool(re.search(r'\b(?:edici[oó]n completa|complete edition|complete in one volume)\b', subtitle, re.I))
+    aliases = [title + (': ' + subtitle if subtitle else '')]
+    if subtitle and complete:
+        aliases.append(title)
+    # La prueba conserva los campos y el anidamiento realmente recibidos, sin
+    # presentar una paráfrasis del modelo como cita de la biblioteca.
+    evidence = ('Search API: obra ' + source['title'] + '; autor ' + source['author']
+        + '; work=' + work_id + '; edición anidada ' + title
+        + ('; subtítulo=' + subtitle if subtitle else '') + '; edition=' + edition_id
+        + '; título compuesto=' + aliases[0])
+    values = source.setdefault('confirmed_aliases', [])
+    for alias in aliases:
+        if len(alias) <= 220 and not any(normalized(item.get('title')) == normalized(alias) for item in values):
+            values.append({'title': alias, 'author': source['author'],
+                           'source_url': evidence_url, 'evidence': evidence})
+
+
+def _openlibrary_complete_edition_alias(source, edition, author_keys, *, reads):
+    """Compara el alcance explícito de obra y edición; contar partes no basta."""
+    if not isinstance(edition, dict) or not isinstance(author_keys, list):
+        return
+    authors = {key for key in author_keys if isinstance(key, str) and re.fullmatch(r'OL\d+A', key)}
+    subtitle = str(edition.get('subtitle') or '')
+    candidates = re.findall(r'(?:^|[/;|]\s*)([IVXLCDM]+|\d+)\s*[.:]\s*\S', subtitle)
+    if not authors or len(set(candidates)) < 2:
+        return
+    work_id, edition_id = source.get('book_id', ''), edition.get('key', '')
+    if not re.fullmatch(r'/books/OL\d+M', str(edition_id)):
+        return
+    work = _openlibrary_detail(work_id, editions=False, reads=reads)
+    if not isinstance(work, dict):
+        return
+    actual_authors = {str(item.get('author', {}).get('key', '')).removeprefix('/authors/')
+                      for item in work.get('authors', []) if isinstance(item, dict)
+                      and isinstance(item.get('author'), dict)} if isinstance(work.get('authors'), list) else set()
+    if actual_authors != authors or normalized(work.get('title')) != normalized(source.get('title')):
+        return
+    ranges = set()
+    for item in work.get('series', []) if isinstance(work.get('series'), list) else []:
+        position = re.fullmatch(r'\s*(\d+)\s*[-–]\s*(\d+)\s*', str(item.get('position', ''))) if isinstance(item, dict) else None
+        if position:
+            first, last = map(int, position.groups())
+            if 1 <= first < last <= 20:
+                ranges.add(tuple(range(first, last + 1)))
+    if len(ranges) != 1:
+        return
+    roman = {name: index for index, name in enumerate((
+        'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X',
+        'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX'), 1)}
+    stated_volumes = {int(value) if value.isdigit() else roman.get(value) for value in candidates}
+    expected = set(next(iter(ranges)))
+    if stated_volumes != expected:
+        return
+    record = _openlibrary_detail(edition_id, editions=False, reads=reads)
+    if not isinstance(record, dict):
+        return
+    works = record.get('works')
+    linked = {item.get('key') for item in works if isinstance(item, dict)} if isinstance(works, list) else set()
+    if (linked != {work_id} or normalized(record.get('title')) != normalized(edition.get('title'))
+            or normalized(record.get('subtitle')) != normalized(subtitle)):
+        return
+    volumes = set()
+    for item in record.get('table_of_contents', []) if isinstance(record.get('table_of_contents'), list) else []:
+        if not isinstance(item, dict) or item.get('level') != 0:
+            continue
+        match = re.match(r'(?i)^\s*(?:vol\.?|volumen|volume|tomo|parte|book)\s*(\d+)\b', str(item.get('title', '')))
+        if match:
+            volumes.add(int(match.group(1)))
+    if volumes != expected:
+        return
+    title = clean_text(record.get('title'), 220)
+    values = source.setdefault('confirmed_aliases', [])
+    if any(normalized(item.get('title')) == normalized(title) for item in values):
+        return
+    evidence = ('Open Library: obra ' + source['title'] + '; autor ' + source['author']
+        + '; work=' + work_id + '; alcance de obra=' + ','.join(map(str, sorted(expected)))
+        + '; edición ' + title + '; edition=' + edition_id
+        + '; works=' + work_id + '; volúmenes de tabla de contenido='
+        + ','.join(map(str, sorted(volumes))) + '; author_keys=' + ','.join(sorted(authors)))
+    values.append({'title': title, 'author': source['author'],
+                   'source_url': 'https://openlibrary.org' + edition_id + '.json', 'evidence': evidence})
+
+
 def _openlibrary_edition_metadata(source, edition, *, nested_in_work=False,
                                  requested_language=''):
     """Acepta metadatos de una edición vinculada por la API a la misma obra.
@@ -254,7 +368,8 @@ def _openlibrary_edition_metadata(source, edition, *, nested_in_work=False,
 
 def _openlibrary_detail(work_id, *, editions, reads):
     """Dos GET de detalle como máximo, compartidos por obras y ediciones."""
-    if not re.fullmatch(r'/works/OL\d+W', str(work_id)):
+    if not (re.fullmatch(r'/works/OL\d+W', str(work_id))
+            or (not editions and re.fullmatch(r'/books/OL\d+M', str(work_id)))):
         return None
     key = _cache_key('litmate_ol_editions_v1:' if editions else 'litmate_ol_work_v1:', work_id)
     try:
@@ -313,7 +428,7 @@ def _search_openlibrary(query):
     catalog_query = ''.join(parts).strip()
     if requested_language:
         catalog_query += ' language:' + requested_language
-    key = _cache_key('litmate_openlibrary_v6:', catalog_query + ':fiction=' +
+    key = _cache_key('litmate_openlibrary_v8:', catalog_query + ':fiction=' +
                      str(bool(re.search(r'\b(?:novelas?|ficcion|fiction)\b', normalized(query)))))
     cached = _cached(key)
     if cached is not None:
@@ -326,17 +441,18 @@ def _search_openlibrary(query):
     except Exception:
         return SearchResults(status='unavailable')
     params = {'q': catalog_query, 'limit': 12 if profile['structured'] else 5, 'lang': 'es',
-              'fields': 'key,title,subtitle,author_name,first_publish_year,subject,cover_i,language,'
+              'fields': 'key,title,subtitle,author_name,author_key,first_publish_year,subject,cover_i,language,'
                         'editions,editions.key,editions.title,editions.subtitle,editions.language'}
+    search_url = 'https://openlibrary.org/search.json?' + urlencode(params)
     try:
-        data = _openlibrary_fetch('https://openlibrary.org/search.json?' + urlencode(params), timeout=6)
+        data = _openlibrary_fetch(search_url, timeout=6)
         if not isinstance(data, dict) or not isinstance(data.get('docs'), list):
             return SearchResults(status='invalid_response', providers={'Open Library': 'invalid_response'})
     except Exception as exc:
         status = error_status(exc)
         cache.set('litmate_ol_cooldown', status, cooldown_seconds(exc))
         return SearchResults(status=status, providers={'Open Library': status})
-    results = []
+    results, alias_candidates = [], []
     for item in data['docs'][:12]:
         if not isinstance(item, dict):
             continue
@@ -384,16 +500,21 @@ def _search_openlibrary(query):
         editions = item.get('editions')
         if isinstance(editions, dict) and isinstance(editions.get('docs'), list):
             for edition in editions['docs'][:3]:
+                _openlibrary_edition_aliases(source, edition, evidence_url=search_url)
+                alias_candidates.append((source, edition, item.get('author_key')))
                 if _openlibrary_edition_metadata(source, edition, nested_in_work=True,
                                                  requested_language=requested_language):
                     break
         results.append(source)
     results = rank_book_sources(results, query, distinct_works=True)[:5]
+    reads = {'used': 0}
+    for source, edition, author_keys in alias_candidates:
+        if source in results and reads['used'] < 2:
+            _openlibrary_complete_edition_alias(source, edition, author_keys, reads=reads)
     # Las fichas de búsqueda no traen sinopsis. Para las recomendaciones por
     # materia se consulta el registro oficial de hasta dos obras, con caché y
     # el mismo límite de lecturas que el resto de la investigación.
     if profile['structured']:
-        reads = {'used': 0}
         for source in results[:2]:
             if source.get('synopsis'):
                 continue
@@ -427,7 +548,7 @@ def retrieve_books(query):
     google_revision = str(getattr(settings, 'LITMATE_USE_GOOGLE_BOOKS_API', True)) + ':' + hashlib.sha256(
         str(getattr(settings, 'GOOGLE_BOOKS_API_KEY', '')).encode()).hexdigest()[:12]
     from .literary_knowledge import search_knowledge, knowledge_revision
-    key = _cache_key('litmate_hybrid_books_v9:', query + ':' + revision + ':' + knowledge_revision(settings) + ':' + google_revision + ':'
+    key = _cache_key('litmate_hybrid_books_v11:', query + ':' + revision + ':' + knowledge_revision(settings) + ':' + google_revision + ':'
                      + str(getattr(settings, 'LITMATE_RAG_SEMANTIC', True)) + ':'
                      + getattr(settings, 'LITMATE_EMBED_MODEL', 'embeddinggemma:latest'))
     cached = _cached(key)
@@ -631,8 +752,9 @@ def discovery_url(value):
     if not url:
         return ''
     host = urlsplit(url).hostname.lower()
-    return url if any(host == domain or host.endswith('.' + domain)
-                      for domain in TRUSTED_DOMAINS + DISCOVERY_ONLY_DOMAINS) else ''
+    return url if (host in DISCOVERY_ONLY_EXACT_HOSTS or any(
+        host == domain or host.endswith('.' + domain)
+        for domain in TRUSTED_DOMAINS + DISCOVERY_ONLY_DOMAINS)) else ''
 
 
 class PageText(HTMLParser):
@@ -679,7 +801,7 @@ def read_public_page(url, query, *, details=False):
 def _detail_focus(query):
     value = normalized(query)
     if re.search(r'\bpersonajes?|\bprotagonistas?|\bcharacters?|\bcaracterizacion', value):
-        return ('personajes', 'protagonistas', 'characters', 'character list')
+        return ('personajes', 'protagonistas', 'characters', 'main characters', 'character list')
     if re.search(r'\bargumento|\btrama|\bresumen|\bsinopsis|\bdesenlace|\bfinal\b', value):
         return ('argumento', 'trama', 'sinopsis', 'plot', 'resumen', 'desenlace', 'final')
     if re.search(r'\btemas?|\banalisis|\bideas?|\binterpretacion', value):
@@ -733,7 +855,7 @@ def relevant_passage(text, query, maximum=1800):
 
 def character_facts(text):
     """Fichas de nombre/papel publicadas, sin generar relaciones nuevas."""
-    heading = re.search(r'(?im)^\s*==\s*Personajes(?: principales)?\s*==\s*$', text)
+    heading = re.search(r'(?im)^\s*==\s*(?:Personajes(?: principales)?|(?:Main )?Characters|Character list)\s*==\s*$', text)
     if not heading:
         return []
     section = text[heading.end():]
@@ -850,6 +972,21 @@ def _wikipedia_fetch(url):
     return result
 
 
+def _wikipedia_table_page(candidate, page_id, endpoint):
+    parsed = _wikipedia_fetch(endpoint + urlencode({'action': 'parse', 'format': 'json',
+        'pageid': page_id, 'prop': 'text', 'disableeditsection': 1, 'disabletoc': 1}))
+    article = parsed.get('parse') if isinstance(parsed, dict) else None
+    if (not isinstance(article, dict) or str(article.get('pageid')) != page_id
+            or normalized(article.get('title')) != normalized(candidate.get('title'))):
+        return None
+    from .literary_web import character_table_passage
+    html = article.get('text')
+    html = html.get('*') if isinstance(html, dict) else html
+    passage = character_table_passage(html, context=candidate.get('extract', ''))
+    facts = character_facts(passage)
+    return {**candidate, 'extract': passage, 'character_facts': facts} if len(facts) >= 2 else None
+
+
 def _search_wikipedia(query, *, language='es'):
     query = public_query(query)
     if not query:
@@ -862,6 +999,10 @@ def _search_wikipedia(query, *, language='es'):
     if focus:
         quoted_title = re.search(r'[«“"]([^»”"\n]{2,180})[»”"]', query)
         remaining = query[:quoted_title.start()] + query[quoted_title.end():] if quoted_title else query
+        # Los verbos de la petición no son palabras del título. Solo se retiran
+        # del prefijo de conversación y fuera de un título entrecomillado.
+        remaining = re.sub(r'(?i)^\s*(?:por favor[,\s]+)?(?:dime|dame|busca|búscame|buscame|'
+            r'encuentra|muéstrame|muestrame|describe|háblame|hablame|cuéntame|cuentame)\b\s*', '', remaining)
         identity_query = re.sub(r'(?i)\b(?:personajes?|protagonistas?|principales?|descripci[oó]n|'
             r'describe|caracter[ií]sticas?|argumento|trama|sinopsis|resumen|temas?|an[aá]lisis|'
             r'ideas?|interpreta(?:ci[oó]n)?|acontecimientos?|escenas?|desenlace|final|relaci[oó]n)\b', ' ', remaining)
@@ -894,6 +1035,24 @@ def _search_wikipedia(query, *, language='es'):
             # Una secuela o la biografía del autor no demuestra las relaciones
             # de los personajes de la obra concreta que eligió el lector.
             pages = matching
+        elif pages:
+            # Una búsqueda ordenada por relevancia puede devolver solamente
+            # películas o secuelas aunque exista el artículo exacto solicitado.
+            # Una sola consulta oficial de título/redirect lo comprueba; no
+            # convierte esa coincidencia en una identidad bibliográfica aceptada.
+            exact_params = {'action': 'query', 'format': 'json', 'titles': quoted_title.group(1),
+                'redirects': 1, 'prop': 'extracts|info', 'inprop': 'url',
+                'explaintext': 1, 'exintro': 1, 'exchars': 1200}
+            try:
+                exact = _wikipedia_fetch(endpoint + urlencode(exact_params))
+                exact_pages = ((exact.get('query') or {}).get('pages') or {}) if isinstance(exact, dict) else {}
+                exact_pages = [page for page in exact_pages.values() if isinstance(page, dict)
+                    and 'missing' not in page and str(page.get('pageid', '')).isdigit()
+                    and page.get('extract')] if isinstance(exact_pages, dict) else []
+                if exact_pages:
+                    pages = exact_pages[:1]
+            except Exception as exc:
+                logger.warning('IA: título exacto de Wikipedia no disponible (%s)', type(exc).__name__)
     if focus and pages:
         pages.sort(key=lambda page: (any(word in normalized(page.get('title')) for word in focus),
                                     '(novela)' in normalized(page.get('title'))), reverse=True)
@@ -903,17 +1062,38 @@ def _search_wikipedia(query, *, language='es'):
         # HTML. La introducción bibliográfica se conserva si se agotó el cupo.
         if page_id.isdigit() and int(page_id) > 0 and reserve_page():
             try:
-                details = {'action': 'query', 'format': 'json', 'pageids': page_id,
-                           'prop': 'extracts|info', 'inprop': 'url', 'explaintext': 1,
-                           'exsectionformat': 'wiki'}
-                full = _wikipedia_fetch(endpoint + urlencode(details))
-                full_page = ((full.get('query') or {}).get('pages') or {}).get(page_id)
+                from .literary_sources import research_snapshot
+                reserved = research_snapshot().get('page_slots_reserved', 0)
+                page_limit = max(0, min(int(getattr(settings, 'LITMATE_RESEARCH_MAX_PAGES', 3)), 3))
+                if focus[0] == 'personajes' and reserved >= page_limit:
+                    # Si solo queda una lectura, Parse puede obtener la tabla
+                    # que TextExtracts omitiría. No se amplía el presupuesto.
+                    full_page = _wikipedia_table_page(candidate, page_id, endpoint)
+                else:
+                    details = {'action': 'query', 'format': 'json', 'pageids': page_id,
+                               'prop': 'extracts|info', 'inprop': 'url', 'explaintext': 1,
+                               'exsectionformat': 'wiki'}
+                    full = _wikipedia_fetch(endpoint + urlencode(details))
+                    full_page = ((full.get('query') or {}).get('pages') or {}).get(page_id)
                 if isinstance(full_page, dict) and full_page.get('extract'):
                     pages[0] = {**candidate, **full_page,
                                 'identity_text': clean_text(candidate.get('extract'), 1200),
                                 'character_facts': character_facts(full_page['extract']) if focus[0] == 'personajes' else [],
                                 'extract': relevant_passage(full_page['extract'], query),
                                 'literary_section_read': True}
+                    # TextExtracts omite tablas: una sección de personajes puede
+                    # contener solo su encabezado. Parse es otra API oficial y
+                    # se consulta únicamente para recuperar esa evidencia.
+                    if (focus[0] == 'personajes' and not pages[0]['character_facts']
+                            and re.match(r'(?i)^==\s*(?:Personajes|Characters|Main characters|Character list)\b', pages[0]['extract'])
+                            and reserve_page()):
+                        try:
+                            table = _wikipedia_table_page(candidate, page_id, endpoint)
+                            if table:
+                                pages[0]['extract'] = table['extract']
+                                pages[0]['character_facts'] = table['character_facts']
+                        except Exception as exc:
+                            logger.warning('IA: tabla de Wikipedia no disponible (%s)', type(exc).__name__)
             except Exception as exc:
                 logger.warning('IA: sección de Wikipedia no disponible (%s)', type(exc).__name__)
     return [{'title': page.get('title'), 'author': 'Fuente web', 'description': page.get('extract'),
@@ -956,7 +1136,7 @@ def retrieve_web(query):
 
 def _web_cache_key(query):
     engines = getattr(settings, 'LITMATE_SEARXNG_ENGINES', ('wikipedia', 'openlibrary', 'mwmbl'))
-    return _cache_key('litmate_local_web_v8:', query + ':es,en:' + repr(engines) + ':'
+    return _cache_key('litmate_local_web_v11:', query + ':es,en:' + repr(engines) + ':'
                      + str(getattr(settings, 'LITMATE_AI_USE_SEARXNG', True)))
 
 

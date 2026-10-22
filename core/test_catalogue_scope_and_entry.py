@@ -2,8 +2,9 @@
 from django.test import SimpleTestCase
 
 from .literary_ai import canonical_sources
-from .literary_quality import _claim_has_wrong_work, _unsupported_catalogue_detail
-from .test_compact_audit_transport import CompactAuditTransportTests
+from .literary_quality import (_claim_has_wrong_work, _unsupported_catalogue_detail,
+                               validate_audit)
+from . import test_compact_audit_transport as compact_fixtures
 
 
 CATALOGUE = {'kind': 'book', 'title': 'A History of Korea', 'author': 'Kyung Moon Hwang',
@@ -43,6 +44,17 @@ class NumberedEntryBindingTests(SimpleTestCase):
         self.assertTrue(_claim_has_wrong_work(self.statement, self.sources[2], self.sources, draft_text=self.draft))
         self.assertFalse(_claim_has_wrong_work(self.statement, self.sources[0], self.sources, draft_text=self.draft))
 
+    def test_existing_auditor_rejects_a_literal_proof_of_the_wrong_list_entry(self):
+        proof = self.sources[2]['description']
+        audit = {'decision': 'approve', 'only_books': True,
+                 'coverage': [{'question_id': 1, 'status': 'answered'}],
+                 'claims': [{'statement': self.statement, 'verdict': 'supported',
+                             'source_id': 3, 'evidence': proof}], 'search_queries': [], 'issues': []}
+        plan = {'questions': ['Recomiéndame tres historias de Corea']}
+        draft = {'status': 'answer', 'text': self.draft, 'citations': [1, 2, 3]}
+        with self.assertRaisesRegex(ValueError, 'otra obra'):
+            validate_audit(audit, plan, draft, self.sources, plan['questions'][0])
+
     def test_final_comparison_is_not_forced_to_the_last_numbered_entry(self):
         statement = 'En comparación, ambos enfoques exploran la historia de Corea.'
         text = self.draft + '\n\n' + statement
@@ -59,7 +71,10 @@ class NumberedEntryBindingTests(SimpleTestCase):
         self.assertFalse(_claim_has_wrong_work(statement, self.sources[2], self.sources, draft_text=text))
 
 
-class CompactEntryOptionsTests(CompactAuditTransportTests):
+class CompactEntryOptionsTests(SimpleTestCase):
+    context = compact_fixtures.CompactAuditTransportTests.context
+    generate = compact_fixtures.CompactAuditTransportTests.generate
+
     def test_compact_schema_excludes_another_work_for_a_pronominal_entry(self):
         context = self.context()
         statement = 'Este libro describe el cielo y las estrellas.'

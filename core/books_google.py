@@ -185,8 +185,18 @@ def _normalized(value):
                    if unicodedata.category(c) != 'Mn')
 
 
+_SPACE_NARRATIVE = (r'\b(?:tematica|ambientacion) espacial\b|'
+                    r'\baventuras? espaciales?\b|\bspace opera\b|'
+                    r'\b(?:novelas?|cuentos?|relatos?|historias?)\b.{0,45}'
+                    r'\b(?:en el espacio|viajes? espaciales?|viajes? interplanetarios?)\b')
+_SPACE_TOPIC = (_SPACE_NARRATIVE + r'|\bespacio exterior\b|'
+                r'\bviajes? (?:espaciales?|interplanetarios?)\b|'
+                r'\bexploracion espacial\b')
+
+
 GENRES = (
-    ('science_fiction', r'\bciencia ficcion\b|\bscience fiction\b|\bsci[ -]?fi\b',
+    ('science_fiction', r'\bciencia ficcion\b|\bscience fiction\b|\bsci[ -]?fi\b|'
+                       + _SPACE_NARRATIVE,
      'Science Fiction', ('ciencia ficcion', 'science fiction', 'sci-fi', 'nave espacial',
                         'viaje en el tiempo', 'viajes en el tiempo', 'extraterrestre',
                         'interplanetari', 'distopi', 'space opera')),
@@ -200,23 +210,47 @@ GENRES = (
      ('romance', 'romantic', 'historia de amor')),
 )
 
+# Las exclusiones usan nombres de género, no sinónimos de ambientación. Así
+# «temática espacial sin ciencia ficción» conserva el espacio sin reactivar
+# el género excluido mediante el alias narrativo positivo.
+_GENRE_EXCLUSION_NAMES = {
+    'science_fiction': r'ciencia\s*ficcion|science fiction|sci[ -]?fi|space opera',
+    'fantasy': r'fantasia|fantasy', 'horror': r'terror|horror',
+    'mystery': r'misterio|mystery|thriller|suspense',
+    'romance': r'romance|romanticas?',
+}
+_GENRE_EXCLUSION_PREFIX = (r'\b(?:no(?:\s+(?:sean?|quiero|incluyas?))?|sin|excepto|'
+                           r'excluye|excluding|not)\s+'
+                           r'(?:(?:libros?|novelas?|obras?)\s+)?(?:de\s+)?')
+
+
+def _genre_exclusions(value):
+    # Los nombres de obras entrecomillados no expresan un filtro del lector.
+    value = re.sub(r'[«“"]([^»”"\n]{1,300})[»”"]', '', value)
+    if re.search(r'\b(?:isbn|intitle|lccn|oclc):', value):
+        return ()
+    return tuple(code for code, names in _GENRE_EXCLUSION_NAMES.items()
+                 if re.search(_GENRE_EXCLUSION_PREFIX + '(?:' + names + r')\b', value))
+
 
 def book_search_profile(query):
     """Reconoce filtros de lectura; no genera títulos ni hechos de una obra."""
     query = public_query(query)
     value = _normalized(query)
+    excluded = _genre_exclusions(value)
     # No transforma una exclusión en una búsqueda positiva del mismo género.
-    value = re.sub(r'\b(?:no (?:sean?|quiero|incluyas?)|sin|excepto|excluye|excluding|not)\s+'
-                   r'(?:de\s+)?(?:ciencia ficcion|science fiction|sci[ -]?fi|fantasia|fantasy|'
-                   r'terror|horror|misterio|romance)\b', '', value)
+    for code in excluded:
+        value = re.sub(_GENRE_EXCLUSION_PREFIX + '(?:' + _GENRE_EXCLUSION_NAMES[code] + r')\b',
+                       '', value)
     precise = bool(re.search(r'\b(?:isbn|intitle|inauthor|inpublisher|lccn|oclc):', value))
     studies = bool(re.search(r'\b(?:estudios?|ensayos?|teoria|critica|manuales?|textos? escolares|'
-                             r'libros? de texto|historia del genero)\b', value))
-    genre = next((row for row in GENRES if re.search(row[1], value)), None)
+                             r'libros? de texto|libros? cientificos|historia del genero|'
+                             r'divulgacion)\b', value))
+    genre = next((row for row in GENRES if row[0] not in excluded and re.search(row[1], value)), None)
     novels = bool(re.search(r'\bnovelas?\b|\bnovels?\b', value))
     fiction = (novels or genre is not None) and not studies and not precise
     return {'query': query, 'genre': genre, 'fiction': fiction, 'novels': novels,
-            'precise': precise, 'studies': studies}
+            'precise': precise, 'studies': studies, 'excluded_genres': excluded}
 
 
 # Traduce materias del catálogo, no títulos ni información sobre las obras.
@@ -232,6 +266,12 @@ _TOPIC_SUBJECTS = (
     ('architecture', r'\barquitectura\b|\barchitecture\b', ('arquitectura', 'architecture')),
     ('poetry', r'\bpoesia\b|\bpoetry\b', ('poesia', 'poetry', 'poesie')),
     ('cooking', r'\bcocina\b|\bgastronomia\b|\bcooking\b', ('cocina', 'cooking', 'gastronomia', 'cookery')),
+    ('space', _SPACE_TOPIC,
+     ('space', 'outer space', 'spaceflight', 'space travel', 'space exploration',
+      'space colonies', 'space warfare', 'space opera', 'interplanetary voyages',
+      'extraterrestrial beings', 'life on other planets', 'nave espacial',
+      'viajes espaciales', 'viajes interplanetarios', 'tematica espacial',
+      'aventura espacial', 'astronomy', 'astronomia', 'astrophysics', 'astrofisica', 'cosmology', 'cosmologia')),
 )
 _TOPIC_PLACES = (
     ('south korea', r'\bcorea del sur\b|\bsurcorean\w*\b|\bsouth korea\b',
@@ -279,6 +319,8 @@ def book_topic_profile(query):
     structured = bool(subjects and (requested or standalone))
     if structured:
         terms = [f'subject:"{row[0]}"' for row in (*subjects, *places)]
+        terms.extend(f'-subject:"{row[2].lower()}"' for row in GENRES
+                     if row[0] in reading['excluded_genres'])
         public = ' '.join(terms)
     else:
         public = re.sub(r'^(?:por favor\s+)?(?:estoy buscando|estoy buscando un libro|busco|buscame|'
@@ -293,10 +335,17 @@ def book_topic_profile(query):
 def topic_matches(source, query):
     """Cada materia y lugar pedidos necesita respaldo en título o metadatos."""
     profile = book_topic_profile(query)
-    if not profile['structured'] or source.get('kind', 'book') != 'book':
+    if source.get('kind', 'book') != 'book':
         return True
+    reading = book_search_profile(query)
     categories = source.get('categories') or []
     category_text = _normalized(' '.join(str(item) for item in categories if isinstance(item, str)))
+    genre_metadata = category_text + ' ' + _normalized(source.get('title'))
+    if any(re.search(r'(?<!\w)(?:' + _GENRE_EXCLUSION_NAMES[code] + r')(?!\w)', genre_metadata)
+           for code in reading['excluded_genres']):
+        return False
+    if not profile['structured']:
+        return True
     text = _normalized(' '.join([str(source.get('title') or ''), str(source.get('subtitle') or ''),
                                 str(source.get('synopsis') or ''),
                                 category_text]))
@@ -306,6 +355,15 @@ def topic_matches(source, query):
         return False
     if any(row[0] == 'art' for row in profile['subjects']):
         text = re.sub(r'\b(?:language arts(?: and| &) disciplines|language arts|martial arts)\b', '', text)
+    if any(row[0] == 'space' for row in profile['subjects']) and book_search_profile(query)['fiction']:
+        # La mención de ciencia ficción en un estudio sobre el género no lo
+        # convierte en una aventura espacial. Se aplica también a fichas del
+        # catálogo local, que pueden llegar sin pasar por rank_book_sources.
+        if (re.search(r'\b(?:nonfiction|non-fiction|no ficcion|study aids|literary criticism|'
+                      r'social science|textbooks?|manuales?|divulgacion)\b', category_text)
+                or re.search(r'\b(?:manual|tratado|estudio de|sociologia|study guide|textbook)\b',
+                             _normalized(source.get('title')))):
+            return False
     if not all(any(re.search(r'(?<!\w)' + re.escape(term) + r'(?!\w)', text) for term in row[2])
                for row in (*profile['subjects'], *profile['places'])):
         return False

@@ -1,5 +1,7 @@
 # Continuación de LitMate — 20 de octubre de 2026
 
+Actualización posterior: [correcciones, modelos, límites y resultados del 21 de octubre](INFORME_RESULTADOS_21_OCTUBRE.md). Este documento conserva el diagnóstico y las mediciones del trabajo anterior.
+
 Trabajo sobre `G:\Proyecto\Litmate`, conservando los cambios existentes del 19 de octubre. No se han hecho commits, migraciones ni pruebas contra la base de producción. La interfaz, tarjetas, organización de mensajes, voz y avatares permanecen sin cambios.
 
 ## Problemas reproducidos y correcciones
@@ -45,7 +47,7 @@ Los archivos de `reportes/` conservan también los fallos. Una respuesta marcada
 
 **Reproducciones anteriores conservadas:** `reproduccion_temas_usuario.json`, `recomendaciones_temas_corregidas.json`, `temas_con_auditoria_factual.json`, `validacion_temas_final.json`, `validacion_temas_20_oct_9b.json` y `validacion_temas_20_oct_4b.json`. Exponen fallos de redacción, cobertura, sinopsis o validación; no deben presentarse como una batería plenamente aprobada.
 
-La comparación de modelos y las verificaciones finales se completan en la sección de resultados de esta misma continuación. No se ha demostrado una tasa de errores del 1 % o menos. Una batería pequeña seleccionada para regresiones no permite certificar ese objetivo.
+La comparación de modelos y las verificaciones posteriores se registran en [los resultados del 21 de octubre](INFORME_RESULTADOS_21_OCTUBRE.md). No se ha demostrado una tasa de errores del 1 % o menos. Una batería pequeña seleccionada para regresiones no permite certificar ese objetivo.
 
 ## Ejecución y pruebas seguras
 

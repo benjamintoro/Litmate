@@ -15,6 +15,11 @@ TOPIC_LIMIT = 140
 RECENT_TOPIC_LIMIT = 4
 LANGUAGE_QUERIES = {'es': 'en español', 'en': 'en inglés', 'fr': 'en francés',
                     'de': 'en alemán', 'pt': 'en portugués', 'ja': 'en japonés'}
+_TOPIC_TASK_BOUNDARY = re.compile(
+    r'\s+(?:y|e)\s+(?:por\s+favor\s+)?(?:expl[ií]ca(?:me|nos)?|'
+    r'cu[eé]nta(?:me|nos)?|comp[aá]ra(?:me|nos)?|descr[ií]be(?:me|nos)?|'
+    r'anal[ií]za(?:me|nos)?|res[uú]me(?:me|nos)?|det[aá]lla(?:me|nos)?|'
+    r'enum[eé]ra(?:me|nos)?|identif[ií]ca(?:me|nos)?|ind[ií]ca(?:me|nos)?|dime|dinos)\b', re.I)
 
 
 def _safe_language(value):
@@ -45,6 +50,13 @@ def _normalized(value):
                    if not unicodedata.combining(character)).casefold()
 
 
+def _without_task_clause(subject):
+    """Quita la tarea literaria y conectores sueltos sin perder la materia."""
+    subject = _TOPIC_TASK_BOUNDARY.split(subject, maxsplit=1)[0].strip()
+    subject = re.split(r'\s+(?:por\s+favor)\b', subject, maxsplit=1, flags=re.I)[0].strip()
+    return re.sub(r'\s+(?:y|e)\s*$', '', subject, flags=re.I).strip()
+
+
 def _safe_subject(value):
     """No conservar pasajes, direcciones, datos personales ni instrucciones."""
     if not isinstance(value, str):
@@ -67,6 +79,12 @@ def _explicit_subject(message):
     # no extraer títulos citados ni pasajes aportados por el lector.
     if re.search(r'''["'“”‘’«»]''', value):
         return ''
+    themed = re.search(r'\b(?:libros?|lecturas?|novelas?|ensayos?|obras?)\s+'
+                      r'con\s+(?:la\s+)?(tem[aá]tica|ambientaci[oó]n)\s+(.+)', value, re.I)
+    if themed:
+        # Conservar «temática/ambientación» evita convertir una aventura
+        # espacial en un pedido ambiguo de manuales sobre el espacio.
+        value = value[:themed.start()] + 'libros sobre ' + themed.group(1) + ' ' + themed.group(2)
     match = re.search(r'\b(?:libros?|lecturas?|novelas?|ensayos?|bibliograf[ií]a|'
                       r'obras?)\s+(?:sobre|acerca de|de|del)\s+(.+)', value, re.I)
     if not match:
@@ -74,11 +92,18 @@ def _explicit_subject(message):
                           r'quiero|necesito)\b.*?\b(?:sobre|acerca de)\s+(.+)', value, re.I)
     if not match:
         return ''
-    subject = re.split(r'[;.!?\n]|\s+(?:por favor|recomi[eé]nda(?:me)?|quiero|necesito)\b',
+    subject = re.split(r'[;.!?\n]|\s+(?:recomi[eé]nda(?:me)?|quiero|necesito)\b',
                        match.group(1), maxsplit=1, flags=re.I)[0].strip()
+    # Validar antes de separar la tarea: una cláusula con secretos o instrucciones
+    # no se vuelve admisible simplemente al ocultarla de la materia recordada.
+    subject = _safe_subject(subject)
+    if not subject:
+        return ''
+    subject = _without_task_clause(subject)
     normal = _normalized(subject)
     if re.fullmatch(r'(?:(?:distintos|diferentes|varios|otros|esos|estos|cualesquiera)\s+)?'
-                    r'(?:artistas|autores|generos|estilos|temas|libros|obras)(?:\s+distintos)?', normal):
+                    r'(?:artistas|autores|generos|estilos|temas|libros|obras)'
+                    r'(?:\s+(?:y|o)\s+(?:artistas|autores))?(?:\s+distintos)?', normal):
         return ''
     if normal in {'cualquier tema', 'cualquier genero', 'cualquier tipo', 'lo que sea',
                   'cualquiera', 'todo', 'todos', 'ellos', 'ellas', 'esos', 'estos'}:
@@ -94,6 +119,8 @@ def _validated_topic(topic, now):
     if (not subject or isinstance(stamp, bool) or not isinstance(stamp, (int, float))
             or not 0 <= now - stamp <= TOPIC_LIFETIME):
         return None
+    # Sanear también peticiones antiguas que ya incluían «y explica sus enfoques».
+    subject = _without_task_clause(subject)
     language = _safe_language(topic.get('language')) or requested_language(subject)
     subject = _safe_subject(_without_language_preference(subject))
     if not subject:
@@ -235,7 +262,7 @@ def resolve_topic_context(message, state, *, now=None):
             return {**empty, 'explicit_change': True, 'reset_work_context': True}
     continuation = bool(recommendation or re.search(
                                   r'\b(?:(?:mas|otras?|algunas?) (?:opciones|obras|libros|lecturas)|'
-                                  r'otra opcion|distintos artistas|diferentes artistas|'
+                                  r'otra opcion|(?:distintos|diferentes) (?:artistas|autores)|'
                                   r'que sean|prefiero|ilustrados|en espanol)\b', normal)
                         or re.fullmatch(r'[¿¡\s]*(?:y )?(?:mas|otros|otras|cualquiera)[?.!\s]*', normal)
                         or (requested_locale and re.fullmatch(
@@ -246,8 +273,10 @@ def resolve_topic_context(message, state, *, now=None):
         # No copiar el mensaje nuevo a la consulta: puede contener un secreto o
         # texto personal. Mantener solo el tema ya validado y ajustes acotados.
         constraints = []
-        if re.search(r'\b(?:artistas|autores)\b', normal):
-            constraints.append('distintos artistas o autores')
+        if re.search(r'\bartistas\b', normal):
+            constraints.append('distintos artistas')
+        if re.search(r'\bautores\b', normal):
+            constraints.append('distintos autores')
         if re.search(r'\bilustrad[oa]s?\b', normal):
             constraints.append('ilustrados')
         language = requested_locale or previous.get('language', '')

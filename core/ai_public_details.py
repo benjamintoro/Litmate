@@ -5,7 +5,25 @@ from .literary_ai import (ChatResult, canonical_sources, clean_text, normalized,
                          sanitized_history)
 from .literary_quality import resolve_followup_books
 from .books_google import public_query
-from .literary_identity import same_work, title_matches, resolve_followup_context
+from .literary_identity import same_work, resolve_followup_context
+
+
+def _title_query_matches(query, book):
+    """Tolera un artículo omitido al buscar, sin crear un alias de identidad."""
+    return bool(_public_title_for_query(query, book))
+
+
+def _public_title_for_query(query, book):
+    """Usa la variante bibliográfica comprobada que coincide con la pregunta."""
+    from .literary_identity import work_identity
+    identity = work_identity(book)
+    titles = [identity.get('title', '')] + [
+        alias['title'] for alias in identity.get('confirmed_aliases', [])]
+    def without_article(value):
+        return re.sub(r'^(?:el|la|los|las|the)\s+', '', normalized(value)).strip()
+    value = without_article(query)
+    return next((title for title in titles if identity and value
+                 and value == without_article(title)), '')
 
 
 def character_answer(message, history, search_books, search_public):
@@ -15,7 +33,7 @@ def character_answer(message, history, search_books, search_public):
             or not re.search(r'\b(?:personajes?|protagonistas?)\b', value)
             or re.search(r'\b(?:compara|analiza|interpreta|simbolismo|evolucion|spoilers?|final|muere|resume)\b', value)
             or re.search(r'\b(?:paginas?|isbn|autor|editorial|publicacion|clima|temperatura|impuestos|codigo|receta)\b', request)
-            or not re.match(r'^(?:y\s+)?(?:quienes|cuales|dime|dame|describe|personajes|hablame|sus personajes|los personajes)', value)):
+            or not re.match(r'^(?:y\s+)?(?:quienes|cuales|dime|dame|describe|busca(?:me|r)?|averigua|personajes|hablame|sus personajes|los personajes)\b', value)):
         return None
     history = sanitized_history(history)
     context = resolve_followup_context(message, history)
@@ -44,7 +62,7 @@ def character_answer(message, history, search_books, search_public):
         books = [book for book in found if book['kind'] == 'book'
                  and book['source'] in {'Google Books API', 'Catálogo LitMate', 'Open Library',
                                        'Conocimiento literario local', 'Biblioteca literaria local'}
-                 and title_matches(query, book) and book['author'] != 'Autor no informado'
+                 and _title_query_matches(query, book) and book['author'] != 'Autor no informado'
                  and (not selected or normalized(book['author']) == normalized(selected[0]['author']))]
         if not books:
             return None
@@ -52,7 +70,11 @@ def character_answer(message, history, search_books, search_public):
         author_query = ' ' + books[0]['author'] if unique_author else ''
         local_facts = [source for source in found if source.get('kind') == 'web'
                        and source.get('character_facts') and any(same_work(source, book) for book in books)]
-        raw_public = reusable or local_facts or search_public('"' + query.replace('"', ' ') + '"' + author_query + ' personajes')
+        # La consulta flexible solo localiza fichas: la lectura y sus hechos
+        # siguen vinculados al título bibliográfico completo y a su autor.
+        variants = [_public_title_for_query(query, book) for book in books]
+        public_title = (variants[0] if len({normalized(title) for title in variants}) == 1 else query)
+        raw_public = reusable or local_facts or search_public('"' + public_title.replace('"', ' ') + '"' + author_query + ' personajes')
         # No fusiona dos registros de una misma página antes de detectar una
         # identidad contradictoria: debe poder volver al diálogo normal.
         public = [source for item in (raw_public if isinstance(raw_public, list) else [])[:8]
@@ -75,6 +97,17 @@ def character_answer(message, history, search_books, search_public):
     from .literary_research import assess_evidence
     relevant = [bind_source(page, book) for page in public if same_work(page, book)]
     if assess_evidence(message, [book, *relevant], [book], 'analysis')['contradictory']:
+        return None
+    roles = {}
+    for page in relevant:
+        description = normalized(page.get('description', ''))
+        for fact in page.get('character_facts', []):
+            name, role = normalized(fact.get('name', '')), normalized(fact.get('role', ''))
+            if name and role and name in description and role in description:
+                roles.setdefault(name, set()).add(role)
+    if any(len(values) > 1 for values in roles.values()):
+        # Descripciones distintas pueden complementarse; esta ruta sin modelo
+        # no elige una de ellas. El flujo normal conserva ambas para evaluarlas.
         return None
     description = normalized(source.get('description', ''))
     facts = [fact for fact in source['character_facts'] if not forbidden_output(fact['role'])

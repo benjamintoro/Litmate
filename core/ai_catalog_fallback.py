@@ -11,7 +11,7 @@ from .literary_ai import (ChatResult, canonical_sources, has_excerpt, looks_lite
 _TOPIC_LABELS = {
     'history': 'historia', 'art': 'arte', 'philosophy': 'filosofía',
     'architecture': 'arquitectura', 'poetry': 'poesía', 'cooking': 'cocina',
-    'science fiction': 'ciencia ficción', 'fantasy': 'fantasía', 'horror': 'terror',
+    'science fiction': 'ciencia ficción', 'space': 'espacio', 'fantasy': 'fantasía', 'horror': 'terror',
     'mystery': 'misterio', 'romance': 'romance', 'fiction': 'ficción',
     'south korea': 'Corea del Sur', 'north korea': 'Corea del Norte', 'korea': 'Corea',
     'japan': 'Japón', 'china': 'China', 'chile': 'Chile', 'peru': 'Perú',
@@ -152,7 +152,7 @@ def grounded_topic_fallback(message, sources):
         return None
     requested = requested_book_count(message)
     limit = requested or 3
-    different_authors = bool(re.search(r'\b(?:distintos?|diferentes?) (?:autores?|artistas?)\b', value))
+    different_authors = bool(re.search(r'\b(?:distintos?|diferentes?) autores?\b', value))
     chosen, proofs = [], []
     for source in canonical_sources(sources, 8):
         if (not _topic_catalogue_origin(source) or not topic_matches(source, message)
@@ -170,7 +170,7 @@ def grounded_topic_fallback(message, sources):
     if not chosen or (requested and len(chosen) != requested):
         return None
     chosen = canonical_sources(chosen, 5)
-    subjects = [('el ' if row[0] in {'art', 'horror', 'mystery', 'romance'} else 'la ')
+    subjects = [('el ' if row[0] in {'art', 'horror', 'mystery', 'romance', 'space'} else 'la ')
                 + _TOPIC_LABELS[row[0]] for row in profile['subjects']]
     scope = ', '.join(subjects[:-1]) + ' y ' + subjects[-1] if len(subjects) > 1 else subjects[0]
     if profile['places']:

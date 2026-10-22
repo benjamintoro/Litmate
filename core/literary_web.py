@@ -299,6 +299,91 @@ def _plain(value, maximum=300):
     return re.sub(r'\s+', ' ', str(value or '')).strip()[:maximum]
 
 
+def character_table_passage(html, *, context='', maximum=1800):
+    """Conserva filas literales de tablas bajo un encabezado de personajes.
+
+    Solo admite columnas explícitas de nombre/descripción, nunca un reparto
+    cinematográfico ni tablas encontradas fuera de la sección pertinente.
+    El llamador debe verificar antes la identidad y procedencia de la página.
+    """
+    from bs4 import BeautifulSoup
+    soup = BeautifulSoup(str(html or ''), 'html.parser')
+    if _INJECTION.search(soup.get_text(' ', strip=True)):
+        return ''
+    adaptation = re.compile(r'\b(?:adaptaciones?|adaptations?|cine|cinematografic\w*|'
+        r'peliculas?|films?|movies?|television|televisiv\w*|videojuegos?|video games?|cast|reparto)\b')
+    rows = []
+    for heading in soup.find_all(['h2', 'h3', 'h4']):
+        label = _normalized(heading.get_text(' ', strip=True))
+        if not re.fullmatch(r'(?:personajes(?: principales)?|(?:main )?characters|character list)', label):
+            continue
+        level = int(heading.name[1])
+        ancestor_level, adaptation_parent = level, False
+        for previous in heading.find_all_previous(['h1', 'h2', 'h3', 'h4']):
+            previous_level = int(previous.name[1])
+            if previous_level < ancestor_level:
+                ancestor_level = previous_level
+                if adaptation.search(_normalized(previous.get_text(' ', strip=True))):
+                    adaptation_parent = True
+                    break
+        if adaptation_parent:
+            continue
+        blocked_level = None
+        for node in heading.find_all_next(['h1', 'h2', 'h3', 'h4', 'table']):
+            if node.name.startswith('h'):
+                current_level = int(node.name[1])
+                if current_level <= level:
+                    break
+                if blocked_level is not None and current_level <= blocked_level:
+                    blocked_level = None
+                if adaptation.search(_normalized(node.get_text(' ', strip=True))):
+                    blocked_level = current_level
+                continue
+            if blocked_level is not None:
+                continue
+            table_rows = node.find_all('tr', recursive=True)
+            if not table_rows:
+                continue
+            labels = [_normalized(cell.get_text(' ', strip=True))
+                      for cell in table_rows[0].find_all(['th', 'td'], recursive=False)]
+            if any(re.search(r'\b(?:actor|actriz|cast|reparto|interprete|portrayed|portrayer)\b', item)
+                   for item in labels):
+                continue
+            names = [i for i, item in enumerate(labels) if item in {'nombre', 'personaje', 'name', 'character'}]
+            roles = [i for i, item in enumerate(labels) if item in {'resumen', 'descripcion', 'description', 'summary', 'role', 'papel'}]
+            if len(names) != 1 or len(roles) != 1:
+                continue
+            for row in table_rows[1:31]:
+                cells = row.find_all(['th', 'td'], recursive=False)
+                if len(cells) != len(labels) or any(cell.get('rowspan') or cell.get('colspan') for cell in cells):
+                    continue
+                for cell in cells:
+                    for note in cell.select('sup, .reference, .mw-ref'):
+                        note.decompose()
+                name = _plain(cells[names[0]].get_text(' ', strip=True), 90)
+                role = _plain(cells[roles[0]].get_text(' ', strip=True), 1000)
+                # Una oración publicada, no un resumen generado ni un corte a
+                # mitad de frase. El resto del párrafo puede contener spoilers.
+                role = re.split(r'(?<=[.!?])\s+(?=[A-ZÁÉÍÓÚÑ])', role, maxsplit=1)[0]
+                if (not re.fullmatch(r'[A-ZÁÉÍÓÚÑ][^\n,:;]{0,64}', name)
+                        or len(name.split()) > 6 or not 12 <= len(role) <= 280
+                        or adaptation.search(_normalized(role))):
+                    continue
+                rows.append((name, role))
+    value = _normalized(context)
+    rows.sort(key=lambda row: not bool(re.search(r'(?<!\w)' + re.escape(_normalized(row[0])) + r'(?!\w)', value)))
+    lines, seen = ['== Personajes principales =='], set()
+    for name, role in rows:
+        line = name + ': ' + role
+        if _normalized(name) in seen or len('\n'.join(lines + [line])) > maximum:
+            continue
+        lines.append(line)
+        seen.add(_normalized(name))
+        if len(seen) == 12:
+            break
+    return '\n'.join(lines) if len(lines) > 2 else ''
+
+
 def _normalized(value):
     return ''.join(char for char in unicodedata.normalize('NFKD', value.lower())
                    if not unicodedata.combining(char))

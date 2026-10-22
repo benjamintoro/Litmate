@@ -165,13 +165,17 @@ def chatbot_query(request):
                     from .literary_search import retrieve_books, retrieve_web
                     direct = character_answer(retrieval_message, state['turns'], retrieve_books, retrieve_web)
                 if direct is None:
+                    from .ai_identification_details import identification_answer
+                    direct = identification_answer(message)
+                if direct is None:
                     direct = bibliographic_answer(retrieval_message, state['turns'], search_google)
         except BudgetExpired:
             direct = None
         if direct is not None:
             remember(request, state, message, direct, round((time.monotonic() - fast_start) * 1000),
-                     SimpleNamespace(usage={}, provider='public-book-details' if direct.diagnostics.get(
-                         'public_details_fast_path') else 'google-books-metadata', calls=0),
+                     SimpleNamespace(usage={}, provider=('public-book-details' if direct.diagnostics.get(
+                         'public_details_fast_path') else 'local-identification' if direct.diagnostics.get(
+                         'local_identification_fast_path') else 'google-books-metadata'), calls=0),
                      topic_context=topic_context)
             return stream_result(direct)
     # SQLite coordina los procesos de un PC; Redis permite compartir el lease entre máquinas.

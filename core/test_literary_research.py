@@ -38,6 +38,22 @@ class LiteraryResearchTests(SimpleTestCase):
         result = assess_evidence('Dime los personajes', [PUBLIC, {**PUBLIC, 'character_facts': PUBLIC['character_facts'][:1]}], [BOOK])
         self.assertFalse(result['contradictory'])
 
+    def test_literal_conflicting_kinship_roles_need_more_evidence(self):
+        from .literary_identity import bind_source
+        first = {**PUBLIC, 'description': 'Ana: Es la hermana de Bruno.',
+                 'character_facts': [{'name': 'Ana', 'role': 'Es la hermana de Bruno.'}]}
+        second = {**PUBLIC, 'description': 'Ana: Es la madre de Bruno.',
+                  'character_facts': [{'name': 'Ana', 'role': 'Es la madre de Bruno.'}]}
+        # Conserva identidad del artículo, no el nombre del editor de la página.
+        first = bind_source({**first, 'identity_text': PUBLIC['identity_text']}, BOOK)
+        second = bind_source({**second, 'identity_text': PUBLIC['identity_text']}, BOOK)
+        result = assess_evidence('Dime los personajes', [first, second], [BOOK])
+        self.assertTrue(result['contradictory'])
+        self.assertFalse(result['sufficient'])
+        complementary = {**second, 'description': 'Ana: Es piloto de una nave.',
+            'character_facts': [{'name': 'Ana', 'role': 'Es piloto de una nave.'}]}
+        self.assertFalse(assess_evidence('Dime los personajes', [first, complementary], [BOOK])['contradictory'])
+
     def test_exact_quote_requires_verbatim_and_edition(self):
         self.assertFalse(assess_evidence('Dame una cita textual', [PUBLIC], [BOOK])['sufficient'])
         excerpt = {**BOOK, 'kind': 'excerpt', 'verbatim_verified': True, 'edition': 'Edición autorizada 2020'}

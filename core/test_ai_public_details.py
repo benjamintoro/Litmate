@@ -63,6 +63,62 @@ class PublicCharactersTests(SimpleTestCase):
                 self.assertIsNone(result)
                 web.assert_not_called()
 
+    def test_dime_and_busca_use_the_same_canonical_title_without_a_leading_article(self):
+        book = {**BOOK, 'title': 'El valle remoto'}
+        page = {**PUBLIC, 'title': 'El valle remoto (novela)',
+                'identity_text': 'El valle remoto es una novela de Frank Herbert.'}
+        for verb in ('Dime', 'Busca', 'Búscame', 'Averigua'):
+            with self.subTest(verb=verb):
+                result, catalog, web = self.answer(books=[book], public=[page],
+                    message=verb + ' los personajes del valle remoto')
+                self.assertEqual(result.status, 'answered')
+                self.assertEqual(result.books[0]['title'], 'El valle remoto')
+                catalog.assert_called_once_with('valle remoto')
+                web.assert_called_once_with('"El valle remoto" Frank Herbert personajes')
+
+    def test_missing_article_does_not_create_an_alias_or_match_another_saga_volume(self):
+        from .literary_identity import same_work, title_matches
+        book = {**BOOK, 'title': 'El valle remoto'}
+        self.assertFalse(title_matches('valle remoto', book))
+        self.assertFalse(same_work({**book, 'title': 'valle remoto'}, book))
+        result, _, web = self.answer(books=[{**book, 'title': 'El valle remoto: el regreso'}],
+                                    message='Busca los personajes del valle remoto')
+        self.assertIsNone(result)
+        web.assert_not_called()
+
+    def test_a_confirmed_translation_keeps_the_query_language_and_canonical_book(self):
+        book = {**BOOK, 'title': 'The Remote Valley', 'confirmed_aliases': [{
+            'title': 'El valle remoto', 'source_url': 'https://openlibrary.org/books/OL100M',
+            'evidence': 'The Remote Valley de Frank Herbert. Edición vinculada: El valle remoto.'}]}
+        page = {**PUBLIC, 'title': 'El valle remoto (novela)',
+                'identity_text': 'El valle remoto es una novela de Frank Herbert.'}
+        result, _, web = self.answer(books=[book], public=[page],
+                                     message='Dime los personajes del valle remoto')
+        self.assertEqual(result.status, 'answered')
+        self.assertEqual(result.books[0]['title'], 'The Remote Valley')
+        web.assert_called_once_with('"El valle remoto" Frank Herbert personajes')
+
+    def test_homonyms_keep_a_shared_full_title_but_do_not_guess_an_author(self):
+        books = [{**BOOK, 'title': 'El valle remoto'},
+                 {**BOOK, 'title': 'El valle remoto', 'author': 'Otra autora', 'book_id': 'other'}]
+        page = {**PUBLIC, 'title': 'El valle remoto (novela)',
+                'identity_text': 'El valle remoto es una novela de Frank Herbert.'}
+        result, _, web = self.answer(books=books, public=[page],
+                                     message='Dime los personajes del valle remoto')
+        self.assertEqual(result.books[0]['author'], 'Frank Herbert')
+        web.assert_called_once_with('"El valle remoto" personajes')
+
+    def test_flexible_search_does_not_relax_public_page_identity_or_mixed_task_guards(self):
+        book = {**BOOK, 'title': 'El valle remoto'}
+        page = {**PUBLIC, 'title': 'El valle remoto: el regreso',
+                'identity_text': 'El valle remoto: el regreso es una novela de Frank Herbert.'}
+        result, _, _ = self.answer(books=[book], public=[page], message='Busca los personajes del valle remoto')
+        self.assertIsNone(result)
+        result, catalog, web = self.answer(message='Busca los personajes de Dune y el final')
+        self.assertIsNone(result)
+        catalog.assert_not_called()
+        web.assert_not_called()
+
     def test_ambiguous_catalog_authors_need_one_unique_public_work_identity(self):
         books = [BOOK, {**BOOK, 'author': 'Brian Herbert', 'book_id': 'different-author'}]
         verified, _, _ = self.answer(books=books)
@@ -135,6 +191,20 @@ class PublicCharactersTests(SimpleTestCase):
         catalog, web = Mock(side_effect=TimeoutError), Mock()
         self.assertIsNone(character_answer(QUESTION, [], catalog, web))
         web.assert_not_called()
+
+    def test_conflicting_literal_character_roles_are_not_resolved_by_picking_the_first_page(self):
+        first = {**PUBLIC, 'character_facts': [*FACTS[:1], {'name': 'Chani', 'role': 'Es la hermana de Paul'}]}
+        first['description'] = '\n'.join(f["name"] + ': ' + f['role'] for f in first['character_facts'])
+        second = {**first, 'url': 'https://en.wikipedia.org/wiki/Dune_(novel)',
+                  'character_facts': [*FACTS[:1], {'name': 'Chani', 'role': 'Es la madre de Paul'}]}
+        second['description'] = '\n'.join(f['name'] + ': ' + f['role'] for f in second['character_facts'])
+        result, _, _ = self.answer(public=[first, second])
+        self.assertIsNone(result)
+
+    def test_a_partial_list_does_not_contradict_another_matching_character_list(self):
+        second = {**PUBLIC, 'url': 'https://en.wikipedia.org/wiki/Dune_(novel)', 'character_facts': FACTS[:2]}
+        result, _, _ = self.answer(public=[PUBLIC, second])
+        self.assertEqual(result.status, 'answered')
 
 
 class CharacterFactParserTests(SimpleTestCase):

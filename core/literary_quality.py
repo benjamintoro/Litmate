@@ -80,6 +80,9 @@ confirmar y responde lo que sabe, missing=la omite. No apruebes missing.
 Una recomendación amplia merece títulos concretos; no pedir un título para
 evitar recomendar. No reiniciar la conversación ni confundir el segundo libro.
 No revelar finales si no se solicitaron. Una ficha no equivale a texto completo.
+Evalúa sólo la afirmación literal del borrador: los finales, contradicciones o
+detalles adicionales presentes únicamente en una fuente no están afirmados por
+la respuesta. No atribuyas al borrador esos pasajes que no contiene.
 
 AFIRMACIONES: revisa de 1 a 6 datos relevantes si status=answer. statement
 debe COPIAR una frase del borrador, no una paráfrasis ni una frase nueva.
@@ -220,6 +223,16 @@ def required_fact_statements(text):
     return statements
 
 
+_NARRATIVE_ACTIONS = re.compile(
+    r'\b(?:acept\w*|dirig\w*|enfrent\w*|descubr\w*|encuentr\w*|'
+    r'asesin\w*|comet\w*|escap\w*|regres\w*|rescat\w*|conquist\w*|'
+    r'derrot\w*|conoc(?:e|en|io|ieron|iendo)|proteg\w*|cuid(?:a|an|o|aba|aban|ando)|'
+    r'constru\w*|expuls\w*|exig\w*|destru\w*|persigu\w*|persig\w*|'
+    r'naveg(?:a|an|o|aba|aban|ando)|viaj(?:a|an|o|aba|aban|aron|ara|aran|ando)|'
+    r'muere|mueren|murio|murieron|huye|huyen|huyo|huyeron|'
+    r'se conviert\w*|se convirt\w*|su protagonista|personaje llamado)\b')
+
+
 def _requires_descriptive_evidence(statement, source):
     """Una identidad bibliográfica no prueba el contenido o periodo de un libro."""
     remaining = _literal(statement)
@@ -238,7 +251,8 @@ def _requires_descriptive_evidence(statement, source):
         r'trata|argumento|trama|personajes|protagonista|siglos?|periodos?|epocas?|'
         r'cronologic\w*|episodic\w*|contemporane\w*|narrativa|narracion|'
         r'publicad\w*|catalogad\w*|clasificad\w*|novela|ensayo|poemario|'
-        r'tratado|biografia|se centra|se enfoca)\b|\b(?:1[0-9]{3}|20[0-9]{2})\b', normal))
+        r'tratado|biografia|se centra|se enfoca)\b|\b(?:1[0-9]{3}|20[0-9]{2})\b', normal)
+        or _NARRATIVE_ACTIONS.search(normal))
 
 
 def _unsupported_catalogue_detail(statement, source):
@@ -309,6 +323,42 @@ def _unsupported_catalogue_detail(statement, source):
         if not (re.search(r'\bsiglos?\s+' + re.escape(century) + r'\b', backing)
                 or re.search(r'(?<!\d)' + str(number) + r'(?:st|nd|rd|th)?\s*(?:century|siglo)\b', backing)):
             return True
+    return False
+
+
+def _catalogue_only_proof_for_narrative(statement, source, evidence):
+    """Materias no prueban acontecimientos aunque otra parte tenga una sinopsis.
+
+    Barrera acotada, independiente del veredicto del modelo: una frase de tema
+    o género puede usar materias; acciones concretas requieren un pasaje real.
+    No pretende decidir la implicación semántica de cualquier afirmación.
+    """
+    def normal(value):
+        return ''.join(character for character in unicodedata.normalize('NFKD', _literal(value))
+                       if not unicodedata.combining(character)).casefold()
+
+    claim = normal(statement)
+    for field in ('title', 'author'):
+        identity = normal(source.get(field, ''))
+        if identity:
+            claim = claim.replace(identity, ' ')
+    narrative = _NARRATIVE_ACTIONS.search(claim)
+    if not narrative:
+        return False
+    proof = normal(evidence)
+    description = normal(source.get('description', ''))
+    catalogue = re.match(r'^(?:temas del catalogo|materias(?: del catalogo)?|subjects)\s*:\s*'
+        r'(.*?)(?=\s+(?:sinopsis(?: del registro bibliografico| editorial)?|descripcion)\s*:|$)',
+        description)
+    if catalogue and proof and proof in catalogue.group(0):
+        return True
+    if re.match(r'^(?:temas del catalogo|materias(?: del catalogo)?|subjects)\s*:', proof):
+        return not re.search(r'\b(?:sinopsis(?: del registro bibliografico| editorial)?|descripcion)\s*:\s*\S', proof)
+    categories = source.get('categories')
+    if isinstance(categories, list) and categories:
+        category_words = evidence_words(' '.join(str(value) for value in categories))
+        proof_words = evidence_words(evidence)
+        return bool(proof_words and proof_words <= category_words)
     return False
 
 
@@ -471,6 +521,8 @@ def validate_audit(audit, plan, draft, sources, message, *, strict_facts=False):
                     raise ValueError('El título o autor solo confirma identidad; la descripción específica necesita evidencia de contenido o materias.')
             if source and _unsupported_catalogue_detail(claim['statement'], source):
                 raise ValueError('Las materias del catálogo no respaldan ese estilo, estructura o periodo; usa una descripción que lo confirme o retira el detalle.')
+            if source and _catalogue_only_proof_for_narrative(claim['statement'], source, claim['evidence']):
+                raise ValueError('Las materias del catálogo no prueban acontecimientos de la trama; cita el pasaje narrativo de la obra correcta.')
             if re.search(r'\b(?:personajes?|protagonistas?)\b', message, re.I):
                 names = character_names(claim['statement'])
                 if names and not names <= evidence_words(claim['evidence']):

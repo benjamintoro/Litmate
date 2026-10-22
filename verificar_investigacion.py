@@ -4,6 +4,7 @@ python verificar_investigacion.py --live --message "..." [--message "seguimiento
 Sin --live solo verifica fuentes/índices locales; --web permite fuentes gratuitas.
 """
 import argparse
+import copy
 import hashlib
 import json
 import os
@@ -16,7 +17,9 @@ def source_revision(base):
     digest = hashlib.sha256()
     for name in ('literary_ai', 'literary_identity', 'literary_conversation', 'literary_constraints',
                  'literary_search', 'literary_research', 'literary_quality', 'local_llm',
-                 'books_google', 'ai_catalog_fallback'):
+                 'books_google', 'ai_catalog_fallback', 'ai_public_details', 'literary_web',
+                 'literary_sources', 'ai_identification_details', 'literary_ai_views',
+                 'ai_literal_followup', 'ai_recommendation_provenance'):
         path = base / 'core' / (name + '.py')
         digest.update(name.encode())
         digest.update(path.read_bytes())
@@ -88,7 +91,14 @@ def main():
                 def traced_generate(stage, prompt, data, name):
                     stage_started = time.monotonic()
                     result = original_generate(stage, prompt, data, name)
-                    drafts.append({'stage': stage, 'draft': result})
+                    snapshot = {'stage': stage, 'draft': result}
+                    if stage in {'answer', 'answer_web', 'repair', 'audit'}:
+                        # Solo fuentes públicas/locales autorizadas y sus IDs;
+                        # no copia historial ni instrucciones del lector.
+                        snapshot['available_sources_for_local_review'] = copy.deepcopy(data.get('sources', []))
+                        snapshot['recommendation_evidence_sources'] = copy.deepcopy(
+                            data.get('recommendation_evidence_sources', []))
+                    drafts.append(snapshot)
                     print(json.dumps({'local_stage': stage,
                         'seconds': round(time.monotonic() - stage_started, 3)}, ensure_ascii=True), flush=True)
                     return result
@@ -96,10 +106,21 @@ def main():
             from core.ai_public_details import character_answer
             topic_context = resolve_topic_context(message, conversation_state)
             remember_topic(conversation_state, message, topic_context)
-            result = character_answer(message, history, local_search,
-                retrieve_web if args.web else lambda query: [])
-            if result is None:
-                result = bot.reply(message, history, topic_context=topic_context)
+            from core.literary_sources import bounded_research, research_snapshot
+            @bounded_research
+            def answer_turn():
+                # Mismo presupuesto compartido que chatbot_query: la ruta
+                # rápida no obtiene lecturas adicionales fuera del límite.
+                result = character_answer(message, history, local_search,
+                    retrieve_web if args.web else lambda query: [])
+                if result is None:
+                    from core.ai_identification_details import identification_answer
+                    result = identification_answer(message)
+                if result is None:
+                    result = bot.reply(message, history, topic_context=topic_context)
+                result.diagnostics['external_research'] = research_snapshot()
+                return result
+            result = answer_turn()
             item = {'question': message, 'status': result.status, 'answer': result.text,
                     'model': args.model,
                     'diagnostics': result.diagnostics, 'local_model_calls': model.calls,

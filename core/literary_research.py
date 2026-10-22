@@ -309,6 +309,20 @@ def _contradictions(sources):
     claims = defaultdict(set)
     for source in sources:
         identity = work_identity(source)
+        # Roles de parentesco incompatibles requieren contrastar fuentes. Una
+        # ocupación complementaria o una lista parcial no contradice otra.
+        text = normalize_identity(source.get('description'))
+        facts = source.get('character_facts', [])
+        for fact in facts[:15] if isinstance(facts, list) else []:
+            if not isinstance(fact, dict) or not identity.get('work_id'):
+                continue
+            name, role = normalize_identity(fact.get('name')), normalize_identity(fact.get('role'))
+            if not name or name not in text or not role or role not in text:
+                continue
+            kinship = re.fullmatch(r'(?:es |era )?(?:el |la )?'
+                r'(madre|padre|hijo|hija|hermano|hermana) de (.{1,120})', role)
+            if kinship:
+                claims[(identity['work_id'], name, 'kinship', kinship.group(2))].add(kinship.group(1))
         # Una lista incompleta no contradice una lista más larga.
         for fact in _grounded_facts(source):
             subject = normalize_identity(fact.get('subject'))

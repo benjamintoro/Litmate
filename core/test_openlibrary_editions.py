@@ -11,6 +11,7 @@ from django.test import SimpleTestCase, override_settings
 
 from .books_google import source_synopsis
 from .literary_search import (_openlibrary_edition_metadata, _openlibrary_detail,
+                              _openlibrary_edition_aliases, _openlibrary_complete_edition_alias,
                               _cache_key, search_openlibrary)
 from .literary_sources import research_scope, research_snapshot, reserve_page
 
@@ -60,6 +61,56 @@ class OpenLibraryEditionBindingTests(SimpleTestCase):
                 edition = {**EDITION, 'works': works, 'subtitle': 'Painting'}
                 self.assertFalse(_openlibrary_edition_metadata(book, edition, nested_in_work=True))
                 self.assertEqual(book, BOOK)
+
+    def test_full_translated_edition_keeps_its_qualifying_subtitle_in_the_alias(self):
+        from .literary_identity import confirmed_aliases, title_matches
+        book = {**BOOK, 'title': 'Lunar Notebook'}
+        edition = {**EDITION, 'title': 'Cuaderno lunar', 'subtitle': 'La primera estación'}
+        _openlibrary_edition_aliases(book, edition, evidence_url=BOOK['url'])
+        self.assertEqual([item['title'] for item in confirmed_aliases(book)], ['Cuaderno lunar: La primera estación'])
+        self.assertFalse(title_matches('Cuaderno lunar', book))
+        self.assertTrue(title_matches('Cuaderno lunar: La primera estación', book))
+
+    def test_enumerating_multiple_parts_does_not_prove_the_edition_is_complete(self):
+        from .literary_identity import title_matches
+        book = {**BOOK, 'title': 'Lunar Notebook'}
+        edition = {**EDITION, 'title': 'Cuaderno lunar', 'subtitle': 'I. La estación / II. El viaje / III. El regreso'}
+        _openlibrary_edition_aliases(book, edition, evidence_url=BOOK['url'])
+        self.assertFalse(title_matches('Cuaderno lunar', book))
+        self.assertTrue(title_matches('Cuaderno lunar: I. La estación / II. El viaje / III. El regreso', book))
+        self.assertEqual(book['title'], 'Lunar Notebook')
+        self.assertEqual(book['author'], 'Ana Robles')
+        self.assertNotIn('synopsis', book)
+
+    def test_an_explicit_complete_edition_statement_can_confirm_the_short_title(self):
+        from .literary_identity import title_matches
+        book = {**BOOK, 'title': 'Lunar Notebook'}
+        edition = {**EDITION, 'title': 'Cuaderno lunar', 'subtitle': 'Edición completa'}
+        _openlibrary_edition_aliases(book, edition, evidence_url=BOOK['url'])
+        self.assertTrue(title_matches('Cuaderno lunar', book))
+
+    def test_a_numbered_partial_edition_does_not_confirm_the_collection_title(self):
+        from .literary_identity import title_matches
+        book = {**BOOK, 'title': 'The Return'}
+        edition = {**EDITION, 'title': 'Cuaderno lunar', 'subtitle': 'III: El regreso'}
+        _openlibrary_edition_aliases(book, edition, evidence_url=BOOK['url'])
+        self.assertFalse(title_matches('Cuaderno lunar', book))
+        self.assertTrue(title_matches('Cuaderno lunar: III: El regreso', book))
+
+    def test_an_unqualified_translation_is_bound_only_to_its_explicit_api_work(self):
+        from .literary_identity import title_matches
+        book = {**BOOK, 'title': 'Lunar Notebook'}
+        _openlibrary_edition_aliases(book, {**EDITION, 'title': 'Cuaderno lunar'}, evidence_url=BOOK['url'])
+        self.assertTrue(title_matches('Cuaderno lunar', book))
+        other = {**BOOK, 'title': 'The Return', 'book_id': '/works/OL2W'}
+        _openlibrary_edition_aliases(other, {**EDITION, 'title': 'Cuaderno lunar'}, evidence_url=BOOK['url'])
+        self.assertFalse(title_matches('Cuaderno lunar', other))
+
+    def test_a_same_language_saga_extension_is_not_promoted_as_a_translation(self):
+        book = deepcopy(BOOK)
+        _openlibrary_edition_aliases(book, {**EDITION, 'title': 'Japanese Art The Next Volume'},
+                                    evidence_url=BOOK['url'])
+        self.assertNotIn('confirmed_aliases', book)
 
     def test_a_sequel_is_not_the_same_work_even_with_an_inconsistent_api_link(self):
         book = deepcopy(BOOK)
@@ -213,4 +264,69 @@ class OpenLibraryEditionRetrievalTests(SimpleTestCase):
             result = search_openlibrary('libros sobre arte japonés')
         self.assertEqual(len(result), 1)
         self.assertEqual(source_synopsis(result[0]), '')
+
+
+class CompleteEditionScopeVerificationTests(SimpleTestCase):
+    def records(self, volumes=(1, 2, 3), position='1-3', author='/authors/OL5A'):
+        work = {'key': '/works/OL1W', 'title': 'Voyages: collected trilogy',
+                'authors': [{'author': {'key': author}}],
+                'series': [{'series': {'key': '/series/OL7L'}, 'position': position}]}
+        edition = {**EDITION, 'title': 'Los viajes',
+                   'subtitle': ' / '.join(str(i) + ': Parte' for i in volumes),
+                   'table_of_contents': [{'level': 0, 'title': 'Vol. ' + str(i) + ': Parte'} for i in volumes]}
+        return work, edition
+
+    def confirm(self, volumes=(1, 2, 3), position='1-3', author='/authors/OL5A', **changes):
+        work, edition = self.records(volumes, position, author)
+        edition.update(changes)
+        book = {**BOOK, 'title': work['title']}
+        _openlibrary_edition_aliases(book, edition, evidence_url=BOOK['url'])
+        with patch('core.literary_search._openlibrary_detail', side_effect=[work, edition]) as fetch:
+            _openlibrary_complete_edition_alias(book, edition, ['OL5A'], reads={'used': 0})
+        return book, fetch
+
+    def test_partial_two_part_edition_cannot_become_the_alias_of_a_three_part_work(self):
+        from .literary_identity import title_matches
+        book, _ = self.confirm(volumes=(1, 2))
+        self.assertFalse(title_matches('Los viajes', book))
+
+    def test_exact_work_range_and_edition_contents_prove_the_same_collected_scope(self):
+        from .literary_identity import title_matches
+        book, fetch = self.confirm()
+        self.assertTrue(title_matches('Los viajes', book))
+        self.assertEqual(fetch.call_count, 2)
+        self.assertEqual(fetch.call_args_list[1].args[0], '/books/OL10M')
+        self.assertTrue(book['confirmed_aliases'][-1]['source_url'].endswith('/books/OL10M.json'))
+        self.assertNotIn('synopsis', book)
+
+    def test_a_different_author_key_does_not_confirm_the_translation(self):
+        from .literary_identity import title_matches
+        book, fetch = self.confirm(author='/authors/OL6A')
+        self.assertFalse(title_matches('Los viajes', book))
+        self.assertEqual(fetch.call_count, 1)
+
+    def test_another_work_in_the_edition_record_does_not_confirm_the_translation(self):
+        from .literary_identity import title_matches
+        book, _ = self.confirm(works=[{'key': '/works/OL2W'}])
+        self.assertFalse(title_matches('Los viajes', book))
+
+    def test_missing_or_ambiguous_work_scope_cannot_be_inferred_from_the_number_of_parts(self):
+        from .literary_identity import title_matches
+        for position in ('', '1', 'complete trilogy', '1-1000'):
+            with self.subTest(position=position):
+                book, fetch = self.confirm(position=position)
+                self.assertFalse(title_matches('Los viajes', book))
+                self.assertEqual(fetch.call_count, 1)
+
+    def test_extra_or_missing_edition_volumes_are_not_equivalent(self):
+        from .literary_identity import title_matches
+        for volumes in ((1, 3), (1, 2, 3, 4), ()):
+            with self.subTest(volumes=volumes):
+                book, _ = self.confirm(volumes=volumes, subtitle='I: La partida / II: El viaje / III: El regreso')
+                self.assertFalse(title_matches('Los viajes', book))
+
+    def test_subtitle_and_table_of_contents_cannot_disagree_about_the_collected_scope(self):
+        from .literary_identity import title_matches
+        book, _ = self.confirm(subtitle='I: La partida / II: El regreso')
+        self.assertFalse(title_matches('Los viajes', book))
 
