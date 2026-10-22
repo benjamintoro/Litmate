@@ -1,0 +1,87 @@
+{
+  "reviewed_on": "2026-10-22",
+  "license": "CC0-1.0 (redacción factual original de LitMate; no licencia de la obra ni de las páginas citadas)",
+  "works": [
+    {
+      "title": "La segunda guerra mundial",
+      "author": "Antony Beevor",
+      "url": "https://pasadopresente.com/colecciones/historia/la-segunda-guerra-mundial",
+      "categories": ["Historia", "Segunda Guerra Mundial", "No ficción"],
+      "language": "es",
+      "description": "Ofrece una visión global de la Segunda Guerra Mundial que combina los grandes acontecimientos con experiencias de los combatientes, recogidas en cartas y diarios."
+    },
+    {
+      "title": "Se desataron todos los infiernos",
+      "author": "Max Hastings",
+      "url": "https://www.planetadelibros.com.ar/libro-se-desataron-todos-los-infiernos/120454",
+      "categories": ["Historia", "Segunda Guerra Mundial", "No ficción"],
+      "language": "es",
+      "description": "Presenta una historia global de la Segunda Guerra Mundial con especial atención a las experiencias humanas de quienes la vivieron."
+    },
+    {
+      "title": "Si esto es un hombre",
+      "author": "Primo Levi",
+      "url": "https://www.planetadelibros.com/libro-si-esto-es-un-hombre/268336",
+      "categories": ["Historia", "Segunda Guerra Mundial", "Memorias", "No ficción"],
+      "language": "es",
+      "description": "Es un testimonio de Primo Levi sobre su deportación a Auschwitz y la experiencia de los campos nazis, no una historia militar general."
+    },
+    {
+      "title": "Cien años de soledad",
+      "author": "Gabriel García Márquez",
+      "url": "https://www.penguinlibros.com/es/literatura-contemporanea/35974-libro-cien-anos-de-soledad-9788497592208",
+      "categories": ["Novela", "Fiction"],
+      "language": "es",
+      "description": "La novela sigue la historia de la familia Buendía-Iguarán en Macondo, entrelazando sucesos familiares, fantasía y tragedia."
+    },
+    {
+      "title": "Pedro Páramo",
+      "author": "Juan Rulfo",
+      "url": "https://www.fondodeculturaeconomica.com/Ficha/9681605020/F",
+      "categories": ["Novela", "Fiction"],
+      "language": "es",
+      "description": "Novela situada en Comala, que condensa en sus habitantes temas de la vida mexicana."
+    },
+    {
+      "title": "El Aleph",
+      "author": "Jorge Luis Borges",
+      "url": "https://www.penguinlibros.com/es/literatura-contemporanea/376318-libro-el-aleph-9788491057406",
+      "categories": ["Relatos", "Fiction"],
+      "language": "es",
+      "description": "Reúne cuentos que exploran problemas filosóficos, intrigas fantásticas y temas como el tiempo, la identidad y el infinito."
+    },
+    {
+      "title": "La metamorfosis",
+      "author": "Franz Kafka",
+      "url": "https://es.wikipedia.org/wiki/La_metamorfosis",
+      "categories": ["Novela corta", "Fiction"],
+      "language": "es",
+      "description": "Gregor Samsa despierta transformado en un insecto monstruoso y se ve incapacitado para trabajar y mantener a su familia."
+    },
+    {
+      "title": "Platero y yo",
+      "author": "Juan Ramón Jiménez",
+      "url": "https://www.gutenberg.org/ebooks/9980",
+      "categories": ["Prosa poética"],
+      "language": "es",
+      "description": "La narración presenta a Platero, un burro pequeño, peludo y suave, y la relación de compañía con su narrador.",
+      "character_facts": [{"name": "Platero", "role": "Burro pequeño, peludo y suave que acompaña al narrador."}]
+    },
+    {
+      "title": "Don Quijote de la Mancha",
+      "author": "Miguel de Cervantes",
+      "url": "https://es.wikipedia.org/wiki/Don_Quijote_de_la_Mancha",
+      "categories": ["Novela", "Fiction"],
+      "language": "es",
+      "description": "Don Quijote sale en busca de aventuras caballerescas, acompañado por su escudero Sancho Panza.",
+      "confirmed_aliases": [
+        {"title": "Don Quijote", "source_url": "https://www.rae.es/obras-academicas/bcrae/don-quijote-de-la-mancha", "evidence": "Don Quijote de la Mancha. Autor Miguel de Cervantes."},
+        {"title": "El Quijote", "source_url": "https://www.rae.es/obras-academicas/bcrae/don-quijote-de-la-mancha", "evidence": "Don Quijote de la Mancha. El Quijote patrocinado por la Real Academia Española. Autor Miguel de Cervantes."}
+      ],
+      "character_facts": [
+        {"name": "Don Quijote", "role": "Protagonista que sale de aventuras como caballero andante."},
+        {"name": "Sancho Panza", "role": "Labrador vecino de don Quijote que lo acompaña como escudero."}
+      ]
+    }
+  ]
+}

@@ -528,6 +528,12 @@ def simple_literary_route(message):
                          r'codigo|programa|receta|ecuacion|constitucion|ley|tratado|'
                          r'python|javascript|html|sql|java)\b', value)):
         return None
+    from .literary_research import is_topic_recommendation
+    from .ai_quick_answers import _simple_topic_request
+    if is_topic_recommendation(message) and _simple_topic_request(message, message):
+        return {'decision': 'allow', 'intent': 'recommend',
+                'queries': [clean_text(message, 240)], 'candidates': [],
+                'followup': False, 'clarification': ''}
     author = re.match(r'^(?:quien (?:escribio|ha escrito|fue el autor|es el autor)|'
                       r'de quien es|quien es el autor)\b', value)
     bibliographic = re.match(r'^(?:en que ano se publico|cuando se publico|'

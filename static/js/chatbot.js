@@ -176,16 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let answerMood = '', hasText = false;
 
         try {
-            const response = await fetch("/chatbot_query/", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCookie('csrftoken'),
-                },
-                body: JSON.stringify({ message: userMessage }),
-            });
-
-            accumulatedText = await LitMateSafe.readChatResponse(response, value => {
+            accumulatedText = await LitMateSafe.queryChat(userMessage, value => {
                 if (!value.trim()) return;
                 botParagraph.hidden = false;
                 if (!hasText) { hasText = true; avatarController.stage('writing'); statusText.textContent = 'Escribiendo...'; }
@@ -199,7 +190,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            await writer.finish();
+            // La respuesta ya fue verificada completa. No sumar otros 2,5 s
+            // de animación al presupuesto de espera del lector.
+            writer.skip();
             status.hidden = true;
             LitMateSafe.renderBookCards(botMessageDiv, suggestedBooks);
             scrollToBottom();

@@ -91,6 +91,11 @@ def _explicit_subject(message):
         match = re.search(r'\b(?:recomi[eé]nda(?:me)?|recomendar|busc(?:o|ando)|'
                           r'quiero|necesito)\b.*?\b(?:sobre|acerca de)\s+(.+)', value, re.I)
     if not match:
+        match = re.search(r'\b(?:qu[eé] (?:puedo|podr[ií]a) leer|'
+                          r'me (?:gustar[ií]a|interesa) leer|'
+                          r'recomend[aá]me|recomi[eé]ndas|recomend[aá]s|sugieres)\b'
+                          r'.*?\b(?:sobre|acerca de)\s+(.+)', value, re.I)
+    if not match:
         return ''
     subject = re.split(r'[;.!?\n]|\s+(?:recomi[eé]nda(?:me)?|quiero|necesito)\b',
                        match.group(1), maxsplit=1, flags=re.I)[0].strip()

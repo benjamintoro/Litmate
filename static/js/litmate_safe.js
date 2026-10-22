@@ -160,6 +160,32 @@
         }
     }
 
+    async function queryChat(message, onText = () => {}, onMetadata = () => {}, options = {}) {
+        const env = options.environment || (typeof window !== 'undefined' ? window : globalThis);
+        const controller = new env.AbortController();
+        const timeout = Math.max(1, Math.min(Number(options.timeout) || 10000, 10000));
+        let expired = false, timer;
+        const limit = new Promise((_, reject) => {
+            timer = env.setTimeout(() => {
+                expired = true;
+                controller.abort();
+                reject(new Error('Se alcanzó el límite de 10 segundos sin recibir una respuesta completa. Vuelve a intentarlo.'));
+            }, timeout);
+        });
+        const transport = (async () => {
+            const response = await env.fetch('/chatbot_query/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCookie('csrftoken') },
+                body: JSON.stringify({ message }), signal: controller.signal
+            });
+            return readChatResponse(response,
+                text => { if (!expired) onText(text); },
+                metadata => { if (!expired) onMetadata(metadata); });
+        })();
+        try { return await Promise.race([transport, limit]); }
+        finally { env.clearTimeout(timer); }
+    }
+
     function storeLink(value, label) {
         const url = safeURL(value);
         if (!url) return null;
@@ -481,7 +507,7 @@
     }
 
     return { escapeHTML, safeURL, element, formatMessageText, renderMessage, getCookie,
-        readChatProblem, readChatResponse, normalizeBooks, renderBookCards,
+        readChatProblem, readChatResponse, queryChat, normalizeBooks, renderBookCards,
         createTypewriter, avatarForText, createChatAvatar, createChatVoice,
         normalizeVolume, readPreference, savePreference };
 });

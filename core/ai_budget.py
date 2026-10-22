@@ -3,12 +3,67 @@ import time
 from contextlib import contextmanager
 from contextvars import ContextVar, copy_context
 from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import TimeoutError as FutureTimeout
+from threading import BoundedSemaphore
 
 _deadline = ContextVar('litmate_ai_deadline', default=None)
+# Sin cola ilimitada: una fuente atascada no permite acumular hilos por visita.
+_chat_pool = ThreadPoolExecutor(max_workers=2, thread_name_prefix='litmate-chat')
+_chat_slots = BoundedSemaphore(2)
 
 
 class BudgetExpired(TimeoutError):
     pass
+
+
+class WorkerBusy(Exception):
+    pass
+
+
+def chat_timeout(config):
+    """Reserva un segundo para sesión/HTTP; .env antiguo no puede volver a 360 s."""
+    try:
+        value = float(getattr(config, 'LITMATE_CHAT_TIMEOUT', 9))
+    except (TypeError, ValueError):
+        value = 9
+    return max(.1, min(value, 9))
+
+
+def current_deadline():
+    return _deadline.get()
+
+
+def run_before_deadline(function, deadline, *args):
+    """Espera acotada incluso si una dependencia ignora su timeout.
+
+    El trabajo no recibe request/sesión ni publica/consume cuotas. Si vence la
+    espera, se descarta su resultado. El slot y cualquier lease del modelo se
+    conservan hasta que termine: nunca se finge haber cancelado un hilo Python.
+    Las operaciones HTTP sí comparten el deadline y cierran su socket al vencer.
+    """
+    with request_budget(deadline):
+        if not _chat_slots.acquire(blocking=False):
+            raise WorkerBusy()
+
+        def work():
+            try:
+                check_budget()
+                result = function(*args)
+                check_budget()
+                return result
+            finally:
+                _chat_slots.release()
+
+        try:
+            future = submit_with_budget(_chat_pool, work)
+        except BaseException:
+            _chat_slots.release()
+            raise
+        try:
+            return future.result(timeout=budget_timeout(9))
+        except FutureTimeout:
+            # No liberar aquí: un proveedor no cooperativo puede seguir activo.
+            raise BudgetExpired('tiempo_total_agotado') from None
 
 
 def budget_timeout(maximum):

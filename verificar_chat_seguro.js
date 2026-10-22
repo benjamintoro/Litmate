@@ -332,6 +332,21 @@ async function main() {
     const stageStream = streaming([bytes('data: {"token":"","stage":"search","message":"Buscando..."}\n\ndata: {"token":"Listo"}\n\ndata: [DONE]\n\n')]);
     check(await Safe.readChatResponse(stageStream.response, () => {}, value => stages.push(value)) === 'Listo' && stages[0].stage === 'search', 'estado de progreso separado del texto');
 
+    let deadlineCallback, requestedTimeout, pendingFetch, requestSignal, latePaints = 0;
+    const deadlineEnv = { AbortController,
+        setTimeout(callback, delay) { deadlineCallback = callback; requestedTimeout = delay; return 123; },
+        clearTimeout() {},
+        fetch(url, options) { requestSignal = options.signal; return new Promise(resolve => { pendingFetch = resolve; }); }
+    };
+    const timedQuery = Safe.queryChat('Libros', () => { latePaints++; }, () => { latePaints++; }, { environment: deadlineEnv });
+    check(requestedTimeout === 10000, 'petición completa limitada a diez segundos');
+    deadlineCallback();
+    await assert.rejects(timedQuery, /10 segundos/); checks++;
+    check(requestSignal.aborted, 'se cancela transporte al vencer la espera');
+    pendingFetch(streaming([bytes('data: {"token":"TARDE"}\n\ndata: [DONE]\n\n')]).response);
+    await new Promise(resolve => setImmediate(resolve));
+    check(latePaints === 0, 'respuesta tardía nunca reemplaza el error ni publica contenido');
+
     global.document = { cookie: 'sessionid=abc; csrftoken=token%20csrf' };
     check(Safe.getCookie('csrftoken') === 'token csrf', 'CSRF decodificado');
     global.document.cookie = 'csrftoken=%zz';
@@ -341,9 +356,9 @@ async function main() {
     for (const file of ['chatbot.js', 'floating_chat.js']) {
         const source = fs.readFileSync(path.join(__dirname, 'static', 'js', file), 'utf8');
         new vm.Script(source, { filename: file });
-        check(source.includes('LitMateSafe.readChatResponse(') && source.includes('LitMateSafe.renderMessage('), file + ': transporte/formato compartido');
+        check(source.includes('LitMateSafe.queryChat(') && source.includes('LitMateSafe.renderMessage('), file + ': transporte acotado/formato compartido');
         check(!source.includes('function formatMessageText') && !source.includes('function readChatProblem'), file + ': sin copias de helpers');
-        check(source.includes("'X-CSRFToken':"), file + ': POST protegido con CSRF');
+        check(source.includes('LitMateSafe.queryChat('), file + ': usa POST compartido protegido con CSRF');
         await clientRequest(file);
         await clientRequest(file, 503);
         await clientRequest(file, 200, [CARD]);
@@ -353,13 +368,13 @@ async function main() {
     check(typeof browser.LitMateSafe.readChatResponse === 'function', 'exportación de navegador');
     const base = fs.readFileSync(path.join(__dirname, 'templates/base.html'), 'utf8');
     check(base.indexOf("js/litmate_safe.js") >= 0 && base.indexOf("js/litmate_safe.js") < base.indexOf("js/floating_chat.js"), 'helper cargado antes del widget');
-    check(base.includes('css/chat-books.css') && base.includes('?v=chat-v5'), 'estilos y scripts IA con versión de caché');
+    check(base.includes('css/chat-books.css') && base.includes('?v=chat-v6'), 'estilos y scripts IA con versión de caché');
     const css = fs.readFileSync(path.join(__dirname, 'static/css/chat-books.css'), 'utf8');
     check(css.includes('background: #c9a96e;') && css.includes('minmax(min(100%, 245px), 1fr)'), 'burbujas doradas y tarjetas adaptables');
     check(css.includes('#floating-chat-body .lm-chat-books-grid { grid-template-columns: minmax(0, 1fr); }'), 'widget muestra una columna sin desbordamiento');
     for (const name of ['chatbot.html', 'chatbotbase.html']) {
         const template = fs.readFileSync(path.join(__dirname, 'templates', name), 'utf8');
-        check(!template.includes('Cuando tengamos una ficha') && template.includes('?v=chat-v5'), name + ': copy retirado y cliente actualizado');
+        check(!template.includes('Cuando tengamos una ficha') && template.includes('?v=chat-v6'), name + ': copy retirado y cliente actualizado');
     }
     for (const file of ['feliz.png', 'agradecida.png', 'triste.png', 'miedo.png', 'enojo.png', 'sorprendida.png', 'pensativa.png', 'sin conexion.png', 'cuerpo.jpg']) {
         check(fs.existsSync(path.join(__dirname, 'static/assets/img/avatar', file)), 'avatar existente: ' + file);

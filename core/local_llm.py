@@ -8,7 +8,7 @@ from .ai_http import local_origin, read_json_url
 from .literary_ai import (ANSWER_SCHEMA, REVIEW_SCHEMA, ROUTE_SCHEMA,
                           ProviderUnavailable)
 from .literary_quality import PLAN_SCHEMA, AUDIT_SCHEMA, character_names, evidence_words
-from .ai_budget import BudgetExpired
+from .ai_budget import BudgetExpired, current_deadline
 
 
 def _external_summary_transport(data):
@@ -86,11 +86,16 @@ class OllamaJSON:
     def __init__(self, base_url='http://127.0.0.1:11434', *, timeout=240,
                  context=16384, thinking=False, answer_tokens=2048, total_timeout=300):
         self.base_url = base_url
-        self.timeout = max(30, min(int(timeout), 600))
+        self.timeout = max(.1, min(float(timeout), 600))
         self.context = max(8192, min(int(context), 32768))
         self.thinking = thinking is True
         self.answer_tokens = max(1024, min(int(answer_tokens), 4096))
-        self.deadline = time.monotonic() + max(60, min(int(total_timeout), 600))
+        self.deadline = time.monotonic() + max(.1, min(float(total_timeout), 600))
+        if current_deadline() is not None:
+            self.deadline = min(self.deadline, current_deadline())
+        self.interactive = current_deadline() is not None and self.deadline - time.monotonic() <= 9
+        if self.interactive:
+            self.answer_tokens = min(self.answer_tokens, 512)
         self.usage = {'prompt_tokens': 0, 'completion_tokens': 0, 'total_tokens': 0}
         self.calls = 0
         self.last_error = ''
@@ -475,6 +480,8 @@ class OllamaJSON:
             if stage == 'audit' and claim_slots is not None:
                 # El transporte compacto devuelve IDs, no pasajes repetidos.
                 output_tokens = 1536
+            if self.interactive and not answer_stage:
+                output_tokens = min(output_tokens, 512 if stage == 'audit' else 256)
             request_tokens = output_tokens
             raw = ''
             for request_attempt in range(2):
@@ -521,7 +528,8 @@ class OllamaJSON:
                     # respuesta publicable, pero tampoco equivale a una caída
                     # del proveedor: se concede un único reintento con más
                     # espacio antes de declarar el corte de forma explícita.
-                    if request_attempt == 0 and request_tokens < 4096:
+                    if (request_attempt == 0 and request_tokens < 4096
+                            and (not self.interactive or self._remaining() >= 3)):
                         request_tokens = min(4096, max(request_tokens + 512, request_tokens * 2))
                         continue
                     self.last_error_detail = 'truncated_json_response'

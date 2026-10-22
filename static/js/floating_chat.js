@@ -160,16 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let answerMood = '', hasText = false;
 
             try {
-                const res = await fetch('/chatbot_query/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': getCsrfToken()
-                    },
-                    body: JSON.stringify({ message: text })
-                });
-
-                accumulated = await LitMateSafe.readChatResponse(res, value => {
+                accumulated = await LitMateSafe.queryChat(text, value => {
                     if (!value.trim()) return;
                     botP.hidden = false;
                     if (!hasText) { hasText = true; avatarController.stage('writing'); statusText.textContent = 'Escribiendo...'; }
@@ -183,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
 
-                await writer.finish();
+                writer.skip();
                 status.hidden = true;
                 LitMateSafe.renderBookCards(botDiv, suggestedBooks);
                 body.scrollTop = body.scrollHeight;

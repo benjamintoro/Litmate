@@ -47,6 +47,9 @@ def main(labels=None):
             LITMATE_AI_USE_OPENLIBRARY=True, LITMATE_AI_USE_WEB=False, LITMATE_AI_USE_SEARXNG=True,
             LITMATE_USE_EXISTING_QUOTAS=False, LITMATE_AI_LOCK_BACKEND='cache',
             LITMATE_AI_CATALOG_FALLBACK=False, LITMATE_AI_REQUIRE_BOOK_SOURCES=False,
+            # Casos anteriores sustituyen el pipeline; la ruta nueva se prueba
+            # explícitamente en test_chat_deadline, sin HTTP accidental.
+            LITMATE_AI_QUICK_ANSWERS=False,
             LITMATE_ANONYMOUS_AI_DAILY_LIMIT=5,
             LITMATE_FREE_AI_DAILY_LIMIT=10, LITMATE_AI_REQUESTS_PER_MINUTE=20,
             LITMATE_AI_RUNTIME_DB=Path(media) / 'ai-runtime.sqlite3', LITMATE_TTS_ENABLED=False,

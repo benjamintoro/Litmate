@@ -30,7 +30,7 @@
     <link href="{% static 'css/subscriptions.css' %}?v=4.0" rel="stylesheet" />
     <link href="{% static 'css/pages.css' %}?v=4.0" rel="stylesheet" />
     <link href="{% static 'css/dark-mode.css' %}?v=4.0" rel="stylesheet" />
-    <link href="{% static 'css/chat-books.css' %}?v=chat-v5" rel="stylesheet" />
+    <link href="{% static 'css/chat-books.css' %}?v=chat-v6" rel="stylesheet" />
     <script>
         // Anti-flash: aplica el tema guardado antes de que se pinte la página
         (function(){
@@ -737,9 +737,9 @@
     </script>
 
     <!-- CARGA CONDICIONAL DEL SCRIPT DEL WIDGET FLOTANTE -->
-    <script src="{% static 'js/litmate_safe.js' %}?v=chat-v5"></script>
+    <script src="{% static 'js/litmate_safe.js' %}?v=chat-v6"></script>
     {% if request.path != '/chat/' and request.path != '/chatbot/' %}
-    <script src="{% static 'js/floating_chat.js' %}?v=chat-v5"></script>
+    <script src="{% static 'js/floating_chat.js' %}?v=chat-v6"></script>
     {% endif %}
 
     {% block scripts %}{% endblock %}

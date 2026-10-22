@@ -298,6 +298,7 @@ class PublicCharactersEndpointTests(TestCase):
                 patch('core.literary_search.retrieve_books') as catalog, \
                 patch('core.literary_search.retrieve_web') as web, \
                 patch('core.literary_ai_views.build_assistant', return_value=(assistant, provider)), \
+                patch('core.literary_ai_views.cuota_disponible', return_value=(False, {})), \
                 patch('core.literary_ai_views.verificar_y_consumir_cuota', return_value=(False, {})) as quota:
             response = self.client.post('/chatbot_query/', json.dumps({'message': QUESTION}),
                                         content_type='application/json')
@@ -305,7 +306,7 @@ class PublicCharactersEndpointTests(TestCase):
         google.assert_not_called()
         catalog.assert_not_called()
         web.assert_not_called()
-        quota.assert_called_once()
+        quota.assert_not_called()
         self.assertNotIn(HISTORY_KEY, self.client.session)
 
     def test_history_owned_by_a_different_user_is_not_given_to_the_fast_answer(self):

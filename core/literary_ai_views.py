@@ -3,6 +3,7 @@ import hashlib
 import json
 import logging
 import time
+from types import SimpleNamespace
 from django.conf import settings
 from django.core.cache import cache
 from django.db import transaction
@@ -16,7 +17,8 @@ from .literary_ai import (build_assistant, ChatResult, MAX_HISTORY, MAX_MESSAGE,
                          local_social, obvious_rejection, REFUSAL)
 from .quotas import cuota_disponible, verificar_y_consumir_cuota
 from .ai_concurrency import acquire, release, rate_increment
-from .ai_budget import request_budget, BudgetExpired
+from .ai_budget import (request_budget, BudgetExpired, WorkerBusy, chat_timeout,
+                        run_before_deadline, budget_timeout, check_budget)
 from .literary_sources import bounded_research
 from .literary_conversation import resolve_topic_context, remember_topic
 
@@ -44,6 +46,7 @@ def stream_result(result):
     response['Cache-Control'] = 'no-cache, no-store'
     response['X-Accel-Buffering'] = 'no'
     response['X-Content-Type-Options'] = 'nosniff'
+    response['X-LitMate-Status'] = result.status
     return response
 
 
@@ -110,10 +113,143 @@ def remember(request, state, message, result, elapsed_ms, client, *, topic_conte
     request.session.modified = True
 
 
+def _compute_answer(message, history, topic_context):
+    """Trabajo acotado sin acceso a la sesión ni al consumo de cuotas.
+
+    Todas las rutas comparten el presupuesto recibido por ContextVar. No se
+    crea otro de cinco minutos después de que falle una ruta rápida.
+    """
+    from django.db import close_old_connections
+    try:
+        retrieval_message = (topic_context['query'] if topic_context.get('followup')
+                             and topic_context.get('intent') == 'recommend' else message)
+        from .literary_ai import requires_exact_text, has_excerpt, EXACT_TEXT_NEEDED
+        if requires_exact_text(message) and not has_excerpt(message):
+            from .literary_search import retrieve_book_content
+            from .literary_evidence import exact_context_available
+            try:
+                with request_budget(time.monotonic() + budget_timeout(1)):
+                    exact_sources = retrieve_book_content(message, [])
+                    if not exact_context_available(message, exact_sources):
+                        return (ChatResult(EXACT_TEXT_NEEDED, 'clarification', True),
+                                SimpleNamespace(usage={}, provider='exact-text-required', calls=0))
+            except BudgetExpired:
+                pass
+        if getattr(settings, 'LITMATE_AI_QUICK_ANSWERS', True):
+            from .ai_quick_answers import quick_answer
+            direct = quick_answer(message, history, topic_context=topic_context)
+            if direct is not None:
+                return direct, SimpleNamespace(usage={}, provider='verified-local-facts', calls=0)
+            from .literary_research import is_topic_recommendation
+            if is_topic_recommendation(retrieval_message):
+                from .literary_search import retrieve_books
+                try:
+                    with request_budget(time.monotonic() + budget_timeout(2.5)):
+                        direct = quick_answer(message, history, topic_context=topic_context, search=retrieve_books)
+                except BudgetExpired:
+                    direct = None
+                if direct is not None:
+                    return direct, SimpleNamespace(usage={}, provider='verified-catalogue', calls=0)
+            else:
+                from .ai_quick_answers import catalogue_lookup_answer
+                from .literary_search import retrieve_books
+                try:
+                    with request_budget(time.monotonic() + budget_timeout(2.5)):
+                        direct = catalogue_lookup_answer(message, history, retrieve_books)
+                except BudgetExpired:
+                    direct = None
+                if direct is not None:
+                    return direct, SimpleNamespace(usage={}, provider='verified-catalogue', calls=0)
+        if getattr(settings, 'LITMATE_AI_BIBLIOGRAPHIC_FAST_PATH', True):
+            from .ai_catalog_fallback import bibliographic_answer
+            from .literary_search import search_google
+            direct = None
+            try:
+                with request_budget(time.monotonic() + budget_timeout(2.5)):
+                    # Identificar con fichas locales antes de intentar leer páginas.
+                    from .ai_identification_details import identification_answer
+                    if getattr(settings, 'LITMATE_AI_QUICK_ANSWERS', True):
+                        from .ai_quick_answers import quick_knowledge_sources
+                        direct = identification_answer(message, search=quick_knowledge_sources)
+                    else:
+                        direct = identification_answer(message)
+                    if (direct is None and getattr(settings, 'LITMATE_AI_PUBLIC_DETAILS_FAST_PATH', True)
+                            and getattr(settings, 'LITMATE_AI_USE_WEB', True)):
+                        from .ai_public_details import character_answer
+                        from .literary_search import retrieve_books, retrieve_web
+                        if getattr(settings, 'LITMATE_AI_QUICK_ANSWERS', True):
+                            direct = character_answer(retrieval_message, history, quick_knowledge_sources, lambda query: [])
+                        if direct is None:
+                            direct = character_answer(retrieval_message, history, retrieve_books, retrieve_web)
+                    if direct is None:
+                        direct = bibliographic_answer(retrieval_message, history, search_google)
+            except BudgetExpired:
+                direct = None
+            if direct is not None:
+                provider = ('public-book-details' if direct.diagnostics.get('public_details_fast_path')
+                            else 'local-identification' if direct.diagnostics.get('local_identification_fast_path')
+                            else 'google-books-metadata')
+                return direct, SimpleNamespace(usage={}, provider=provider, calls=0)
+        check_budget()
+        import uuid
+        lock_key, owner_token = 'litmate_local_inference_lock', uuid.uuid4().hex
+        try:
+            # El lease no se libera desde el hilo HTTP cuando vence su espera:
+            # hacerlo permitiría inferencias concurrentes con el trabajo tardío.
+            lifetime = max(60, min(int(getattr(settings, 'LITMATE_AI_TOTAL_TIMEOUT', 360)), 600)) + 60
+            locked = acquire(lock_key, owner_token, lifetime)
+            # El socket vencido puede estar cerrándose todavía. Conceder solo
+            # milisegundos de limpieza, no una cola de inferencias costosas.
+            if not locked:
+                time.sleep(min(.04, budget_timeout(.04)))
+                check_budget()
+                locked = acquire(lock_key, owner_token, lifetime)
+        except Exception:
+            locked = False
+        if not locked:
+            raise WorkerBusy()
+        try:
+            check_budget()
+            assistant, client = build_assistant(settings)
+            result = assistant.reply(message, history, topic_context=topic_context)
+            if result.status == 'clarification' and topic_context.get('subject'):
+                from .ai_quick_answers import _simple_topic_request
+                if _simple_topic_request(message, topic_context.get('query') or message):
+                    # No atribuir un fallo de verificación a la forma de hablar
+                    # del lector cuando ya tenemos una petición temática clara.
+                    result = ChatResult('Entendí que buscas libros sobre ' + topic_context['subject'] + '. '
+                        'Esta vez no pude verificar suficientes opciones. No necesitas reformular '
+                        'la petición; puedes volver a intentarlo.', 'unavailable',
+                        diagnostics={**result.diagnostics, 'clear_topic_not_ambiguity': True})
+            if result.status == 'unavailable' and getattr(settings, 'LITMATE_AI_CATALOG_FALLBACK', True):
+                from .ai_catalog_fallback import catalog_fallback
+                from .literary_search import search_google
+                try:
+                    with request_budget(getattr(client, 'deadline', time.monotonic() + budget_timeout(1))):
+                        fallback = catalog_fallback(retrieval_message, history, search_google,
+                            failure_reason=result.diagnostics.get('provider_error', 'quality_check_failed'))
+                except BudgetExpired:
+                    fallback = None
+                if fallback is not None:
+                    fallback.diagnostics['original_failure'] = result.diagnostics
+                    result = fallback
+            return result, client
+        finally:
+            try:
+                release(lock_key, owner_token)
+            except Exception:
+                logger.warning('IA: no se pudo liberar el turno local')
+    finally:
+        # Las conexiones creadas por recuperación SQL pertenecen a este hilo.
+        close_old_connections()
+
+
 @require_POST
 @csrf_protect
 @bounded_research
 def chatbot_query(request):
+    start = time.monotonic()
+    deadline = start + chat_timeout(settings)
     if request.content_type != 'application/json':
         return JsonResponse({'response': 'Envía un mensaje JSON válido.'}, status=415)
     try:
@@ -157,85 +293,35 @@ def chatbot_query(request):
         # Se conserva aparte del historial de respuestas aceptadas.
         request.session[HISTORY_KEY] = state
         request.session.modified = True
-    retrieval_message = (topic_context['query'] if topic_context.get('followup')
-                         and topic_context.get('intent') == 'recommend' else message)
-    if (getattr(settings, 'LITMATE_AI_BIBLIOGRAPHIC_FAST_PATH', True)
-            and not getattr(settings, 'LITMATE_USE_EXISTING_QUOTAS', False)):
-        from .ai_catalog_fallback import bibliographic_answer
-        from .literary_search import search_google
-        from types import SimpleNamespace
-        fast_start = time.monotonic()
-        try:
-            with request_budget(fast_start + 25):
-                direct = None
-                if (getattr(settings, 'LITMATE_AI_PUBLIC_DETAILS_FAST_PATH', True)
-                        and getattr(settings, 'LITMATE_AI_USE_WEB', True)):
-                    from .ai_public_details import character_answer
-                    from .literary_search import retrieve_books, retrieve_web
-                    direct = character_answer(retrieval_message, state['turns'], retrieve_books, retrieve_web)
-                if direct is None:
-                    from .ai_identification_details import identification_answer
-                    direct = identification_answer(message)
-                if direct is None:
-                    direct = bibliographic_answer(retrieval_message, state['turns'], search_google)
-        except BudgetExpired:
-            direct = None
-        if direct is not None:
-            remember(request, state, message, direct, round((time.monotonic() - fast_start) * 1000),
-                     SimpleNamespace(usage={}, provider=('public-book-details' if direct.diagnostics.get(
-                         'public_details_fast_path') else 'local-identification' if direct.diagnostics.get(
-                         'local_identification_fast_path') else 'google-books-metadata'), calls=0),
-                     topic_context=topic_context)
-            return stream_result(direct)
-    # SQLite coordina los procesos de un PC; Redis permite compartir el lease entre máquinas.
-    import uuid
-    lock_key, owner_token = 'litmate_local_inference_lock', uuid.uuid4().hex
     try:
-        lifetime = max(60, min(int(getattr(settings, 'LITMATE_AI_TOTAL_TIMEOUT', 360)), 600)) + 60
-        locked = acquire(lock_key, owner_token, lifetime)
-    except Exception:
-        locked = False
-    if not locked:
+        result, client = run_before_deadline(_compute_answer, deadline, message, state['turns'], topic_context)
+    except WorkerBusy:
         response = JsonResponse({'response': 'La IA local está ocupada. Espera un momento y vuelve a intentar.'}, status=503)
         response['Retry-After'] = '5'
         return response
-    try:
-        try:
-            assistant, client = build_assistant(settings)
-        except (TypeError, ValueError):
-            return JsonResponse({'response': 'Revisa los valores de configuración de la IA local.'}, status=503)
-        start = time.monotonic()
-        result = assistant.reply(message, state['turns'], topic_context=topic_context)
-        if result.status == 'unavailable':
-                logger.warning('IA: respuesta pendiente (%s)',
-                           result.diagnostics.get('provider_error') or
-                           result.diagnostics.get('validation_error') or 'quality_check_failed')
-        if result.status == 'unavailable' and getattr(settings, 'LITMATE_AI_CATALOG_FALLBACK', True):
-            from .ai_catalog_fallback import catalog_fallback
-            from .literary_search import search_google
-            try:
-                with request_budget(getattr(client, 'deadline', start + 20)):
-                    fallback = catalog_fallback(retrieval_message, state['turns'], search_google,
-                        failure_reason=result.diagnostics.get('provider_error', 'quality_check_failed'))
-            except BudgetExpired:
-                fallback = None
-            if fallback is not None:
-                fallback.diagnostics['original_failure'] = result.diagnostics
-                result = fallback
-        # No se cobra una cuota por ocupado, fallo del proveedor o borrador rechazado.
-        if result.status == 'answered' and getattr(settings, 'LITMATE_USE_EXISTING_QUOTAS', False):
-            quota_ok, quota_info = verificar_y_consumir_cuota(request)
-            if not quota_ok:
-                return JsonResponse({'error': 'quota_exceeded', 'info_cuota': quota_info,
-                    'response': 'Has alcanzado tu límite diario de consultas.'}, status=429)
-        remember(request, state, message, result, round((time.monotonic()-start)*1000), client,
-                 topic_context=topic_context)
-    finally:
-        try:
-            release(lock_key, owner_token)
-        except Exception:
-            logger.warning('IA: no se pudo liberar el turno local')
-    return stream_result(result)
+    except BudgetExpired:
+        # El problema es técnico, no una supuesta ambigüedad de una petición clara.
+        result = ChatResult('Llegué al límite de tiempo sin completar la verificación de esta respuesta. '
+                            'No voy a inventar los datos que faltan. Puedes volver a intentarlo.',
+                            'unavailable', diagnostics={'provider_error': 'tiempo_total_agotado'})
+        client = SimpleNamespace(usage={}, provider='deadline', calls=0)
+    except (TypeError, ValueError):
+        return JsonResponse({'response': 'Revisa los valores de configuración de la IA local.'}, status=503)
+    # También las rutas rápidas respetan cuotas, sin desactivarse al habilitarlas.
+    if result.status == 'answered' and getattr(settings, 'LITMATE_USE_EXISTING_QUOTAS', False):
+        quota_ok, quota_info = verificar_y_consumir_cuota(request)
+        if not quota_ok:
+            return JsonResponse({'error': 'quota_exceeded', 'info_cuota': quota_info,
+                'response': 'Has alcanzado tu límite diario de consultas.'}, status=429)
+    elapsed_ms = round((time.monotonic() - start) * 1000)
+    result.diagnostics.update(elapsed_ms=elapsed_ms, chat_budget_seconds=chat_timeout(settings),
+                              model_calls=getattr(client, 'calls', 0))
+    remember(request, state, message, result, elapsed_ms, client, topic_context=topic_context)
+    response = stream_result(result)
+    response['Server-Timing'] = f'chat;dur={elapsed_ms}'
+    response['X-LitMate-Status'] = result.status
+    response['X-LitMate-Model-Calls'] = str(getattr(client, 'calls', 0))
+    return response
 
 
 @require_POST

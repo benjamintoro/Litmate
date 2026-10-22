@@ -258,6 +258,10 @@ def book_search_profile(query):
 # búsqueda que incluya Japón no demuestra por sí sola que un resultado trate
 # sobre arte japonés.
 _TOPIC_SUBJECTS = (
+    ('world war ii', r'\b(?:segunda|2[ªa]?|ii) guerra mundial\b|\b(?:wwii|ww2|sgm)\b|'
+                     r'\bworld war (?:ii|2)\b',
+     ('segunda guerra mundial', 'world war ii', 'world war, 1939-1945',
+      'world war 1939-1945', 'world war, 1939 1945', 'world war 1939 1945')),
     ('history', r'\bhistoria\b|\bhistoric[oa]s?\b|\bhistory\b',
      ('historia', 'history', 'historical', 'histoire')),
     ('art', r'\barte\b|\bartes\b|\bart\b|\bartistic[oa]s?\b',
@@ -318,7 +322,9 @@ def book_topic_profile(query):
     standalone = bool(subjects and places and len(value.split()) <= 8)
     structured = bool(subjects and (requested or standalone))
     if structured:
-        terms = [f'subject:"{row[0]}"' for row in (*subjects, *places)]
+        # Open Library cataloga este conflicto por sus fechas, no por «wwii».
+        terms = [f'subject:"{"world war, 1939-1945" if row[0] == "world war ii" else row[0]}"'
+                 for row in (*subjects, *places)]
         terms.extend(f'-subject:"{row[2].lower()}"' for row in GENRES
                      if row[0] in reading['excluded_genres'])
         public = ' '.join(terms)
@@ -351,7 +357,7 @@ def topic_matches(source, query):
                                 category_text]))
     if (not book_search_profile(query)['fiction'] and not any(row[0] == 'poetry' for row in profile['subjects'])
             and not re.search(r'\b(?:novelas?|ficcion|fiction)\b', _normalized(query)) and re.search(
-            r'\b(?:fiction|ficcion|novela)\b', category_text)):
+            r'\b(?:fiction|ficcion|novela)\b', re.sub(r'\bno[ -]ficcion\b|\bnon[ -]fiction\b', '', category_text))):
         return False
     if any(row[0] == 'art' for row in profile['subjects']):
         text = re.sub(r'\b(?:language arts(?: and| &) disciplines|language arts|martial arts)\b', '', text)

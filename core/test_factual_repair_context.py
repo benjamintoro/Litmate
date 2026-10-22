@@ -87,4 +87,5 @@ class FactualRepairContextTests(SimpleTestCase):
         self.assertTrue(result.diagnostics['early_grounded_fallback'])
         self.assertTrue(result.diagnostics['validation_issues'])
         self.assertEqual(result.diagnostics['catalog_fallback_audit']['decision'], 'approve')
-        self.assertEqual([stage for stage, data, model in llm.records], ['route', 'answer'])
+        self.assertEqual([stage for stage, data, model in llm.records], ['answer'])
+        self.assertTrue(result.diagnostics['simple_literary_route'])

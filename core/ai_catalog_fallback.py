@@ -9,6 +9,7 @@ from .literary_ai import (ChatResult, canonical_sources, has_excerpt, looks_lite
 
 
 _TOPIC_LABELS = {
+    'world war ii': 'Segunda Guerra Mundial',
     'history': 'historia', 'art': 'arte', 'philosophy': 'filosofía',
     'architecture': 'arquitectura', 'poetry': 'poesía', 'cooking': 'cocina',
     'science fiction': 'ciencia ficción', 'space': 'espacio', 'fantasy': 'fantasía', 'horror': 'terror',

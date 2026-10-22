@@ -58,7 +58,8 @@ def is_topic_recommendation(message):
     """
     if not isinstance(message, str) or excerpt_marker(message):
         return False
-    value = normalize_identity(message)
+    from .literary_language import request_text
+    value = normalize_identity(request_text(message))
     if not value or re.search(
             r'\b(?:recuerdo|recordaba|no recuerdo|no me acuerdo|olvid[eé]|'
             r'como se llama|cual es el titulo|que libro es|en que libro|'
@@ -72,7 +73,12 @@ def is_topic_recommendation(message):
     book = r'(?:libros?|novelas?|lecturas?|titulos?|obras?|manual(?:es)?|ensayos?)'
     if re.search(book + r'\s+(?:llamad[oa]|titulad[oa]|de titulo|que se llama)\b', value):
         return False
-    request = re.search(r'\b(?:recomiend\w*|recomenda\w*|sugier\w*)\b', value)
+    request = re.search(r'\b(?:recomiend\w*|recomenda\w*|sugier\w*|sugeri\w*)\b', value)
+    if not request:
+        request = re.search(r'\b(?:que (?:puedo|podria|me aconsejas|me aconsejarias) leer|'
+                            r'que me (?:recomiendas|recomendas) (?:para )?leer|'
+                            r'alguna? (?:libro|lectura|novela)|'
+                            r'me (?:gustaria|interesa) leer)\b', value)
     if not request:
         request = re.search(
             r'\b(?:quiero|quisiera|busco|buscando|necesito|dame|dime|recomendarme|'
@@ -160,7 +166,8 @@ def resolve_verified_request(message, sources):
     _, identity, titles = unique[0]
     # «Papelucho» no identifica «Papelucho y ...» sin un alias confirmado.
     subject = re.search(r'\b(?:(?:personajes?|protagonistas?)(?: principales?)?\s+(?:de|del)|'
-                        r'hablame de|cuentame de|resumen de|sinopsis de|argumento de|final de|'
+                        r'hablame de|cuentame de(?: que trata)?|de que trata|'
+                        r'resumen de|sinopsis de|argumento de|final de|'
                         r'(?:sucede|pasa|ocurre)(?:\s+con\s+\w+(?:\s+\w+){0,2})?\s+en)\s+(?:el libro\s+)?(.+)', value)
     if subject:
         target = subject.group(1)

@@ -15,7 +15,8 @@ from django.conf import settings
 from django.core.cache import cache
 from django.db.models import Case, IntegerField, Q, Value, When
 from .ai_http import NoRedirects, local_origin, read_json_url, read_bounded
-from .ai_budget import budget_timeout, submit_with_budget, check_budget, pool_in_budget, request_budget
+from .ai_budget import (budget_timeout, submit_with_budget, check_budget, pool_in_budget,
+                        request_budget, current_deadline)
 from .literary_ai import canonical_sources, clean_text, normalized, safe_source_url, has_excerpt
 from .local_rag import retrieve_fragments
 from .books_google import (search_volumes, get_volume, volume_source, public_query, BooksUnavailable,
@@ -45,6 +46,19 @@ DISCOVERY_ONLY_DOMAINS = ('amazon.com', 'amazon.es', 'buscalibre.cl', 'buscalibr
 # El descubrimiento de esta wiki no habilita acceso automatizado a Fandom.
 # Su API técnicamente pública no sustituye el permiso exigido por sus términos.
 DISCOVERY_ONLY_EXACT_HOSTS = ('lotr.fandom.com',)
+
+
+def _retrieval_embedder():
+    """En chat corto usa FTS ya indexado, sin cargar otra red neuronal en GPU.
+
+    El diagnóstico/indexado offline conserva recuperación híbrida. Con nueve
+    segundos, cambiar al modelo de embeddings puede gastar todo el turno antes
+    de recuperar un solo pasaje; no modifica el índice ni sus evidencias.
+    """
+    if current_deadline() is not None and budget_timeout(30) <= 9:
+        return None
+    from .local_embeddings import configured_embedder
+    return configured_embedder(settings)
 
 
 def _agent():
@@ -556,9 +570,8 @@ def retrieve_books(query):
         return cached
     results = search_knowledge(query, maximum=8)
     try:
-        from .local_embeddings import configured_embedder
         results.extend(retrieve_fragments(query, database, 3,
-                       embedder=configured_embedder(settings)))
+                       embedder=_retrieval_embedder()))
     except Exception as exc:
         logger.warning('IA: índice local no disponible (%s)', type(exc).__name__)
     # Django/SQL permanece en el hilo de la petición; los hilos solo consultan HTTP.
@@ -734,7 +747,7 @@ def retrieve_book_content(message, candidates):
         return cached
     return _save(key, canonical_sources(facts + retrieve_fragments(query, database, 4, book_titles=titles,
         book_identities=identities,
-        embedder=configured_embedder(settings),
+        embedder=_retrieval_embedder(),
         minimum_similarity=float(getattr(settings, 'LITMATE_RAG_MIN_SIMILARITY', 0.35))), 8))
 
 

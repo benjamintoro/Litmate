@@ -152,19 +152,22 @@ class LocalIdentificationEndpointTests(IdentificationFixtures, TestCase):
         self.assertTrue(answer.metadata_json['sources'])
         self.assertEqual(self.client.session[HISTORY_KEY]['turns'][-1]['books'][0]['title'], 'El principito')
 
-    def test_enabled_quota_keeps_the_existing_normal_pipeline(self):
+    def test_enabled_quota_keeps_identification_fast_and_consumes_only_after_answer(self):
         from types import SimpleNamespace
         from .literary_ai import ChatResult
         from unittest.mock import Mock
         assistant = Mock()
         assistant.reply.return_value = ChatResult('Falta evidencia.', 'clarification')
         with override_settings(LITMATE_USE_EXISTING_QUOTAS=True), \
-                patch('core.ai_identification_details.identification_answer') as fast, \
+                patch('core.ai_identification_details.identification_answer', wraps=identification_answer) as fast, \
+                patch('core.literary_ai_views.cuota_disponible', return_value=(True, {})), \
+                patch('core.literary_ai_views.verificar_y_consumir_cuota', return_value=(True, {})) as consume, \
                 patch('core.literary_ai_views.build_assistant',
                       return_value=(assistant, SimpleNamespace(usage={}, provider='ollama-local', calls=1))):
             response = self.client.post('/chatbot_query/', json.dumps({'message': ROSE}),
                                         content_type='application/json')
             b''.join(response.streaming_content)
         self.assertEqual(response.status_code, 200)
-        fast.assert_not_called()
-        assistant.reply.assert_called_once()
+        fast.assert_called_once()
+        assistant.reply.assert_not_called()
+        consume.assert_called_once()

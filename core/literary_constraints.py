@@ -46,7 +46,21 @@ def explicit_author(message):
     proper = r'[A-ZÁÉÍÓÚÑ][a-záéíóúñü]+(?:[-\x27][A-ZÁÉÍÓÚÑa-záéíóúñü]+)?'
     cue = re.search(r'\b(?i:libros?|novelas?|obras?)\s+(?i:de)\s+('
                     + proper + r'(?:\s+(?:(?:de|del|la|y)\s+)?' + proper + r'){1,4})', text)
-    return cue.group(1).strip() if cue else ''
+    if not cue:
+        return ''
+    name = cue.group(1).strip()
+    # Las mayúsculas de «libros de Segunda Guerra Mundial» o «Historia de
+    # Corea» no convierten una materia completa en un nombre de autor. Solo se
+    # descarta esta inferencia si todo el nombre coincide con materias/lugares
+    # reconocidos; «del autor ...» sigue siendo explícito y prevalece arriba.
+    from .books_google import book_topic_profile
+    profile = book_topic_profile('libros sobre ' + name)
+    remaining = _normal(name)
+    for row in (*profile['subjects'], *profile['places']):
+        remaining = re.sub(row[1], ' ', remaining)
+    if profile['structured'] and not re.sub(r'\b(?:de|del|la|el|y)\b|\W', '', remaining):
+        return ''
+    return name
 
 
 def publication_range(message):

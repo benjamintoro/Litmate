@@ -18,7 +18,7 @@ IDENTITY_DOMAINS = (
     'memoriachilena.gob.cl', 'bibliotecanacionaldigital.gob.cl', 'bnchile.gob.cl',
     'literaturasm.cl', 'literaturasm.com', 'penguinlibros.com',
     'planetadelibros.com', 'anagrama-ed.es', 'fce.com.mx', 'cervantesvirtual.com',
-    'ci.nii.ac.jp',
+    'ci.nii.ac.jp', 'rae.es',
 )
 UNKNOWN_AUTHORS = {'', 'autor no informado', 'autor desconocido', 'fuente web'}
 
@@ -277,6 +277,12 @@ def resolve_followup_context(message, history):
             return {**result, 'ambiguous': True, 'reason': 'correction_other'}
         return result
     ordinal = re.search(r'\b(?:el|la|del|de la|al|a la)\s+(primero|primer|primera|segundo|segunda|tercero|tercer|tercera|cuarto|cuarta|quinto|quinta)\b', value)
+    if ordinal and (re.search(r'[«“"]([^»”"\n]{2,180})[»”"]', message)
+            or (re.search(r'\b(?:quien escribio|quien es el autor|quien es la autora)\b', value)
+                and re.match(r'\s+(?!(?:libro|novela|obra|titulo)\b)\w', value[ordinal.end():]))):
+        # «¿Quién escribió El segundo sexo?» introduce un título, no la segunda
+        # ficha de una lista anterior. La identidad exacta se resuelve después.
+        ordinal = None
     if ordinal:
         index = {'primero': 0, 'primer': 0, 'primera': 0, 'segundo': 1, 'segunda': 1,
                  'tercero': 2, 'tercer': 2, 'tercera': 2, 'cuarto': 3, 'cuarta': 3,

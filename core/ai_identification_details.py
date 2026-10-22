@@ -11,7 +11,7 @@ from .literary_research import (VAGUE, _matches, _words, assess_evidence,
                                is_topic_recommendation, public_research_queries, rank_candidates)
 
 
-def identification_answer(message):
+def identification_answer(message, *, search=None):
     """Propone solo una identidad o devuelve None para el recorrido normal.
 
     Solo lee el SQLite auxiliar mediante search_knowledge. No accede al
@@ -23,7 +23,14 @@ def identification_answer(message):
         return None
     plan = simple_research_plan(message, 'identify')
     if plan is None:
-        return None
+        # «Recuerdo un burro llamado ...; ¿cuál es?» es una sola petición,
+        # aunque use punto y coma o sitúe la pregunta después de la escena.
+        value = normalize_identity(message)
+        if not re.search(r'\b(?:libro|novela|obra|cuento)\b', value) or not re.search(
+                r'\b(?:recuerdo|recordaba|que libro es|cual es|cual era|como se llama)\b', value):
+            return None
+        plan = {'questions': [message], 'search_queries': [], 'needs_contents': False,
+                'needs_fresh_sources': False, 'spoilers_requested': False}
     value = normalize_identity(message)
     # Esta ruta sin clasificador no autoriza tareas adicionales ni usa
     # confidencias personales como pistas de una obra pública.
@@ -37,7 +44,7 @@ def identification_answer(message):
                          r'(?:personajes?|final|argumento|trama|autor|resumen|temas?)\b', value)):
         return None
     try:
-        raw = search_knowledge(message, maximum=8)
+        raw = (search or search_knowledge)(message, maximum=8)
         licensed = [source for source in raw if isinstance(source, dict)
                     and source.get('source') == 'Conocimiento literario local'
                     and source.get('license') == ORIGINAL_LICENSE]
@@ -56,7 +63,9 @@ def identification_answer(message):
             return None
         book = books[0]
         related = [source for source in sources if same_work(source, book)]
-        ignored = (VAGUE | set(_words(book['title'] + ' ' + book['author']))
+        documented_names = {word for source in related for fact in source.get('character_facts', [])
+                            for word in _words(fact['name'])}
+        ignored = (VAGUE | (set(_words(book['title'] + ' ' + book['author'])) - documented_names)
                    | {'todos', 'todas', 'todo', 'toda', 'menciona', 'mencionaba'})
         meaningful = {clue for clue in candidate['matched_clues'] if clue not in ignored}
         # Las pistas deben constar en descripciones con procedencia; título,

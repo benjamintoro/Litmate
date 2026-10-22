@@ -117,7 +117,10 @@ class Command(BaseCommand):
         self.stdout.write('Plan y auditoría de cobertura: ' + ('activados' if assistant.quality_checks else 'desactivados'))
         self.stdout.write('Recomendaciones habituales: ' + ('ruta rápida con revisión' if assistant.fast_recommendations
                                                           else 'plan y auditoría completos'))
-        self.stdout.write('Presupuesto por consulta: ' + str(getattr(settings, 'LITMATE_AI_TOTAL_TIMEOUT', 300)) + ' s.')
+        from core.ai_budget import chat_timeout
+        self.stdout.write('Presupuesto del chat HTTP: ' + str(chat_timeout(settings)) + ' s de trabajo; '
+                          'cliente: máximo 10 s de espera.')
+        self.stdout.write('Presupuesto del diagnóstico offline: ' + str(getattr(settings, 'LITMATE_AI_TOTAL_TIMEOUT', 300)) + ' s.')
         self.stdout.write('Buscador: ' + ('SearXNG + Wikipedia' if getattr(
             settings, 'LITMATE_AI_USE_SEARXNG', True) else 'Wikipedia; SearXNG desactivado'))
         self.stdout.write('Motores permitidos: ' + ', '.join(getattr(settings, 'LITMATE_SEARXNG_ENGINES',
