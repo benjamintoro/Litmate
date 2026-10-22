@@ -1,8 +1,12 @@
 import datetime
-from django.utils import timezone
-from django.core.cache import cache
-from suscripciones.models import SuscripcionUsuario
+import ipaddress
 import logging
+
+from django.conf import settings
+from django.core.cache import cache
+from django.utils import timezone
+
+from suscripciones.models import SuscripcionUsuario
 
 logger = logging.getLogger('litmate')
 
@@ -46,6 +50,32 @@ def obtener_plan_y_limite(usuario):
     return 'gratis', LIMITES_PLANES['gratis'], 'Plan Gratuito'
 
 
+def _trusted_proxy_ips():
+    value = getattr(settings, 'LITMATE_TRUSTED_PROXY_IPS', ())
+    if isinstance(value, str):
+        value = value.split(',')
+    return {str(item).strip() for item in value if str(item).strip()}
+
+
+def _client_ip(request):
+    """No confía en X-Forwarded-For salvo que venga de un proxy autorizado.
+
+    Un visitante puede inventar esa cabecera para cambiar de cuota en cada
+    petición. Por defecto se usa REMOTE_ADDR, que asigna el servidor.
+    """
+    remote = request.META.get('REMOTE_ADDR', '') or 'anon'
+    if not getattr(settings, 'LITMATE_TRUST_X_FORWARDED_FOR', False):
+        return remote
+    trusted = _trusted_proxy_ips()
+    if not trusted or remote not in trusted:
+        return remote
+    forwarded = request.META.get('HTTP_X_FORWARDED_FOR', '').split(',')[0].strip()
+    try:
+        return str(ipaddress.ip_address(forwarded))
+    except ValueError:
+        return remote
+
+
 def generar_clave_cache_cuota(request):
     """
     Genera una clave única diaria basada en el usuario o su IP.
@@ -53,10 +83,41 @@ def generar_clave_cache_cuota(request):
     hoy_str = timezone.now().strftime('%Y-%m-%d')
     if request.user.is_authenticated:
         return f"cuota_ia_user:{request.user.id}:{hoy_str}"
-    
-    # Identificar visitantes por IP si no han iniciado sesión
-    ip_cliente = request.META.get('HTTP_X_FORWARDED_FOR', '').split(',')[0].strip() or request.META.get('REMOTE_ADDR', 'anon')
-    return f"cuota_ia_ip:{ip_cliente}:{hoy_str}"
+    return f"cuota_ia_ip:{_client_ip(request)}:{hoy_str}"
+
+
+def _segundos_hasta_medianoche():
+    ahora = timezone.now()
+    manana = ahora.replace(hour=0, minute=0, second=0, microsecond=0) + datetime.timedelta(days=1)
+    return int((manana - ahora).total_seconds())
+
+
+def cuota_disponible(request):
+    """Comprueba la cuota sin consumirla, antes de iniciar una inferencia.
+
+    Evita que un usuario agotado siga ocupando el modelo local. El consumo
+    definitivo se hace sólo cuando hay una respuesta publicable.
+    """
+    plan_slug, limite_diario, nombre_plan = obtener_plan_y_limite(request.user)
+    if limite_diario == -1:
+        return True, {
+            'permitido': True,
+            'plan': nombre_plan,
+            'limite': 'Ilimitado',
+            'usadas': 0,
+            'restantes': 'Ilimitado',
+        }
+    cache_key = generar_clave_cache_cuota(request)
+    usadas_hoy = cache.get(cache_key, 0)
+    restantes = max(0, limite_diario - usadas_hoy)
+    return usadas_hoy < limite_diario, {
+        'permitido': usadas_hoy < limite_diario,
+        'plan': nombre_plan,
+        'limite': limite_diario,
+        'usadas': usadas_hoy,
+        'restantes': restantes,
+        'segundos_reinicio': _segundos_hasta_medianoche(),
+    }
 
 
 def verificar_y_consumir_cuota(request):

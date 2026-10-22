@@ -5,12 +5,14 @@ from decimal import Decimal
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import JsonResponse, HttpResponse
+from django.db import transaction
+from django.http import Http404, JsonResponse, HttpResponse
 from django.utils import timezone
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import PlanSuscripcion, SuscripcionUsuario, HistorialPago
+from .payment_safety import simulation_allowed
 from .services import TransbankService, MercadoPagoService, PayPalService
 
 logger = logging.getLogger('litmate')
@@ -88,6 +90,7 @@ def iniciar_pago_gateway_view(request):
     # Guardar en sesión el plan que se está intentando comprar
     request.session['checkout_plan_id'] = plan.id
     request.session['checkout_metodo_pago'] = metodo_pago
+    request.session.pop('checkout_amount_usd', None)
 
     # Construir URLs de retorno absolutas
     host = request.get_host()
@@ -150,6 +153,10 @@ def iniciar_pago_gateway_view(request):
     elif metodo_pago == 'paypal':
         return_url = f"{base_url}{reverse('suscripciones:paypal_callback')}"
         cancel_url = f"{base_url}{reverse('suscripciones:pago_cancelado')}"
+        # El precio de PayPal se expresa en USD referencial; el callback debe
+        # comprobar el monto real de la orden, no sólo el plan guardado.
+        expected_usd = max(1.0, round(float(plan.precio) / 950.0, 2))
+        request.session['checkout_amount_usd'] = f"{expected_usd:.2f}"
 
         pp_service = PayPalService()
         result = pp_service.crear_orden(
@@ -169,6 +176,31 @@ def iniciar_pago_gateway_view(request):
     return redirect('suscripciones:checkout', plan_slug=plan.slug)
 
 
+def _checkout_plan(request):
+    """Recupera sólo el plan que este usuario guardó al iniciar el pago."""
+    plan_id = request.session.get('checkout_plan_id')
+    if not plan_id:
+        return None
+    return PlanSuscripcion.objects.filter(id=plan_id, activo=True).first()
+
+
+def _amount_covers(amount, plan):
+    try:
+        return Decimal(str(amount)) >= Decimal(str(plan.precio))
+    except (TypeError, ValueError, ArithmeticError):
+        return False
+
+
+def _usd_amount_covers(amount, currency, expected):
+    if str(currency or '').upper() != 'USD' or expected is None:
+        return False
+    try:
+        return Decimal(str(amount)) >= Decimal(str(expected))
+    except (TypeError, ValueError, ArithmeticError):
+        return False
+
+
+@login_required(login_url='login')
 @csrf_exempt
 def webpay_commit_view(request):
     """
@@ -190,67 +222,129 @@ def webpay_commit_view(request):
     tbk_service = TransbankService()
     resultado = tbk_service.confirmar_transaccion(token_ws)
 
-    if resultado.get("success"):
-        plan_id = request.session.get('checkout_plan_id')
-        plan = PlanSuscripcion.objects.filter(id=plan_id).first() if plan_id else PlanSuscripcion.objects.filter(slug='lector-vip').first()
+    plan = _checkout_plan(request)
+    if plan is None:
+        messages.error(request, "No encontramos el plan de esta compra. Inicia el pago nuevamente.")
+        return redirect('suscripciones:planes')
 
-        # Activar suscripción y registrar pago
+    if resultado.get("success"):
+        if (not resultado.get('is_simulated')
+                and not _amount_covers(resultado.get('amount'), plan)):
+            logger.warning("[Webpay Plus] Monto no coincide con el plan; no se activa la suscripción.")
+            messages.error(request, "El monto pagado no coincide con el plan seleccionado.")
+            return redirect('suscripciones:pago_cancelado')
         txn_ref = f"TBK-{resultado.get('authorization_code', uuid.uuid4().hex[:6].upper())}"
-        pago, sub = _completar_suscripcion_usuario(
-            usuario=request.user,
-            plan=plan,
-            metodo_pago='Webpay Plus',
-            monto=resultado.get('amount', plan.precio),
-            txn_referencia=txn_ref,
-            metadata=resultado
-        )
+        try:
+            pago, sub = _completar_suscripcion_usuario(
+                usuario=request.user,
+                plan=plan,
+                metodo_pago='Webpay Plus',
+                monto=plan.precio if resultado.get('is_simulated') else resultado.get('amount'),
+                txn_referencia=txn_ref,
+                metadata=resultado
+            )
+        except ValueError as exc:
+            logger.warning("[Webpay Plus] Pago no aplicado: %s", exc)
+            return redirect('suscripciones:pago_cancelado')
         return redirect('suscripciones:pago_exitoso', transaccion_id=txn_ref)
     else:
         messages.error(request, "La transacción en Webpay Plus fue rechazada o no pudo ser autorizada.")
         return redirect('suscripciones:pago_cancelado')
 
 
+@login_required(login_url='login')
 def mercadopago_callback_view(request):
     """
     Callback de retorno para Mercado Pago Checkout Pro.
+
+    El estado de la URL no es una prueba de pago: se consulta la API y se
+    comprueba que la referencia pertenece a este usuario y a este plan.
     """
     payment_id = request.GET.get('payment_id') or request.GET.get('collection_id') or request.GET.get('token')
-    status = request.GET.get('status') or request.GET.get('collection_status', 'approved')
+    if not payment_id:
+        return redirect('suscripciones:pago_cancelado')
+    plan = _checkout_plan(request)
+    if plan is None:
+        messages.error(request, "No encontramos el plan de esta compra. Inicia el pago nuevamente.")
+        return redirect('suscripciones:planes')
 
-    if status in ['approved', 'accredited']:
-        plan_id = request.session.get('checkout_plan_id')
-        plan = PlanSuscripcion.objects.filter(id=plan_id).first() if plan_id else PlanSuscripcion.objects.filter(slug='lector-vip').first()
+    verificacion = MercadoPagoService().verificar_pago(payment_id)
+    if not verificacion.get('success'):
+        logger.warning("[Mercado Pago] Pago no verificado: %s", verificacion.get('status'))
+        return redirect('suscripciones:pago_cancelado')
 
-        txn_ref = f"MP-{payment_id or uuid.uuid4().hex[:8].upper()}"
+    if verificacion.get('is_simulated'):
+        if not simulation_allowed():
+            return redirect('suscripciones:pago_cancelado')
+        monto = plan.precio
+    else:
+        raw = verificacion.get('raw_data') or {}
+        reference = str(verificacion.get('external_reference')
+                        or raw.get('external_reference') or '')
+        expected = f"MP-{request.user.id}-{plan.id}-"
+        if not reference.startswith(expected):
+            logger.warning("[Mercado Pago] Referencia externa no corresponde al usuario o plan.")
+            return redirect('suscripciones:pago_cancelado')
+        monto = verificacion.get('transaction_amount', raw.get('transaction_amount'))
+        if not _amount_covers(monto, plan):
+            logger.warning("[Mercado Pago] Monto no coincide con el plan.")
+            return redirect('suscripciones:pago_cancelado')
+
+    txn_ref = f"MP-{verificacion.get('payment_id') or payment_id}"
+    try:
         pago, sub = _completar_suscripcion_usuario(
             usuario=request.user,
             plan=plan,
             metodo_pago='Mercado Pago',
-            monto=plan.precio,
+            monto=monto,
             txn_referencia=txn_ref,
-            metadata={'payment_id': payment_id, 'status': status}
+            metadata={'payment_id': payment_id, 'verification': verificacion}
         )
-        return redirect('suscripciones:pago_exitoso', transaccion_id=txn_ref)
-    else:
+    except ValueError as exc:
+        logger.warning("[Mercado Pago] Pago no aplicado: %s", exc)
         return redirect('suscripciones:pago_cancelado')
+    return redirect('suscripciones:pago_exitoso', transaccion_id=txn_ref)
 
 
+@login_required(login_url='login')
 def paypal_callback_view(request):
     """
     Callback de retorno para PayPal Orders API v2.
+
+    Una captura sólo activa la suscripción si PayPal confirma la orden y la
+    referencia de compra corresponde al usuario y al plan de esta sesión.
     """
     order_id = request.GET.get('token') or request.GET.get('order_id')
     if not order_id:
         return redirect('suscripciones:pago_cancelado')
+    plan = _checkout_plan(request)
+    if plan is None:
+        messages.error(request, "No encontramos el plan de esta compra. Inicia el pago nuevamente.")
+        return redirect('suscripciones:planes')
 
-    pp_service = PayPalService()
-    resultado = pp_service.capturar_orden(order_id)
+    resultado = PayPalService().capturar_orden(order_id)
+    if not resultado.get("success"):
+        messages.error(request, "No se pudo completar la captura del pago con PayPal.")
+        return redirect('suscripciones:pago_cancelado')
 
-    if resultado.get("success"):
-        plan_id = request.session.get('checkout_plan_id')
-        plan = PlanSuscripcion.objects.filter(id=plan_id).first() if plan_id else PlanSuscripcion.objects.filter(slug='lector-vip').first()
+    if not resultado.get('is_simulated'):
+        raw = resultado.get('raw_data') or {}
+        expected = f"LITMATE-{request.user.id}-{plan.id}"
+        units = raw.get('purchase_units') or []
+        matched = next((unit for unit in units if isinstance(unit, dict)
+                        and expected in {str(unit.get('custom_id')),
+                                         str(unit.get('reference_id'))}), None)
+        if matched is None:
+            logger.warning("[PayPal] Orden no corresponde al usuario o plan.")
+            return redirect('suscripciones:pago_cancelado')
+        amount = matched.get('amount') or {}
+        if not _usd_amount_covers(amount.get('value'), amount.get('currency_code'),
+                                  request.session.get('checkout_amount_usd')):
+            logger.warning("[PayPal] Monto o moneda no coinciden con el plan.")
+            return redirect('suscripciones:pago_cancelado')
 
-        txn_ref = f"PP-{order_id}"
+    txn_ref = f"PP-{order_id}"
+    try:
         pago, sub = _completar_suscripcion_usuario(
             usuario=request.user,
             plan=plan,
@@ -259,17 +353,21 @@ def paypal_callback_view(request):
             txn_referencia=txn_ref,
             metadata=resultado
         )
-        return redirect('suscripciones:pago_exitoso', transaccion_id=txn_ref)
-    else:
-        messages.error(request, "No se pudo completar la captura del pago con PayPal.")
+    except ValueError as exc:
+        logger.warning("[PayPal] Pago no aplicado: %s", exc)
         return redirect('suscripciones:pago_cancelado')
+    return redirect('suscripciones:pago_exitoso', transaccion_id=txn_ref)
 
 
 def simulador_gateway_view(request):
     """
     Simulador Sandbox interactivo para desarrollo y pruebas.
-    Permite probar en 1 clic los flujos de éxito, rechazo o cancelación de cada pasarela.
+
+    No se publica en producción: de lo contrario cualquiera podría generar
+    tokens simulados y saltarse la pasarela.
     """
+    if not simulation_allowed():
+        raise Http404
     provider = request.GET.get('provider', 'webpay')
     token = request.GET.get('token', 'TBK_MOCK_1234')
     amount = request.GET.get('amount', '9990')
@@ -295,38 +393,64 @@ def pago_cancelado_view(request):
 
 def _completar_suscripcion_usuario(usuario, plan, metodo_pago, monto, txn_referencia, metadata=None):
     """
-    Función auxiliar para registrar el pago y activar la suscripción del usuario en TiDB Cloud.
+    Registra un pago verificado y activa la suscripción de forma idempotente.
+
+    Nunca acepta usuarios anónimos, planes ausentes ni una referencia ya usada
+    por otra cuenta. Un reintento del mismo pago devuelve el registro existente.
     """
+    if not getattr(usuario, 'is_authenticated', False) or not getattr(usuario, 'pk', None):
+        raise ValueError('usuario no autenticado')
+    if plan is None:
+        raise ValueError('plan no encontrado')
+    try:
+        monto_decimal = Decimal(str(monto))
+    except (TypeError, ValueError, ArithmeticError) as exc:
+        raise ValueError('monto inválido') from exc
+    if monto_decimal < 0:
+        raise ValueError('monto negativo')
+    txn_referencia = str(txn_referencia or '')[:255]
+    if not txn_referencia:
+        raise ValueError('referencia de pago ausente')
+
     dias = 365 if plan.periodo == 'anual' else 30
     fecha_fin = timezone.now() + datetime.timedelta(days=dias)
 
-    suscripcion, _ = SuscripcionUsuario.objects.update_or_create(
-        usuario=usuario,
-        defaults={
-            'plan': plan,
-            'estado': 'activa',
-            'fecha_inicio': timezone.now(),
-            'fecha_fin': fecha_fin,
-            'auto_renovar': True,
-            'id_suscripcion_externa': txn_referencia,
-            'fecha_cancelacion': None,
-            'motivo_cancelacion': None,
-            'metadatos': metadata or {}
-        }
-    )
+    with transaction.atomic():
+        existente = (HistorialPago.objects.select_for_update()
+                     .filter(referencia_transaccion=txn_referencia).first())
+        if existente is not None:
+            if existente.usuario_id != usuario.pk:
+                raise ValueError('referencia de pago pertenece a otra cuenta')
+            return existente, existente.suscripcion
 
-    pago = HistorialPago.objects.create(
-        suscripcion=suscripcion,
-        usuario=usuario,
-        plan=plan,
-        monto=monto,
-        moneda='CLP',
-        metodo_pago=metodo_pago,
-        estado='completado',
-        referencia_transaccion=txn_referencia
-    )
+        suscripcion, _ = SuscripcionUsuario.objects.update_or_create(
+            usuario=usuario,
+            defaults={
+                'plan': plan,
+                'estado': 'activa',
+                'fecha_inicio': timezone.now(),
+                'fecha_fin': fecha_fin,
+                'auto_renovar': True,
+                'id_suscripcion_externa': txn_referencia,
+                'fecha_cancelacion': None,
+                'motivo_cancelacion': None,
+                'metadatos': metadata or {}
+            }
+        )
 
-    logger.info(f"Suscripción activada con éxito ({metodo_pago}): {usuario.username} -> {plan.nombre} (Ref: {txn_referencia})")
+        pago = HistorialPago.objects.create(
+            suscripcion=suscripcion,
+            usuario=usuario,
+            plan=plan,
+            monto=monto_decimal,
+            moneda='CLP',
+            metodo_pago=metodo_pago,
+            estado='completado',
+            referencia_transaccion=txn_referencia
+        )
+
+    logger.info("Suscripción activada con éxito (%s): %s -> %s (Ref: %s)",
+                metodo_pago, usuario.username, plan.nombre, txn_referencia)
     return pago, suscripcion
 
 

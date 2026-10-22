@@ -3,6 +3,8 @@ import logging
 import uuid
 from django.conf import settings
 
+from ..payment_safety import simulation_allowed
+
 logger = logging.getLogger('litmate')
 
 
@@ -81,7 +83,11 @@ class MercadoPagoService:
                 else:
                     logger.warning(f"[Mercado Pago] Error API ({response.status_code}): {response.text}")
             except Exception as e:
-                logger.warning(f"[Mercado Pago] Conexión falló: {e}. Activando modo sandbox local.")
+                logger.warning(f"[Mercado Pago] Conexión falló: {e}.")
+
+        if not simulation_allowed():
+            logger.error("[Mercado Pago] Pasarela no disponible y el sandbox local está desactivado.")
+            return {"success": False, "error": "provider_unavailable"}
 
         # Modo Sandbox / Simulación Local para Desarrollo
         mock_pref_id = f"MP_MOCK_{uuid.uuid4().hex[:12].upper()}"
@@ -97,12 +103,16 @@ class MercadoPagoService:
         Verifica el estado de un pago en Mercado Pago mediante su ID.
         """
         if str(payment_id).startswith("MP_MOCK_"):
+            if not simulation_allowed():
+                logger.warning("[Mercado Pago] Pago simulado rechazado fuera del sandbox.")
+                return {"success": False, "status": "simulation_disabled"}
             return {
                 "success": True,
                 "status": "approved",
                 "status_detail": "accredited",
                 "payment_id": payment_id,
-                "is_simulated": True
+                "is_simulated": True,
+                "raw_data": {},
             }
 
         try:
@@ -119,6 +129,9 @@ class MercadoPagoService:
                     "status": data.get("status"),
                     "status_detail": data.get("status_detail"),
                     "payment_id": data.get("id"),
+                    "transaction_amount": data.get("transaction_amount"),
+                    "currency_id": data.get("currency_id"),
+                    "external_reference": data.get("external_reference"),
                     "raw_data": data,
                     "is_simulated": False
                 }

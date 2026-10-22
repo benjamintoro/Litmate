@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .services_voice import obtener_audio_miku
 from django.http import JsonResponse, StreamingHttpResponse
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -336,9 +335,18 @@ def social_login_start(request, provider):
     return redirect('login')
 
 
+def _social_demo_allowed():
+    """El login simulado no debe ser una puerta trasera en producción."""
+    return bool(getattr(settings, 'DEBUG', False)
+                or getattr(settings, 'LITMATE_SOCIAL_DEMO', False))
+
+
 def _social_login_demo_mock(request, provider):
     """Genera/autentica una cuenta de demostración cuando se solicita expresamente el modo demo."""
     from django.contrib.auth.models import User
+    if not _social_demo_allowed():
+        messages.warning(request, 'El modo de demostración social no está habilitado.')
+        return redirect('login')
 
     if provider == 'google':
         username = 'google_lector'
@@ -364,6 +372,10 @@ def _social_login_demo_mock(request, provider):
     if created:
         user.set_unusable_password()
         user.save()
+    elif user.is_staff or user.is_superuser or user.has_usable_password():
+        # Nunca convertir una cuenta real con contraseña en una sesión demo.
+        messages.error(request, 'La cuenta de demostración no está disponible.')
+        return redirect('login')
 
     # Perfil
     PerfilUsuario.objects.get_or_create(
@@ -415,10 +427,10 @@ def social_login_callback(request, provider):
         messages.error(request, f'No se recibió código de autorización de {provider.title()}.')
         return redirect('login')
 
-    # Validar state CSRF si estaba guardado en la sesión
+    # Validar state CSRF si estaba guardado en la sesión.
     returned_state = request.GET.get('state')
     session_state = request.session.pop('oauth_state', None)
-    if session_state and returned_state and session_state != returned_state:
+    if not session_state or not returned_state or session_state != returned_state:
         logger.warning(f"Validación CSRF fallida en OAuth ({provider}).")
         messages.error(request, 'Error de validación de seguridad (CSRF). Por favor intenta de nuevo.')
         return redirect('login')
@@ -459,9 +471,11 @@ def social_login_callback(request, provider):
             user_info = user_info_res.json()
 
             email = (user_info.get('email') or '').strip().lower()
-            if not email:
-                messages.error(request, 'Google no proporcionó una dirección de correo válida.')
-                return redirect('login')
+            if email and user_info.get('verified_email') is not True:
+                # No se usa un correo no verificado para vincular una cuenta
+                # existente: el proveedor no demuestra que pertenezca al lector.
+                logger.warning('Google no confirmó el correo; no se vincula por email.')
+                email = ''
 
             first_name = (user_info.get('given_name') or '').strip()
             last_name = (user_info.get('family_name') or '').strip()
@@ -511,22 +525,24 @@ def social_login_callback(request, provider):
                 first_name = login_name or 'Lector'
                 last_name = ''
 
-            email = (user_info.get('email') or '').strip().lower()
-            if not email:
-                emails_res = requests.get(
-                    "https://api.github.com/user/emails",
-                    headers={'Authorization': f"token {access_token}", 'Accept': 'application/json'},
-                    timeout=10
-                )
-                if emails_res.status_code == 200:
-                    emails_data = emails_res.json()
-                    if isinstance(emails_data, list):
-                        for e in emails_data:
-                            if e.get('primary') and e.get('verified'):
-                                email = (e.get('email') or '').strip().lower()
-                                break
-                        if not email and emails_data:
-                            email = (emails_data[0].get('email') or '').strip().lower()
+            # No se confía en el correo público de /user: sólo se vincula una
+            # cuenta si /user/emails lo devuelve como verificado.
+            email = ''
+            emails_res = requests.get(
+                "https://api.github.com/user/emails",
+                headers={'Authorization': f"token {access_token}", 'Accept': 'application/json'},
+                timeout=10
+            )
+            if emails_res.status_code == 200:
+                emails_data = emails_res.json()
+                if isinstance(emails_data, list):
+                    verified = [item for item in emails_data
+                                if isinstance(item, dict) and item.get('verified')
+                                and item.get('email')]
+                    chosen = next((item for item in verified if item.get('primary')),
+                                  verified[0] if verified else None)
+                    if chosen:
+                        email = (chosen.get('email') or '').strip().lower()
 
             if not email:
                 email = f"{login_name or github_id}@users.noreply.github.com"
@@ -540,15 +556,20 @@ def social_login_callback(request, provider):
         if email and not email.endswith('@users.noreply.github.com'):
             user = User.objects.filter(email__iexact=email).first()
 
-        # 2. Si no existe por correo, verificar por nombre de usuario del proveedor
+        # 2. Un nombre de usuario del proveedor sólo puede recuperar una cuenta
+        # social ya existente (sin contraseña usable); nunca una cuenta local
+        # protegida con contraseña.
         if not user and login_name:
-            user = User.objects.filter(username__iexact=login_name).first()
+            candidate = User.objects.filter(username__iexact=login_name).first()
+            if (candidate is not None and not candidate.has_usable_password()
+                    and not candidate.is_staff and not candidate.is_superuser):
+                user = candidate
 
         # 3. Si sigue sin existir, creamos una nueva cuenta con username único
         if not user:
-            raw_base = login_name if (provider == 'github' and login_name) else (
-                f"google_{google_id[:8]}" if google_id else email.split('@')[0]
-            )
+            raw_base = (login_name if (provider == 'github' and login_name) else
+                        f"google_{google_id[:8]}" if google_id else
+                        email.split('@')[0] if email else f"user_{provider}")
             base_username = re.sub(r'[^\w.@+-]', '_', raw_base)[:20]
             if not base_username:
                 base_username = f"user_{provider}"
@@ -588,7 +609,7 @@ def social_login_callback(request, provider):
             usuario=user,
             defaults={
                 'nombre': full_name,
-                'correo': email
+                'correo': email or None
             }
         )
         if not created:
@@ -993,7 +1014,6 @@ def editar_perfil(request):
         p_form = ProfileUpdateForm(instance=perfil)
     return render(request, 'core/editar_perfil.html', {'u_form': u_form, 'p_form': p_form})
 
-@csrf_exempt
 @login_required
 def agregar_favorito(request):
     if request.method == 'POST':
@@ -1368,7 +1388,6 @@ def buscar_libros(request):
     })
 
 
-@csrf_exempt
 def track_conversion_click(request):
     """
     Endpoint para registrar clics a librerías externas (Buscalibre, Google Books, Amazon).
@@ -1406,7 +1425,6 @@ def track_conversion_click(request):
         return JsonResponse({'status': 'error', 'msg': str(e)}, status=400)
 
 
-@csrf_exempt
 def api_precios_libro(request):
     """
     Endpoint para consultar precios escrapeados y enlaces directos de un libro.
@@ -1446,7 +1464,6 @@ def api_precios_libro(request):
         return JsonResponse({'status': 'error', 'msg': str(e)}, status=500)
 
 
-@csrf_exempt
 @login_required
 def actualizar_estado_lectura(request):
     """Permite al usuario marcar un libro como 'por_leer', 'leyendo' o 'completado'."""
@@ -1658,7 +1675,6 @@ def buscar_informacion_web_en_vivo(query):
 # =====================================================================
 # ENDPOINT PRINCIPAL DEL CHATBOT CON STREAMING Y GROUNDING WEB
 # =====================================================================
-@csrf_exempt
 @ratelimit(limit=30, period=60, key_prefix='chatbot_query', json_response=True)
 def chatbot_query(request):
     """
@@ -1955,7 +1971,6 @@ def api_estado_cuota(request):
 
     from .services_voice import obtener_audio_miku
 
-@csrf_exempt
 def api_miku_tts(request):
     """
     Endpoint que recibe el texto del bot y devuelve la URL del audio generado con voz de Miku.

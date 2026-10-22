@@ -4,6 +4,8 @@ Django settings for litmate_project project.
 
 from pathlib import Path
 import os
+
+from django.core.exceptions import ImproperlyConfigured
 from dotenv import load_dotenv
 
 # Cargar variables desde el archivo .env o env
@@ -14,12 +16,17 @@ load_dotenv('env')
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-m6_@z#8*&k2!v$r9s^5w(x1yq+j0e7b4n3j2a1m!i*n_t#o')
+DEBUG = os.getenv('DEBUG', 'True').strip().lower() in {'1', 'true', 'yes', 'on'}
+SECRET_KEY = os.getenv('SECRET_KEY', '').strip()
+if not SECRET_KEY:
+    if not DEBUG:
+        raise ImproperlyConfigured(
+            'Define SECRET_KEY antes de arrancar con DEBUG=False.')
+    # Clave local reconocible; nunca se usa como valor de producción.
+    SECRET_KEY = 'django-insecure-local-development-only'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', 'True') == 'True'
-
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [host.strip() for host in os.getenv(
+    'ALLOWED_HOSTS', 'localhost,127.0.0.1,[::1],testserver').split(',') if host.strip()]
 
 # Application definition
 INSTALLED_APPS = [
@@ -156,6 +163,12 @@ TRANSBANK_ENVIRONMENT = os.getenv('TRANSBANK_ENVIRONMENT', 'integration')  # 'in
 MERCADOPAGO_ACCESS_TOKEN = os.getenv('MERCADOPAGO_ACCESS_TOKEN', 'TEST-785123984123-082520-litmate_test_token_sandbox_998822')
 MERCADOPAGO_PUBLIC_KEY = os.getenv('MERCADOPAGO_PUBLIC_KEY', 'TEST-litmate-public-key')
 
+# Sandbox local de pagos: nunca se activa solo porque fallen las credenciales.
+LITMATE_PAYMENT_SANDBOX = os.getenv('LITMATE_PAYMENT_SANDBOX', 'False').lower() in {'1', 'true', 'yes', 'on'}
+
+# El acceso social simulado sólo se permite en desarrollo o con una bandera explícita.
+LITMATE_SOCIAL_DEMO = os.getenv('LITMATE_SOCIAL_DEMO', 'False').lower() in {'1', 'true', 'yes', 'on'}
+
 # 3. PayPal
 PAYPAL_CLIENT_ID = os.getenv('PAYPAL_CLIENT_ID', 'sandbox_litmate_client_id_paypal_2026')
 PAYPAL_CLIENT_SECRET = os.getenv('PAYPAL_CLIENT_SECRET', 'sandbox_litmate_client_secret_paypal_2026')
@@ -196,6 +209,12 @@ LOGGING = {
     },
 }
 
+
+# Cookies y cabeceras seguras cuando no se está en desarrollo.
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_REFERRER_POLICY = 'same-origin'
 
 # Asistente IA: configuracion centralizada; no cambia los otros modulos.
 from .ai_settings import apply_ai_settings

@@ -3,6 +3,8 @@ import logging
 import uuid
 from django.conf import settings
 
+from ..payment_safety import simulation_allowed
+
 logger = logging.getLogger('litmate')
 
 
@@ -60,9 +62,13 @@ class TransbankService:
             else:
                 logger.warning(f"[Webpay Plus] Error de API Transbank ({response.status_code}): {response.text}")
         except Exception as e:
-            logger.warning(f"[Webpay Plus] Conexión directa a Transbank falló: {e}. Activando modo sandbox local.")
+            logger.warning(f"[Webpay Plus] Conexión directa a Transbank falló: {e}.")
 
-        # Fallback Seguro para Desarrollo / Modo Sandbox Local
+        if not simulation_allowed():
+            logger.error("[Webpay Plus] Pasarela no disponible y el sandbox local está desactivado.")
+            return {"success": False, "error": "provider_unavailable"}
+
+        # Fallback de desarrollo. Nunca se usa para activar pagos reales.
         mock_token = f"TBK_MOCK_{uuid.uuid4().hex[:16].upper()}"
         return {
             "success": True,
@@ -75,13 +81,16 @@ class TransbankService:
         """
         Confirma (Commit) una transacción con Transbank usando token_ws.
         """
-        # Si es un token de simulación local
-        if token_ws.startswith("TBK_MOCK_"):
+        # Un token local nunca activa una suscripción fuera del sandbox.
+        if str(token_ws).startswith("TBK_MOCK_"):
+            if not simulation_allowed():
+                logger.warning("[Webpay Plus] Token simulado rechazado fuera del sandbox.")
+                return {"success": False, "error": "simulation_disabled"}
             return {
                 "success": True,
                 "status": "AUTHORIZED",
                 "response_code": 0,
-                "amount": 9990,
+                "amount": 0,
                 "authorization_code": f"AUT-{uuid.uuid4().hex[:6].upper()}",
                 "payment_type_code": "VN",
                 "shares_number": 0,

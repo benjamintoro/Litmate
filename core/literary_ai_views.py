@@ -14,7 +14,7 @@ from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
 from django.views.decorators.http import require_POST
 from .literary_ai import (build_assistant, ChatResult, MAX_HISTORY, MAX_MESSAGE,
                          local_social, obvious_rejection, REFUSAL)
-from .quotas import verificar_y_consumir_cuota
+from .quotas import cuota_disponible, verificar_y_consumir_cuota
 from .ai_concurrency import acquire, release, rate_increment
 from .ai_budget import request_budget, BudgetExpired
 from .literary_sources import bounded_research
@@ -135,6 +135,15 @@ def chatbot_query(request):
     social = local_social(message)
     if social:
         return stream_result(ChatResult(social, 'social'))
+    if getattr(settings, 'LITMATE_USE_EXISTING_QUOTAS', False):
+        quota_ok, quota_info = cuota_disponible(request)
+        if not quota_ok:
+            response = JsonResponse({'error': 'quota_exceeded', 'info_cuota': quota_info,
+                'response': 'Has alcanzado tu límite diario de consultas.'}, status=429)
+            retry = quota_info.get('segundos_reinicio')
+            if isinstance(retry, int) and retry > 0:
+                response['Retry-After'] = str(retry)
+            return response
     if not request.session.session_key:
         request.session.save()
     owner = 'user:' + str(request.user.pk) if request.user.is_authenticated else 'anonymous'
