@@ -136,6 +136,33 @@ class QualityContractTests(unittest.TestCase):
         audit = audit_for(coverage=[{'question_id': 1, 'status': 'uncertain'}])
         validate_audit(audit, PLAN, DRAFT, canonical_sources([BOOK]), 'Pregunta')
 
+    def test_award_or_date_cannot_be_approved_as_an_unverified_inference(self):
+        draft = {**DRAFT, 'citations': [],
+                 'text': 'Cien años de soledad ganó el Premio Cervantes en 1982.'}
+        audit = audit_for(draft)
+        audit['claims'][0].update(statement=draft['text'], verdict='inference',
+                                  source_id=0, evidence='')
+        with self.assertRaises(ValueError):
+            validate_audit(audit, PLAN, draft, canonical_sources([BOOK]), '¿Qué premios recibió?')
+
+    def test_attribution_to_the_novel_does_not_make_a_date_uncertain(self):
+        draft = {**DRAFT, 'citations': [],
+                 'text': 'Según la novela, ganó el Premio Cervantes en 1982.'}
+        audit = audit_for(draft)
+        audit['claims'][0].update(statement=draft['text'], verdict='inference',
+                                  source_id=0, evidence='')
+        with self.assertRaises(ValueError):
+            validate_audit(audit, PLAN, draft, canonical_sources([BOOK]), '¿Qué premios recibió?')
+
+    def test_award_or_date_can_pass_when_the_answer_declares_uncertainty(self):
+        draft = {**DRAFT, 'citations': [],
+                 'text': 'No puedo confirmar si ganó el Premio Cervantes en 1982.'}
+        audit = audit_for(draft)
+        audit['claims'][0].update(statement=draft['text'], verdict='unverified',
+                                  source_id=0, evidence='')
+        self.assertEqual(validate_audit(audit, PLAN, draft, canonical_sources([BOOK]),
+                                        '¿Qué premios recibió?'), audit)
+
     def test_user_excerpt_is_a_local_source_for_literal_proof(self):
         draft = knowledge()
         audit = audit_for(draft)

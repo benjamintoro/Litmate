@@ -192,6 +192,9 @@ CALIDAD Y UTILIDAD:
 - Usa párrafos y listas numeradas legibles. No repitas advertencias genéricas.
 - Una pregunta sencilla merece brevedad; si solicitan detalle puedes desarrollar
   hasta aproximadamente 600 palabras, máximo 6500 caracteres en text.
+- Si piden un dato puntual (autor, fecha, publicación), responde ese dato y no
+  agregues premios, cifras ni datos biográficos no solicitados. Si no están
+  respaldados por una fuente, omítelos en lugar de completar la respuesta.
 
 CONOCIMIENTO Y FUENTES:
 - Puedes usar conocimiento literario general y de obras conocidas, aunque
@@ -500,6 +503,35 @@ def requested_book_count(message):
             'cuatro': 4, 'cinco': 5}.get(token, int(token) if token.isdigit() else None)
 
 
+def simple_literary_route(message):
+    """Clasifica sólo preguntas factuales simples y literarias inequívocas.
+
+    Evita una llamada de routing de varios segundos para «quién escribió la
+    novela X». No acepta tareas compuestas, fragmentos ni instrucciones; esos
+    casos conservan el clasificador completo.
+    """
+    if (not isinstance(message, str) or has_excerpt(message) or requires_exact_text(message)
+            or message.count('?') > 1 or re.search(r'[;\n\r]', message)
+            or re.search(r'[.!?]\s+\S', message)):
+        return None
+    value = normalized(message).strip(' ¿?¡!.,')
+    if (re.search(r'\b(?:y|e)\s+(?:que|quien|quienes|cuando|donde|como|cual|cuales)\b', value)
+            or re.search(r'\b(?:ignora|instrucciones|contrasena|password|correo|email|'
+                         r'codigo|programa|receta|ecuacion)\b', value)):
+        return None
+    if not re.search(r'\b(?:libro|novela|obra|autor|escritor)\b', value):
+        return None
+    author = re.match(r'^(?:quien (?:escribio|ha escrito|fue el autor|es el autor)|'
+                      r'de quien es|quien es el autor)\b', value)
+    bibliographic = re.match(r'^(?:en que ano se publico|cuando se publico|'
+                             r'cuantas paginas tiene|cual es el genero)\b', value)
+    if not (author or bibliographic):
+        return None
+    return {'decision': 'allow', 'intent': 'author',
+            'queries': [clean_text(message, 240)], 'candidates': [],
+            'followup': False, 'clarification': ''}
+
+
 def simple_research_plan(message, intent, *, followup=False, selected_books=()):
     """Conserva una tarea breve literal sin pedir al modelo que invente subtareas.
 
@@ -529,7 +561,11 @@ def simple_research_plan(message, intent, *, followup=False, selected_books=()):
               and re.match(r'^(?:y\s+)?(?:que (?:sucede|pasa|paso|ocurre)|'
                            r'quien (?:es|era)|como (?:se relaciona|termina|acaba)|'
                            r'que relacion|cual es (?:su|la) relacion)\b', value))
-    if not (identifying or detail):
+    bibliographic = (intent == 'author' and len(message) <= 200 and re.match(
+        r'^(?:quien (?:escribio|ha escrito|fue el autor|es el autor)|'
+        r'de quien es|quien es el autor|en que ano se publico|'
+        r'cuando se publico|cuantas paginas tiene|cual es el genero)\b', value))
+    if not (identifying or detail or bibliographic):
         return None
     return {'questions': [message], 'search_queries': [], 'needs_contents': bool(detail),
             'needs_fresh_sources': False,
@@ -1112,7 +1148,12 @@ class LiteraryAssistant:
                 return ChatResult('¿De cuál de las obras que comentamos quieres conocer ese detalle?',
                                   'clarification', diagnostics={**diagnostics, 'context_error': 'ambiguous_work'})
             route = None
-            if self.research_enabled and self.quality_checks and not verified['books']:
+            if self.research_enabled and not verified['books']:
+                route = simple_literary_route(message)
+                if route is not None:
+                    route = validate_route(route)
+                    diagnostics['simple_literary_route'] = True
+            if route is None and self.research_enabled and self.quality_checks and not verified['books']:
                 from .ai_literal_followup import literal_followup_route
                 route = literal_followup_route(message, followup, history)
                 if route is not None:
@@ -1192,7 +1233,7 @@ class LiteraryAssistant:
                 named = [book for book in route['candidates'] if normalized(book['title']) in normalized(message)]
                 if named:
                     route = {**route, 'candidates': named}
-            from .literary_quality import (PLAN_PROMPT, AUDIT_PROMPT,
+            from .literary_quality import (PLAN_PROMPT, AUDIT_PROMPT, RetryableAuditError,
                 validate_plan, validate_audit, resolve_followup_books)
             selected_books = resolve_followup_books(message, history) if route['followup'] else []
             if selected_books:
@@ -1512,6 +1553,7 @@ class LiteraryAssistant:
             for attempt in range(3 if self.quality_checks else 2):
                 issues = []
                 rejected_claims = []
+                retryable_audit = False
                 try:
                     # La ficha identifica la obra de las tarjetas aunque los roles
                     # se citen desde otra página. Completa sólo esa referencia de
@@ -1583,6 +1625,7 @@ class LiteraryAssistant:
                             raise ValueError('Cita el pasaje recibido que respalda esos acontecimientos, '
                                 'escenas o desenlace; una ficha general de la obra no sustituye esa evidencia.')
                 except ValueError as exc:
+                    retryable_audit = isinstance(exc, RetryableAuditError)
                     issues = [str(exc)]
                     diagnostics.setdefault('validation_issues', []).append({'stage': 'draft', 'issue': str(exc)[:500]})
                 if (issues and attempt == 0 and grounded_recommendation and not relation
@@ -1628,6 +1671,7 @@ class LiteraryAssistant:
                             diagnostics['coverage'] = audit['coverage']
                             diagnostics['claim_checks'] = len(audit['claims'])
                         except ValueError as exc:
+                            retryable_audit = isinstance(exc, RetryableAuditError)
                             diagnostics.setdefault('validation_issues', []).append({'stage': 'audit', 'issue': str(exc)[:500]})
                             # Localiza también apoyos inválidos declarados como
                             # supported: p. ej. materias usadas como trama.
@@ -1680,7 +1724,8 @@ class LiteraryAssistant:
                         return self._publish(draft, sources, route['intent'], diagnostics)
                     issues = review['issues'] or ['Corrige el borrador y responde el pedido literario con honestidad.']
                     diagnostics.setdefault('review_issues', []).extend(issues[:4])
-                if diagnostics['repairs'] == 0 and attempt < (2 if self.quality_checks else 1):
+                repair_limit = 2 if self.quality_checks and retryable_audit else 1
+                if diagnostics['repairs'] < repair_limit and attempt < repair_limit:
                     diagnostics['repairs'] += 1
                     repair_context = {**context, 'corrections': issues}
                     if rejected_claims:

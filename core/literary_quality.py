@@ -14,6 +14,10 @@ MAX_AUDIT_CLAIMS = 24
 NORMAL_AUDIT_CLAIMS = 6
 
 
+class RetryableAuditError(ValueError):
+    """Fallo de apoyo semántico que merece una segunda reparación acotada."""
+
+
 def obj(properties):
     return {'type': 'object', 'properties': properties,
             'required': list(properties), 'additionalProperties': False}
@@ -158,6 +162,29 @@ def validate_plan(plan):
 
 def _literal(value):
     return re.sub(r'\s+', ' ', unicodedata.normalize('NFKC', value or '')).strip()
+
+
+_SPECIFIC_FACTUAL_CLAIM = re.compile(
+    r'(?i)\b(?:premio|galard[oó]n|nobel|cervantes|pulitzer|booker|goncourt|'
+    r'neustadt|r[oó]mulo\s+gallegos|publicad[oa]s?|editad[oa]s?|'
+    r'naci[oó]|muri[oó]|falleci[oó]|isbn|p[aá]ginas?)\b|'
+    r'\b(?:en|desde|hasta|hacia|año)\s+(?:el\s+)?(?:año\s+)?(?:1[0-9]{3}|20[0-9]{2})\b'
+)
+_UNCERTAINTY_DECLARED = re.compile(
+    r'(?i)(?:no (?:puedo|se puede|consta|sabemos|est[aá]|est[aá]n|es posible)|'
+    r'no .{0,30}(?:confirm|detalla|describe|explica)|'
+    r'incertidumbre|sin confirmar|no confirmad[oa]s?|podr[ií]a|posiblemente|'
+    r'quiz[aá]|tal vez|al parecer|no encontr|no dispongo)'
+)
+
+
+def _specific_factual_claim(statement):
+    """Detecta datos que no deben aprobarse como mera interpretación."""
+    return bool(_SPECIFIC_FACTUAL_CLAIM.search(str(statement or '')))
+
+
+def _uncertainty_declared(statement):
+    return bool(_UNCERTAINTY_DECLARED.search(str(statement or '')))
 
 
 def factual_statements(text):
@@ -537,6 +564,13 @@ def validate_audit(audit, plan, draft, sources, message, *, strict_facts=False):
                 names = character_names(claim['statement'])
                 if names and not names <= evidence_words(claim['evidence']):
                     raise ValueError('La evidencia debe describir al personaje de la afirmación; una sinopsis general no basta.')
+        if (audit['decision'] == 'approve'
+                and claim['verdict'] in {'inference', 'unverified'}
+                and _specific_factual_claim(claim['statement'])
+                and not _uncertainty_declared(claim['statement'])):
+            raise RetryableAuditError('No puedo aprobar como inferencia el dato concreto «'
+                                      + claim['statement'][:180] + '»: respáldalo con una '
+                                      'fuente o declara la incertidumbre.')
     if audit['decision'] == 'approve' and (any(c['status'] == 'missing' for c in coverage)
             or any(c['verdict'] == 'contradicted' for c in claims)):
         raise ValueError('Corrige las partes omitidas o contradichas antes de aprobar.')
@@ -550,9 +584,7 @@ def validate_audit(audit, plan, draft, sources, message, *, strict_facts=False):
         if any(_literal(statement) not in checked for statement in statements):
             raise ValueError('Comprueba todas las frases factuales de esta respuesta, no solo su primera afirmación.')
         for claim in claims:
-            if claim['verdict'] in {'unverified', 'inference'} and not re.search(
-                    r'(?i)no (?:puedo|se puede|consta|sabemos)|no est[aá].{0,20}confirm|'
-                    r'no .{0,30}(?:detalla|describe|explica)|incertidumbre|no encontr|no dispongo', claim['statement']):
+            if claim['verdict'] in {'unverified', 'inference'} and not _uncertainty_declared(claim['statement']):
                 raise ValueError('Un acontecimiento concreto sin respaldo debe retirarse o declararse como incertidumbre, no aprobarse.')
     return audit
 

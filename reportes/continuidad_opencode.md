@@ -2,8 +2,10 @@
 
 Actualizado: 22 de octubre de 2026.
 Rama: `feature/cuotas-ia-chatbot`.
-Checkpoint: `96d2587` (preservación del trabajo de Codex). Los cambios de la
-Fase B están en el árbol de trabajo y se guardarán en el siguiente commit.
+Checkpoint: `96d2587` (preservación del trabajo de Codex) y `bac4391`
+(auditorías largas y respuestas truncadas). La mejora de precisión y la ruta
+rápida factual están en el árbol de trabajo y se guardarán en el siguiente
+commit.
 
 ## Objetivo general
 
@@ -30,9 +32,11 @@ diseño visual ni las funciones existentes.
 
 - [x] Fase A — Preservación y diagnóstico.
 - [x] Fase B — Errores de auditoría y precisión de la IA (A y B corregidos;
-  queda la revisión semántica y de recomendaciones).
+  fechas, premios, publicación y biografía ya no se aprueban como inferencia
+  sin fuente ni incertidumbre declarada).
 - [ ] Fase C — Memoria, razonamiento e investigación.
-- [ ] Fase D — Rendimiento y latencia.
+- [ ] Fase D — Rendimiento y latencia (ruta factual simple medida; quedan
+  consultas complejas, streaming y precalentamiento).
 - [ ] Fase E — Cuotas, seguridad y mantenimiento.
 - [ ] Fase F — Evaluación final y comparación con la línea base.
 
@@ -41,12 +45,36 @@ diseño visual ni las funciones existentes.
 - `.\venv\Scripts\python.exe -B verificar_proyecto.py core.test_topic_task_boundaries`
   → 9 pruebas OK.
 - `.\venv\Scripts\python.exe -B verificar_proyecto.py core suscripciones`
-  → 1035 pruebas OK en 5.789 s; `System check identified no issues`.
+  → **1041 pruebas OK en 5.777 s**; `System check identified no issues`.
 - Regresión nueva: auditoría estricta con 8 hechos, todos con slot y validación
   `strict_facts=True`.
 - Regresión nueva: respuesta con `done_reason=length` reintenta una vez con más
   `num_predict`; un segundo corte se informa como `respuesta_local_truncada`,
   no como caída del proveedor.
+- Regresión nueva: un premio o fecha concreta no se aprueba como `inference`
+  ni `unverified` sin fuente; atribuirlo a «la novela» tampoco cuenta como
+  incertidumbre. Una duda explícita sí se permite.
+- Regresión nueva: la pregunta factual inequívoca «¿Quién escribió la novela
+  X?» usa ruta y plan deterministas; mensajes compuestos o no literarios
+  conservan el router completo.
+
+## Mediciones reales (Ollama local, 9B, sin fuentes externas)
+
+- Consulta factual simple de referencia, en caliente: **13,5 s y 4 llamadas**
+  (ruta, plan, respuesta, auditoría).
+- Prueba A/B exacta con «¿Quién escribió la novela Cien años de soledad?»:
+  - router y plan completos: **20,625 s y 22,386 s; 6 llamadas**, con una
+    reparación adicional;
+  - ruta y plan deterministas: **5,331 s y 6,554 s; 2 llamadas** (respuesta y
+    auditoría). La misma prueba en el diagnóstico dio 7,13 s.
+  - Reducción observada: **70–74 %** y **4 llamadas menos** en esta consulta.
+- El guardián 4B no se adopta: al no caber junto al 9B en la GPU, Ollama
+  descarga/carga modelos y la consulta empeoró (30 s en frío; 19,8 s en
+  caliente frente a 13,5 s del 9B caliente).
+- Sonda de precisión: «Premio Cervantes 1972/1982» sin fuente fue rechazado y
+  la respuesta quedó en `unavailable`; no se publicó el premio inventado.
+  Es el comportamiento seguro hasta que la investigación web encuentre una
+  fuente verificable.
 
 ## Decisiones técnicas
 
@@ -60,17 +88,23 @@ diseño visual ni las funciones existentes.
 
 ## Problemas pendientes conocidos
 
-1. Verificación semántica: la evidencia literal no garantiza implicación.
+1. Verificación semántica: la evidencia literal no garantiza implicación. La
+   regla de fechas/premios reduce el riesgo, pero no sustituye una comprobación
+   semántica general.
 2. Recomendaciones rápidas pueden omitir auditoría factual de trama.
 3. Las respuestas con más de 24 hechos estrictos requieren auditoría por lotes;
    hoy se rechazan de forma explícita (`auditoria_requiere_lotes`) en vez de
    recortar afirmaciones en silencio.
-4. Latencia: llamadas secuenciales, guardián 9B, timeouts altos, ruta rápida de
-   25 s, streaming no progresivo, precalentamiento no integrado.
+4. Latencia: la ruta factual simple ya baja de 4 a 2 llamadas; las consultas
+   complejas siguen con llamadas secuenciales, guardián 9B, timeouts altos y
+   streaming no progresivo.
 5. Cuotas desactivadas por defecto, acopladas a rutas rápidas, consumidas después
    de inferir y con confianza en `X-Forwarded-For`.
 6. Seguridad: bypass de pagos, settings inseguros por defecto, login demo,
    endpoints CSRF-exempt y dependencias legacy.
+7. Memoria multiturno: hay pruebas de «el segundo» y continuidad, pero falta
+   una batería específica de correcciones, cambio de tema y referencias al
+   libro anterior dentro de la evaluación final.
 
 ## Riesgos
 
@@ -81,6 +115,7 @@ diseño visual ni las funciones existentes.
 
 ## Próxima acción concreta
 
-Guardar la Fase B en un commit local y continuar con la Fase C/D: probar
-memoria multiturno y recomendaciones rápidas, medir latencia real y revisar la
-verificación semántica antes de pasar a cuotas y seguridad.
+Guardar esta fase en un commit local y continuar con la Fase C: agregar
+pruebas de corrección («no, el otro libro»), cambio de tema y referencia al
+libro anterior; después revisar la procedencia de recomendaciones rápidas y
+medir consultas complejas antes de pasar a cuotas y seguridad.
