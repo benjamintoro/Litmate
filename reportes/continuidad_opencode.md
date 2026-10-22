@@ -2,120 +2,180 @@
 
 Actualizado: 22 de octubre de 2026.
 Rama: `feature/cuotas-ia-chatbot`.
-Checkpoint: `96d2587` (preservación del trabajo de Codex) y `bac4391`
-(auditorías largas y respuestas truncadas). La mejora de precisión y la ruta
-rápida factual están en el árbol de trabajo y se guardarán en el siguiente
-commit.
+Commits locales de esta sesión: `f12ee52` (seguridad), `057a687` (IA),
+`2f8708f` (evaluación) y el commit de documentación de este informe.
 
 ## Objetivo general
 
-Completar y perfeccionar la IA de LitMate: precisión factual, memoria
+Completar la IA literaria de LitMate con precisión factual, memoria
 conversacional, identificación por recuerdos parciales, investigación web
 verificable, menor latencia y protección contra invenciones, sin romper el
 diseño visual ni las funciones existentes.
 
-## Estado inicial verificado
+## Estado actual
 
-- El árbol tenía 21 archivos rastreados modificados y 28 archivos nuevos sin
-  rastrear, además de este informe.
-- La última evidencia histórica era de 989 pruebas generales y 37 pruebas de
-  procedencia, pero había ediciones posteriores sin cubrir.
-- La suite completa actual se ejecutó antes del checkpoint: **1032 pruebas OK**
-  en 5.837 s, con SQLite en memoria y sin tocar la base principal.
-- Se corrigieron dos regresiones reales detectadas por esa suite:
-  1. `LiteraryAssistant.reply` trataba un `deadline` no numérico (Mock) como
-     presupuesto válido y fallaba con `TypeError`.
-  2. La memoria de tema conservaba una «y» final cuando la tarea incluía
-     «por favor»; ahora separa la tarea sin validar secretos ocultos.
+- La suite offline completa de `core` pasa: **1078 pruebas OK** en 6.220 s.
+- Las pruebas de pagos pasan: **13 pruebas OK**.
+- La evaluación final v2 se ejecutó de nuevo después del último ajuste de
+  auditoría: `reportes/evaluacion_v2_final3_20261022`.
+- Resultado final3: **21 respuestas, 8 aclaraciones, 10 no disponibles y 3
+  rechazos**. Cobertura publicada:
+  **21/42 turnos**. Aprobación mecánica de la matriz:
+  **27/42**. Fallos de estado: 15;
+  fallos de contenido: **0**; fallos de seguridad: **0**.
+- Latencia final3: p50 **26.050 s**, p95 **118.487 s**, máximo
+  **172.537 s**. No se midió la latencia del endpoint HTTP: el evaluador
+  llama al asistente directamente.
+- No hubo revisión factual independiente. `correct_answers`,
+  `incorrect_answers` y `factual_error_rate` siguen siendo `null`; los conteos
+  de estado no son una medida de exactitud.
 
 ## Fases
 
 - [x] Fase A — Preservación y diagnóstico.
-- [x] Fase B — Errores de auditoría y precisión de la IA (A y B corregidos;
-  fechas, premios, publicación y biografía ya no se aprueban como inferencia
-  sin fuente ni incertidumbre declarada).
-- [ ] Fase C — Memoria, razonamiento e investigación.
-- [ ] Fase D — Rendimiento y latencia (ruta factual simple medida; quedan
-  consultas complejas, streaming y precalentamiento).
-- [ ] Fase E — Cuotas, seguridad y mantenimiento.
-- [ ] Fase F — Evaluación final y comparación con la línea base.
+- [x] Fase B — Auditoría, fechas, premios, publicación y biografía.
+- [x] Fase C — Memoria, correcciones, cambio de tema y referencias al libro
+  anterior; hay pruebas de pipeline y de conversación.
+- [x] Fase D — Ruta factual simple y reducción de llamadas; la latencia de
+  consultas complejas, el streaming progresivo y el precalentamiento siguen
+  pendientes.
+- [x] Fase E — Cuotas, pagos, OAuth, CSRF y settings de producción.
+- [x] Fase F — Evaluación final v2 y comparación honesta con la línea base.
+
+## Cambios principales
+
+### Seguridad
+
+- `core/quotas.py`: comprobación de cuota sin consumir antes de inferir;
+  consumo sólo tras una respuesta publicable; `X-Forwarded-For` se acepta
+  únicamente desde proxies configurados.
+- `suscripciones/views.py` y servicios de pago: verificación de montos,
+  monedas, referencias e idempotencia; simulaciones sólo con `DEBUG` o
+  `LITMATE_PAYMENT_SANDBOX`.
+- `core/views.py`: login social demo limitado por bandera; OAuth exige state;
+  no se vincula por correo no verificado; no se toma una cuenta con contraseña
+  por nombre de usuario; se retiraron `csrf_exempt` de endpoints activos.
+- `litmate_project/settings.py`: `SECRET_KEY` obligatoria con `DEBUG=False`,
+  `ALLOWED_HOSTS` explícitos, cookies seguras y cabeceras de seguridad.
+
+### IA literaria
+
+- Rutas deterministas para autoría simple y corrección de identificaciones.
+- Recorte de respuestas factuales simples a la primera frase para evitar datos
+  adicionales no respaldados.
+- Respaldo de autor sólo desde fuentes y respaldo de listas sólo para
+  recomendaciones temáticas puras, no para auditorías fallidas ni evidencia
+  inventada.
+- Memoria de correcciones («no, el otro libro»), referencias al libro anterior
+  y cambios explícitos de tema.
+- Conservación de pasajes entrecomillados y comparación de citas sin distinguir
+  mayúsculas.
+- Auditoría: detecta fechas entre paréntesis y años con contexto temporal;
+  detecta sucesos concretos (por ejemplo, «se lleva», «ascensión», lluvias con
+  duración) y exige que las frases concretas de un análisis largo estén
+  auditadas. Si no se pueden respaldar, la respuesta queda en `unavailable`.
+
+### Evaluación
+
+- `datos_evaluacion_ia_v2.json`: 37 casos, 45 mensajes, 42 turnos en vivo y 2
+  casos controlados (3 turnos) que no se ejecutan.
+- `evaluar_litmate.py` conserva conversación, fuentes y diagnósticos.
+- `analizar_evaluacion_ia.py` separa estado, contenido y seguridad; no certifica
+  verdad factual.
 
 ## Pruebas ejecutadas
 
-- `.\venv\Scripts\python.exe -B verificar_proyecto.py core.test_topic_task_boundaries`
-  → 9 pruebas OK.
-- `.\venv\Scripts\python.exe -B verificar_proyecto.py core suscripciones`
-  → **1041 pruebas OK en 5.777 s**; `System check identified no issues`.
-- Regresión nueva: auditoría estricta con 8 hechos, todos con slot y validación
-  `strict_facts=True`.
-- Regresión nueva: respuesta con `done_reason=length` reintenta una vez con más
-  `num_predict`; un segundo corte se informa como `respuesta_local_truncada`,
-  no como caída del proveedor.
-- Regresión nueva: un premio o fecha concreta no se aprueba como `inference`
-  ni `unverified` sin fuente; atribuirlo a «la novela» tampoco cuenta como
-  incertidumbre. Una duda explícita sí se permite.
-- Regresión nueva: la pregunta factual inequívoca «¿Quién escribió la novela
-  X?» usa ruta y plan deterministas; mensajes compuestos o no literarios
-  conservan el router completo.
+```text
+.\venv\Scripts\python.exe -B verificar_proyecto.py
+-> 1078 pruebas OK en 6.220 s
 
-## Mediciones reales (Ollama local, 9B, sin fuentes externas)
+.\venv\Scripts\python.exe -B verificar_proyecto.py suscripciones.test_payments
+-> 13 pruebas OK en 0.103 s
+```
 
-- Consulta factual simple de referencia, en caliente: **13,5 s y 4 llamadas**
-  (ruta, plan, respuesta, auditoría).
-- Prueba A/B exacta con «¿Quién escribió la novela Cien años de soledad?»:
-  - router y plan completos: **20,625 s y 22,386 s; 6 llamadas**, con una
-    reparación adicional;
-  - ruta y plan deterministas: **5,331 s y 6,554 s; 2 llamadas** (respuesta y
-    auditoría). La misma prueba en el diagnóstico dio 7,13 s.
-  - Reducción observada: **70–74 %** y **4 llamadas menos** en esta consulta.
-- El guardián 4B no se adopta: al no caber junto al 9B en la GPU, Ollama
-  descarga/carga modelos y la consulta empeoró (30 s en frío; 19,8 s en
-  caliente frente a 13,5 s del 9B caliente).
-- Sonda de precisión: «Premio Cervantes 1972/1982» sin fuente fue rechazado y
-  la respuesta quedó en `unavailable`; no se publicó el premio inventado.
-  Es el comportamiento seguro hasta que la investigación web encuentre una
-  fuente verificable.
+También se ejecutaron regresiones específicas de fechas entre paréntesis,
+sucesos concretos no auditados y años en títulos; las cuatro nuevas pruebas
+pasan.
 
-## Decisiones técnicas
+## Comparación de evaluaciones
 
-- Conservar Django, Ollama y el pipeline actual mientras no haya mediciones que
-  justifiquen una migración.
-- Mantener las rutas rápidas y la auditoría basada en evidencia literal.
-- No añadir dependencias ni servicios de pago sin justificación y autorización.
-- Las pruebas seguirán usando SQLite en memoria y entornos aislados.
-- No se modificará `.env`, no se hará push y no se ejecutarán migraciones sin
-  autorización específica.
+| Ejecución | Respondidas | Aprobadas | Fallos estado | Fallos contenido | Fallos seguridad | p50 | p95 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Inicial corregida | 19 | 22 | 20 | 0 | 0 | 16.087 s | 55.140 s |
+| Final pre-fix | 17 | 23 | 19 | 0 | 0 | 32.900 s | 156.840 s |
+| Final2 | 21 | 27 | 15 | 0 | 0 | 34.831 s | 175.972 s |
+| Final3 | 21 | 27 | 15 | 0 | 0 | 26.050 s | 118.487 s |
 
-## Problemas pendientes conocidos
+La comparación no es un experimento controlado: las fuentes externas
+(Open Library/SearXNG) varían entre ejecuciones. La matriz además usa
+`answered` por defecto en varios casos de seguridad o ambigüedad; una
+abstención segura puede contar como fallo de estado.
 
-1. Verificación semántica: la evidencia literal no garantiza implicación. La
-   regla de fechas/premios reduce el riesgo, pero no sustituye una comprobación
-   semántica general.
-2. Recomendaciones rápidas pueden omitir auditoría factual de trama.
-3. Las respuestas con más de 24 hechos estrictos requieren auditoría por lotes;
-   hoy se rechazan de forma explícita (`auditoria_requiere_lotes`) en vez de
-   recortar afirmaciones en silencio.
-4. Latencia: la ruta factual simple ya baja de 4 a 2 llamadas; las consultas
-   complejas siguen con llamadas secuenciales, guardián 9B, timeouts altos y
-   streaming no progresivo.
-5. Cuotas desactivadas por defecto, acopladas a rutas rápidas, consumidas después
-   de inferir y con confianza en `X-Forwarded-For`.
-6. Seguridad: bypass de pagos, settings inseguros por defecto, login demo,
-   endpoints CSRF-exempt y dependencias legacy.
-7. Memoria multiturno: hay pruebas de «el segundo» y continuidad, pero falta
-   una batería específica de correcciones, cambio de tema y referencias al
-   libro anterior dentro de la evaluación final.
+## Hallazgo factual importante
 
-## Riesgos
+La evaluación final2 publicó en `long_structure_cien_anos` dos datos no
+respaldados: la fundación de Macondo «(1840)», la destrucción «(1950)» y un
+suceso inventado sobre Remedios y el aljibe. La auditoría los marcó como
+`inference` porque el detector sólo reconocía años precedidos por
+`en/desde/hasta/año`; no reconocía años entre paréntesis ni sucesos concretos
+no auditados.
 
-- No afirmar que una prueba pasó sin ejecutarla.
-- No aceptar afirmaciones sin evidencia para “mejorar” una respuesta.
-- No aumentar la latencia con nuevas llamadas al modelo sin medición.
-- No publicar ni desplegar mientras existan los bypass de pago verificados.
+Se corrigió el detector y se añadió una barrera que exige auditar cada frase
+concreta de un análisis largo, incluso cuando la auditoría estricta está
+desactivada. La repetición dirigida
+`reportes/evaluacion_v2_recheck5_20261022` quedó en `unavailable`, sin publicar
+los datos inventados. La evaluación final3 vuelve a comprobar el caso.
 
-## Próxima acción concreta
+Esto demuestra que `content_failures=0` no equivale a verdad factual: el
+analizador sólo comprobaba términos obligatorios y prohibidos.
 
-Guardar esta fase en un commit local y continuar con la Fase C: agregar
-pruebas de corrección («no, el otro libro»), cambio de tema y referencia al
-libro anterior; después revisar la procedencia de recomendaciones rápidas y
-medir consultas complejas antes de pasar a cuotas y seguridad.
+## Fallos y limitaciones conocidos
+
+1. **Fuentes externas inestables.** El mismo tema apareció como respondido en
+   un turno y como abstención en otro; por ejemplo, arte japonés y la segunda
+   variante de recomendación. No se sustituyen por conocimiento del modelo.
+2. **Abstenciones seguras contadas como fallo.** `mixed_practical_action_rejected`
+   se rechaza correctamente; `exact_quote_without_authorized_text` y
+   `vague_scene_needs_clue` piden aclaración; la matriz las esperaba
+   `answered`. `false_premise_quixote` se abstiene sin corregir la premisa.
+3. **Casos aún limitados por fuentes:** personajes y final de *Cien años de
+   soledad*, comparación de *Cien años* y *El amor en los tiempos del cólera*,
+   recomendaciones chilena/breve, investigación web reciente y seguimiento
+   ordinal completo.
+4. **Long_structure** quedó en `unavailable` en final3 en lugar de publicar un
+   análisis con fechas/escenas no respaldadas. Es una pérdida de cobertura
+   deliberada.
+5. **Calidad parcial:** `recommendation_ordinal_followup` pide aclaración en
+   ambos turnos en final3, en lugar de explicar los enfoques;
+   `nonfiction_books_allowed` recomienda una obra sin desarrollar el nivel de
+   lectura.
+6. **Latencia:** las consultas complejas siguen usando varias llamadas
+   secuenciales al 9B; en final3 el p95 fue 118.487 s y el máximo 172.537 s.
+   La ruta HTTP con streaming no se midió en esta evaluación.
+7. **Revisión factual independiente pendiente.** Los resultados deben leerse
+   como cobertura, seguridad y comportamiento, no como certificación de
+   exactitud.
+
+## Decisiones y riesgos
+
+- Se conservan Django, Ollama y el pipeline actual; no se añadieron servicios de
+  pago ni dependencias.
+- Las fuentes externas se tratan como datos no confiables; no se convierten en
+  evidencia por el hecho de aparecer en una búsqueda.
+- No se publican citas textuales sin pasaje autorizado.
+- No se modificó `.env`, no se ejecutaron migraciones y no se hizo push.
+- No se afirma que una prueba haya pasado si no se ejecutó.
+
+## Próximos pasos
+
+1. Revisar manualmente las respuestas publicadas de final3 y completar la
+   revisión factual independiente que la matriz deja en `null`.
+2. Medir el endpoint HTTP real con streaming y distinguir latencia de
+   recuperación de fuentes de latencia del modelo.
+3. Mejorar la estabilidad de búsqueda y reintentos sin convertir una búsqueda
+   vacía en una recomendación inventada.
+4. Decidir si los casos de seguridad/ambigüedad deben actualizar
+   `expected_status` en la matriz para no penalizar abstenciones correctas.
+5. Evaluar una segunda reparación acotada para respuestas largas: hoy una
+   respuesta con datos concretos no respaldados puede terminar en
+   `unavailable` en lugar de una versión corregida.
