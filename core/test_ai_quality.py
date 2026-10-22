@@ -163,6 +163,43 @@ class QualityContractTests(unittest.TestCase):
         self.assertEqual(validate_audit(audit, PLAN, draft, canonical_sources([BOOK]),
                                         '¿Qué premios recibió?'), audit)
 
+    def test_parenthetical_date_cannot_be_approved_as_inference(self):
+        draft = {**DRAFT, 'citations': [],
+                 'text': 'La historia comienza con la fundación de Macondo (1840).'}
+        audit = audit_for(draft)
+        audit['claims'][0].update(statement=draft['text'], verdict='inference',
+                                  source_id=0, evidence='')
+        with self.assertRaises(ValueError):
+            validate_audit(audit, PLAN, draft, canonical_sources([BOOK]),
+                           'Explica la estructura narrativa de la novela')
+
+    def test_a_specific_event_cannot_hide_outside_the_audited_claims(self):
+        draft = {**DRAFT, 'citations': [],
+                 'text': ('La novela es circular.\n'
+                          'Remedios se lleva el aljibe.')}
+        audit = audit_for(draft)
+        with self.assertRaisesRegex(ValueError, 'Remedios'):
+            validate_audit(audit, PLAN, draft, canonical_sources([BOOK]),
+                           'Explica la estructura narrativa de la novela')
+
+    def test_specific_event_noun_cannot_hide_outside_the_audited_claims(self):
+        draft = {**DRAFT, 'citations': [],
+                 'text': ('La novela es circular.\n'
+                          'La ascensión de Remedios la Bella al cielo es un episodio mágico.')}
+        audit = audit_for(draft)
+        with self.assertRaisesRegex(ValueError, 'ascensión'):
+            validate_audit(audit, PLAN, draft, canonical_sources([BOOK]),
+                           'Explica la estructura narrativa de la novela')
+
+    def test_title_year_is_not_a_date_without_date_context(self):
+        draft = {**DRAFT, 'citations': [],
+                 'text': '1984, de George Orwell, es una novela distópica.'}
+        audit = audit_for(draft)
+        audit['claims'][0].update(statement=draft['text'], verdict='inference',
+                                  source_id=0, evidence='')
+        self.assertEqual(validate_audit(audit, PLAN, draft, canonical_sources([BOOK]),
+                                        'Habla de la novela'), audit)
+
     def test_user_excerpt_is_a_local_source_for_literal_proof(self):
         draft = knowledge()
         audit = audit_for(draft)

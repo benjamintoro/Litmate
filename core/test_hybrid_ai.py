@@ -49,9 +49,16 @@ class QuoteTests(unittest.TestCase):
                               canonical_sources([EXCERPT]), 'Dame una cita textual')
 
     def test_user_excerpt_can_be_quoted_without_catalog(self):
-        draft = {**self.draft('“' + QUOTE + '” muestra una relación con la memoria.', 'excerpt'),
+        draft = {**self.draft('"' + QUOTE + '" muestra una relación con la memoria.', 'excerpt'),
                  'citations': [], 'books': []}
         validate_evidence(draft, [], 'Analiza este fragmento: ' + QUOTE)
+
+    def test_user_excerpt_quote_comparison_ignores_case(self):
+        excerpt = 'Elena encontro un cuaderno azul. Ese cuaderno conservaba la memoria.'
+        message = 'Lee este fragmento: "' + excerpt + '" ¿Quién conserva la memoria?'
+        draft = {**self.draft("El texto indica que 'ese cuaderno conservaba la memoria'.",
+                              'excerpt'), 'citations': [], 'books': []}
+        validate_evidence(draft, [], message)
 
     def test_no_answer_is_required_when_exact_quote_missing(self):
         validate_evidence({**DRAFT, 'status': 'clarify'}, [], 'Dame una cita textual')

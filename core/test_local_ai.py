@@ -191,8 +191,8 @@ class LocalProviderTests(unittest.TestCase):
 
 class WebEngineTests(unittest.TestCase):
     def test_missing_sources_triggers_web_before_answer(self):
-        draft = {**knowledge(), 'text': 'La guerra afecta a los personajes de la novela [1].',
-                 'basis': 'mixed', 'citations': [1]}
+        draft = {**knowledge(), 'text': 'La guerra afecta a los personajes de Sin novedad en el frente, '
+                 'de Erich Maria Remarque [1].', 'basis': 'mixed', 'citations': [1]}
         llm, web = FakeLLM(answer=draft), Mock(return_value=[WEB])
         result = LiteraryAssistant(llm, lambda query: [], web_search=web).reply('Libros de guerra')
         self.assertEqual(result.status, 'answered')

@@ -77,7 +77,7 @@ def validate_evidence(draft, sources, message):
         if not exact_quote and _attributed_recollection(quote, draft['text'], message):
             continue
         quote = _text(quote)
-        if quote and user_excerpt and quote in user_excerpt:
+        if quote and user_excerpt and quote.casefold() in user_excerpt.casefold():
             continue
         matches = [s for s in cited if quote and quote in _text(s.get('description', ''))]
         if not matches:

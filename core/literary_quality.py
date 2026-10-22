@@ -110,7 +110,9 @@ para llenar la lista: cada frase factual requiere su propia comprobación.
 supported exige
 source_id real citado por el borrador y evidence COPIADA LITERALMENTE de la
 descripción, título o autor de esa fuente, entre 8 y 300 caracteres. El pasaje debe respaldar
-la afirmación, no basta que mencione un nombre. source_id=0 solo para un
+la afirmación, no basta que mencione un nombre. En preguntas por personajes, la
+evidencia debe ser una frase de la descripción que nombre al personaje y su papel;
+el título de la obra no prueba quién es ni qué hace. source_id=0 solo para un
 fragmento aportado por el usuario; en ese caso evidence viene de ese pasaje.
 inference es una interpretación indicada como tal. unverified significa
 conocimiento del modelo o dato no comprobado: no inventar una prueba.
@@ -125,6 +127,13 @@ la novela ni afirma haber leído el original. No exijas texto íntegro de la
 novela para parafrasear ese argumento; sí exígelo para citas o páginas exactas.
 No hace falta comprobar una interpretación general con varias fuentes; sí
 evitar afirmaciones concretas dudosas, citas inventadas y actualidad sin apoyo.
+En intent=concept o en análisis interpretativo sin fuentes, una lectura
+razonada puede ser inference con source_id=0: no exijas crítica secundaria ni
+una cita para cada idea. Sólo los datos concretos (fechas, premios, publicación,
+biografía, citas textuales, sucesos de trama) necesitan respaldo o una
+incertidumbre explícita. Si todas las afirmaciones son interpretaciones
+generales y no hay datos concretos sin apoyo, no pidas repair por falta de
+fuentes: puedes aprobar con coverage=answered.
 current_date es la fecha de la consulta. retrieved_at indica cuándo se obtuvo
 una fuente, NO cuándo ocurrieron sus hechos ni que el contenido sea actual.
 
@@ -168,7 +177,21 @@ _SPECIFIC_FACTUAL_CLAIM = re.compile(
     r'(?i)\b(?:premio|galard[oó]n|nobel|cervantes|pulitzer|booker|goncourt|'
     r'neustadt|r[oó]mulo\s+gallegos|publicad[oa]s?|editad[oa]s?|'
     r'naci[oó]|muri[oó]|falleci[oó]|isbn|p[aá]ginas?)\b|'
-    r'\b(?:en|desde|hasta|hacia|año)\s+(?:el\s+)?(?:año\s+)?(?:1[0-9]{3}|20[0-9]{2})\b'
+    r'\b(?:en|desde|hasta|hacia|año)\s+(?:el\s+)?(?:año\s+)?(?:1[0-9]{3}|20[0-9]{2})\b|'
+    # Un año entre paréntesis también es una fecha concreta: «Macondo
+    # (1840)» no se vuelve interpretación por no llevar preposición.
+    r'\(\s*(?:1[0-9]{3}|20[0-9]{2})\s*\)'
+)
+_YEAR = re.compile(r'\b(?:1[0-9]{3}|20[0-9]{2})\b')
+_DATE_CONTEXT = re.compile(
+    r'(?i)\b(?:comien\w*|termin\w*|fundaci[oó]n|fundad[oa]s?|destrucci[oó]n|'
+    r'destruid[oa]s?|publicaci[oó]n|public\w*|editad[oa]s?|nacimiento|'
+    r'naci[oó]|muri[oó]|falleci[oó]|fecha|siglos?|d[eé]cadas?)\b'
+)
+_SPECIFIC_EVENT_CLAIM = re.compile(
+    r'(?i)\b(?:se llev\w*|sub(?:e|en|i[oó]|ieron|[ií]a|[ií]an|iendo)|'
+    r'asciend\w*|ascensi[oó]n(?:es)?|ascensos?|se cas\w*|se enamor\w*|'
+    r'lluvia(?:s)?\s+(?:que\s+)?(?:dur\w*|de\s+\w+\s+años))\b'
 )
 _UNCERTAINTY_DECLARED = re.compile(
     r'(?i)(?:no (?:puedo|se puede|consta|sabemos|est[aá]|est[aá]n|es posible)|'
@@ -180,7 +203,10 @@ _UNCERTAINTY_DECLARED = re.compile(
 
 def _specific_factual_claim(statement):
     """Detecta datos que no deben aprobarse como mera interpretación."""
-    return bool(_SPECIFIC_FACTUAL_CLAIM.search(str(statement or '')))
+    text = str(statement or '')
+    return bool(_SPECIFIC_FACTUAL_CLAIM.search(text)
+                or _SPECIFIC_EVENT_CLAIM.search(text)
+                or (_YEAR.search(text) and _DATE_CONTEXT.search(text)))
 
 
 def _uncertainty_declared(statement):
@@ -266,7 +292,11 @@ _NARRATIVE_ACTIONS = re.compile(
     r'constru\w*|expuls\w*|exig\w*|destru\w*|persigu\w*|persig\w*|'
     r'naveg(?:a|an|o|aba|aban|ando)|viaj(?:a|an|o|aba|aban|aron|ara|aran|ando)|'
     r'muere|mueren|murio|murieron|huye|huyen|huyo|huyeron|'
-    r'se conviert\w*|se convirt\w*|su protagonista|personaje llamado)\b')
+    r'se llev\w*|sub(?:e|en|i[oó]|ieron|[ií]a|[ií]an|iendo)|asciend\w*|'
+    r'ascensi[oó]n(?:es)?|ascensos?|se cas\w*|se enamor\w*|'
+    r'lluvia(?:s)?\s+(?:que\s+)?(?:dur\w*|de\s+\w+\s+años)|'
+    r'se conviert\w*|se convirt\w*|su protagonista|'
+    r'personaje llamado)\b')
 
 
 def _requires_descriptive_evidence(statement, source):
@@ -574,6 +604,22 @@ def validate_audit(audit, plan, draft, sources, message, *, strict_facts=False):
     if audit['decision'] == 'approve' and (any(c['status'] == 'missing' for c in coverage)
             or any(c['verdict'] == 'contradicted' for c in claims)):
         raise ValueError('Corrige las partes omitidas o contradichas antes de aprobar.')
+    if (audit['decision'] == 'approve' and draft.get('status') == 'answer'
+            and not strict_facts):
+        # Una auditoría que sólo revisa la primera frase no puede aprobar un
+        # análisis con fechas o acontecimientos concretos sin examinarlos. La
+        # comprobación estricta ya cubre las respuestas factuales; esta barrera
+        # evita que una interpretación larga cuele datos inventados entre las
+        # frases auditadas.
+        checked = {_literal(claim['statement']) for claim in claims}
+        unaudited = [statement for statement in required_fact_statements(draft['text'])
+                     if _specific_factual_claim(statement)
+                     and not _uncertainty_declared(statement)
+                     and _literal(statement) not in checked]
+        if unaudited:
+            raise ValueError('Audita también la afirmación concreta «'
+                             + unaudited[0][:180] + '»: una fecha o un suceso '
+                             'requiere revisión expresa, no sólo la primera frase.')
     if audit['decision'] == 'research' and not audit['search_queries']:
         raise ValueError('Indica una búsqueda concreta para el dato faltante.')
     if strict_facts and draft.get('status') == 'answer' and audit['decision'] == 'approve':

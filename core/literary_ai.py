@@ -124,6 +124,9 @@ Una palabra como "libro" no concede permiso por sí sola.'''
 
 ANSWER_PROMPT = '''Eres LitMate, una compañera de lectura cálida, curiosa y atenta.
 Conversa con naturalidad y responde sobre libros, autores, lectura y sus contenidos.
+Para análisis y comentario literario general, usa conocimiento de obras conocidas.
+La ausencia de fuentes o de selected_books no es una prohibición ni motivo de
+rechazo: nunca digas que no puedes responder por no tener acceso a las obras.
 También puedes charlar con el lector, escuchar cómo va su día y comentar
 sus gustos o emociones sin exigir que mencione una obra. En conversation
 responde a lo que acaba de decir y usa su contexto; no fuerces una búsqueda,
@@ -252,7 +255,10 @@ COMPROBACIONES DE CONTENIDO:
 ANSWER_PROMPT += '''
 Si hay plan, contesta cada pregunta de plan.questions; no publiques el plan.
 selected_books fija la obra elegida en un seguimiento. No la cambies por un
-título sugerido por memoria. plan.spoilers_requested=false exige evitar finales.
+título sugerido por memoria. Si selected_books está vacío, no lo interpretes
+como una prohibición: puedes analizar las obras nombradas en el mensaje y usar
+conocimiento literario general. Nunca respondas que sólo puedes hablar de
+selected_books. plan.spoilers_requested=false exige evitar finales.
 Si una búsqueda dirigida añadió fuentes, escribe un borrador nuevo y usa
 los IDs actuales, sin conservar referencias del borrador anterior.
 No afirmes ISBN, precios, premios recientes o ediciones concretas si no hay
@@ -346,6 +352,8 @@ Parafrasea con claridad; no copies más de 25 palabras de una misma página web.
 Responde también otras preguntas del mensaje o plan, si las hay. Si falta un
 dato, needs_web=true permite otra búsqueda; si ya se buscó, explica qué sí
 se pudo confirmar y qué falta. No inventes una respuesta para evitar esa duda.
+Si intent=author y la pregunta pide sólo el autor o la fecha, responde ese
+dato sin añadir trama, temas, valoraciones ni otros hechos no solicitados.
 
 books identifica la OBRA, no la página web. Copia exactamente título, autor y
 source_id de la ficha book/excerpt. Incluye ese ID en citations, junto a los IDs
@@ -517,9 +525,8 @@ def simple_literary_route(message):
     value = normalized(message).strip(' ¿?¡!.,')
     if (re.search(r'\b(?:y|e)\s+(?:que|quien|quienes|cuando|donde|como|cual|cuales)\b', value)
             or re.search(r'\b(?:ignora|instrucciones|contrasena|password|correo|email|'
-                         r'codigo|programa|receta|ecuacion)\b', value)):
-        return None
-    if not re.search(r'\b(?:libro|novela|obra|autor|escritor)\b', value):
+                         r'codigo|programa|receta|ecuacion|constitucion|ley|tratado|'
+                         r'python|javascript|html|sql|java)\b', value)):
         return None
     author = re.match(r'^(?:quien (?:escribio|ha escrito|fue el autor|es el autor)|'
                       r'de quien es|quien es el autor)\b', value)
@@ -527,8 +534,23 @@ def simple_literary_route(message):
                              r'cuantas paginas tiene|cual es el genero)\b', value)
     if not (author or bibliographic):
         return None
+    if not re.search(r'\b(?:libro|novela|obra|autor|escritor)\b', value):
+        # «¿Quién escribió Pedro Páramo?» no contiene la palabra «libro».
+        # El título debe tener al menos dos palabras para no convertir
+        # preguntas de una sola palabra en una ruta factual automática.
+        if not author:
+            return None
+        title = re.sub(
+            r'^(?:quien (?:escribio|ha escrito|fue el autor|es el autor)|'
+            r'de quien es|quien es el autor)\s+', '', value).strip()
+        title = re.sub(r'^(?:la|el)\s+(?:novela|libro|obra)\s+', '', title).strip()
+        if len(title.split()) < 2:
+            return None
+        query = clean_text(title, 240)
+    else:
+        query = clean_text(message, 240)
     return {'decision': 'allow', 'intent': 'author',
-            'queries': [clean_text(message, 240)], 'candidates': [],
+            'queries': [query], 'candidates': [],
             'followup': False, 'clarification': ''}
 
 
@@ -720,9 +742,60 @@ def local_social(message):
 
 def looks_literary(message, history):
     # Solo solicita una segunda clasificación; NO aprueba por palabras clave.
-    words = r'\b(libros?|novelas?|lectura|autor(?:es)?|titulo|literatura|personajes?|fragmento|poema)\b'
+    words = (r'\b(libros?|novelas?|lectura|autor(?:es)?|escritor(?:a|es)?|escribio|'
+             r'titulo|literatura|personajes?|fragmento|poema|cuento|ensayo|obra|'
+             r'premio|galardon|biografia)\b')
     social = r'\b(?:conversar|charlar|como estas|me siento|estoy triste|estoy cansad[oa]|me gustan)\b'
     return bool(re.search(words + '|' + social, normalized(message)) or history)
+
+
+def literary_scope_hint(message):
+    """Reconoce una consulta literaria que el router no debe convertir en veto.
+
+    No sustituye al clasificador ni aprueba por sí sola una respuesta: sólo
+    evita que una pregunta legítima sobre un autor, una obra o un premio quede
+    fuera de ámbito y se convierta en un rechazo genérico.
+    """
+    value = normalized(message)
+    return bool(re.search(
+        r'\b(?:libros?|novelas?|obra|literatura|autor(?:a|es)?|escritor(?:a|es)?|'
+        r'escribio|personajes?|protagonistas?|trama|argumento|poema|poesia|cuento|'
+        r'ensayo|premio|galardon|biografia|borges|cervantes|garcia marquez)\b', value))
+
+
+def adjust_route_for_message(route, message):
+    """Corrige dos errores de clasificación que no deben llegar al lector."""
+    value = normalized(message).strip(' ¿?¡!.,;:')
+    if has_excerpt(message) and route.get('intent') in {'identify', 'conversation'}:
+        route = {**route, 'intent': 'analysis', 'followup': False, 'candidates': []}
+    elif (route.get('intent') == 'identify' and route.get('candidates')
+          and re.match(r'^(?:quien (?:escribio|ha escrito|fue el autor|es el autor)|'
+                       r'de quien es|quien es el autor)\b', value)):
+        # El título puede parecer una obra que se busca («identify»), pero
+        # la pregunta pide expresamente su autoría. Los candidatos ya están
+        # validados y permiten responder sin otro plan genérico.
+        route = {**route, 'intent': 'author', 'followup': False}
+    elif (route.get('intent') == 'identify' and route.get('candidates')
+          and re.search(r'\b(?:personajes?|protagonistas?)\b', value)
+          and not re.search(r'\b(?:recuerdo|no recuerdo|busco un libro|'
+                           r'estoy buscando un libro)\b', value)):
+        # «Personajes de Don Quijote» no es identificar una obra olvidada.
+        route = {**route, 'intent': 'analysis'}
+    if (route.get('decision') == 'reject' and not obvious_rejection(message)
+            and literary_scope_hint(message)
+            and not re.search(r'\b(?:programar|programa|script|codigo|receta|'
+                              r'calcula|resuelve|prepara|ejecuta)\b', value)):
+        if re.search(r'\b(?:quien (?:escribio|ha escrito|fue el autor|es el autor)|'
+                     r'autor(?:a)?|premio|galardon|biografia|gano)\b', value):
+            intent = 'author'
+        elif re.search(r'\b(?:personajes?|protagonistas?|trama|argumento|'
+                       r'final|termina|analiza|compara|obra)\b', value):
+            intent = 'analysis'
+        else:
+            intent = route.get('intent') if route.get('intent') not in {None, 'conversation'} else 'analysis'
+        route = {**route, 'decision': 'allow', 'intent': intent,
+                 'queries': route.get('queries') or [clean_text(message, 240)]}
+    return route
 
 
 def has_excerpt(message):
@@ -950,6 +1023,134 @@ class ChatResult:
     diagnostics: dict = field(default_factory=dict)
 
 
+def contradiction_correction(message, history):
+    """Mantiene una autoría ya publicada ante una corrección infundada.
+
+    No intenta decidir quién tiene razón con conocimiento nuevo: reutiliza la
+    respuesta aceptada en el turno anterior, que ya pasó por los controles.
+    """
+    value = normalized(message)
+    if (not re.match(r'^(?:no|incorrecto|incorrecta|falso|falsa|te equivocas|'
+                     r'eso no es (?:cierto|correcto))\b', value)
+            or not re.search(r'\b(?:quien|autor|escribio|realidad)\b', value)):
+        return None
+    for turn in reversed(history or []):
+        if not isinstance(turn, dict):
+            continue
+        question = normalized(turn.get('question', ''))
+        if not re.search(r'\bquien (?:escribio|ha escrito|fue el autor|es el autor)\b',
+                         question):
+            continue
+        answer = str(turn.get('answer') or '').strip()
+        if not answer:
+            return None
+        first = re.split(r'(?<=[.!?])\s+', answer, maxsplit=1)[0].strip()
+        if not first:
+            return None
+        sources = turn.get('sources') if isinstance(turn.get('sources'), list) else []
+        books = turn.get('books') if isinstance(turn.get('books'), list) else []
+        return ChatResult(f'Mi respuesta anterior sigue siendo la misma: {first}',
+                          'answered', True, sources, books,
+                          'sources' if sources else 'knowledge', 'author',
+                          {'contradiction_correction': True,
+                           'prior_answer_reused': True})
+    return None
+
+
+def fallback_recommendation_allowed(message):
+    """Autoriza el respaldo sólo para una petición de lecturas sin otra tarea."""
+    from .literary_research import is_topic_recommendation
+    if not is_topic_recommendation(message):
+        return False
+    value = normalized(message)
+    return not re.search(
+        r'\b(?:prepara|cocinar|calcula|resuelve|programa|depura|ejecuta|'
+        r'escribe|haz|crea)\b', value)
+
+
+def grounded_book_list_fallback(draft, sources, diagnostics):
+    """Devuelve sólo títulos y autores que constan en las fuentes recibidas.
+
+    Se usa cuando el revisor rechaza un borrador de recomendación por incluir
+    material ajeno a los libros. No reutiliza el texto rechazado ni añade
+    sinopsis, temas o autores que no estén ya en las fichas.
+    """
+    if not isinstance(draft, dict) or not isinstance(sources, list):
+        return None
+    text = normalized(draft.get('text', ''))
+    by_id = {source.get('id'): source for source in sources if isinstance(source, dict)}
+    chosen, seen = [], set()
+    ordered = []
+    for book in draft.get('books') or []:
+        if isinstance(book, dict) and book.get('source_id') in by_id:
+            ordered.append(by_id[book['source_id']])
+    for source in ordered:
+        if not isinstance(source, dict) or source.get('kind') not in {'book', 'excerpt'}:
+            continue
+        title = str(source.get('title') or '').strip()
+        author = str(source.get('author') or '').strip()
+        if (not title or not author or normalized(author) in {
+                'autor no informado', 'unknown', 'desconocido', 'anonimo'}
+                or normalized(title) not in text or normalized(author) not in text):
+            continue
+        key = (normalized(title), normalized(author))
+        if key in seen or not isinstance(source.get('id'), int):
+            continue
+        seen.add(key)
+        chosen.append(source)
+    if not chosen:
+        return None
+    lines = ['Estas son las obras que pude verificar en el catálogo:']
+    lines.extend(f'{number}. **{source["title"]}** — {source["author"]}'
+                 for number, source in enumerate(chosen[:5], 1))
+    lines.append('¿Quieres que te cuente más sobre alguna de ellas?')
+    return ChatResult('\n'.join(lines), 'answered', True, chosen[:5],
+        [{'title': source['title'], 'author': source['author'], 'source_id': source['id']}
+         for source in chosen[:5]], 'sources', 'recommend',
+        {**diagnostics, 'grounded_book_list_fallback': True})
+
+
+def supported_author_fallback(route, message, sources, diagnostics):
+    """Responde sólo la autoría que consta en una ficha recibida.
+
+    Si el modelo añade una frase descriptiva no respaldada y la auditoría la
+    rechaza, no se publica el borrador completo ni se inventa otra respuesta:
+    se conserva el dato mínimo que la fuente sí identifica.
+    """
+    if not isinstance(route, dict) or route.get('intent') != 'author':
+        return None
+    value = normalized(message).strip(' ¿?¡!.,;:')
+    if not re.match(r'^(?:quien (?:escribio|ha escrito|fue el autor|es el autor)|'
+                    r'de quien es|quien es el autor)\b', value):
+        return None
+    candidates = [normalized(book.get('title', '')) for book in route.get('candidates') or []
+                  if isinstance(book, dict)]
+    matches = []
+    for source in sources or []:
+        if not isinstance(source, dict) or source.get('kind') not in {'book', 'excerpt'}:
+            continue
+        title = str(source.get('title') or '').strip()
+        author = str(source.get('author') or '').strip()
+        if not title or not author or normalized(author) in {
+                'autor no informado', 'unknown', 'desconocido', 'anonimo'}:
+            continue
+        title_key = normalized(title)
+        if (title_key and (title_key in value or title_key in candidates)):
+            matches.append(source)
+    if not matches:
+        return None
+    source = max(matches, key=lambda item: len(normalized(item.get('title', ''))))
+    title = str(source['title']).strip()
+    author = str(source['author']).strip()
+    books = []
+    if source.get('kind') == 'book' and isinstance(source.get('id'), int):
+        books = [{'title': title, 'author': author, 'source_id': source['id']}]
+    return ChatResult(
+        f'El autor de «{title}» es {author}.', 'answered', True,
+        [source], books, 'sources', 'author',
+        {**diagnostics, 'supported_author_fallback': True})
+
+
 def validate_route(route):
     if not isinstance(route, dict) or set(route) != set(ROUTE_SCHEMA['properties']):
         raise ValueError('Formato de clasificación inválido')
@@ -1039,6 +1240,27 @@ class LiteraryAssistant:
         self.research_timeout = max(1, min(float(research_timeout), 30))
         self.research_max_searches = max(0, min(int(research_max_searches), 2))
 
+    def _recommendation_fallback(self, message, retrieval_message, sources, diagnostics, *,
+                                 draft=None, early=False):
+        """Publica una lista verificada cuando el texto libre no es publicable."""
+        if not sources:
+            return None
+        from .ai_catalog_fallback import grounded_topic_fallback
+        fallback_message = retrieval_message
+        explicit_count = requested_book_count(message)
+        if explicit_count:
+            fallback_message += f', {explicit_count} libros'
+        fallback = grounded_topic_fallback(fallback_message, sources)
+        if fallback is None:
+            fallback = grounded_book_list_fallback(draft, sources, diagnostics)
+        if fallback is None:
+            return None
+        fallback.diagnostics = {**diagnostics, **fallback.diagnostics,
+            'rejected_generation_preserved': True}
+        if early:
+            fallback.diagnostics['early_grounded_fallback'] = True
+        return fallback
+
     def reply(self, message, history=None, *, topic_context=None):
         from .ai_budget import request_budget, BudgetExpired
         started = time.monotonic()
@@ -1070,6 +1292,9 @@ class LiteraryAssistant:
         if social:
             return ChatResult(social, 'social')
         history = sanitized_history(history or [])
+        correction = contradiction_correction(message, history)
+        if correction is not None:
+            return correction
         previous_recommendations = history
         topic_context = topic_context if isinstance(topic_context, dict) else {}
         from .literary_identity import followup_context
@@ -1174,6 +1399,7 @@ class LiteraryAssistant:
                 diagnostics['route_rescue'] = True
                 route = validate_route(self.llm('route_rescue', ROUTE_RESCUE_PROMPT,
                                                 route_data, self.answer_model))
+            route = adjust_route_for_message(route, message)
             if route['decision'] == 'reject':
                 return ChatResult(REFUSAL, 'rejected', diagnostics=diagnostics)
             if relation and followup['books']:
@@ -1234,7 +1460,8 @@ class LiteraryAssistant:
                 if named:
                     route = {**route, 'candidates': named}
             from .literary_quality import (PLAN_PROMPT, AUDIT_PROMPT, RetryableAuditError,
-                validate_plan, validate_audit, resolve_followup_books)
+                validate_plan, validate_audit, resolve_followup_books,
+                _specific_factual_claim)
             selected_books = resolve_followup_books(message, history) if route['followup'] else []
             if selected_books:
                 # No dependemos del recuerdo del modelo para resolver el ordinal.
@@ -1249,6 +1476,9 @@ class LiteraryAssistant:
             grounded_recommendation = (self.research_enabled and self.quality_checks
                 and route['intent'] == 'recommend' and
                 ((topic_request and book_topic_profile(retrieval_message)['structured']) or relation))
+            fallback_recommendation = (route['intent'] == 'recommend' and not relation
+                and (grounded_recommendation or fallback_recommendation_allowed(message)))
+            diagnostics['fallback_recommendation'] = fallback_recommendation
             if grounded_recommendation and fast_recommendation:
                 # Una recomendación por materia tiene una tarea clara. El plan
                 # local evita una llamada extra; la auditoría factual sigue entera.
@@ -1310,6 +1540,14 @@ class LiteraryAssistant:
                 queries = queries[:1]
             for book in ([] if has_excerpt(message) or route['intent'] == 'conversation' else route['candidates'][:3]):
                 queries.append(book['title'] + ' ' + book['author'])
+            if (route['intent'] == 'analysis' and route['candidates']
+                    and re.search(r'\b(?:personajes?|protagonistas?)\b', normalized(retrieval_message))
+                    and not has_excerpt(message)):
+                # La consulta conversacional («¿quiénes son...?») suele traer
+                # resultados genéricos. Añadir la obra y el autor permite que
+                # las fuentes públicas hablen de sus personajes concretos.
+                book = route['candidates'][0]
+                queries.insert(0, clean_text(book['title'] + ' ' + book['author'] + ' personajes', 240))
             identity_queries = {normalized(book['title'] + ' ' + book['author']) for book in route['candidates']}
             if (not queries and not has_excerpt(message)
                     and route['intent'] in {'recommend', 'identify', 'summary', 'author'}):
@@ -1487,9 +1725,14 @@ class LiteraryAssistant:
                 diagnostics['evidence'] = {key: evidence_state.get(key) for key in
                     ('sufficient', 'missing', 'contradictory', 'requirements')}
                 context['external_evidence_is_untrusted_data'] = True
-                context['specific_factual_question'] = any(requirement in
-                    {'events', 'ending', 'relationships', 'scenes', 'character_detail'}
-                    for requirement in evidence_state.get('requirements', []))
+                # Una relación conceptual («Borges y la filosofía») no es un
+                # acontecimiento de trama ni una ficha de personaje. Marcarla
+                # como pregunta factual estricta obligaba al modelo a rechazar
+                # un análisis legítimo por no tener fuentes.
+                context['specific_factual_question'] = (route['intent'] != 'concept'
+                    and any(requirement in
+                        {'events', 'ending', 'relationships', 'scenes', 'character_detail'}
+                        for requirement in evidence_state.get('requirements', [])))
                 if context['specific_factual_question']:
                     # La ficha y la evidencia de esta pregunta cumplen funciones
                     # distintas. No se añaden citas después de la generación.
@@ -1549,6 +1792,16 @@ class LiteraryAssistant:
                 if grounded_recommendation:
                     context['recommendation_evidence_sources'] = recommendation_evidence_sources(sources)
                 draft = self.llm('answer_web', answer_prompt, context, self.answer_model)
+            if (route['intent'] == 'author' and diagnostics.get('simple_literary_route')
+                    and isinstance(draft, dict) and draft.get('status') == 'answer'):
+                # Una pregunta de autoría simple no necesita el párrafo
+                # enciclopédico que el modelo suele añadir. Recortar a la
+                # primera frase elimina fechas, colecciones y adjetivos no
+                # pedidos que la auditoría no podría respaldar.
+                sentences = re.split(r'(?<=[.!?])\s+', draft['text'].strip(), maxsplit=1)
+                if len(sentences) > 1 and sentences[0].strip():
+                    draft = {**draft, 'text': sentences[0].strip()}
+                    diagnostics['short_factual_trim'] = True
             research_used = False
             for attempt in range(3 if self.quality_checks else 2):
                 issues = []
@@ -1571,7 +1824,10 @@ class LiteraryAssistant:
                                 draft = {**draft, 'citations': draft['citations'] + [source['id']]}
                     validate_draft(draft, sources)
                     validate_evidence(draft, sources, message)
-                    if grounded_recommendation and draft['status'] == 'answer':
+                    if route['intent'] == 'recommend' and draft['status'] == 'answer':
+                        # La ruta rápida no exime de que el texto y las tarjetas
+                        # identifiquen las mismas obras ni de citar el pasaje
+                        # narrativo que respalda una descripción de trama.
                         validate_recommendation_text(draft, sources)
                         from .ai_recommendation_provenance import validate_recommendation_provenance
                         validate_recommendation_provenance(draft, sources)
@@ -1635,14 +1891,9 @@ class LiteraryAssistant:
                     # Un saludo sin recomendaciones no se publica. Si las
                     # fichas ya permiten el respaldo validado, evita otra
                     # inferencia que en las pruebas repetía el mismo saludo.
-                    from .ai_catalog_fallback import grounded_topic_fallback
-                    fallback_message = retrieval_message
-                    if requested_book_count(message):
-                        fallback_message += f', {requested_book_count(message)} libros'
-                    fallback = grounded_topic_fallback(fallback_message, sources)
+                    fallback = self._recommendation_fallback(
+                        message, retrieval_message, sources, diagnostics, early=True)
                     if fallback is not None:
-                        fallback.diagnostics = {**diagnostics, **fallback.diagnostics,
-                            'rejected_generation_preserved': True, 'early_grounded_fallback': True}
                         return fallback
                 if not issues:
                     if self.quality_checks and plan:
@@ -1670,6 +1921,25 @@ class LiteraryAssistant:
                                 strict_facts=context.get('all_factual_claims_required', False))
                             diagnostics['coverage'] = audit['coverage']
                             diagnostics['claim_checks'] = len(audit['claims'])
+                            # Una interpretación general sin fuentes no es una
+                            # alucinación. Si el auditor sólo marca inferencias
+                            # interpretativas, no obligues a citar crítica para
+                            # un análisis que el producto permite responder con
+                            # conocimiento literario.
+                            if (audit['decision'] == 'repair'
+                                    and route['intent'] in {'analysis', 'concept'}
+                                    and not sources
+                                    and draft.get('basis') == 'knowledge'
+                                    and not context.get('specific_factual_question')
+                                    and audit.get('only_books') is True
+                                    and audit.get('claims')
+                                    and all(row.get('status') == 'answered'
+                                            for row in audit.get('coverage', []))
+                                    and all(claim.get('verdict') == 'inference'
+                                            and not _specific_factual_claim(claim.get('statement', ''))
+                                            for claim in audit['claims'])):
+                                audit = {**audit, 'decision': 'approve', 'issues': []}
+                                diagnostics['audit_inference_override'] = True
                         except ValueError as exc:
                             retryable_audit = isinstance(exc, RetryableAuditError)
                             diagnostics.setdefault('validation_issues', []).append({'stage': 'audit', 'issue': str(exc)[:500]})
@@ -1695,6 +1965,9 @@ class LiteraryAssistant:
                             audit = {'decision': 'repair', 'only_books': True,
                                      'issues': [str(exc)], 'search_queries': []}
                         if audit['only_books'] is not True:
+                            # La auditoría marca el borrador completo fuera del
+                            # ámbito; no se sustituye por una lista que evite
+                            # revisar la infracción de seguridad.
                             return ChatResult(REFUSAL, 'blocked_output', diagnostics=diagnostics)
                         if audit['decision'] == 'research' and research_remaining:
                             research_used = True
@@ -1719,6 +1992,11 @@ class LiteraryAssistant:
                         review = validate_review(self.llm('review', REVIEW_PROMPT,
                                                  {**context, 'draft': draft}, self.guard_model))
                     if review['only_books'] is not True:
+                        if fallback_recommendation:
+                            fallback = self._recommendation_fallback(
+                                message, retrieval_message, sources, diagnostics, draft=draft)
+                            if fallback is not None:
+                                return fallback
                         return ChatResult(REFUSAL, 'blocked_output', diagnostics=diagnostics)
                     if review['decision'] == 'approve' and draft['status'] != 'refuse':
                         return self._publish(draft, sources, route['intent'], diagnostics)
@@ -1744,17 +2022,17 @@ class LiteraryAssistant:
                 else:
                     break
             # No exponemos un borrador que no pudo validarse, ni fingimos fuera-de-ámbito.
+            # El respaldo general sólo se permite si la petición ya era una
+            # recomendación temática estructurada; un fallo de auditoría no se
+            # convierte en una respuesta nueva.
             if grounded_recommendation and not relation:
-                from .ai_catalog_fallback import grounded_topic_fallback
-                fallback_message = retrieval_message
-                explicit_count = requested_book_count(message)
-                if explicit_count:
-                    fallback_message += f', {explicit_count} libros'
-                fallback = grounded_topic_fallback(fallback_message, sources)
+                fallback = self._recommendation_fallback(
+                    message, retrieval_message, sources, diagnostics, draft=draft)
                 if fallback is not None:
-                    fallback.diagnostics = {**diagnostics, **fallback.diagnostics,
-                        'rejected_generation_preserved': True}
                     return fallback
+            author_fallback = supported_author_fallback(route, message, sources, diagnostics)
+            if author_fallback is not None:
+                return author_fallback
             return ChatResult(
                 ('No pude preparar una recomendación fiable dentro del tema que buscas. '
                  '¿Prefieres una introducción o un enfoque más específico?'

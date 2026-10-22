@@ -252,6 +252,30 @@ def resolve_followup_context(message, history):
              for turn in turns]
     known_titles = {title for books in lists for book in books
                     for title in _titles(work_identity(book))}
+    # Corrección explícita: «no, el otro libro». Se resuelve sólo si hay una
+    # obra activa y otra distinta en la lista inmediatamente anterior; con dos
+    # candidatos sin referencia previa se pregunta en lugar de adivinar.
+    correction = re.search(
+        r'\bno\b(?:\s+\w+){0,6}\s+(?:el|la)\s+otr[oa]\s+'
+        r'(?:libro|novela|obra|uno|una)\b'
+        r'(?:\s+que\s+(?:mencionaste|dijiste|recomendaste))?$', value)
+    other_request = re.match(
+        r'^(?:y\s+)?(?:el|la)\s+otr[oa]\s+(?:libro|novela|obra|uno|una)\b'
+        r'(?:\s+que\s+(?:mencionaste|dijiste|recomendaste))?$', value)
+    if correction or other_request:
+        active = []
+        for books in reversed(lists):
+            if not books:
+                continue
+            if len(books) == 1:
+                active = books
+                continue
+            candidates = [book for book in books
+                          if not any(same_work(book, previous) for previous in active)]
+            if len(candidates) == 1:
+                return {**result, 'books': candidates, 'reason': 'correction_other'}
+            return {**result, 'ambiguous': True, 'reason': 'correction_other'}
+        return result
     ordinal = re.search(r'\b(?:el|la|del|de la|al|a la)\s+(primero|primer|primera|segundo|segunda|tercero|tercer|tercera|cuarto|cuarta|quinto|quinta)\b', value)
     if ordinal:
         index = {'primero': 0, 'primer': 0, 'primera': 0, 'segundo': 1, 'segunda': 1,

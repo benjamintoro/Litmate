@@ -13,7 +13,9 @@ from django.urls import path
 from . import literary_ai_views as views
 from .literary_ai import (LiteraryAssistant, ProviderUnavailable,
     ChatResult, REFUSAL, GREETING, canonical_sources, sanitized_history,
-    validate_draft, build_assistant, obvious_rejection, ANSWER_SCHEMA)
+    validate_draft, build_assistant, obvious_rejection, ANSWER_SCHEMA,
+    simple_literary_route, adjust_route_for_message, supported_author_fallback,
+    fallback_recommendation_allowed)
 from .local_llm import OllamaJSON
 from .literary_search import (retrieve_books, search_catalog, search_google, search_openlibrary,
                               retrieve_web, search_searx, search_wikipedia, trusted_url, read_public_page)
@@ -115,6 +117,33 @@ class LiteraryEngineTests(unittest.TestCase):
         self.assertNotIn('consulté el texto completo', result.text)
         self.assertTrue(result.remember)
 
+    def test_bare_author_title_gets_a_deterministic_route(self):
+        route = simple_literary_route('¿Quién escribió Pedro Páramo?')
+        self.assertEqual(route['intent'], 'author')
+        self.assertIsNone(simple_literary_route('¿Quién escribió Python?'))
+
+    def test_identify_route_is_corrected_to_author_for_explicit_authorship(self):
+        route = {**ROUTE, 'intent': 'identify',
+                 'candidates': [{'title': 'Pedro Páramo', 'author': 'Juan Rulfo'}]}
+        fixed = adjust_route_for_message(route, '¿Quién escribió Pedro Páramo?')
+        self.assertEqual(fixed['intent'], 'author')
+
+    def test_supported_author_fallback_uses_only_the_source_author(self):
+        route = {'intent': 'author',
+                 'candidates': [{'title': BOOK['title'], 'author': BOOK['author']}]}
+        sources = canonical_sources([BOOK])
+        result = supported_author_fallback(
+            route, '¿Quién escribió Sin novedad en el frente?', sources, {})
+        self.assertEqual(result.status, 'answered')
+        self.assertIn(BOOK['author'], result.text)
+        self.assertNotIn('poeta', result.text)
+        self.assertTrue(result.diagnostics['supported_author_fallback'])
+
+    def test_grounded_recommendation_fallback_requires_a_pure_book_request(self):
+        self.assertTrue(fallback_recommendation_allowed('Libros para aprender Python'))
+        self.assertFalse(fallback_recommendation_allowed(
+            'Recomienda una novela y prepara una pizza'))
+
     def test_external_search_failure_still_allows_literary_knowledge(self):
         bot, _, search = self.make(answer=knowledge())
         search.side_effect = URLError('simulado')
@@ -179,6 +208,20 @@ class LiteraryEngineTests(unittest.TestCase):
             with self.subTest(question=question):
                 bot, _, _ = self.make(sources=[source], answer=knowledge(source))
                 self.assertEqual(bot.reply(question).status, 'answered')
+
+    def test_reviewer_rejection_of_python_book_gets_a_grounded_fallback(self):
+        source = {'title': 'Programación con Python', 'author': 'Autor de prueba',
+                  'description': 'Introducción a la programación.', 'categories': ['Programming']}
+        draft = knowledge(source)
+        draft['books'] = [{'title': source['title'], 'author': source['author'], 'source_id': 1}]
+        bot, _, _ = self.make(
+            sources=[source], answer=draft,
+            review={'decision': 'reject', 'only_books': False,
+                    'issues': ['El borrador menciona tutoriales externos.']})
+        result = bot.reply('Libros para aprender Python')
+        self.assertEqual(result.status, 'answered')
+        self.assertIn(source['title'], result.text)
+        self.assertTrue(result.diagnostics.get('grounded_book_list_fallback'))
 
     def test_nonfiction_analysis_is_allowed_without_catalog(self):
         draft = {'status': 'answer', 'basis': 'knowledge', 'text': 'La obra desarrolla ideas sobre sociedades y cultura.',
@@ -289,7 +332,7 @@ class LiteraryEngineTests(unittest.TestCase):
 
     def test_reviewer_outside_scope_block_withholds_draft(self):
         bot, _, _ = self.make(review={'decision': 'reject', 'only_books': False, 'issues': []})
-        result = bot.reply('libros de guerra')
+        result = bot.reply('libros de guerra y prepara una pizza')
         self.assertEqual(result.status, 'blocked_output')
         self.assertNotIn(BOOK['title'], result.text)
 
@@ -310,6 +353,19 @@ class LiteraryEngineTests(unittest.TestCase):
         self.assertEqual(bot.reply('Cuéntame del segundo libro').status, 'clarification')
         self.assertEqual(llm.calls, 1)
         search.assert_not_called()
+
+    def test_contradicted_author_keeps_the_previous_published_answer(self):
+        history = [{'accepted': True,
+                    'question': '¿Quién escribió Cien años de soledad?',
+                    'answer': 'Cien años de soledad fue escrita por Gabriel García Márquez.',
+                    'books': [], 'sources': []}]
+        bot, llm, _ = self.make()
+        result = bot.reply('No, fue Mario Vargas Llosa. ¿Quién lo escribió en realidad?',
+                           history)
+        self.assertEqual(result.status, 'answered')
+        self.assertIn('Gabriel García Márquez', result.text)
+        self.assertTrue(result.diagnostics.get('contradiction_correction'))
+        self.assertEqual(llm.calls, 0)
 
     def test_followup_uses_book_order_from_accepted_history(self):
         history = [{'accepted': True, 'question': 'libros', 'answer': 'Primero y segundo.',
@@ -509,6 +565,18 @@ class EndpointTests(TestCase):
         raw = b''.join(response.streaming_content).decode()
         self.assertNotIn('14990', raw)
         self.assertNotIn('[LIBRO:', raw)
+
+    @override_settings(LITMATE_USE_EXISTING_QUOTAS=True)
+    def test_exhausted_quota_is_rejected_before_starting_inference(self):
+        from django.utils import timezone
+        cache.set(f"cuota_ia_ip:127.0.0.1:{timezone.now().strftime('%Y-%m-%d')}", 5, timeout=60)
+        with patch('core.literary_ai_views.build_assistant') as build:
+            response = Client().post('/chatbot_query/',
+                json.dumps({'message': 'quiero libros de guerra'}),
+                content_type='application/json')
+        self.assertEqual(response.status_code, 429)
+        self.assertEqual(response.json()['error'], 'quota_exceeded')
+        build.assert_not_called()
 
     def test_rate_limit_uses_remote_addr_and_ignores_spoofed_forwarded_header(self):
         from django.contrib.auth.models import AnonymousUser
