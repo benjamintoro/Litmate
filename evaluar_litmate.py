@@ -66,6 +66,8 @@ def summarize_turns(case, rows):
             'question_matches': row.get('question') == expected['text'],
             'expected': {key: value for key, value in expected.items() if key != 'text'},
             'status': row.get('status', 'missing'), 'seconds': row.get('seconds'),
+            'answer': row.get('answer', ''),
+            'answer_chars': len(row.get('answer') or ''),
             'observed_intent': route.get('intent'),
             'observed_topic': diagnostics.get('requested_subject'),
             'reported_coverage': diagnostics.get('coverage'),
