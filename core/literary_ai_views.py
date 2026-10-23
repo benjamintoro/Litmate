@@ -120,12 +120,21 @@ def rate_allowed(request):
 def remember(request, state, message, result, elapsed_ms, client, *, topic_context=None):
     topic_changed = remember_topic(state, message, topic_context)
     if not result.remember:
-        if topic_changed:
+        if result.status == 'clarification':
+            state['pending_clarification'] = {
+                'question': result.text[:500],
+                'original_query': message[:500],
+                'status': 'clarification'
+            }
+            request.session[HISTORY_KEY] = state
+            request.session.modified = True
+        elif topic_changed:
             # Guardar la petición permite continuar tras un fallo. No guardar el
             # borrador rechazado como respuesta ni convertirlo en evidencia.
             request.session[HISTORY_KEY] = state
             request.session.modified = True
         return
+    state.pop('pending_clarification', None)
     from .literary_identity import work_identity
     records = {source.get('id'): source for source in result.sources}
     remembered_books = []
@@ -334,6 +343,13 @@ def _compute_answer_impl(message, history, topic_context):
                 researched = None
             if researched is not None:
                 return researched, SimpleNamespace(usage={}, provider='verified-progressive-research', calls=0)
+            from .ai_narrative_answers import narrative_answer
+            try:
+                narrative = narrative_answer(message, history)
+            except (TimeoutError, OSError, ValueError):
+                narrative = None
+            if narrative is not None:
+                return narrative, SimpleNamespace(usage={}, provider='verified-narrative-engine', calls=0)
             from .ai_quick_answers import isbn_lookup_answer, quick_answer
             try:
                 with request_budget(time.monotonic() + budget_timeout(5)):

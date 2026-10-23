@@ -195,16 +195,28 @@ def research_answer(message, history):
             or re.search(r'[;\n]|[.!?]\s+\S', message)):
         return None
     reference = resolve_followup_context(message, history)
-    if reference['ambiguous']:
-        return None
     author = re.fullmatch(r'quien (?:escribio|es (?:el autor|la autora))(?: de)?\s+(.+)', value)
     characters = re.search(r'\b(?:personajes?|protagonistas?|personaje principal)\b', value)
-    summary = re.fullmatch(r'(?:de que trata|sinopsis de|resumen de|resume)\s+(.+)', value)
+    summary = re.fullmatch(
+        r'(?:(?:necesito|quiero|dame|dime|cuentame|explicame)\s+)?'
+        r'(?:sobre\s+)?(?:(?:el|la|un|una)\s+)?'
+        r'(?:trama|argumento|sinopsis|resumen|contenido)\s+(?:de|del)\s+(.+)|'
+        r'(?:de que trata|cuentame de que trata|cuentame sobre|hablame de|de que va|'
+        r'que cuenta|que explica|que pasa en|que sucede en|resume|resumen de|sinopsis de)\s+(.+)|'
+        r'(?:cual es\s+)?(?:el\s+)?(?:tema principal|conflicto central)\s+(?:de|del)\s+(.+)',
+        value
+    )
+    if reference['ambiguous'] and not (author or summary):
+        return None
     if reference['books'] and (author or characters or summary):
         book = reference['books'][0]
         title, query = book['title'], book['title'] + ' ' + book['author']
-    elif author or summary:
-        title = re.sub(r'^(?:el libro|la novela|la obra)\s+', '', (author or summary).group(1))
+    elif author:
+        title = re.sub(r'^(?:el libro|la novela|la obra)\s+', '', author.group(1))
+        query = title
+    elif summary:
+        extracted = next(g for g in summary.groups() if g)
+        title = re.sub(r'^(?:el libro|la novela|la obra)\s+', '', extracted)
         query = title
     elif characters:
         match = re.search(r'\b(?:personajes?|protagonistas?|personaje principal)'

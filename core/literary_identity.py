@@ -198,6 +198,21 @@ def bind_source(source, book):
             'work_author': identity['author'], 'work_binding_verified': True}
 
 
+_TITLE_PREFIX_FRAMING = {
+    'cuentame', 'cuenta', 'hablame', 'habla', 'dime', 'di', 'explicame', 'explica',
+    'resume', 'resumen', 'describe', 'analiza', 'compara', 'recomienda', 'quiero',
+    'necesito', 'sabes', 'conoces', 'opinas', 'parece', 'de', 'del', 'la', 'el',
+    'los', 'las', 'un', 'una', 'unos', 'unas', 'sobre', 'acerca', 'en', 'para',
+    'por', 'con', 'y', 'e', 'o', 'u', 'a', 'al', 'se', 'es', 'era', 'fue', 'son',
+    'eran', 'fueron', 'que', 'quien', 'quienes', 'cual', 'cuales', 'como', 'cuando',
+    'donde', 'trata', 'va', 'pasa', 'sucede', 'ocurre', 'escribio', 'autor', 'autora',
+    'libro', 'novela', 'obra', 'texto', 'cuento', 'ensayo', 'trama', 'argumento',
+    'sinopsis', 'personajes', 'protagonista', 'protagonistas', 'final', 'desenlace',
+    'favor', 'porfavor', 'do', 'da', 'dos', 'das', 'no', 'na', 'nos', 'nas', 'em',
+    'um', 'uma', 'the', 'of', 'in', 'on', 'about', 'by', 'and', 'a', 'an', 'book', 'novel'
+}
+
+
 def _title_mention(message, title, author, known_titles):
     """Un prefijo de saga no identifica por sí solo el volumen mencionado.
 
@@ -205,7 +220,13 @@ def _title_mention(message, title, author, known_titles):
     la pregunta. Así «Papelucho y sus personajes» conserva la obra, mientras
     «Papelucho y el marciano» no hereda automáticamente «Papelucho».
     """
+    known_words = {w for t in known_titles for w in re.findall(r'\w+', t)}
     for match in re.finditer(r'(?<!\w)' + re.escape(title) + r'(?!\w)', message):
+        prefix = message[:match.start()].strip()
+        if prefix:
+            prefix_tokens = re.findall(r'\w+', prefix)
+            if not all(token in _TITLE_PREFIX_FRAMING or token in known_words for token in prefix_tokens):
+                continue
         suffix = message[match.end():].strip()
         if not suffix:
             return True
@@ -320,7 +341,12 @@ def resolve_followup_context(message, history):
                         r'anterior|ultimo|ultima|el ultimo|la ultima|el mismo|la misma)\b', reference):
             return result
     # Una obra nueva explícita prevalece sobre el «y» de continuación.
-    subject = re.search(r'\b(?:personajes? de|protagonistas? de|sucede en|pasa en|hablame de|sobre el libro)\s+(.+)', value)
+    subject = re.search(
+        r'\b(?:personajes? de|protagonistas? de|sucede en|pasa en|hablame de|cuentame de|'
+        r'cuentame sobre(?: la trama de| el argumento de| la sinopsis de| el libro| la obra)?|'
+        r'trama de|argumento de|sinopsis de|resumen de|de que trata(?: el libro| la obra)?|'
+        r'de que va(?: el libro| la obra)?|que explica(?: el libro| la obra)?|'
+        r'sobre el libro|sobre la obra)\s+(.+)', value)
     if subject and subject.group(1).strip() not in {'el', 'ella', 'ese', 'esa', 'este', 'esta', 'ese libro', 'este libro'}:
         return result
     # El posesivo de «no su título» pertenece al libro que intenta recordar,

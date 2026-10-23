@@ -532,11 +532,11 @@ def _explicit_work_context(message, value):
     if re.search(r'[«“"].{2,180}[»”"]', message):
         return True
     if re.search(r'\b(?:libro|novela|obra|cuento|poema|ensayo|c[oó]mic|historieta|'
-                 r'novela gr[aá]fica|teatro)\b', value):
+                 r'novela gr[aá]fica|teatro|trama|argumento|sinopsis)\b', value):
         return True
     return bool(re.search(
-        r'\bde\s+[A-ZÁÉÍÓÚÜÑ][\wÁÉÍÓÚÜÑáéíóúüñ.-]+'
-        r'(?:\s+[A-ZÁÉÍÓÚÜÑ][\wÁÉÍÓÚÜÑáéíóúüñ.-]+){1,3}\s*[?.!]*$', message))
+        r'\b(?:de|del|trata|escribi[oó]|sobre)\s+[A-ZÁÉÍÓÚÜÑÃÕÊÇ][\wÁÉÍÓÚÜÑÃÕÊÇáéíóúüñãõêç.-]*'
+        r'(?:\s+[\wÁÉÍÓÚÜÑÃÕÊÇáéíóúüñãõêç.-]+){0,8}\s*[?.!]*$', message))
 
 
 def compound_literary_request(value):
@@ -580,8 +580,15 @@ def simple_literary_route(message):
         return {'decision': 'allow', 'intent': 'recommend',
                 'queries': [clean_text(message, 240)], 'candidates': [],
                 'followup': False, 'clarification': ''}
-    summary = re.match(r'^(?:de que trata|sinopsis de|resumen de|resume|'
-                       r'cuentame de que trata|hablame de)\s+(.+)$', value)
+    summary = re.match(
+        r'^(?:(?:necesito|quiero|dame|dime|cuentame|explicame)\s+)?'
+        r'(?:sobre\s+)?(?:(?:el|la|un|una)\s+)?'
+        r'(?:trama|argumento|sinopsis|resumen|contenido)\s+(?:de|del)\s+(.+)$|'
+        r'^(?:de que trata|cuentame de que trata|cuentame sobre|hablame de|de que va|'
+        r'que cuenta|que explica|que pasa en|que sucede en|resume|resumen de|sinopsis de)\s+(.+)$|'
+        r'^(?:cual es\s+)?(?:el\s+)?(?:tema principal|conflicto central)\s+(?:de|del)\s+(.+)$',
+        value
+    )
     characters = re.search(r'\b(?:personajes?|protagonistas?|personaje principal)\b', value)
     if summary or characters:
         if characters:
@@ -592,7 +599,7 @@ def simple_literary_route(message):
                 return None
             title = detail.group(1)
         else:
-            title = summary.group(1)
+            title = next(g for g in summary.groups() if g)
         title = re.sub(r'^(?:el|la)\s+(?:libro|novela|obra)\s+', '', title).strip(' ¿?¡!.,')
         if (len(title) < 2 or len(title.split()) > 12
                 or re.fullmatch(r'(?:el|la|los|las|un|una)?\s*(?:libro|novela|obra|cuento|'
@@ -1475,9 +1482,6 @@ class LiteraryAssistant:
                 route_data['verified_current_books'] = verified['books']
                 if followup['books'] and not verified['books']:
                     route_data['active_work'] = followup['books'][0]
-            if self.research_enabled and followup['ambiguous'] and not verified['books']:
-                return ChatResult('¿De cuál de las obras que comentamos quieres conocer ese detalle?',
-                                  'clarification', diagnostics={**diagnostics, 'context_error': 'ambiguous_work'})
             route = None
             # La clasificación determinista se mide aparte del routing del
             # modelo. Así sabemos si la ruta rápida realmente ahorra tiempo y
@@ -1488,6 +1492,10 @@ class LiteraryAssistant:
                     if route is not None:
                         route = validate_route(route)
                         diagnostics['simple_literary_route'] = True
+            if route is None and self.research_enabled and followup['ambiguous'] and not verified['books']:
+                return ChatResult('¿De cuál de las obras que comentamos quieres conocer ese detalle?',
+                                  'clarification', diagnostics={**diagnostics, 'context_error': 'ambiguous_work'})
+            with measure_stage('intent'):
                 if (route is None and self.research_enabled and self.quality_checks
                         and not verified['books']):
                     from .ai_literal_followup import literal_followup_route
@@ -1578,6 +1586,15 @@ class LiteraryAssistant:
                 # No dependemos del recuerdo del modelo para resolver el ordinal.
                 route = {**route, 'candidates': selected_books,
                          'queries': [b['title'] + ' ' + b['author'] for b in selected_books]}
+            if (self.research_enabled and route['intent'] in {'summary', 'analysis'}
+                    and not has_excerpt(message) and not requires_exact_text(message)):
+                from .ai_narrative_answers import narrative_answer
+                try:
+                    narrative_res = narrative_answer(message, history, config=self.config)
+                    if narrative_res is not None and narrative_res.status == 'answered':
+                        return narrative_res
+                except Exception:
+                    pass
             plan = None
             fast_recommendation = (self.fast_recommendations and route['intent'] == 'recommend'
                 and not requires_exact_text(message) and not has_excerpt(message)

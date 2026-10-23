@@ -147,6 +147,7 @@ def _bibliographic_query(work, provider):
     if any(public_query(part) != part or '\n' in part or '"' in part for part in parts):
         raise ValueError('invalid_identity')
     query = (f'title:"{parts[0]}" author:"{parts[1]}"' if provider == 'openlibrary'
+             else f'"{parts[0]}" {parts[1]}' if provider == 'wikipedia'
              else parts[0])
     if len(query) > 240:
         raise ValueError('invalid_identity')
@@ -161,6 +162,9 @@ def _fetch_public_metadata(work, provider):
     if provider == 'wikidata':
         from .literary_wikidata import search_wikidata
         return search_wikidata(query)
+    if provider == 'wikipedia':
+        from .literary_search import search_wikipedia
+        return search_wikipedia(query)
     raise ValueError('not_permitted')
 
 
