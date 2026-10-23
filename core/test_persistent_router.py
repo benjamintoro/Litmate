@@ -205,6 +205,14 @@ class PersistentRouterTests(SimpleTestCase):
         pages = _work_web_pages([novel, musical], 'Los miserables')
         self.assertEqual([page['title'] for page in pages], ['Los miserables'])
 
+    def test_disambiguation_page_is_not_used_as_the_novel(self):
+        page = {'kind': 'web', 'title': 'El túnel', 'author': 'Fuente web',
+                'description': 'El túnel (novela), novela de Ernesto Sabato.',
+                'identity_text': 'El túnel puede referirse a: El túnel (documental), '
+                                 'El túnel (novela) y El túnel (película de 1952).',
+                'url': 'https://es.wikipedia.org/wiki/El_t%C3%BAnel'}
+        self.assertEqual(_work_web_pages([page], 'El túnel'), [])
+
     def test_protagonist_answer_uses_only_a_literal_role_from_the_same_work(self):
         result = character_answer('¿Quién es el protagonista de Nana?', [],
             lambda query: [dict(NANA_BOOK), dict(NANA_PAGE)],

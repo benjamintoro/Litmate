@@ -50,10 +50,13 @@ velocidad ni publicar datos inventados.
 
 ```text
 .\venv\Scripts\python.exe -B verificar_proyecto.py core
--> 1296 pruebas OK en 16.382 s
+-> 1297 pruebas OK en 16.406 s
+
+.\venv\Scripts\python.exe -B verificar_proyecto.py core.test_persistent_router
+-> 18 pruebas OK en 0.596 s
 
 .\venv\Scripts\python.exe -B verificar_proyecto.py core.test_persistent_router core.test_web_search core.test_ai_answer_cache
--> 59 pruebas OK en 0.941 s
+-> 59 pruebas OK en 0.941 s (antes del filtro de desambiguación)
 ```
 
 También se ejecutaron sondas HTTP reales aisladas (sin datos de usuario) y
@@ -77,16 +80,52 @@ Turnos v7: autoría de *Orgullo y prejuicio* 2,680 s; personajes de *Nana*
 miserables* 7,669 s. `source_files_changed_during_run=false`; el benchmark no
 certifica verdad factual de forma independiente.
 
+### Benchmark ampliado de 8 preguntas y revisión de cobertura
+
+Matriz: `reportes/arquitectura_20261023/matriz_benchmark_8.json`.
+Ejecución: `reportes/arquitectura_20261023/despues_http_v8_matriz8.json`.
+Ocho preguntas simples con obra explícita, `--repeat 2`, caché de respuestas
+vaciada en cada turno (la caché de recuperación sí se conserva). 16 turnos,
+16 `answered`, 12 por debajo de 5 s, todos por debajo de 10 s y de 30 s;
+p50 0,968 s, media 2,323 s, p95 y máximo 7,356 s. La segunda repetición de una
+misma pregunta suele ser más rápida por la caché de recuperación; no es una
+medida independiente de latencia externa en frío.
+
+| Caso | Respuesta publicada | Revisión |
+|---|---|---|
+| Autoría de *Cien años de soledad* | Gabriel García Márquez | Correcta |
+| Autoría de *Rayuela* | Julio Cortázar | Correcta |
+| Sinopsis de *La casa de los espíritus* | Primera novela de Isabel Allende; cuatro generaciones | Correcta, pasaje breve |
+| Sinopsis de *Pedro Páramo* | Novela situada en Comala | Correcta, ficha muy breve |
+| Protagonista de *El túnel* | Primera pasada: página de desambiguación y página de la novela; segunda: sólo contexto | Cobertura incompleta; no hubo invención |
+| Protagonista de *Madame Bovary* | Emma Bovary | Correcta |
+| Personajes de *La Regenta* | Pasajes sobre la obra, sin nombres de personajes | No responde la lista; referencia parcial |
+| Personajes de *Fortunata y Jacinta* | Juanito Santa Cruz y contexto de la novela | Parcial; no es una lista completa |
+
+La revisión confirma que «answered» no equivale a respuesta exhaustiva. Las
+respuestas parciales se presentan como pasajes atribuidos y no como fichas
+verificadas. No se detectaron citas inventadas ni mezcla de obras homónimas en
+esta matriz; *La Regenta* y parte de *El túnel* no certifican la lista pedida.
+
+Se añadió un filtro para no usar páginas de desambiguación aunque su título
+coincida con la obra y su pasaje recuperado hable de la novela. La sonda
+posterior `probe_tunel_v9.json` (2 turnos, caché de respuestas vaciada) nombró
+a Juan Pablo Castel en ambas respuestas, en 3,820 s y 1,888 s, sin la página
+«El túnel puede referirse a». La prueba unitaria nueva está en
+`core.test_persistent_router`.
+
 ### Limitaciones actuales
 
-1. La lista de personajes de *Nana* devuelve un pasaje parcial sobre la novela
-   de Zola, no una lista completa; evita el manga, pero no sustituye una
-   lectura de la sección de personajes.
+1. Las listas de personajes siguen siendo parciales: *Nana* devuelve un pasaje
+   sobre la novela de Zola y *La Regenta* puede devolver contexto sin nombres.
+   Evitan homónimos y adaptaciones, pero no sustituyen una lectura de la
+   sección de personajes.
 2. Wikipedia puede responder `rate_limited`; en ese caso la ruta rápida puede
    caer a la búsqueda web acotada o al pipeline completo. La latencia externa
    sigue siendo variable.
-3. El benchmark cubre cuatro preguntas y una sola repetición; no demuestra
-   cobertura general ni exactitud factual. Falta una revisión independiente.
+3. El benchmark ampliado cubre ocho preguntas y dos repeticiones; no demuestra
+   cobertura general ni exactitud factual. La revisión fue interna, no
+   independiente.
 4. La caché y la memoria usan SQLite temporal en las pruebas; no se midió
    MySQL remoto ni el coste del middleware de sesión.
 5. Las referencias parciales se presentan como pasajes atribuidos, no como
@@ -94,12 +133,12 @@ certifica verdad factual de forma independiente.
 
 ### Próximos pasos inmediatos
 
-1. Repetir la matriz con más preguntas y `--repeat 2` para medir varianza
-   externa y aciertos, no sólo latencia.
+1. Añadir a la matriz consultas compuestas, de cita exacta y de materia general
+   para comprobar que no entran en las rutas rápidas, y repetir con más obras.
 2. Mejorar la extracción de listas de personajes cuando la página correcta no
    es la primera de Wikipedia, sin relajar la vinculación por autor.
-3. Revisar factualmente las respuestas publicadas y registrar las que no
-   puedan certificarse.
+3. Completar una revisión factual independiente de las respuestas publicadas y
+   registrar las que no puedan certificarse.
 4. Medir sesión/historial en MySQL aislado antes de cambiar la arquitectura.
 
 ## Intervención anterior — búsqueda amplia, no limitada a la captura

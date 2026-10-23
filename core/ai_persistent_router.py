@@ -95,6 +95,13 @@ def _work_web_pages(sources, title):
                 or base_title.startswith(wanted + ' -')):
             continue
         text = normalized(str(source.get('title', '')) + ' ' + str(source.get('description', '')))
+        identity = normalized(str(source.get('identity_text', '')))
+        # Una página de desambiguación puede titularse igual que la obra y
+        # ofrecer un pasaje centrado en la novela; su introducción delata que
+        # no es el artículo de la obra. No se usa como si fuera una ficha.
+        if re.search(r'\b(?:puede(?:n)? referirse a|may refer to|can refer to|'
+                     r'desambiguacion)\b', identity):
+            continue
         page_words = set(re.findall(r'\w{3,}', text))
         if wanted_words and not (wanted_words & page_words):
             continue
