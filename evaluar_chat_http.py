@@ -112,6 +112,10 @@ def main(argv=None):
             LITMATE_AI_STREAM_DB=root / 'stream.sqlite3',
             LITMATE_AI_ANSWER_CACHE_DB=root / 'answers.sqlite3',
             LITMATE_LITERARY_MEMORY_DB=root / 'memory.sqlite3',
+            LITMATE_LITERARY_MEMORY_RAG_DB=root / 'memory-rag.sqlite3',
+            LITMATE_KNOWLEDGE_DB=root / 'knowledge.sqlite3',
+            LITMATE_KNOWLEDGE_RAG_DB=root / 'knowledge-rag.sqlite3',
+            LITMATE_RAG_DB=root / 'rag.sqlite3',
             LITMATE_USE_EXISTING_QUOTAS=False, LITMATE_AI_REQUESTS_PER_MINUTE=1000,
             LITMATE_USE_GOOGLE_BOOKS_API=False, GOOGLE_BOOKS_API_KEY='',
             LITMATE_LOCAL_MODEL=args.model, LITMATE_LOCAL_GUARD_MODEL=args.model,
@@ -149,7 +153,9 @@ def main(argv=None):
                       'mode': 'real_http_sse_isolated_database', 'model': args.model,
                       'web_enabled': not args.no_web, 'chat_budget_seconds': args.chat_budget,
                       'response_budget_seconds': args.response_budget,
-                      'progressive': args.progressive, 'repeat': args.repeat,
+                       'progressive': args.progressive, 'repeat': args.repeat,
+                       'knowledge_setup': 'empty_auxiliary_databases_with_bundled_catalogue',
+                       'resource_scope': 'python_server_process_only_not_ollama_or_gpu',
                       'cache_controls': {'empty_answers_each_turn': args.empty_answer_cache_each_turn,
                                          'empty_retrieval_each_turn': args.empty_retrieval_cache_each_turn},
                       'factual_review': 'not_independently_certified', 'turns': []}
@@ -174,6 +180,7 @@ def main(argv=None):
                         request = Request(origin + '/chatbot_query/',
                             data=json.dumps({'message': message, 'progress': args.progressive}).encode('utf-8'),
                             headers={'Content-Type': 'application/json', 'X-CSRFToken': csrf}, method='POST')
+                        cpu_start = time.process_time()
                         start, first_useful, first_phase, done, text = time.monotonic(), None, None, False, ''
                         phases, diagnostics = [], {}
                         ready = None
@@ -216,6 +223,11 @@ def main(argv=None):
                         except Exception as exc:
                             http_status, status, calls = None, type(exc).__name__, None
                         elapsed = time.monotonic() - start
+                        progress = (diagnostics.get('progress_metrics')
+                                    if isinstance(diagnostics, dict) else None)
+                        work_ms = progress.get('elapsed_ms') if isinstance(progress, dict) else None
+                        delivery_ms = (round(max(0., elapsed * 1000 - work_ms), 3)
+                                       if type(work_ms) in {int, float} and work_ms >= 0 else None)
                         row = {'case': case['id'], 'turn': index, 'question': message,
                             'http_status': http_status, 'status': status, 'completed_sse': done,
                             'seconds': round(elapsed, 3),
@@ -224,7 +236,12 @@ def main(argv=None):
                                 if first_useful is not None and status == 'answered' else None,
                             'first_progress_seconds': round(first_phase, 3) if first_phase is not None else None,
                             'progress_phases': phases, 'diagnostics': diagnostics,
-                            'resources': memory_snapshot(), 'category': case.get('category', 'unspecified'),
+                            'stage_totals_ms': (progress.get('stage_totals_ms', {})
+                                                if isinstance(progress, dict) else {}),
+                            'delivery_overhead_ms': delivery_ms,
+                            'resources': {**memory_snapshot(),
+                                          'cpu_seconds': round(time.process_time() - cpu_start, 6)},
+                            'category': case.get('category', 'unspecified'),
                             'under_response_budget': elapsed <= args.response_budget,
                             'model_calls': int(calls) if calls is not None else None,
                             'answer': text, 'source_urls': re.findall(r'https://\S+', text)}

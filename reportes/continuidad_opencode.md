@@ -10,7 +10,77 @@ persistente y rutas rápidas verificadas; punto de control local de esta
 intervención), `33d1d47` (filtro de páginas de desambiguación y benchmark
 ampliado) y `b08e841` (comparaciones reservadas al pipeline completo).
 
-## Intervención vigente — arquitectura persistente y rutas rápidas verificadas
+## Unidad vigente — matriz integral e instrumentación (23 de octubre de 2026)
+
+Se retoma el trabajo existente, sin sustituir Ollama, reescribir la arquitectura,
+alterar el diseño, instalar paquetes ni modificar `.env` o datos personales.
+
+### Estado comprobado
+
+- Existen `literary_memory.py` (fuentes/identidades/procedencia/cola),
+  `literary_memory_rag.py` + `local_rag.py` (FTS5/BM25 y embeddings opcionales),
+  `literary_learning.py` (priorización agregada, sin entrenamiento de pesos),
+  `ai_persistent_router.py`, `ai_answer_cache.py` y trabajos SSE privados.
+- Existen `core/literary_quality.py`, `validate_audit` y `diagnosticar_ia`.
+  Los validadores y límites de afirmaciones se conservan.
+- Las tareas automáticas ya disponibles actualizan identidades conocidas en
+  lotes limitados; no constituyen todavía descubrimiento autónomo general de
+  obras nuevas ni certificación de todas las relaciones literarias solicitadas.
+- Modelos instalados leídos con `ollama list`: Qwen 3.5 9B Q4, variante local
+  sólo texto de 9B, Qwen 3.5 4B, Qwen 3 8B y EmbeddingGemma.
+  GPU leída: RTX 4060, 8188 MiB. No se cambió el modelo de la aplicación.
+
+### Cambios de esta unidad
+
+- Tiempos explícitos de clasificación/plan determinista (`intent`), extracción
+  de páginas (`extraction`) y recuperación semántica (`semantic_retrieval`).
+- `evaluar_chat_http.py` registra etapas, sobrecarga entre trabajo y entrega,
+  RSS/peak y CPU del proceso Python. No mide memoria/CPU de Ollama ni GPU.
+  Todas sus bases auxiliares son temporales; sólo conserva el catálogo de
+  arranque incluido normalmente en la aplicación, no respuestas preparadas.
+- Matriz reproducible `arquitectura_20261023/matriz_integral_20261023.json`:
+  13 casos / 16 turnos, incluyendo los ejemplos solicitados, memoria,
+  recomendaciones, identificación por escena, relación, discrepancia de fecha,
+  citas y materia general. La discrepancia de fechas es una alegación del
+  lector; no garantiza que los proveedores reales devuelvan fuentes opuestas.
+- `resumir_benchmark_ia.py` agrega categorías/rutas, percentiles, etapas,
+  llamadas conocidas/desconocidas, caché y recursos. Los tiempos de etapas son
+  inclusivos y pueden solaparse; sumarlos no equivale a latencia de pared.
+- Se retiró instrumentación de depuración temporal de las pruebas. Los casos
+  de conversación con proveedor simulado fallido deshabilitan la web real.
+  Las pruebas SSE deshabilitan la caché ajena al componente simulado y cierran
+  el stream igual que el cliente de pruebas de Django, sin cerrar la conexión
+  que contiene la transacción de `TestCase`.
+
+### Comprobaciones ejecutadas
+
+```text
+.\venv\Scripts\python.exe -B verificar_proyecto.py core.test_ai_progress_stream core.test_literary_conversation core.test_hybrid_ai core.test_simple_factual_context
+-> 99 pruebas OK en 2.241 s
+
+.\venv\Scripts\python.exe -B verificar_proyecto.py core
+-> 1302 pruebas OK en 16.892 s
+```
+
+El ejecutor configura SQLite y todas las tablas/almacenes en un entorno temporal,
+sin migrar ni conectarse a la base del proyecto. La ejecución anterior mediante
+`manage.py test core --keepdb` tuvo 5 fallos y 8 errores; no se presenta como
+verde. El respaldo web real explica respuestas inesperadas en los mocks y el
+cierre manual de SSE explica la transacción rota. MySQL no se ha vuelto a medir.
+
+### En ejecución / siguiente paso
+
+1. Matriz real con `--progressive`, salida `integral_progressive_v1.json`.
+2. Comparación de caché normal frente a `--empty-answer-cache-each-turn`.
+   Una categoría llamada caché no demuestra un acierto: se comprobará la señal
+   real `exact_answer_cache_hit` y se documentarán los fallos de reutilización.
+3. Analizar latencia y cobertura factual antes de elegir la siguiente mejora.
+   `answered` no significa respuesta completa ni certificación independiente.
+4. Aún pendiente: streaming real de tokens (Ollama usa `stream=False`),
+   instrumentación HTTP que conserve memoria conversacional/finalización,
+   cobertura completa de personajes/comparaciones y sesión MySQL aislada.
+
+## Intervención anterior — arquitectura persistente y rutas rápidas verificadas
 
 Objetivo: consultas literarias comunes en 1–5 s (caché/local), 3–10 s con
 índice y 10–30 s con investigación externa, sin cambiar verdad factual por

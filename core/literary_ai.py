@@ -12,6 +12,7 @@ from datetime import datetime, timezone
 from dataclasses import dataclass, field
 from .ai_http import read_json_url
 from .ai_privacy import excerpt_marker, user_excerpt
+from .ai_progress import measure_stage
 
 logger = logging.getLogger('litmate')
 MAX_MESSAGE = 6000
@@ -1478,17 +1479,22 @@ class LiteraryAssistant:
                 return ChatResult('¿De cuál de las obras que comentamos quieres conocer ese detalle?',
                                   'clarification', diagnostics={**diagnostics, 'context_error': 'ambiguous_work'})
             route = None
-            if self.research_enabled and not verified['books']:
-                route = simple_literary_route(message)
-                if route is not None:
-                    route = validate_route(route)
-                    diagnostics['simple_literary_route'] = True
-            if route is None and self.research_enabled and self.quality_checks and not verified['books']:
-                from .ai_literal_followup import literal_followup_route
-                route = literal_followup_route(message, followup, history)
-                if route is not None:
-                    route = validate_route(route)
-                    diagnostics['literal_followup_route'] = True
+            # La clasificación determinista se mide aparte del routing del
+            # modelo. Así sabemos si la ruta rápida realmente ahorra tiempo y
+            # no atribuimos su coste a la generación o a la auditoría.
+            with measure_stage('intent'):
+                if self.research_enabled and not verified['books']:
+                    route = simple_literary_route(message)
+                    if route is not None:
+                        route = validate_route(route)
+                        diagnostics['simple_literary_route'] = True
+                if (route is None and self.research_enabled and self.quality_checks
+                        and not verified['books']):
+                    from .ai_literal_followup import literal_followup_route
+                    route = literal_followup_route(message, followup, history)
+                    if route is not None:
+                        route = validate_route(route)
+                        diagnostics['literal_followup_route'] = True
             if route is None:
                 try:
                     route = validate_route(self.llm('route', ROUTER_PROMPT, route_data, self.guard_model))
@@ -1591,8 +1597,9 @@ class LiteraryAssistant:
                         'needs_fresh_sources': False, 'spoilers_requested': False}
                 diagnostics.update(question_count=1, quality_checks=True, grounded_recommendation=True)
             elif self.quality_checks and route['intent'] != 'conversation' and not fast_recommendation:
-                plan = simple_research_plan(message, route['intent'],
-                    followup=route['followup'], selected_books=selected_books)
+                with measure_stage('intent'):
+                    plan = simple_research_plan(message, route['intent'],
+                        followup=route['followup'], selected_books=selected_books)
                 if plan is not None:
                     plan = validate_plan(plan)
                     diagnostics['literal_question_plan'] = True

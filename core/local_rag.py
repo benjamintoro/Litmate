@@ -10,6 +10,7 @@ import tempfile
 from contextlib import closing
 from functools import lru_cache
 from pathlib import Path
+from .ai_progress import measure_stage
 from .literary_ai import clean_text, normalized
 
 logger = logging.getLogger('litmate')
@@ -288,27 +289,28 @@ def retrieve_fragments(query, database, maximum=4, *, embedder=None,
         metadata = _metadata(db)
         if embedder is not None and metadata.get('version') == 'hybrid-v2' and not page:
             try:
-                import numpy as np
-                if embedder.identity() != (metadata.get('model'), metadata.get('digest')):
-                    raise ValueError('El modelo de embeddings cambió: vuelve a indexar')
-                _, ids, matrix = _vector_matrix(str(database), revision.st_mtime_ns, revision.st_size)
-                current = database.stat()
-                if (current.st_mtime_ns, current.st_size) != (revision.st_mtime_ns, revision.st_size):
-                    raise ValueError('El índice cambió durante la consulta')
-                vector = np.asarray(embedder.embed([query], query=True)[0], dtype=np.float32)
-                if vector.shape != (matrix.shape[1],):
-                    raise ValueError('Dimensión de consulta inválida')
-                similarities = matrix @ vector
-                eligible = np.isfinite(similarities) & (similarities >= minimum_similarity)
-                if conditions:
-                    eligible_ids = [row[0] for row in db.execute('SELECT rowid FROM chunks WHERE '
-                                    + ' AND '.join(conditions), params)]
-                    eligible &= np.isin(ids, eligible_ids)
-                indices = np.flatnonzero(eligible)
-                best = indices[np.argsort(similarities[indices], kind='stable')[::-1][:32]]
-                for rank, index in enumerate(best, 1):
-                    rowid = int(ids[index])
-                    ranking[rowid] = ranking.get(rowid, 0) + 1 / (60 + rank)
+                with measure_stage('semantic_retrieval'):
+                    import numpy as np
+                    if embedder.identity() != (metadata.get('model'), metadata.get('digest')):
+                        raise ValueError('El modelo de embeddings cambió: vuelve a indexar')
+                    _, ids, matrix = _vector_matrix(str(database), revision.st_mtime_ns, revision.st_size)
+                    current = database.stat()
+                    if (current.st_mtime_ns, current.st_size) != (revision.st_mtime_ns, revision.st_size):
+                        raise ValueError('El índice cambió durante la consulta')
+                    vector = np.asarray(embedder.embed([query], query=True)[0], dtype=np.float32)
+                    if vector.shape != (matrix.shape[1],):
+                        raise ValueError('Dimensión de consulta inválida')
+                    similarities = matrix @ vector
+                    eligible = np.isfinite(similarities) & (similarities >= minimum_similarity)
+                    if conditions:
+                        eligible_ids = [row[0] for row in db.execute('SELECT rowid FROM chunks WHERE '
+                                        + ' AND '.join(conditions), params)]
+                        eligible &= np.isin(ids, eligible_ids)
+                    indices = np.flatnonzero(eligible)
+                    best = indices[np.argsort(similarities[indices], kind='stable')[::-1][:32]]
+                    for rank, index in enumerate(best, 1):
+                        rowid = int(ids[index])
+                        ranking[rowid] = ranking.get(rowid, 0) + 1 / (60 + rank)
             except Exception as exc:
                 logger.warning('IA: búsqueda semántica no disponible (%s); se usa FTS', type(exc).__name__)
         if page and not ranking:

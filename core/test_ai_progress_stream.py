@@ -11,6 +11,8 @@ from unittest.mock import Mock, patch
 
 from django.conf import settings
 from django.core.cache import cache
+from django.core.signals import request_finished
+from django.db import close_old_connections
 from django.test import Client, SimpleTestCase, TestCase, override_settings
 
 from .ai_budget import BudgetExpired, check_budget
@@ -49,6 +51,18 @@ class ProgressMetricsTests(SimpleTestCase):
         self.assertGreaterEqual(metrics['stage_totals_ms']['audit'], 0)
         self.assertIsNotNone(metrics['first_phase_emitted_ms'])
         self.assertEqual(snapshot_metrics(), {})
+
+    def test_public_page_extraction_is_measured_as_its_own_stage(self):
+        from .literary_search import read_public_page
+        with progress_scope():
+            with patch('core.literary_web.extract_public_page',
+                       return_value={'status': 'ok', 'description': 'pasaje público'}):
+                self.assertEqual(read_public_page(
+                    'https://www.cervantesvirtual.com/obra/', 'Nana'), 'pasaje público')
+            metrics = snapshot_metrics()
+        self.assertIn('extraction', metrics['stage_totals_ms'])
+        self.assertTrue(any(row['stage'] == 'extraction' and row['status'] == 'ok'
+                            for row in metrics['stage_timings']))
 
     def test_failed_stage_and_callback_do_not_hide_original_failure(self):
         with progress_scope(Mock(side_effect=ValueError('instrumentation'))):
@@ -203,7 +217,8 @@ class StreamJobTests(SimpleTestCase):
             create_job('owner', 'newer', {})
 
 
-@override_settings(LITMATE_USE_EXISTING_QUOTAS=False, LITMATE_AI_LOCK_BACKEND='cache')
+@override_settings(LITMATE_USE_EXISTING_QUOTAS=False, LITMATE_AI_LOCK_BACKEND='cache',
+                   LITMATE_AI_QUICK_ANSWERS=False)
 class ProgressiveEndpointTests(TestCase):
     def setUp(self):
         cache.clear()
@@ -236,6 +251,15 @@ class ProgressiveEndpointTests(TestCase):
         return (client or self.client).post('/chatbot_finalize/', json.dumps({'ready': token}),
                                           content_type='application/json')
 
+    def close_stream(self, response):
+        # Igual que closing_iterator_wrapper de Django: el cierre manual no
+        # debe cerrar la conexión que contiene la transacción de TestCase.
+        request_finished.disconnect(close_old_connections)
+        try:
+            response.close()
+        finally:
+            request_finished.connect(close_old_connections)
+
     def test_first_real_phase_arrives_before_work_finishes_and_history_waits_for_finalization(self):
         started, stop, finished = threading.Event(), threading.Event(), threading.Event()
         def blocked(message, history, topic):
@@ -263,7 +287,7 @@ class ProgressiveEndpointTests(TestCase):
             self.assertNotIn('secret_prompt', final.json()['diagnostics'])
         finally:
             stop.set()
-            response.close()
+            self.close_stream(response)
 
     def test_token_cannot_be_retrieved_by_another_anonymous_session(self):
         token = self.ready(self.start())
@@ -372,7 +396,7 @@ class ProgressiveEndpointTests(TestCase):
         response = self.start(work=blocked)
         try:
             self.assertTrue(started.wait(1))
-            response.close()
+            self.close_stream(response)
             stop.set()
             self.assertTrue(cancelled.wait(2))
             self.assertEqual(self.client.session[HISTORY_KEY]['turns'], [])

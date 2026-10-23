@@ -24,7 +24,7 @@ from .books_google import (search_volumes, get_volume, volume_source, public_que
                           book_topic_profile, topic_matches)
 from .literary_sources import (SearchResults, error_status, cooldown_seconds, reserve_page,
                                record_research_event)
-from .ai_progress import timed_stage
+from .ai_progress import measure_stage, timed_stage
 
 logger = logging.getLogger('litmate')
 STOPWORDS = {'libro', 'libros', 'novela', 'novelas', 'sobre', 'para', 'del', 'los',
@@ -917,8 +917,9 @@ def read_public_page(url, query, *, details=False):
     if host.endswith('openlibrary.org') or host.startswith('books.google.'):
         return ''
     from .literary_web import extract_public_page
-    result = extract_public_page(url, query, allowed_domains=TRUSTED_DOMAINS,
-                                 timeout=budget_timeout(6))
+    with measure_stage('extraction'):
+        result = extract_public_page(url, query, allowed_domains=TRUSTED_DOMAINS,
+                                     timeout=budget_timeout(6))
     if details:
         return result
     return result.get('description', '') if result.get('status') == 'ok' else ''
@@ -937,8 +938,9 @@ def read_public_web_page(url, query, *, details=False):
     if host.endswith('openlibrary.org') or host.startswith('books.google.'):
         return ''
     from .literary_web import extract_public_page
-    result = extract_public_page(url, query, allowed_domains=('*',),
-                                 timeout=budget_timeout(5))
+    with measure_stage('extraction'):
+        result = extract_public_page(url, query, allowed_domains=('*',),
+                                     timeout=budget_timeout(5))
     if details:
         return result
     return result.get('description', '') if result.get('status') == 'ok' else ''

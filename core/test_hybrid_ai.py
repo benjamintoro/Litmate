@@ -12,6 +12,7 @@ from pathlib import Path
 from unittest.mock import Mock, patch
 from urllib.request import Request, ProxyHandler, build_opener
 from django.test import SimpleTestCase, override_settings
+from .ai_progress import progress_scope, snapshot_metrics
 from .literary_ai import LiteraryAssistant, ProviderUnavailable, canonical_sources, ChatResult
 from .literary_evidence import validate_evidence, exact_context_available
 from .local_embeddings import OllamaEmbeddings
@@ -136,6 +137,17 @@ class HybridTests(SimpleTestCase):
         self.assertTrue(result)
         self.assertEqual(result[0]['title'], 'Horizonte')
         self.assertIn('melancolía', result[0]['description'])
+
+    def test_semantic_retrieval_stage_is_measured_separately_from_lexical_search(self):
+        embedder = FakeEmbeddings()
+        index_documents(self.folder, self.db, embedder=embedder)
+        with progress_scope():
+            result = retrieve_fragments('añoranza', self.db, embedder=embedder)
+            metrics = snapshot_metrics()
+        self.assertTrue(result)
+        self.assertIn('semantic_retrieval', metrics['stage_totals_ms'])
+        self.assertTrue(any(row['stage'] == 'semantic_retrieval' and row['status'] == 'ok'
+                            for row in metrics['stage_timings']))
 
     def test_explicit_book_is_not_replaced_by_semantically_similar_book(self):
         embedder = FakeEmbeddings()
