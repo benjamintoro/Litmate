@@ -55,6 +55,12 @@ velocidad ni publicar datos inventados.
 
 .\venv\Scripts\python.exe -B verificar_proyecto.py core.test_simple_factual_context core.test_persistent_router core.test_literary_ai
 -> 99 pruebas OK en 0.956 s
+
+.\venv\Scripts\python.exe manage.py check
+-> System check identified no issues (0 silenced).
+
+.\venv\Scripts\python.exe manage.py diagnosticar_ia --sin-fuentes
+-> configuración revisada; sin conexiones externas
 ```
 
 También se ejecutaron sondas HTTP reales aisladas (sin datos de usuario) y
