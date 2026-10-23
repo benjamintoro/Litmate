@@ -219,6 +219,36 @@ class WebReferenceAnswerTests(SimpleTestCase):
                   'description': 'Los miserables es un musical basado en la novela de Victor Hugo.'}
         self.assertIsNone(reference_answer('¿De qué trata Los miserables?', [source]))
 
+    def test_a_homonymous_band_is_not_used_for_a_novel_character_question(self):
+        source = {'title': 'Los Miserables (band) - Wikipedia', 'kind': 'web',
+                  'url': 'https://en.wikipedia.org/wiki/Los_Miserables_(band)',
+                  'description': 'Los Miserables is a Chilean punk rock band formed in 1990.'}
+        self.assertIsNone(reference_answer('¿Quién es el protagonista de Los miserables?', [source]))
+        source['title'] = 'Los Miserables'
+        self.assertIsNone(reference_answer('¿Quién es el protagonista de Los miserables?', [source]))
+
+    def test_publication_discrepancy_cannot_publish_an_unrelated_writer(self):
+        source = {'title': 'Julio Cortázar', 'kind': 'web',
+                  'url': 'https://es.wikipedia.org/wiki/Julio_Cortazar',
+                  'description': 'Junto a Carlos Fuentes fue un exponente del boom latinoamericano.'}
+        message = '¿En qué año se publicó El túnel? He visto fuentes que dicen 1948 y 1949.'
+        self.assertIsNone(reference_answer(message, [source]))
+
+    def test_reference_with_the_literal_requested_title_remains_available(self):
+        source = {'title': 'El túnel (novela)', 'kind': 'web',
+                  'url': 'https://es.wikipedia.org/wiki/El_tunel_(novela)',
+                  'description': 'El túnel es una novela de Ernesto Sabato publicada en 1948.'}
+        result = reference_answer('¿En qué año se publicó El túnel?', [source])
+        self.assertIsNotNone(result)
+        self.assertIn('1948', result.text)
+
+    def test_general_topic_does_not_replace_a_named_character_relationship(self):
+        source = {'title': 'Adulterio en la literatura', 'kind': 'web',
+                  'url': 'https://es.wikipedia.org/wiki/Adulterio_en_la_literatura',
+                  'description': 'Una relación sexual fuera del matrimonio es un tema literario.'}
+        self.assertIsNone(reference_answer('Explica la relación entre Emma Bovary y Charles Bovary.',
+                                           [source]))
+
     def test_a_biography_passage_on_another_subject_is_not_a_synopsis(self):
         source = {'title': 'León Tolstói', 'kind': 'web',
                   'url': 'https://example.org/tolstoi',

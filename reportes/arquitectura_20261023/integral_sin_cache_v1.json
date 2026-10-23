@@ -1,0 +1,300 @@
+{
+  "created_at_utc": "2026-10-23T19:15:44.569814+00:00",
+  "mode": "real_http_sse_isolated_database",
+  "model": "qwen3.5:9b-q4_K_M",
+  "web_enabled": true,
+  "chat_budget_seconds": 36,
+  "response_budget_seconds": 42,
+  "progressive": true,
+  "repeat": 1,
+  "knowledge_setup": "empty_auxiliary_databases_with_bundled_catalogue",
+  "resource_scope": "python_server_process_only_not_ollama_or_gpu",
+  "cache_controls": {
+    "empty_answers_each_turn": true,
+    "empty_retrieval_each_turn": false
+  },
+  "factual_review": "not_independently_certified",
+  "turns": [
+    {
+      "case": "cache_exacta",
+      "turn": 1,
+      "question": "¿Quién escribió Rayuela?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 1.173,
+      "first_text_seconds": 1.173,
+      "first_useful_seconds": 1.173,
+      "first_progress_seconds": 0.038,
+      "progress_phases": [
+        "search"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 1163,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 1057.168,
+          "first_phase_emitted_ms": 1.338,
+          "stage_totals_ms": {
+            "cache_lookup": 1.026,
+            "knowledge_lookup": 51.327,
+            "retrieval": 983.169
+          },
+          "stage_timings": [
+            {
+              "stage": "cache_lookup",
+              "started_ms": 0.3,
+              "elapsed_ms": 1.026,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 13.22,
+              "elapsed_ms": 1.127,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 29.951,
+              "elapsed_ms": 1.315,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 29.693,
+              "elapsed_ms": 9.368,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 2.741,
+              "elapsed_ms": 38.444,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 49.851,
+              "elapsed_ms": 1.073,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 56.277,
+              "elapsed_ms": 983.169,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 1.338
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-progressive-research"
+      },
+      "stage_totals_ms": {
+        "cache_lookup": 1.026,
+        "knowledge_lookup": 51.327,
+        "retrieval": 983.169
+      },
+      "delivery_overhead_ms": 116.049,
+      "resources": {
+        "rss_mb": 61.965,
+        "peak_rss_mb": 61.984,
+        "cpu_seconds": 0.140625
+      },
+      "category": "cache_exacta",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "**Rayuela** es una obra de **Julio Cortázar**.\n\nFuente: https://openlibrary.org/works/OL14860424W",
+      "source_urls": [
+        "https://openlibrary.org/works/OL14860424W"
+      ]
+    },
+    {
+      "case": "cache_exacta",
+      "turn": 2,
+      "question": "¿Quién escribió Rayuela?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 0.143,
+      "first_text_seconds": 0.143,
+      "first_useful_seconds": 0.143,
+      "first_progress_seconds": 0.016,
+      "progress_phases": [
+        "search"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 135,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 50.386,
+          "first_phase_emitted_ms": 4.558,
+          "stage_totals_ms": {
+            "cache_lookup": 4.279,
+            "knowledge_lookup": 49.087
+          },
+          "stage_timings": [
+            {
+              "stage": "cache_lookup",
+              "started_ms": 0.269,
+              "elapsed_ms": 4.279,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 6.039,
+              "elapsed_ms": 9.064,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 4.616,
+              "elapsed_ms": 40.023,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 4.558
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-indexed-evidence"
+      },
+      "stage_totals_ms": {
+        "cache_lookup": 4.279,
+        "knowledge_lookup": 49.087
+      },
+      "delivery_overhead_ms": 92.705,
+      "resources": {
+        "rss_mb": 62.129,
+        "peak_rss_mb": 62.188,
+        "cpu_seconds": 0.0625
+      },
+      "category": "cache_exacta",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "**Rayuela** es una obra de **Julio Cortázar**.\n\nFuente de la ficha: https://openlibrary.org/works/OL14860424W",
+      "source_urls": [
+        "https://openlibrary.org/works/OL14860424W"
+      ]
+    },
+    {
+      "case": "conocimiento_indexado",
+      "turn": 1,
+      "question": "¿De qué trata El principito?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 0.158,
+      "first_text_seconds": 0.158,
+      "first_useful_seconds": 0.158,
+      "first_progress_seconds": 0.017,
+      "progress_phases": [
+        "search",
+        "review"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 150,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 35.207,
+          "first_phase_emitted_ms": 4.138,
+          "stage_totals_ms": {
+            "cache_lookup": 3.935,
+            "knowledge_lookup": 18.964,
+            "audit": 2.499
+          },
+          "stage_timings": [
+            {
+              "stage": "cache_lookup",
+              "started_ms": 0.193,
+              "elapsed_ms": 3.935,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 4.836,
+              "elapsed_ms": 1.74,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 19.561,
+              "elapsed_ms": 1.834,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 4.191,
+              "elapsed_ms": 17.224,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 28.862,
+              "elapsed_ms": 0.665,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 4.138
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 19.547
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-indexed-evidence"
+      },
+      "stage_totals_ms": {
+        "cache_lookup": 3.935,
+        "knowledge_lookup": 18.964,
+        "audit": 2.499
+      },
+      "delivery_overhead_ms": 123.155,
+      "resources": {
+        "rss_mb": 62.488,
+        "peak_rss_mb": 62.547,
+        "cpu_seconds": 0.0625
+      },
+      "category": "conocimiento_indexado",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "**El principito — Antoine de Saint-Exupéry**: Un niño procede de un planeta diminuto, cuida una rosa y viaja por otros mundos. En la Tierra conoce a un zorro y a un aviador.\n\nFuentes de las fichas:\nhttps://es.literaturasm.com/personaje/principito",
+      "source_urls": [
+        "https://es.literaturasm.com/personaje/principito"
+      ]
+    }
+  ],
+  "source_sha256": "581b9acea07ea8b9a7515916f916d08bfbd3b3a2463e73d79da709b318d61651",
+  "metrics": {
+    "turns": 3,
+    "p50_seconds": 0.158,
+    "mean_seconds": 0.491,
+    "p95_seconds": 1.173,
+    "max_seconds": 1.173,
+    "under_response_budget": 3,
+    "statuses": {
+      "answered": 3
+    },
+    "under_5_seconds": 3,
+    "under_10_seconds": 3,
+    "under_30_seconds": 3,
+    "answered_is_not_factual_certification": true
+  },
+  "source_files_changed_during_run": false
+}

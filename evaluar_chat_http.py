@@ -8,6 +8,7 @@ import argparse
 from collections import Counter
 from datetime import datetime, timezone
 from http.cookiejar import CookieJar
+import io
 import json
 import hashlib
 import math
@@ -64,6 +65,9 @@ def main(argv=None):
     parser.add_argument('--case', action='append', default=[])
     parser.add_argument('--message', action='append', default=[])
     parser.add_argument('--model', default='qwen3.5:9b-q4_K_M')
+    parser.add_argument('--context', type=int, default=16384)
+    parser.add_argument('--prewarm', action='store_true',
+                        help='Precarga el modelo instalado con prompt vacío, sin preparar respuestas.')
     parser.add_argument('--chat-budget', type=float, default=36,
                         help='Segundos de trabajo literario antes de cerrar el stream.')
     parser.add_argument('--response-budget', type=float, default=42,
@@ -79,6 +83,8 @@ def main(argv=None):
         parser.error('--response-budget debe ser mayor que --chat-budget.')
     if not 1 <= args.repeat <= 20:
         parser.error('--repeat debe estar entre 1 y 20.')
+    if not 8192 <= args.context <= 32768:
+        parser.error('--context debe estar entre 8192 y 32768.')
     if args.output.exists():
         parser.error('El informe ya existe; usa otra ruta para no sobrescribirlo.')
     cases = []
@@ -120,9 +126,10 @@ def main(argv=None):
             LITMATE_USE_GOOGLE_BOOKS_API=False, GOOGLE_BOOKS_API_KEY='',
             LITMATE_LOCAL_MODEL=args.model, LITMATE_LOCAL_GUARD_MODEL=args.model,
             LITMATE_AI_TOTAL_TIMEOUT=360, LITMATE_CHAT_TIMEOUT=args.chat_budget,
-            LITMATE_LOCAL_CONTEXT=16384, LITMATE_LOCAL_ANSWER_TOKENS=3072,
+            LITMATE_LOCAL_CONTEXT=args.context, LITMATE_LOCAL_ANSWER_TOKENS=3072,
             LITMATE_AI_USE_WEB=not args.no_web, LITMATE_AI_USE_SEARXNG=not args.no_web,
-            LITMATE_AI_USE_OPENLIBRARY=not args.no_web, LITMATE_RAG_SEMANTIC=True)
+            LITMATE_AI_USE_OPENLIBRARY=not args.no_web,
+            LITMATE_AI_USE_WIKIDATA=not args.no_web, LITMATE_RAG_SEMANTIC=True)
         import django
         django.setup()
         from django.apps import apps
@@ -137,6 +144,14 @@ def main(argv=None):
         from core.literary_ai_views import chatbot_query, chatbot_finalize
         urlpatterns.extend([path('csrf/', ensure_csrf_cookie(lambda request: HttpResponse('ready'))),
                             path('chatbot_query/', chatbot_query), path('chatbot_finalize/', chatbot_finalize)])
+        warmup = {'requested': args.prewarm, 'seconds': None, 'generates_answers': False}
+        if args.prewarm:
+            from django.core.management import call_command
+            started = time.monotonic()
+            # Reutiliza la comprobación GGUF/local del comando existente; no
+            # hace pull ni genera respuestas de ninguna pregunta de la matriz.
+            call_command('precalentar_ia', keep_alive='10m', timeout=180, stdout=io.StringIO())
+            warmup['seconds'] = round(time.monotonic() - started, 3)
 
         class Server(ThreadingMixIn, WSGIServer):
             daemon_threads = True
@@ -150,16 +165,19 @@ def main(argv=None):
             serving.start()
             origin = f'http://127.0.0.1:{server.server_port}'
             report = {'created_at_utc': datetime.now(timezone.utc).isoformat(),
-                      'mode': 'real_http_sse_isolated_database', 'model': args.model,
-                      'web_enabled': not args.no_web, 'chat_budget_seconds': args.chat_budget,
-                      'response_budget_seconds': args.response_budget,
-                       'progressive': args.progressive, 'repeat': args.repeat,
-                       'knowledge_setup': 'empty_auxiliary_databases_with_bundled_catalogue',
-                       'resource_scope': 'python_server_process_only_not_ollama_or_gpu',
+                       'mode': 'real_http_sse_isolated_database', 'model': args.model,
+                       'context': args.context, 'prewarm': warmup,
+                       'web_enabled': not args.no_web, 'chat_budget_seconds': args.chat_budget,
+                       'response_budget_seconds': args.response_budget,
+                      'progressive': args.progressive, 'repeat': args.repeat,
+                      'knowledge_setup': 'empty_auxiliary_databases_with_bundled_catalogue',
+                      'resource_scope': 'python_server_process_only_not_ollama_or_gpu',
                       'cache_controls': {'empty_answers_each_turn': args.empty_answer_cache_each_turn,
                                          'empty_retrieval_each_turn': args.empty_retrieval_cache_each_turn},
                       'factual_review': 'not_independently_certified', 'turns': []}
             report['source_sha256'] = code_revision(base)
+            report['runner_sha256'] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+            report['matrix_sha256'] = hashlib.sha256(args.matrix.read_bytes()).hexdigest() if args.matrix else None
             args.output.parent.mkdir(parents=True, exist_ok=True)
             try:
                 for case in cases:

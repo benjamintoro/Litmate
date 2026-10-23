@@ -1,7 +1,7 @@
 """Agregados del benchmark: mediciones ausentes no se convierten en éxitos."""
 from unittest import TestCase
 
-from resumir_benchmark_ia import summarize
+from resumir_benchmark_ia import review_summary, summarize
 
 
 class BenchmarkSummaryTests(TestCase):
@@ -42,3 +42,16 @@ class BenchmarkSummaryTests(TestCase):
         self.assertIsNone(result['p50_seconds'])
         self.assertEqual(result['model_calls_unknown_turns'], 2)
         self.assertEqual(result['under_5_seconds'], 0)
+
+    def test_internal_review_is_bound_to_exact_report_and_cannot_count_twice(self):
+        rows = [{'case': 'a', 'turn': 1}, {'case': 'b', 'turn': 1}]
+        rating = {'case': 'a', 'turn': 1, 'classification': 'wrong_entity'}
+        review = {'benchmark_sha256': 'digest',
+                  'review_type': 'internal_manual_not_independently_certified', 'turns': [rating]}
+        result = review_summary(review, rows, 'digest')
+        self.assertEqual(result['classification_counts'], {'wrong_entity': 1})
+        self.assertEqual(result['unreviewed_turns'], 1)
+        with self.assertRaises(ValueError):
+            review_summary(review, rows, 'different-benchmark')
+        with self.assertRaises(ValueError):
+            review_summary({**review, 'turns': [rating, rating]}, rows, 'digest')

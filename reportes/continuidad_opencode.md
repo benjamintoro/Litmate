@@ -68,14 +68,109 @@ sin migrar ni conectarse a la base del proyecto. La ejecución anterior mediante
 verde. El respaldo web real explica respuestas inesperadas en los mocks y el
 cierre manual de SSE explica la transacción rota. MySQL no se ha vuelto a medir.
 
-### En ejecución / siguiente paso
+### Primera medición integral real
 
-1. Matriz real con `--progressive`, salida `integral_progressive_v1.json`.
-2. Comparación de caché normal frente a `--empty-answer-cache-each-turn`.
-   Una categoría llamada caché no demuestra un acierto: se comprobará la señal
-   real `exact_answer_cache_hit` y se documentarán los fallos de reutilización.
-3. Analizar latencia y cobertura factual antes de elegir la siguiente mejora.
-   `answered` no significa respuesta completa ni certificación independiente.
+Checkpoint local del instrumental/matriz: `7628746`.
+Salida: `arquitectura_20261023/integral_progressive_v1.json`, con
+`source_files_changed_during_run=false`.
+
+| Medición | Resultado |
+|---|---:|
+| Turnos | 16 |
+| Estados | 11 answered / 4 unavailable / 1 clarification |
+| p50 / media / p95 | 2,415 / 12,313 / 35,169 s |
+| <5 / <10 / <30 s | 10 / 10 / 13 |
+| Publicadas <30 s | 10, sin certificar cobertura/verdad |
+| Primer progreso p50 | 0,017 s |
+| Sobrecarga de entrega p50 | 123,305 ms |
+| Llamadas LLM / aciertos de caché exacta | 25 / 0 |
+| RSS máximo / CPU del servidor Python | 84,906 MB / 3,109 s |
+
+Costes inclusivos acumulados: generación 68,355 s; routing/plan 33,096 s;
+reparación 32,733 s; auditoría 32,715 s; recuperación 16,616 s;
+web 11,756 s; extracción 1,196 s. La inspección de modelos suma sólo 0,186 s.
+En el primer turno que necesitó Ollama, la carga del 9B consumió 11,484 s.
+No se suman etapas anidadas/paralelas para calcular latencia total.
+
+La comparación `integral_sin_cache_v1.json` vació sólo respuestas en cada turno:
+Rayuela 1,173 / 0,143 s y El principito 0,158 s. La repetición rápida usa memoria
+de evidencia, no un acierto de caché exacta; ambas ejecuciones dieron cero hits.
+La categoría de El principito utiliza fichas incluidas con la aplicación, no una
+base semántica ya poblada. No se demuestra aún latencia RAG semántica real.
+
+**Revisión interna de cobertura (no certificación factual independiente):**
+
+- Autorías de Orgullo y prejuicio, Rayuela y El túnel, y ficha de El principito:
+  responden al dato básico solicitado.
+- Nana: pasaje sobre la serie del autor, sin lista de personajes.
+- El nombre de la rosa: inicio de sinopsis, truncado a un pasaje breve.
+- Los miserables: referencia a una banda chilena homónima. **Error de identidad**,
+  no éxito factual aunque el estado diga answered.
+- Relación Emma/Charles: página general de adulterio, no la relación pedida.
+- Fecha de El túnel: referencia a Julio Cortázar, no resuelve la discrepancia.
+- Seguimiento del protagonista de El túnel: «El Narrador y protagonista de la
+  historia», sin nombre. Respuesta incompleta.
+- Identificación por escena, cita y materia general: no se completaron. La
+  recomendación no tuvo obra de referencia porque falló su primer turno.
+
+### Correcciones motivadas por esta medición
+
+- El respaldo web filtra la identidad de la obra **antes** de redactar/citar y
+  vuelve a comprobar todas sus fuentes. Se rechazan también bandas homónimas.
+- Las referencias de autoría/publicación/personajes con título literal deben
+  mencionar ese título en el texto recuperado; una coincidencia temática o URL
+  no basta. Una relación entre dos entidades nombradas requiere ambas en la
+  fuente, no solamente un artículo sobre el tema general.
+- Regresión reproducida y corregida: la caché se guardaba antes de añadir el
+  turno al historial, por lo que la repetición no encontraba su clave. Ahora
+  las autorías explícitas y verificadas sin LLM pueden guardarse también bajo
+  el estado publicado. No se proyecta la clave de pronombres/ordinales; se
+  conservan propietario, contexto completo, TTL y revisión de evidencia.
+- `.\venv\Scripts\python.exe -B verificar_proyecto.py core`:
+  **1310 pruebas OK en 17,028 s** tras estas correcciones.
+- Se cambia el namespace de caché a `extractive-answer-v2`: las respuestas
+  admitidas por los filtros anteriores dejan de reutilizarse sin borrar filas
+  ni conversaciones. Regresión nueva ejecutada primero en rojo y después verde.
+- El resumidor admite una revisión interna por turno vinculada al SHA256 del
+  informe, rechaza duplicados/hash incorrecto y separa cobertura de `answered`.
+  Revisiones: `revision_integral_v1.json`, `v2.json` y `v3.json` en la misma carpeta.
+- Última suite de esta unidad: **1312 pruebas OK en 16,820 s**.
+
+### Comparación real de modelos, con precarga declarada
+
+Misma matriz, código y runner (hashes idénticos), contexto 16384,
+`--prewarm --progressive`; ejecuciones secuenciales, sin cambiar código durante
+ninguna. La precarga usa prompt vacío y se excluye de los tiempos de consulta.
+
+| Ejecución | p50 | Media | p95/máx | <30 s | answered / unavailable / clarification | LLM |
+|---|---:|---:|---:|---:|---|---:|
+| `integral_progressive_v2_9b_warm.json` | 2,425 s | 11,103 s | 35,114 s | 13/16 | 9 / 5 / 2 | 25 |
+| `integral_progressive_v3_4b_warm.json` | 2,342 s | 7,664 s | 24,647 s | 16/16 | 9 / 5 / 2 | 27 |
+
+Precarga: 9B 5,819 s; 4B 5,579 s. Reducción observada del p95: 29,8%; media:
+31,0%. No es una garantía ni una comparación con evidencia idéntica: internet
+varió y el primer Rayuela pasó al LLM en el 4B, con 15,297 s frente a 1,348 s
+por catálogo en el 9B. El número de llamadas no bajó con el modelo menor.
+
+Revisión interna v2: cinco respuestas básicas adecuadas, cuatro referencias
+incompletas, cinco unavailable y dos aclaraciones. Ya no aparece la banda ni
+las dos referencias ajenas a la pregunta. V3 conserva sólo cuatro básicas sin
+reservas; el primer Rayuela añade afirmaciones no suficientemente respaldadas.
+**No se cambia el modelo de la aplicación**: el 4B cumple el umbral temporal en
+esta muestra, pero no demuestra respuestas completas/verificadas bajo 30 s.
+
+Caché exacta v2: un hit real en 0,145 s. La sonda posterior
+`cache_entrega_antes_v4.json` repitió Rayuela seis veces: primera investigación
+1,385 s; siguientes turnos 0,141–0,153 s. Se medirá por separado el coste fijo
+del despertar del iterador SSE antes de afirmar una mejora de entrega.
+
+### Siguiente paso
+
+1. Sustituir el sondeo periódico de finalización SSE por aviso del Future,
+   conservando auditoría, cuotas, cancelación y el POST de finalización.
+2. Repetir caché normal/vaciada y registrar hits reales y diferencias medidas.
+3. Priorizar evidencia/identificación y cobertura de personajes: bajar el p95
+   devolviendo errores más rápido no cumple el objetivo de respuestas completas.
 4. Aún pendiente: streaming real de tokens (Ollama usa `stream=False`),
    instrumentación HTTP que conserve memoria conversacional/finalización,
    cobertura completa de personajes/comparaciones y sesión MySQL aislada.

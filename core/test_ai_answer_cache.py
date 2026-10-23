@@ -6,7 +6,7 @@ import sqlite3
 from tempfile import TemporaryDirectory
 from unittest.mock import patch
 
-from django.test import SimpleTestCase
+from django.test import RequestFactory, SimpleTestCase, override_settings
 from .ai_answer_cache import get_answer, put_answer, cache_key
 from .ai_quick_answers import quick_answer
 
@@ -106,3 +106,81 @@ class AnswerCacheTests(SimpleTestCase):
         with closing(sqlite3.connect(self.path)) as db:
             self.assertEqual(db.execute("SELECT name FROM sqlite_master WHERE type='table'").fetchall(),
                              [('private_data',)])
+
+
+class PublishedAnswerCacheTests(SimpleTestCase):
+    """Una respuesta publicada cambia el historial, no el hecho bibliográfico."""
+    def setUp(self):
+        from django.contrib.auth.models import AnonymousUser
+        from django.contrib.sessions.backends.signed_cookies import SessionStore
+        from types import SimpleNamespace
+        from .ai_quick_answers import catalogue_lookup_answer
+        from .literary_ai_views import stable_session_owner
+        temporary = TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        root = Path(temporary.name)
+        override = override_settings(
+            LITMATE_AI_QUICK_ANSWERS=True,
+            LITMATE_AI_ANSWER_CACHE_DB=root / 'answers.sqlite3',
+            LITMATE_LITERARY_MEMORY_DB=root / 'memory.sqlite3',
+            LITMATE_KNOWLEDGE_DB=root / 'knowledge.sqlite3')
+        override.enable()
+        self.addCleanup(override.disable)
+        self.question = '¿Quién escribió Rayuela?'
+        self.book = {'title': 'Rayuela', 'author': 'Julio Cortázar', 'kind': 'book',
+                     'source': 'Open Library', 'url': 'https://openlibrary.org/works/OL123W'}
+        self.result = catalogue_lookup_answer(self.question, [], lambda query: [self.book])
+        self.assertIsNotNone(self.result)
+        self.client = SimpleNamespace(calls=0, provider='verified-catalogue', usage={})
+        self.request = RequestFactory().post('/chatbot_query/')
+        self.request.user = AnonymousUser()
+        self.request.session = SessionStore()
+        self.owner = stable_session_owner(self.request)
+        self.state = {'owner': 'anonymous', 'turns': []}
+
+    def test_identical_explicit_authorship_after_publication_reuses_verified_result(self):
+        from .literary_ai_views import _answer_with_cache, remember
+        with patch('core.literary_ai_views._compute_answer',
+                   return_value=(self.result, self.client)) as compute:
+            first, client = _answer_with_cache(
+                self.question, [], {}, self.state, self.owner)
+            remember(self.request, self.state, self.question, first, 1, client)
+            second, _ = _answer_with_cache(self.question, self.state['turns'], {},
+                                            self.state, self.owner)
+        self.assertEqual(second.text, first.text)
+        self.assertTrue(second.diagnostics.get('exact_answer_cache_hit'))
+        self.assertEqual(compute.call_count, 1)
+
+    def test_published_cache_does_not_cross_owner_homonym_or_evidence_revision(self):
+        from .literary_ai_views import _answer_with_cache, remember
+        with patch('core.literary_ai_views._compute_answer', return_value=(self.result, self.client)):
+            result, client = _answer_with_cache(self.question, [], {}, self.state, self.owner)
+            remember(self.request, self.state, self.question, result, 1, client)
+        self.assertIsNotNone(get_answer(self.question, self.state, self.owner))
+        self.assertIsNone(get_answer(self.question, self.state, 'another-reader'))
+        changed = {**self.state, 'active_work': {**self.book, 'author': 'Otra autora'}}
+        self.assertIsNone(get_answer(self.question, changed, self.owner))
+        from .literary_memory import remember_evidence
+        updated = {**self.book, 'categories': ['Novela']}
+        remember_evidence([updated], [updated])
+        self.assertIsNone(get_answer(self.question, self.state, self.owner))
+
+    def test_old_validation_policy_is_invalidated_without_deleting_rows(self):
+        from django.conf import settings
+        with patch('core.ai_answer_cache.POLICY', 'extractive-answer-v1'):
+            self.assertTrue(put_answer(self.question, self.state, self.owner, self.result))
+        self.assertIsNone(get_answer(self.question, self.state, self.owner))
+        with closing(sqlite3.connect(settings.LITMATE_AI_ANSWER_CACHE_DB)) as db:
+            self.assertEqual(db.execute('SELECT COUNT(*) FROM answers').fetchone()[0], 1)
+
+    def test_contextual_or_model_generated_authorship_is_not_cached_for_the_new_state(self):
+        from .literary_ai_views import _answer_with_cache, remember
+        for question, calls in [('¿Quién escribió ese libro?', 0), (self.question, 1)]:
+            with self.subTest(question=question, calls=calls):
+                state = {'owner': 'anonymous', 'turns': []}
+                self.client.calls = calls
+                with patch('core.literary_ai_views._compute_answer',
+                           return_value=(self.result, self.client)):
+                    result, client = _answer_with_cache(question, [], {}, state, self.owner)
+                    remember(self.request, state, question, result, 1, client)
+                self.assertIsNone(get_answer(question, state, self.owner))

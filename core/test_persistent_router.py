@@ -187,7 +187,9 @@ class PersistentRouterTests(SimpleTestCase):
                        LITMATE_AI_USE_WIKIDATA=False)
     def test_web_fallback_publishes_a_reference_bound_to_the_known_author(self):
         answer = SimpleNamespace(
-            sources=[{'title': 'Nana (Zola)', 'description': 'Nana, de Émile Zola.'}],
+            sources=[{'title': 'Nana (Zola)', 'description': 'Nana es una novela de Émile Zola.',
+                      'identity_text': 'Nana es una novela de Émile Zola.',
+                      'kind': 'web', 'url': 'https://es.wikipedia.org/wiki/Nana_(Zola)'}],
             diagnostics={})
         with TemporaryDirectory() as temporary, override_settings(
                 LITMATE_LITERARY_MEMORY_DB=Path(temporary) / 'memory.sqlite3'), \
@@ -199,6 +201,18 @@ class PersistentRouterTests(SimpleTestCase):
         self.assertTrue(result.diagnostics['persistent_research_route'])
         self.assertTrue(result.diagnostics['progressive_web_fallback'])
         self.assertIn('zola', web.call_args.kwargs['query'].lower())
+
+    @override_settings(LITMATE_AI_USE_WEB=True, LITMATE_AI_USE_OPENLIBRARY=False,
+                       LITMATE_AI_USE_WIKIDATA=True)
+    def test_fallback_filters_a_homonymous_band_before_rendering_a_reference(self):
+        band = {'title': 'Los Miserables (band) - Wikipedia', 'kind': 'web',
+                'url': 'https://en.wikipedia.org/wiki/Los_Miserables_(band)',
+                'description': 'Los Miserables is a Chilean punk rock band.'}
+        with patch('core.ai_quick_answers.quick_knowledge_sources', return_value=[]), \
+                patch('core.literary_wikidata.search_wikidata', return_value=[]), \
+                patch('core.literary_search.search_wikipedia', return_value=[]), \
+                patch('core.literary_search.retrieve_web', return_value=[band]):
+            self.assertIsNone(research_answer('¿Quién es el protagonista de Los miserables?', []))
 
     def test_a_musical_adaptation_is_not_used_as_the_novel(self):
         novel = {'kind': 'web', 'title': 'Los miserables', 'author': 'Fuente web',

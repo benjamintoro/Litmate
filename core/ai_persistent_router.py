@@ -64,13 +64,15 @@ def _work_web_pages(sources, title):
     explícita en el pasaje.
     """
     from .literary_ai import normalized
+    from .ai_quick_answers import _is_adaptation_page
     wanted = _work_title(title)
     if not wanted:
         return []
     wanted_words = set(re.findall(r'\w{3,}', wanted))
     pages = []
     for source in sources:
-        if source.get('kind') != 'web' or not source.get('url'):
+        if (source.get('kind') != 'web' or not source.get('url')
+                or _is_adaptation_page(source)):
             continue
         raw_title = normalized(source.get('title', ''))
         disambiguation = re.search(r'\(([^)]*)\)\s*$', raw_title)
@@ -268,6 +270,7 @@ def research_answer(message, history):
             return None
         from .ai_quick_answers import web_reference_answer
         from .literary_ai import normalized
+        from .literary_search import retrieve_web
         books = [source for source in known if source.get('kind') == 'book'
                  and _work_title(source.get('title')) == _work_title(title)]
         authors = {normalized(source.get('author')) for source in books
@@ -284,9 +287,20 @@ def research_answer(message, history):
         else:
             focus = ' sinopsis'
         query = title + (' ' + author if author else '') + focus
+
+        def bound_search(request):
+            # Filtrar ANTES de redactar la referencia: un resultado homónimo
+            # no se valida por mencionar una palabra del título solicitado.
+            found = retrieve_web(request)
+            return _bound_work_pages([*known, *found], title)
+
         with request_budget(time.monotonic() + budget_timeout(7)):
-            result = web_reference_answer(message, query=query, limit=3)
+            result = web_reference_answer(message, query=query, search=bound_search, limit=3)
         if result is None:
+            return None
+        bound = _bound_work_pages([*known, *result.sources], title)
+        accepted = {source.get('url') for source in bound}
+        if not result.sources or any(source.get('url') not in accepted for source in result.sources):
             return None
         if author and not all(_author_mentioned(author, source.get('title', '') + ' '
                                                 + source.get('description', ''))

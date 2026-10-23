@@ -7,6 +7,7 @@ del lector. Sirve para comparar matrices con las mismas condiciones.
 import argparse
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -144,6 +145,34 @@ def summarize(rows):
     }
 
 
+def review_summary(review, rows, source_digest):
+    """Agrega una revisión declarada, vinculada al archivo exacto, sin certificarla."""
+    if (not isinstance(review, dict) or review.get('benchmark_sha256') != source_digest
+            or review.get('review_type') != 'internal_manual_not_independently_certified'):
+        raise ValueError('La revisión debe identificar el hash del benchmark y su alcance interno.')
+    allowed = {'adequate_basic_answer', 'partial_missing_requested_detail', 'wrong_entity',
+               'irrelevant_reference', 'unavailable', 'clarification_without_context',
+               'clarification_missing_evidence', 'contains_unverified_extra_claims'}
+    keys = {(row.get('case'), row.get('turn')) for row in rows}
+    seen, counts = set(), Counter()
+    items = review.get('turns')
+    if not isinstance(items, list):
+        raise ValueError('La revisión necesita una lista de turnos.')
+    for item in items:
+        if not isinstance(item, dict):
+            raise ValueError('Turno de revisión inválido.')
+        key = item.get('case'), item.get('turn')
+        classification = item.get('classification')
+        if (not isinstance(key[0], str) or type(key[1]) is not int
+                or key not in keys or key in seen or not isinstance(classification, str)
+                or classification not in allowed):
+            raise ValueError('La revisión contiene un turno desconocido, duplicado o sin clasificación admitida.')
+        seen.add(key)
+        counts[classification] += 1
+    return {'review_type': review['review_type'], 'reviewed_turns': len(seen),
+            'unreviewed_turns': len(keys - seen), 'classification_counts': dict(counts)}
+
+
 def _markdown(report):
     lines = ['# Resumen del benchmark literario', '',
              f"- Fuente: `{report['source']}`",
@@ -190,6 +219,13 @@ def _markdown(report):
                   '| Etapa | Llamadas registradas | Total |', '|---|---:|---:|']
         for stage, total in overall['model_stage_totals_ms'].items():
             lines.append(f"| {stage} | {overall['model_stage_calls'].get(stage, 0)} | {total} ms |")
+    if report.get('review'):
+        lines += ['', '## Revisión interna de cobertura', '',
+                  'No es una certificación factual independiente.', '',
+                  '| Clasificación | Turnos |', '|---|---:|']
+        for classification, count in report['review']['classification_counts'].items():
+            lines.append(f'| {classification} | {count} |')
+        lines.append(f"\nTurnos sin revisión: {report['review']['unreviewed_turns']}.")
     return '\n'.join(lines) + '\n'
 
 
@@ -198,6 +234,7 @@ def main(argv=None):
     parser.add_argument('input', type=Path)
     parser.add_argument('--output', type=Path)
     parser.add_argument('--markdown', type=Path)
+    parser.add_argument('--review', type=Path, help='Revisión interna vinculada por SHA256 al informe de entrada.')
     args = parser.parse_args(argv)
     report = json.loads(args.input.read_text(encoding='utf-8-sig'))
     rows = [row for row in report.get('turns', []) if isinstance(row, dict)]
@@ -217,6 +254,12 @@ def main(argv=None):
                        for category, items in sorted(categories.items())},
         'routes': {route: summarize(items) for route, items in sorted(routes.items())},
     }
+    if args.review:
+        try:
+            review = json.loads(args.review.read_text(encoding='utf-8-sig'))
+            summary['review'] = review_summary(review, rows, hashlib.sha256(args.input.read_bytes()).hexdigest())
+        except (ValueError, OSError) as exc:
+            parser.error(str(exc))
     markdown = _markdown(summary)
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)

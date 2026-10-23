@@ -1,0 +1,23 @@
+{
+  "benchmark_sha256": "4a02362e17bf5f7aa843a1652e5a836b8fd4ca6126d178817a7e30b632728318",
+  "review_type": "internal_manual_not_independently_certified",
+  "basis": "Revisión interna de pertinencia y cobertura del texto publicado; no certificación factual independiente.",
+  "turns": [
+    {"case": "autoria_simple", "turn": 1, "classification": "adequate_basic_answer"},
+    {"case": "personajes_simple", "turn": 1, "classification": "partial_missing_requested_detail", "note": "No incluye lista de personajes."},
+    {"case": "sinopsis_simple", "turn": 1, "classification": "partial_missing_requested_detail", "note": "Pasaje breve cortado a mitad de oración."},
+    {"case": "protagonista_simple", "turn": 1, "classification": "partial_missing_requested_detail", "note": "Ya cita la novela correcta, pero publica una frase sobre Lesgle/Marius, no identifica al protagonista."},
+    {"case": "cache_exacta", "turn": 1, "classification": "adequate_basic_answer"},
+    {"case": "cache_exacta", "turn": 2, "classification": "adequate_basic_answer", "note": "Acierto de caché exacta real."},
+    {"case": "conocimiento_indexado", "turn": 1, "classification": "adequate_basic_answer"},
+    {"case": "recomendacion_multiturno", "turn": 1, "classification": "unavailable"},
+    {"case": "recomendacion_multiturno", "turn": 2, "classification": "clarification_without_context"},
+    {"case": "identificacion_escena", "turn": 1, "classification": "clarification_missing_evidence", "note": "No identifica la obra; devuelve una pregunta genérica de recomendación."},
+    {"case": "relacion_personajes", "turn": 1, "classification": "unavailable", "note": "Ya no publica la referencia genérica de adulterio."},
+    {"case": "fuentes_contradictorias", "turn": 1, "classification": "unavailable", "note": "Ya no publica a Julio Cortázar como respaldo de El túnel."},
+    {"case": "cita_exacta", "turn": 1, "classification": "unavailable"},
+    {"case": "materia_general", "turn": 1, "classification": "unavailable"},
+    {"case": "conversacion_multiturno", "turn": 1, "classification": "adequate_basic_answer"},
+    {"case": "conversacion_multiturno", "turn": 2, "classification": "partial_missing_requested_detail", "note": "No publica el nombre del protagonista."}
+  ]
+}

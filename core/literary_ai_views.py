@@ -165,6 +165,10 @@ def remember(request, state, message, result, elapsed_ms, client, *, topic_conte
     # El middleware guarda los cambios antes de empezar el streaming.
     request.session[HISTORY_KEY] = state
     request.session.modified = True
+    if (getattr(settings, 'LITMATE_AI_QUICK_ANSWERS', True)
+            and type(getattr(client, 'calls', None)) is int and client.calls == 0):
+        from .ai_answer_cache import cache_published_authorship
+        cache_published_authorship(message, state, stable_session_owner(request), result)
 
 
 def _model_answer(message, history, topic_context, retrieval_message):

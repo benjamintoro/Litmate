@@ -13,7 +13,9 @@ import re
 import sqlite3
 import time
 
-POLICY = 'extractive-answer-v1'
+# Cambiar el namespace evita reutilizar referencias admitidas antes de los
+# filtros de identidad, sin borrar registros ni datos de conversaciones.
+POLICY = 'extractive-answer-v2'
 
 
 def _path(database=None):
@@ -193,6 +195,28 @@ def put_answer(message, state, owner, result, *, database=None):
         return True
     except (OSError, sqlite3.Error, ValueError, TypeError):
         return False
+
+
+def cache_published_authorship(message, state, owner, result, *, database=None):
+    """Cachea una autoría explícita bajo el estado que verá el próximo turno.
+
+    El historial cambia al publicar. Guardar sólo la clave previa provoca un
+    fallo en la repetición siguiente. No se proyecta esta respuesta a consultas
+    deícticas: su significado puede cambiar al añadir el nuevo turno.
+    """
+    from .literary_identity import title_matches
+    from .literary_language import request_text
+    value = request_text(message).strip(' ¿?¡!.,')
+    match = re.fullmatch(r'quien escribio\s+(.{2,180})', value)
+    if (not match or result.intent != 'author' or len(result.sources) != 1
+            or result.sources[0].get('kind') != 'book'
+            or re.search(r'\b(?:ese|esa|este|esta|anterior|mismo|primero|segundo|tercero)\b',
+                         match.group(1))
+            or not title_matches(match.group(1), result.sources[0])):
+        return False
+    # put_answer conserva auditoría, TTL, revisión de evidencia y aislamiento
+    # por propietario; no se relaja ni se simplifica la clave conversacional.
+    return put_answer(message, state, owner, result, database=database)
 
 
 def delete_owner_cache(*, database=None):

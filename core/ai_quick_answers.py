@@ -501,7 +501,12 @@ def _is_adaptation_page(source):
                  r'rottentomatoes|tomatazos|prime video|netflix)\b', title):
         return True
     if re.search(r'\((?:pelicula|film|serie|miniserie|telenovela|musical|'
-                 r'opera|ballet|adaptacion|videojuego|album|sencillo|cancion)\b', title):
+                 r'opera|ballet|adaptacion|videojuego|album|sencillo|cancion|'
+                 r'band|banda|grupo musical|music group|song)\b', title):
+        return True
+    introduction = normalized(source.get('identity_text') or source.get('description', ''))[:700]
+    if re.search(r'\b(?:es|son|fue|is|are|was)\s+(?:un|una|an?|the)\s+'
+                 r'(?:\w+\s+){0,5}(?:band|banda|grupo musical|music group)\b', introduction):
         return True
     return bool(re.search(r'\b(?:pelicula|film|serie de television|miniserie|'
                           r'telenovela|musical|adaptacion cinematografica|videojuego)\b', title))
@@ -527,6 +532,31 @@ def _literal_snippet(text, terms):
     if len(snippet) > 230:
         snippet = snippet[:230].rsplit(' ', 1)[0]
     return snippet
+
+
+def _explicit_reference_target(message):
+    """Ancla el respaldo a un título literal; no es un clasificador ni un hecho.
+
+    Sólo reconoce preguntas bibliográficas/de personajes con un sujeto escrito
+    por el lector. No convierte pronombres, recuerdos o materias en títulos.
+    La intención puede conservar varias tareas y seguir en el pipeline completo.
+    """
+    value = request_text(message).lstrip(' ¿¡')
+    first = re.split(r'[?!]|\.\s', value, maxsplit=1)[0].strip(' .')
+    match = re.match(r'^(?:quien escribio|(?:en que ano|cuando) se publico)\s+(.+)$', first)
+    if match is None:
+        match = re.match(r'^(?:y\s+)?(?:quien(?:es)?|cual(?:es)?|dime|dame)\b.*?'
+                         r'\b(?:personajes?|protagonistas?|personaje principal)'
+                         r'(?: principales)?\s+(?:de|del)\s+(.+)$', first)
+    if match is None:
+        return ''
+    title = re.sub(r'^(?:el|la)\s+(?:libro|novela|obra)\s+', '', match.group(1))
+    title = title.strip(' «»“”"\'')
+    if (not 2 <= len(title) <= 180 or re.search(r'\b(?:ese|esa|este|esta|su|sus|'
+            r'anterior|primero|segundo|tercero|mismo|ultima|ultimo)\b', title)
+            or re.search(r'\b(?:y|pero|ademas)\s+(?:dime|explica|quien|que)\b', title)):
+        return ''
+    return title
 
 
 def reference_answer(message, sources, *, query=None, intent='recommend', limit=4):
@@ -556,6 +586,26 @@ def reference_answer(message, sources, *, query=None, intent='recommend', limit=
                  source['title'] + ' ' + source['description'] + ' ' + source['url']))))]
     if not pages:
         return None
+    target = _explicit_reference_target(message)
+    if target:
+        # Una coincidencia genérica («año», «novela») no autoriza una página
+        # sobre otro escritor. El título debe figurar en el texto de la fuente,
+        # no solamente en una URL o en los términos de la consulta del buscador.
+        literal = r'(?<!\w)' + re.escape(target) + r'(?!\w)'
+        pages = [source for source in pages if re.search(literal, normalized(
+            source['title'] + ' ' + source.get('identity_text', '') + ' ' + source['description']))]
+        if not pages:
+            return None
+    pair = re.search(r'\brelacion entre\s+(.+?)\s+y\s+(.+)$',
+                     request_text(message).strip(' ¿?¡!.,'))
+    if pair and all(2 <= len(name.split()) <= 6 for name in pair.groups()):
+        # Un artículo general sobre el tema no responde a la relación entre
+        # dos entidades nombradas. No se infiere la relación por compartir tema.
+        literals = [r'(?<!\w)' + re.escape(name) + r'(?!\w)' for name in pair.groups()]
+        pages = [source for source in pages if all(re.search(literal, normalized(
+            source['title'] + ' ' + source['description'])) for literal in literals)]
+        if not pages:
+            return None
     if re.match(r'^(?:de que trata|cuentame|hablame|resumen|sinopsis)\b', request_text(message).strip(' ¿?¡!.,')):
         from .literary_research import bibliographic_title_hints
         hints = [normalized(title) for title in bibliographic_title_hints(query or message)]
