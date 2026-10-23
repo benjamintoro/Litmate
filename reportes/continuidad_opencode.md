@@ -51,13 +51,10 @@ velocidad ni publicar datos inventados.
 
 ```text
 .\venv\Scripts\python.exe -B verificar_proyecto.py core
--> 1297 pruebas OK en 16.406 s
+-> 1298 pruebas OK en 16.369 s
 
-.\venv\Scripts\python.exe -B verificar_proyecto.py core.test_persistent_router
--> 18 pruebas OK en 0.596 s
-
-.\venv\Scripts\python.exe -B verificar_proyecto.py core.test_persistent_router core.test_web_search core.test_ai_answer_cache
--> 59 pruebas OK en 0.941 s (antes del filtro de desambiguación)
+.\venv\Scripts\python.exe -B verificar_proyecto.py core.test_simple_factual_context core.test_persistent_router core.test_literary_ai
+-> 99 pruebas OK en 0.956 s
 ```
 
 También se ejecutaron sondas HTTP reales aisladas (sin datos de usuario) y
@@ -115,6 +112,27 @@ a Juan Pablo Castel en ambas respuestas, en 3,820 s y 1,888 s, sin la página
 «El túnel puede referirse a». La prueba unitaria nueva está en
 `core.test_persistent_router`.
 
+### Consultas compuestas, citas y materia general
+
+Matriz: `reportes/arquitectura_20261023/matriz_benchmark_complejas.json`.
+Primera ejecución: `despues_http_v10_complejas.json` (una repetición por caso,
+caché de respuestas vaciada). Resultado real: la comparación se respondió en
+4,625 s con una referencia web de una sola obra y 0 llamadas al modelo; la
+cita exacta y la materia general quedaron `unavailable` en 35,018 s y 35,016 s
+tras respuestas inválidas de Ollama; la pregunta de memoria sin contexto pidió
+aclaración en 7,394 s. La comparación reveló un fallo: la ruta rápida aceptaba
+una coordinación de dos obras como si fuera una sola.
+
+Se corrigió con `compound_literary_request()`: comparaciones, diferencias,
+«frente a», «versus», «ambos» y coordinaciones como «... y el de ...» o
+«... con el de ...» se rechazan en `simple_literary_route`,
+`simple_research_plan`, `indexed_answer` y `research_answer`. La sonda
+posterior `probe_compuesta_v11.json` usó el pipeline completo (6 llamadas al
+modelo) y tardó 35,060 s. Publicó sólo pasajes atribuidos de *El túnel* y no
+inventó la comparación con *Madame Bovary*; la respuesta sigue siendo parcial,
+no una comparación completa. Las pruebas nuevas están en
+`core.test_simple_factual_context` y `core.test_persistent_router`.
+
 ### Limitaciones actuales
 
 1. Las listas de personajes siguen siendo parciales: *Nana* devuelve un pasaje
@@ -124,18 +142,21 @@ a Juan Pablo Castel en ambas respuestas, en 3,820 s y 1,888 s, sin la página
 2. Wikipedia puede responder `rate_limited`; en ese caso la ruta rápida puede
    caer a la búsqueda web acotada o al pipeline completo. La latencia externa
    sigue siendo variable.
-3. El benchmark ampliado cubre ocho preguntas y dos repeticiones; no demuestra
-   cobertura general ni exactitud factual. La revisión fue interna, no
-   independiente.
+3. El benchmark cubre ocho preguntas simples con dos repeticiones y cuatro
+   casos complejos con una; no demuestra cobertura general ni exactitud
+   factual. La revisión fue interna, no independiente.
 4. La caché y la memoria usan SQLite temporal en las pruebas; no se midió
    MySQL remoto ni el coste del middleware de sesión.
 5. Las referencias parciales se presentan como pasajes atribuidos, no como
    fichas verificadas ni como respuesta exhaustiva.
+6. Una comparación puede terminar publicando referencias de una sola obra si
+   el modelo no completa la síntesis; no se inventa la comparación, pero la
+   respuesta queda incompleta.
 
 ### Próximos pasos inmediatos
 
-1. Añadir a la matriz consultas compuestas, de cita exacta y de materia general
-   para comprobar que no entran en las rutas rápidas, y repetir con más obras.
+1. Mejorar el respaldo de comparaciones para incluir ambas obras o declarar
+   explícitamente que no puede completar la comparación.
 2. Mejorar la extracción de listas de personajes cuando la página correcta no
    es la primera de Wikipedia, sin relajar la vinculación por autor.
 3. Completar una revisión factual independiente de las respuestas publicadas y

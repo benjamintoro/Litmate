@@ -65,6 +65,11 @@ class PersistentRouterTests(SimpleTestCase):
                                         lambda query: [dict(BOOK)])
         self.assertIsNone(result)
 
+    def test_comparison_keeps_the_full_pipeline(self):
+        message = 'Compara el protagonista de El túnel con el de Madame Bovary.'
+        self.assertIsNone(indexed_answer(message, []))
+        self.assertIsNone(research_answer(message, []))
+
     def test_public_metadata_survives_restart_and_answers_without_http(self):
         with TemporaryDirectory() as temporary, override_settings(
                 LITMATE_LITERARY_MEMORY_DB=Path(temporary) / 'memory.sqlite3'):

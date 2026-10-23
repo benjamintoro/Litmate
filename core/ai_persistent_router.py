@@ -10,7 +10,8 @@ from concurrent.futures import FIRST_COMPLETED, wait
 from django.conf import settings
 from .ai_budget import budget_timeout, pool_in_budget, request_budget, submit_with_budget
 from .ai_progress import measure_stage
-from .literary_ai import canonical_sources, has_excerpt, obvious_rejection, requires_exact_text
+from .literary_ai import (canonical_sources, compound_literary_request, has_excerpt,
+                          obvious_rejection, requires_exact_text)
 from .literary_identity import bind_source, resolve_followup_context, same_work
 from .literary_language import request_text
 
@@ -30,6 +31,8 @@ def persist_sources(sources):
 def indexed_answer(message, history, *, topic_context=None):
     from .ai_quick_answers import quick_answer, quick_knowledge_sources, catalogue_lookup_answer
     from .ai_public_details import character_answer
+    if compound_literary_request(message):
+        return None
     result = quick_answer(message, history, topic_context=topic_context)
     if result is not None:
         return result
@@ -185,7 +188,8 @@ def research_answer(message, history):
     from .literary_wikidata import search_wikidata
     from .literary_research import public_research_queries
     value = request_text(message).strip('¿?¡!., ')
-    if (has_excerpt(message) or obvious_rejection(message) or requires_exact_text(message)
+    if (compound_literary_request(value)
+            or has_excerpt(message) or obvious_rejection(message) or requires_exact_text(message)
             or re.search(r'[;\n]|[.!?]\s+\S', message)):
         return None
     reference = resolve_followup_context(message, history)

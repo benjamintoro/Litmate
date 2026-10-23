@@ -538,6 +538,20 @@ def _explicit_work_context(message, value):
         r'(?:\s+[A-ZÁÉÍÓÚÜÑ][\wÁÉÍÓÚÜÑáéíóúüñ.-]+){1,3}\s*[?.!]*$', message))
 
 
+def compound_literary_request(value):
+    """Detecta comparaciones o coordinación de dos obras.
+
+    Las rutas rápidas sólo responden una obra explícita. Una comparación, una
+    diferencia o una segunda obra coordinada («... y el de ...», «... con el
+    de ...») necesitan el pipeline completo y su auditoría.
+    """
+    value = normalized(value)
+    return bool(
+        re.search(r'\b(?:compara(?:r|cion(?:es)?)?|contrasta(?:r)?|diferencias?|'
+                  r'semejanzas?|frente a|versus|vs|ambos|ambas|los dos|las dos)\b', value)
+        or re.search(r'\b(?:y|e|con)\s+(?:el|la|los|las)\s+(?:de|del)\b', value))
+
+
 def simple_literary_route(message):
     """Clasifica sólo preguntas factuales simples y literarias inequívocas.
 
@@ -551,9 +565,10 @@ def simple_literary_route(message):
             or re.search(r'[.!?]\s+\S', message)):
         return None
     value = normalized(message).strip(' ¿?¡!.,')
-    if (re.search(r'\b(?:y|e)\s+(?:(?:su|sus|el|la|los|las)\s+)?'
-                  r'(?:que|quien|quienes|cuando|donde|como|cual|cuales|dime|'
-                  r'explica|resume|personajes?|argumento|trama|final)\b', value)
+    if (compound_literary_request(value)
+            or re.search(r'\b(?:y|e)\s+(?:(?:su|sus|el|la|los|las)\s+)?'
+                         r'(?:que|quien|quienes|cuando|donde|como|cual|cuales|dime|'
+                         r'explica|resume|personajes?|argumento|trama|final)\b', value)
             or re.search(r'\b(?:ignora|instrucciones|contrasena|password|correo|email|'
                          r'codigo|programa|receta|ecuacion|constitucion|ley|tratado|'
                          r'python|javascript|html|sql|java)\b', value)):
@@ -626,8 +641,9 @@ def simple_research_plan(message, intent, *, followup=False, selected_books=()):
         return None
     value = normalized(message).strip(' ¿?¡!.,')
     clauses = re.sub(r'^y\s+', '', value)
-    if (re.search(r'\b(?:compara|comparacion|diferencias|ademas|tambien|despues|'
-                  r'luego|por otra parte|por ultimo)\b', value)
+    if (compound_literary_request(value)
+            or re.search(r'\b(?:compara|comparacion|diferencias|ademas|tambien|despues|'
+                         r'luego|por otra parte|por ultimo)\b', value)
             or re.search(r'\b(?:y|e|o|pero)\s+(?:(?:luego|ademas)\s+)?'
                          r'(?:(?:de|en|a|con|por|para)\s+)?'
                          r'(?:dime|cuentame|explica|analiza|resume|recomiend\w*|'
