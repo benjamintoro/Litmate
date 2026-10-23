@@ -1,5 +1,10 @@
 # Chat con presupuesto de diez segundos — resultados y límites
 
+> **Objetivo vigente desde el 22-10-2026:** el límite del chat pasó de 10 s a
+> **30 s** (29 s de trabajo del backend). El informe vigente es
+> `reportes/descubrimiento_30s_20261022/INFORME.md`. Este documento se conserva
+> como registro histórico del presupuesto de diez segundos.
+
 Fecha: 22-10-2026. Checkpoint anterior: `147c75e`, etiqueta local
 `checkpoint/ia-antes-limite-10s-20261022`. Sin push.
 Código guardado en `935f2cb` y `1f3a7b7`.

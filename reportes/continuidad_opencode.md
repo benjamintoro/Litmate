@@ -4,7 +4,43 @@ Actualizado: 22 de octubre de 2026.
 Rama: `feature/cuotas-ia-chatbot`.
 Commits locales de esta sesión: `f12ee52` (seguridad), `057a687` (IA),
 `2f8708f` (evaluación), `147c75e` (informe anterior), `935f2cb` (chat acotado y
-respuestas verificadas rápidas) y `1f3a7b7` (métricas honestas de timeout).
+respuestas verificadas rápidas), `1f3a7b7` (métricas honestas de timeout) y
+`45babb1` (descubrimiento en 30 segundos).
+
+## Intervención vigente — objetivo de 30 segundos y descubrimiento local
+
+- Punto de partida: `253e029`, etiqueta local
+  `checkpoint/antes-descubrimiento-30s-20261022`. Commit del código de esta
+  intervención: `45babb1`. Sin push, sin migraciones y sin cambios en
+  `.env`.
+- El chat dispone de **29 s de trabajo** y el navegador corta a los **30 s**.
+  Antes de generar, consulta un diccionario local de materias, lugares, alias y
+  etiquetas (**230 facetas, 252 temas y 929 alias**, ~117 KB) y descubre fichas
+  verificadas con `retrieve_discovery_books()`, aceptación temprana y
+  presupuesto anidado de 18 s.
+- La secuencia exacta de la captura responde **sin modelo** en
+  0,078 / 0,024 / 0,063 s (Segunda Guerra Mundial, seguimiento de Primera
+  Guerra Mundial y Antigua Grecia), con tres obras y tres fuentes por turno.
+  Con el presupuesto anterior de 9 s, los turnos 2 y 3 quedaban en
+  `unavailable` a 9,0 s
+  (`reportes/descubrimiento_30s_20261022/antes_captura.json`).
+- Benchmark HTTP/SSE real v2
+  (`reportes/benchmark_30s_descubrimiento_20261022_v2.json`): **8/8 turnos por
+  debajo de 30 s**, p50 2,475 s, p95 y máximo 29,014 s; **6 answered y 2
+  unavailable**. v1: 3 answered, 3 unavailable y 2 aclaraciones, también 8/8
+  por debajo de 30 s. `source_files_changed_during_run=false` en ambas; sin
+  revisión factual independiente.
+- Revolución Francesa respondió en 26,8 s; Corea del Sur y aventuras espaciales
+  en ~2-3 s con cero llamadas al modelo. Guerra Fría y «Guerra y Paz» agotaron
+  el presupuesto y quedaron en `unavailable`, sin títulos inventados. Open
+  Library respondió `timeout`/`cooldown` en el sondeo del mismo día.
+- Si el descubrimiento no devuelve ninguna ficha de libro, la respuesta es
+  `unavailable` inmediata (`provider_error: sin_fuentes_verificables`) en lugar
+  de esperar al 9B o permitir una recomendación sin fuente.
+- Pruebas: **1134 core OK** con `--keepdb` (252,578 s), **17 de pagos y cuotas
+  OK** (13 + 4) y **198 comprobaciones JavaScript OK**.
+- Informe completo: `reportes/descubrimiento_30s_20261022/INFORME.md`. El
+  informe de diez segundos se conserva como histórico.
 
 ## Objetivo general
 
