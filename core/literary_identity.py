@@ -209,7 +209,8 @@ _TITLE_PREFIX_FRAMING = {
     'libro', 'novela', 'obra', 'texto', 'cuento', 'ensayo', 'trama', 'argumento',
     'sinopsis', 'personajes', 'protagonista', 'protagonistas', 'final', 'desenlace',
     'favor', 'porfavor', 'do', 'da', 'dos', 'das', 'no', 'na', 'nos', 'nas', 'em',
-    'um', 'uma', 'the', 'of', 'in', 'on', 'about', 'by', 'and', 'a', 'an', 'book', 'novel'
+    'um', 'uma', 'the', 'of', 'in', 'on', 'about', 'by', 'and', 'a', 'an', 'book', 'novel',
+    'otro', 'otra', 'mismo', 'misma', 'parecido', 'parecida', 'similar'
 }
 
 

@@ -2,6 +2,67 @@
 
 Actualizado: 23 de octubre de 2026.
 Rama: `feature/cuotas-ia-chatbot`.
+
+## Recuperación del checkpoint y fase 1 de tramas (23 de octubre de 2026)
+
+### Estado del repositorio al retomar
+
+- El árbol estaba limpio en `2c73692` (`origin/feature/cuotas-ia-chatbot`).
+  Las siete modificaciones de la fase interrumpida ya estaban guardadas en ese
+  commit: `ai_narrative_answers.py`, `ai_persistent_router.py`,
+  `literary_ai.py`, `literary_ai_views.py`, `literary_identity.py`,
+  `literary_learning.py` y `test_narrative_answers.py`.
+- Se conservó intacto el checkpoint previo
+  `checkpoint/antes-fase1-tramas-20261023`; no se restauraron ni sobrescribieron
+  archivos desde Git. El checkpoint de recuperación se guarda como
+  `checkpoint/fase1-tramas-recuperada-20261023`.
+- Se verificó `core/literary_quality.py`, `validate_audit` y el comando
+  `core/management/commands/diagnosticar_ia.py`.
+
+### Revisión y correcciones
+
+- La fase interrumpida añadió parser y motor de recuperación para `O Exército
+  na história do Brasil`, pero la prueba de título tras una aclaración llamaba
+  al motor directamente: no comprobaba que la sesión transmitiera
+  `pending_clarification` al worker. La cobertura también dependía de una
+  fuente bibliográfica remota; los casos ahora usan una fixture local y
+  determinista.
+- Se completó la memoria de aclaraciones: el estado `pending_clarification`
+  que la sesión ya guardaba ahora viaja al worker privado y permite interpretar
+  el título exacto que responde el lector. No se inserta la aclaración como
+  respuesta aceptada ni como evidencia.
+- Se corrigió la lista de palabras de encuadre que impedía seleccionar una
+  obra anterior después de «otro parecido a Dune» o «otro del mismo autor de
+  Dune».
+- Se acotó la clasificación automática: «¿De qué trata la historia de Chile?»
+  vuelve al router completo; «Cuéntame sobre la trama de O Exército na
+  história do Brasil» conserva la clasificación de consulta sobre obra.
+- Se retiró la llamada narrativa redundante dentro de `LiteraryAssistant`.
+  Esa ruta refería `self.config`, atributo inexistente, y repetía recuperación;
+  el worker de conversación ya invoca el motor narrativo antes del pipeline
+  completo y conserva su fallback.
+- La prueba de rendimiento usa ahora *El principito*, ficha local incluida,
+  en vez de esperar una ficha de *Orgullo y prejuicio* que no estaba en el
+  catálogo de arranque.
+
+### Comprobaciones de recuperación
+
+`verificar_proyecto.py` configura SQLite `:memory:`, desactiva migraciones
+Django y dirige los almacenes auxiliares a un directorio temporal. No se usó la
+base del proyecto ni se ejecutaron migraciones.
+
+```text
+.\venv\Scripts\python.exe -B verificar_proyecto.py core.test_ai_progress_stream core.test_chat_deadline core.test_research_integration core.test_narrative_answers
+-> 117 pruebas OK en 7.169 s
+
+.\venv\Scripts\python.exe -B verificar_proyecto.py core
+-> 1340 pruebas OK en 17.266 s
+```
+
+La ruta rápida, las verificaciones de fuentes y los límites existentes se
+conservan. Esta suite no certifica por sí sola la exactitud independiente de
+cada respuesta web ni la cobertura de capítulos de obras históricas.
+
 Commits locales de esta sesión: `f12ee52` (seguridad), `057a687` (IA),
 `2f8708f` (evaluación), `147c75e` (informe anterior), `935f2cb` (chat acotado y
 respuestas verificadas rápidas), `1f3a7b7` (métricas honestas de timeout),

@@ -79,6 +79,9 @@ class SimpleResearchPlanTests(SimpleTestCase):
         summary = simple_literary_route('¿De qué trata la novela El nombre de la rosa?')
         self.assertEqual(summary['intent'], 'summary')
         self.assertEqual(summary['decision'], 'allow')
+        portuguese_title = simple_literary_route(
+            'Cuéntame sobre la trama de O Exército na história do Brasil')
+        self.assertEqual(portuguese_title['intent'], 'summary')
         protagonist = simple_literary_route('¿Quién es el protagonista de la novela Nana?')
         self.assertEqual(protagonist['intent'], 'analysis')
         self.assertEqual(protagonist['decision'], 'allow')

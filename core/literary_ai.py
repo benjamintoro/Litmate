@@ -534,6 +534,8 @@ def _explicit_work_context(message, value):
     if re.search(r'\b(?:libro|novela|obra|cuento|poema|ensayo|c[oó]mic|historieta|'
                  r'novela gr[aá]fica|teatro|trama|argumento|sinopsis)\b', value):
         return True
+    if re.search(r'\bde que trata\s+(?:la|el)\s+(?:historia|vida)\s+de\b', value):
+        return False
     return bool(re.search(
         r'\b(?:de|del|trata|escribi[oó]|sobre)\s+[A-ZÁÉÍÓÚÜÑÃÕÊÇ][\wÁÉÍÓÚÜÑÃÕÊÇáéíóúüñãõêç.-]*'
         r'(?:\s+[\wÁÉÍÓÚÜÑÃÕÊÇáéíóúüñãõêç.-]+){0,8}\s*[?.!]*$', message))
@@ -1586,15 +1588,6 @@ class LiteraryAssistant:
                 # No dependemos del recuerdo del modelo para resolver el ordinal.
                 route = {**route, 'candidates': selected_books,
                          'queries': [b['title'] + ' ' + b['author'] for b in selected_books]}
-            if (self.research_enabled and route['intent'] in {'summary', 'analysis'}
-                    and not has_excerpt(message) and not requires_exact_text(message)):
-                from .ai_narrative_answers import narrative_answer
-                try:
-                    narrative_res = narrative_answer(message, history, config=self.config)
-                    if narrative_res is not None and narrative_res.status == 'answered':
-                        return narrative_res
-                except Exception:
-                    pass
             plan = None
             fast_recommendation = (self.fast_recommendations and route['intent'] == 'recommend'
                 and not requires_exact_text(message) and not has_excerpt(message)

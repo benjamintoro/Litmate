@@ -19,7 +19,7 @@ from .literary_identity import (normalize_identity, same_work, title_matches, wo
 from .literary_language import request_text
 
 
-def request_for(message, history=()):
+def request_for(message, history=(), pending_clarification=None):
     """Reconoce una sola tarea literal, sin adivinar títulos ni hechos."""
     if (not isinstance(message, str) or has_excerpt(message) or obvious_rejection(message)
             or requires_exact_text(message) or compound_literary_request(message)
@@ -61,16 +61,26 @@ def request_for(message, history=()):
         match = re.fullmatch(pattern, raw, re.I)
         if match:
             break
+    pending_request = None
+    if isinstance(pending_clarification, dict) and pending_clarification.get('status') == 'clarification':
+        clarification = str(pending_clarification.get('question', ''))
+        if re.search(r'¿De cuál de las obras|¿De qué libro|Dime el título|cuál de|indica el libro',
+                     clarification, re.I):
+            pending_request = request_for(pending_clarification.get('original_query', ''), history)
     if not match:
         history_list = sanitized_history(list(history))
-        if history_list and 2 <= len(raw) <= 120 and not re.search(r'\b(?:no|si|gracias|adios|hola)\b', raw.lower()):
-            last_turn = history_list[-1]
-            last_ans = last_turn.get('answer', '')
-            if re.search(r'¿De cuál de las obras|¿De qué libro|Dime el título|cuál de|indica el libro', last_ans, re.I):
-                task = 'summary'
-                extracted_raw = raw
-            else:
-                return None
+        short_reply = (2 <= len(raw) <= 120
+                       and not re.search(r'\b(?:no|si|gracias|adios|hola)\b', raw.lower()))
+        previous_clarification = bool(history_list and short_reply and re.search(
+            r'¿De cuál de las obras|¿De qué libro|Dime el título|cuál de|indica el libro',
+            history_list[-1].get('answer', ''), re.I))
+        if previous_clarification:
+            task = 'summary'
+            extracted_raw = raw
+        elif pending_request and pending_request.get('task') in {
+                'summary', 'characters', 'protagonist'}:
+            task = pending_request['task']
+            extracted_raw = raw
         else:
             return None
     else:
@@ -401,7 +411,7 @@ def synthesize_answer(message, request, sources, config):
         return unavailable_answer(request), client
 
 
-def narrative_answer(message, history=None, config=None):
+def narrative_answer(message, history=None, config=None, *, pending_clarification=None):
     """Responde consultas sobre trama, contenido y personajes de obras literarias o no ficción.
 
     1. Comprende la consulta (solicitud de contenido y título o referencia deíctica).
@@ -413,7 +423,7 @@ def narrative_answer(message, history=None, config=None):
     6. Si hay pasajes descriptivos, sintetiza y audita con el modelo.
     7. Si no hay información suficiente, explica honestamente la limitación sin bucles.
     """
-    req = request_for(message, history)
+    req = request_for(message, history, pending_clarification)
     if not req or not req['title'] or req['ambiguous']:
         return None
     from .literary_identity import normalize_identity
@@ -480,4 +490,3 @@ def narrative_answer(message, history=None, config=None):
 
     # 5. Si no se puede confirmar sinopsis fiable
     return unavailable_answer(req)
-

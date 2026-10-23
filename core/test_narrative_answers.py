@@ -22,6 +22,12 @@ PAGE = {'kind': 'web', 'title': 'Cuaderno lunar', 'author': 'Fuente web',
             'authors': 'Wikipedia contributors', 'title': 'Cuaderno lunar',
             'url': 'https://es.wikipedia.org/wiki/Cuaderno_lunar', 'revision_id': '1234',
             'license_url': 'https://creativecommons.org/licenses/by-sa/4.0/'}}
+BRAZIL_HISTORY_BOOK = {
+    'id': 987, 'kind': 'book', 'title': 'O Exército na história do Brasil',
+    'author': 'Autor de prueba', 'source': 'Open Library',
+    'url': 'https://openlibrary.org/works/OL987W',
+    'description': '', 'subjects': ['Brazil -- History'],
+}
 
 
 def history():
@@ -51,6 +57,25 @@ class NarrativeRequestTests(SimpleTestCase):
                 request = request_for(message, history())
                 self.assertEqual(request['task'], task)
                 self.assertEqual(request['title'], BOOK['title'])
+
+    def test_title_reply_uses_the_pending_content_clarification(self):
+        from .ai_narrative_answers import request_for
+        from .ai_narrative_answers import narrative_answer
+        pending = {
+            'status': 'clarification',
+            'question': '¿De cuál de las obras que comentamos quieres conocer ese detalle?',
+            'original_query': 'Cuéntame sobre la trama de O Exército na história do Brasil',
+        }
+        request = request_for('O Exército na história do Brasil', [], pending)
+        self.assertEqual(request['task'], 'summary')
+        self.assertEqual(request['title'], 'O Exército na história do Brasil')
+        self.assertEqual(request['targets'], [])
+        with patch('core.ai_narrative_answers.retrieve_sources', return_value=[]):
+            result = narrative_answer('O Exército na história do Brasil', [],
+                                     pending_clarification=pending)
+        self.assertEqual(result.status, 'unavailable')
+        self.assertIn('O Exército na história do Brasil', result.text)
+        self.assertNotIn('¿De cuál de las obras', result.text)
 
     def test_explicit_new_title_never_inherits_the_previous_book(self):
         from .ai_narrative_answers import request_for
@@ -146,6 +171,21 @@ class DirectNarrativeTests(SimpleTestCase):
 
 
 class AutomatedNarrativeQualityTests(SimpleTestCase):
+    def test_worker_forwards_pending_clarification_without_putting_it_in_accepted_history(self):
+        from types import SimpleNamespace
+        from .literary_ai import ChatResult
+        from .literary_ai_views import _answer_with_cache
+        pending = {'status': 'clarification', 'question': '¿De cuál de las obras?',
+                   'original_query': 'Cuéntame la trama de O Exército na história do Brasil'}
+        state = {'turns': [], 'pending_clarification': pending}
+        result = ChatResult('Sin fuente suficiente.', 'unavailable')
+        client = SimpleNamespace(calls=1, usage={}, provider='test')
+        with patch('core.ai_answer_cache.get_answer', return_value=None), \
+                patch('core.literary_ai_views._compute_answer', return_value=(result, client)) as compute:
+            _answer_with_cache('O Exército na história do Brasil', [], {}, state, 'test-owner')
+        compute.assert_called_once_with('O Exército na história do Brasil', [],
+                                        {'_pending_clarification': pending})
+
     def test_case_1_error_reportado_o_exercito_na_historia_do_brasil(self):
         from .ai_narrative_answers import narrative_answer
         history_brasil = [{
@@ -158,7 +198,10 @@ class AutomatedNarrativeQualityTests(SimpleTestCase):
             ],
             'sources': []
         }]
-        result = narrative_answer('Cuéntame sobre la trama de O Exército na história do Brasil', history_brasil)
+        with patch('core.ai_narrative_answers.retrieve_sources',
+                   return_value=[BRAZIL_HISTORY_BOOK]):
+            result = narrative_answer(
+                'Cuéntame sobre la trama de O Exército na história do Brasil', history_brasil)
         self.assertIsNotNone(result)
         self.assertEqual(result.status, 'answered')
         self.assertIn('O Exército na história do Brasil', result.text)
@@ -176,7 +219,9 @@ class AutomatedNarrativeQualityTests(SimpleTestCase):
             ],
             'sources': []
         }]
-        result = narrative_answer('O Exército na história do Brasil', history_clarify)
+        with patch('core.ai_narrative_answers.retrieve_sources',
+                   return_value=[BRAZIL_HISTORY_BOOK]):
+            result = narrative_answer('O Exército na história do Brasil', history_clarify)
         self.assertIsNotNone(result)
         self.assertEqual(result.status, 'answered')
         self.assertIn('O Exército na história do Brasil', result.text)
@@ -185,7 +230,10 @@ class AutomatedNarrativeQualityTests(SimpleTestCase):
     def test_case_3_obra_de_no_ficcion_historica(self):
         from .ai_narrative_answers import narrative_answer
         history_empty = []
-        result = narrative_answer('Cuéntame la trama de O Exército na história do Brasil', history_empty)
+        with patch('core.ai_narrative_answers.retrieve_sources',
+                   return_value=[BRAZIL_HISTORY_BOOK]):
+            result = narrative_answer(
+                'Cuéntame la trama de O Exército na história do Brasil', history_empty)
         self.assertIsNotNone(result)
         self.assertEqual(result.status, 'answered')
         self.assertIn('histórica', result.text.lower())
@@ -251,7 +299,7 @@ class AutomatedNarrativeQualityTests(SimpleTestCase):
         from .ai_persistent_router import indexed_answer
         import time
         start = time.perf_counter()
-        result = indexed_answer('¿Quién escribió Orgullo y prejuicio?', [])
+        result = indexed_answer('¿Quién escribió El principito?', [])
         elapsed = time.perf_counter() - start
         self.assertIsNotNone(result)
         self.assertLess(elapsed, 0.5)
@@ -271,4 +319,3 @@ class AutomatedNarrativeQualityTests(SimpleTestCase):
         self.assertFalse(context['ambiguous'])
         self.assertEqual(len(context['books']), 1)
         self.assertEqual(context['books'][0]['title'], 'O Exército na história do Brasil')
-

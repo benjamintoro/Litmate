@@ -53,6 +53,12 @@ class RecommendationReferenceTests(SimpleTestCase):
         self.assertEqual(result['books'], [DUNE])
         self.assertEqual(result['reason'], 'similar')
 
+    def test_relation_language_before_known_title_is_not_treated_as_a_new_title(self):
+        for message in ('Otro del mismo autor de Dune', 'Otro parecido a Dune'):
+            with self.subTest(message=message):
+                result = resolve_followup_context(message, history([DUNE], [PAPELUCHO]))
+                self.assertEqual(result['books'], [DUNE])
+
     def test_multiple_authors_require_selection_instead_of_picking_arbitrarily(self):
         for message, reason in (('Otro del mismo autor', 'same_author'),
                                 ('Otro parecido', 'similar')):

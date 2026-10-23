@@ -271,7 +271,10 @@ def _compute_answer(message, history, topic_context):
         # Aquí comienza la consulta efectiva a las fichas y al contexto local.
         # No es un temporizador ni una secuencia de animaciones prefijadas.
         emit_phase('search')
-        result, client = _compute_answer_impl(message, history, topic_context)
+        context = dict(topic_context)
+        pending_clarification = context.pop('_pending_clarification', None)
+        result, client = _compute_answer_impl(
+            message, history, context, pending_clarification=pending_clarification)
         result.diagnostics['progress_metrics'] = snapshot_metrics()
         return result, client
 
@@ -295,7 +298,10 @@ def _answer_with_cache(message, history, topic_context, cache_state, cache_owner
                 cached = get_answer(message, cache_state, cache_owner)
             if cached is not None:
                 return measured(cached, SimpleNamespace(usage={}, provider='verified-answer-cache', calls=0))
-        result, client = _compute_answer(message, history, topic_context)
+        pending_clarification = cache_state.get('pending_clarification')
+        compute_context = ({**topic_context, '_pending_clarification': pending_clarification}
+                          if isinstance(pending_clarification, dict) else topic_context)
+        result, client = _compute_answer(message, history, compute_context)
         if enabled:
             try:
                 from .ai_persistent_router import persist_sources
@@ -307,7 +313,7 @@ def _answer_with_cache(message, history, topic_context, cache_state, cache_owner
         return measured(result, client)
 
 
-def _compute_answer_impl(message, history, topic_context):
+def _compute_answer_impl(message, history, topic_context, *, pending_clarification=None):
     """Trabajo acotado sin acceso a la sesión ni al consumo de cuotas.
 
     Todas las rutas comparten el presupuesto recibido por ContextVar. No se
@@ -345,7 +351,8 @@ def _compute_answer_impl(message, history, topic_context):
                 return researched, SimpleNamespace(usage={}, provider='verified-progressive-research', calls=0)
             from .ai_narrative_answers import narrative_answer
             try:
-                narrative = narrative_answer(message, history)
+                narrative = narrative_answer(message, history,
+                    pending_clarification=pending_clarification)
             except (TimeoutError, OSError, ValueError):
                 narrative = None
             if narrative is not None:
