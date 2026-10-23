@@ -82,6 +82,62 @@
         {"name": "Don Quijote", "role": "Protagonista que sale de aventuras como caballero andante."},
         {"name": "Sancho Panza", "role": "Labrador vecino de don Quijote que lo acompaña como escudero."}
       ]
+    },
+    {
+      "title": "1914. El año de la catástrofe",
+      "author": "Max Hastings",
+      "url": "https://www.planetadelibros.com/libro-1914/114547",
+      "categories": ["Historia", "Primera Guerra Mundial", "No ficción"],
+      "language": "es",
+      "description": "Examina los orígenes y el primer año de la Primera Guerra Mundial, con atención a las decisiones políticas y a la experiencia de los combatientes."
+    },
+    {
+      "title": "Los cañones de agosto",
+      "author": "Barbara W. Tuchman",
+      "url": "https://www.rbalibros.com/rba-no-ficcion/los-canones-de-agosto_5825",
+      "categories": ["Historia", "Primera Guerra Mundial", "No ficción"],
+      "language": "es",
+      "description": "Reconstruye los primeros treinta y un días de la Primera Guerra Mundial, desde el estallido del conflicto hasta la batalla del Marne."
+    },
+    {
+      "title": "1914-1918. Historia de la Primera Guerra Mundial",
+      "author": "David Stevenson",
+      "url": "https://www.casadellibro.com/libro-1914-1918-la-historia-de-la-primera-guerra-mundial/9788499923574/2190050",
+      "categories": ["Historia", "Primera Guerra Mundial", "No ficción"],
+      "language": "es",
+      "description": "Reexamina las causas, el desarrollo y el impacto de la Primera Guerra Mundial en el contexto internacional de su época."
+    },
+    {
+      "title": "Sin novedad en el frente",
+      "author": "Erich Maria Remarque",
+      "url": "https://es.wikipedia.org/wiki/Sin_novedad_en_el_frente_(novela)",
+      "categories": ["Novela", "Primera Guerra Mundial", "Fiction"],
+      "language": "es",
+      "description": "Novela que sigue a Paul Bäumer, un joven soldado alemán, y muestra la dureza de la guerra de trincheras durante la Primera Guerra Mundial."
+    },
+    {
+      "title": "Historia de los griegos",
+      "author": "Indro Montanelli",
+      "url": "https://www.planetadelibros.cl/libro-historia-de-los-griegos/127854",
+      "categories": ["Historia", "Antigua Grecia", "No ficción"],
+      "language": "es",
+      "description": "Recorre la historia política y cultural de la Grecia antigua, desde sus primeras civilizaciones hasta la época helenística."
+    },
+    {
+      "title": "Los griegos: una gran aventura",
+      "author": "Isaac Asimov",
+      "url": "https://www.alianzaeditorial.es/primer_capitulo/los-griegos.pdf",
+      "categories": ["Historia", "Antigua Grecia", "No ficción"],
+      "language": "es",
+      "description": "Presenta un recorrido divulgativo por la historia y la cultura de la antigua Grecia."
+    },
+    {
+      "title": "Historia de la guerra del Peloponeso",
+      "author": "Tucídides",
+      "url": "https://es.wikipedia.org/wiki/Historia_de_la_guerra_del_Peloponeso",
+      "categories": ["Historia", "Antigua Grecia", "No ficción"],
+      "language": "es",
+      "description": "Relata la guerra entre Atenas y Esparta y las alianzas griegas del siglo V a. C., escrita por un general ateniense que participó en el conflicto."
     }
   ]
 }

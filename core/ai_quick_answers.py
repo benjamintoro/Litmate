@@ -173,7 +173,7 @@ def _simple_topic_request(message, query):
                   'opciones opcion ensayos ensayo algo algun alguna algunos algunas necesito '
                   'busco buscando estoy dame dime aprender entender sobre acerca de del el la los '
                   'las en y para a un una uno dos tres cuatro cinco mas otros otras otro otra '
-                  'distintos diferentes autores son sean seanme'.split())
+                  'distintos diferentes autores son sean seanme tambien también ademas además'.split())
     return all(word in allowed or word in {'1', '2', '3', '4', '5'}
                for word in re.findall(r'\w+', residue))
 

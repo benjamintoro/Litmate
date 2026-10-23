@@ -8,7 +8,7 @@ from .ai_http import local_origin, read_json_url
 from .literary_ai import (ANSWER_SCHEMA, REVIEW_SCHEMA, ROUTE_SCHEMA,
                           ProviderUnavailable)
 from .literary_quality import PLAN_SCHEMA, AUDIT_SCHEMA, character_names, evidence_words
-from .ai_budget import BudgetExpired, current_deadline
+from .ai_budget import BudgetExpired, current_deadline, CHAT_WORK_SECONDS
 
 
 def _external_summary_transport(data):
@@ -93,7 +93,7 @@ class OllamaJSON:
         self.deadline = time.monotonic() + max(.1, min(float(total_timeout), 600))
         if current_deadline() is not None:
             self.deadline = min(self.deadline, current_deadline())
-        self.interactive = current_deadline() is not None and self.deadline - time.monotonic() <= 9
+        self.interactive = current_deadline() is not None and self.deadline - time.monotonic() <= CHAT_WORK_SECONDS
         if self.interactive:
             self.answer_tokens = min(self.answer_tokens, 512)
         self.usage = {'prompt_tokens': 0, 'completion_tokens': 0, 'total_tokens': 0}

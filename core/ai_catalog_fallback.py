@@ -3,12 +3,14 @@ import re
 import unicodedata
 from urllib.parse import parse_qs, urlsplit
 from django.conf import settings
+from . import topic_reference
 from .books_google import public_query, rank_book_sources, source_synopsis, get_volume, volume_source, BooksUnavailable
 from .literary_ai import (ChatResult, canonical_sources, has_excerpt, looks_literary,
                          obvious_rejection, requires_exact_text, sanitized_history, normalized)
 
 
 _TOPIC_LABELS = {
+    'world war i': 'Primera Guerra Mundial', 'ancient history': 'historia antigua',
     'world war ii': 'Segunda Guerra Mundial',
     'history': 'historia', 'art': 'arte', 'philosophy': 'filosofía',
     'architecture': 'arquitectura', 'poetry': 'poesía', 'cooking': 'cocina',
@@ -18,7 +20,57 @@ _TOPIC_LABELS = {
     'japan': 'Japón', 'china': 'China', 'chile': 'Chile', 'peru': 'Perú',
     'mexico': 'México', 'spain': 'España', 'italy': 'Italia',
     'france': 'Francia',
+    'greece': 'Grecia', 'rome': 'Roma', 'astronomy': 'astronomía',
+    'psychology': 'psicología', 'economics': 'economía', 'biology': 'biología',
+    'cold war': 'Guerra Fría', 'french revolution': 'Revolución Francesa',
+    'industrial revolution': 'Revolución Industrial',
+    'spanish civil war': 'Guerra Civil Española', 'renaissance': 'Renacimiento',
+    'enlightenment': 'Ilustración', 'medieval history': 'historia medieval',
+    'archaeology': 'arqueología', 'mythology': 'mitología',
+    'greek mythology': 'mitología griega', 'norse mythology': 'mitología nórdica',
+    'biography': 'biografía', 'politics': 'política', 'ethics': 'ética',
+    'logic': 'lógica', 'metaphysics': 'metafísica', 'aesthetics': 'estética',
+    'religion': 'religión', 'sociology': 'sociología', 'anthropology': 'antropología',
+    'education': 'educación', 'linguistics': 'lingüística',
+    'psychoanalysis': 'psicoanálisis', 'management': 'gestión',
+    'globalization': 'globalización', 'gender': 'género',
+    'photography': 'fotografía', 'music': 'música', 'design': 'diseño',
+    'literary criticism': 'crítica literaria', 'comics': 'cómics',
+    'dystopia': 'distopía', 'utopia': 'utopía',
+    'magical realism': 'realismo mágico', 'coming of age': 'novela de formación',
+    'satire': 'sátira', 'classics': 'clásicos',
+    'contemporary literature': 'literatura contemporánea',
+    'spanish literature': 'literatura española', 'physics': 'física',
+    'chemistry': 'química', 'astrophysics': 'astrofísica',
+    'cosmology': 'cosmología', 'mathematics': 'matemáticas',
+    'statistics': 'estadística', 'anatomy': 'anatomía', 'genetics': 'genética',
+    'evolution': 'evolución', 'ecology': 'ecología',
+    'climate change': 'cambio climático', 'technology': 'tecnología',
+    'computing': 'informática', 'programming': 'programación',
+    'artificial intelligence': 'inteligencia artificial', 'engineering': 'ingeniería',
+    'robotics': 'robótica', 'nutrition': 'nutrición', 'gardening': 'jardinería',
+    'mindfulness': 'atención plena', 'meditation': 'meditación',
+    'astrology': 'astrología', 'dreams': 'sueños', 'migration': 'migración',
+    'betrayal': 'traición', 'mountains': 'montañas', 'soviet union': 'Unión Soviética',
+    'latin america': 'América Latina', 'mediterranean': 'Mediterráneo',
+    'africa': 'África', 'iran': 'Irán', 'turkey': 'Turquía',
 }
+
+
+def _topic_label(key):
+    """Etiqueta estable: primero las traducciones ya probadas, luego el diccionario."""
+    return _TOPIC_LABELS.get(key) or topic_reference.label(key)
+
+
+def _topic_article(key):
+    # El diccionario guarda el artículo de cada materia; las traducciones
+    # antiguas solo actúan como respaldo si faltara ese dato.
+    article = topic_reference.article(key)
+    if article:
+        return article if article.endswith(' ') else article + ' '
+    if key in {'art', 'horror', 'mystery', 'romance', 'space'}:
+        return 'el '
+    return 'la '
 
 
 def _topic_catalogue_origin(source):
@@ -143,7 +195,7 @@ def grounded_topic_fallback(message, sources):
         return None
     profile = book_topic_profile(message)
     facets = (*profile['subjects'], *profile['places'])
-    if not profile['structured'] or not facets or any(row[0] not in _TOPIC_LABELS for row in facets):
+    if not profile['structured'] or not facets or any(not _topic_label(row[0]) for row in facets):
         return None
     # «... de Orwell» puede ser una autoría solicitada, no otra materia.
     # Dejarla al recorrido completo en vez de ignorar silenciosamente el filtro.
@@ -171,11 +223,10 @@ def grounded_topic_fallback(message, sources):
     if not chosen or (requested and len(chosen) != requested):
         return None
     chosen = canonical_sources(chosen, 5)
-    subjects = [('el ' if row[0] in {'art', 'horror', 'mystery', 'romance', 'space'} else 'la ')
-                + _TOPIC_LABELS[row[0]] for row in profile['subjects']]
+    subjects = [_topic_article(row[0]) + _topic_label(row[0]) for row in profile['subjects']]
     scope = ', '.join(subjects[:-1]) + ' y ' + subjects[-1] if len(subjects) > 1 else subjects[0]
     if profile['places']:
-        scope += ' de ' + _TOPIC_LABELS[profile['places'][0][0]]
+        scope += ' de ' + _topic_label(profile['places'][0][0])
     lines, claims, books = ['¡Buen tema!'], [], []
     for number, (source, proof) in enumerate(zip(chosen, proofs), 1):
         statement = f'**{source["title"]} — {source["author"]}**: Una opción para explorar {scope}.'

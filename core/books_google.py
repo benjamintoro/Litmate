@@ -15,6 +15,7 @@ from django.core.cache import cache
 from .ai_http import read_json_url
 from .ai_budget import BudgetExpired, budget_timeout, check_budget
 from .ai_privacy import excerpt_marker
+from . import topic_reference
 
 
 class BooksUnavailable(Exception):
@@ -258,10 +259,18 @@ def book_search_profile(query):
 # búsqueda que incluya Japón no demuestra por sí sola que un resultado trate
 # sobre arte japonés.
 _TOPIC_SUBJECTS = (
+    ('world war i', r'\b(?:primera|1[ªa]?|i) guerra mundial\b|\b(?:wwi|ww1|pgm|gran guerra)\b|'
+                    r'\bworld war (?:i|1)\b',
+     ('primera guerra mundial', 'world war i', 'world war, 1914-1918',
+      'world war 1914-1918', 'world war, 1914 1918', 'world war 1914 1918', 'great war')),
     ('world war ii', r'\b(?:segunda|2[ªa]?|ii) guerra mundial\b|\b(?:wwii|ww2|sgm)\b|'
                      r'\bworld war (?:ii|2)\b',
      ('segunda guerra mundial', 'world war ii', 'world war, 1939-1945',
       'world war 1939-1945', 'world war, 1939 1945', 'world war 1939 1945')),
+    ('ancient history', r'\b(?:antigua grecia|grecia antigua|grecia clasica|antigua roma|'
+                       r'roma antigua|historia antigua|antiguedad|ancient greece|ancient rome)\b',
+     ('ancient', 'antigua', 'antiguo', 'antiguedad', 'antiquity', 'antike', 'antiquite',
+      'to 146 b.c.', 'to 146 b c', 'to 146 bc')),
     ('history', r'\bhistoria\b|\bhistoric[oa]s?\b|\bhistory\b',
      ('historia', 'history', 'historical', 'histoire')),
     ('art', r'\barte\b|\bartes\b|\bart\b|\bartistic[oa]s?\b',
@@ -270,6 +279,12 @@ _TOPIC_SUBJECTS = (
     ('architecture', r'\barquitectura\b|\barchitecture\b', ('arquitectura', 'architecture')),
     ('poetry', r'\bpoesia\b|\bpoetry\b', ('poesia', 'poetry', 'poesie')),
     ('cooking', r'\bcocina\b|\bgastronomia\b|\bcooking\b', ('cocina', 'cooking', 'gastronomia', 'cookery')),
+    ('astronomy', r'\bastronomia\b|\bastronomy\b', ('astronomia', 'astronomy', 'astronomie')),
+    ('science', r'\bciencia(?! ficcion)\b|\bciencias\b|\bscience(?! fiction)\b',
+     ('ciencia', 'ciencias', 'science', 'sciences')),
+    ('psychology', r'\bpsicologia\b|\bpsychology\b', ('psicologia', 'psychology', 'psychologie')),
+    ('economics', r'\beconomia\b|\beconomics\b', ('economia', 'economics', 'economy', 'economie')),
+    ('biology', r'\bbiologia\b|\bbiology\b', ('biologia', 'biology', 'biologie')),
     ('space', _SPACE_TOPIC,
      ('space', 'outer space', 'spaceflight', 'space travel', 'space exploration',
       'space colonies', 'space warfare', 'space opera', 'interplanetary voyages',
@@ -278,6 +293,9 @@ _TOPIC_SUBJECTS = (
       'aventura espacial', 'astronomy', 'astronomia', 'astrophysics', 'astrofisica', 'cosmology', 'cosmologia')),
 )
 _TOPIC_PLACES = (
+    ('greece', r'\bgrecia\b|\bgrieg[oa]s?\b|\bgreece\b|\bgreek\b',
+     ('grecia', 'griego', 'griega', 'griegos', 'griegas', 'greece', 'greek')),
+    ('rome', r'\broma\b|\brome\b|\broman[oa]s?\b', ('roma', 'rome', 'roman', 'romano', 'romana')),
     ('south korea', r'\bcorea del sur\b|\bsurcorean\w*\b|\bsouth korea\b',
      ('south korea', 'corea del sur', 'korea (south)', 'korea south', 'korean republic')),
     ('north korea', r'\bcorea del norte\b|\bnorcorean\w*\b|\bnorth korea\b',
@@ -296,35 +314,66 @@ _TOPIC_PLACES = (
 )
 
 
+def _catalog_subject(key):
+    """Materia de catálogo; el diccionario local es la fuente por defecto."""
+    legacy = {'world war i': 'world war, 1914-1918',
+              'world war ii': 'world war, 1939-1945', 'ancient history': 'ancient'}
+    return legacy.get(key) or topic_reference.catalog_subject(key, key)
+
+
+def _reference_rows(reference, kind, static_rows, excluded):
+    """Añade materias del diccionario sin duplicar ni reactivar exclusiones."""
+    rows = list(static_rows)
+    seen = {row[0] for row in rows}
+    for row in reference[kind]:
+        key = row[0]
+        if key in seen or key.replace(' ', '_') in excluded:
+            continue
+        rows.append(row)
+        seen.add(key)
+    return tuple(rows)
+
+
 def book_topic_profile(query):
     """Materias explícitas para buscar y verificar recomendaciones temáticas.
 
     No traduce un título entre comillas ni una consulta de identidad. Los
     ámbitos desconocidos conservan el texto del lector, sin adivinar materias.
+    Las frases del diccionario local se resuelven antes de tocar la red y la
+    coincidencia más larga impide que «segunda guerra mundial» active «guerra».
     """
     query = public_query(query)
     value = _normalized(query)
     if re.search(r'\b(?:isbn|intitle|inauthor|inpublisher|lccn|oclc):', value) or re.search(r'[«“"]', query):
         return {'subjects': (), 'places': (), 'query': query, 'structured': False}
-    subjects = tuple(row for row in _TOPIC_SUBJECTS if re.search(row[1], value))
     reading = book_search_profile(query)
+    # «Guerra y Paz» es el título de una novela, no una petición de materias
+    # bélicas y pacifistas. Se conserva como búsqueda de título.
+    title_like = bool(re.search(r'\bguerra\s+y\s+paz\b', value))
+    reference = topic_reference.resolve(query) if not title_like else {'subjects': (), 'places': ()}
+    subjects = () if title_like else _reference_rows(
+        reference, 'subjects',
+        tuple(row for row in _TOPIC_SUBJECTS if re.search(row[1], value)),
+        reading['excluded_genres'])
     if reading['fiction'] and reading['genre']:
         genre = reading['genre']
-        subjects += ((genre[2].lower(), genre[1], genre[3]),)
-    elif reading['fiction'] and subjects:
+        if genre[0] not in reading['excluded_genres'] and all(row[0] != genre[2].lower() for row in subjects):
+            subjects += ((genre[2].lower(), genre[1], genre[3]),)
+    elif reading['fiction'] and subjects and all(row[0] != 'fiction' for row in subjects):
         subjects += (('fiction', r'\bfiction\b|\bficcion\b|\bnovelas?\b', ('fiction', 'ficcion', 'novela')),)
     geography = re.sub(r'\b(?:en|idioma|al)\s+espanol\b', '', value)
-    place = next((row for row in _TOPIC_PLACES if re.search(row[1], geography)), None)
-    places = (place,) if place else ()
+    place = None if title_like else next(
+        (row for row in _TOPIC_PLACES if re.search(row[1], geography)), None)
+    places = _reference_rows(reference, 'places', (place,) if place else (),
+                             reading['excluded_genres'])
     # Solo activar restricciones de materia ante un tema explícito. "¿Quién
     # escribió El arte de la guerra?" continúa siendo una búsqueda de título.
     requested = bool(re.search(r'\b(?:recomiend\w*|busc\w*|libros?|obras?|books?|sobre)\b', value))
     standalone = bool(subjects and places and len(value.split()) <= 8)
     structured = bool(subjects and (requested or standalone))
     if structured:
-        # Open Library cataloga este conflicto por sus fechas, no por «wwii».
-        terms = [f'subject:"{"world war, 1939-1945" if row[0] == "world war ii" else row[0]}"'
-                 for row in (*subjects, *places)]
+        # Materias reales del catálogo; no mandar la petición conversacional.
+        terms = [f'subject:"{_catalog_subject(row[0])}"' for row in (*subjects, *places)]
         terms.extend(f'-subject:"{row[2].lower()}"' for row in GENRES
                      if row[0] in reading['excluded_genres'])
         public = ' '.join(terms)
@@ -353,8 +402,7 @@ def topic_matches(source, query):
     if not profile['structured']:
         return True
     text = _normalized(' '.join([str(source.get('title') or ''), str(source.get('subtitle') or ''),
-                                str(source.get('synopsis') or ''),
-                                category_text]))
+                                source_synopsis(source), category_text]))
     if (not book_search_profile(query)['fiction'] and not any(row[0] == 'poetry' for row in profile['subjects'])
             and not re.search(r'\b(?:novelas?|ficcion|fiction)\b', _normalized(query)) and re.search(
             r'\b(?:fiction|ficcion|novela)\b', re.sub(r'\bno[ -]ficcion\b|\bnon[ -]fiction\b', '', category_text))):

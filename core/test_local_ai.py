@@ -142,7 +142,7 @@ class LocalProviderTests(unittest.TestCase):
     def test_old_paid_settings_are_ignored(self):
         bot, client = build_assistant(settings, search=lambda query: [])
         self.assertEqual(client.provider, 'ollama-local')
-        self.assertEqual(bot.answer_model, 'qwen3.5:4b-q4_K_M')
+        self.assertEqual(bot.answer_model, settings.LITMATE_LOCAL_MODEL)
         self.assertFalse(hasattr(client, 'key'))
 
     def test_local_origin_rejects_url_credentials_paths_and_private_network_hosts(self):
@@ -436,6 +436,7 @@ class LocalRAGTests(SimpleTestCase):
         self.assertIn('1 libros', out.getvalue())
 
 
+@override_settings(LITMATE_AI_QUICK_ANSWERS=False, LITMATE_AI_LOCK_BACKEND='cache')
 class LocalEndpointTests(TestCase):
     def setUp(self):
         cache.clear()

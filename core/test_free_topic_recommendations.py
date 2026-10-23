@@ -26,10 +26,15 @@ class TopicRestrictionTests(SimpleTestCase):
             with self.subTest(query=query):
                 self.assertFalse(book_topic_profile(query)['structured'])
 
-    def test_unmapped_topic_keeps_meaning_and_removes_request_words(self):
+    def test_reference_dictionary_turns_known_science_topic_into_a_subject(self):
         profile = book_topic_profile('estoy buscando un libro sobre astronomia')
+        self.assertTrue(profile['structured'])
+        self.assertEqual(profile['query'], 'subject:"astronomy"')
+
+    def test_unmapped_topic_keeps_meaning_and_removes_request_words(self):
+        profile = book_topic_profile('estoy buscando un libro sobre cetreria')
         self.assertFalse(profile['structured'])
-        self.assertEqual(profile['query'], 'astronomia')
+        self.assertEqual(profile['query'], 'cetreria')
 
     def test_all_topic_facets_are_required_not_only_country(self):
         valid = {'title': 'Korean history', 'categories': ['Korea', 'History'], 'kind': 'book'}

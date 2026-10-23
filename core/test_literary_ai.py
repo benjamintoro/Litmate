@@ -457,6 +457,7 @@ class SearchTests(TestCase):
         self.assertIn('Open Library', {s['source'] for s in sources})
 
 
+@override_settings(LITMATE_AI_QUICK_ANSWERS=False, LITMATE_AI_LOCK_BACKEND='cache')
 class EndpointTests(TestCase):
     def setUp(self):
         cache.clear()

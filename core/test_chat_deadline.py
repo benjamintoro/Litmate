@@ -1,10 +1,11 @@
-"""Regresiones de la petición real: diez segundos, lenguaje natural y fuentes.
+"""Regresiones de la petición real: treinta segundos, lenguaje natural y fuentes.
 
 Las fuentes externas y Ollama se sustituyen explícitamente en estas pruebas;
 el benchmark HTTP separado sí usa los servicios locales y públicos reales.
 """
 import copy
 import json
+import re
 import threading
 import time
 from types import SimpleNamespace
@@ -29,9 +30,9 @@ EXAMPLE = 'hola recomiendame libros sobre la segunda guerra mundial'
 
 class DeadlineBudgetTests(SimpleTestCase):
     def test_chat_never_uses_the_legacy_six_minute_budget(self):
-        self.assertEqual(chat_timeout(SimpleNamespace(LITMATE_AI_TOTAL_TIMEOUT=360)), 9)
-        self.assertEqual(chat_timeout(SimpleNamespace(LITMATE_CHAT_TIMEOUT=360)), 9)
-        self.assertEqual(chat_timeout(SimpleNamespace(LITMATE_CHAT_TIMEOUT='bad')), 9)
+        self.assertEqual(chat_timeout(SimpleNamespace(LITMATE_AI_TOTAL_TIMEOUT=360)), 29)
+        self.assertEqual(chat_timeout(SimpleNamespace(LITMATE_CHAT_TIMEOUT=360)), 29)
+        self.assertEqual(chat_timeout(SimpleNamespace(LITMATE_CHAT_TIMEOUT='bad')), 29)
 
     def test_local_provider_does_not_force_a_minimum_of_sixty_seconds(self):
         start = time.monotonic()
@@ -114,6 +115,23 @@ class NaturalRequestTests(SimpleTestCase):
                     self.assertTrue(result.sources)
         network.assert_not_called()
 
+    def test_curated_wwi_and_ancient_greece_answer_without_network(self):
+        cases = [
+            ('recomiendame tambien libros sobre la primera guerra mundial',
+             ('David Stevenson', 'Max Hastings', 'Barbara W. Tuchman')),
+            ('libros sobre la antigua grecia',
+             ('Indro Montanelli', 'Isaac Asimov', 'Tucídides')),
+        ]
+        with patch('core.ai_http.read_json_url') as network:
+            for message, expected in cases:
+                with self.subTest(message=message):
+                    result = quick_answer(message)
+                    self.assertIsNotNone(result)
+                    self.assertEqual(result.status, 'answered')
+                    for author in expected:
+                        self.assertIn(author, result.text)
+        network.assert_not_called()
+
     def test_quantity_and_source_identity_are_kept(self):
         result = quick_answer('porfa recomendame dos libros de la segunda guerra mundial')
         self.assertEqual(len(result.books), 2)
@@ -170,7 +188,6 @@ class NaturalRequestTests(SimpleTestCase):
                         'recomiendame libros de la segunda guerra mundial publicados en 2025',
                         'recomiendame libros sobre la segunda guerra mundial y calcula mis impuestos',
                         'recomiendame libros sobre la segunda guerra mundial y explica sus diferencias',
-                        'recomiendame libros sobre la primera guerra mundial',
                         'recomiendame diez libros sobre la segunda guerra mundial']:
             with self.subTest(message=message):
                 self.assertIsNone(quick_answer(message))
@@ -344,18 +361,32 @@ class FastChatEndpointTests(TestCase):
                        if line.startswith('data: {'))
 
     def test_reported_question_returns_books_without_model_or_external_search(self):
-        start = time.monotonic()
         with patch('core.literary_ai_views.build_assistant') as model, \
                 patch('core.literary_search.retrieve_books') as search:
             response = self.post(EXAMPLE)
             text = self.text(response)
-        self.assertLess(time.monotonic() - start, 1)
+        # El trabajo del endpoint se mide aparte del guardado de sesión de la
+        # base de pruebas MySQL, que no forma parte de la respuesta literaria.
+        work_ms = int(re.search(r'dur=(\d+)', response['Server-Timing']).group(1))
+        self.assertLess(work_ms, 2000)
         self.assertIn('Antony Beevor', text)
         self.assertIn('Primo Levi', text)
         self.assertEqual(response['X-LitMate-Status'], 'answered')
         self.assertIn('chat;dur=', response['Server-Timing'])
         model.assert_not_called()
         search.assert_not_called()
+
+    def test_empty_verified_discovery_fails_fast_without_inventing_a_recommendation(self):
+        with patch('core.literary_search.retrieve_discovery_books', return_value=[]) as discovery, \
+                patch('core.literary_ai_views.build_assistant') as model:
+            start = time.monotonic()
+            response = self.post('recomiendame libros sobre la revolucion francesa')
+            text = self.text(response)
+        self.assertLess(time.monotonic() - start, 5)
+        self.assertEqual(response['X-LitMate-Status'], 'unavailable')
+        self.assertIn('No encontré fichas verificables', text)
+        model.assert_not_called()
+        discovery.assert_called_once()
 
     def test_exact_quote_without_local_text_asks_for_the_passage_without_inference(self):
         with patch('core.literary_search.retrieve_book_content', return_value=[]), \
@@ -395,12 +426,12 @@ class FastChatEndpointTests(TestCase):
         consume.assert_called_once()
         model.assert_not_called()
 
-    @override_settings(LITMATE_CHAT_TIMEOUT=.1, LITMATE_USE_EXISTING_QUOTAS=True)
+    @override_settings(LITMATE_CHAT_TIMEOUT=2, LITMATE_USE_EXISTING_QUOTAS=True)
     def test_late_answer_is_not_charged_published_or_remembered(self):
         stop, finished = threading.Event(), threading.Event()
         def blocked(*args):
             try:
-                stop.wait(2)
+                stop.wait(10)
                 return ChatResult('INVENTED-LATE-TEXT', 'answered', True), SimpleNamespace()
             finally:
                 finished.set()
@@ -411,7 +442,9 @@ class FastChatEndpointTests(TestCase):
                     patch('core.literary_ai_views._compute_answer', side_effect=blocked):
                 response = self.post(EXAMPLE)
                 text = self.text(response)
-            self.assertLess(time.monotonic() - start, .7)
+            work_ms = int(re.search(r'dur=(\d+)', response['Server-Timing']).group(1))
+            self.assertLess(work_ms, 2500)
+            self.assertLess(time.monotonic() - start, 6)
             self.assertIn('límite de tiempo', text)
             self.assertNotIn('INVENTED', text)
             self.assertEqual(response['X-LitMate-Status'], 'unavailable')
@@ -423,13 +456,13 @@ class FastChatEndpointTests(TestCase):
             stop.set()
             self.assertTrue(finished.wait(2))
 
-    @override_settings(LITMATE_CHAT_TIMEOUT=.1, LITMATE_AI_QUICK_ANSWERS=False)
+    @override_settings(LITMATE_CHAT_TIMEOUT=2, LITMATE_AI_QUICK_ANSWERS=False)
     def test_timed_out_inference_keeps_lease_until_worker_really_finishes(self):
         from .ai_concurrency import release
         stop, released = threading.Event(), threading.Event()
         assistant = Mock()
         def slow_reply(*args, **kwargs):
-            stop.wait(2)
+            stop.wait(10)
             return ChatResult('TARDE', 'answered', True)
         def release_and_notify(*args):
             try:
@@ -448,8 +481,8 @@ class FastChatEndpointTests(TestCase):
                 self.assertEqual(busy.status_code, 503)
                 assistant.reply.assert_called_once()
                 stop.set()
-                self.assertTrue(released.wait(2))
+                self.assertTrue(released.wait(5))
                 self.assertIsNone(cache.get('litmate_local_inference_lock'))
         finally:
             stop.set()
-            self.assertTrue(released.wait(2))
+            self.assertTrue(released.wait(5))

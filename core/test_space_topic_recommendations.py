@@ -59,9 +59,11 @@ class SpaceTopicRestrictionTests(SimpleTestCase):
                 self.assertFalse(book_search_profile(query)['fiction'])
                 self.assertNotIn('science fiction', {row[0] for row in book_topic_profile(query)['subjects']})
 
-    def test_the_word_space_alone_does_not_invent_a_fiction_preference(self):
+    def test_the_word_space_alone_is_a_subject_but_not_a_fiction_preference(self):
         self.assertFalse(book_search_profile('Busco libros sobre el espacio')['fiction'])
-        self.assertFalse(book_topic_profile('Busco libros sobre el espacio')['structured'])
+        profile = book_topic_profile('Busco libros sobre el espacio')
+        self.assertTrue(profile['structured'])
+        self.assertEqual(profile['query'], 'subject:"space"')
 
     def test_quoted_titles_are_not_replaced_with_subject_searches(self):
         for query in ('Busco el libro «Temática espacial»', 'intitle:Temática espacial',

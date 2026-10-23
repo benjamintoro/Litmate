@@ -588,7 +588,7 @@ class NaturalCatalogFallbackTests(SimpleTestCase):
             sources.append(volume_source(item))
         result = catalog_fallback('Recomiéndame dos novelas de ciencia ficción y explica sus diferencias', [],
                                   Mock(return_value=sources))
-        self.assertIn('No encontré una descripción fiable de su trama', result.text)
+        self.assertIn('no encontré una descripción fiable', result.text.lower())
         self.assertIn('Las sinopsis necesitan más detalle', result.text)
         self.assertNotIn('robots e inteligencia artificial', result.text)
 

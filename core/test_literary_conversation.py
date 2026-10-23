@@ -138,6 +138,7 @@ class TopicResolutionTests(SimpleTestCase):
 
 @override_settings(LITMATE_AI_BIBLIOGRAPHIC_FAST_PATH=False,
                    LITMATE_AI_CATALOG_FALLBACK=False,
+                   LITMATE_AI_QUICK_ANSWERS=False,
                    LITMATE_AI_LOCK_BACKEND='cache')
 class PendingTopicEndpointTests(TestCase):
     def setUp(self):

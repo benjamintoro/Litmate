@@ -119,7 +119,7 @@ class Command(BaseCommand):
                                                           else 'plan y auditoría completos'))
         from core.ai_budget import chat_timeout
         self.stdout.write('Presupuesto del chat HTTP: ' + str(chat_timeout(settings)) + ' s de trabajo; '
-                          'cliente: máximo 10 s de espera.')
+                          'cliente: máximo 30 s de espera.')
         self.stdout.write('Presupuesto del diagnóstico offline: ' + str(getattr(settings, 'LITMATE_AI_TOTAL_TIMEOUT', 300)) + ' s.')
         self.stdout.write('Buscador: ' + ('SearXNG + Wikipedia' if getattr(
             settings, 'LITMATE_AI_USE_SEARXNG', True) else 'Wikipedia; SearXNG desactivado'))

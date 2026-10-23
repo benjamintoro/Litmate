@@ -6,7 +6,7 @@ import re
 import socket
 import time
 from datetime import datetime, timezone
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlencode, urlsplit
@@ -16,7 +16,7 @@ from django.core.cache import cache
 from django.db.models import Case, IntegerField, Q, Value, When
 from .ai_http import NoRedirects, local_origin, read_json_url, read_bounded
 from .ai_budget import (budget_timeout, submit_with_budget, check_budget, pool_in_budget,
-                        request_budget, current_deadline)
+                        request_budget, current_deadline, CHAT_WORK_SECONDS)
 from .literary_ai import canonical_sources, clean_text, normalized, safe_source_url, has_excerpt
 from .local_rag import retrieve_fragments
 from .books_google import (search_volumes, get_volume, volume_source, public_query, BooksUnavailable,
@@ -51,11 +51,11 @@ DISCOVERY_ONLY_EXACT_HOSTS = ('lotr.fandom.com',)
 def _retrieval_embedder():
     """En chat corto usa FTS ya indexado, sin cargar otra red neuronal en GPU.
 
-    El diagnóstico/indexado offline conserva recuperación híbrida. Con nueve
-    segundos, cambiar al modelo de embeddings puede gastar todo el turno antes
+    El diagnóstico/indexado offline conserva recuperación híbrida. En el chat,
+    cambiar al modelo de embeddings puede gastar todo el turno antes
     de recuperar un solo pasaje; no modifica el índice ni sus evidencias.
     """
-    if current_deadline() is not None and budget_timeout(30) <= 9:
+    if current_deadline() is not None and budget_timeout(30) <= CHAT_WORK_SECONDS:
         return None
     from .local_embeddings import configured_embedder
     return configured_embedder(settings)
@@ -112,7 +112,7 @@ def search_catalog(query):
              'source': 'Catálogo LitMate', 'book_id': 'db_' + str(book.pk), 'kind': 'book'} for book in books]
 
 
-def search_google(query):
+def search_google(query, *, details=True):
     if not getattr(settings, 'LITMATE_USE_GOOGLE_BOOKS_API', True):
         return []
     if not str(getattr(settings, 'GOOGLE_BOOKS_API_KEY', '')).strip():
@@ -142,7 +142,7 @@ def search_google(query):
         items = list(by_id.values())
         sources = rank_book_sources([volume_source(item) for item in items], query,
                                     distinct_works=profile['fiction'])
-        selected_ids = [source['book_id'] for source in sources[:2] if not source.get('synopsis')]
+        selected_ids = [source['book_id'] for source in sources[:2] if details and not source.get('synopsis')]
         for index, item in enumerate(items):
             if item.get('id') in selected_ids and re.fullmatch(
                     r'[A-Za-z0-9_-]{1,100}', str(item.get('id', ''))):
@@ -184,7 +184,7 @@ def _openlibrary_fetch(url, *, timeout):
     return result
 
 
-def search_openlibrary(query):
+def search_openlibrary(query, *, details=True):
     from .literary_sources import research_scope, account_research
     # La búsqueda bibliográfica es una API existente, no otra consulta SearXNG;
     # su tiempo HTTP sí se descuenta del presupuesto externo compartido.
@@ -197,7 +197,7 @@ def search_openlibrary(query):
         started = time.monotonic()
         try:
             with request_budget(started + budget_timeout(min(15, remaining))):
-                return _search_openlibrary(query)
+                return _search_openlibrary(query, details=details)
         finally:
             account_research(time.monotonic() - started)
 
@@ -422,7 +422,7 @@ def _openlibrary_detail(work_id, *, editions, reads):
         return None
 
 
-def _search_openlibrary(query):
+def _search_openlibrary(query, *, details=True):
     query = public_query(query)
     if not query:
         return []
@@ -442,7 +442,7 @@ def _search_openlibrary(query):
     catalog_query = ''.join(parts).strip()
     if requested_language:
         catalog_query += ' language:' + requested_language
-    key = _cache_key('litmate_openlibrary_v8:', catalog_query + ':fiction=' +
+    key = _cache_key('litmate_openlibrary_v9:', catalog_query + ':details=' + str(details) + ':fiction=' +
                      str(bool(re.search(r'\b(?:novelas?|ficcion|fiction)\b', normalized(query)))))
     cached = _cached(key)
     if cached is not None:
@@ -457,6 +457,9 @@ def _search_openlibrary(query):
     params = {'q': catalog_query, 'limit': 12 if profile['structured'] else 5, 'lang': 'es',
               'fields': 'key,title,subtitle,author_name,author_key,first_publish_year,subject,cover_i,language,'
                         'editions,editions.key,editions.title,editions.subtitle,editions.language'}
+    if not details:
+        # Encontrar obras no requiere descargar sus ediciones ni sus sinopsis.
+        params['fields'] = 'key,title,subtitle,author_name,first_publish_year,subject,cover_i,language'
     search_url = 'https://openlibrary.org/search.json?' + urlencode(params)
     try:
         data = _openlibrary_fetch(search_url, timeout=6)
@@ -521,6 +524,8 @@ def _search_openlibrary(query):
                     break
         results.append(source)
     results = rank_book_sources(results, query, distinct_works=True)[:5]
+    if not details:
+        return _save(key, SearchResults(results, providers={'Open Library': 'ok'}))
     reads = {'used': 0}
     for source, edition, author_keys in alias_candidates:
         if source in results and reads['used'] < 2:
@@ -550,6 +555,72 @@ def _search_openlibrary(query):
                                                          requested_language=requested_language):
                             break
     return _save(key, SearchResults(results, providers={'Open Library': 'ok'}))
+
+
+def retrieve_discovery_books(query, *, accept=None):
+    """Busca fichas ligeras y retorna al tener opciones verificadas, no al último timeout.
+
+    SQL y cada API tienen conexiones propias; nunca reciben sesión ni consumen
+    cuota. ``accept`` es un validador local, no un veredicto del modelo. Se
+    preservan las fichas ya obtenidas aunque otra fuente falle o quede pendiente.
+    """
+    from .literary_research import public_research_queries
+    public = public_research_queries(query)
+    if not public:
+        return SearchResults(status='disabled')
+    query = public[0]
+    from .literary_knowledge import knowledge_revision, search_knowledge
+    fingerprint = (book_topic_profile(query)['query'] + ':' + knowledge_revision(settings)
+        + ':' + str(getattr(settings, 'LITMATE_AI_USE_OPENLIBRARY', True))
+        + ':' + str(getattr(settings, 'LITMATE_USE_GOOGLE_BOOKS_API', False)))
+    key = _cache_key('litmate_book_discovery_v1:', fingerprint)
+    cached = _cached(key)
+    if cached is not None and (accept is None or accept(cached)):
+        return cached
+    results = search_knowledge(query, maximum=8)
+    if results and accept is not None and accept(results):
+        return canonical_sources(results)
+
+    def local_catalog():
+        from django.db import connections
+        try:
+            return search_catalog(query)
+        finally:
+            connections.close_all()
+
+    def google():
+        return search_google(query, details=False)
+
+    def openlibrary():
+        return search_openlibrary(query, details=False)
+
+    providers = {}
+    jobs = [('Catálogo LitMate', local_catalog)]
+    if getattr(settings, 'LITMATE_USE_GOOGLE_BOOKS_API', False):
+        jobs.append(('Google Books', google))
+    if getattr(settings, 'LITMATE_AI_USE_OPENLIBRARY', True):
+        jobs.append(('Open Library', openlibrary))
+    with pool_in_budget(len(jobs)) as pool:
+        pending = {submit_with_budget(pool, function): name for name, function in jobs}
+        while pending:
+            completed, _ = wait(pending, timeout=budget_timeout(12), return_when=FIRST_COMPLETED)
+            if not completed:
+                break
+            for future in completed:
+                name = pending.pop(future)
+                try:
+                    found = future.result()
+                    results.extend(found)
+                    providers[name] = getattr(found, 'status', 'ok' if found else 'empty')
+                except Exception as exc:
+                    providers[name] = error_status(exc)
+            sources = canonical_sources(rank_book_sources(results, query, distinct_works=True))
+            if sources and accept is not None and accept(sources):
+                return _save(key, SearchResults(sources, providers=providers))
+    sources = canonical_sources(rank_book_sources(results, query, distinct_works=True))
+    failed = bool(pending) or any(value not in {'ok', 'empty', 'disabled'} for value in providers.values())
+    status = 'partial' if failed and sources else 'unavailable' if failed else 'ok'
+    return _save(key, SearchResults(sources, status=status, providers=providers))
 
 
 def retrieve_books(query):

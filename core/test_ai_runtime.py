@@ -261,11 +261,17 @@ class BibliographicEndpointTests(TestCase):
     def test_metadata_answers_without_model_even_when_inference_is_busy(self):
         cache.set('litmate_local_inference_lock', 'ongoing-inference', timeout=60)
         with patch('core.literary_search.search_google', return_value=[FULL_METADATA]), \
+                patch('core.literary_search.search_openlibrary', return_value=[]), \
                 patch('core.literary_ai_views.build_assistant') as builder:
             response = self.client.post('/chatbot_query/', json.dumps({'message': '¿Quién escribió «1984»?'}),
                                         content_type='application/json')
         self.assertEqual(response.status_code, 200)
-        self.assertIn('lo escribió **George Orwell**', self.text(response))
+        text = self.text(response)
+        # La ruta rápida de catálogo puede responder antes que la ficha de
+        # Google Books; en ambos casos la autoría queda respaldada por fuente.
+        self.assertIn('1984', text)
+        self.assertIn('George Orwell', text)
+        self.assertIn('https://books.google.com/books?id=volume_1984', text)
         builder.assert_not_called()
         self.assertEqual(cache.get('litmate_local_inference_lock'), 'ongoing-inference')
 

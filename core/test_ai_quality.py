@@ -11,7 +11,7 @@ from pathlib import Path
 from unittest.mock import Mock, patch
 from django.core.management import call_command
 from django.core.management.base import CommandError
-from django.test import TestCase, SimpleTestCase
+from django.test import TestCase, SimpleTestCase, override_settings
 from .ai_budget import request_budget, budget_timeout, submit_with_budget, BudgetExpired
 from .literary_ai import LiteraryAssistant, canonical_sources, sanitized_history
 from .literary_quality import validate_plan, validate_audit, resolve_followup_books
@@ -484,6 +484,7 @@ class AcceptanceCommandTests(SimpleTestCase):
             self.assertTrue(report['cases'][0]['failures'])
 
 
+@override_settings(LITMATE_AI_QUICK_ANSWERS=False, LITMATE_AI_LOCK_BACKEND='cache')
 class QualityEndpointTests(TestCase):
     def test_only_an_audited_response_reaches_legacy_sse(self):
         llm = QualityLLM()

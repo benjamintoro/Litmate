@@ -10,6 +10,8 @@ _deadline = ContextVar('litmate_ai_deadline', default=None)
 # Sin cola ilimitada: una fuente atascada no permite acumular hilos por visita.
 _chat_pool = ThreadPoolExecutor(max_workers=2, thread_name_prefix='litmate-chat')
 _chat_slots = BoundedSemaphore(2)
+CHAT_RESPONSE_SECONDS = 30
+CHAT_WORK_SECONDS = CHAT_RESPONSE_SECONDS - 1
 
 
 class BudgetExpired(TimeoutError):
@@ -23,10 +25,10 @@ class WorkerBusy(Exception):
 def chat_timeout(config):
     """Reserva un segundo para sesión/HTTP; .env antiguo no puede volver a 360 s."""
     try:
-        value = float(getattr(config, 'LITMATE_CHAT_TIMEOUT', 9))
+        value = float(getattr(config, 'LITMATE_CHAT_TIMEOUT', CHAT_WORK_SECONDS))
     except (TypeError, ValueError):
-        value = 9
-    return max(.1, min(value, 9))
+        value = CHAT_WORK_SECONDS
+    return max(.1, min(value, CHAT_WORK_SECONDS))
 
 
 def current_deadline():
@@ -60,7 +62,7 @@ def run_before_deadline(function, deadline, *args):
             _chat_slots.release()
             raise
         try:
-            return future.result(timeout=budget_timeout(9))
+            return future.result(timeout=budget_timeout(CHAT_WORK_SECONDS))
         except FutureTimeout:
             # No liberar aquí: un proveedor no cooperativo puede seguir activo.
             raise BudgetExpired('tiempo_total_agotado') from None

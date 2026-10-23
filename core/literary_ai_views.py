@@ -142,14 +142,47 @@ def _compute_answer(message, history, topic_context):
                 return direct, SimpleNamespace(usage={}, provider='verified-local-facts', calls=0)
             from .literary_research import is_topic_recommendation
             if is_topic_recommendation(retrieval_message):
-                from .literary_search import retrieve_books
+                from .literary_search import retrieve_discovery_books
+                from .literary_ai import requested_book_count
+                from .books_google import topic_matches
+                minimum = requested_book_count(message) or 3
+                last_discovery = None
+
+                def discovery(query):
+                    # No cerrar la fuente lenta con una única ficha local:
+                    # aceptar solo cuando ya hay opciones que respaldan el tema.
+                    # Se valida contra la consulta temática resuelta, no contra
+                    # una elipsis como «otros dos».
+                    nonlocal last_discovery
+
+                    def enough(found):
+                        return sum(1 for source in found
+                                   if source.get('kind') == 'book'
+                                   and topic_matches(source, query)) >= minimum
+                    last_discovery = retrieve_discovery_books(query, accept=enough)
+                    return last_discovery
+
                 try:
-                    with request_budget(time.monotonic() + budget_timeout(2.5)):
-                        direct = quick_answer(message, history, topic_context=topic_context, search=retrieve_books)
+                    # Descubrimiento ligero: devuelve en cuanto hay fichas
+                    # verificadas y reserva tiempo para el modelo si aún faltan.
+                    with request_budget(time.monotonic() + budget_timeout(18)):
+                        direct = quick_answer(message, history, topic_context=topic_context,
+                                              search=discovery)
                 except BudgetExpired:
                     direct = None
                 if direct is not None:
-                    return direct, SimpleNamespace(usage={}, provider='verified-catalogue', calls=0)
+                    return direct, SimpleNamespace(usage={}, provider='verified-discovery', calls=0)
+                if (last_discovery is not None
+                        and not any(source.get('kind') == 'book' for source in last_discovery)):
+                    # Sin fichas verificables no se deja hablar al modelo: una
+                    # recomendación sin fuente sería una invención y esperarla
+                    # consumiría el turno entero. Es un fallo honesto y rápido.
+                    return (ChatResult('No encontré fichas verificables sobre ese tema en este '
+                                       'momento. No voy a inventar títulos; puedes volver a '
+                                       'intentarlo en unos minutos.', 'unavailable',
+                                       diagnostics={'discovery_empty': True,
+                                                    'provider_error': 'sin_fuentes_verificables'}),
+                            SimpleNamespace(usage={}, provider='verified-discovery', calls=0))
             else:
                 from .ai_quick_answers import catalogue_lookup_answer
                 from .literary_search import retrieve_books

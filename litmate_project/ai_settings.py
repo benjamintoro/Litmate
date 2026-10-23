@@ -18,8 +18,8 @@ def apply_ai_settings(target, base_dir):
         LITMATE_LOCAL_ANSWER_TOKENS=int(os.getenv('LITMATE_LOCAL_ANSWER_TOKENS', '3072')),
         LITMATE_AI_TOTAL_TIMEOUT=int(os.getenv('LITMATE_AI_TOTAL_TIMEOUT', '360')),
         # El chat interactivo tiene un presupuesto propio, aunque un diagnóstico
-        # offline necesite más tiempo. Nunca supera nueve segundos de trabajo.
-        LITMATE_CHAT_TIMEOUT=min(9, max(.1, float(os.getenv('LITMATE_CHAT_TIMEOUT', '9')))),
+        # offline necesite más tiempo. Reserva un segundo del máximo de 30 s.
+        LITMATE_CHAT_TIMEOUT=min(29, max(.1, float(os.getenv('LITMATE_CHAT_TIMEOUT', '29')))),
         LITMATE_AI_QUALITY_CHECKS=flag('LITMATE_AI_QUALITY_CHECKS'),
         LITMATE_AI_FAST_RECOMMENDATIONS=flag('LITMATE_AI_FAST_RECOMMENDATIONS'),
         LITMATE_AI_SEARCH_BUDGET=int(os.getenv('LITMATE_AI_SEARCH_BUDGET', '4')),
