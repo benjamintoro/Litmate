@@ -7,8 +7,8 @@ Commits locales de esta sesión: `f12ee52` (seguridad), `057a687` (IA),
 respuestas verificadas rápidas), `1f3a7b7` (métricas honestas de timeout),
 `45babb1` (descubrimiento en 30 segundos), `4c08d83` (arquitectura
 persistente y rutas rápidas verificadas; punto de control local de esta
-intervención) y `33d1d47` (filtro de páginas de desambiguación y benchmark
-ampliado).
+intervención), `33d1d47` (filtro de páginas de desambiguación y benchmark
+ampliado) y `b08e841` (comparaciones reservadas al pipeline completo).
 
 ## Intervención vigente — arquitectura persistente y rutas rápidas verificadas
 
