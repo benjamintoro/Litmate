@@ -18,7 +18,8 @@ from .literary_ai import (build_assistant, ChatResult, MAX_HISTORY, MAX_MESSAGE,
 from .quotas import cuota_disponible, verificar_y_consumir_cuota
 from .ai_concurrency import acquire, release, rate_increment
 from .ai_budget import (request_budget, BudgetExpired, WorkerBusy, chat_timeout,
-                        run_before_deadline, budget_timeout, check_budget)
+                        run_before_deadline, budget_timeout, check_budget,
+                        pool_in_budget, submit_with_budget)
 from .literary_sources import bounded_research
 from .literary_conversation import resolve_topic_context, remember_topic
 
@@ -113,6 +114,90 @@ def remember(request, state, message, result, elapsed_ms, client, *, topic_conte
     request.session.modified = True
 
 
+def _model_answer(message, history, topic_context, retrieval_message):
+    """Investiga también obras desconocidas mientras Ollama prepara su respuesta.
+
+    El respaldo no espera a una inferencia extra: conserva resultados públicos
+    por si falla la generación. Se reserva un margen dentro del deadline único
+    para publicar las referencias, sin reiniciar el reloj ni tocar la sesión.
+    """
+    from .literary_ai import looks_literary, normalized, requires_exact_text, has_excerpt, simple_literary_route
+    from .literary_identity import resolve_followup_context
+    from .literary_research import public_research_queries
+    from .literary_search import retrieve_web
+    from .literary_sources import SearchResults
+    reference = resolve_followup_context(message, history)
+    route = simple_literary_route(message)
+    eligible = (getattr(settings, 'LITMATE_AI_USE_WEB', True)
+                and not requires_exact_text(message) and not has_excerpt(message)
+                and not reference['ambiguous']
+                and (looks_literary(message, history) or route is not None))
+    queries = public_research_queries(retrieval_message, reference['books']) if eligible else []
+    with pool_in_budget(1) as pool:
+        pending = None
+        if queries:
+            def research():
+                try:
+                    with request_budget(time.monotonic() + budget_timeout(8)):
+                        return retrieve_web(queries[0])
+                except (TimeoutError, OSError, ValueError):
+                    return SearchResults(status='unavailable')
+            pending = submit_with_budget(pool, research)
+
+        def web_search(query):
+            if pending is not None and normalized(query) == normalized(queries[0]):
+                try:
+                    return pending.result(timeout=budget_timeout(8))
+                except TimeoutError:
+                    return SearchResults(status='timeout')
+            return retrieve_web(query)
+
+        remaining = budget_timeout(chat_timeout(settings))
+        margin = min(1.0, remaining / 10)
+        with request_budget(time.monotonic() + remaining - margin):
+            kwargs = {'web_search': web_search} if pending is not None else {}
+            assistant, client = build_assistant(settings, **kwargs)
+            try:
+                result = assistant.reply(message, history, topic_context=topic_context)
+            except BudgetExpired:
+                result = ChatResult('No se completó la verificación en el tiempo disponible.',
+                    'unavailable', diagnostics={'provider_error': 'tiempo_total_agotado'})
+        if result.status == 'clarification' and topic_context.get('subject'):
+            from .ai_quick_answers import _simple_topic_request
+            if _simple_topic_request(message, topic_context.get('query') or message):
+                result = ChatResult('Entendí que buscas libros sobre ' + topic_context['subject'] + '. '
+                    'Esta vez no pude verificar suficientes opciones. No necesitas reformular '
+                    'la petición; puedes volver a intentarlo.', 'unavailable',
+                    diagnostics={**result.diagnostics, 'clear_topic_not_ambiguity': True})
+        if result.status == 'unavailable' and pending is not None:
+            from .ai_quick_answers import reference_answer
+            try:
+                waiting = budget_timeout(8)
+                found = pending.result(timeout=max(.001, waiting - min(.25, waiting / 10)))
+            except (TimeoutError, OSError, ValueError):
+                found = []
+            backup = reference_answer(message, found, query=queries[0],
+                intent=(route or {}).get('intent', 'analysis'))
+            if backup is not None:
+                backup.diagnostics.update(original_failure=result.diagnostics, web_backup=True)
+                result = backup
+        if result.status == 'unavailable' and getattr(settings, 'LITMATE_AI_CATALOG_FALLBACK', True):
+            from .ai_catalog_fallback import catalog_fallback
+            from .literary_search import search_google
+            try:
+                with request_budget(getattr(client, 'deadline', time.monotonic() + budget_timeout(1))):
+                    fallback = catalog_fallback(retrieval_message, history, search_google,
+                        failure_reason=result.diagnostics.get('provider_error', 'quality_check_failed'))
+            except BudgetExpired:
+                fallback = None
+            if fallback is not None:
+                fallback.diagnostics['original_failure'] = result.diagnostics
+                result = fallback
+        if pending is not None:
+            pending.cancel()
+        return result, client
+
+
 def _compute_answer(message, history, topic_context):
     """Trabajo acotado sin acceso a la sesión ni al consumo de cuotas.
 
@@ -136,7 +221,14 @@ def _compute_answer(message, history, topic_context):
             except BudgetExpired:
                 pass
         if getattr(settings, 'LITMATE_AI_QUICK_ANSWERS', True):
-            from .ai_quick_answers import quick_answer
+            from .ai_quick_answers import isbn_lookup_answer, quick_answer
+            try:
+                with request_budget(time.monotonic() + budget_timeout(5)):
+                    direct = isbn_lookup_answer(message)
+            except (TimeoutError, OSError, ValueError):
+                direct = None
+            if direct is not None:
+                return direct, SimpleNamespace(usage={}, provider='verified-isbn', calls=0)
             direct = quick_answer(message, history, topic_context=topic_context)
             if direct is not None:
                 return direct, SimpleNamespace(usage={}, provider='verified-local-facts', calls=0)
@@ -164,25 +256,44 @@ def _compute_answer(message, history, topic_context):
 
                 try:
                     # Descubrimiento ligero: devuelve en cuanto hay fichas
-                    # verificadas y reserva tiempo para el modelo si aún faltan.
-                    with request_budget(time.monotonic() + budget_timeout(18)):
+                    # verificadas y reserva el resto del reloj para razonar.
+                    # La espera externa no puede comerse el turno del modelo.
+                    discovery_seconds = float(getattr(
+                        settings, 'LITMATE_AI_DISCOVERY_SECONDS', 6))
+                    # El segundo extra permite validar y redactar la respuesta
+                    # local si la fuente llega justo al límite de la búsqueda.
+                    with request_budget(time.monotonic() + budget_timeout(discovery_seconds + 1)):
                         direct = quick_answer(message, history, topic_context=topic_context,
                                               search=discovery)
                 except BudgetExpired:
                     direct = None
                 if direct is not None:
                     return direct, SimpleNamespace(usage={}, provider='verified-discovery', calls=0)
-                if (last_discovery is not None
-                        and not any(source.get('kind') == 'book' for source in last_discovery)):
-                    # Sin fichas verificables no se deja hablar al modelo: una
-                    # recomendación sin fuente sería una invención y esperarla
-                    # consumiría el turno entero. Es un fallo honesto y rápido.
-                    return (ChatResult('No encontré fichas verificables sobre ese tema en este '
-                                       'momento. No voy a inventar títulos; puedes volver a '
-                                       'intentarlo en unos minutos.', 'unavailable',
-                                       diagnostics={'discovery_empty': True,
-                                                    'provider_error': 'sin_fuentes_verificables'}),
-                            SimpleNamespace(usage={}, provider='verified-discovery', calls=0))
+                if last_discovery and any(source.get('kind') == 'book'
+                                          for source in last_discovery):
+                    # Las fichas ya verificadas se publican sin esperar al
+                    # modelo: una lista bibliográfica honesta es preferible a
+                    # un turno agotado por una síntesis que no llega.
+                    from .ai_quick_answers import verified_book_list_answer
+                    book_direct = verified_book_list_answer(message, last_discovery,
+                        history=history, topic_context=topic_context)
+                    if book_direct is not None:
+                        return book_direct, SimpleNamespace(
+                            usage={}, provider='verified-discovery-list', calls=0)
+                if getattr(settings, 'LITMATE_AI_USE_WEB', True):
+                    # Sin una respuesta local validada, una búsqueda general
+                    # real permite responder con páginas citadas en pocos
+                    # segundos, sin dejar que el modelo lento agote el reloj y
+                    # devuelva un mensaje vacío.
+                    from .ai_quick_answers import web_reference_answer
+                    try:
+                        with request_budget(time.monotonic() + budget_timeout(9)):
+                            web_direct = web_reference_answer(message, query=retrieval_message)
+                    except BudgetExpired:
+                        web_direct = None
+                    if web_direct is not None:
+                        return web_direct, SimpleNamespace(
+                            usage={}, provider='web-references', calls=0)
             else:
                 from .ai_quick_answers import catalogue_lookup_answer
                 from .literary_search import retrieve_books
@@ -243,30 +354,7 @@ def _compute_answer(message, history, topic_context):
             raise WorkerBusy()
         try:
             check_budget()
-            assistant, client = build_assistant(settings)
-            result = assistant.reply(message, history, topic_context=topic_context)
-            if result.status == 'clarification' and topic_context.get('subject'):
-                from .ai_quick_answers import _simple_topic_request
-                if _simple_topic_request(message, topic_context.get('query') or message):
-                    # No atribuir un fallo de verificación a la forma de hablar
-                    # del lector cuando ya tenemos una petición temática clara.
-                    result = ChatResult('Entendí que buscas libros sobre ' + topic_context['subject'] + '. '
-                        'Esta vez no pude verificar suficientes opciones. No necesitas reformular '
-                        'la petición; puedes volver a intentarlo.', 'unavailable',
-                        diagnostics={**result.diagnostics, 'clear_topic_not_ambiguity': True})
-            if result.status == 'unavailable' and getattr(settings, 'LITMATE_AI_CATALOG_FALLBACK', True):
-                from .ai_catalog_fallback import catalog_fallback
-                from .literary_search import search_google
-                try:
-                    with request_budget(getattr(client, 'deadline', time.monotonic() + budget_timeout(1))):
-                        fallback = catalog_fallback(retrieval_message, history, search_google,
-                            failure_reason=result.diagnostics.get('provider_error', 'quality_check_failed'))
-                except BudgetExpired:
-                    fallback = None
-                if fallback is not None:
-                    fallback.diagnostics['original_failure'] = result.diagnostics
-                    result = fallback
-            return result, client
+            return _model_answer(message, history, topic_context, retrieval_message)
         finally:
             try:
                 release(lock_key, owner_token)
@@ -313,8 +401,9 @@ def chatbot_query(request):
             if isinstance(retry, int) and retry > 0:
                 response['Retry-After'] = str(retry)
             return response
-    if not request.session.session_key:
-        request.session.save()
+    # No forzar aquí una escritura extra: SessionMiddleware guarda la sesión
+    # modificada antes de consumir el stream, así que el historial sigue
+    # disponible y se evita duplicar la latencia de MySQL/TiDB.
     owner = 'user:' + str(request.user.pk) if request.user.is_authenticated else 'anonymous'
     state = request.session.get(HISTORY_KEY, {})
     if (not isinstance(state, dict) or state.get('owner') != owner

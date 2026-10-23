@@ -209,9 +209,8 @@ class WikipediaCharacterApiTests(SimpleTestCase):
         with research_scope(), patch('core.literary_search._wikipedia_fetch', side_effect=[
                 film, missing, full_film]) as fetch:
             sources = _search_wikipedia('"Cuaderno lunar" personajes')
-        self.assertEqual(fetch.call_count, 3)
-        self.assertEqual(sources[0]['title'], 'Cuaderno lunar (película)')
-        self.assertEqual(sources[0]['character_facts'], [])
+        self.assertEqual(fetch.call_count, 2)
+        self.assertEqual(sources, [])
 
 
 class FandomDiscoveryOnlyTests(SimpleTestCase):
@@ -231,4 +230,3 @@ class FandomDiscoveryOnlyTests(SimpleTestCase):
         fetch.assert_not_called()
         with self.assertRaises(PublicFetchError):
             _validated_url('https://lotr.fandom.com/api.php?action=query&format=json', API_DOMAINS)
-

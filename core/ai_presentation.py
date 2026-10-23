@@ -43,6 +43,10 @@ def build_book_cards(result):
         google_url = google_url or allowed_url(source.get('preview_url'), GOOGLE_HOSTS)
         if google_url:
             links.append({'label': 'Google Books', 'url': google_url})
+        original = allowed_url(source.get('url'), {'openlibrary.org', 'www.wikidata.org', 'wikidata.org'})
+        if original:
+            links.append({'label': 'Open Library' if urlsplit(original).hostname == 'openlibrary.org'
+                          else 'Wikidata', 'url': original})
         query = title + (' ' + author if author and author != 'Autor no informado' else '')
         links.extend([
             {'label': 'Amazon', 'url': 'https://www.amazon.com/s?' + urlencode({'k': query, 'i': 'stripbooks'})},

@@ -17,7 +17,7 @@ import time
 import unicodedata
 from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeout
 from datetime import datetime, timezone
-from urllib.parse import urlsplit, urlunsplit
+from urllib.parse import unquote, urlsplit, urlunsplit
 from urllib.robotparser import RobotFileParser
 
 from django.conf import settings
@@ -81,7 +81,11 @@ def _validated_url(url, allowed_domains):
         else:
             raise PublicFetchError('unsafe_url')
         domains = tuple(str(item).lower().strip('.') for item in allowed_domains)
-        if not any(host == domain or host.endswith('.' + domain) for domain in domains if domain):
+        # El comodín sólo se usa para páginas descubiertas por un buscador
+        # público. La resolución DNS y la conexión siguen rechazando redes
+        # privadas, redirecciones y esquemas distintos de HTTPS.
+        if '*' not in domains and not any(host == domain or host.endswith('.' + domain)
+                                          for domain in domains if domain):
             raise PublicFetchError('domain_not_allowed')
         return urlunsplit(('https', host, parsed.path or '/', parsed.query, '')), host
     except (UnicodeError, ValueError) as exc:
@@ -247,6 +251,32 @@ def read_public_json(url, *, headers=None, timeout=6, allowed_domains=None, maxi
     return data
 
 
+def _robots_can_fetch(parser, url):
+    """Respeta comodines/fin de ruta también con versiones antiguas de Python."""
+    agent = USER_AGENT.lower()
+    entries = [(max((len(name) for name in entry.useragents
+                     if name != '*' and name.lower() in agent), default=0), entry)
+               for entry in parser.entries]
+    specificity = max((score for score, _ in entries), default=0)
+    active = [entry for score, entry in entries if score == specificity and score > 0]
+    if not active:
+        active = [entry for _, entry in entries if '*' in entry.useragents]
+        if parser.default_entry is not None:
+            active.append(parser.default_entry)
+    parsed = urlsplit(url)
+    target = unquote(parsed.path or '/') + ('?' + unquote(parsed.query) if parsed.query else '')
+    matches = []
+    for entry in active:
+        for rule in entry.rulelines:
+            path = unquote(rule.path)
+            terminal = getattr(rule, 'fullmatch', False) or path.endswith('$')
+            pattern = re.escape(path.rstrip('$')).replace(r'\*', '.*')
+            if re.match('^' + pattern + ('$' if terminal else ''), target):
+                matches.append((len(path.replace('*', '').rstrip('$')), rule.allowance))
+    # Ante igual longitud prevalece Allow, según las reglas de robots.txt.
+    return not matches or max(matches)[1]
+
+
 def _robots_permission(url, host, domains, deadline):
     key = 'litmate_robots_v1:' + hashlib.sha256(host.encode()).hexdigest()
     try:
@@ -280,7 +310,7 @@ def _robots_permission(url, host, domains, deadline):
         raise PublicFetchError(record['error'])
     parser = RobotFileParser()
     parser.parse(record.get('text', '').splitlines())
-    if record.get('allow') is False or (record.get('allow') is None and not parser.can_fetch(USER_AGENT, url)):
+    if record.get('allow') is False or (record.get('allow') is None and not _robots_can_fetch(parser, url)):
         raise PublicFetchError('robots_denied')
     delay = max(1, parser.crawl_delay(USER_AGENT) or parser.crawl_delay('*') or 1)
     rate = parser.request_rate(USER_AGENT) or parser.request_rate('*')
@@ -293,6 +323,33 @@ def _robots_permission(url, host, domains, deadline):
         raise
     except Exception:
         raise PublicFetchError('rate_limit_unavailable') from None
+
+
+def read_public_html(url, *, headers=None, timeout=6, allowed_domains=None, maximum=1_500_000):
+    """HTML público tras comprobar robots, DNS público y límites de tamaño.
+
+    Se usa para buscadores y páginas descubiertas por ellos. No sigue
+    redirecciones ni acepta cookies; el comodín ``'*'`` sólo evita la lista
+    cerrada de dominios, nunca las comprobaciones de red privada.
+    """
+    domains = ('*',) if allowed_domains is None else tuple(allowed_domains)
+    if not domains:
+        raise PublicFetchError('domain_not_allowed')
+    safe_url, host = _validated_url(url, domains)
+    deadline = time.monotonic() + budget_timeout(timeout)
+    _robots_permission(safe_url, host, domains, deadline)
+    result = _secure_fetch(safe_url, allowed_domains=domains, deadline=deadline,
+                           maximum=maximum, accept='text/html,application/xhtml+xml',
+                           headers=headers)
+    content_type = result['content_type'].split(';', 1)[0].strip().lower()
+    if content_type not in {'text/html', 'application/xhtml+xml', ''}:
+        raise PublicFetchError('unsupported_type')
+    return result['body'].decode('utf-8', errors='replace')
+
+
+def public_text_has_injection(text):
+    """Los fragmentos web son datos; jamás deben publicar instrucciones ajenas."""
+    return bool(_INJECTION.search(str(text or '')))
 
 
 def _plain(value, maximum=300):

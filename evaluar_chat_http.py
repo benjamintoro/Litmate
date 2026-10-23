@@ -31,7 +31,8 @@ def code_revision(base):
     digest = hashlib.sha256()
     for name in ('ai_budget.py', 'ai_quick_answers.py', 'literary_language.py',
                  'literary_ai.py', 'literary_ai_views.py', 'literary_search.py',
-                 'literary_quality.py', 'literary_research.py', 'literary_conversation.py', 'literary_constraints.py',
+                  'literary_quality.py', 'literary_research.py', 'literary_conversation.py', 'literary_constraints.py',
+                  'literary_web.py', 'literary_sources.py', 'ai_presentation.py',
                  'books_google.py', 'local_llm.py', 'literary_identity.py', 'literary_evidence.py',
                  'ai_identification_details.py', 'ai_public_details.py', 'topic_reference.py',
                  'data/topic_reference.json', 'data/verified_readings.json'):
@@ -45,9 +46,15 @@ def main(argv=None):
     parser.add_argument('--case', action='append', default=[])
     parser.add_argument('--message', action='append', default=[])
     parser.add_argument('--model', default='qwen3.5:9b-q4_K_M')
+    parser.add_argument('--chat-budget', type=float, default=36,
+                        help='Segundos de trabajo literario antes de cerrar el stream.')
+    parser.add_argument('--response-budget', type=float, default=42,
+                        help='Segundos máximos que espera el cliente HTTP.')
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--no-web', action='store_true')
     args = parser.parse_args(argv)
+    if args.chat_budget <= 0 or args.response_budget <= args.chat_budget:
+        parser.error('--response-budget debe ser mayor que --chat-budget.')
     if args.output.exists():
         parser.error('El informe ya existe; usa otra ruta para no sobrescribirlo.')
     cases = []
@@ -81,7 +88,7 @@ def main(argv=None):
             LITMATE_USE_EXISTING_QUOTAS=False, LITMATE_AI_REQUESTS_PER_MINUTE=1000,
             LITMATE_USE_GOOGLE_BOOKS_API=False, GOOGLE_BOOKS_API_KEY='',
             LITMATE_LOCAL_MODEL=args.model, LITMATE_LOCAL_GUARD_MODEL=args.model,
-            LITMATE_AI_TOTAL_TIMEOUT=360, LITMATE_CHAT_TIMEOUT=29,
+            LITMATE_AI_TOTAL_TIMEOUT=360, LITMATE_CHAT_TIMEOUT=args.chat_budget,
             LITMATE_LOCAL_CONTEXT=16384, LITMATE_LOCAL_ANSWER_TOKENS=3072,
             LITMATE_AI_USE_WEB=not args.no_web, LITMATE_AI_USE_SEARXNG=not args.no_web,
             LITMATE_AI_USE_OPENLIBRARY=not args.no_web, LITMATE_RAG_SEMANTIC=True)
@@ -113,7 +120,8 @@ def main(argv=None):
             origin = f'http://127.0.0.1:{server.server_port}'
             report = {'created_at_utc': datetime.now(timezone.utc).isoformat(),
                       'mode': 'real_http_sse_isolated_database', 'model': args.model,
-                      'web_enabled': not args.no_web, 'chat_budget_seconds': 29,
+                      'web_enabled': not args.no_web, 'chat_budget_seconds': args.chat_budget,
+                      'response_budget_seconds': args.response_budget,
                       'factual_review': 'not_independently_certified', 'turns': []}
             report['source_sha256'] = code_revision(base)
             args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -131,7 +139,7 @@ def main(argv=None):
                             headers={'Content-Type': 'application/json', 'X-CSRFToken': csrf}, method='POST')
                         start, first_useful, done, text = time.monotonic(), None, False, ''
                         try:
-                            with client.open(request, timeout=30) as response:
+                            with client.open(request, timeout=args.response_budget) as response:
                                 status = response.headers.get('X-LitMate-Status', 'unknown')
                                 calls = response.headers.get('X-LitMate-Model-Calls')
                                 http_status = response.status
@@ -159,7 +167,8 @@ def main(argv=None):
                             'first_text_seconds': round(first_useful, 3) if first_useful is not None else None,
                             'first_useful_seconds': round(first_useful, 3)
                                 if first_useful is not None and status == 'answered' else None,
-                            'under_30_seconds': elapsed <= 30, 'model_calls': int(calls) if calls else None,
+                            'under_response_budget': elapsed <= args.response_budget,
+                            'model_calls': int(calls) if calls else None,
                             'answer': text, 'source_urls': re.findall(r'https://\S+', text)}
                         report['turns'].append(row)
                         samples = [turn['seconds'] for turn in report['turns']]
@@ -167,10 +176,10 @@ def main(argv=None):
                         report['metrics'] = {'turns': len(samples), 'p50_seconds': statistics.median(samples),
                             'p95_seconds': ordered[max(0, math.ceil(len(samples) * .95) - 1)],
                             'max_seconds': max(samples),
-                            'under_30_seconds': sum(turn['under_30_seconds'] for turn in report['turns']),
+                            'under_response_budget': sum(turn['under_response_budget'] for turn in report['turns']),
                             'statuses': dict(Counter(turn['status'] for turn in report['turns']))}
                         args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
-                        print(json.dumps({key: row[key] for key in ('case', 'turn', 'status', 'seconds', 'under_30_seconds')},
+                        print(json.dumps({key: row[key] for key in ('case', 'turn', 'status', 'seconds', 'under_response_budget')},
                                          ensure_ascii=True), flush=True)
             finally:
                 server.shutdown()
@@ -179,7 +188,7 @@ def main(argv=None):
             report['source_files_changed_during_run'] = code_revision(base) != report['source_sha256']
             args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
         print(json.dumps(report['metrics']), flush=True)
-    return int(any(not row['under_30_seconds'] or not row['completed_sse'] for row in report['turns']))
+    return int(any(not row['under_response_budget'] or not row['completed_sse'] for row in report['turns']))
 
 
 if __name__ == '__main__':

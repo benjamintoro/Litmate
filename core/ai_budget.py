@@ -10,8 +10,11 @@ _deadline = ContextVar('litmate_ai_deadline', default=None)
 # Sin cola ilimitada: una fuente atascada no permite acumular hilos por visita.
 _chat_pool = ThreadPoolExecutor(max_workers=2, thread_name_prefix='litmate-chat')
 _chat_slots = BoundedSemaphore(2)
-CHAT_RESPONSE_SECONDS = 30
-CHAT_WORK_SECONDS = CHAT_RESPONSE_SECONDS - 1
+# La respuesta completa incluye persistencia de sesión y envío del stream. El
+# trabajo literario reserva esos segundos finales para no cortar la respuesta
+# cuando el modelo ya terminó pero la sesión aún debe guardarse.
+CHAT_RESPONSE_SECONDS = 42
+CHAT_WORK_SECONDS = 36
 
 
 class BudgetExpired(TimeoutError):
@@ -23,7 +26,12 @@ class WorkerBusy(Exception):
 
 
 def chat_timeout(config):
-    """Reserva un segundo para sesión/HTTP; .env antiguo no puede volver a 360 s."""
+    """Acota el trabajo literario y reserva segundos para sesión/stream.
+
+    Un valor antiguo de 360 s en .env no puede volver a bloquear el chat: el
+    máximo efectivo es CHAT_WORK_SECONDS. La respuesta puede durar algo más
+    (hasta CHAT_RESPONSE_SECONDS) mientras se persiste la sesión.
+    """
     try:
         value = float(getattr(config, 'LITMATE_CHAT_TIMEOUT', CHAT_WORK_SECONDS))
     except (TypeError, ValueError):

@@ -117,12 +117,15 @@ class Command(BaseCommand):
         self.stdout.write('Plan y auditoría de cobertura: ' + ('activados' if assistant.quality_checks else 'desactivados'))
         self.stdout.write('Recomendaciones habituales: ' + ('ruta rápida con revisión' if assistant.fast_recommendations
                                                           else 'plan y auditoría completos'))
-        from core.ai_budget import chat_timeout
+        from core.ai_budget import CHAT_RESPONSE_SECONDS, chat_timeout
         self.stdout.write('Presupuesto del chat HTTP: ' + str(chat_timeout(settings)) + ' s de trabajo; '
-                          'cliente: máximo 30 s de espera.')
+                           'cliente: máximo ' + str(CHAT_RESPONSE_SECONDS) + ' s de espera.')
         self.stdout.write('Presupuesto del diagnóstico offline: ' + str(getattr(settings, 'LITMATE_AI_TOTAL_TIMEOUT', 300)) + ' s.')
-        self.stdout.write('Buscador: ' + ('SearXNG + Wikipedia' if getattr(
-            settings, 'LITMATE_AI_USE_SEARXNG', True) else 'Wikipedia; SearXNG desactivado'))
+        self.stdout.write('Buscador: ' + ('Wikipedia + DuckDuckGo Lite; ' + ('SearXNG como respaldo' if getattr(
+            settings, 'LITMATE_AI_USE_SEARXNG', True) else 'SearXNG desactivado')
+            if getattr(settings, 'LITMATE_AI_USE_WEB', True) and not options['sin_fuentes']
+            else 'investigación web desactivada para esta ejecución'))
+        self.stdout.write('Páginas públicas: HTTPS, robots.txt y límites de lectura; sin eludir bloqueos.')
         self.stdout.write('Motores permitidos: ' + ', '.join(getattr(settings, 'LITMATE_SEARXNG_ENGINES',
             ('wikipedia', 'openlibrary', 'mwmbl'))))
         self.stdout.write('Investigación externa: hasta ' + str(getattr(settings, 'LITMATE_RESEARCH_TIMEOUT', 15)) + ' s; '

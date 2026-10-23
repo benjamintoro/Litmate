@@ -51,6 +51,14 @@ class BookCardTests(SimpleTestCase):
         cards = build_book_cards(result([SOURCE, SECOND], books))
         self.assertEqual([card['title'] for card in cards], [SECOND['title'], SOURCE['title']])
 
+    def test_open_library_card_links_the_actual_record_beside_store_searches(self):
+        source = {**SOURCE, 'source': 'Open Library',
+                  'url': 'https://openlibrary.org/works/OL1W', 'preview_url': ''}
+        links = {link['label']: link['url'] for link in build_book_cards(result([source]))[0]['links']}
+        self.assertEqual(links['Open Library'], source['url'])
+        self.assertIn('Amazon', links)
+        self.assertIn('Buscalibre', links)
+
     def test_unverified_or_mismatched_model_identity_never_creates_a_card(self):
         for book in ({'title': SOURCE['title'], 'author': SOURCE['author'], 'source_id': 0},
                      {'title': SOURCE['title'], 'author': 'Autor inventado', 'source_id': 1},

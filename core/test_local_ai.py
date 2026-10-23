@@ -327,18 +327,21 @@ class FreeRetrievalTests(SimpleTestCase):
 
     def test_wikipedia_remains_available_if_search_engine_fails(self):
         with (patch('core.literary_search.search_searx', side_effect=URLError('simulado')),
+              patch('core.literary_search.search_duckduckgo', return_value=[]),
               patch('core.literary_search.search_wikipedia', return_value=[WEB])):
             result = retrieve_web('guerra')
         self.assertEqual(result[0]['source'], 'Wikipedia')
 
     def test_web_sources_are_cached_and_do_not_repeat_searches(self):
         with (patch('core.literary_search.search_searx', return_value=[]) as searx,
+              patch('core.literary_search.search_duckduckgo', return_value=[]) as general,
               patch('core.literary_search.search_wikipedia', return_value=[WEB]) as wiki):
             first = retrieve_web('novela')
             second = retrieve_web('novela')
         self.assertEqual(first, second)
         self.assertEqual(wiki.call_count, 1)
-        self.assertEqual(searx.call_count, 1)
+        self.assertEqual(general.call_count, 1)
+        searx.assert_not_called()
 
 
 class LocalRAGTests(SimpleTestCase):

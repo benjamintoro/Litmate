@@ -44,6 +44,7 @@ def main(labels=None):
                 {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
                 {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'}],
             GOOGLE_BOOKS_API_KEY='', LITMATE_USE_GOOGLE_BOOKS_API=False,
+            LITMATE_LOCAL_MODEL='qwen3.5:9b-q4_K_M', LITMATE_LOCAL_GUARD_MODEL='qwen3.5:9b-q4_K_M',
             LITMATE_AI_USE_OPENLIBRARY=True, LITMATE_AI_USE_WEB=False, LITMATE_AI_USE_SEARXNG=True,
             LITMATE_USE_EXISTING_QUOTAS=False, LITMATE_AI_LOCK_BACKEND='cache',
             LITMATE_AI_CATALOG_FALLBACK=False, LITMATE_AI_REQUIRE_BOOK_SOURCES=False,

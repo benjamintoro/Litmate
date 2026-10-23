@@ -1,4 +1,4 @@
-"""Regresiones de la petición real: treinta segundos, lenguaje natural y fuentes.
+"""Regresiones de la petición real: presupuesto ampliado, lenguaje natural y fuentes.
 
 Las fuentes externas y Ollama se sustituyen explícitamente en estas pruebas;
 el benchmark HTTP separado sí usa los servicios locales y públicos reales.
@@ -30,9 +30,9 @@ EXAMPLE = 'hola recomiendame libros sobre la segunda guerra mundial'
 
 class DeadlineBudgetTests(SimpleTestCase):
     def test_chat_never_uses_the_legacy_six_minute_budget(self):
-        self.assertEqual(chat_timeout(SimpleNamespace(LITMATE_AI_TOTAL_TIMEOUT=360)), 29)
-        self.assertEqual(chat_timeout(SimpleNamespace(LITMATE_CHAT_TIMEOUT=360)), 29)
-        self.assertEqual(chat_timeout(SimpleNamespace(LITMATE_CHAT_TIMEOUT='bad')), 29)
+        self.assertEqual(chat_timeout(SimpleNamespace(LITMATE_AI_TOTAL_TIMEOUT=360)), 36)
+        self.assertEqual(chat_timeout(SimpleNamespace(LITMATE_CHAT_TIMEOUT=360)), 36)
+        self.assertEqual(chat_timeout(SimpleNamespace(LITMATE_CHAT_TIMEOUT='bad')), 36)
 
     def test_local_provider_does_not_force_a_minimum_of_sixty_seconds(self):
         start = time.monotonic()
@@ -344,6 +344,7 @@ class NaturalRequestTests(SimpleTestCase):
 
 
 @override_settings(LITMATE_AI_QUICK_ANSWERS=True, LITMATE_AI_LOCK_BACKEND='cache',
+                   LITMATE_AI_USE_WEB=False,
                    LITMATE_AI_BIBLIOGRAPHIC_FAST_PATH=False,
                    LITMATE_AI_CATALOG_FALLBACK=False)
 class FastChatEndpointTests(TestCase):
@@ -376,17 +377,51 @@ class FastChatEndpointTests(TestCase):
         model.assert_not_called()
         search.assert_not_called()
 
-    def test_empty_verified_discovery_fails_fast_without_inventing_a_recommendation(self):
+    @override_settings(LITMATE_AI_USE_WEB=True)
+    def test_empty_verified_discovery_uses_web_grounded_answer_without_inventing_books(self):
+        web_source = {'id': 1, 'title': 'Página pública sobre la Revolución francesa',
+                      'author': 'Fuente web', 'description': 'Resumen documentado del tema.',
+                      'source': 'DuckDuckGo', 'url': 'https://example.org/revolucion-francesa',
+                      'kind': 'web', 'year': '', 'book_id': '', 'locator': '',
+                      'read_mode': 'pasaje de página pública', 'retrieved_at': ''}
+        assistant = Mock()
+        assistant.reply.return_value = ChatResult(
+            'Encontré información documentada sobre el tema [1].', 'answered', True,
+            sources=[web_source], basis='sources', intent='recommend')
+        provider = SimpleNamespace(usage={}, provider='test', calls=1)
         with patch('core.literary_search.retrieve_discovery_books', return_value=[]) as discovery, \
-                patch('core.literary_ai_views.build_assistant') as model:
+                patch('core.ai_quick_answers.web_reference_answer', return_value=None), \
+                patch('core.literary_search.retrieve_web', return_value=[]), \
+                patch('core.literary_ai_views.build_assistant',
+                      return_value=(assistant, provider)) as model:
             start = time.monotonic()
             response = self.post('recomiendame libros sobre la revolucion francesa')
             text = self.text(response)
         self.assertLess(time.monotonic() - start, 5)
-        self.assertEqual(response['X-LitMate-Status'], 'unavailable')
-        self.assertIn('No encontré fichas verificables', text)
-        model.assert_not_called()
+        self.assertEqual(response['X-LitMate-Status'], 'answered')
+        self.assertIn('información documentada', text)
+        self.assertNotIn('No encontré fichas verificables', text)
+        model.assert_called_once()
+        assistant.reply.assert_called_once()
         discovery.assert_called_once()
+
+    @override_settings(LITMATE_AI_USE_WEB=True)
+    def test_empty_discovery_returns_web_references_without_waiting_for_model(self):
+        web_source = {'id': 1, 'title': 'Página pública sobre la Revolución francesa',
+                      'author': 'Fuente web', 'description': 'Resumen documentado del tema.',
+                      'source': 'DuckDuckGo', 'url': 'https://example.org/revolucion-francesa',
+                      'kind': 'web', 'year': '', 'book_id': '', 'locator': '',
+                      'read_mode': 'pasaje de página pública', 'retrieved_at': ''}
+        answer = ChatResult('Referencias web documentadas [1].', 'answered', True,
+                            sources=[web_source], basis='sources', intent='recommend')
+        with patch('core.literary_search.retrieve_discovery_books', return_value=[]), \
+                patch('core.ai_quick_answers.web_reference_answer', return_value=answer), \
+                patch('core.literary_ai_views.build_assistant') as model:
+            response = self.post('recomiendame libros sobre la revolucion francesa')
+            text = self.text(response)
+        self.assertEqual(response['X-LitMate-Status'], 'answered')
+        self.assertIn('Referencias web documentadas', text)
+        model.assert_not_called()
 
     def test_exact_quote_without_local_text_asks_for_the_passage_without_inference(self):
         with patch('core.literary_search.retrieve_book_content', return_value=[]), \

@@ -9,14 +9,14 @@ from datetime import datetime, timezone
 from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import urlencode, urlsplit
+from urllib.parse import urlencode, urlsplit, parse_qs
 from urllib.request import Request, build_opener
 from django.conf import settings
 from django.core.cache import cache
 from django.db.models import Case, IntegerField, Q, Value, When
 from .ai_http import NoRedirects, local_origin, read_json_url, read_bounded
 from .ai_budget import (budget_timeout, submit_with_budget, check_budget, pool_in_budget,
-                        request_budget, current_deadline, CHAT_WORK_SECONDS)
+                        request_budget, current_deadline, CHAT_WORK_SECONDS, BudgetExpired)
 from .literary_ai import canonical_sources, clean_text, normalized, safe_source_url, has_excerpt
 from .local_rag import retrieve_fragments
 from .books_google import (search_volumes, get_volume, volume_source, public_query, BooksUnavailable,
@@ -442,7 +442,8 @@ def _search_openlibrary(query, *, details=True):
     catalog_query = ''.join(parts).strip()
     if requested_language:
         catalog_query += ' language:' + requested_language
-    key = _cache_key('litmate_openlibrary_v9:', catalog_query + ':details=' + str(details) + ':fiction=' +
+    requested_isbn = query[5:] if re.fullmatch(r'isbn:[\dX]{10,13}', query) else ''
+    key = _cache_key('litmate_openlibrary_v10:', catalog_query + ':details=' + str(details) + ':fiction=' +
                      str(bool(re.search(r'\b(?:novelas?|ficcion|fiction)\b', normalized(query)))))
     cached = _cached(key)
     if cached is not None:
@@ -460,6 +461,8 @@ def _search_openlibrary(query, *, details=True):
     if not details:
         # Encontrar obras no requiere descargar sus ediciones ni sus sinopsis.
         params['fields'] = 'key,title,subtitle,author_name,first_publish_year,subject,cover_i,language'
+    if requested_isbn:
+        params['fields'] += ',isbn'
     search_url = 'https://openlibrary.org/search.json?' + urlencode(params)
     try:
         data = _openlibrary_fetch(search_url, timeout=6)
@@ -511,6 +514,11 @@ def _search_openlibrary(query, *, details=True):
         source['categories'] = (representatives + [subject for subject in subjects
                                                   if subject not in representatives])[:12]
         source['description'] = 'Temas del catálogo: ' + ', '.join(source['categories'])
+        if requested_isbn and isinstance(item.get('isbn'), list):
+            numbers = {re.sub(r'[\s-]', '', str(number)).upper() for number in item['isbn']}
+            if requested_isbn in numbers:
+                source['isbns'] = [requested_isbn]
+                source['description'] += '\nISBN registrado: ' + requested_isbn + '.'
         if isinstance(item.get('subtitle'), str) and item['subtitle'].strip():
             source['subtitle'] = clean_text(item['subtitle'], 600)
             source['description'] += '\nSubtítulo del registro bibliográfico: ' + source['subtitle']
@@ -557,6 +565,29 @@ def _search_openlibrary(query, *, details=True):
     return _save(key, SearchResults(results, providers={'Open Library': 'ok'}))
 
 
+def _polite_openlibrary_discovery(query):
+    """Una consulta consecutiva puede esperar el slot local, no eludirlo.
+
+    Un 429 remoto/cooldown nunca se reintenta aquí. Sólo la pausa local de dos
+    segundos admite una repetición, compartiendo el deadline del descubrimiento.
+    """
+    found = search_openlibrary(query, details=False)
+    if getattr(found, 'providers', {}).get('Open Library') != 'local_rate_limit':
+        return found
+    until = time.monotonic() + budget_timeout(2)
+    try:
+        while cache.get('litmate_local_ol_slot'):
+            left = until - time.monotonic()
+            if left <= 0:
+                return found
+            time.sleep(budget_timeout(min(.05, left)))
+    except BudgetExpired:
+        raise
+    except Exception:
+        return found
+    return search_openlibrary(query, details=False)
+
+
 def retrieve_discovery_books(query, *, accept=None):
     """Busca fichas ligeras y retorna al tener opciones verificadas, no al último timeout.
 
@@ -592,7 +623,7 @@ def retrieve_discovery_books(query, *, accept=None):
         return search_google(query, details=False)
 
     def openlibrary():
-        return search_openlibrary(query, details=False)
+        return _polite_openlibrary_discovery(query)
 
     providers = {}
     jobs = [('Catálogo LitMate', local_catalog)]
@@ -600,10 +631,14 @@ def retrieve_discovery_books(query, *, accept=None):
         jobs.append(('Google Books', google))
     if getattr(settings, 'LITMATE_AI_USE_OPENLIBRARY', True):
         jobs.append(('Open Library', openlibrary))
+    deadline = time.monotonic() + budget_timeout(getattr(settings, 'LITMATE_AI_DISCOVERY_SECONDS', 6))
     with pool_in_budget(len(jobs)) as pool:
         pending = {submit_with_budget(pool, function): name for name, function in jobs}
         while pending:
-            completed, _ = wait(pending, timeout=budget_timeout(12), return_when=FIRST_COMPLETED)
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                break
+            completed, _ = wait(pending, timeout=budget_timeout(remaining), return_when=FIRST_COMPLETED)
             if not completed:
                 break
             for future in completed:
@@ -617,6 +652,9 @@ def retrieve_discovery_books(query, *, accept=None):
             sources = canonical_sources(rank_book_sources(results, query, distinct_works=True))
             if sources and accept is not None and accept(sources):
                 return _save(key, SearchResults(sources, providers=providers))
+        for future, name in pending.items():
+            providers[name] = 'timeout'
+            future.cancel()
     sources = canonical_sources(rank_book_sources(results, query, distinct_works=True))
     failed = bool(pending) or any(value not in {'ok', 'empty', 'disabled'} for value in providers.values())
     status = 'partial' if failed and sources else 'unavailable' if failed else 'ok'
@@ -706,7 +744,7 @@ def retrieve_books(query):
 
 
 def enrich_book_sources(sources, message=''):
-    """Busca respaldo público para hasta dos fichas sin sinopsis, en veinte segundos.
+    """Busca respaldo público para hasta dos fichas sin sinopsis, en siete segundos.
 
     Conserva la procedencia: research_summary es un pasaje web y nunca una
     sinopsis editorial de Google. Devuelve libros más evidencia web adicional.
@@ -720,7 +758,7 @@ def enrich_book_sources(sources, message=''):
     if not missing:
         return books
     evidence = []
-    deadline = time.monotonic() + budget_timeout(20)
+    deadline = time.monotonic() + budget_timeout(7)
     with request_budget(deadline):
         # MediaWiki recomienda solicitudes en serie; dos sinopsis pueden usar
         # la misma API. Comparten el límite total aunque la segunda quede en cola.
@@ -737,7 +775,7 @@ def enrich_book_sources(sources, message=''):
                     jobs.append((index, submit_with_budget(pool, retrieve_web, query)))
             for index, future in jobs:
                 try:
-                    found = future.result(timeout=budget_timeout(20))
+                    found = future.result(timeout=budget_timeout(7))
                 except Exception as exc:
                     logger.warning('IA: sinopsis complementaria no disponible (%s)', type(exc).__name__)
                     continue
@@ -882,6 +920,26 @@ def read_public_page(url, query, *, details=False):
     return result.get('description', '') if result.get('status') == 'ok' else ''
 
 
+def read_public_web_page(url, query, *, details=False):
+    """Lee una página descubierta por un buscador general público.
+
+    La URL no procede del lector ni del modelo: sólo de resultados de
+    DuckDuckGo. Aun así se exige HTTPS, host público, robots y tamaño máximo.
+    """
+    url = safe_source_url(url)
+    if not url:
+        return ''
+    host = (urlsplit(url).hostname or '').lower()
+    if host.endswith('openlibrary.org') or host.startswith('books.google.'):
+        return ''
+    from .literary_web import extract_public_page
+    result = extract_public_page(url, query, allowed_domains=('*',),
+                                 timeout=budget_timeout(5))
+    if details:
+        return result
+    return result.get('description', '') if result.get('status') == 'ok' else ''
+
+
 def _detail_focus(query):
     value = normalized(query)
     if re.search(r'\bpersonajes?|\bprotagonistas?|\bcharacters?|\bcaracterizacion', value):
@@ -964,6 +1022,116 @@ def character_facts(text):
         if len(facts) >= 12:
             break
     return facts
+
+
+def _duckduckgo_target(value):
+    """Extrae el destino real de un enlace de DuckDuckGo Lite.
+
+    Sólo acepta HTTPS público. Los enlaces patrocinados o internos del
+    buscador se descartan antes de llegar a la extracción de la página.
+    """
+    href = str(value or '').strip()
+    if href.startswith('//'):
+        href = 'https:' + href
+    try:
+        parsed = urlsplit(href)
+    except ValueError:
+        return ''
+    host = (parsed.hostname or '').lower()
+    if host == 'duckduckgo.com' or host.endswith('.duckduckgo.com'):
+        target = parse_qs(parsed.query).get('uddg', [''])
+        href = target[0] if target else ''
+    return safe_source_url(href)
+
+
+def search_duckduckgo(query):
+    """Buscador web general gratuito, sin clave ni cookies.
+
+    DuckDuckGo Lite publica una página HTML sencilla y su robots.txt permite
+    el acceso. Se conserva únicamente título, fragmento y URL; la lectura de
+    cada página se hace después con comprobaciones de robots, DNS y tamaño.
+    """
+    if not getattr(settings, 'LITMATE_AI_USE_WEB', True):
+        return SearchResults(status='disabled')
+    from .literary_research import bibliographic_web_query, public_research_queries
+    public = public_research_queries(query)
+    query = bibliographic_web_query(public[0]) if public else ''
+    if not query:
+        return SearchResults(status='empty')
+    key = _cache_key('litmate_ddg_v2:', query + ':es')
+    cached = _cached(key)
+    if cached is not None:
+        return cached
+    if cache.get('litmate_ddg_cooldown'):
+        return SearchResults(status='cooldown')
+    from .literary_web import public_text_has_injection, read_public_html
+    params = {'q': query, 'kl': 'es-es'}
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+                             'AppleWebKit/537.36 (KHTML, like Gecko) '
+                             'Chrome/124.0 Safari/537.36 LitMate/1.0',
+               'Accept-Language': 'es-ES,es;q=0.9,en;q=0.6'}
+    try:
+        record_research_event('http_request', 'DuckDuckGo', 'started')
+        html = read_public_html('https://lite.duckduckgo.com/lite/?' + urlencode(params),
+                                headers=headers, timeout=4,
+                                allowed_domains=('lite.duckduckgo.com',),
+                                maximum=1_000_000)
+    except Exception as exc:
+        status = 'access_denied' if getattr(exc, 'code', '') == 'http_202' else error_status(exc)
+        record_research_event('http_request', 'DuckDuckGo', status)
+        cache.set('litmate_ddg_cooldown', status, cooldown_seconds(exc))
+        return SearchResults(status=status)
+    try:
+        from bs4 import BeautifulSoup
+        soup = BeautifulSoup(html, 'html.parser')
+        if soup.select_one('#challenge-form, .anomaly-modal, form[action*="anomaly.js"]'):
+            record_research_event('http_request', 'DuckDuckGo', 'access_denied')
+            cache.set('litmate_ddg_cooldown', 'access_denied', 180)
+            return SearchResults(status='access_denied', providers={'DuckDuckGo': 'access_denied'})
+        # El enlace y su fragmento ocupan filas distintas. No emparejar dos
+        # listas tras filtrar URLs: una URL rechazada desalinearía las pruebas.
+        links, current = [], None
+        for row in soup.select('tr'):
+            anchor = row.select_one('a.result-link')
+            sponsored = 'result-sponsored' in (row.get('class') or [])
+            if anchor is not None or sponsored:
+                current = None
+            if anchor is not None and not sponsored:
+                current = {'url': _duckduckgo_target(anchor.get('href')),
+                           'title': clean_text(anchor.get_text(' ', strip=True), 300),
+                           'snippet': ''}
+                links.append(current)
+            cell = row.select_one('td.result-snippet')
+            if cell is not None and current is not None and not sponsored:
+                current['snippet'] = clean_text(cell.get_text(' ', strip=True), 700)
+    except Exception:
+        record_research_event('http_request', 'DuckDuckGo', 'invalid_response')
+        cache.set('litmate_ddg_cooldown', 'invalid_response', 300)
+        return SearchResults(status='invalid_response')
+    results, seen = [], set()
+    for item in links[:20]:
+        title, url, snippet = item['title'], item['url'], item['snippet']
+        host = (urlsplit(url).hostname or '').lower()
+        if (not host or not title or host == 'duckduckgo.com'
+                or host.endswith('.duckduckgo.com') or url in seen
+                or public_text_has_injection(title + ' ' + snippet)):
+            continue
+        seen.add(url)
+        results.append({
+            'title': title, 'author': 'Fuente web',
+            'description': snippet or title, 'url': url, 'kind': 'web',
+            'source': 'DuckDuckGo', 'site': host,
+            'read_mode': 'fragmento del buscador', 'trust': 'untrusted_data',
+            'permanent_index_allowed': False,
+            'retrieved_at': datetime.now(timezone.utc).isoformat(),
+        })
+        if len(results) >= 8:
+            break
+    if not results:
+        record_research_event('http_request', 'DuckDuckGo', 'empty')
+        return _save(key, SearchResults(status='empty', providers={'DuckDuckGo': 'empty'}))
+    record_research_event('http_request', 'DuckDuckGo', 'ok', count=len(results))
+    return _save(key, SearchResults(results, status='ok', providers={'DuckDuckGo': 'ok'}))
 
 
 def search_searx(query):
@@ -1072,7 +1240,8 @@ def _wikipedia_table_page(candidate, page_id, endpoint):
 
 
 def _search_wikipedia(query, *, language='es'):
-    query = public_query(query)
+    from .literary_research import bibliographic_title_hints, bibliographic_web_query
+    query = bibliographic_web_query(query)
     if not query:
         return []
     # En consultas de detalle buscamos la identidad de la obra y después leemos
@@ -1107,13 +1276,18 @@ def _search_wikipedia(query, *, language='es'):
         raise ValueError('invalid_wikipedia_response')
     pages = (data.get('query') or {}).get('pages') or {}
     pages = [page for page in (pages.values() if isinstance(pages, dict) else []) if isinstance(page, dict)]
-    if focus and quoted_title:
-        wanted = normalized(quoted_title.group(1))
+    title_hints = [quoted_title.group(1)] if focus and quoted_title else []
+    if focus and not title_hints:
+        # «X de Autora Apellido» puede nombrar la obra sin comillas. Es sólo
+        # una pista para consultar títulos oficiales, nunca una ficha nueva.
+        title_hints = bibliographic_title_hints(identity_query)
+    if focus and title_hints:
+        wanted = {normalized(title) for title in title_hints}
         def same_work(page):
             title = normalized(page.get('title'))
             title = re.sub(r'\s*\((?:novela|libro|book|novel)\)\s*$', '', title)
             title = re.sub(r'^(?:anexo\s*:\s*)?(?:personajes|characters)\s+(?:de|of)\s+', '', title)
-            return title == wanted
+            return title in wanted
         matching = [page for page in pages if same_work(page)]
         if matching:
             # Una secuela o la biografía del autor no demuestra las relaciones
@@ -1124,7 +1298,12 @@ def _search_wikipedia(query, *, language='es'):
             # películas o secuelas aunque exista el artículo exacto solicitado.
             # Una sola consulta oficial de título/redirect lo comprueba; no
             # convierte esa coincidencia en una identidad bibliográfica aceptada.
-            exact_params = {'action': 'query', 'format': 'json', 'titles': quoted_title.group(1),
+            # MediaWiki sólo normaliza la primera letra: «Guerra y Paz» no
+            # necesariamente redirige a «Guerra y paz». Ambas variantes son
+            # búsquedas de títulos, no equivalencias bibliográficas inventadas.
+            lookup_titles = list(dict.fromkeys([*title_hints,
+                *(title[:1].upper() + title[1:].casefold() for title in title_hints)]))
+            exact_params = {'action': 'query', 'format': 'json', 'titles': '|'.join(lookup_titles),
                 'redirects': 1, 'prop': 'extracts|info', 'inprop': 'url',
                 'explaintext': 1, 'exintro': 1, 'exchars': 1200}
             try:
@@ -1132,11 +1311,17 @@ def _search_wikipedia(query, *, language='es'):
                 exact_pages = ((exact.get('query') or {}).get('pages') or {}) if isinstance(exact, dict) else {}
                 exact_pages = [page for page in exact_pages.values() if isinstance(page, dict)
                     and 'missing' not in page and str(page.get('pageid', '')).isdigit()
-                    and page.get('extract')] if isinstance(exact_pages, dict) else []
+                    and page.get('extract') and same_work(page)] if isinstance(exact_pages, dict) else []
                 if exact_pages:
+                    order = [normalized(title) for title in title_hints]
+                    exact_pages.sort(key=lambda page: next((index for index, title in enumerate(order)
+                        if normalized(page.get('title')) == title), len(order)))
                     pages = exact_pages[:1]
             except Exception as exc:
                 logger.warning('IA: título exacto de Wikipedia no disponible (%s)', type(exc).__name__)
+    if not re.search(r'\b(?:pelicula|film|adaptacion|cine|serie)\b', normalized(query)):
+        pages = [page for page in pages if not re.search(
+            r'\((?:pelicula|film|serie|videojuego)\b', normalized(page.get('title', '')))]
     if focus and pages:
         pages.sort(key=lambda page: (any(word in normalized(page.get('title')) for word in focus),
                                     '(novela)' in normalized(page.get('title'))), reverse=True)
@@ -1193,9 +1378,9 @@ def _search_wikipedia(query, *, language='es'):
 
 
 def retrieve_web(query):
-    from .literary_research import public_research_queries
+    from .literary_research import bibliographic_web_query, public_research_queries
     public_queries = public_research_queries(query)
-    query = public_queries[0] if public_queries else ''
+    query = bibliographic_web_query(public_queries[0]) if public_queries else ''
     if not query:
         return []
     from .ai_budget import request_budget
@@ -1220,8 +1405,9 @@ def retrieve_web(query):
 
 def _web_cache_key(query):
     engines = getattr(settings, 'LITMATE_SEARXNG_ENGINES', ('wikipedia', 'openlibrary', 'mwmbl'))
-    return _cache_key('litmate_local_web_v11:', query + ':es,en:' + repr(engines) + ':'
-                     + str(getattr(settings, 'LITMATE_AI_USE_SEARXNG', True)))
+    return _cache_key('litmate_local_web_v14:', query + ':es,en:' + repr(engines) + ':'
+                     + str(getattr(settings, 'LITMATE_AI_USE_SEARXNG', True))
+                     + ':' + str(getattr(settings, 'LITMATE_AI_USE_WEB', True)))
 
 
 def _retrieve_web(query):
@@ -1229,23 +1415,47 @@ def _retrieve_web(query):
     cached = _cached(key)
     if cached is not None:
         return cached
-    groups, statuses = [], {}
-    # Primero el descubrimiento local; APIs oficiales sólo si hay cobertura escasa.
-    for name, searcher in [('SearXNG', search_searx), ('Wikipedia', search_wikipedia)]:
-        if name == 'SearXNG' and not getattr(settings, 'LITMATE_AI_USE_SEARXNG', True):
-            continue
-        try:
-            result = searcher(query)
-            groups.append(result)
-            statuses[name] = getattr(result, 'status', 'ok' if result else 'empty')
-        except Exception as exc:
-            statuses[name] = error_status(exc)
-            logger.warning('IA: búsqueda=%s estado=%s', name, statuses[name])
-        if name == 'SearXNG' and groups:
-            # Tres snippets no garantizan la sección concreta solicitada.
-            if any(source.get('character_facts') for source in groups[-1]):
+    groups, statuses, providers = [], {}, [
+        ('Wikipedia', search_wikipedia),
+        ('DuckDuckGo', search_duckduckgo),
+    ]
+    # Wikipedia y el buscador general comparten reloj: uno lento no retrasa al
+    # otro. SearXNG queda como último recurso local, nunca como cuello de botella.
+    with pool_in_budget(len(providers)) as pool:
+        futures = {submit_with_budget(pool, searcher, query): name
+                   for name, searcher in providers}
+        pending = set(futures)
+        deadline = time.monotonic() + budget_timeout(5)
+        while pending:
+            left = deadline - time.monotonic()
+            if left <= 0:
                 break
+            done, pending = wait(pending, timeout=left, return_when=FIRST_COMPLETED)
+            if not done:
+                break
+            for future in done:
+                name = futures[future]
+                try:
+                    result = future.result()
+                except Exception as exc:
+                    statuses[name] = error_status(exc)
+                    logger.warning('IA: búsqueda=%s estado=%s', name, statuses[name])
+                    continue
+                groups.append(result)
+                statuses[name] = getattr(result, 'status', 'ok' if result else 'empty')
+        for future in pending:
+            statuses[futures[future]] = 'timeout'
+            future.cancel()
     results = [item for group in groups for item in group]
+    if not results and getattr(settings, 'LITMATE_AI_USE_SEARXNG', True):
+        try:
+            result = search_searx(query)
+            groups.append(result)
+            statuses['SearXNG'] = getattr(result, 'status', 'ok' if result else 'empty')
+            results.extend(result)
+        except Exception as exc:
+            statuses['SearXNG'] = error_status(exc)
+            logger.warning('IA: búsqueda=SearXNG estado=%s', statuses['SearXNG'])
     if not results and getattr(settings, 'LITMATE_AI_USE_WIKIDATA', False):
         from .literary_wikidata import search_wikidata
         fallback = search_wikidata(query)
@@ -1255,9 +1465,10 @@ def _retrieve_web(query):
     terms = [term for term in re.findall(r'\w+', normalized(query)) if len(term) >= 4 and term not in STOPWORDS]
     def rank(source):
         text = normalized(str(source.get('title', '')) + ' ' + str(source.get('description', '')))
-        domain = urlsplit(source.get('url', '')).hostname or ''
-        authority = 6 if any(d in domain for d in ('literaturasm.', 'penguin', 'memoriachilena.', 'bibliotecanacional')) else 2
-        return authority + sum(4 if term in normalized(source.get('title')) else 1 for term in terms if term in text)
+        authority = 6 if trusted_url(source.get('url')) else 3 if source.get('source') == 'DuckDuckGo' else 2
+        title = normalized(source.get('title'))
+        return authority + sum(6 if term in title else 2 if term in text else 0
+                               for term in terms)
     results.sort(key=rank, reverse=True)
     unique, seen_passages = [], set()
     for source in results:
@@ -1265,21 +1476,26 @@ def _retrieve_web(query):
         if signature and signature not in seen_passages:
             unique.append(source)
             seen_passages.add(signature)
-    sources = canonical_sources(unique, 5)
+    sources = canonical_sources(unique, 6)
     for source in sources:
         source['retrieved_at'] = datetime.now(timezone.utc).isoformat()
-    # Se extrae solo un pasaje relevante de dos páginas públicas, nunca todo el libro.
+    # Se extrae solo un pasaje relevante de tres páginas públicas como máximo.
     def enrich(source):
         if source.get('read_mode') != 'fragmento del buscador':
             return source
-        # Descubrir una tienda no nos autoriza a extraer su página. Conserva
-        # el fragmento del proveedor y su procedencia sin gastar una lectura.
-        if not trusted_url(source.get('url')):
+        url = safe_source_url(source.get('url'))
+        if not url:
+            return source
+        trusted = bool(trusted_url(url))
+        # Un resultado general se lee sólo si procede de DuckDuckGo; una tienda
+        # descubierta por él conserva el fragmento si su robots no lo permite.
+        if not trusted and source.get('source') != 'DuckDuckGo':
             return source
         if not reserve_page():
             return source
         try:
-            extracted = read_public_page(source['url'], query, details=True)
+            extracted = (read_public_page(url, query, details=True) if trusted
+                         else read_public_web_page(url, query, details=True))
             body = extracted.get('description', '') if isinstance(extracted, dict) and extracted.get('status') == 'ok' else ''
             record_research_event('page_read', 'web', extracted.get('status', 'unavailable')
                                   if isinstance(extracted, dict) else 'unsupported_type', count=int(bool(body)))
@@ -1294,13 +1510,23 @@ def _retrieve_web(query):
             logger.warning('IA: página no disponible (%s)', type(exc).__name__)
         return source
     maximum = max(0, min(int(getattr(settings, 'LITMATE_RESEARCH_MAX_PAGES', 3)), 3))
+    candidates = [source for source in sources if source.get('read_mode') == 'fragmento del buscador']
+    # Primero editoriales y fuentes de confianza; después páginas generales.
+    candidates.sort(key=lambda source: 0 if trusted_url(source.get('url')) else 1)
     with pool_in_budget(max(1, maximum)) as pool:
-        futures = [submit_with_budget(pool, enrich, source) for source in sources[:maximum]]
-        for index, future in enumerate(futures):
+        futures = {source['id']: submit_with_budget(pool, enrich, source)
+                   for source in candidates[:maximum]}
+        for identifier, future in futures.items():
             try:
-                sources[index] = future.result(timeout=budget_timeout(8))
+                updated = future.result(timeout=budget_timeout(6))
             except Exception as exc:
                 logger.warning('IA: lectura web no disponible (%s)', type(exc).__name__)
-    failed = any(status not in {'ok', 'empty', 'disabled'} for status in statuses.values())
+                continue
+            for index, source in enumerate(sources):
+                if source['id'] == identifier:
+                    sources[index] = updated
+                    break
+    failed = any(status not in {'ok', 'empty', 'disabled'}
+                 for status in statuses.values())
     status = 'partial' if failed and sources else 'unavailable' if failed else 'ok' if sources else 'empty'
     return _save(key, SearchResults(sources, status=status, providers=statuses))

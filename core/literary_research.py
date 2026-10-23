@@ -341,6 +341,32 @@ def _contradictions(sources):
     return any(len(values) > 1 for values in claims.values())
 
 
+def bibliographic_web_query(query):
+    """Retira sólo prefijos conversacionales inequívocos, no palabras del título."""
+    query = public_query(query).strip(' ¿?¡!.,')
+    isbn = re.search(r'\bISBN(?:-1[03])?\s*:?\s*([\dXx][\dXx -]{8,22}[\dXx])', query, re.I)
+    if isbn:
+        from .literary_identity import _isbn_values
+        numbers = _isbn_values({'isbns': [isbn.group(1)]})
+        if numbers:
+            return 'isbn:' + numbers[0]
+    summary = re.match(r'(?i)^(?:de qu[eé] trata|(?:cu[eé]ntame|h[aá]blame)\s+'
+        r'(?:sobre|acerca de|de)|resumen de|sinopsis de)\s+'
+        r'(?:(?:el|la)\s+(?:libro|novela|obra)\s+)?(.+)$', query)
+    return summary.group(1) + ' sinopsis' if summary else query
+
+
+def bibliographic_title_hints(query):
+    """Pistas de títulos, no identidades verificadas ni autores inferidos."""
+    value = re.sub(r'\s+(?:sinopsis|argumento|personajes)\s*$', '', bibliographic_web_query(query), flags=re.I).strip()
+    quoted = re.search(r'[«“"]([^»”"\n]{2,180})[»”"]', value)
+    if quoted:
+        return [quoted.group(1)]
+    proper = r'[A-ZÁÉÍÓÚÜÑ][\wÁÉÍÓÚÜÑáéíóúüñ.-]*'
+    named = re.fullmatch(r'(.{2,180}?)\s+de\s+(' + proper + r'(?:\s+' + proper + r'){0,4})', value)
+    return [value, named.group(1)] if named else []
+
+
 def public_research_queries(message, selected_books=None, requirements=None):
     """Construye consultas bibliográficas, nunca envía pasajes privados o historial."""
     if excerpt_marker(message):

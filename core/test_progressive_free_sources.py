@@ -193,6 +193,7 @@ class ResearchOperationTraceTests(SimpleTestCase):
         self.assertEqual(found[0]['read_mode'], 'fragmento del buscador')
         with research_scope(), patch('core.literary_search.search_searx', return_value=found), \
                 patch('core.literary_search.search_wikipedia', return_value=[]), \
+                patch('core.literary_search.search_duckduckgo', return_value=[]), \
                 patch('core.literary_search.read_public_page') as read:
             results = _retrieve_web('Cuaderno de la luna Ana Robles')
             snapshot = research_snapshot()

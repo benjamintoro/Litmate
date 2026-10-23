@@ -4,14 +4,15 @@ import json
 import socket
 import time
 from unittest.mock import Mock, patch
+from urllib.robotparser import RobotFileParser
 
 from django.core.cache import cache
 from django.test import SimpleTestCase, override_settings
 
 from .literary_web import (
     PublicFetchError, _PinnedHTTPSConnection, _extract_html, _resolve_public,
-    _robots_permission, _secure_fetch, _validated_url, extract_public_page,
-    read_public_json,
+    _robots_can_fetch, _robots_permission, _secure_fetch, _validated_url, extract_public_page,
+    read_public_html, read_public_json,
 )
 from .ai_http import read_json_url
 
@@ -43,6 +44,44 @@ class PublicURLSecurityTests(SimpleTestCase):
         url, host = _validated_url(URL + '#personajes', ALLOWED)
         self.assertEqual(url, URL)
         self.assertEqual(host, 'literaturasm.cl')
+
+    def test_wildcard_allows_public_https_without_weakening_host_checks(self):
+        url, host = _validated_url('https://example.org/pagina', ('*',))
+        self.assertEqual((url, host), ('https://example.org/pagina', 'example.org'))
+        for unsafe in ['http://example.org/pagina', 'https://127.0.0.1/pagina',
+                       'https://[::1]/pagina', 'https://example.org:8443/pagina']:
+            with self.subTest(unsafe=unsafe), self.assertRaises(PublicFetchError):
+                _validated_url(unsafe, ('*',))
+
+    def test_robots_wildcard_and_specific_allow_rules_are_respected(self):
+        parser = RobotFileParser()
+        parser.parse(['User-agent: *', 'Disallow: /libros/search*?*',
+                      'Disallow: /*.pdf$', 'Allow: /libros/search/permitido?*'])
+        for path, allowed in [('/libros/search?q=novela', False),
+                              ('/libros/search/permitido?q=novela', True),
+                              ('/catalogo.pdf', False), ('/catalogo.pdf/info', True),
+                              ('/libro-ejemplo/123', True)]:
+            with self.subTest(path=path):
+                self.assertEqual(_robots_can_fetch(parser, 'https://example.org' + path), allowed)
+
+    def test_robots_uses_the_most_specific_user_agent(self):
+        parser = RobotFileParser()
+        parser.parse(['User-agent: *', 'Allow: /', '',
+                      'User-agent: LitMate', 'Disallow: /privado*'])
+        self.assertFalse(_robots_can_fetch(parser, 'https://example.org/privado?x=1'))
+
+    @patch('core.literary_web._robots_permission')
+    @patch('core.literary_web._secure_fetch')
+    def test_read_public_html_checks_robots_and_rejects_non_html(self, fetch, robots):
+        fetch.return_value = {'content_type': 'text/html; charset=utf-8',
+                              'body': b'<html>contenido p\xc3\xbablico</html>'}
+        self.assertEqual(read_public_html('https://example.org/pagina'),
+                         '<html>contenido p\xfablico</html>')
+        robots.assert_called_once()
+        fetch.return_value = {'content_type': 'application/pdf', 'body': b'%PDF'}
+        with self.assertRaises(PublicFetchError) as caught:
+            read_public_html('https://example.org/pagina.pdf')
+        self.assertEqual(caught.exception.code, 'unsupported_type')
 
     def test_credentials_ports_private_hosts_and_host_suffix_tricks_rejected(self):
         for url in ['http://literaturasm.cl/x', 'https://literaturasm.cl:8443/x',

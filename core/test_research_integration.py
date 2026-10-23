@@ -436,17 +436,19 @@ class FreeResearchFallbackIntegrationTests(SimpleTestCase):
 
     @override_settings(LITMATE_AI_USE_SEARXNG=True, LITMATE_AI_USE_WIKIDATA=False,
                        LITMATE_RESEARCH_MAX_PAGES=0)
-    def test_searx_outage_keeps_wikipedia_evidence_and_reports_partial_status(self):
+    def test_general_search_outage_keeps_wikipedia_evidence_and_reports_partial_status(self):
         source = {'kind': 'web', 'title': 'Una novela', 'author': 'Fuente web',
                   'description': 'Información pública recuperada de la API oficial.',
                   'url': 'https://es.wikipedia.org/wiki/Una_novela', 'source': 'Wikipedia'}
-        with patch('core.literary_search.search_searx', return_value=SearchResults(status='unavailable')), \
+        with patch('core.literary_search.search_searx') as searx, \
+                patch('core.literary_search.search_duckduckgo', return_value=SearchResults(status='unavailable')), \
                 patch('core.literary_search.search_wikipedia', return_value=SearchResults([source])):
             result = retrieve_web('Una novela personajes')
         self.assertEqual(len(result), 1)
         self.assertEqual(result.status, 'partial')
-        self.assertEqual(result.providers['SearXNG'], 'unavailable')
+        self.assertEqual(result.providers['DuckDuckGo'], 'unavailable')
         self.assertEqual(result.providers['Wikipedia'], 'ok')
+        searx.assert_not_called()
 
     @override_settings(LITMATE_AI_USE_SEARXNG=True, LITMATE_AI_USE_WIKIDATA=True,
                        LITMATE_RESEARCH_MAX_PAGES=0)
@@ -455,6 +457,7 @@ class FreeResearchFallbackIntegrationTests(SimpleTestCase):
                   'description': 'Identidad bibliográfica pública.', 'url': 'https://www.wikidata.org/wiki/Q123',
                   'source': 'Wikidata'}
         with patch('core.literary_search.search_searx', return_value=SearchResults(status='empty')), \
+                patch('core.literary_search.search_duckduckgo', return_value=SearchResults(status='empty')), \
                 patch('core.literary_search.search_wikipedia', return_value=SearchResults(status='empty')), \
                 patch('core.literary_wikidata.search_wikidata', return_value=SearchResults([source])) as wikidata:
             result = retrieve_web('Una novela')

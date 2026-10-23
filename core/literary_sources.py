@@ -65,7 +65,7 @@ def record_research_event(stage, provider, status, *, count=0):
         return
     # Los identificadores pertenecen al código, nunca a respuestas remotas.
     stages = {'http_request', 'page_read', 'cache_hit', 'supplementary_synopsis'}
-    providers = {'Open Library', 'Google Books', 'SearXNG', 'Wikipedia', 'web'}
+    providers = {'Open Library', 'Google Books', 'SearXNG', 'Wikipedia', 'DuckDuckGo', 'web'}
     statuses = {'started', 'ok', 'empty', 'partial', 'cached', 'disabled',
                 'unavailable', 'timeout', 'rate_limited', 'invalid_response',
                 'access_denied', 'unauthorized', 'cooldown', 'budget_exhausted',
@@ -121,7 +121,8 @@ def error_status(error):
               'dns_failed': 'unavailable', 'dns_busy': 'unavailable'}
     if code in mapped:
         return mapped[code]
-    if code in {'timeout', 'rate_limited', 'access_denied', 'unavailable', 'invalid_response'}:
+    if code in {'timeout', 'rate_limited', 'access_denied', 'unavailable', 'invalid_response',
+                'robots_denied', 'robots_unavailable', 'unsupported_type', 'budget_exhausted'}:
         return code
     if isinstance(error, HTTPError):
         return {429: 'rate_limited', 403: 'access_denied', 401: 'unauthorized'}.get(

@@ -1,5 +1,9 @@
 # Descubrimiento rápido con objetivo de 30 segundos — resultados reales
 
+> Informe histórico. Desde el 23-10-2026 el presupuesto vigente es de 36 s de
+> trabajo y 42 s de espera del cliente, con búsqueda web general y respaldo
+> mediante referencias auditadas. Véase `../busqueda_amplia_20261023/INFORME.md`.
+
 Fecha: 22-10-2026. Rama `feature/cuotas-ia-chatbot`.
 Punto de partida: `253e029`, etiqueta local
 `checkpoint/antes-descubrimiento-30s-20261022`.

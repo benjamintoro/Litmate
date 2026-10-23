@@ -78,14 +78,14 @@ class WikipediaReadingBudgetTests(SimpleTestCase):
         from .literary_search import _retrieve_web
 
         snippets = [{'title': 'Papelucho y el marciano: ficha ' + str(index),
-                     'author': 'Fuente web', 'kind': 'web', 'source': 'SearXNG',
+                     'author': 'Fuente web', 'kind': 'web', 'source': 'DuckDuckGo',
                      'url': 'https://literaturasm.cl/ficha-' + str(index),
                      'description': 'Ficha de Marcela Paz y sus personajes número ' + str(index),
                      'read_mode': 'fragmento del buscador'} for index in range(3)]
         extracted = {'status': 'ok', 'description': 'Papelucho y Det, personajes de la obra de Marcela Paz.',
                      'title': 'Papelucho y el marciano'}
         with research_scope(2, 15, 3), \
-                patch('core.literary_search.search_searx', return_value=snippets), \
+                patch('core.literary_search.search_duckduckgo', return_value=snippets), \
                 patch('core.literary_search.read_json_url', side_effect=[self.intro, self.article]) as api, \
                 patch('core.literary_search.read_public_page', return_value=extracted) as html:
             results = _retrieve_web(self.query)

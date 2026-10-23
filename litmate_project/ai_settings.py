@@ -4,6 +4,8 @@ from pathlib import Path
 
 
 def apply_ai_settings(target, base_dir):
+    from core.ai_budget import CHAT_WORK_SECONDS
+
     def flag(name, default=True):
         return os.getenv(name, str(default)).lower() in {'1', 'true', 'yes', 'on'}
     model = os.getenv('LITMATE_LOCAL_MODEL', 'qwen3.5:9b-q4_K_M').strip()
@@ -18,8 +20,15 @@ def apply_ai_settings(target, base_dir):
         LITMATE_LOCAL_ANSWER_TOKENS=int(os.getenv('LITMATE_LOCAL_ANSWER_TOKENS', '3072')),
         LITMATE_AI_TOTAL_TIMEOUT=int(os.getenv('LITMATE_AI_TOTAL_TIMEOUT', '360')),
         # El chat interactivo tiene un presupuesto propio, aunque un diagnóstico
-        # offline necesite más tiempo. Reserva un segundo del máximo de 30 s.
-        LITMATE_CHAT_TIMEOUT=min(29, max(.1, float(os.getenv('LITMATE_CHAT_TIMEOUT', '29')))),
+        # offline necesite más tiempo. El trabajo del modelo queda acotado por
+        # CHAT_WORK_SECONDS; la respuesta completa reserva unos segundos más
+        # para guardar la sesión y cerrar el stream.
+        LITMATE_CHAT_TIMEOUT=min(CHAT_WORK_SECONDS, max(.1, float(os.getenv(
+            'LITMATE_CHAT_TIMEOUT', str(CHAT_WORK_SECONDS))))),
+        # El descubrimiento externo compite con el modelo por el mismo reloj.
+        # Seis segundos bastan para catálogo local y una fuente pública; si no
+        # hay fichas, es mejor reservar el resto para razonar y verificar.
+        LITMATE_AI_DISCOVERY_SECONDS=float(os.getenv('LITMATE_AI_DISCOVERY_SECONDS', '6')),
         LITMATE_AI_QUALITY_CHECKS=flag('LITMATE_AI_QUALITY_CHECKS'),
         LITMATE_AI_FAST_RECOMMENDATIONS=flag('LITMATE_AI_FAST_RECOMMENDATIONS'),
         LITMATE_AI_SEARCH_BUDGET=int(os.getenv('LITMATE_AI_SEARCH_BUDGET', '4')),

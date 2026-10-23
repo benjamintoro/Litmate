@@ -337,3 +337,215 @@ def catalogue_lookup_answer(message, history, search):
     if description and description in source['description'] and len(description) <= 300:
         return _validated_result(message, [{**source, 'description': description}])
     return None
+
+def isbn_lookup_answer(message, *, search=None):
+    """Identifica un ISBN sólo si el registro recibido contiene ese número."""
+    if (not isinstance(message, str) or has_excerpt(message) or obvious_rejection(message)
+            or requires_exact_text(message) or re.search(r'[;\n]|[.!?]\s+\S', message)
+            or re.search(r'\b(?:y|e|ademas|tambien|compara\w*|analiza\w*|resume\w*|'
+                         r'sinopsis|trata|paginas|publicad\w*|precio|cuesta)\b', request_text(message))):
+        return None
+    from .literary_research import public_research_queries
+    if not public_research_queries(message):
+        return None
+    match = re.search(r'\bISBN(?:-1[03])?\s*:?\s*([\dXx][\dXx -]{8,22}[\dXx])', message, re.I)
+    if not match:
+        return None
+    from .literary_identity import _isbn_values
+    numbers = _isbn_values({'isbns': [match.group(1)]})
+    if not numbers:
+        return None
+    query = 'isbn:' + numbers[0]
+    if search is None:
+        from .literary_search import retrieve_discovery_books
+        search = retrieve_discovery_books
+    from .ai_catalog_fallback import _topic_catalogue_origin
+    number = query[5:]
+    found = canonical_sources(search(query))
+    matches = [source for source in found if _topic_catalogue_origin(source)
+               and number in source.get('isbns', [])
+               and ('ISBN registrado: ' + number + '.') in source['description']]
+    if len({(normalized(source['title']), normalized(source['author'])) for source in matches}) != 1:
+        return None
+    source = matches[0]
+    result = _validated_result(message, [{**source, 'description': 'ISBN registrado: ' + number + '.'}])
+    if result is not None:
+        result.intent = 'identify'
+        result.diagnostics['isbn_lookup_quick_answer'] = True
+    return result
+
+
+def verified_book_list_answer(message, sources, *, history=None, topic_context=None, limit=3):
+    """Lista las fichas ya verificadas cuando no hay una sinopsis publicable.
+
+    No añade argumentos ni sinopsis inventadas: sólo título, autor y la ficha
+    real recuperada. Evita que una lista de libros válida dependa del modelo
+    lento o de una segunda búsqueda web.
+    """
+    if (not isinstance(message, str) or has_excerpt(message)
+            or obvious_rejection(message) or requires_exact_text(message)):
+        return None
+    query = (topic_context or {}).get('query') or message
+    if not _simple_topic_request(message, query):
+        return None
+    from .ai_catalog_fallback import _topic_catalogue_origin
+    from .books_google import topic_matches
+    from .literary_constraints import constraints_match, recommendation_constraints
+    from .literary_ai import recommendation_sources
+    constraints = recommendation_constraints(query)
+    constraints.update({key: value for key, value in recommendation_constraints(message).items() if value})
+    books = [source for source in canonical_sources(sources, 32)
+             if _topic_catalogue_origin(source) and topic_matches(source, query)
+             and constraints_match(source, constraints)]
+    requested = requested_book_count(message)
+    previous = ([book for turn in sanitized_history(history or []) for book in turn['books']]
+                if re.search(r'\b(?:otros?|otras?|mas)\b', request_text(message)) else [])
+    chosen = recommendation_sources(books, min(5, requested or limit),
+        different_authors=bool(re.search(r'\b(?:distintos?|diferentes?) autores?\b', request_text(message))),
+        excluded=previous)
+    chosen = canonical_sources(chosen, 5)
+    if not chosen:
+        return None
+    from .literary_quality import required_fact_statements, validate_audit
+    from .literary_evidence import validate_evidence
+    lines, claims = [], []
+    for index, source in enumerate(chosen, 1):
+        identity = f'**{source["title"]}** — {source["author"]}'
+        proof = next((source[field] for field in ('title', 'author', 'description')
+                      if 8 <= len(source.get(field, '')) <= 300), '')
+        if not proof:
+            return None
+        lines.append(f'{index}. {identity}')
+        claims.extend({'statement': statement, 'verdict': 'supported',
+                       'source_id': source['id'], 'evidence': proof}
+                      for statement in required_fact_statements(identity) or [identity])
+    cards = [{'title': source['title'], 'author': source['author'],
+              'source_id': source['id']} for source in chosen]
+    draft = {'status': 'answer', 'text': '\n\n'.join(lines), 'basis': 'sources',
+             'citations': [source['id'] for source in chosen], 'books': cards, 'needs_web': False}
+    plan = {'questions': [message], 'search_queries': [], 'needs_contents': False,
+            'needs_fresh_sources': False, 'spoilers_requested': False}
+    audit = {'decision': 'approve', 'only_books': True, 'claims': claims,
+             'coverage': [{'question_id': 1, 'status': 'uncertain' if requested and len(chosen) < requested else 'answered'}],
+             'search_queries': [], 'issues': []}
+    try:
+        validate_draft(draft, chosen)
+        validate_recommendation_text(draft, chosen)
+        validate_evidence(draft, chosen, message)
+        validate_audit(audit, plan, draft, chosen, message, strict_facts=True)
+    except (ValueError, TypeError):
+        return None
+    text = 'Estas son las obras cuyas fichas pude verificar:\n\n' + draft['text']
+    if requested and len(chosen) < requested:
+        text += f'\n\nPude confirmar {len(chosen)} de las {requested} opciones solicitadas.'
+    text += '\n\nNo dispongo de una sinopsis verificada para todas; no añado detalles sobre su contenido.'
+    text += '\n\nFuentes de las fichas:\n' + '\n'.join(source['url'] for source in chosen if source['url'])
+    return ChatResult(text, 'answered', True, sources=chosen,
+                      books=cards, basis='sources', intent='recommend',
+                      diagnostics={'verified_book_list_quick_answer': True, 'audit': audit})
+
+
+def reference_answer(message, sources, *, query=None, intent='recommend', limit=4):
+    """Publica pasajes atribuidos y enlaces reales; no los convierte en fichas.
+
+    La auditoría comprueba la copia literal, no certifica la veracidad de una
+    página ajena. El alcance parcial se declara y nunca reemplaza citas exactas.
+    """
+    if has_excerpt(message) or obvious_rejection(message) or requires_exact_text(message):
+        return None
+    from .literary_ai import LiteraryAssistant, forbidden_output
+    from .literary_search import STOPWORDS
+    from .literary_web import public_text_has_injection
+    terms = set(re.findall(r'\w{3,}', normalized(query or message))) - STOPWORDS - {
+        'recomiendame', 'recomiendas', 'puedes', 'podrias', 'cuentame', 'hablame',
+        'analiza', 'analisis', 'resume', 'resumen', 'sinopsis', 'trata', 'autor',
+        'autora', 'autores', 'escribio', 'obra', 'obras', 'ensayo', 'isbn',
+        'cual', 'como', 'informacion', 'lectura', 'lecturas', 'personajes', 'principales'}
+    adaptations = bool(re.search(r'\b(?:pelicula|film|adaptacion|cine|serie)\b', normalized(query or message)))
+    pages = [source for source in canonical_sources(sources, 16)
+             if source['kind'] == 'web' and source['url']
+             and not source.get('injection_detected')
+             and not public_text_has_injection(source['title'] + ' ' + source['description'])
+             and not forbidden_output(source['title'] + ' ' + source['description'])
+             and (adaptations or not re.search(r'\((?:pelicula|film|serie|videojuego)\b', normalized(source['title'])))
+             and (not terms or terms & set(re.findall(r'\w{3,}', normalized(
+                 source['title'] + ' ' + source['description'] + ' ' + source['url']))))]
+    if not pages:
+        return None
+    if re.match(r'^(?:de que trata|cuentame|hablame|resumen|sinopsis)\b', request_text(message).strip(' ¿?¡!.,')):
+        from .literary_research import bibliographic_title_hints
+        hints = [normalized(title) for title in bibliographic_title_hints(query or message)]
+        if hints:
+            # Una biografía del autor no responde al argumento de su novela.
+            # Si sólo hay una página general, al menos el pasaje que se muestra
+            # debe mencionar la obra; no citar un párrafo de otro asunto.
+            work_pages = [source for source in pages if any(title in normalized(source['title']) for title in hints)]
+            pages = work_pages or [source for source in pages if any(
+                title in normalized(source['description'][:230]) for title in hints)]
+            if not pages:
+                return None
+    sources = canonical_sources(pages, limit)
+    from .literary_quality import required_fact_statements, validate_audit
+    from .literary_evidence import validate_evidence
+    lines, claims = [], []
+    for source in sources:
+        title = '**' + source['title'] + '** [' + str(source['id']) + ']'
+        proof = source['title']
+        if len(proof) < 8:
+            continue
+        lines.append(title)
+        claims.extend({'statement': statement, 'verdict': 'supported',
+                       'source_id': source['id'], 'evidence': proof}
+                      for statement in required_fact_statements(title) or [title])
+        # Cita corta, literal y atribuida. No presentar el fragmento del
+        # buscador como lectura de la página ni como texto de la novela.
+        snippet = re.sub(r'\s+', ' ', source['description']).strip()
+        words = list(re.finditer(r'\S+', snippet))[:25]
+        snippet = snippet[:words[-1].end()] if words else ''
+        if len(snippet) > 230:
+            snippet = snippet[:230].rsplit(' ', 1)[0]
+        if len(snippet) >= 8:
+            mode = 'Fragmento del buscador' if source['read_mode'] == 'fragmento del buscador' else 'Pasaje recuperado'
+            line = mode + ': «' + snippet + '»'
+            lines.append(line)
+            claims.extend({'statement': statement, 'verdict': 'supported',
+                           'source_id': source['id'], 'evidence': snippet}
+                          for statement in required_fact_statements(line) or [line])
+    if not claims:
+        return None
+    draft = {'status': 'answer', 'text': '\n\n'.join(lines), 'basis': 'sources',
+             'citations': sorted({claim['source_id'] for claim in claims}), 'books': [], 'needs_web': False}
+    plan = {'questions': [message], 'search_queries': [], 'needs_contents': False,
+            'needs_fresh_sources': False, 'spoilers_requested': False}
+    audit = {'decision': 'approve', 'only_books': True, 'claims': claims,
+             'coverage': [{'question_id': 1, 'status': 'uncertain'}], 'search_queries': [], 'issues': []}
+    try:
+        validate_draft(draft, sources)
+        validate_evidence(draft, sources, message)
+        validate_audit(audit, plan, draft, sources, message, strict_facts=True)
+    except (ValueError, TypeError):
+        return None
+    draft['text'] = ('Encontré estas referencias relacionadas con tu consulta:\n\n' + draft['text']
+        + '\n\nSon pasajes atribuidos a sus fuentes, no fichas bibliográficas ni una verificación '
+          'independiente de todos sus datos. No puedo confirmar con ellos todas las partes de tu consulta.')
+    return LiteraryAssistant._publish(draft, sources, intent,
+        {'web_reference_quick_answer': True, 'partial_answer': True, 'reference_audit': audit})
+
+
+def web_reference_answer(message, *, query=None, search=None, limit=4):
+    """Investiga con los mismos límites y filtros de privacidad que el modelo."""
+    from django.conf import settings
+    from .literary_research import public_research_queries
+    if not getattr(settings, 'LITMATE_AI_USE_WEB', True):
+        return None
+    queries = public_research_queries(query or message)
+    if not queries or has_excerpt(message) or obvious_rejection(message) or requires_exact_text(message):
+        return None
+    if search is None:
+        from .literary_search import retrieve_web
+        search = retrieve_web
+    try:
+        found = search(queries[0])
+    except (TimeoutError, OSError, ValueError):
+        return None
+    return reference_answer(message, found, query=queries[0], limit=limit)

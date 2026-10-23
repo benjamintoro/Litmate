@@ -279,6 +279,16 @@ siquiera como alternativas no verificadas al final. Si el lector pide una obra,
 elige una de las fuentes y explica la recomendación sin agregar nombres nuevos.'''
 
 ANSWER_PROMPT += '''
+Si allow_web_only_recommendations=true no hay fichas bibliográficas verificadas
+en sources. No inventes títulos, autores, ISBN, precios ni argumentos. Responde
+en español con una síntesis útil de lo que las páginas sí documentan, citando
+los IDs [n] de las fuentes usadas. Si mencionas un libro, hazlo sólo cuando su
+título y autor aparezcan literalmente en una fuente citada; no lo presentes
+como una ficha verificada. Deja books=[] y no uses source_id=0. Si las fuentes
+no alcanzan para responder una parte, dilo con precisión y ofrece la referencia
+real disponible en lugar de un rechazo vacío.'''
+
+ANSWER_PROMPT += '''
 Si hay requested_topic o resolved_request, conserva esa materia durante toda
 la respuesta. «Cualquiera» o «distintos artistas» continúa dentro de ese tema.
 No sustituyas libros de arte por novelas que mencionan un artista. Explica
@@ -623,13 +633,18 @@ def validate_recommendation_text(draft, sources):
                         or not value[len(normalized(source['title']))].isalnum())]
         if not matches:
             raise ValueError('Cada opción enumerada debe comenzar con el título real de una ficha recibida.')
-        source = max(matches, key=lambda item: len(item['title']))
-        author = set(re.findall(r'\w+', normalized(source['author'])))
-        author = {word for word in author if len(word) > 1 and word not in {'and', 'et', 'al', 'por'}}
+        longest = max(len(normalized(source['title'])) for source in matches)
+        matches = [source for source in matches if len(normalized(source['title'])) == longest]
         heading_words = set(re.findall(r'\w+',
-            value[len(normalized(source['title'])):].split(':', 1)[0]))
-        if not author <= heading_words:
+            value[longest:].split(':', 1)[0]))
+        # Títulos homónimos pueden pertenecer a autores distintos. El primer
+        # resultado del catálogo no debe invalidar las otras fichas correctas.
+        matches = [source for source in matches if {
+            word for word in re.findall(r'\w+', normalized(source['author']))
+            if len(word) > 1 and word not in {'and', 'et', 'al', 'por'}} <= heading_words]
+        if not matches:
             raise ValueError('Copia también el autor de la ficha en el encabezado de cada recomendación.')
+        source = max(matches, key=lambda item: len(item['author']))
         mentioned.append((normalized(source['title']), normalized(source['author'])))
     chosen = [(normalized(book['title']), normalized(book['author'])) for book in draft['books']]
     if len(mentioned) != len(chosen) or set(mentioned) != set(chosen):
@@ -1233,7 +1248,8 @@ class LiteraryAssistant:
     def __init__(self, llm, search, *, answer_model='qwen3.5:4b-q4_K_M',
                  guard_model='qwen3.5:4b-q4_K_M', web_search=None,
                  content_search=None, search_budget=4, quality_checks=False,
-                 require_book_sources=False, fast_recommendations=False,
+                 require_book_sources=False, allow_web_only=False,
+                 fast_recommendations=False,
                  research_enabled=False, research_timeout=15, research_max_searches=2):
         self.llm, self.search, self.web_search = llm, search, web_search
         self.answer_model, self.guard_model = answer_model, guard_model
@@ -1241,6 +1257,7 @@ class LiteraryAssistant:
         self.search_budget = max(1, min(int(search_budget), 4))
         self.quality_checks = quality_checks is True
         self.require_book_sources = require_book_sources is True
+        self.allow_web_only = allow_web_only is True
         self.fast_recommendations = fast_recommendations is True
         self.research_enabled = research_enabled is True
         self.research_timeout = max(1, min(float(research_timeout), 30))
@@ -1267,6 +1284,14 @@ class LiteraryAssistant:
             fallback.diagnostics['early_grounded_fallback'] = True
         return fallback
 
+    def _web_reference_fallback(self, sources, intent, diagnostics, *, message=''):
+        """Conserva sólo referencias literales auditadas, nunca el borrador fallido."""
+        from .ai_quick_answers import reference_answer
+        result = reference_answer(message, sources, intent=intent)
+        if result is not None:
+            result.diagnostics.update(diagnostics, web_reference_fallback=True)
+        return result
+
     def reply(self, message, history=None, *, topic_context=None):
         from .ai_budget import request_budget, BudgetExpired
         started = time.monotonic()
@@ -1289,6 +1314,7 @@ class LiteraryAssistant:
         return result
 
     def _reply(self, message, history=None, *, topic_context=None):
+        from .ai_budget import BudgetExpired
         if not isinstance(message, str) or not message.strip() or len(message) > MAX_MESSAGE:
             raise ValueError('Mensaje vacío, inválido o demasiado largo')
         message = message.strip()
@@ -1673,11 +1699,21 @@ class LiteraryAssistant:
                 selected_sources = recommendation_sources(sources, requested,
                     different_authors=different_authors, excluded=excluded)
                 # No fingir nuevas opciones si la búsqueda repite lo ya recomendado.
-                if selected_sources or excluded:
+                if selected_sources:
                     sources = selected_sources
+                elif not any(source['kind'] in {'book', 'excerpt'} for source in sources):
+                    # Sin fichas, conserva las páginas web reales para que el
+                    # turno pueda responder con citas en lugar de quedar vacío.
+                    sources = canonical_sources(sources)
+                elif excluded:
+                    # No volver a publicar obras que el lector ya descartó.
+                    sources = [source for source in sources if source['kind'] == 'web']
                 else:
                     sources = recommendation_sources(sources, requested,
                         different_authors=different_authors)
+            web_only = (self.allow_web_only
+                        and not any(s['kind'] in {'book', 'excerpt'} for s in sources)
+                        and any(s['kind'] == 'web' and s.get('url') for s in sources))
             context = {'message': message, 'intent': route['intent'],
                        'current_date': current_date,
                        'accepted_history': history, 'sources': sources,
@@ -1687,7 +1723,9 @@ class LiteraryAssistant:
                        'facts_only': route['intent'] in {'analysis', 'summary', 'author'} and bool(sources)
                            and bool(re.search(r'\b(?:personajes?|protagonistas?)\b', normalized(message))),
                        'ground_book_identity': self.require_book_sources and any(s['kind'] in {'book', 'excerpt'} for s in sources),
-                       'require_book_sources': self.require_book_sources and route['intent'] in {'recommend', 'identify'}}
+                       'require_book_sources': (self.require_book_sources
+                           and route['intent'] in {'recommend', 'identify'} and not web_only),
+                       'allow_web_only_recommendations': web_only}
             if route['intent'] == 'recommend':
                 from .books_google import topic_matches
                 sources = canonical_sources([source for source in sources
@@ -1746,7 +1784,8 @@ class LiteraryAssistant:
                         if assess_evidence(retrieval_message, [source],
                             selected_books or route['candidates'], route['intent'])['sufficient']]
             context['all_factual_claims_required'] = (route['intent'] == 'identify'
-                or context.get('specific_factual_question', False) or grounded_recommendation)
+                or context.get('specific_factual_question', False) or grounded_recommendation
+                or context.get('allow_web_only_recommendations', False))
             if context['require_book_sources'] and not any(s['kind'] in {'book', 'excerpt'} for s in sources):
                 if route['intent'] == 'recommend' and topic_context.get('subject'):
                     return ChatResult('No pude confirmar todavía títulos que encajen con lo que buscas. '
@@ -1760,7 +1799,7 @@ class LiteraryAssistant:
             if plan:
                 context.update({'plan': plan, 'selected_books': selected_books})
             answer_prompt = CHARACTER_PROMPT if context['facts_only'] and not has_excerpt(message) else ANSWER_PROMPT
-            if grounded_recommendation:
+            if grounded_recommendation and not web_only:
                 answer_prompt = TOPIC_RECOMMENDATION_PROMPT
                 answer_prompt += ('\nEl conjunto de fichas ya está acotado a las opciones pertinentes. '
                     'El campo text contiene la lista completa, con el título y autor de cada '
@@ -1795,6 +1834,12 @@ class LiteraryAssistant:
                     queries=plan['search_queries'] if plan else None, seen=web_queries_seen)
                 context['sources'] = sources
                 context['web_search_completed'] = True
+                web_only = (self.allow_web_only
+                            and not any(s['kind'] in {'book', 'excerpt'} for s in sources)
+                            and any(s['kind'] == 'web' and s.get('url') for s in sources))
+                context['allow_web_only_recommendations'] = web_only
+                context['require_book_sources'] = (self.require_book_sources
+                    and route['intent'] in {'recommend', 'identify'} and not web_only)
                 if grounded_recommendation:
                     context['recommendation_evidence_sources'] = recommendation_evidence_sources(sources)
                 draft = self.llm('answer_web', answer_prompt, context, self.answer_model)
@@ -1846,8 +1891,18 @@ class LiteraryAssistant:
                                 r'(?i)te refieres|qu[eé] libro|cu[aá]l (?:libro|obra)', draft['text'])):
                         raise ValueError('La obra ya está identificada en selected_books. No vuelvas a pedir su título; responde lo respaldado o pregunta por el detalle que falta.')
                     if (route['intent'] == 'recommend' and draft['status'] == 'answer'
-                            and not draft['books']):
+                            and not draft['books']
+                            and not context.get('allow_web_only_recommendations')):
                         raise ValueError('Da al menos una recomendación concreta con título y autor en books.')
+                    if (context.get('allow_web_only_recommendations')
+                            and draft['status'] == 'answer'):
+                        if draft['books']:
+                            raise ValueError('No presentes libros como fichas verificadas: no hay fichas book en sources. Deja books=[] y cita las páginas web.')
+                        if draft.get('basis') not in {'sources', 'mixed'}:
+                            raise ValueError('La respuesta sin fichas debe basarse en las páginas web recibidas; usa basis=sources.')
+                        if not any(source['id'] in draft['citations']
+                                   and source['kind'] in {'web', 'excerpt'} for source in sources):
+                            raise ValueError('Cita al menos una página web recibida para respaldar la respuesta.')
                     if route['intent'] == 'recommend' and draft['status'] == 'answer':
                         identities = [(normalized(book['title']), normalized(book['author'])) for book in draft['books']]
                         book_lookup = {source['id']: source for source in sources}
@@ -1983,6 +2038,12 @@ class LiteraryAssistant:
                                 queries=audit['search_queries'], seen=web_queries_seen,
                                 prefer_new=True)
                             context.update({'sources': sources, 'web_search_completed': True})
+                            web_only = (self.allow_web_only
+                                        and not any(s['kind'] in {'book', 'excerpt'} for s in sources)
+                                        and any(s['kind'] == 'web' and s.get('url') for s in sources))
+                            context['allow_web_only_recommendations'] = web_only
+                            context['require_book_sources'] = (self.require_book_sources
+                                and route['intent'] in {'recommend', 'identify'} and not web_only)
                             if grounded_recommendation:
                                 context['recommendation_evidence_sources'] = recommendation_evidence_sources(sources)
                             draft = self.llm('answer_web', answer_prompt,
@@ -2039,6 +2100,11 @@ class LiteraryAssistant:
             author_fallback = supported_author_fallback(route, message, sources, diagnostics)
             if author_fallback is not None:
                 return author_fallback
+            if self.allow_web_only and not any(
+                    s['kind'] in {'book', 'excerpt'} for s in sources):
+                web_fallback = self._web_reference_fallback(sources, route['intent'], diagnostics, message=message)
+                if web_fallback is not None:
+                    return web_fallback
             return ChatResult(
                 ('No pude preparar una recomendación fiable dentro del tema que buscas. '
                  '¿Prefieres una introducción o un enfoque más específico?'
@@ -2050,13 +2116,21 @@ class LiteraryAssistant:
                 'unavailable', diagnostics={**diagnostics, 'failure_kind':
                     'insufficient_evidence' if evidence_state is not None and not evidence_state.get('sufficient')
                     else 'quality_rejected'})
-        except ProviderUnavailable as exc:
-            diagnostics['provider_error'] = exc.code
-            logger.warning('IA local: %s', exc.code)
+        except (ProviderUnavailable, BudgetExpired) as exc:
+            code = exc.code if isinstance(exc, ProviderUnavailable) else 'tiempo_total_agotado'
+            diagnostics['provider_error'] = code
+            logger.warning('IA local: %s', code)
+            current_route = locals().get('route') or {}
+            current_sources = locals().get('sources') or []
+            if self.allow_web_only and not requires_exact_text(message) and not has_excerpt(message):
+                web_fallback = self._web_reference_fallback(
+                    current_sources, current_route.get('intent', ''), diagnostics, message=message)
+                if web_fallback is not None:
+                    return web_fallback
             text = {'contexto_demasiado_extenso': 'Esta consulta necesita más contexto del disponible. '
                     'Divide las preguntas o indica el pasaje concreto que quieres analizar.',
                     'tiempo_total_agotado': 'No pude completar esta consulta dentro del tiempo disponible. '
-                    'Prueba con una pregunta más concreta sobre la obra.'}.get(exc.code,
+                    'Prueba con una pregunta más concreta sobre la obra.'}.get(code,
                     'El servicio de IA no pudo completar la consulta. Vuelve a intentar en unos instantes.')
             return ChatResult(text, 'unavailable', diagnostics=diagnostics)
         except (ValueError, TypeError, KeyError, IndexError) as exc:
@@ -2179,7 +2253,8 @@ class LiteraryAssistant:
                           True, used, draft['books'], draft['basis'], intent, diagnostics)
 
 
-def build_assistant(settings, *, search=None, web_search=None):
+def build_assistant(settings, *, search=None, web_search=None,
+                    require_book_sources=None, allow_web_only=None):
     """No lee claves ni admite proveedores remotos, aunque queden en tu .env."""
     from .local_llm import OllamaJSON
     from .literary_search import retrieve_books, retrieve_web
@@ -2191,6 +2266,8 @@ def build_assistant(settings, *, search=None, web_search=None):
         answer_tokens=getattr(settings, 'LITMATE_LOCAL_ANSWER_TOKENS', 2048),
         total_timeout=getattr(settings, 'LITMATE_AI_TOTAL_TIMEOUT', 300))
     from .literary_search import retrieve_book_content
+    selected_web = web_search if web_search is not None else (
+        retrieve_web if getattr(settings, 'LITMATE_AI_USE_WEB', True) else None)
     assistant = LiteraryAssistant(client, retrieve_books if search is None else search,
         answer_model=getattr(settings, 'LITMATE_LOCAL_MODEL', 'qwen3.5:4b-q4_K_M'),
         guard_model=getattr(settings, 'LITMATE_LOCAL_GUARD_MODEL',
@@ -2198,11 +2275,12 @@ def build_assistant(settings, *, search=None, web_search=None):
         content_search=retrieve_book_content if search is None else None,
         search_budget=getattr(settings, 'LITMATE_AI_SEARCH_BUDGET', 4),
         quality_checks=getattr(settings, 'LITMATE_AI_QUALITY_CHECKS', True),
-        require_book_sources=getattr(settings, 'LITMATE_AI_REQUIRE_BOOK_SOURCES', True),
+        require_book_sources=(getattr(settings, 'LITMATE_AI_REQUIRE_BOOK_SOURCES', True)
+                              if require_book_sources is None else require_book_sources is True),
+        allow_web_only=(selected_web is not None if allow_web_only is None else allow_web_only is True),
         fast_recommendations=getattr(settings, 'LITMATE_AI_FAST_RECOMMENDATIONS', True),
         research_enabled=getattr(settings, 'LITMATE_RESEARCH_ENABLED', True),
         research_timeout=getattr(settings, 'LITMATE_RESEARCH_TIMEOUT', 15),
         research_max_searches=getattr(settings, 'LITMATE_RESEARCH_MAX_SEARCHES', 2),
-        web_search=web_search if web_search is not None else (
-            retrieve_web if getattr(settings, 'LITMATE_AI_USE_WEB', True) else None))
+        web_search=selected_web)
     return assistant, client

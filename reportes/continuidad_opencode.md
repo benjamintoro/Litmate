@@ -1,13 +1,56 @@
 # Continuidad OpenCode — LitMate IA
 
-Actualizado: 22 de octubre de 2026.
+Actualizado: 23 de octubre de 2026.
 Rama: `feature/cuotas-ia-chatbot`.
 Commits locales de esta sesión: `f12ee52` (seguridad), `057a687` (IA),
 `2f8708f` (evaluación), `147c75e` (informe anterior), `935f2cb` (chat acotado y
 respuestas verificadas rápidas), `1f3a7b7` (métricas honestas de timeout) y
 `45babb1` (descubrimiento en 30 segundos).
 
-## Intervención vigente — objetivo de 30 segundos y descubrimiento local
+## Intervención vigente — búsqueda amplia, no limitada a la captura
+
+- Se amplía la recuperación para obras y materias arbitrarias: catálogo local,
+  Open Library, Wikipedia en español/inglés y DuckDuckGo Lite. SearXNG queda
+  como respaldo cuando los proveedores principales no devuelven resultados.
+  Google Books sigue siendo opcional y no se habilita ningún proveedor de pago.
+- Las primeras páginas pertinentes, incluidas editoriales y librerías, pueden
+  aportar pasajes públicos cuando sus reglas lo permiten. Se conservan HTTPS,
+  DNS público fijado para TLS, robots.txt (también comodines), límites de tamaño,
+  tres lecturas por petición y rechazo de redirecciones/bloqueos/CAPTCHA.
+- `CHAT_WORK_SECONDS=36`, `CHAT_RESPONSE_SECONDS=42`; descubrimiento ligero
+  de seis segundos. La inferencia reserva un segundo para publicar un respaldo
+  antes del límite externo. No se ha activado thinking ni cambiado el modelo 9B.
+- Las listas rápidas verifican procedencia, tema, filtros, obras anteriores y
+  auditoría de identidades. Sin sinopsis no inventan una explicación.
+- Si sólo hay información web, se ofrecen pasajes cortos atribuidos y sus URL,
+  con `books=[]` y advertencia de alcance parcial. La auditoría comprueba la
+  copia literal; no se presenta como certificación independiente de la página.
+- Las consultas sobre libros concretos también investigan en paralelo con
+  Ollama. Si falla la generación, se reutilizan las fuentes recuperadas; no se
+  publica el borrador fallido ni se reinicia un timeout de varios minutos.
+- Se corrigió el error de argumentos posicionales de `ChatResult` que causaba
+  HTTP 500 al recordar una respuesta web. Las pruebas cubren los tipos de
+  `books`, `sources`, `basis` e `intent`, además de privacidad y cuotas.
+- Se añadieron normalización de consultas naturales, consulta de ISBN con
+  número comprobado en el registro y soporte correcto de títulos homónimos;
+  una película no sustituye a la novela cuando se buscan sus contenidos.
+- Última comprobación offline: **1167 pruebas core OK en 11,790 s**, **17 de
+  pagos/cuotas OK en 0,108 s**, **198 comprobaciones JavaScript OK**.
+  `manage.py check` y `diagnosticar_ia --sin-fuentes` ejecutados correctamente.
+- Matriz real final: `reportes/busqueda_amplia_20261023/http_v4.json`, **10/10
+  HTTP 200, SSE completo y `answered`**, todos antes de 42 s; mediana **4,802 s**,
+  máximo **35,061 s**. **3 respuestas bibliográficas y 7 respaldos parciales**,
+  no diez respuestas exhaustivas. En Guerra y paz se eliminó la biografía
+  irrelevante. Hay resultados de Amazon/Casa del Libro y páginas públicas leídas.
+  `source_files_changed_during_run=false`; sin revisión factual independiente.
+- Control HTTP sin web: Revolución francesa, `unavailable` honesto en **0,163 s**,
+  sin enlaces ni títulos inventados. Medición externa y limitaciones en
+  `reportes/busqueda_amplia_20261023/`.
+- No se modificó `.env`, no se instalaron paquetes, no se ejecutaron migraciones,
+  no se modificaron datos existentes de usuarios y no se hizo push. Las pruebas nuevas
+  usan tablas temporales; el diagnóstico lee SQLite auxiliares en modo sólo lectura.
+
+## Histórico — objetivo anterior de 30 segundos y descubrimiento local
 
 - Punto de partida: `253e029`, etiqueta local
   `checkpoint/antes-descubrimiento-30s-20261022`. Commit del código de esta

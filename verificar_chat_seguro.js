@@ -339,9 +339,9 @@ async function main() {
         fetch(url, options) { requestSignal = options.signal; return new Promise(resolve => { pendingFetch = resolve; }); }
     };
     const timedQuery = Safe.queryChat('Libros', () => { latePaints++; }, () => { latePaints++; }, { environment: deadlineEnv });
-    check(requestedTimeout === 30000, 'petición completa limitada a treinta segundos');
+    check(requestedTimeout === 42000, 'petición completa limitada a cuarenta y dos segundos');
     deadlineCallback();
-    await assert.rejects(timedQuery, /30 segundos/); checks++;
+    await assert.rejects(timedQuery, /42 segundos/); checks++;
     check(requestSignal.aborted, 'se cancela transporte al vencer la espera');
     pendingFetch(streaming([bytes('data: {"token":"TARDE"}\n\ndata: [DONE]\n\n')]).response);
     await new Promise(resolve => setImmediate(resolve));

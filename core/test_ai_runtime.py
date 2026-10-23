@@ -261,17 +261,21 @@ class BibliographicEndpointTests(TestCase):
     def test_metadata_answers_without_model_even_when_inference_is_busy(self):
         cache.set('litmate_local_inference_lock', 'ongoing-inference', timeout=60)
         with patch('core.literary_search.search_google', return_value=[FULL_METADATA]), \
+                patch('core.ai_identification_details.identification_answer', return_value=None), \
                 patch('core.literary_search.search_openlibrary', return_value=[]), \
                 patch('core.literary_ai_views.build_assistant') as builder:
             response = self.client.post('/chatbot_query/', json.dumps({'message': '¿Quién escribió «1984»?'}),
                                         content_type='application/json')
         self.assertEqual(response.status_code, 200)
+        chunks = list(response.streaming_content)
+        response.streaming_content = chunks
         text = self.text(response)
         # La ruta rápida de catálogo puede responder antes que la ficha de
         # Google Books; en ambos casos la autoría queda respaldada por fuente.
         self.assertIn('1984', text)
         self.assertIn('George Orwell', text)
-        self.assertIn('https://books.google.com/books?id=volume_1984', text)
+        # Las referencias bibliográficas se muestran en las tarjetas SSE.
+        self.assertIn(b'https://books.google.com/books?id=volume_1984', b''.join(chunks))
         builder.assert_not_called()
         self.assertEqual(cache.get('litmate_local_inference_lock'), 'ongoing-inference')
 
@@ -304,7 +308,8 @@ class BibliographicEndpointTests(TestCase):
 
 
 @override_settings(LITMATE_AI_LOCK_BACKEND='cache', LITMATE_AI_CATALOG_FALLBACK=True,
-                   LITMATE_USE_EXISTING_QUOTAS=False)
+                   LITMATE_USE_EXISTING_QUOTAS=False, LITMATE_AI_QUICK_ANSWERS=False,
+                   LITMATE_AI_USE_WEB=False)
 class FallbackEndpointTests(TestCase):
     def setUp(self):
         cache.clear()

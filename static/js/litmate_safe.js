@@ -163,13 +163,13 @@
     async function queryChat(message, onText = () => {}, onMetadata = () => {}, options = {}) {
         const env = options.environment || (typeof window !== 'undefined' ? window : globalThis);
         const controller = new env.AbortController();
-        const timeout = Math.max(1, Math.min(Number(options.timeout) || 30000, 30000));
+        const timeout = Math.max(1, Math.min(Number(options.timeout) || 42000, 42000));
         let expired = false, timer;
         const limit = new Promise((_, reject) => {
             timer = env.setTimeout(() => {
                 expired = true;
                 controller.abort();
-                reject(new Error('Se alcanzó el límite de 30 segundos sin recibir una respuesta completa. Vuelve a intentarlo.'));
+                reject(new Error('Se alcanzó el límite de 42 segundos sin recibir una respuesta completa. Vuelve a intentarlo.'));
             }, timeout);
         });
         const transport = (async () => {
