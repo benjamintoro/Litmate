@@ -77,6 +77,36 @@ class NarrativeRequestTests(SimpleTestCase):
         self.assertIn('O Exército na história do Brasil', result.text)
         self.assertNotIn('¿De cuál de las obras', result.text)
 
+    def test_retrieval_uses_the_clarified_title_and_keeps_the_retrieved_synopsis(self):
+        from .ai_narrative_answers import request_for, retrieve_sources
+        title = 'O Exército na história do Brasil'
+        history_brasil = [{
+            'accepted': True, 'question': 'Libros sobre Brasil', 'answer': 'Opciones.',
+            'books': [
+                {'title': 'Brasil', 'author': 'Lilia Moritz Schwarcz'},
+                {'title': 'Historia do Brasil', 'author': 'Boris Fausto'},
+            ],
+            'sources': [],
+        }]
+        pending = {'status': 'clarification',
+                   'question': '¿De cuál de las obras que comentamos quieres conocer ese detalle?',
+                   'original_query': 'Cuéntame sobre la trama de ' + title}
+        request = request_for(title, history_brasil, pending)
+        synopsis = 'Descripción bibliográfica simulada del contenido de la obra.'
+        with override_settings(LITMATE_AI_USE_WEB=False, LITMATE_AI_USE_OPENLIBRARY=True), \
+                patch('core.ai_quick_answers.quick_knowledge_sources', return_value=[]), \
+                patch('core.literary_search.search_openlibrary',
+                      return_value=[BRAZIL_HISTORY_BOOK]) as catalogue, \
+                patch('core.literary_search._openlibrary_detail', return_value={
+                    'key': '/works/OL987W', 'title': title, 'description': synopsis,
+                    'subjects': ['Brazil -- History']}), \
+                patch('core.literary_search._openlibrary_description', return_value=synopsis), \
+                patch('core.ai_persistent_router.persist_sources'):
+            sources = retrieve_sources(title, request, history_brasil)
+        catalogue.assert_called_once_with(title, details=False)
+        self.assertEqual(sources[0]['title'], title)
+        self.assertEqual(sources[0]['synopsis'], synopsis)
+
     def test_explicit_new_title_never_inherits_the_previous_book(self):
         from .ai_narrative_answers import request_for
         request = request_for('¿De qué trata Otro libro?', history())

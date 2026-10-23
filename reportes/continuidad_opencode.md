@@ -14,8 +14,9 @@ Rama: `feature/cuotas-ia-chatbot`.
   `literary_learning.py` y `test_narrative_answers.py`.
 - Se conservó intacto el checkpoint previo
   `checkpoint/antes-fase1-tramas-20261023`; no se restauraron ni sobrescribieron
-  archivos desde Git. El checkpoint de recuperación se guarda como
-  `checkpoint/fase1-tramas-recuperada-20261023`.
+  archivos desde Git. El checkpoint de recuperación y el checkpoint final se
+  conservan como `checkpoint/fase1-tramas-recuperada-20261023` y
+  `checkpoint/fase1-tramas-recuperada-final-20261023`.
 - Se verificó `core/literary_quality.py`, `validate_audit` y el comando
   `core/management/commands/diagnosticar_ia.py`.
 
@@ -52,11 +53,11 @@ Django y dirige los almacenes auxiliares a un directorio temporal. No se usó la
 base del proyecto ni se ejecutaron migraciones.
 
 ```text
-.\venv\Scripts\python.exe -B verificar_proyecto.py core.test_ai_progress_stream core.test_chat_deadline core.test_research_integration core.test_narrative_answers
--> 117 pruebas OK en 7.169 s
+.\venv\Scripts\python.exe -B verificar_proyecto.py core.test_narrative_answers
+-> 24 pruebas OK en 0.269 s
 
 .\venv\Scripts\python.exe -B verificar_proyecto.py core
--> 1340 pruebas OK en 17.266 s
+-> 1341 pruebas OK en 17.469 s
 ```
 
 La ruta rápida, las verificaciones de fuentes y los límites existentes se
