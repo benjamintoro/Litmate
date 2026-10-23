@@ -2,7 +2,13 @@
 import hashlib
 import json
 import logging
+import copy
+import secrets
+import sqlite3
+import threading
 import time
+from dataclasses import asdict
+from queue import Empty, Full, Queue
 from types import SimpleNamespace
 from django.conf import settings
 from django.core.cache import cache
@@ -19,12 +25,59 @@ from .quotas import cuota_disponible, verificar_y_consumir_cuota
 from .ai_concurrency import acquire, release, rate_increment
 from .ai_budget import (request_budget, BudgetExpired, WorkerBusy, chat_timeout,
                         run_before_deadline, budget_timeout, check_budget,
-                        pool_in_budget, submit_with_budget)
+                        pool_in_budget, submit_with_budget, submit_before_deadline)
 from .literary_sources import bounded_research
 from .literary_conversation import resolve_topic_context, remember_topic
+from .ai_progress import emit_phase, measure_stage, progress_scope, snapshot_metrics, sanitize_metrics
 
 logger = logging.getLogger('litmate')
 HISTORY_KEY = 'litmate_literary_chat_local_v1'
+STREAM_NONCE_KEY = 'litmate_ai_stream_owner_v1'
+
+
+def stable_session_owner(request):
+    """Identidad privada estable, también para visitantes y signed cookies.
+
+    Debe llamarse en la petición, antes de devolver sus cabeceras. Ni una IP ni
+    el literal anonymous bastan para separar trabajos/cachés de dos lectores.
+    """
+    from .ai_stream_jobs import owner_key
+    nonce = request.session.get(STREAM_NONCE_KEY)
+    if not isinstance(nonce, str) or len(nonce) != 43:
+        nonce = secrets.token_urlsafe(32)
+        request.session[STREAM_NONCE_KEY] = nonce
+    principal = ('user:' + str(request.user.pk) if request.user.is_authenticated else 'anonymous')
+    return owner_key(principal, nonce)
+
+
+def _safe_diagnostics(result, client):
+    """Telemetría pública; excluye prompts, borradores y consultas privadas."""
+    diagnostics = result.diagnostics
+    allowed = ('elapsed_ms', 'chat_budget_seconds', 'model_calls', 'cache_hit',
+               'answer_cache_hit', 'exact_cache_hit', 'semantic_cache_hit')
+    allowed += ('exact_answer_cache_hit',)
+    values = {key: diagnostics[key] for key in allowed
+              if type(diagnostics.get(key)) in {int, float, bool}}
+    metrics = diagnostics.get('progress_metrics', {})
+    if isinstance(metrics, dict):
+        values['progress_metrics'] = sanitize_metrics(metrics)
+    # Estos registros contienen solo identificadores controlados y números,
+    # nunca la auditoría de afirmaciones ni los mensajes del usuario.
+    timings = diagnostics.get('stage_timings', [])
+    if isinstance(timings, list):
+        timing_keys = {'stage', 'model', 'elapsed_ms', 'status', 'load_ms',
+                       'prompt_eval_ms', 'eval_ms', 'total_ms', 'prompt_eval_count', 'eval_count'}
+        values['stage_timings'] = [{key: item[key] for key in timing_keys if key in item}
+                                  for item in timings[:128] if isinstance(item, dict)]
+    research = diagnostics.get('external_research')
+    if isinstance(research, dict):
+        keys = {'logical_searches', 'page_slots_reserved', 'external_seconds',
+                'http_requests_started', 'pages_extracted'}
+        values['external_research'] = {key: research[key] for key in keys
+                                      if type(research.get(key)) in {int, float}}
+    values['provider'] = str(getattr(client, 'provider', 'local'))[:64]
+    values['model_calls'] = getattr(client, 'calls', None)
+    return values
 
 
 @ensure_csrf_cookie
@@ -199,6 +252,41 @@ def _model_answer(message, history, topic_context, retrieval_message):
 
 
 def _compute_answer(message, history, topic_context):
+    """Recoge métricas incluso en las rutas que no llaman a ningún modelo."""
+    with progress_scope():
+        # Aquí comienza la consulta efectiva a las fichas y al contexto local.
+        # No es un temporizador ni una secuencia de animaciones prefijadas.
+        emit_phase('search')
+        result, client = _compute_answer_impl(message, history, topic_context)
+        result.diagnostics['progress_metrics'] = snapshot_metrics()
+        return result, client
+
+
+def _answer_with_cache(message, history, topic_context, cache_state, cache_owner):
+    """Sólo datos copiados del lector; ninguna sesión/ORM dentro del worker."""
+    from .ai_answer_cache import get_answer, put_answer
+    enabled = getattr(settings, 'LITMATE_AI_QUICK_ANSWERS', True)
+    with progress_scope():
+        if enabled:
+            with measure_stage('cache_lookup'):
+                cached = get_answer(message, cache_state, cache_owner)
+            if cached is not None:
+                cached.diagnostics['progress_metrics'] = snapshot_metrics()
+                return cached, SimpleNamespace(usage={}, provider='verified-answer-cache', calls=0)
+        result, client = _compute_answer(message, history, topic_context)
+        if enabled:
+            try:
+                from .ai_persistent_router import persist_sources
+                persist_sources(result.sources)
+            except (OSError, ValueError, sqlite3.Error):
+                logger.warning('IA: memoria pública no disponible; se conserva la respuesta validada')
+            if getattr(client, 'calls', None) == 0:
+                put_answer(message, cache_state, cache_owner, result)
+        result.diagnostics['progress_metrics'] = snapshot_metrics()
+        return result, client
+
+
+def _compute_answer_impl(message, history, topic_context):
     """Trabajo acotado sin acceso a la sesión ni al consumo de cuotas.
 
     Todas las rutas comparten el presupuesto recibido por ContextVar. No se
@@ -221,6 +309,19 @@ def _compute_answer(message, history, topic_context):
             except BudgetExpired:
                 pass
         if getattr(settings, 'LITMATE_AI_QUICK_ANSWERS', True):
+            from .ai_persistent_router import indexed_answer, research_answer
+            with measure_stage('knowledge_lookup'):
+                indexed = indexed_answer(message, history, topic_context=topic_context)
+            if indexed is not None:
+                return indexed, SimpleNamespace(usage={}, provider='verified-indexed-evidence', calls=0)
+            # Una ronda de proveedores estructurados antes del pipeline LLM.
+            # Las recomendaciones mantienen su descubrimiento especializado.
+            try:
+                researched = research_answer(message, history)
+            except (TimeoutError, OSError, ValueError):
+                researched = None
+            if researched is not None:
+                return researched, SimpleNamespace(usage={}, provider='verified-progressive-research', calls=0)
             from .ai_quick_answers import isbn_lookup_answer, quick_answer
             try:
                 with request_budget(time.monotonic() + budget_timeout(5)):
@@ -365,6 +466,204 @@ def _compute_answer(message, history, topic_context):
         close_old_connections()
 
 
+def _sse(data):
+    return 'data: ' + json.dumps(data, ensure_ascii=False, allow_nan=False) + '\n\n'
+
+
+def _progressive_response(request, state, message, topic_context, start, deadline):
+    """Abre progreso antes de esperar; ningún worker obtiene request/sesión.
+
+    La respuesta factual se entrega en el POST de finalización, después del
+    guardado normal de SessionMiddleware. Así también funcionan signed cookies
+    y servidores que consumen el iterador en otro hilo.
+    """
+    from .ai_stream_jobs import create_job, complete_job, discard_job, JobBusy
+    owner = stable_session_owner(request)
+    revision = secrets.token_urlsafe(32)
+    try:
+        token = create_job(owner, revision,
+            {'message': message, 'topic_context': topic_context, 'started': start})
+    except (JobBusy, OSError, ValueError, sqlite3.Error):
+        return JsonResponse({'response': 'Hay solicitudes pendientes. Espera un momento y vuelve a intentar.'}, status=503)
+    events = Queue(maxsize=16)
+    cancellation = threading.Event()
+    published = threading.Event()
+
+    def publish(event):
+        try:
+            events.put_nowait(event)
+        except Full:
+            # Conservar las fases recientes sin crear una cola sin límite ni
+            # frenar la búsqueda si el cliente lee lentamente.
+            try:
+                events.get_nowait()
+            except Empty:
+                pass
+            try:
+                events.put_nowait(event)
+            except Full:
+                pass
+
+    # copy_context captura progress_scope y bounded_research ANTES de que la
+    # vista termine. Crear el Future dentro del iterador perdería esos ámbitos.
+    try:
+        with progress_scope(publish):
+            pending = submit_before_deadline(_answer_with_cache, deadline, message,
+                copy.deepcopy(state['turns']), copy.deepcopy(topic_context),
+                copy.deepcopy(state), owner,
+                cancellation=cancellation)
+    except (WorkerBusy, BudgetExpired):
+        discard_job(token, owner)
+        response = JsonResponse({'response': 'La IA local está ocupada. Espera un momento y vuelve a intentar.'}, status=503)
+        response['Retry-After'] = '5'
+        return response
+    state['_stream_revision'] = revision
+    request.session[HISTORY_KEY] = state
+    request.session.modified = True
+
+    def stream():
+        ready = False
+        try:
+            while True:
+                remaining = deadline - time.monotonic()
+                try:
+                    event = events.get(timeout=max(.001, min(.1, remaining)))
+                    yield _sse(event)
+                    continue
+                except Empty:
+                    pass
+                if pending.done():
+                    result, client = pending.result()
+                    break
+                if remaining <= 0:
+                    cancellation.set()
+                    result = ChatResult('Llegué al límite de tiempo sin completar la verificación de esta respuesta. '
+                        'No voy a inventar los datos que faltan. Puedes volver a intentarlo.', 'unavailable',
+                        diagnostics={'provider_error': 'tiempo_total_agotado'})
+                    client = SimpleNamespace(usage={}, provider='deadline', calls=None)
+                    break
+            result.diagnostics.update(elapsed_ms=round((time.monotonic() - start) * 1000),
+                chat_budget_seconds=chat_timeout(settings), model_calls=getattr(client, 'calls', None))
+            receipt = {'result': asdict(result), 'client': {
+                'provider': str(getattr(client, 'provider', 'local'))[:64],
+                'calls': getattr(client, 'calls', None),
+                'usage': {key: value for key, value in getattr(client, 'usage', {}).items()
+                          if key in {'prompt_tokens', 'completion_tokens', 'total_tokens'}
+                          and type(value) is int and value >= 0}}}
+            if not complete_job(token, owner, receipt):
+                raise ValueError('Trabajo caducado')
+            ready = True
+            published.set()
+            yield _sse({'ready': token})
+            yield 'data: [DONE]\n\n'
+        except (BudgetExpired, WorkerBusy):
+            yield _sse({'error': 'unavailable', 'response': 'No pude completar esta consulta en el tiempo disponible. Vuelve a intentarlo.'})
+            yield 'data: [DONE]\n\n'
+        except Exception as exc:
+            logger.warning('IA: progreso no disponible (%s)', type(exc).__name__)
+            yield _sse({'error': 'unavailable', 'response': 'No pude completar la respuesta. Vuelve a intentarlo.'})
+            yield 'data: [DONE]\n\n'
+        finally:
+            if not ready:
+                cancellation.set()
+                # cancel() no mata un hilo. El worker conserva el slot y el
+                # lease hasta su finally real, aunque el cliente desaparezca.
+                discard_job(token, owner)
+
+    response = StreamingHttpResponse(stream(), content_type='text/event-stream; charset=utf-8')
+    response['Cache-Control'] = 'no-cache, no-store'
+    response['X-Accel-Buffering'] = 'no'
+    response['X-Content-Type-Options'] = 'nosniff'
+    response['X-LitMate-Progress'] = '1'
+    def on_close():
+        # También cubre clientes que cierran antes de pedir el primer bloque
+        # del generador (su finally todavía no se habría ejecutado).
+        if not published.is_set():
+            cancellation.set()
+            discard_job(token, owner)
+    response._resource_closers.append(on_close)
+    return response
+
+
+@require_POST
+@csrf_protect
+def chatbot_finalize(request):
+    """Publica un resultado validado y persiste contexto en una petición normal."""
+    from .ai_stream_jobs import (claim_finalization, finish_finalization,
+                                 JobUnavailable, JobBusy, JobStale)
+    if request.content_type != 'application/json':
+        return JsonResponse({'response': 'Envía un mensaje JSON válido.'}, status=415)
+    try:
+        if len(request.body) > 2048:
+            raise ValueError()
+        data = json.loads(request.body)
+        token = data.get('ready') if isinstance(data, dict) else None
+    except (ValueError, UnicodeDecodeError):
+        return JsonResponse({'response': 'No pude leer la solicitud.'}, status=400)
+    owner = stable_session_owner(request)
+    # Serializar además por la clave de cuota evita carreras entre dos sesiones
+    # del mismo usuario/IP. El valor guardado es un hash, nunca la IP en claro.
+    from .quotas import generar_clave_cache_cuota
+    quota_owner = hashlib.sha256(generar_clave_cache_cuota(request).encode('utf-8')).hexdigest()
+    try:
+        job = claim_finalization(token, owner, quota_owner=quota_owner)
+    except JobUnavailable:
+        return JsonResponse({'response': 'La respuesta pendiente caducó o no pertenece a esta sesión. Vuelve a preguntar.'}, status=404)
+    except JobStale:
+        return JsonResponse({'response': 'La conversación cambió mientras se preparaba esta respuesta. Vuelve a preguntar.'}, status=409)
+    except JobBusy:
+        response = JsonResponse({'response': 'La respuesta todavía se está preparando o guardando. Vuelve a intentar.'}, status=409)
+        response['Retry-After'] = '1'
+        return response
+    except (OSError, ValueError, sqlite3.Error):
+        return JsonResponse({'response': 'El almacenamiento temporal no está disponible. Vuelve a intentar.'}, status=503)
+    state = request.session.get(HISTORY_KEY, {})
+    if not isinstance(state, dict) or state.get('_stream_revision') != job['revision']:
+        body = {'response': 'La conversación cambió. Vuelve a preguntar.'}
+        if job['status'] != 'done':
+            finish_finalization(token, owner, {'body': body, 'status': 409, 'state': state})
+        return JsonResponse(body, status=409)
+    if job['status'] == 'done':
+        # Un reintento no vuelve a consumir cuota ni duplica MensajeIA. Si se
+        # perdió la respuesta HTTP anterior, sí restaura su cookie de sesión.
+        final = job['final']
+        request.session[HISTORY_KEY] = final['state']
+        request.session.modified = True
+        return JsonResponse(final['body'], status=final['status'])
+    try:
+        result = ChatResult(**job['result']['result'])
+        client = SimpleNamespace(**job['result']['client'])
+        status = 200
+        if result.status == 'answered' and getattr(settings, 'LITMATE_USE_EXISTING_QUOTAS', False):
+            quota_ok, quota_info = verificar_y_consumir_cuota(request)
+            if not quota_ok:
+                body = {'error': 'quota_exceeded', 'info_cuota': quota_info,
+                        'response': 'Has alcanzado tu límite diario de consultas.'}
+                status = 429
+            else:
+                body = None
+        else:
+            body = None
+        if body is None:
+            payload = job['payload']
+            elapsed_ms = round((time.monotonic() - payload['started']) * 1000)
+            result.diagnostics['elapsed_ms'] = elapsed_ms
+            with progress_scope(), measure_stage('finalization'):
+                remember(request, state, payload['message'], result, elapsed_ms, client,
+                         topic_context=payload['topic_context'])
+            from .ai_presentation import build_book_cards
+            body = {'response': result.text, 'status': result.status,
+                    'books': build_book_cards(result), 'diagnostics': _safe_diagnostics(result, client)}
+        final = {'body': body, 'status': status, 'state': copy.deepcopy(state)}
+        finish_finalization(token, owner, final)
+        return JsonResponse(body, status=status)
+    except Exception as exc:
+        # La marca finalizing queda cerrada hasta TTL: un reintento tras una
+        # caída no puede consumir otra cuota ni duplicar historial persistente.
+        logger.warning('IA: finalización no disponible (%s)', type(exc).__name__)
+        return JsonResponse({'response': 'No pude guardar la respuesta de forma segura. Vuelve a intentarlo.'}, status=503)
+
+
 @require_POST
 @csrf_protect
 @bounded_research
@@ -409,14 +708,18 @@ def chatbot_query(request):
     if (not isinstance(state, dict) or state.get('owner') != owner
             or not isinstance(state.get('turns'), list)):
         state = {'owner': owner, 'turns': []}
-    topic_context = resolve_topic_context(message, state)
+    with progress_scope(), measure_stage('conversation'):
+        topic_context = resolve_topic_context(message, state)
     if remember_topic(state, message, topic_context):
         # La intención del lector existe aunque falle el proveedor.
         # Se conserva aparte del historial de respuestas aceptadas.
         request.session[HISTORY_KEY] = state
         request.session.modified = True
+    if data.get('progress') is True:
+        return _progressive_response(request, state, message, topic_context, start, deadline)
     try:
-        result, client = run_before_deadline(_compute_answer, deadline, message, state['turns'], topic_context)
+        result, client = run_before_deadline(_answer_with_cache, deadline, message, state['turns'], topic_context,
+                                            dict(state), stable_session_owner(request))
     except WorkerBusy:
         response = JsonResponse({'response': 'La IA local está ocupada. Espera un momento y vuelve a intentar.'}, status=503)
         response['Retry-After'] = '5'

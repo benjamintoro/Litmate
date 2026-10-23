@@ -7,6 +7,7 @@ from concurrent.futures import TimeoutError as FutureTimeout
 from threading import BoundedSemaphore
 
 _deadline = ContextVar('litmate_ai_deadline', default=None)
+_cancellation = ContextVar('litmate_ai_cancellation', default=None)
 # Sin cola ilimitada: una fuente atascada no permite acumular hilos por visita.
 _chat_pool = ThreadPoolExecutor(max_workers=2, thread_name_prefix='litmate-chat')
 _chat_slots = BoundedSemaphore(2)
@@ -43,32 +44,42 @@ def current_deadline():
     return _deadline.get()
 
 
-def run_before_deadline(function, deadline, *args):
-    """Espera acotada incluso si una dependencia ignora su timeout.
+def submit_before_deadline(function, deadline, *args, cancellation=None):
+    """Somete trabajo sin cola ilimitada y conserva su slot hasta terminar.
 
-    El trabajo no recibe request/sesión ni publica/consume cuotas. Si vence la
-    espera, se descarta su resultado. El slot y cualquier lease del modelo se
-    conservan hasta que termine: nunca se finge haber cancelado un hilo Python.
-    Las operaciones HTTP sí comparten el deadline y cierran su socket al vencer.
+    El resultado es un Future, no un hilo por conexión SSE. La cancelación es
+    cooperativa: nunca se libera el slot de un proveedor que sigue activo.
     """
     with request_budget(deadline):
         if not _chat_slots.acquire(blocking=False):
             raise WorkerBusy()
 
         def work():
+            token = _cancellation.set(cancellation)
             try:
                 check_budget()
                 result = function(*args)
                 check_budget()
                 return result
             finally:
+                _cancellation.reset(token)
                 _chat_slots.release()
 
         try:
-            future = submit_with_budget(_chat_pool, work)
+            return submit_with_budget(_chat_pool, work)
         except BaseException:
             _chat_slots.release()
             raise
+
+
+def run_before_deadline(function, deadline, *args):
+    """Espera acotada incluso si una dependencia ignora su timeout.
+
+    El worker no recibe request/sesión ni consume cuotas. Un resultado tardío
+    se descarta; su slot y lease permanecen ocupados hasta su finalización real.
+    """
+    with request_budget(deadline):
+        future = submit_before_deadline(function, deadline, *args)
         try:
             return future.result(timeout=budget_timeout(CHAT_WORK_SECONDS))
         except FutureTimeout:
@@ -77,6 +88,9 @@ def run_before_deadline(function, deadline, *args):
 
 
 def budget_timeout(maximum):
+    cancellation = _cancellation.get()
+    if cancellation is not None and cancellation.is_set():
+        raise BudgetExpired('consulta_cancelada')
     deadline = _deadline.get()
     if deadline is None:
         return float(maximum)

@@ -103,7 +103,7 @@
         return message;
     }
 
-    async function readChatResponse(response, onText = () => {}, onMetadata = () => {}) {
+    async function readChatResponse(response, onText = () => {}, onMetadata = () => {}, options = {}) {
         if (!response.ok) throw new Error(await readChatProblem(response));
         const mime = response.headers.get('content-type') || '';
         if (mime.includes('application/json')) {
@@ -119,7 +119,7 @@
         if (!mime.includes('text/event-stream') || !response.body) throw new Error('El asistente envió una respuesta inesperada. Vuelve a intentar.');
         const reader = response.body.getReader();
         const decoder = new TextDecoder('utf-8');
-        let buffer = '', text = '', completed = false;
+        let buffer = '', text = '', completed = false, ready = '';
         function event(block) {
             const data = block.split(/\r?\n/).filter(line => line.startsWith('data:'))
                 .map(line => line.slice(5).replace(/^ /, '')).join('\n').trim();
@@ -129,7 +129,13 @@
             try { parsed = JSON.parse(data); } catch (error) { throw new Error('La respuesta del asistente llegó dañada. Vuelve a intentar.'); }
             if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('La respuesta del asistente llegó dañada. Vuelve a intentar.');
             if (parsed.error) throw new Error(typeof parsed.response === 'string' ? parsed.response : 'El asistente no pudo completar la respuesta.');
+            if (Object.prototype.hasOwnProperty.call(parsed, 'ready')) {
+                if (!options.allowReady || typeof parsed.ready !== 'string' || !/^[A-Za-z0-9_-]{43}$/.test(parsed.ready)
+                        || text || ready) throw new Error('La respuesta del asistente llegó dañada. Vuelve a intentar.');
+                ready = parsed.ready;
+            }
             if (typeof parsed.token === 'string') {
+                if (ready && parsed.token) throw new Error('La respuesta del asistente llegó dañada. Vuelve a intentar.');
                 text += parsed.token;
                 if (text.length > 64000) throw new Error('La respuesta es demasiado extensa. Prueba con una pregunta más concreta.');
                 onText(text);
@@ -152,6 +158,7 @@
                 if (chunk.done) break;
             }
             if (!completed) throw new Error('La conexión se interrumpió antes de completar la respuesta. Vuelve a intentar.');
+            if (ready) return { ready };
             if (!text.trim()) throw new Error('El asistente no envió una respuesta. Vuelve a intentar.');
             return text;
         } finally {
@@ -173,14 +180,27 @@
             }, timeout);
         });
         const transport = (async () => {
+            const headers = { 'Content-Type': 'application/json', 'X-CSRFToken': getCookie('csrftoken') };
             const response = await env.fetch('/chatbot_query/', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCookie('csrftoken') },
-                body: JSON.stringify({ message }), signal: controller.signal
+                headers,
+                body: JSON.stringify({ message, progress: options.progress !== false }), signal: controller.signal
             });
-            return readChatResponse(response,
-                text => { if (!expired) onText(text); },
-                metadata => { if (!expired) onMetadata(metadata); });
+            const paint = text => { if (!expired) onText(text); };
+            const describe = metadata => { if (!expired) onMetadata(metadata); };
+            const result = await readChatResponse(response,
+                paint, describe, { allowReady: options.progress !== false });
+            if (result && typeof result === 'object' && result.ready) {
+                if (expired) throw new Error('Se alcanzó el límite de espera. Vuelve a intentarlo.');
+                // El servidor finaliza en una petición normal: guarda sesión y
+                // cuota antes de publicar datos factuales o activar la voz.
+                const finalized = await env.fetch('/chatbot_finalize/', {
+                    method: 'POST', headers, body: JSON.stringify({ ready: result.ready }),
+                    signal: controller.signal
+                });
+                return readChatResponse(finalized, paint, describe);
+            }
+            return result;
         })();
         try { return await Promise.race([transport, limit]); }
         finally { env.clearTimeout(timer); }

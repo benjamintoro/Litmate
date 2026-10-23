@@ -29,15 +29,33 @@ urlpatterns = []
 
 def code_revision(base):
     digest = hashlib.sha256()
-    for name in ('ai_budget.py', 'ai_quick_answers.py', 'literary_language.py',
-                 'literary_ai.py', 'literary_ai_views.py', 'literary_search.py',
-                  'literary_quality.py', 'literary_research.py', 'literary_conversation.py', 'literary_constraints.py',
-                  'literary_web.py', 'literary_sources.py', 'ai_presentation.py',
-                 'books_google.py', 'local_llm.py', 'literary_identity.py', 'literary_evidence.py',
-                 'ai_identification_details.py', 'ai_public_details.py', 'topic_reference.py',
-                 'data/topic_reference.json', 'data/verified_readings.json'):
-        digest.update((base / 'core' / name).read_bytes())
+    files = [path for path in (base / 'core').rglob('*.py') if not path.name.startswith('test')]
+    files += [base / 'core' / 'data' / name for name in ('topic_reference.json', 'verified_readings.json')]
+    for path in sorted(files):
+        digest.update(str(path.relative_to(base)).encode())
+        digest.update(path.read_bytes())
     return digest.hexdigest()
+
+
+def memory_snapshot():
+    """RSS/peak del proceso servidor; no equivale al consumo de Ollama/GPU."""
+    if os.name == 'nt':
+        import ctypes
+        from ctypes import wintypes
+        class Counters(ctypes.Structure):
+            _fields_ = [('cb', wintypes.DWORD), ('faults', wintypes.DWORD)] + [
+                (name, ctypes.c_size_t) for name in ('peak', 'working', 'peak_paged', 'paged',
+                    'peak_nonpaged', 'nonpaged', 'pagefile', 'peak_pagefile')]
+        value = Counters()
+        value.cb = ctypes.sizeof(value)
+        kernel = ctypes.WinDLL('kernel32', use_last_error=True)
+        kernel.GetCurrentProcess.restype = wintypes.HANDLE
+        read_memory = ctypes.WinDLL('psapi').GetProcessMemoryInfo
+        read_memory.argtypes = [wintypes.HANDLE, ctypes.c_void_p, wintypes.DWORD]
+        read_memory.restype = wintypes.BOOL
+        if read_memory(kernel.GetCurrentProcess(), ctypes.byref(value), value.cb):
+            return {'rss_mb': round(value.working / 2**20, 3), 'peak_rss_mb': round(value.peak / 2**20, 3)}
+    return {}
 
 
 def main(argv=None):
@@ -52,9 +70,15 @@ def main(argv=None):
                         help='Segundos máximos que espera el cliente HTTP.')
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--no-web', action='store_true')
+    parser.add_argument('--progressive', action='store_true', help='Mide SSE temprano + POST de finalización real.')
+    parser.add_argument('--repeat', type=int, default=1, help='Repite cada turno en su conversación, sin preparar respuestas.')
+    parser.add_argument('--empty-answer-cache-each-turn', action='store_true')
+    parser.add_argument('--empty-retrieval-cache-each-turn', action='store_true')
     args = parser.parse_args(argv)
     if args.chat_budget <= 0 or args.response_budget <= args.chat_budget:
         parser.error('--response-budget debe ser mayor que --chat-budget.')
+    if not 1 <= args.repeat <= 20:
+        parser.error('--repeat debe estar entre 1 y 20.')
     if args.output.exists():
         parser.error('El informe ya existe; usa otra ruta para no sobrescribirlo.')
     cases = []
@@ -85,6 +109,9 @@ def main(argv=None):
             SESSION_ENGINE='django.contrib.sessions.backends.signed_cookies',
             USE_TZ=True, DEFAULT_AUTO_FIELD='django.db.models.BigAutoField',
             LITMATE_AI_LOCK_BACKEND='sqlite', LITMATE_AI_RUNTIME_DB=root / 'runtime.sqlite3',
+            LITMATE_AI_STREAM_DB=root / 'stream.sqlite3',
+            LITMATE_AI_ANSWER_CACHE_DB=root / 'answers.sqlite3',
+            LITMATE_LITERARY_MEMORY_DB=root / 'memory.sqlite3',
             LITMATE_USE_EXISTING_QUOTAS=False, LITMATE_AI_REQUESTS_PER_MINUTE=1000,
             LITMATE_USE_GOOGLE_BOOKS_API=False, GOOGLE_BOOKS_API_KEY='',
             LITMATE_LOCAL_MODEL=args.model, LITMATE_LOCAL_GUARD_MODEL=args.model,
@@ -103,9 +130,9 @@ def main(argv=None):
         from django.http import HttpResponse
         from django.urls import path
         from django.views.decorators.csrf import ensure_csrf_cookie
-        from core.literary_ai_views import chatbot_query
+        from core.literary_ai_views import chatbot_query, chatbot_finalize
         urlpatterns.extend([path('csrf/', ensure_csrf_cookie(lambda request: HttpResponse('ready'))),
-                            path('chatbot_query/', chatbot_query)])
+                            path('chatbot_query/', chatbot_query), path('chatbot_finalize/', chatbot_finalize)])
 
         class Server(ThreadingMixIn, WSGIServer):
             daemon_threads = True
@@ -122,6 +149,9 @@ def main(argv=None):
                       'mode': 'real_http_sse_isolated_database', 'model': args.model,
                       'web_enabled': not args.no_web, 'chat_budget_seconds': args.chat_budget,
                       'response_budget_seconds': args.response_budget,
+                      'progressive': args.progressive, 'repeat': args.repeat,
+                      'cache_controls': {'empty_answers_each_turn': args.empty_answer_cache_each_turn,
+                                         'empty_retrieval_each_turn': args.empty_retrieval_cache_each_turn},
                       'factual_review': 'not_independently_certified', 'turns': []}
             report['source_sha256'] = code_revision(base)
             args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -132,12 +162,21 @@ def main(argv=None):
                     with client.open(origin + '/csrf/', timeout=2) as response:
                         response.read()
                     csrf = next(cookie.value for cookie in cookies if cookie.name == 'csrftoken')
-                    for index, item in enumerate(case['messages'], 1):
+                    messages = [item for item in case['messages'] for _ in range(args.repeat)]
+                    for index, item in enumerate(messages, 1):
+                        if args.empty_answer_cache_each_turn:
+                            from core.ai_answer_cache import delete_owner_cache
+                            delete_owner_cache()
+                        if args.empty_retrieval_cache_each_turn:
+                            from django.core.cache import cache
+                            cache.clear()  # Únicamente caché de este servidor temporal.
                         message = item['text']
                         request = Request(origin + '/chatbot_query/',
-                            data=json.dumps({'message': message}).encode('utf-8'),
+                            data=json.dumps({'message': message, 'progress': args.progressive}).encode('utf-8'),
                             headers={'Content-Type': 'application/json', 'X-CSRFToken': csrf}, method='POST')
-                        start, first_useful, done, text = time.monotonic(), None, False, ''
+                        start, first_useful, first_phase, done, text = time.monotonic(), None, None, False, ''
+                        phases, diagnostics = [], {}
+                        ready = None
                         try:
                             with client.open(request, timeout=args.response_budget) as response:
                                 status = response.headers.get('X-LitMate-Status', 'unknown')
@@ -151,10 +190,26 @@ def main(argv=None):
                                         done = True
                                         break
                                     payload = json.loads(event)
+                                    if payload.get('stage'):
+                                        if first_phase is None:
+                                            first_phase = time.monotonic() - start
+                                        phases.append(payload['stage'])
+                                    if payload.get('ready'):
+                                        ready = payload['ready']
                                     token = payload.get('token', '')
                                     if token and first_useful is None:
                                         first_useful = time.monotonic() - start
                                     text += token
+                            if ready:
+                                finalize = Request(origin + '/chatbot_finalize/',
+                                    data=json.dumps({'ready': ready}).encode(),
+                                    headers={'Content-Type': 'application/json', 'X-CSRFToken': csrf}, method='POST')
+                                with client.open(finalize, timeout=max(.1, args.response_budget - (time.monotonic() - start))) as response:
+                                    body = json.load(response)
+                                    status, text = body['status'], body['response']
+                                    diagnostics = body.get('diagnostics', {})
+                                    calls = diagnostics.get('model_calls')
+                                    first_useful = time.monotonic() - start
                         except HTTPError as exc:
                             http_status, status, calls = exc.code, 'http_error', None
                             text = exc.read(4000).decode('utf-8', 'replace')
@@ -167,17 +222,25 @@ def main(argv=None):
                             'first_text_seconds': round(first_useful, 3) if first_useful is not None else None,
                             'first_useful_seconds': round(first_useful, 3)
                                 if first_useful is not None and status == 'answered' else None,
+                            'first_progress_seconds': round(first_phase, 3) if first_phase is not None else None,
+                            'progress_phases': phases, 'diagnostics': diagnostics,
+                            'resources': memory_snapshot(), 'category': case.get('category', 'unspecified'),
                             'under_response_budget': elapsed <= args.response_budget,
-                            'model_calls': int(calls) if calls else None,
+                            'model_calls': int(calls) if calls is not None else None,
                             'answer': text, 'source_urls': re.findall(r'https://\S+', text)}
                         report['turns'].append(row)
                         samples = [turn['seconds'] for turn in report['turns']]
                         ordered = sorted(samples)
                         report['metrics'] = {'turns': len(samples), 'p50_seconds': statistics.median(samples),
+                            'mean_seconds': round(statistics.mean(samples), 3),
                             'p95_seconds': ordered[max(0, math.ceil(len(samples) * .95) - 1)],
                             'max_seconds': max(samples),
                             'under_response_budget': sum(turn['under_response_budget'] for turn in report['turns']),
-                            'statuses': dict(Counter(turn['status'] for turn in report['turns']))}
+                            'statuses': dict(Counter(turn['status'] for turn in report['turns'])),
+                            'under_5_seconds': sum(t['seconds'] < 5 for t in report['turns']),
+                            'under_10_seconds': sum(t['seconds'] < 10 for t in report['turns']),
+                            'under_30_seconds': sum(t['seconds'] < 30 for t in report['turns']),
+                            'answered_is_not_factual_certification': True}
                         args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
                         print(json.dumps({key: row[key] for key in ('case', 'turn', 'status', 'seconds', 'under_response_budget')},
                                          ensure_ascii=True), flush=True)

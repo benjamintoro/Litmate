@@ -208,7 +208,7 @@ def index_documents(folder, database, *, embedder=None, progress=None, metadata=
         Path(staging).unlink(missing_ok=True)
 
 
-@lru_cache(maxsize=1)
+@lru_cache(maxsize=2)
 def _vector_matrix(path, mtime_ns, size):
     import numpy as np
     revision = Path(path).stat()
@@ -337,12 +337,16 @@ def retrieve_fragments(query, database, maximum=4, *, embedder=None,
                 for key in ('kind', 'source', 'url', 'license', 'work_id', 'work_title',
                             'work_author', 'work_binding_verified', 'confirmed_aliases',
                             'isbns', 'character_facts', 'character_scope', 'fact_topics',
-                            'literary_facts', 'fact_ids'):
+                            'literary_facts', 'fact_ids', 'memory_source_id', 'content_hash',
+                            'evidence_hash', 'policy', 'attribution', 'memory_verified',
+                            'expires_at', 'last_verified_at'):
                     if key in attributes:
                         source[key] = attributes[key]
                 if source['kind'] != 'excerpt':
                     source.update(locator='ficha factual local', complete_work=False,
                         read_mode='resumen original autorizado; no texto de la novela')
+                    if attributes.get('memory_source_id'):
+                        source['read_mode'] = 'candidato del índice de memoria; requiere revalidación de fuente'
                     source['literary_facts'] = [fact for fact in source.get('literary_facts', [])
                         if isinstance(fact, dict) and fact.get('evidence')
                         and fact['evidence'] in body]

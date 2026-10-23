@@ -7,7 +7,100 @@ Commits locales de esta sesión: `f12ee52` (seguridad), `057a687` (IA),
 respuestas verificadas rápidas), `1f3a7b7` (métricas honestas de timeout) y
 `45babb1` (descubrimiento en 30 segundos).
 
-## Intervención vigente — búsqueda amplia, no limitada a la captura
+## Intervención vigente — arquitectura persistente y rutas rápidas verificadas
+
+Objetivo: consultas literarias comunes en 1–5 s (caché/local), 3–10 s con
+índice y 10–30 s con investigación externa, sin cambiar verdad factual por
+velocidad ni publicar datos inventados.
+
+- Se conserva y completa la arquitectura no confirmada de Codex: memoria
+  literaria persistente, recuperación híbrida, investigación en segundo plano,
+  aprendizaje de correcciones, enrutamiento, caché de respuestas privadas,
+  streaming progresivo, auditorías y benchmarks reproducibles.
+- Las preguntas simples sobre una obra nombrada explícitamente (sinopsis,
+  personajes, protagonista) intentan una ruta determinista antes del modelo.
+  Las consultas compuestas, privadas, de cita exacta o de materia general
+  siguen usando el pipeline completo y sus validadores.
+- La ruta externa acotada (`research_answer`) publica sólo pasajes literales
+  atribuidos mediante `reference_answer`; no convierte una página tangencial
+  en sinopsis ni una adaptación en la novela.
+- Las páginas web se vinculan a una ficha bibliográfica y a su autor. Se
+  rechazan homónimos, mangas, películas, musicales, series y páginas de
+  streaming (Prime Video, Filmaffinity, IMDb, etc.). «Nana (Zola)» se acepta
+  como desambiguación por autoría sólo si el autor aparece en la introducción
+  y coincide con la ficha de Open Library.
+- Si la API de Wikipedia falla o no devuelve la ficha, una segunda ruta acotada
+  busca con título + autor + «protagonista/personajes/sinopsis» y exige que
+  todas las fuentes publicadas mencionen al autor conocido. Para títulos de
+  una sola palabra sin autoría comprobada no se publica nada (evita mezclar
+  «Nana» novela y manga).
+- Las preguntas de autoría priorizan la autoría estructurada de Wikidata
+  cuando Open Library devuelve ediciones con traductores o ilustradores en el
+  campo de autor. Si Wikidata también discrepa, no se elige por mayoría.
+- La caché de Wikipedia sólo se activa dentro de un presupuesto de petición
+  real; las pruebas y comandos offline no reciben páginas de otro contexto.
+  La caché privada de respuestas acepta referencias web auditadas y vuelve a
+  validar el texto sin las envolturas de interfaz ni las URL añadidas.
+- No se modificó `.env`, no se instalaron paquetes, no se ejecutaron
+  migraciones, no se alteraron datos de usuarios y no se hizo push.
+
+### Pruebas ejecutadas (23 de octubre de 2026)
+
+```text
+.\venv\Scripts\python.exe -B verificar_proyecto.py core
+-> 1296 pruebas OK en 16.382 s
+
+.\venv\Scripts\python.exe -B verificar_proyecto.py core.test_persistent_router core.test_web_search core.test_ai_answer_cache
+-> 59 pruebas OK en 0.941 s
+```
+
+También se ejecutaron sondas HTTP reales aisladas (sin datos de usuario) y
+comprobaciones directas de Wikipedia/Open Library. Las sondas externas
+sufrieron `rate_limited` intermitente de Wikipedia; por eso las pruebas
+deterministas usan mocks y el benchmark se repite con enfriamiento.
+
+### Benchmark HTTP/SSE real de 4 preguntas
+
+Matriz: `reportes/arquitectura_20261023/matriz_benchmark_4.json`.
+Ejecución final: `reportes/arquitectura_20261023/despues_http_v7.json`.
+Base anterior: `despues_http_v2.json` (misma matriz, antes de estas rutas).
+
+| Ejecución | answered | <5 s | p50 | p95 / máx | Observación |
+|---|---:|---:|---:|---:|---|
+| v2 (antes) | 4/4 | 2/4 | 18,930 s | 35,178 s | «Nana» mezcló manga y novela; protagonista de *Los miserables* agotó ~35 s |
+| v7 (después) | 4/4 | 3/4 | 3,697 s | 7,669 s | «Nana» sólo novela de Zola; protagonista de *Los miserables* con Jean Valjean en 7,669 s |
+
+Turnos v7: autoría de *Orgullo y prejuicio* 2,680 s; personajes de *Nana*
+4,714 s; sinopsis de *El nombre de la rosa* 1,296 s; protagonista de *Los
+miserables* 7,669 s. `source_files_changed_during_run=false`; el benchmark no
+certifica verdad factual de forma independiente.
+
+### Limitaciones actuales
+
+1. La lista de personajes de *Nana* devuelve un pasaje parcial sobre la novela
+   de Zola, no una lista completa; evita el manga, pero no sustituye una
+   lectura de la sección de personajes.
+2. Wikipedia puede responder `rate_limited`; en ese caso la ruta rápida puede
+   caer a la búsqueda web acotada o al pipeline completo. La latencia externa
+   sigue siendo variable.
+3. El benchmark cubre cuatro preguntas y una sola repetición; no demuestra
+   cobertura general ni exactitud factual. Falta una revisión independiente.
+4. La caché y la memoria usan SQLite temporal en las pruebas; no se midió
+   MySQL remoto ni el coste del middleware de sesión.
+5. Las referencias parciales se presentan como pasajes atribuidos, no como
+   fichas verificadas ni como respuesta exhaustiva.
+
+### Próximos pasos inmediatos
+
+1. Repetir la matriz con más preguntas y `--repeat 2` para medir varianza
+   externa y aciertos, no sólo latencia.
+2. Mejorar la extracción de listas de personajes cuando la página correcta no
+   es la primera de Wikipedia, sin relajar la vinculación por autor.
+3. Revisar factualmente las respuestas publicadas y registrar las que no
+   puedan certificarse.
+4. Medir sesión/historial en MySQL aislado antes de cambiar la arquitectura.
+
+## Intervención anterior — búsqueda amplia, no limitada a la captura
 
 - Se amplía la recuperación para obras y materias arbitrarias: catálogo local,
   Open Library, Wikipedia en español/inglés y DuckDuckGo Lite. SearXNG queda

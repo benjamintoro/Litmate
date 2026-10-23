@@ -19,6 +19,7 @@ urlpatterns = [
     path('chat/', literary_ai_views.chatbot_page, name='chatbot_page'),
     path('chatbot/', literary_ai_views.chatbot_page, name='chatbot'),
     path('chatbot_query/', literary_ai_views.chatbot_query, name='chatbot_query'),
+    path('chatbot_finalize/', literary_ai_views.chatbot_finalize, name='chatbot_finalize'),
     
     # --- Autenticación y Registro ---
     path('registro/', views.register, name='register'),

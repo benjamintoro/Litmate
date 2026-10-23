@@ -5,6 +5,7 @@ pasaje, no que todas las conclusiones del modelo sean verdaderas.
 """
 import re
 import unicodedata
+from .ai_progress import timed_stage
 
 
 # Una respuesta literaria detallada puede contener más de seis hechos. El
@@ -531,6 +532,7 @@ def _claim_has_wrong_work(statement, source, sources, *, draft_text=''):
     return bool(unambiguous and not any(same_work(source, book) for book in unambiguous))
 
 
+@timed_stage('audit')
 def validate_audit(audit, plan, draft, sources, message, *, strict_facts=False):
     if (not isinstance(audit, dict) or set(audit) != set(AUDIT_SCHEMA['properties'])
             or audit['decision'] not in {'approve', 'repair', 'research'}

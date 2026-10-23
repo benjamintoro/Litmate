@@ -139,16 +139,18 @@ def remember_work(work, *, database=None):
     return value
 
 
-def _records(database=None):
+def _records(database=None, *, work_id=None, include_facts=True):
     path = _path(database)
     if not path.is_file():
         return [], []
     try:
         with closing(sqlite3.connect(path.as_uri() + '?mode=ro', uri=True, timeout=2)) as db:
+            where, params = (' WHERE work_id=?', (work_id,)) if work_id else ('', ())
             works = [json.loads(row[0]) for row in db.execute(
-                'SELECT record FROM knowledge_works ORDER BY work_id LIMIT 5000')]
+                'SELECT record FROM knowledge_works' + where + ' ORDER BY work_id LIMIT 5000', params)]
             facts = [json.loads(row[0]) for row in db.execute(
-                'SELECT record FROM knowledge_facts ORDER BY fact_id LIMIT 30000')]
+                'SELECT record FROM knowledge_facts' + where + ' ORDER BY fact_id LIMIT 30000', params)
+                ] if include_facts else []
         return works, facts
     except (sqlite3.Error, ValueError, TypeError):
         return [], []
@@ -156,7 +158,9 @@ def _records(database=None):
 
 def lookup_work(title='', author='', *, work_id='', database=None):
     """Solo identidad exacta o alias bibliográfico confirmado; nunca similitud."""
-    works, _ = _records(database)
+    # An identity lookup does not load every factual passage in the collection.
+    # work_id uses the primary-key index; alias lookup reads metadata only.
+    works, _ = _records(database, work_id=work_id, include_facts=False)
     matches = []
     wanted, writer = normalize_identity(title), normalize_identity(author)
     for work in works:
@@ -174,14 +178,24 @@ def lookup_work(title='', author='', *, work_id='', database=None):
 def lookup_facts(work_id='', *, database=None, topic='', maximum=20):
     if not work_id:
         return []
-    _, facts = _records(database)
-    return [fact for fact in facts if fact['work_id'] == work_id
-            and (not topic or fact.get('topic') == topic)][:max(1, min(int(maximum), 100))]
+    path = _path(database)
+    if not path.is_file():
+        return []
+    try:
+        with closing(sqlite3.connect(path.as_uri() + '?mode=ro', uri=True, timeout=2)) as db:
+            suffix = ' AND topic=?' if topic else ''
+            params = (work_id, topic) if topic else (work_id,)
+            return [json.loads(row[0]) for row in db.execute(
+                'SELECT record FROM knowledge_facts WHERE work_id=?' + suffix +
+                ' ORDER BY fact_id LIMIT ?', (*params, max(1, min(int(maximum), 100))))]
+    except (sqlite3.Error, ValueError, TypeError):
+        return []
 
 
-def _terms(text):
-    return list(dict.fromkeys(term for term in normalize_identity(text).split()
-                             if len(term) >= 3 and term not in STOPWORDS))[:32]
+def _terms(text, maximum=32):
+    terms = list(dict.fromkeys(term for term in normalize_identity(text).split()
+                              if len(term) >= 3 and term not in STOPWORDS))
+    return terms[:maximum] if maximum is not None else terms
 
 
 def _score(query, work, facts):
@@ -190,8 +204,10 @@ def _score(query, work, facts):
         for alias in work.get('confirmed_aliases', [])]
     exact = any(re.search(r'(?<!\w)' + re.escape(title) + r'(?!\w)', text) for title in titles)
     terms = _terms(query)
+    # Only the query is capped at 32 clues. Capping documents at 32 terms hid
+    # characters/scenes appearing later in an otherwise valid factual card.
     words = set(_terms(' '.join([work['title'], work['author'], work.get('description', '')]
-        + [fact['text'] + ' ' + ' '.join(fact.get('keywords', [])) for fact in facts])))
+        + [fact['text'] + ' ' + ' '.join(fact.get('keywords', [])) for fact in facts]), maximum=None))
     hits = []
     for term in terms:
         if term in words:
@@ -236,9 +252,11 @@ def knowledge_sources(work, facts):
 
 
 def search_knowledge(query, maximum=5, *, database=None, work_id=None):
-    works, facts = _records(database)
-    related = {work['work_id']: [fact for fact in facts if fact['work_id'] == work['work_id']]
-               for work in works if not work_id or work['work_id'] == work_id}
+    works, facts = _records(database, work_id=work_id)
+    related = {work['work_id']: [] for work in works}
+    for fact in facts:
+        if fact['work_id'] in related:
+            related[fact['work_id']].append(fact)
     ranked = []
     for work in works:
         if work['work_id'] not in related:

@@ -74,6 +74,32 @@ class SimpleResearchPlanTests(SimpleTestCase):
         self.assertEqual(route['decision'], 'allow')
         self.assertEqual(route['queries'], ['¿Quién escribió la novela Cien años de soledad?'])
 
+    def test_explicit_summary_and_character_questions_use_the_fast_route(self):
+        summary = simple_literary_route('¿De qué trata la novela El nombre de la rosa?')
+        self.assertEqual(summary['intent'], 'summary')
+        self.assertEqual(summary['decision'], 'allow')
+        protagonist = simple_literary_route('¿Quién es el protagonista de la novela Nana?')
+        self.assertEqual(protagonist['intent'], 'analysis')
+        self.assertEqual(protagonist['decision'], 'allow')
+        characters = simple_literary_route('Dime los personajes de "Nana"')
+        self.assertEqual(characters['intent'], 'analysis')
+
+    def test_summary_without_an_explicit_work_keeps_the_full_router(self):
+        for message in ('¿De qué trata la fotosíntesis?',
+                        '¿De qué trata la historia de Chile?',
+                        '¿De qué trata la novela?',
+                        '¿De qué trata la novela X y dime sus personajes?',
+                        '¿Quién es el protagonista?'):
+            with self.subTest(message=message):
+                self.assertIsNone(simple_literary_route(message))
+
+    def test_summary_and_character_plans_do_not_add_extra_questions(self):
+        summary = simple_research_plan('¿De qué trata la novela El nombre de la rosa?', 'summary')
+        self.assertEqual(summary['questions'], ['¿De qué trata la novela El nombre de la rosa?'])
+        self.assertFalse(summary['needs_contents'])
+        characters = simple_research_plan('¿Quién es el protagonista de la novela Nana?', 'analysis')
+        self.assertEqual(characters['questions'], ['¿Quién es el protagonista de la novela Nana?'])
+
     def test_compound_or_nonliterary_message_keeps_the_full_router(self):
         for message in ('¿Quién escribió la novela X y qué premios recibió?',
                         '¿Quién escribió el código de la aplicación?',

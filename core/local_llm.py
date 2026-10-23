@@ -9,6 +9,7 @@ from .literary_ai import (ANSWER_SCHEMA, REVIEW_SCHEMA, ROUTE_SCHEMA,
                           ProviderUnavailable)
 from .literary_quality import PLAN_SCHEMA, AUDIT_SCHEMA, character_names, evidence_words
 from .ai_budget import BudgetExpired, current_deadline, CHAT_WORK_SECONDS
+from .ai_progress import measure_stage, timed_stage
 
 
 def _external_summary_transport(data):
@@ -144,6 +145,7 @@ class OllamaJSON:
             raise ProviderUnavailable('contexto_demasiado_extenso')
         return json.dumps(context, ensure_ascii=False, separators=(',', ':'))
 
+    @timed_stage('model_inspection')
     def inspect_model(self, model):
         if (not isinstance(model, str)
                 or not re.fullmatch(r'[A-Za-z0-9_.:/-]{1,100}', model)
@@ -185,7 +187,11 @@ class OllamaJSON:
         self.last_error_detail = ''
         self._inference_metrics = {}
         try:
-            result = self._generate(stage, prompt, data, model)
+            operation = ('audit' if stage in {'audit', 'review'} else
+                         'repair' if stage == 'repair' else
+                         'routing' if stage in {'route', 'route_rescue', 'plan'} else 'generation')
+            with measure_stage(operation):
+                result = self._generate(stage, prompt, data, model)
             status = 'ok'
             return result
         finally:

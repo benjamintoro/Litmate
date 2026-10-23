@@ -55,6 +55,11 @@ def apply_ai_settings(target, base_dir):
         LITMATE_AI_USE_WIKIDATA=flag('LITMATE_AI_USE_WIKIDATA'),
         LITMATE_KNOWLEDGE_DB=Path(os.getenv('LITMATE_KNOWLEDGE_DB', str(Path(base_dir) / 'data' / 'litmate_knowledge.sqlite3'))),
         LITMATE_KNOWLEDGE_RAG_DB=Path(os.getenv('LITMATE_KNOWLEDGE_RAG_DB', str(Path(base_dir) / 'data' / 'litmate_knowledge_rag.sqlite3'))),
+        # SQLite auxiliares: conocimiento público con procedencia y resultados
+        # privados efímeros separados. No requieren migraciones de Django.
+        LITMATE_LITERARY_MEMORY_DB=Path(os.getenv('LITMATE_LITERARY_MEMORY_DB', str(Path(base_dir) / 'data' / 'literary_memory.sqlite3'))),
+        LITMATE_AI_ANSWER_CACHE_DB=Path(os.getenv('LITMATE_AI_ANSWER_CACHE_DB', str(Path(base_dir) / 'data' / 'litmate_answers.sqlite3'))),
+        LITMATE_AI_STREAM_DB=Path(os.getenv('LITMATE_AI_STREAM_DB', str(Path(base_dir) / 'data' / 'litmate_ia_stream.sqlite3'))),
         LITMATE_BOOKS_CONTACT=os.getenv('LITMATE_BOOKS_CONTACT', '').strip(),
         LITMATE_RAG_DB=Path(os.getenv('LITMATE_RAG_DB', str(Path(base_dir) / 'data' / 'litmate_rag.sqlite3'))),
         LITMATE_RAG_SEMANTIC=flag('LITMATE_RAG_SEMANTIC'),

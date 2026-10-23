@@ -83,6 +83,30 @@ class KnowledgeTests(SimpleTestCase):
         self.assertEqual(search_knowledge('Era un libro sobre una mujer que viajaba', database=self.db), [])
         self.assertEqual(search_knowledge('Recuerdo una escena de un libro pero no su título', database=self.db), [])
 
+    def test_metadata_lookup_does_not_fetch_all_facts(self):
+        self.prepare()
+        from . import literary_knowledge
+        original = literary_knowledge._records
+        with patch('core.literary_knowledge._records', wraps=original) as records:
+            work = lookup_work('Papelucho y el marciano', database=self.db)
+            self.assertTrue(work)
+            self.assertFalse(records.call_args.kwargs['include_facts'])
+            lookup_work(work_id=work['work_id'], database=self.db)
+            self.assertEqual(records.call_args.kwargs['work_id'], work['work_id'])
+        with patch('core.literary_knowledge._records', side_effect=AssertionError('global scan')):
+            self.assertTrue(lookup_facts(work['work_id'], database=self.db))
+
+    def test_clues_later_than_first_32_document_terms_remain_searchable(self):
+        filler = ' '.join('vocablo' + str(index) for index in range(45))
+        remember_work({'title': 'Mapa del horizonte', 'author': 'Escritora original',
+            'url': 'https://example.org/horizonte', 'license': 'Redacción propia autorizada',
+            'indexing_authorized': True, 'description': filler,
+            'facts': [{'topic': 'identification', 'source_url': 'https://example.org/horizonte',
+                'text': 'Una cartógrafa atraviesa un archipiélago de cristales violetas.'}]}, database=self.db)
+        results = search_knowledge('cartógrafa archipiélago cristales', database=self.db)
+        self.assertTrue(results)
+        self.assertEqual(results[0]['title'], 'Mapa del horizonte')
+
     def test_det_context_reuses_verified_work_and_partial_characters(self):
         self.prepare()
         work = lookup_work('Papelucho y el marciano', database=self.db)

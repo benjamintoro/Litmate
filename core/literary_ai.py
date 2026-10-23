@@ -521,19 +521,39 @@ def requested_book_count(message):
             'cuatro': 4, 'cinco': 5}.get(token, int(token) if token.isdigit() else None)
 
 
+def _explicit_work_context(message, value):
+    """Reconoce una obra nombrada sin convertir cualquier tema en una novela.
+
+    Una comilla, la palabra «novela/libro/obra» o una atribución de autor son
+    señales explícitas. No se infiere una obra a partir de una pregunta general
+    como «¿de qué trata la historia de Chile?».
+    """
+    if re.search(r'[«“"].{2,180}[»”"]', message):
+        return True
+    if re.search(r'\b(?:libro|novela|obra|cuento|poema|ensayo|c[oó]mic|historieta|'
+                 r'novela gr[aá]fica|teatro)\b', value):
+        return True
+    return bool(re.search(
+        r'\bde\s+[A-ZÁÉÍÓÚÜÑ][\wÁÉÍÓÚÜÑáéíóúüñ.-]+'
+        r'(?:\s+[A-ZÁÉÍÓÚÜÑ][\wÁÉÍÓÚÜÑáéíóúüñ.-]+){1,3}\s*[?.!]*$', message))
+
+
 def simple_literary_route(message):
     """Clasifica sólo preguntas factuales simples y literarias inequívocas.
 
     Evita una llamada de routing de varios segundos para «quién escribió la
-    novela X». No acepta tareas compuestas, fragmentos ni instrucciones; esos
-    casos conservan el clasificador completo.
+    novela X», sus personajes o su argumento cuando la obra está nombrada de
+    forma explícita. No acepta tareas compuestas, fragmentos ni instrucciones;
+    esos casos conservan el clasificador completo.
     """
     if (not isinstance(message, str) or has_excerpt(message) or requires_exact_text(message)
             or message.count('?') > 1 or re.search(r'[;\n\r]', message)
             or re.search(r'[.!?]\s+\S', message)):
         return None
     value = normalized(message).strip(' ¿?¡!.,')
-    if (re.search(r'\b(?:y|e)\s+(?:que|quien|quienes|cuando|donde|como|cual|cuales)\b', value)
+    if (re.search(r'\b(?:y|e)\s+(?:(?:su|sus|el|la|los|las)\s+)?'
+                  r'(?:que|quien|quienes|cuando|donde|como|cual|cuales|dime|'
+                  r'explica|resume|personajes?|argumento|trama|final)\b', value)
             or re.search(r'\b(?:ignora|instrucciones|contrasena|password|correo|email|'
                          r'codigo|programa|receta|ecuacion|constitucion|ley|tratado|'
                          r'python|javascript|html|sql|java)\b', value)):
@@ -542,6 +562,29 @@ def simple_literary_route(message):
     from .ai_quick_answers import _simple_topic_request
     if is_topic_recommendation(message) and _simple_topic_request(message, message):
         return {'decision': 'allow', 'intent': 'recommend',
+                'queries': [clean_text(message, 240)], 'candidates': [],
+                'followup': False, 'clarification': ''}
+    summary = re.match(r'^(?:de que trata|sinopsis de|resumen de|resume|'
+                       r'cuentame de que trata|hablame de)\s+(.+)$', value)
+    characters = re.search(r'\b(?:personajes?|protagonistas?|personaje principal)\b', value)
+    if summary or characters:
+        if characters:
+            detail = re.search(
+                r'\b(?:personajes?|protagonistas?|personaje principal)(?: principales)?\s+'
+                r'(?:de|del|de la|de los|de las)\s+(.+)$', value)
+            if detail is None:
+                return None
+            title = detail.group(1)
+        else:
+            title = summary.group(1)
+        title = re.sub(r'^(?:el|la)\s+(?:libro|novela|obra)\s+', '', title).strip(' ¿?¡!.,')
+        if (len(title) < 2 or len(title.split()) > 12
+                or re.fullmatch(r'(?:el|la|los|las|un|una)?\s*(?:libro|novela|obra|cuento|'
+                                r'poema|ensayo|texto|relato|historia)', title)
+                or re.match(r'^(?:ese|esa|este|esta|esto|eso|lo|aquel|aquella)\b', title)
+                or not _explicit_work_context(message, value)):
+            return None
+        return {'decision': 'allow', 'intent': 'summary' if summary else 'analysis',
                 'queries': [clean_text(message, 240)], 'candidates': [],
                 'followup': False, 'clarification': ''}
     author = re.match(r'^(?:quien (?:escribio|ha escrito|fue el autor|es el autor)|'
@@ -603,7 +646,14 @@ def simple_research_plan(message, intent, *, followup=False, selected_books=()):
         r'^(?:quien (?:escribio|ha escrito|fue el autor|es el autor)|'
         r'de quien es|quien es el autor|en que ano se publico|'
         r'cuando se publico|cuantas paginas tiene|cual es el genero)\b', value))
-    if not (identifying or detail or bibliographic):
+    summary = (intent == 'summary' and len(message) <= 240 and re.match(
+        r'^(?:de que trata|sinopsis de|resumen de|resume|cuentame de que trata|'
+        r'hablame de)\b', value))
+    characters = (intent == 'analysis' and len(message) <= 240 and re.match(
+        r'^(?:quien(?:es)?|cual(?:es)?|dime|dame|describe|enumera|busca(?:me|r)?|'
+        r'averigua|hablame|cuentame)\b', value)
+        and re.search(r'\b(?:personajes?|protagonistas?|personaje principal)\b', value))
+    if not (identifying or detail or bibliographic or summary or characters):
         return None
     return {'questions': [message], 'search_queries': [], 'needs_contents': bool(detail),
             'needs_fresh_sources': False,
@@ -916,13 +966,20 @@ def canonical_sources(items, maximum=8):
             'retrieved_at': clean_text(item.get('retrieved_at'), 40),
         }
         # Procedencia interna: no confundir el autor de una página con la obra.
-        for name in ('work_id', 'work_title', 'work_author', 'license', 'fact_kind', 'trust', 'extraction_method', 'site', 'claim_verification', 'character_scope'):
+        for name in ('work_id', 'work_title', 'work_author', 'license', 'fact_kind', 'trust', 'extraction_method', 'site', 'claim_verification', 'character_scope',
+                     'verified_at', 'expires_at', 'source_id', 'evidence_hash', 'policy_id',
+                     'memory_source_id', 'last_verified_at', 'policy'):
             if name in item:
                 source[name] = clean_text(item[name], 220)
-        for name in ('work_binding_verified', 'permanent_index_allowed', 'injection_detected'):
+        for name in ('work_binding_verified', 'permanent_index_allowed', 'injection_detected', 'memory_verified'):
             if name in item:
                 source[name] = item[name] is True
-        for name in ('headings', 'character_mentions'):
+        if isinstance(item.get('attribution'), dict):
+            source['attribution'] = {key: clean_text(item['attribution'].get(key), 500)
+                for key in ('authors', 'title', 'url', 'license_url', 'revision_id')}
+        if item.get('storage_policy') == 'wikipedia-cc-by-sa-4.0-v1':
+            source['storage_policy'] = item['storage_policy']
+        for name in ('headings', 'character_mentions', 'fact_ids', 'fact_topics', 'conflicts_with'):
             if isinstance(item.get(name), list):
                 source[name] = [clean_text(value, 100) for value in item[name][:8]]
         if isinstance(item.get('confirmed_aliases'), list):

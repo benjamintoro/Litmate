@@ -9,11 +9,19 @@ import re
 import hashlib
 from functools import lru_cache
 from pathlib import Path
+from urllib.parse import urlsplit
 
 from .literary_ai import (ChatResult, canonical_sources, has_excerpt, normalized,
                           obvious_rejection, requires_exact_text, requested_book_count,
                           sanitized_history, validate_draft, validate_recommendation_text)
 from .literary_language import request_text
+
+
+# La envoltura de una referencia parcial no forma parte de las frases
+# auditadas. El caché la retira antes de volver a validar el mismo contenido.
+REFERENCE_PREFIX = 'Encontré estas referencias relacionadas con tu consulta:\n\n'
+REFERENCE_SUFFIX = ('\n\nSon pasajes atribuidos a sus fuentes, no fichas bibliográficas ni una verificación '
+                    'independiente de todos sus datos. No puedo confirmar con ellos todas las partes de tu consulta.')
 
 
 @lru_cache(maxsize=1)
@@ -40,6 +48,21 @@ def quick_knowledge_sources(query, maximum=8):
     from .literary_knowledge import search_knowledge, _score, knowledge_sources
     from .literary_identity import same_work
     local = search_knowledge(query, maximum=maximum)
+    # El índice persistente devuelve evidencia pública vigente, nunca textos
+    # generados ni respuestas de otro lector. La suficiencia se verifica después.
+    from .literary_memory import retrieve_evidence
+    from .ai_progress import measure_stage
+    try:
+        with measure_stage('knowledge_lookup'):
+            books, sources = retrieve_evidence(query, limit=maximum)
+            # No fusionar una redacción original con la URL de otra ficha.
+            # Los metadatos mínimos no desplazan una sinopsis ya revisada.
+            protected = [s for s in local if s.get('kind') == 'book'] + list(_bundled())
+            extra = [s for s in sources if not (s.get('kind') == 'book'
+                and any(same_work(s, old) for old in protected))]
+            local.extend(extra)
+    except (OSError, ValueError):
+        pass
     ranked = []
     for work in _bundled():
         if any(source.get('kind') == 'book' and same_work(source, work) for source in local):
@@ -286,7 +309,10 @@ def quick_answer(message, history=None, *, topic_context=None, search=None):
                         'citations': [source['id']], 'books': result.books, 'needs_web': False}, [source])
         result.text += '\n\nFuente de la ficha: ' + source['url']
         return result
-    return _validated_result(message, candidates[:1])
+    narrative = [source for source in candidates if source.get('policy') != 'openlibrary-minimal-metadata-v1'
+                 and 'metadatos bibliogr' not in source.get('read_mode', '').lower()
+                 and source.get('source') != 'Wikidata']
+    return _validated_result(message, narrative[:1]) if narrative else None
 
 
 def catalogue_lookup_answer(message, history, search):
@@ -296,8 +322,12 @@ def catalogue_lookup_answer(message, history, search):
     una edición como prueba de páginas, citas textuales, finales o publicación.
     """
     if (has_excerpt(message) or obvious_rejection(message) or requires_exact_text(message)
-            or re.search(r'\b(?:y|ademas|tambien|final|despues|premio|ano|fecha|'
+            or re.search(r'\b(?:ademas|tambien|despues|premio|ano|fecha|'
                          r'capitulo|pagina|isbn|compara|analiza|interpreta)\b|[;\n]', request_text(message))):
+        return None
+    if re.search(r'\by\s+(?:(?:su|sus|el|la|los|las)\s+)?(?:dime|describe|explica|'
+                 r'cuentame|resume|recomienda\w*|que|quien|como|cuando|cual|'
+                 r'personajes|argumento|trama|final)\b', request_text(message)):
         return None
     value = request_text(message).strip('¿?¡!., ')
     author = re.fullmatch(r'(?:quien (?:escribio|es (?:el autor|la autora)))(?: de)?\s+(.+)', value)
@@ -321,6 +351,15 @@ def catalogue_lookup_answer(message, history, search):
     from .ai_catalog_fallback import _topic_catalogue_origin
     candidates = [source for source in found if _topic_catalogue_origin(source) and title_matches(title, source)
                   and (not reference['books'] or normalized(source['author']) == normalized(book['author']))]
+    # Open Library puede devolver ediciones con traductores o ilustradores en
+    # el campo de autoría. Para una pregunta de autoría, Wikidata aporta una
+    # identidad estructurada y evita que esas ediciones conviertan una obra
+    # conocida en ambigua. Si Wikidata también discrepa, no se elige por mayoría.
+    if author:
+        structured = [source for source in candidates
+                      if 'Wikidata' in str(source.get('source', '')).split(' / ')]
+        if structured and len({normalized(source['author']) for source in structured}) == 1:
+            candidates = structured
     if len({normalized(source['author']) for source in candidates}) != 1:
         return None
     source = canonical_sources(candidates[:1])[0]
@@ -333,6 +372,10 @@ def catalogue_lookup_answer(message, history, search):
         return ChatResult(draft['text'] + '\n\nFuente: ' + source['url'], 'answered', True,
                           [source], draft['books'], 'sources', 'author', {'catalogue_quick_lookup': True})
     from .books_google import source_synopsis
+    if (source.get('policy') == 'openlibrary-minimal-metadata-v1'
+            or 'metadatos bibliogr' in source.get('read_mode', '').lower()
+            or source.get('source') == 'Wikidata'):
+        return None
     description = source_synopsis(source)
     if description and description in source['description'] and len(description) <= 300:
         return _validated_result(message, [{**source, 'description': description}])
@@ -445,6 +488,47 @@ def verified_book_list_answer(message, sources, *, history=None, topic_context=N
                       diagnostics={'verified_book_list_quick_answer': True, 'audit': audit})
 
 
+def _is_adaptation_page(source):
+    """Detecta una página sobre la película, serie o musical, no sobre la obra."""
+    host = (urlsplit(str(source.get('url', ''))).hostname or '').lower()
+    if any(host == domain or host.endswith('.' + domain) for domain in (
+            'primevideo.com', 'netflix.com', 'filmaffinity.com', 'imdb.com',
+            'disneyplus.com', 'max.com', 'hulu.com', 'rtve.es', 'ecartelera.com',
+            'sensacine.com', 'letterboxd.com', 'rottentomatoes.com', 'tomatazos.com')):
+        return True
+    title = normalized(source.get('title', ''))
+    if re.search(r'\b(?:filmaffinity|imdb|sensacine|ecartelera|letterboxd|'
+                 r'rottentomatoes|tomatazos|prime video|netflix)\b', title):
+        return True
+    if re.search(r'\((?:pelicula|film|serie|miniserie|telenovela|musical|'
+                 r'opera|ballet|adaptacion|videojuego|album|sencillo|cancion)\b', title):
+        return True
+    return bool(re.search(r'\b(?:pelicula|film|serie de television|miniserie|'
+                          r'telenovela|musical|adaptacion cinematografica|videojuego)\b', title))
+
+
+def _literal_snippet(text, terms):
+    """Elige una oración literal relevante sin parafrasear ni mezclar pasajes."""
+    text = re.sub(r'\s+', ' ', str(text or '')).strip()
+    if not text:
+        return ''
+    best = None
+    for sentence in re.split(r'(?<=[.!?])\s+', text):
+        words = set(re.findall(r'\w{3,}', normalized(sentence)))
+        matched = words & terms
+        # Preferir la oración que responde al término específico («protagonista»)
+        # antes que una mención genérica del título («Nana»).
+        score = (len(matched), sum(len(word) for word in matched))
+        if matched and (best is None or score > best[0]):
+            best = (score, sentence)
+    snippet = best[1] if best else text
+    words = list(re.finditer(r'\S+', snippet))[:25]
+    snippet = snippet[:words[-1].end()] if words else ''
+    if len(snippet) > 230:
+        snippet = snippet[:230].rsplit(' ', 1)[0]
+    return snippet
+
+
 def reference_answer(message, sources, *, query=None, intent='recommend', limit=4):
     """Publica pasajes atribuidos y enlaces reales; no los convierte en fichas.
 
@@ -467,7 +551,7 @@ def reference_answer(message, sources, *, query=None, intent='recommend', limit=
              and not source.get('injection_detected')
              and not public_text_has_injection(source['title'] + ' ' + source['description'])
              and not forbidden_output(source['title'] + ' ' + source['description'])
-             and (adaptations or not re.search(r'\((?:pelicula|film|serie|videojuego)\b', normalized(source['title'])))
+             and (adaptations or not _is_adaptation_page(source))
              and (not terms or terms & set(re.findall(r'\w{3,}', normalized(
                  source['title'] + ' ' + source['description'] + ' ' + source['url']))))]
     if not pages:
@@ -499,11 +583,19 @@ def reference_answer(message, sources, *, query=None, intent='recommend', limit=
                       for statement in required_fact_statements(title) or [title])
         # Cita corta, literal y atribuida. No presentar el fragmento del
         # buscador como lectura de la página ni como texto de la novela.
-        snippet = re.sub(r'\s+', ' ', source['description']).strip()
-        words = list(re.finditer(r'\S+', snippet))[:25]
-        snippet = snippet[:words[-1].end()] if words else ''
-        if len(snippet) > 230:
-            snippet = snippet[:230].rsplit(' ', 1)[0]
+        # En preguntas de detalle se elige una oración que contenga el término
+        # pedido; en sinopsis se conserva el comienzo del pasaje.
+        if intent == 'analysis' and terms:
+            # El título aparece en casi todas las oraciones y no distingue la
+            # respuesta. Se prioriza el término específico de la pregunta.
+            title_words = set(re.findall(r'\w{3,}', normalized(source.get('title', ''))))
+            snippet = _literal_snippet(source['description'], terms - title_words or terms)
+        else:
+            snippet = re.sub(r'\s+', ' ', source['description']).strip()
+            words = list(re.finditer(r'\S+', snippet))[:25]
+            snippet = snippet[:words[-1].end()] if words else ''
+            if len(snippet) > 230:
+                snippet = snippet[:230].rsplit(' ', 1)[0]
         if len(snippet) >= 8:
             mode = 'Fragmento del buscador' if source['read_mode'] == 'fragmento del buscador' else 'Pasaje recuperado'
             line = mode + ': «' + snippet + '»'
@@ -525,9 +617,7 @@ def reference_answer(message, sources, *, query=None, intent='recommend', limit=
         validate_audit(audit, plan, draft, sources, message, strict_facts=True)
     except (ValueError, TypeError):
         return None
-    draft['text'] = ('Encontré estas referencias relacionadas con tu consulta:\n\n' + draft['text']
-        + '\n\nSon pasajes atribuidos a sus fuentes, no fichas bibliográficas ni una verificación '
-          'independiente de todos sus datos. No puedo confirmar con ellos todas las partes de tu consulta.')
+    draft['text'] = (REFERENCE_PREFIX + draft['text'] + REFERENCE_SUFFIX)
     return LiteraryAssistant._publish(draft, sources, intent,
         {'web_reference_quick_answer': True, 'partial_answer': True, 'reference_audit': audit})
 

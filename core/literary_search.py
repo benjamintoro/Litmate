@@ -24,6 +24,7 @@ from .books_google import (search_volumes, get_volume, volume_source, public_que
                           book_topic_profile, topic_matches)
 from .literary_sources import (SearchResults, error_status, cooldown_seconds, reserve_page,
                                record_research_event)
+from .ai_progress import timed_stage
 
 logger = logging.getLogger('litmate')
 STOPWORDS = {'libro', 'libros', 'novela', 'novelas', 'sobre', 'para', 'del', 'los',
@@ -88,6 +89,7 @@ def _save(key, result):
     return result
 
 
+@timed_stage('local_search')
 def search_catalog(query):
     from .models import Libro
     terms = [t for t in re.findall(r'\w+', query)
@@ -588,6 +590,7 @@ def _polite_openlibrary_discovery(query):
     return search_openlibrary(query, details=False)
 
 
+@timed_stage('retrieval')
 def retrieve_discovery_books(query, *, accept=None):
     """Busca fichas ligeras y retorna al tener opciones verificadas, no al último timeout.
 
@@ -661,6 +664,7 @@ def retrieve_discovery_books(query, *, accept=None):
     return _save(key, SearchResults(sources, status=status, providers=providers))
 
 
+@timed_stage('retrieval')
 def retrieve_books(query):
     query = clean_text(query, 240)
     if not query:
@@ -1186,6 +1190,19 @@ def search_searx(query):
 
 def search_wikipedia(query):
     """API oficial: español primero; inglés solo si falta una página utilizable."""
+    # Sólo se conserva durante un turno real. Los comandos y las pruebas deben
+    # observar cada petición y no recibir páginas de otra consulta/contexto.
+    active = current_deadline() is not None
+    cache_name = _cache_key('litmate_local_wikipedia_v2:', normalized(query) + ':pages='
+                            + str(getattr(settings, 'LITMATE_RESEARCH_MAX_PAGES', 3)))
+    if active:
+        cached = _cached(cache_name)
+        if cached is not None:
+            return cached
+
+    def finish(result):
+        return _save(cache_name, result) if active else result
+
     statuses, spanish_alternatives = {}, []
     query_terms = {word for word in re.findall(r'\w+', normalized(query)) if len(word) >= 3
                    and word not in STOPWORDS | {'the', 'with', 'of', 'una', 'del',
@@ -1202,15 +1219,15 @@ def search_wikipedia(query):
                         re.findall(r'\w+', normalized(source.get('title')))) for source in result):
                     spanish_alternatives = result
                     continue
-                return SearchResults(result, status='partial' if any(
+                return finish(SearchResults(result, status='partial' if any(
                     value not in {'ok', 'empty'} for value in statuses.values()) else 'ok',
-                    providers={'Wikipedia (' + key + ')': value for key, value in statuses.items()})
+                    providers={'Wikipedia (' + key + ')': value for key, value in statuses.items()}))
         except Exception as exc:
             statuses[language] = error_status(exc)
     failed = any(value not in {'ok', 'empty'} for value in statuses.values())
-    return SearchResults(spanish_alternatives, status=('partial' if spanish_alternatives else 'unavailable')
+    return finish(SearchResults(spanish_alternatives, status=('partial' if spanish_alternatives else 'unavailable')
                          if failed else 'ok' if spanish_alternatives else 'empty',
-                         providers={'Wikipedia (' + key + ')': value for key, value in statuses.items()})
+                         providers={'Wikipedia (' + key + ')': value for key, value in statuses.items()}))
 
 
 def _wikipedia_fetch(url):
@@ -1266,7 +1283,7 @@ def _search_wikipedia(query, *, language='es'):
             identity_query = query
     params = {'action': 'query', 'format': 'json', 'generator': 'search',
               'gsrsearch': identity_query, 'gsrlimit': 2,
-              'gsrnamespace': '0|104' if focus else 0, 'prop': 'extracts|info',
+              'gsrnamespace': '0|104' if focus else 0, 'prop': 'extracts|info|revisions', 'rvprop': 'ids',
               'inprop': 'url', 'explaintext': 1, 'exintro': 1, 'exchars': 1200}
     if language not in {'es', 'en'}:
         raise ValueError('unsupported_wikipedia_language')
@@ -1304,7 +1321,7 @@ def _search_wikipedia(query, *, language='es'):
             lookup_titles = list(dict.fromkeys([*title_hints,
                 *(title[:1].upper() + title[1:].casefold() for title in title_hints)]))
             exact_params = {'action': 'query', 'format': 'json', 'titles': '|'.join(lookup_titles),
-                'redirects': 1, 'prop': 'extracts|info', 'inprop': 'url',
+                'redirects': 1, 'prop': 'extracts|info|revisions', 'rvprop': 'ids', 'inprop': 'url',
                 'explaintext': 1, 'exintro': 1, 'exchars': 1200}
             try:
                 exact = _wikipedia_fetch(endpoint + urlencode(exact_params))
@@ -1340,7 +1357,7 @@ def _search_wikipedia(query, *, language='es'):
                     full_page = _wikipedia_table_page(candidate, page_id, endpoint)
                 else:
                     details = {'action': 'query', 'format': 'json', 'pageids': page_id,
-                               'prop': 'extracts|info', 'inprop': 'url', 'explaintext': 1,
+                               'prop': 'extracts|info|revisions', 'rvprop': 'ids', 'inprop': 'url', 'explaintext': 1,
                                'exsectionformat': 'wiki'}
                     full = _wikipedia_fetch(endpoint + urlencode(details))
                     full_page = ((full.get('query') or {}).get('pages') or {}).get(page_id)
@@ -1366,8 +1383,13 @@ def _search_wikipedia(query, *, language='es'):
             except Exception as exc:
                 logger.warning('IA: sección de Wikipedia no disponible (%s)', type(exc).__name__)
     return [{'title': page.get('title'), 'author': 'Fuente web', 'description': page.get('extract'),
-             'identity_text': page.get('identity_text', ''), 'character_facts': page.get('character_facts', []),
+             # La introducción identifica la obra aunque no se haya reservado
+             # una lectura completa. Nunca se usa el pasaje temático como
+             # identidad: para eso está identity_text.
+             'identity_text': page.get('identity_text') or clean_text(page.get('extract'), 1200),
+             'character_facts': page.get('character_facts', []),
              'kind': 'web', 'url': trusted_url(page.get('fullurl')),
+             **_wikipedia_storage_metadata(page),
              'source': 'Wikipedia', 'read_mode': 'pasaje de sección de artículo público' if page.get(
                  'literary_section_read') else 'extracto de introducción',
              'literary_facts': [{'topic': 'events', 'subject': page.get('title'),
@@ -1377,6 +1399,25 @@ def _search_wikipedia(query, *, language='es'):
             for page in pages[:2] if page.get('extract')]
 
 
+def _wikipedia_storage_metadata(page):
+    """Permiso explícito sólo para pasajes oficiales con revisión y atribución.
+
+    La identidad bibliográfica se valida posteriormente, antes de persistir.
+    Las páginas públicas generales siguen sin permiso de indexación permanente.
+    """
+    revisions = page.get('revisions')
+    revision_id = revisions[0].get('revid') if isinstance(revisions, list) and revisions else None
+    url = safe_source_url(page.get('fullurl'))
+    if not (type(revision_id) is int and revision_id > 0 and url
+            and urlsplit(url).hostname in {'es.wikipedia.org', 'en.wikipedia.org'}):
+        return {}
+    return {'license': 'CC-BY-SA-4.0', 'storage_policy': 'wikipedia-cc-by-sa-4.0-v1',
+            'permanent_index_allowed': True, 'attribution': {'authors': 'Wikipedia contributors',
+                'title': str(page.get('title', '')), 'url': url, 'revision_id': str(revision_id),
+                'license_url': 'https://creativecommons.org/licenses/by-sa/4.0/'}}
+
+
+@timed_stage('web_search')
 def retrieve_web(query):
     from .literary_research import bibliographic_web_query, public_research_queries
     public_queries = public_research_queries(query)

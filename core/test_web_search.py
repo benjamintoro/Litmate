@@ -9,7 +9,7 @@ from django.test import SimpleTestCase, override_settings
 from .ai_budget import BudgetExpired, current_deadline, request_budget
 from .ai_quick_answers import isbn_lookup_answer, reference_answer, verified_book_list_answer, web_reference_answer
 from .literary_ai import ChatResult, LiteraryAssistant
-from .literary_search import search_duckduckgo
+from .literary_search import search_duckduckgo, search_wikipedia
 
 
 DDG_HTML = '''<!doctype html><html><body><table>
@@ -72,6 +72,37 @@ class DuckDuckGoSearchTests(SimpleTestCase):
             with override_settings(LITMATE_AI_USE_WEB=False):
                 self.assertEqual(search_duckduckgo('una novela').status, 'disabled')
         fetch.assert_not_called()
+
+
+@override_settings(CACHES={'default': {'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+                                     'LOCATION': 'wikipedia-cache-tests'}},
+                   LITMATE_AI_USE_WEB=True)
+class WikipediaCacheTests(SimpleTestCase):
+    SOURCE = {'title': 'Nana (novela)', 'author': 'Fuente web',
+              'description': 'Nana es una novela de Émile Zola.',
+              'url': 'https://es.wikipedia.org/wiki/Nana_(novela)',
+              'kind': 'web', 'source': 'Wikipedia',
+              'read_mode': 'extracto de introducción'}
+
+    def setUp(self):
+        cache.clear()
+
+    def test_the_same_lookup_is_reused_inside_one_active_turn(self):
+        with patch('core.literary_search._search_wikipedia',
+                   return_value=[dict(self.SOURCE)]) as fetch, \
+                request_budget(time.monotonic() + 5):
+            first = search_wikipedia('Nana Emile Zola')
+            second = search_wikipedia('Nana Emile Zola')
+        self.assertEqual(first[0]['title'], 'Nana (novela)')
+        self.assertEqual(second[0]['url'], self.SOURCE['url'])
+        self.assertEqual(fetch.call_count, 1)
+
+    def test_an_offline_or_test_call_never_receives_another_contexts_pages(self):
+        with patch('core.literary_search._search_wikipedia',
+                   return_value=[dict(self.SOURCE)]) as fetch:
+            search_wikipedia('Nana Emile Zola offline')
+            search_wikipedia('Nana Emile Zola offline')
+        self.assertEqual(fetch.call_count, 2)
 
 
 class VerifiedBookListAnswerTests(SimpleTestCase):
@@ -169,6 +200,24 @@ class WebReferenceAnswerTests(SimpleTestCase):
         source = {'title': 'Guerra y paz (película de 1956)', 'kind': 'web',
                   'url': 'https://example.org/film', 'description': 'El argumento de Guerra y paz.'}
         self.assertIsNone(reference_answer('¿De qué trata la novela Guerra y paz?', [source]))
+
+    def test_a_film_database_page_is_not_used_as_a_novel_summary(self):
+        source = {'title': 'El nombre de la rosa (1986) - Filmaffinity', 'kind': 'web',
+                  'url': 'https://www.filmaffinity.com/es/film288865.html',
+                  'description': 'Fray Guillermo de Baskerville (Sean Connery) y Adso (Christian Slater).'}
+        self.assertIsNone(reference_answer('¿De qué trata El nombre de la rosa?', [source]))
+
+    def test_a_streaming_page_is_not_used_as_a_novel_summary(self):
+        source = {'title': 'Los Miserables - Prime Video', 'kind': 'web',
+                  'url': 'https://www.primevideo.com/-/es/detail/0NYGDPUZCWQ300VN561C7KPQ3X/',
+                  'description': 'Los Miserables narra una historia de sueños rotos y redención.'}
+        self.assertIsNone(reference_answer('¿De qué trata Los miserables?', [source]))
+
+    def test_a_musical_page_is_not_used_as_a_novel_summary(self):
+        source = {'title': 'Los miserables (musical)', 'kind': 'web',
+                  'url': 'https://es.wikipedia.org/wiki/Los_miserables_(musical)',
+                  'description': 'Los miserables es un musical basado en la novela de Victor Hugo.'}
+        self.assertIsNone(reference_answer('¿De qué trata Los miserables?', [source]))
 
     def test_a_biography_passage_on_another_subject_is_not_a_synopsis(self):
         source = {'title': 'León Tolstói', 'kind': 'web',

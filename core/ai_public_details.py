@@ -30,10 +30,10 @@ def character_answer(message, history, search_books, search_public):
     value = normalized(message).strip('¿?¡! ')
     request = re.sub(r'[«“\"]([^»”\"\n]{2,180})[»”\"]', '', value)
     if (has_excerpt(message) or obvious_rejection(message) or requires_exact_text(message)
-            or not re.search(r'\b(?:personajes?|protagonistas?)\b', value)
+            or not re.search(r'\b(?:personajes?|protagonistas?|personaje principal)\b', value)
             or re.search(r'\b(?:compara|analiza|interpreta|simbolismo|evolucion|spoilers?|final|muere|resume)\b', value)
             or re.search(r'\b(?:paginas?|isbn|autor|editorial|publicacion|clima|temperatura|impuestos|codigo|receta)\b', request)
-            or not re.match(r'^(?:y\s+)?(?:quienes|cuales|dime|dame|describe|busca(?:me|r)?|averigua|personajes|hablame|sus personajes|los personajes)\b', value)):
+            or not re.match(r'^(?:y\s+)?(?:quien(?:es)?|cual(?:es)?|dime|dame|describe|busca(?:me|r)?|averigua|personajes|hablame|sus personajes|los personajes)\b', value)):
         return None
     history = sanitized_history(history)
     context = resolve_followup_context(message, history)
@@ -60,7 +60,7 @@ def character_answer(message, history, search_books, search_public):
         reusable = [source for source in remembered if source.get('character_facts')]
         found = canonical_sources(remembered if reusable else search_books(book_query))
         books = [book for book in found if book['kind'] == 'book'
-                 and book['source'] in {'Google Books API', 'Catálogo LitMate', 'Open Library',
+                 and book['source'] in {'Google Books API', 'Catálogo LitMate', 'Open Library', 'Wikidata',
                                        'Conocimiento literario local', 'Biblioteca literaria local'}
                  and _title_query_matches(query, book) and book['author'] != 'Autor no informado'
                  and (not selected or normalized(book['author']) == normalized(selected[0]['author']))]
@@ -110,14 +110,29 @@ def character_answer(message, history, search_books, search_public):
         # no elige una de ellas. El flujo normal conserva ambas para evaluarlas.
         return None
     description = normalized(source.get('description', ''))
+    singular = bool(re.search(r'\b(?:quien|cual)\b.*\b(?:protagonista|personaje principal)\b', value))
     facts = [fact for fact in source['character_facts'] if not forbidden_output(fact['role'])
-             and normalized(fact['name']) in description and normalized(fact['role']) in description][:5]
-    if len(facts) < 2:
-        return None
+             and normalized(fact['name']) in description and normalized(fact['role']) in description]
+    if singular:
+        # Sólo se responde «quién es el protagonista» si la fuente lo dice
+        # literalmente. Una lista general de personajes no sustituye ese dato.
+        facts = [fact for fact in facts if re.search(
+            r'\b(?:protagonista|personaje principal)\b', normalized(fact['role']))][:3]
+        if not facts:
+            return None
+    else:
+        facts = facts[:5]
+        if len(facts) < 2:
+            return None
     sources = canonical_sources([book, source])
-    lines = [f'En **{book["title"]}**, de **{book["author"]}**, estos personajes ayudan a entender la historia:']
-    for index, fact in enumerate(facts, 1):
-        lines.append(f'\n{index}. **{fact["name"]}**: {fact["role"].rstrip(".")}.')
+    if singular:
+        lines = [f'En **{book["title"]}**, de **{book["author"]}**, la fuente describe así al protagonista:']
+        for fact in facts:
+            lines.append(f'\n**{fact["name"]}**: {fact["role"].rstrip(".")}.')
+    else:
+        lines = [f'En **{book["title"]}**, de **{book["author"]}**, estos personajes ayudan a entender la historia:']
+        for index, fact in enumerate(facts, 1):
+            lines.append(f'\n{index}. **{fact["name"]}**: {fact["role"].rstrip(".")}.')
     lines.append('\nSi quieres, podemos comentar cómo se relacionan o cuál te llama más la atención.')
     lines.append('\nMás sobre los personajes: ' + source['url'])
     return ChatResult('\n'.join(lines), 'answered', True, sources,

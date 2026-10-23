@@ -60,6 +60,9 @@ def reserve_page():
 
 def record_research_event(stage, provider, status, *, count=0):
     """Diagnóstico de operaciones, sin consultas, URLs ni contenido del lector."""
+    if stage in {'http_request', 'page_read'} and status == 'started':
+        from .ai_progress import emit_phase
+        emit_phase('search')
     state = _scope.get()
     if state is None:
         return

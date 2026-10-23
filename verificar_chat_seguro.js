@@ -332,6 +332,51 @@ async function main() {
     const stageStream = streaming([bytes('data: {"token":"","stage":"search","message":"Buscando..."}\n\ndata: {"token":"Listo"}\n\ndata: [DONE]\n\n')]);
     check(await Safe.readChatResponse(stageStream.response, () => {}, value => stages.push(value)) === 'Listo' && stages[0].stage === 'search', 'estado de progreso separado del texto');
 
+    const readyToken = 'r'.repeat(43), progressiveEvents = [], progressiveTexts = [], progressiveRequests = [];
+    const progressiveEnv = { AbortController, setTimeout, clearTimeout,
+        async fetch(url, options) {
+            progressiveRequests.push({ url, options });
+            if (url === '/chatbot_query/') {
+                check(JSON.parse(options.body).progress === true, 'navegador solicita progreso real optativo');
+                return streaming([bytes('data: {"stage":"search","message":"Consultando fuentes"}\n\ndata: '
+                    + JSON.stringify({ ready: readyToken }) + '\n\ndata: [DONE]\n\n')]).response;
+            }
+            check(url === '/chatbot_finalize/' && JSON.parse(options.body).ready === readyToken,
+                'la finalización usa únicamente el identificador opaco y el endpoint fijo');
+            check(progressiveTexts.length === 0 && progressiveEvents[0].stage === 'search',
+                'se muestra progreso antes de finalizar sin publicar texto factual');
+            return { ok: true, headers: { get: () => 'application/json' },
+                json: async () => ({ response: 'Respuesta verificada', books: [CARD] }) };
+        }
+    };
+    const progressiveAnswer = await Safe.queryChat('Pregunta literaria', value => progressiveTexts.push(value),
+        value => progressiveEvents.push(value), { environment: progressiveEnv });
+    check(progressiveAnswer === 'Respuesta verificada' && progressiveTexts.length === 1,
+        'el texto aparece únicamente después de la finalización validada');
+    check(progressiveRequests.length === 2 && progressiveRequests.every(item => item.options.method === 'POST'
+        && item.options.headers['Content-Type'] === 'application/json'
+        && 'X-CSRFToken' in item.options.headers), 'ambos pasos usan POST JSON con CSRF');
+    check(progressiveRequests[0].options.signal === progressiveRequests[1].options.signal,
+        'SSE y finalización comparten la cancelación y el presupuesto total');
+    const readyOnly = () => streaming([bytes('data: ' + JSON.stringify({ ready: readyToken }) + '\n\ndata: [DONE]\n\n')]).response;
+    await assert.rejects(() => Safe.readChatResponse(readyOnly()), /dañada/); checks++;
+    for (const record of [{ ready: 'https://other.example/result' }, { ready: '<script>' },
+                          { ready: readyToken, token: 'Texto sin finalizar' }]) {
+        await assert.rejects(() => Safe.readChatResponse(streaming([bytes('data: ' + JSON.stringify(record)
+            + '\n\ndata: [DONE]\n\n')]).response, () => {}, () => {}, { allowReady: true }), /dañada/); checks++;
+    }
+    const deniedFinalizeEnv = { AbortController, setTimeout, clearTimeout,
+        async fetch(url) {
+            if (url === '/chatbot_query/') return readyOnly();
+            return { ok: false, status: 429, headers: { get: () => 'application/json' },
+                json: async () => ({ response: 'Has alcanzado tu límite diario de consultas.' }) };
+        }
+    };
+    let deniedTexts = 0;
+    await assert.rejects(() => Safe.queryChat('Pregunta', () => deniedTexts++, () => {},
+        { environment: deniedFinalizeEnv }), /límite diario/); checks++;
+    check(deniedTexts === 0, 'una finalización rechazada no publica texto ni activa voz');
+
     let deadlineCallback, requestedTimeout, pendingFetch, requestSignal, latePaints = 0;
     const deadlineEnv = { AbortController,
         setTimeout(callback, delay) { deadlineCallback = callback; requestedTimeout = delay; return 123; },
