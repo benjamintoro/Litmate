@@ -5,9 +5,10 @@ Rama: `feature/cuotas-ia-chatbot`.
 Commits locales de esta sesión: `f12ee52` (seguridad), `057a687` (IA),
 `2f8708f` (evaluación), `147c75e` (informe anterior), `935f2cb` (chat acotado y
 respuestas verificadas rápidas), `1f3a7b7` (métricas honestas de timeout),
-`45babb1` (descubrimiento en 30 segundos) y `4c08d83` (arquitectura
+`45babb1` (descubrimiento en 30 segundos), `4c08d83` (arquitectura
 persistente y rutas rápidas verificadas; punto de control local de esta
-intervención).
+intervención) y `33d1d47` (filtro de páginas de desambiguación y benchmark
+ampliado).
 
 ## Intervención vigente — arquitectura persistente y rutas rápidas verificadas
 
