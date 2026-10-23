@@ -17,7 +17,7 @@ from django.test import Client, SimpleTestCase, TestCase, override_settings
 
 from .ai_budget import BudgetExpired, check_budget
 from .ai_progress import (emit_phase, measure_stage, progress_scope, snapshot_metrics,
-                          timed_stage, sanitize_metrics)
+                          timed_stage, sanitize_metrics, merge_metrics)
 from .ai_stream_jobs import (JobBusy, JobStale, JobUnavailable, claim_finalization,
                              complete_job, create_job, finish_finalization, owner_key)
 from .literary_ai import ChatResult
@@ -36,6 +36,30 @@ def answer(message, history, topic):
 
 
 class ProgressMetricsTests(SimpleTestCase):
+    def test_merge_metrics_preserves_real_origins_stages_and_privacy(self):
+        first = {'elapsed_ms': 5, 'stage_totals_ms': {'conversation': 3},
+                 'stage_timings': [{'stage': 'conversation', 'started_ms': 1,
+                                    'elapsed_ms': 3, 'status': 'ok'}], 'secret': 'not public'}
+        second = {'elapsed_ms': 4, 'stage_totals_ms': {'finalization': 2},
+                  'stage_timings': [{'stage': 'finalization', 'started_ms': 1,
+                                     'elapsed_ms': 2, 'status': 'ok'}],
+                  'progress_events': [{'stage': 'review', 'elapsed_ms': .5, 'message': 'private'}]}
+        result = merge_metrics(first, second, offset_ms=10)
+        self.assertEqual(result['elapsed_ms'], 14)
+        self.assertEqual(result['stage_totals_ms'], {'conversation': 3, 'finalization': 2})
+        self.assertEqual(result['stage_timings'][1]['started_ms'], 11)
+        self.assertEqual(result['first_phase_emitted_ms'], 10.5)
+        self.assertNotIn('secret', result)
+        self.assertNotIn('message', result['progress_events'][0])
+
+    def test_merge_is_bounded_and_rejects_invalid_offsets(self):
+        value = {'stage_timings': [{'stage': 'audit', 'started_ms': i, 'elapsed_ms': 1}
+                                  for i in range(128)]}
+        self.assertEqual(len(merge_metrics(value, value, offset_ms=128)['stage_timings']), 128)
+        for offset in (-1, True, float('inf'), float('nan')):
+            with self.subTest(offset=offset), self.assertRaises(ValueError):
+                merge_metrics({}, {}, offset_ms=offset)
+
     def test_phases_are_explicit_deduplicated_and_never_contain_reader_data(self):
         callback = Mock()
         with progress_scope(callback):
@@ -285,6 +309,12 @@ class ProgressiveEndpointTests(TestCase):
             self.assertEqual(final.json()['response'], 'La autoría está comprobada.')
             self.assertEqual(len(self.client.session[HISTORY_KEY]['turns']), 1)
             self.assertNotIn('secret_prompt', final.json()['diagnostics'])
+            metrics = final.json()['diagnostics']['progress_metrics']
+            self.assertIn('conversation', metrics['stage_totals_ms'])
+            self.assertIn('finalization', metrics['stage_totals_ms'])
+            stages = metrics['stage_timings']
+            self.assertLess(next(row['started_ms'] for row in stages if row['stage'] == 'conversation'),
+                            next(row['started_ms'] for row in stages if row['stage'] == 'finalization'))
         finally:
             stop.set()
             self.close_stream(response)
@@ -295,6 +325,42 @@ class ProgressiveEndpointTests(TestCase):
         self.assertEqual(stolen.status_code, 404)
         self.assertNotIn('comprobada', stolen.content.decode())
         self.assertEqual(self.finish(token).status_code, 200)
+
+    def test_completed_worker_notifies_stream_without_a_poll_or_public_control_event(self):
+        from queue import Queue
+        notified = threading.Event()
+        signals = []
+
+        class CompletionQueue(Queue):
+            def put_nowait(queue, event):
+                super().put_nowait(event)
+                if not isinstance(event, dict):
+                    signals.append(event)
+                    notified.set()
+
+            def get(queue, block=True, timeout=None):
+                if notified.is_set() and queue.empty():
+                    raise AssertionError('Un Future terminado no debe esperar otro sondeo.')
+                return super().get(block, timeout)
+
+        with patch('core.literary_ai_views.Queue', CompletionQueue):
+            response = self.start()
+            self.assertTrue(notified.wait(2))
+            token = self.ready(response)
+        self.assertEqual(len(signals), 1)
+        self.assertEqual(self.finish(token).status_code, 200)
+
+    def test_worker_failure_notifies_without_publishing_ready_or_internal_details(self):
+        def broken(*args):
+            raise RuntimeError('private-worker-detail')
+
+        response = self.start(work=broken)
+        raw = b''.join(response.streaming_content).decode('utf-8')
+        self.assertIn('"error": "unavailable"', raw)
+        self.assertTrue(raw.endswith('data: [DONE]\n\n'))
+        self.assertNotIn('"ready"', raw)
+        self.assertNotIn('private-worker-detail', raw)
+        self.assertEqual(self.client.session[HISTORY_KEY]['turns'], [])
 
     @override_settings(LITMATE_USE_EXISTING_QUOTAS=True)
     def test_duplicate_finalize_charges_once_and_creates_one_authenticated_turn(self):

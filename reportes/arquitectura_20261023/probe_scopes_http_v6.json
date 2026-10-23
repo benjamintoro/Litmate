@@ -1,0 +1,201 @@
+{
+  "created_at_utc": "2026-10-23T19:42:10.152058+00:00",
+  "mode": "real_http_sse_isolated_database",
+  "model": "qwen3.5:9b-q4_K_M",
+  "context": 16384,
+  "prewarm": {
+    "requested": false,
+    "seconds": null,
+    "generates_answers": false
+  },
+  "web_enabled": false,
+  "chat_budget_seconds": 36,
+  "response_budget_seconds": 42,
+  "progressive": true,
+  "repeat": 1,
+  "knowledge_setup": "empty_auxiliary_databases_with_bundled_catalogue",
+  "resource_scope": "python_server_process_only_not_ollama_or_gpu",
+  "cache_controls": {
+    "empty_answers_each_turn": false,
+    "empty_retrieval_each_turn": false
+  },
+  "factual_review": "not_independently_certified",
+  "turns": [
+    {
+      "case": "consulta_reportada",
+      "turn": 1,
+      "question": "¿Quién escribió El principito?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 0.193,
+      "first_text_seconds": 0.193,
+      "first_useful_seconds": 0.193,
+      "first_progress_seconds": 0.045,
+      "progress_phases": [
+        "search"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 176,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 183.09,
+          "first_phase_emitted_ms": 43.069,
+          "stage_totals_ms": {
+            "conversation": 14.288,
+            "cache_lookup": 0.532,
+            "knowledge_lookup": 42.017,
+            "finalization": 7.128
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 11.882,
+              "elapsed_ms": 14.288,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 42.525,
+              "elapsed_ms": 0.532,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 47.632,
+              "elapsed_ms": 40.854,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 66.172,
+              "elapsed_ms": 1.163,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 175.953,
+              "elapsed_ms": 7.128,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 43.069
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-indexed-evidence"
+      },
+      "stage_totals_ms": {
+        "conversation": 14.288,
+        "cache_lookup": 0.532,
+        "knowledge_lookup": 42.017,
+        "finalization": 7.128
+      },
+      "delivery_overhead_ms": 9.473,
+      "resources": {
+        "rss_mb": 59.27,
+        "peak_rss_mb": 60.695,
+        "cpu_seconds": 0.09375
+      },
+      "category": "unspecified",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "**El principito** es una obra de **Antoine de Saint-Exupéry**.\n\nFuente de la ficha: https://es.literaturasm.com/personaje/principito",
+      "source_urls": [
+        "https://es.literaturasm.com/personaje/principito"
+      ]
+    },
+    {
+      "case": "consulta_reportada",
+      "turn": 2,
+      "question": "¿Quién escribió El principito?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 0.045,
+      "first_text_seconds": 0.045,
+      "first_useful_seconds": 0.045,
+      "first_progress_seconds": null,
+      "progress_phases": [],
+      "diagnostics": {
+        "elapsed_ms": 30,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "exact_answer_cache_hit": true,
+        "progress_metrics": {
+          "elapsed_ms": 35.998,
+          "stage_totals_ms": {
+            "conversation": 0.239,
+            "cache_lookup": 4.223,
+            "finalization": 5.927
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 3.65,
+              "elapsed_ms": 0.239,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 10.461,
+              "elapsed_ms": 4.223,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 30.06,
+              "elapsed_ms": 5.927,
+              "status": "ok"
+            }
+          ],
+          "progress_events": []
+        },
+        "stage_timings": [],
+        "provider": "verified-answer-cache"
+      },
+      "stage_totals_ms": {
+        "conversation": 0.239,
+        "cache_lookup": 4.223,
+        "finalization": 5.927
+      },
+      "delivery_overhead_ms": 9.1,
+      "resources": {
+        "rss_mb": 59.289,
+        "peak_rss_mb": 60.695,
+        "cpu_seconds": 0.046875
+      },
+      "category": "unspecified",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "**El principito** es una obra de **Antoine de Saint-Exupéry**.\n\nFuente de la ficha: https://es.literaturasm.com/personaje/principito",
+      "source_urls": [
+        "https://es.literaturasm.com/personaje/principito"
+      ]
+    }
+  ],
+  "source_sha256": "987f19e4bb2db915b325e463fd56e9fda04cfe9cb87b93e67afdff688e7ec823",
+  "runner_sha256": "fa1955691a757678bcd326237bd8cbfe65c0b32a7120e96538f277a67028e94e",
+  "matrix_sha256": null,
+  "metrics": {
+    "turns": 2,
+    "p50_seconds": 0.119,
+    "mean_seconds": 0.119,
+    "p95_seconds": 0.193,
+    "max_seconds": 0.193,
+    "under_response_budget": 2,
+    "statuses": {
+      "answered": 2
+    },
+    "under_5_seconds": 2,
+    "under_10_seconds": 2,
+    "under_30_seconds": 2,
+    "answered_is_not_factual_certification": true
+  },
+  "source_files_changed_during_run": false
+}

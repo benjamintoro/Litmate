@@ -142,3 +142,35 @@ def sanitize_metrics(value):
             if isinstance(row, dict) and row.get('stage') in _MESSAGES and number(row.get('elapsed_ms')):
                 clean['progress_events'].append({'stage': row['stage'], 'elapsed_ms': row['elapsed_ms']})
     return clean
+
+
+def merge_metrics(first, second, *, offset_ms=0):
+    """Une scopes con un mismo origen, trasladando el inicio del segundo.
+
+    Sólo combina la telemetría permitida; nunca copia texto arbitrario del
+    resultado. Los totales siguen siendo inclusivos, no tiempos exclusivos.
+    """
+    if type(offset_ms) not in {int, float} or not math.isfinite(offset_ms) or offset_ms < 0:
+        raise ValueError('Desplazamiento de métricas inválido')
+    left, right = sanitize_metrics(first), sanitize_metrics(second)
+    timings = left.get('stage_timings', []) + [
+        {**row, 'started_ms': round(row.get('started_ms', 0) + offset_ms, 3)}
+        for row in right.get('stage_timings', [])]
+    timings.sort(key=lambda row: row.get('started_ms', 0))
+    # Conservar también las últimas etapas si una consulta llegó al límite.
+    if len(timings) > 128:
+        timings = timings[:64] + timings[-64:]
+    events = left.get('progress_events', []) + [
+        {**row, 'elapsed_ms': round(row['elapsed_ms'] + offset_ms, 3)}
+        for row in right.get('progress_events', [])]
+    events.sort(key=lambda row: row['elapsed_ms'])
+    totals = dict(left.get('stage_totals_ms', {}))
+    for stage, duration in right.get('stage_totals_ms', {}).items():
+        totals[stage] = round(totals.get(stage, 0) + duration, 3)
+    result = {'stage_timings': timings, 'stage_totals_ms': totals,
+              'progress_events': events[:64],
+              'elapsed_ms': round(max(left.get('elapsed_ms', 0),
+                                      right.get('elapsed_ms', 0) + offset_ms), 3)}
+    if events:
+        result['first_phase_emitted_ms'] = events[0]['elapsed_ms']
+    return result

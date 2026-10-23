@@ -28,7 +28,8 @@ from .ai_budget import (request_budget, BudgetExpired, WorkerBusy, chat_timeout,
                         pool_in_budget, submit_with_budget, submit_before_deadline)
 from .literary_sources import bounded_research
 from .literary_conversation import resolve_topic_context, remember_topic
-from .ai_progress import emit_phase, measure_stage, progress_scope, snapshot_metrics, sanitize_metrics
+from .ai_progress import (emit_phase, measure_stage, progress_scope, snapshot_metrics,
+                          sanitize_metrics, merge_metrics)
 
 logger = logging.getLogger('litmate')
 HISTORY_KEY = 'litmate_literary_chat_local_v1'
@@ -266,17 +267,25 @@ def _compute_answer(message, history, topic_context):
         return result, client
 
 
-def _answer_with_cache(message, history, topic_context, cache_state, cache_owner):
+def _answer_with_cache(message, history, topic_context, cache_state, cache_owner,
+                       request_metrics=None, request_started=None):
     """Sólo datos copiados del lector; ninguna sesión/ORM dentro del worker."""
     from .ai_answer_cache import get_answer, put_answer
     enabled = getattr(settings, 'LITMATE_AI_QUICK_ANSWERS', True)
-    with progress_scope():
+    with progress_scope() as progress:
+        def measured(result, client):
+            metrics = snapshot_metrics()
+            if request_metrics is not None and request_started is not None:
+                metrics = merge_metrics(request_metrics, metrics,
+                    offset_ms=max(0., (progress['start'] - request_started) * 1000))
+            result.diagnostics['progress_metrics'] = metrics
+            return result, client
+
         if enabled:
             with measure_stage('cache_lookup'):
                 cached = get_answer(message, cache_state, cache_owner)
             if cached is not None:
-                cached.diagnostics['progress_metrics'] = snapshot_metrics()
-                return cached, SimpleNamespace(usage={}, provider='verified-answer-cache', calls=0)
+                return measured(cached, SimpleNamespace(usage={}, provider='verified-answer-cache', calls=0))
         result, client = _compute_answer(message, history, topic_context)
         if enabled:
             try:
@@ -286,8 +295,7 @@ def _answer_with_cache(message, history, topic_context, cache_state, cache_owner
                 logger.warning('IA: memoria pública no disponible; se conserva la respuesta validada')
             if getattr(client, 'calls', None) == 0:
                 put_answer(message, cache_state, cache_owner, result)
-        result.diagnostics['progress_metrics'] = snapshot_metrics()
-        return result, client
+        return measured(result, client)
 
 
 def _compute_answer_impl(message, history, topic_context):
@@ -474,7 +482,8 @@ def _sse(data):
     return 'data: ' + json.dumps(data, ensure_ascii=False, allow_nan=False) + '\n\n'
 
 
-def _progressive_response(request, state, message, topic_context, start, deadline):
+def _progressive_response(request, state, message, topic_context, start, deadline,
+                          request_metrics=None):
     """Abre progreso antes de esperar; ningún worker obtiene request/sesión.
 
     La respuesta factual se entrega en el POST de finalización, después del
@@ -490,6 +499,7 @@ def _progressive_response(request, state, message, topic_context, start, deadlin
     except (JobBusy, OSError, ValueError, sqlite3.Error):
         return JsonResponse({'response': 'Hay solicitudes pendientes. Espera un momento y vuelve a intentar.'}, status=503)
     events = Queue(maxsize=16)
+    completed = object()  # Señal interna; nunca es un evento público de progreso.
     cancellation = threading.Event()
     published = threading.Event()
 
@@ -514,13 +524,21 @@ def _progressive_response(request, state, message, topic_context, start, deadlin
         with progress_scope(publish):
             pending = submit_before_deadline(_answer_with_cache, deadline, message,
                 copy.deepcopy(state['turns']), copy.deepcopy(topic_context),
-                copy.deepcopy(state), owner,
+                copy.deepcopy(state), owner, request_metrics, start,
                 cancellation=cancellation)
     except (WorkerBusy, BudgetExpired):
         discard_job(token, owner)
         response = JsonResponse({'response': 'La IA local está ocupada. Espera un momento y vuelve a intentar.'}, status=503)
         response['Retry-After'] = '5'
         return response
+
+    def wake_stream(_future):
+        # Un resultado local puede estar listo mientras get() espera una fase.
+        # Avisar al completar el Future evita añadir el intervalo de sondeo a
+        # cada respuesta rápida. La señal no adelanta ni publica su contenido.
+        publish(completed)
+
+    pending.add_done_callback(wake_stream)
     state['_stream_revision'] = revision
     request.session[HISTORY_KEY] = state
     request.session.modified = True
@@ -532,8 +550,9 @@ def _progressive_response(request, state, message, topic_context, start, deadlin
                 remaining = deadline - time.monotonic()
                 try:
                     event = events.get(timeout=max(.001, min(.1, remaining)))
-                    yield _sse(event)
-                    continue
+                    if event is not completed:
+                        yield _sse(event)
+                        continue
                 except Empty:
                     pass
                 if pending.done():
@@ -652,9 +671,14 @@ def chatbot_finalize(request):
             payload = job['payload']
             elapsed_ms = round((time.monotonic() - payload['started']) * 1000)
             result.diagnostics['elapsed_ms'] = elapsed_ms
-            with progress_scope(), measure_stage('finalization'):
-                remember(request, state, payload['message'], result, elapsed_ms, client,
-                         topic_context=payload['topic_context'])
+            with progress_scope() as progress:
+                with measure_stage('finalization'):
+                    remember(request, state, payload['message'], result, elapsed_ms, client,
+                             topic_context=payload['topic_context'])
+                final_metrics = snapshot_metrics()
+            result.diagnostics['progress_metrics'] = merge_metrics(
+                result.diagnostics.get('progress_metrics', {}), final_metrics,
+                offset_ms=max(0., (progress['start'] - payload['started']) * 1000))
             from .ai_presentation import build_book_cards
             body = {'response': result.text, 'status': result.status,
                     'books': build_book_cards(result), 'diagnostics': _safe_diagnostics(result, client)}
@@ -708,22 +732,26 @@ def chatbot_query(request):
     # modificada antes de consumir el stream, así que el historial sigue
     # disponible y se evita duplicar la latencia de MySQL/TiDB.
     owner = 'user:' + str(request.user.pk) if request.user.is_authenticated else 'anonymous'
-    state = request.session.get(HISTORY_KEY, {})
-    if (not isinstance(state, dict) or state.get('owner') != owner
-            or not isinstance(state.get('turns'), list)):
-        state = {'owner': owner, 'turns': []}
-    with progress_scope(), measure_stage('conversation'):
-        topic_context = resolve_topic_context(message, state)
+    with progress_scope() as progress:
+        with measure_stage('conversation'):
+            state = request.session.get(HISTORY_KEY, {})
+            if (not isinstance(state, dict) or state.get('owner') != owner
+                    or not isinstance(state.get('turns'), list)):
+                state = {'owner': owner, 'turns': []}
+            topic_context = resolve_topic_context(message, state)
+        request_metrics = merge_metrics({}, snapshot_metrics(),
+            offset_ms=max(0., (progress['start'] - start) * 1000))
     if remember_topic(state, message, topic_context):
         # La intención del lector existe aunque falle el proveedor.
         # Se conserva aparte del historial de respuestas aceptadas.
         request.session[HISTORY_KEY] = state
         request.session.modified = True
     if data.get('progress') is True:
-        return _progressive_response(request, state, message, topic_context, start, deadline)
+        return _progressive_response(request, state, message, topic_context, start, deadline,
+                                     request_metrics=request_metrics)
     try:
         result, client = run_before_deadline(_answer_with_cache, deadline, message, state['turns'], topic_context,
-                                            dict(state), stable_session_owner(request))
+                                             dict(state), stable_session_owner(request), request_metrics, start)
     except WorkerBusy:
         response = JsonResponse({'response': 'La IA local está ocupada. Espera un momento y vuelve a intentar.'}, status=503)
         response['Retry-After'] = '5'

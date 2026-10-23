@@ -70,7 +70,8 @@ cierre manual de SSE explica la transacción rota. MySQL no se ha vuelto a medir
 
 ### Primera medición integral real
 
-Checkpoint local del instrumental/matriz: `7628746`.
+Checkpoints locales: `7628746` (instrumental/matriz), `2bd78f9`
+(identidad de referencias, caché publicada y comparación documentada).
 Salida: `arquitectura_20261023/integral_progressive_v1.json`, con
 `source_files_changed_during_run=false`.
 
@@ -161,18 +162,94 @@ esta muestra, pero no demuestra respuestas completas/verificadas bajo 30 s.
 
 Caché exacta v2: un hit real en 0,145 s. La sonda posterior
 `cache_entrega_antes_v4.json` repitió Rayuela seis veces: primera investigación
-1,385 s; siguientes turnos 0,141–0,153 s. Se medirá por separado el coste fijo
-del despertar del iterador SSE antes de afirmar una mejora de entrega.
+1,385 s; siguientes turnos 0,141–0,153 s. Es la base de la comparación de
+entrega siguiente, separada de las llamadas al modelo.
+
+### Entrega SSE por aviso de finalización — resultado medido
+
+Se sustituye la espera periódica del iterador por una señal interna del
+`Future.add_done_callback`. No se reduce ningún presupuesto ni se muestra
+contenido sin auditar. La cola sigue acotada; cancelación, cuotas, aislamiento
+de sesión y POST de finalización permanecen. No es streaming real de tokens.
+
+Matriz Rayuela `--case cache_exacta --repeat 3 --progressive`, sin respuestas
+preparadas y con la primera investigación real incluida en ambos informes:
+
+| Medición | Antes v4 | Después v5 |
+|---|---:|---:|
+| Primera investigación, no comparable como mejora de caché | 1,385 s | 1,183 s |
+| Aciertos exactos posteriores | 5/5 | 5/5 |
+| p50 de los cinco hits | 0,146 s | 0,042 s |
+| p95 de los cinco hits | 0,153 s | 0,053 s |
+| Sobrecarga de entrega p50 de los hits | 141,169 ms | 38,013 ms |
+| Llamadas LLM | 0 | 0 |
+
+Reducción observada del p50 de hits: **71,2%**. No es una mejora del 71% de todas
+las consultas ni del p95 integral. Informes `cache_entrega_antes_v4.json` y
+`cache_entrega_despues_v5.json`; sin cambios de código durante ninguna ejecución.
+
+Control `cache_vaciada_despues_v5.json`, con
+`--empty-answer-cache-each-turn`: nueve answered, cero hits y cero llamadas
+LLM. Primer Rayuela 1,112 s; cinco repeticiones por memoria de evidencia con
+p50 0,103 s / p95 0,107 s. Tres consultas de El principito desde las fichas de
+arranque: p50 0,071 s. Vaciar respuestas **no** vacía memoria ni la recuperación.
+
+Pruebas nuevas: aviso aunque el trabajador termine antes de consumir SSE,
+ausencia de sondeo posterior al fin y error del trabajador sin token ready ni
+detalles privados. Se mantienen las pruebas de cancelación, cuota, repetición
+de ACK, signed cookies y propietario ajeno.
+
+```text
+.\venv\Scripts\python.exe -B verificar_proyecto.py core.test_ai_progress_stream core.test_chat_deadline core.test_ai_answer_cache
+-> 84 pruebas OK en 6.455 s
+
+.\venv\Scripts\python.exe -B verificar_proyecto.py core
+-> 1314 pruebas OK en 16.885 s
+```
+
+La matriz integral no se ha vuelto a ejecutar tras este cambio de entrega;
+los p95 integrales anteriores no son una nueva medición de la versión final.
+Los JSON/revisiones se conservan con sus bytes originales mediante
+`.gitattributes`, para que los SHA256 de revisión no cambien por CRLF/LF.
+
+### Telemetría HTTP de conversación y finalización
+
+- `merge_metrics()` une snapshots saneados con desplazamientos de reloj
+  explícitos, filas acotadas y sin copiar mensajes, URLs o prompts arbitrarios.
+- La lectura de estado/contexto conversacional se conserva al pasar al worker,
+  también si responde la caché. La finalización añade sus tiempos al mismo
+  origen HTTP, sin perder las etapas del trabajador ni duplicar todo su reloj.
+- Sonda `probe_scopes_http_v6.json`, sin web y con todas las bases temporales:
+  autoría de El principito 0,193 s desde fichas de arranque; repetición 0,045 s
+  con hit exacto y cero llamadas LLM. El segundo turno registra conversation
+  0,239 ms, cache_lookup 4,223 ms y finalization 5,927 ms.
+- Desde v6 el elapsed agregado incluye conversación/finalización. Por ello el
+  campo derivado delivery_overhead_ms ya no es directamente comparable al de
+  los informes v1–v5, que incluía también etapas HTTP entonces ausentes.
+- Suite final: **1316 pruebas OK en 16,964 s** con el ejecutor aislado.
+  `manage.py check`: sin problemas. `diagnosticar_ia --sin-fuentes`: configuración
+  revisada sin conexiones; 9B/9B, contexto 16384 y auditorías activadas.
+  Lectura de sólo consulta: RAG de documentos ausente, RAG de fichas con cuatro
+  fragmentos y conocimiento persistente con cuatro obras/cinco datos. Esto no
+  equivale todavía a una base literaria amplia ni a descubrimiento autónomo.
+
+Reproducción (rutas de salida nuevas para no sobrescribir resultados):
+
+```powershell
+.\venv\Scripts\python.exe -B verificar_proyecto.py core
+.\venv\Scripts\python.exe -B evaluar_chat_http.py --matrix reportes\arquitectura_20261023\matriz_integral_20261023.json --prewarm --progressive --output reportes\arquitectura_20261023\nueva_integral.json
+.\venv\Scripts\python.exe -B resumir_benchmark_ia.py reportes\arquitectura_20261023\integral_progressive_v2_9b_warm.json --review reportes\arquitectura_20261023\revision_integral_v2.json
+```
 
 ### Siguiente paso
 
-1. Sustituir el sondeo periódico de finalización SSE por aviso del Future,
-   conservando auditoría, cuotas, cancelación y el POST de finalización.
-2. Repetir caché normal/vaciada y registrar hits reales y diferencias medidas.
-3. Priorizar evidencia/identificación y cobertura de personajes: bajar el p95
+1. Priorizar evidencia/identificación y cobertura de personajes: bajar el p95
    devolviendo errores más rápido no cumple el objetivo de respuestas completas.
+2. Revisar las autorías que caen al LLM y añaden valoración no solicitada; no
+   promover el 4B sin un ensayo con las mismas evidencias y mayor cobertura.
+3. Medir un índice semántico realmente poblado y ampliar conocimiento mediante
+   fuentes permitidas, no confundir las fichas de arranque con ese benchmark.
 4. Aún pendiente: streaming real de tokens (Ollama usa `stream=False`),
-   instrumentación HTTP que conserve memoria conversacional/finalización,
    cobertura completa de personajes/comparaciones y sesión MySQL aislada.
 
 ## Intervención anterior — arquitectura persistente y rutas rápidas verificadas
