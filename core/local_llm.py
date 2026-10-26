@@ -296,6 +296,16 @@ class OllamaJSON:
                                'requested_book_count. El texto visible mantiene su formato natural '
                                'con título y autor y será validado frente a esas mismas fichas. '
                                'Conserva sin cambios las demás claves de la respuesta.')
+            if (answer_stage and isinstance(data, dict) and data.get('narrative_contract', {}).get(
+                    'book_cards_from_verified_identity') is True):
+                # Una consulta sobre una obra ya resuelta no necesita que el
+                # modelo vuelva a elegir tarjetas. El servidor conserva esa
+                # identidad; el borrador sólo elige pruebas para su contenido.
+                schema = copy.deepcopy(schema)
+                schema['properties']['books']['maxItems'] = 0
+                prompt += ('\nCONTRATO NARRATIVO: books=[] obligatoriamente. La identidad '
+                           'y las tarjetas de esta única obra las conserva el servidor. '
+                           'Cita en citations las fuentes que realmente respaldan el texto.')
             if stage == 'audit' and isinstance(data, dict):
                 schema = copy.deepcopy(schema)
                 # El contrato semántico rechaza cadenas vacías y listas sin
@@ -324,14 +334,34 @@ class OllamaJSON:
                     raise ProviderUnavailable(self.last_error)
                 evidence_by_source = {}
                 cited = set((data.get('draft') or {}).get('citations', []))
+                scoped_proofs = None
+                if data.get('narrative_contract', {}).get('content_proofs_only') is True:
+                    scoped_proofs = {}
+                    lookup = {source.get('id'): source for source in data.get('sources', [])
+                              if isinstance(source, dict)}
+                    for unit in data.get('task_evidence', []):
+                        if not isinstance(unit, dict):
+                            continue
+                        source_id, proof = unit.get('source_id'), unit.get('evidence')
+                        source = lookup.get(source_id)
+                        if (type(source_id) is int and source and source.get('kind') == 'web' and isinstance(proof, str)
+                                and 8 <= len(proof) <= 300
+                                and proof in source.get('description', '')):
+                            scoped_proofs.setdefault(source_id, []).append(proof)
                 for source in data.get('sources', []):
                     if isinstance(source, dict) and source.get('id') in cited:
                         evidence = []
-                        for name in ('title', 'author', 'description'):
+                        fields = ('title', 'author') if scoped_proofs is not None else ('title', 'author', 'description')
+                        for name in fields:
                             value = str(source.get(name, ''))
                             if len(value.strip()) >= 8:
                                 evidence.extend(value[start:start + 300] for start in range(0, min(len(value), 1800), 250)
                                                 if len(value[start:start + 300].strip()) >= 8)
+                        if scoped_proofs is not None and source.get('kind') == 'web':
+                            # Sólo pasajes seleccionados y literalmente presentes
+                            # en la fuente original. Una cita publicitaria no es
+                            # prueba alternativa para el contenido de un capítulo.
+                            evidence = scoped_proofs.get(source['id'], [])
                         if evidence:
                             evidence_by_source[source['id']] = list(dict.fromkeys(evidence))
                 from .ai_privacy import user_excerpt

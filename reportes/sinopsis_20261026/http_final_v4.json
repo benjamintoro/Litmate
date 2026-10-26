@@ -1,0 +1,1443 @@
+{
+  "created_at_utc": "2026-10-26T13:38:53.327138+00:00",
+  "mode": "real_http_sse_isolated_database",
+  "model": "qwen3.5:9b-q4_K_M",
+  "context": 16384,
+  "prewarm": {
+    "requested": true,
+    "seconds": 0.072,
+    "generates_answers": false
+  },
+  "web_enabled": true,
+  "chat_budget_seconds": 36,
+  "response_budget_seconds": 42,
+  "progressive": true,
+  "repeat": 1,
+  "knowledge_setup": "empty_auxiliary_databases_with_bundled_catalogue",
+  "resource_scope": "python_server_process_only_not_ollama_or_gpu",
+  "cache_controls": {
+    "empty_answers_each_turn": false,
+    "empty_retrieval_each_turn": false
+  },
+  "factual_review": "not_independently_certified",
+  "turns": [
+    {
+      "case": "sinopsis_brinkley",
+      "turn": 1,
+      "question": "Dime la trama de The Unfinished Nation de Alan Brinkley",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 14.266,
+      "first_text_seconds": 14.266,
+      "first_useful_seconds": 14.266,
+      "first_progress_seconds": 0.036,
+      "progress_phases": [
+        "search",
+        "writing",
+        "review"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 14257,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 2,
+        "verified_narrative_answer": true,
+        "narrative_synthesized": true,
+        "partial_evidence": false,
+        "work_type": "nonfiction",
+        "progress_metrics": {
+          "elapsed_ms": 14256.879,
+          "first_phase_emitted_ms": 33.611,
+          "stage_totals_ms": {
+            "conversation": 9.825,
+            "cache_lookup": 0.444,
+            "knowledge_lookup": 53.803,
+            "retrieval": 1860.125,
+            "web_search": 3136.496,
+            "extraction": 2083.346,
+            "model_inspection": 26.359,
+            "generation": 3398.169,
+            "audit": 3599.491,
+            "finalization": 0.12
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 9.205,
+              "elapsed_ms": 9.825,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 33.155,
+              "elapsed_ms": 0.444,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 34.994,
+              "elapsed_ms": 38.32,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 41.04,
+              "elapsed_ms": 1.1,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 60.151,
+              "elapsed_ms": 12.206,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 60.443,
+              "elapsed_ms": 1.168,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 79.89,
+              "elapsed_ms": 1.009,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 97.102,
+              "elapsed_ms": 1860.125,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 1959.732,
+              "elapsed_ms": 1781.915,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 3741.73,
+              "elapsed_ms": 1354.581,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 5096.512,
+              "elapsed_ms": 2083.346,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 7234.611,
+              "elapsed_ms": 3398.169,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 7234.628,
+              "elapsed_ms": 26.352,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 10634.757,
+              "elapsed_ms": 3598.759,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 10634.779,
+              "elapsed_ms": 0.007,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 14234.705,
+              "elapsed_ms": 0.732,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 14256.752,
+              "elapsed_ms": 0.12,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 33.611
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 7234.59
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 10634.737
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "elapsed_ms": 3398,
+            "load_ms": 5.438,
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 72,
+            "total_ms": 3355.116,
+            "status": "ok",
+            "prompt_eval_count": 789,
+            "stage": "answer",
+            "prompt_eval_ms": 416.961,
+            "eval_ms": 2691.527
+          },
+          {
+            "elapsed_ms": 3599,
+            "load_ms": 5.728,
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 47,
+            "total_ms": 3586.744,
+            "status": "ok",
+            "prompt_eval_count": 3336,
+            "stage": "audit",
+            "prompt_eval_ms": 1839.478,
+            "eval_ms": 1627.567
+          }
+        ],
+        "provider": "verified-narrative-engine"
+      },
+      "stage_totals_ms": {
+        "conversation": 9.825,
+        "cache_lookup": 0.444,
+        "knowledge_lookup": 53.803,
+        "retrieval": 1860.125,
+        "web_search": 3136.496,
+        "extraction": 2083.346,
+        "model_inspection": 26.359,
+        "generation": 3398.169,
+        "audit": 3599.491,
+        "finalization": 0.12
+      },
+      "delivery_overhead_ms": 8.926,
+      "resources": {
+        "rss_mb": 82.719,
+        "peak_rss_mb": 89.031,
+        "cpu_seconds": 0.75
+      },
+      "category": "unspecified",
+      "under_response_budget": true,
+      "model_calls": 2,
+      "answer": "Entre los temas que aborda la obra, según el índice editorial proporcionado, destacan la Reconstrucción y el Nuevo Sur, la Conquista del Oeste lejano y la supremacía industrial como ejes centrales de su análisis histórico.\n\nFuente: https://openlibrary.org/works/OL176193W\nhttps://www.mheducation.com/highered/product/the-unfinished-nation-brinkley.html",
+      "source_urls": [
+        "https://openlibrary.org/works/OL176193W",
+        "https://www.mheducation.com/highered/product/the-unfinished-nation-brinkley.html"
+      ]
+    },
+    {
+      "case": "sinopsis_brinkley",
+      "turn": 2,
+      "question": "¿Qué temas aborda este ensayo?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 8.211,
+      "first_text_seconds": 8.211,
+      "first_useful_seconds": 8.211,
+      "first_progress_seconds": 0.021,
+      "progress_phases": [
+        "search",
+        "writing",
+        "review"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 8197,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 2,
+        "verified_narrative_answer": true,
+        "narrative_synthesized": true,
+        "partial_evidence": true,
+        "work_type": "nonfiction",
+        "progress_metrics": {
+          "elapsed_ms": 8196.704,
+          "first_phase_emitted_ms": 15.843,
+          "stage_totals_ms": {
+            "conversation": 4.724,
+            "cache_lookup": 0.725,
+            "knowledge_lookup": 90.18,
+            "model_inspection": 20.357,
+            "generation": 3803.74,
+            "audit": 4265.806,
+            "finalization": 0.147
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 4.281,
+              "elapsed_ms": 4.724,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 15.108,
+              "elapsed_ms": 0.725,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 16.209,
+              "elapsed_ms": 54.643,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 19.78,
+              "elapsed_ms": 3.813,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 42.939,
+              "elapsed_ms": 23.212,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 43.212,
+              "elapsed_ms": 3.198,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 81.054,
+              "elapsed_ms": 5.314,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 107.285,
+              "elapsed_ms": 3803.74,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 107.301,
+              "elapsed_ms": 20.346,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 3911.288,
+              "elapsed_ms": 4264.709,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 3911.315,
+              "elapsed_ms": 0.011,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 8176.094,
+              "elapsed_ms": 0.594,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 8177.147,
+              "elapsed_ms": 0.503,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 8196.549,
+              "elapsed_ms": 0.147,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 15.843
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 107.265
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 3911.264
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "elapsed_ms": 3804,
+            "load_ms": 5.537,
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 91,
+            "total_ms": 3774.573,
+            "status": "ok",
+            "prompt_eval_count": 783,
+            "stage": "answer",
+            "prompt_eval_ms": 376.838,
+            "eval_ms": 3305.517
+          },
+          {
+            "elapsed_ms": 4265,
+            "load_ms": 6.438,
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 60,
+            "total_ms": 4253.504,
+            "status": "ok",
+            "prompt_eval_count": 3824,
+            "stage": "audit",
+            "prompt_eval_ms": 2087.692,
+            "eval_ms": 2060.275
+          }
+        ],
+        "provider": "verified-narrative-engine"
+      },
+      "stage_totals_ms": {
+        "conversation": 4.724,
+        "cache_lookup": 0.725,
+        "knowledge_lookup": 90.18,
+        "model_inspection": 20.357,
+        "generation": 3803.74,
+        "audit": 4265.806,
+        "finalization": 0.147
+      },
+      "delivery_overhead_ms": 14.171,
+      "resources": {
+        "rss_mb": 83.617,
+        "peak_rss_mb": 89.031,
+        "cpu_seconds": 0.140625
+      },
+      "category": "unspecified",
+      "under_response_budget": true,
+      "model_calls": 2,
+      "answer": "Entre los temas que aborda esta obra, según el índice editorial proporcionado, se encuentran la Reconstrucción y el Nuevo Sur, la Conquista del Far West y la Hegemonía Industrial.\n\nFuente: https://openlibrary.org/works/OL176193W\nhttps://www.mheducation.com/highered/product/the-unfinished-nation-brinkley.html\n\nEs lo que pude respaldar con la descripción consultada.",
+      "source_urls": [
+        "https://openlibrary.org/works/OL176193W",
+        "https://www.mheducation.com/highered/product/the-unfinished-nation-brinkley.html"
+      ]
+    },
+    {
+      "case": "sinopsis_papelucho",
+      "turn": 1,
+      "question": "Dime la trama de Papelucho y el marciano",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 0.084,
+      "first_text_seconds": 0.084,
+      "first_useful_seconds": 0.084,
+      "first_progress_seconds": 0.014,
+      "progress_phases": [
+        "search",
+        "review"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 74,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 74.698,
+          "first_phase_emitted_ms": 11.644,
+          "stage_totals_ms": {
+            "conversation": 0.137,
+            "cache_lookup": 0.742,
+            "knowledge_lookup": 26.022,
+            "audit": 2.395,
+            "finalization": 0.476
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 3.836,
+              "elapsed_ms": 0.137,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 10.891,
+              "elapsed_ms": 0.742,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 11.711,
+              "elapsed_ms": 23.94,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 12.541,
+              "elapsed_ms": 2.082,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 34.479,
+              "elapsed_ms": 1.151,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 43.821,
+              "elapsed_ms": 1.244,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 74.213,
+              "elapsed_ms": 0.476,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 11.644
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 34.464
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-indexed-evidence"
+      },
+      "stage_totals_ms": {
+        "conversation": 0.137,
+        "cache_lookup": 0.742,
+        "knowledge_lookup": 26.022,
+        "audit": 2.395,
+        "finalization": 0.476
+      },
+      "delivery_overhead_ms": 9.765,
+      "resources": {
+        "rss_mb": 83.93,
+        "peak_rss_mb": 89.031,
+        "cpu_seconds": 0.046875
+      },
+      "category": "unspecified",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "**Diario secreto de Papelucho y el marciano — Marcela Paz**: Papelucho relata su convivencia con Det, un amigo extraterrestre. Su amistad combina dificultades cotidianas con la posibilidad de conocer otros mundos.\n\nFuentes de las fichas:\nhttps://literaturasm.cl/diario-secreto-de-papelucho-y-el-marciano/",
+      "source_urls": [
+        "https://literaturasm.cl/diario-secreto-de-papelucho-y-el-marciano/"
+      ]
+    },
+    {
+      "case": "sinopsis_papelucho",
+      "turn": 2,
+      "question": "Cuéntame la historia de Papelucho y el marciano",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 0.082,
+      "first_text_seconds": 0.082,
+      "first_useful_seconds": 0.082,
+      "first_progress_seconds": 0.018,
+      "progress_phases": [
+        "search",
+        "review"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 72,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 72.386,
+          "first_phase_emitted_ms": 14.712,
+          "stage_totals_ms": {
+            "conversation": 0.541,
+            "cache_lookup": 3.939,
+            "knowledge_lookup": 32.831,
+            "audit": 1.951,
+            "finalization": 0.251
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 3.569,
+              "elapsed_ms": 0.541,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 10.761,
+              "elapsed_ms": 3.939,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 14.78,
+              "elapsed_ms": 30.17,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 17.065,
+              "elapsed_ms": 2.661,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 44.041,
+              "elapsed_ms": 0.89,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 50.968,
+              "elapsed_ms": 1.061,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 72.128,
+              "elapsed_ms": 0.251,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 14.712
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 44.024
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-indexed-evidence"
+      },
+      "stage_totals_ms": {
+        "conversation": 0.541,
+        "cache_lookup": 3.939,
+        "knowledge_lookup": 32.831,
+        "audit": 1.951,
+        "finalization": 0.251
+      },
+      "delivery_overhead_ms": 9.211,
+      "resources": {
+        "rss_mb": 84.008,
+        "peak_rss_mb": 89.031,
+        "cpu_seconds": 0.0625
+      },
+      "category": "unspecified",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "**Diario secreto de Papelucho y el marciano — Marcela Paz**: Papelucho relata su convivencia con Det, un amigo extraterrestre. Su amistad combina dificultades cotidianas con la posibilidad de conocer otros mundos.\n\nFuentes de las fichas:\nhttps://literaturasm.cl/diario-secreto-de-papelucho-y-el-marciano/",
+      "source_urls": [
+        "https://literaturasm.cl/diario-secreto-de-papelucho-y-el-marciano/"
+      ]
+    },
+    {
+      "case": "sinopsis_tolkien",
+      "turn": 1,
+      "question": "Dime la trama de El señor de los anillos",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 2.567,
+      "first_text_seconds": 2.567,
+      "first_useful_seconds": 2.567,
+      "first_progress_seconds": 0.016,
+      "progress_phases": [
+        "search",
+        "review"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 2559,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "work_type": "fiction",
+        "progress_metrics": {
+          "elapsed_ms": 2559.104,
+          "first_phase_emitted_ms": 14.69,
+          "stage_totals_ms": {
+            "conversation": 0.131,
+            "cache_lookup": 4.181,
+            "knowledge_lookup": 30.085,
+            "retrieval": 2489.14,
+            "audit": 1.004,
+            "finalization": 0.073
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 3.74,
+              "elapsed_ms": 0.131,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 10.497,
+              "elapsed_ms": 4.181,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 14.745,
+              "elapsed_ms": 18.007,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 15.498,
+              "elapsed_ms": 1.703,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 25.52,
+              "elapsed_ms": 7.066,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 25.796,
+              "elapsed_ms": 1.623,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 33.193,
+              "elapsed_ms": 1.686,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 41.142,
+              "elapsed_ms": 2489.14,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 2544.124,
+              "elapsed_ms": 1.004,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 2559.025,
+              "elapsed_ms": 0.073,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 14.69
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 2544.108
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "stage_totals_ms": {
+        "conversation": 0.131,
+        "cache_lookup": 4.181,
+        "knowledge_lookup": 30.085,
+        "retrieval": 2489.14,
+        "audit": 1.004,
+        "finalization": 0.073
+      },
+      "delivery_overhead_ms": 7.445,
+      "resources": {
+        "rss_mb": 85.129,
+        "peak_rss_mb": 89.031,
+        "cpu_seconds": 0.21875
+      },
+      "category": "unspecified",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "Su historia se desarrolla en la Tercera Edad del Sol de la Tierra Media, un lugar ficticio poblado por hombres y otras razas antropomorfas, como los hobbits, los elfos o los enanos, así como por muchas otras criaturas reales y fantásticas. La novela narra el viaje del protagonista principal, Frodo Bolsón, hobbit de la Comarca, para destruir el Anillo Único y la consiguiente guerra que provocará el enemigo para recuperarlo, ya que es la principal fuente de poder de su creador, el señor oscuro Sauron.\n\nFuente: https://es.wikipedia.org/wiki/El_Se%C3%B1or_de_los_Anillos\nWikipedia contributors · CC BY-SA 4.0.",
+      "source_urls": [
+        "https://es.wikipedia.org/wiki/El_Se%C3%B1or_de_los_Anillos"
+      ]
+    },
+    {
+      "case": "sinopsis_tolkien",
+      "turn": 2,
+      "question": "¿De qué trata el libro que mencionaste anteriormente?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 0.074,
+      "first_text_seconds": 0.074,
+      "first_useful_seconds": 0.074,
+      "first_progress_seconds": 0.015,
+      "progress_phases": [
+        "search",
+        "review"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 67,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "work_type": "fiction",
+        "progress_metrics": {
+          "elapsed_ms": 66.793,
+          "first_phase_emitted_ms": 12.313,
+          "stage_totals_ms": {
+            "conversation": 0.165,
+            "cache_lookup": 3.076,
+            "knowledge_lookup": 32.664,
+            "audit": 1.823,
+            "finalization": 0.072
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 3.169,
+              "elapsed_ms": 0.165,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 9.227,
+              "elapsed_ms": 3.076,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 12.386,
+              "elapsed_ms": 20.858,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 13.947,
+              "elapsed_ms": 1.999,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 24.333,
+              "elapsed_ms": 6.467,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 24.631,
+              "elapsed_ms": 1.761,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 35.04,
+              "elapsed_ms": 1.579,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 46.014,
+              "elapsed_ms": 0.919,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 53.048,
+              "elapsed_ms": 0.904,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 66.715,
+              "elapsed_ms": 0.072,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 12.313
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 46.0
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "stage_totals_ms": {
+        "conversation": 0.165,
+        "cache_lookup": 3.076,
+        "knowledge_lookup": 32.664,
+        "audit": 1.823,
+        "finalization": 0.072
+      },
+      "delivery_overhead_ms": 7.683,
+      "resources": {
+        "rss_mb": 85.492,
+        "peak_rss_mb": 89.031,
+        "cpu_seconds": 0.078125
+      },
+      "category": "unspecified",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "Su historia se desarrolla en la Tercera Edad del Sol de la Tierra Media, un lugar ficticio poblado por hombres y otras razas antropomorfas, como los hobbits, los elfos o los enanos, así como por muchas otras criaturas reales y fantásticas. La novela narra el viaje del protagonista principal, Frodo Bolsón, hobbit de la Comarca, para destruir el Anillo Único y la consiguiente guerra que provocará el enemigo para recuperarlo, ya que es la principal fuente de poder de su creador, el señor oscuro Sauron.\n\nFuente: https://es.wikipedia.org/wiki/El_Se%C3%B1or_de_los_Anillos\nWikipedia contributors · CC BY-SA 4.0.",
+      "source_urls": [
+        "https://es.wikipedia.org/wiki/El_Se%C3%B1or_de_los_Anillos"
+      ]
+    },
+    {
+      "case": "sinopsis_tolkien",
+      "turn": 3,
+      "question": "¿Cuál es el conflicto principal de esta novela?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 0.091,
+      "first_text_seconds": 0.091,
+      "first_useful_seconds": 0.091,
+      "first_progress_seconds": 0.017,
+      "progress_phases": [
+        "search",
+        "review"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 82,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "work_type": "fiction",
+        "progress_metrics": {
+          "elapsed_ms": 82.238,
+          "first_phase_emitted_ms": 13.0,
+          "stage_totals_ms": {
+            "conversation": 0.38,
+            "cache_lookup": 2.912,
+            "knowledge_lookup": 49.544,
+            "audit": 1.837,
+            "finalization": 0.073
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 3.468,
+              "elapsed_ms": 0.38,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 10.079,
+              "elapsed_ms": 2.912,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 13.054,
+              "elapsed_ms": 32.816,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 15.651,
+              "elapsed_ms": 1.774,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 32.211,
+              "elapsed_ms": 11.65,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 32.467,
+              "elapsed_ms": 1.713,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 48.73,
+              "elapsed_ms": 1.591,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 61.114,
+              "elapsed_ms": 0.933,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 68.345,
+              "elapsed_ms": 0.904,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 82.158,
+              "elapsed_ms": 0.073,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 13.0
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 61.1
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "stage_totals_ms": {
+        "conversation": 0.38,
+        "cache_lookup": 2.912,
+        "knowledge_lookup": 49.544,
+        "audit": 1.837,
+        "finalization": 0.073
+      },
+      "delivery_overhead_ms": 8.304,
+      "resources": {
+        "rss_mb": 85.672,
+        "peak_rss_mb": 89.031,
+        "cpu_seconds": 0.078125
+      },
+      "category": "unspecified",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "Su historia se desarrolla en la Tercera Edad del Sol de la Tierra Media, un lugar ficticio poblado por hombres y otras razas antropomorfas, como los hobbits, los elfos o los enanos, así como por muchas otras criaturas reales y fantásticas. La novela narra el viaje del protagonista principal, Frodo Bolsón, hobbit de la Comarca, para destruir el Anillo Único y la consiguiente guerra que provocará el enemigo para recuperarlo, ya que es la principal fuente de poder de su creador, el señor oscuro Sauron.\n\nFuente: https://es.wikipedia.org/wiki/El_Se%C3%B1or_de_los_Anillos\nWikipedia contributors · CC BY-SA 4.0.",
+      "source_urls": [
+        "https://es.wikipedia.org/wiki/El_Se%C3%B1or_de_los_Anillos"
+      ]
+    }
+  ],
+  "narrative_traces": [
+    {
+      "question": "Dime la trama de The Unfinished Nation de Alan Brinkley",
+      "request": {
+        "task": "summary",
+        "title": "The Unfinished Nation",
+        "targets": [],
+        "author_hint": "Alan Brinkley",
+        "ambiguous": false,
+        "retrieval_trace": [
+          {
+            "stage": "bibliographic",
+            "sources": 5,
+            "bound": 1,
+            "content": 0,
+            "providers": [
+              "Open Library",
+              "Wikipedia"
+            ]
+          },
+          {
+            "stage": "content_discovery",
+            "sources": 6,
+            "bound": 2,
+            "content": 1,
+            "providers": [
+              "DuckDuckGo",
+              "Open Library",
+              "Wikipedia"
+            ]
+          }
+        ]
+      },
+      "sources": [
+        {
+          "id": 1,
+          "title": "The Unfinished Nation",
+          "author": "Alan Brinkley",
+          "description": "Temas del catálogo: History, Textbooks, United States, Geschichte, Kultur, United States -- History, United states, history, Histoire, Historia",
+          "source": "Open Library",
+          "year": "1993",
+          "book_id": "/works/OL176193W",
+          "kind": "book",
+          "url": "https://openlibrary.org/works/OL176193W",
+          "locator": "",
+          "read_mode": "ficha bibliográfica; materias de catálogo, no texto de la ob",
+          "retrieved_at": "",
+          "image_url": "https://covers.openlibrary.org/b/id/4948125-M.jpg",
+          "categories": [
+            "History",
+            "Textbooks",
+            "United States",
+            "Geschichte",
+            "Kultur"
+          ]
+        },
+        {
+          "id": 2,
+          "title": "The Unfinished Nation: A Concise History of the American People",
+          "author": "Fuente web",
+          "description": "The Unfinished Nation: A Concise History of the American People continues the evolution of Alan Brinkley's influential work, with a focus on making history relatable and accessible to today's students. Table of Contents: 1. The Collision of Cultures 2. Transplantations and Borderlands 3. Society and Culture in Provincial America 4. The Empire in Transition 5. The American Revolution 6. The Constitution and the New Republic 7. The Jeffersonian Era 8. Expansion and Division in the Early Republic 9. Jacksonian America 10. America's Economic Revolution 11. Cotton, Slavery, and the Old South 12. Antebellum Culture and Reform 13. The Impending Crisis 14. The Civil War 15. Reconstruction and the New South 16. The Conquest of the Far West 17. Industrial Supremacy 18. The Age of the City 19. From Crisis to Empire 20. The Progressives 21. America and the Great War 22. The New Era 23. The Great Depression 24. The New Deal Era 25. America in a World at War 26. The Cold War 27. The Affluent Society 28. The Turbulent Sixties 29. The Crisis of Authority 30. From the \"Age of Limits\" to Reaganism 31. The Age of Globalization",
+          "source": "DuckDuckGo",
+          "year": "",
+          "book_id": "",
+          "kind": "web",
+          "url": "https://www.mheducation.com/highered/product/the-unfinished-nation-brinkley.html",
+          "locator": "",
+          "read_mode": "pasaje de página pública",
+          "retrieved_at": "2026-10-26T13:38:58.449843+00:00",
+          "work_id": "litmate:612813c24f5478b4b3abd50f",
+          "work_title": "The Unfinished Nation",
+          "work_author": "Alan Brinkley",
+          "trust": "untrusted_data",
+          "extraction_method": "trafilatura+structured_contents",
+          "site": "www.mheducation.com",
+          "work_binding_verified": true,
+          "permanent_index_allowed": false,
+          "headings": [
+            "Learning Levels",
+            "PreK–12",
+            "Browse by Subject",
+            "Purchase",
+            "Discover Resources for your Classroom & School",
+            "Discover Our Principles",
+            "Connect",
+            "Support"
+          ],
+          "identity_text": "The Unfinished Nation: A Concise History of the American People The Unfinished Nation: A Concise History of the American People continues the evolution of Alan Brinkley's influential work, with a focus on making history relatable and accessible to today's students. Table of Contents: 1. The Collision of Cultures 2. Transplantations and Borderlands 3. Society and Culture in Provincial America 4. The Empire in Transition 5. The American Revolution 6. The Constitution and the New Republic 7. The Jeffersonian Era 8. Expansion and Division in the Early Republic 9. Jacksonian America 10. America's Economic Revolution 11. Cotton, Slavery, and the Old South 12. Antebellum Culture and Reform 13. The Impending Crisis 14. The Civil War 15. Reconstruction and the New South 16. The Conquest of the Far West 17. Industrial Supremacy 18. The Age of the City 19. From Crisis to Empire 20. The Progressives 21. America and the Great War 22. The New Era 23. The Great Depression 24. The New Deal Era 25. America in a World at War 26. The Cold War 27. The Affluent Society 28. The Turbulent Sixties 29. The Crisis of Authority 30. From the \"Age of Limits\" to Reaganism 31. The Age of Globalization",
+          "character_facts": []
+        }
+      ],
+      "stages": [
+        {
+          "stage": "draft",
+          "output": {
+            "status": "answer",
+            "text": "Entre los temas que aborda la obra, según el índice editorial proporcionado, destacan la Reconstrucción y el Nuevo Sur, la Conquista del Oeste lejano y la supremacía industrial como ejes centrales de su análisis histórico.",
+            "basis": "sources",
+            "citations": [
+              2
+            ],
+            "needs_web": false,
+            "books": []
+          }
+        },
+        {
+          "stage": "audit",
+          "output": {
+            "decision": "approve",
+            "only_books": true,
+            "coverage": [
+              {
+                "question_id": 1,
+                "status": "answered"
+              }
+            ],
+            "claims": [
+              {
+                "statement": "Entre los temas que aborda la obra, según el índice editorial proporcionado, destacan la Reconstrucción y el Nuevo Sur, la Conquista del Oeste lejano y la supremacía industrial como ejes centrales de su análisis histórico.",
+                "verdict": "supported",
+                "source_id": 2,
+                "evidence": "15. Reconstruction and the New South 16. The Conquest of the Far West 17. Industrial Supremacy"
+              }
+            ],
+            "search_queries": [],
+            "issues": []
+          }
+        }
+      ],
+      "status": "answered",
+      "diagnostics": {
+        "verified_narrative_answer": true,
+        "audit": {
+          "decision": "approve",
+          "only_books": true,
+          "coverage": [
+            {
+              "question_id": 1,
+              "status": "answered"
+            }
+          ],
+          "claims": [
+            {
+              "statement": "Entre los temas que aborda la obra, según el índice editorial proporcionado, destacan la Reconstrucción y el Nuevo Sur, la Conquista del Oeste lejano y la supremacía industrial como ejes centrales de su análisis histórico.",
+              "verdict": "supported",
+              "source_id": 2,
+              "evidence": "15. Reconstruction and the New South 16. The Conquest of the Far West 17. Industrial Supremacy"
+            }
+          ],
+          "search_queries": [],
+          "issues": []
+        },
+        "work_type": "nonfiction",
+        "model_calls": 2,
+        "narrative_synthesized": true,
+        "partial_evidence": false,
+        "temporal_claims_rejected": 0,
+        "usage": {
+          "prompt_tokens": 4125,
+          "completion_tokens": 119,
+          "total_tokens": 4244
+        },
+        "stage_timings": [
+          {
+            "stage": "answer",
+            "model": "qwen3.5:9b-q4_K_M",
+            "elapsed_ms": 3398,
+            "status": "ok",
+            "load_ms": 5.438,
+            "prompt_eval_ms": 416.961,
+            "eval_ms": 2691.527,
+            "total_ms": 3355.116,
+            "prompt_eval_count": 789,
+            "eval_count": 72
+          },
+          {
+            "stage": "audit",
+            "model": "qwen3.5:9b-q4_K_M",
+            "elapsed_ms": 3599,
+            "status": "ok",
+            "load_ms": 5.728,
+            "prompt_eval_ms": 1839.478,
+            "eval_ms": 1627.567,
+            "total_ms": 3586.744,
+            "prompt_eval_count": 3336,
+            "eval_count": 47
+          }
+        ]
+      }
+    },
+    {
+      "question": "¿Qué temas aborda este ensayo?",
+      "request": {
+        "task": "summary",
+        "title": "The Unfinished Nation",
+        "targets": [
+          {
+            "work_id": "litmate:612813c24f5478b4b3abd50f",
+            "title": "The Unfinished Nation",
+            "author": "Alan Brinkley",
+            "confirmed_aliases": [],
+            "isbns": [],
+            "source": "Open Library",
+            "url": "https://openlibrary.org/works/OL176193W"
+          }
+        ],
+        "author_hint": "",
+        "ambiguous": false,
+        "retrieval_trace": [
+          {
+            "stage": "stored_content",
+            "bound": 2,
+            "content": 1,
+            "providers": [
+              "DuckDuckGo",
+              "Open Library"
+            ]
+          }
+        ]
+      },
+      "sources": [
+        {
+          "id": 1,
+          "title": "The Unfinished Nation",
+          "author": "Alan Brinkley",
+          "description": "Temas del catálogo: History, Textbooks, United States, Geschichte, Kultur, United States -- History, United states, history, Histoire, Historia",
+          "source": "Open Library",
+          "year": "1993",
+          "book_id": "",
+          "kind": "book",
+          "url": "https://openlibrary.org/works/OL176193W",
+          "locator": "",
+          "read_mode": "ficha bibliográfica; materias de catálogo, no texto de la ob",
+          "retrieved_at": "1793021947.5903585",
+          "work_id": "litmate:612813c24f5478b4b3abd50f",
+          "license": "Open Library bibliographic facts; rights vary",
+          "trust": "untrusted_data",
+          "expires_at": "1795613947.5903585",
+          "evidence_hash": "109f2256da81de511ab3b61abc462ff312a553e1d4a9f6606a7778e6bd4a56d2",
+          "memory_source_id": "fc2235e9cccf26d37e1b9080c5c6fe125f0189a6b6582725bb03cbcd2d4a79b0",
+          "last_verified_at": "1793021947.5903585",
+          "policy": "openlibrary-minimal-metadata-v1",
+          "memory_verified": true,
+          "confirmed_aliases": [],
+          "isbns": [],
+          "categories": [
+            "History",
+            "Textbooks",
+            "United States",
+            "Geschichte",
+            "Kultur"
+          ]
+        },
+        {
+          "id": 2,
+          "title": "The Unfinished Nation: A Concise History of the American People",
+          "author": "Fuente web",
+          "description": "The Unfinished Nation: A Concise History of the American People continues the evolution of Alan Brinkley's influential work, with a focus on making history relatable and accessible to today's students. Table of Contents: 1. The Collision of Cultures 2. Transplantations and Borderlands 3. Society and Culture in Provincial America 4. The Empire in Transition 5. The American Revolution 6. The Constitution and the New Republic 7. The Jeffersonian Era 8. Expansion and Division in the Early Republic 9. Jacksonian America 10. America's Economic Revolution 11. Cotton, Slavery, and the Old South 12. Antebellum Culture and Reform 13. The Impending Crisis 14. The Civil War 15. Reconstruction and the New South 16. The Conquest of the Far West 17. Industrial Supremacy 18. The Age of the City 19. From Crisis to Empire 20. The Progressives 21. America and the Great War 22. The New Era 23. The Great Depression 24. The New Deal Era 25. America in a World at War 26. The Cold War 27. The Affluent Society 28. The Turbulent Sixties 29. The Crisis of Authority 30. From the \"Age of Limits\" to Reaganism 31. The Age of Globalization",
+          "source": "DuckDuckGo",
+          "year": "",
+          "book_id": "",
+          "kind": "web",
+          "url": "https://www.mheducation.com/highered/product/the-unfinished-nation-brinkley.html",
+          "locator": "",
+          "read_mode": "pasaje de página pública",
+          "retrieved_at": "2026-10-26T13:38:58.449843+00:00",
+          "work_id": "litmate:612813c24f5478b4b3abd50f",
+          "work_title": "The Unfinished Nation",
+          "work_author": "Alan Brinkley",
+          "trust": "untrusted_data",
+          "extraction_method": "trafilatura+structured_contents",
+          "site": "www.mheducation.com",
+          "work_binding_verified": true,
+          "permanent_index_allowed": false,
+          "headings": [
+            "Learning Levels",
+            "PreK–12",
+            "Browse by Subject",
+            "Purchase",
+            "Discover Resources for your Classroom & School",
+            "Discover Our Principles",
+            "Connect",
+            "Support"
+          ],
+          "identity_text": "The Unfinished Nation: A Concise History of the American People The Unfinished Nation: A Concise History of the American People continues the evolution of Alan Brinkley's influential work, with a focus on making history relatable and accessible to today's students. Table of Contents: 1. The Collision of Cultures 2. Transplantations and Borderlands 3. Society and Culture in Provincial America 4. The Empire in Transition 5. The American Revolution 6. The Constitution and the New Republic 7. The Jeffersonian Era 8. Expansion and Division in the Early Republic 9. Jacksonian America 10. America's Economic Revolution 11. Cotton, Slavery, and the Old South 12. Antebellum Culture and Reform 13. The Impending Crisis 14. The Civil War 15. Reconstruction and the New South 16. The Conquest of the Far West 17. Industrial Supremacy 18. The Age of the City 19. From Crisis to Empire 20. The Progressives 21. America and the Great War 22. The New Era 23. The Great Depression 24. The New Deal Era 25. America in a World at War 26. The Cold War 27. The Affluent Society 28. The Turbulent Sixties 29. The Crisis of Authority 30. From the \"Age of Limits\" to Reaganism 31. The Age of Globalization",
+          "character_facts": []
+        }
+      ],
+      "stages": [
+        {
+          "stage": "draft",
+          "output": {
+            "status": "answer",
+            "text": "Entre los temas que aborda esta obra, según el índice editorial proporcionado, se encuentran la Reconstrucción y el Nuevo Sur, la Conquista del Far West y la Hegemonía Industrial. El libro estudia estos periodos clave de la historia estadounidense sin añadir fechas ni interpretaciones externas a lo documentado en las fuentes.",
+            "basis": "sources",
+            "citations": [
+              2
+            ],
+            "needs_web": false,
+            "books": []
+          }
+        },
+        {
+          "stage": "audit",
+          "output": {
+            "decision": "approve",
+            "only_books": true,
+            "coverage": [
+              {
+                "question_id": 1,
+                "status": "answered"
+              }
+            ],
+            "claims": [
+              {
+                "statement": "Entre los temas que aborda esta obra, según el índice editorial proporcionado, se encuentran la Reconstrucción y el Nuevo Sur, la Conquista del Far West y la Hegemonía Industrial.",
+                "verdict": "supported",
+                "source_id": 2,
+                "evidence": "15. Reconstruction and the New South 16. The Conquest of the Far West 17. Industrial Supremacy"
+              },
+              {
+                "statement": "El libro estudia estos periodos clave de la historia estadounidense sin añadir fechas ni interpretaciones externas a lo documentado en las fuentes.",
+                "verdict": "inference",
+                "source_id": 0,
+                "evidence": ""
+              }
+            ],
+            "search_queries": [],
+            "issues": []
+          }
+        }
+      ],
+      "status": "answered",
+      "diagnostics": {
+        "verified_narrative_answer": true,
+        "audit": {
+          "decision": "approve",
+          "only_books": true,
+          "coverage": [
+            {
+              "question_id": 1,
+              "status": "uncertain"
+            }
+          ],
+          "claims": [
+            {
+              "statement": "Entre los temas que aborda esta obra, según el índice editorial proporcionado, se encuentran la Reconstrucción y el Nuevo Sur, la Conquista del Far West y la Hegemonía Industrial.",
+              "verdict": "supported",
+              "source_id": 2,
+              "evidence": "15. Reconstruction and the New South 16. The Conquest of the Far West 17. Industrial Supremacy"
+            }
+          ],
+          "search_queries": [],
+          "issues": []
+        },
+        "work_type": "nonfiction",
+        "model_calls": 2,
+        "narrative_synthesized": true,
+        "partial_evidence": true,
+        "temporal_claims_rejected": 0,
+        "unsupported_sentences_removed": true,
+        "usage": {
+          "prompt_tokens": 4607,
+          "completion_tokens": 151,
+          "total_tokens": 4758
+        },
+        "stage_timings": [
+          {
+            "stage": "answer",
+            "model": "qwen3.5:9b-q4_K_M",
+            "elapsed_ms": 3804,
+            "status": "ok",
+            "load_ms": 5.537,
+            "prompt_eval_ms": 376.838,
+            "eval_ms": 3305.517,
+            "total_ms": 3774.573,
+            "prompt_eval_count": 783,
+            "eval_count": 91
+          },
+          {
+            "stage": "audit",
+            "model": "qwen3.5:9b-q4_K_M",
+            "elapsed_ms": 4265,
+            "status": "ok",
+            "load_ms": 6.438,
+            "prompt_eval_ms": 2087.692,
+            "eval_ms": 2060.275,
+            "total_ms": 4253.504,
+            "prompt_eval_count": 3824,
+            "eval_count": 60
+          }
+        ]
+      }
+    }
+  ],
+  "source_sha256": "370c868639c75542aef6eb3982b948c20c0eead958cb45939d433b40fa56b65c",
+  "runner_sha256": "68d99f05b1f550a646ef6fcc73f3ca7d973f1cd822cd6ba4a731f950dbfdbdf9",
+  "matrix_sha256": "293c90f6fd01eb442a251fe1ea08f18e07e966fcd0b8421c0102121492153378",
+  "metrics": {
+    "turns": 7,
+    "p50_seconds": 0.091,
+    "mean_seconds": 3.625,
+    "p95_seconds": 14.266,
+    "max_seconds": 14.266,
+    "under_response_budget": 7,
+    "statuses": {
+      "answered": 7
+    },
+    "under_5_seconds": 5,
+    "under_10_seconds": 6,
+    "under_30_seconds": 7,
+    "answered_is_not_factual_certification": true
+  },
+  "source_files_changed_during_run": false
+}

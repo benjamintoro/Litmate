@@ -1,0 +1,49 @@
+python.exe : Creating test database for alias 'default'...
+En línea: 2 Carácter: 15
++ ... alidation = & .\venv\Scripts\python.exe -B verificar_proyecto.py core ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Creating test d...as 'default'...:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+................IA: progreso no disponible (RuntimeError)
+....................................................................Validaci�n CSRF fallida en OAuth (google).
+....Google no confirm� el correo; no se vincula por email.
+......[Mercado Pago] Pago no verificado: rejected
+.[Mercado Pago] Referencia externa no corresponde al usuario o plan.
+..[PayPal] Monto o moneda no coinciden con el plan.
+.[PayPal] Orden no corresponde al usuario o plan.
+..[Webpay Plus] Monto no coincide con el plan; no se activa la suscripci�n.
+.[Webpay Plus] Token simulado rechazado fuera del sandbox.
+[Mercado Pago] Pago simulado rechazado fuera del sandbox.
+[PayPal] Orden simulada rechazada fuera del sandbox.
+.......................................................................................................................
+......................Fall� la s�ntesis de voz externa: OSError.
+.....Fall� la s�ntesis de voz externa: TimeoutError.
+.......................................................................................................................
+.............................IA: secci�n de Wikipedia no disponible (URLError)
+...........................................................................................................IA:
+b�squeda sem�ntica no disponible (ValueError); se usa FTS
+.......................................................................IA: b�squeda sem�ntica no disponible
+(TimeoutError); se usa FTS
+.......................................................................................................................
+.......................................................................................................................
+.......................................................................................................................
+.......................................................................................................................
+.......................................................................................................................
+.........................................................IA: tabla de Wikipedia no disponible (TimeoutError)
+................................................IA: validaci�n no completada (ValueError)
+.................................................IA: b�squeda no disponible (URLError)
+................IA local: fallo_simulado
+............IA: validaci�n no completada (ValueError)
+..IA: validaci�n no completada (ValueError)
+.............................IA: b�squeda web no disponible (URLError)
+........................
+----------------------------------------------------------------------
+Ran 1405 tests in 17.472s
+
+OK
+Destroying test database for alias 'default'...
+
+Found 1405 test(s).
+System check identified no issues (0 silenced).

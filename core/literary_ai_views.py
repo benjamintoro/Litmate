@@ -57,8 +57,14 @@ def _safe_diagnostics(result, client):
     allowed = ('elapsed_ms', 'chat_budget_seconds', 'model_calls', 'cache_hit',
                'answer_cache_hit', 'exact_cache_hit', 'semantic_cache_hit')
     allowed += ('exact_answer_cache_hit',)
+    allowed += ('verified_narrative_answer', 'narrative_synthesized', 'partial_evidence')
     values = {key: diagnostics[key] for key in allowed
               if type(diagnostics.get(key)) in {int, float, bool}}
+    if diagnostics.get('work_type') in {'fiction', 'nonfiction', 'unknown'}:
+        values['work_type'] = diagnostics['work_type']
+    if diagnostics.get('narrative_failure') in {'audit_not_approved', 'insufficient_content',
+            'model_not_configured', 'ValueError', 'TypeError', 'ProviderUnavailable', 'BudgetExpired', 'TimeoutError'}:
+        values['narrative_failure'] = diagnostics['narrative_failure']
     metrics = diagnostics.get('progress_metrics', {})
     if isinstance(metrics, dict):
         values['progress_metrics'] = sanitize_metrics(metrics)
@@ -120,7 +126,19 @@ def rate_allowed(request):
 def remember(request, state, message, result, elapsed_ms, client, *, topic_context=None):
     topic_changed = remember_topic(state, message, topic_context)
     if not result.remember:
-        if result.status == 'clarification':
+        if result.status == 'unavailable' and result.diagnostics.get('narrative_failure'):
+            from .ai_narrative_answers import request_for
+            pending = request_for(message, state.get('turns', []), state.get('pending_clarification'))
+            if pending and pending.get('title') and not pending.get('ambiguous'):
+                task = {'summary': 'Dime la trama', 'characters': 'Dime los personajes',
+                        'protagonist': 'Quién es el protagonista'}[pending['task']]
+                query = task + ' de ' + pending['title']
+                if pending.get('author_hint'):
+                    query += ' del autor ' + pending['author_hint']
+                state['pending_clarification'] = {'original_query': query[:500], 'status': 'unavailable'}
+                request.session[HISTORY_KEY] = state
+                request.session.modified = True
+        elif result.status == 'clarification':
             state['pending_clarification'] = {
                 'question': result.text[:500],
                 'original_query': message[:500],
@@ -341,22 +359,24 @@ def _compute_answer_impl(message, history, topic_context, *, pending_clarificati
                 indexed = indexed_answer(message, history, topic_context=topic_context)
             if indexed is not None:
                 return indexed, SimpleNamespace(usage={}, provider='verified-indexed-evidence', calls=0)
-            # Una ronda de proveedores estructurados antes del pipeline LLM.
-            # Las recomendaciones mantienen su descubrimiento especializado.
+            # Una petición de contenido tiene que llegar al generador narrativo.
+            # Buscar antes con la ruta genérica agotaba las lecturas y podía
+            # publicar fragmentos antes de intentar construir la sinopsis.
+            from .ai_narrative_answers import narrative_answer
+            try:
+                narrative = narrative_answer(message, history, config=settings,
+                    pending_clarification=pending_clarification)
+            except (TimeoutError, OSError, ValueError):
+                narrative = None
+            if narrative is not None:
+                return narrative, SimpleNamespace(usage=narrative.diagnostics.get('usage', {}),
+                    provider='verified-narrative-engine', calls=narrative.diagnostics.get('model_calls', 0))
             try:
                 researched = research_answer(message, history)
             except (TimeoutError, OSError, ValueError):
                 researched = None
             if researched is not None:
                 return researched, SimpleNamespace(usage={}, provider='verified-progressive-research', calls=0)
-            from .ai_narrative_answers import narrative_answer
-            try:
-                narrative = narrative_answer(message, history,
-                    pending_clarification=pending_clarification)
-            except (TimeoutError, OSError, ValueError):
-                narrative = None
-            if narrative is not None:
-                return narrative, SimpleNamespace(usage={}, provider='verified-narrative-engine', calls=0)
             from .ai_quick_answers import isbn_lookup_answer, quick_answer
             try:
                 with request_budget(time.monotonic() + budget_timeout(5)):

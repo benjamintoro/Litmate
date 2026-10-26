@@ -467,6 +467,61 @@ def _relevant_excerpt(text, query, maximum):
     return '\n'.join(paragraph for _, paragraph in sorted(selected))[:maximum]
 
 
+def _inline_section_nodes(soup, heading):
+    """Resuelve sólo paneles del HTML recibido; nunca carga enlaces o scripts."""
+    controls = [heading] + list(heading.find_all(['button', 'a'], limit=3))
+    for control in controls:
+        target = control.get('aria-controls', '')
+        if not target:
+            anchor = control.get('data-bs-target') or control.get('href', '')
+            target = anchor[1:] if anchor.startswith('#') else ''
+        if target and re.fullmatch(r'[\w:.-]{1,256}', target):
+            panel = soup.find(id=target)
+            if panel is not None and panel is not heading:
+                return [panel]
+    if heading.name == 'summary' and heading.parent.name == 'details':
+        return [heading.parent]
+    siblings = []
+    for sibling in heading.next_siblings:
+        name = getattr(sibling, 'name', '')
+        if name in {'h1', 'h2', 'h3', 'h4', 'summary'}:
+            break
+        if name:
+            siblings.append(sibling)
+        if len(siblings) == 4:
+            break
+    return siblings
+
+
+def _bibliographic_contents(soup, maximum):
+    """Recupera títulos de capítulos publicados, no el texto de los capítulos.
+
+    Algunos extractores omiten índices dentro de acordeones cerrados. Se exige
+    un encabezado explícito y una lista breve en su panel o sección inmediata;
+    una lista cualquiera de la página no es evidencia del contenido del libro.
+    """
+    labels = {'table of contents', 'tabla de contenido', 'tabla de contenidos',
+              'indice', 'indice de contenido', 'indice de contenidos', 'indice del libro'}
+    for heading in soup.find_all(['h2', 'h3', 'h4', 'summary', 'button']):
+        if _normalized(heading.get_text(' ', strip=True)).strip(' :.') not in labels:
+            continue
+        entries, seen = [], set()
+        for panel in _inline_section_nodes(soup, heading):
+            lists = [panel] if panel.name in {'ul', 'ol'} else panel.find_all(['ul', 'ol'], limit=3)
+            for listing in lists:
+                for node in listing.find_all('li', recursive=False)[:80]:
+                    value = _plain(node.get_text(' ', strip=True), 221)
+                    if not 2 <= len(value) <= 220 or _INJECTION.search(value) or value in seen:
+                        continue
+                    if len('\n'.join(entries + [value])) > maximum:
+                        break  # No cortar un título de capítulo a mitad de frase.
+                    entries.append(value)
+                    seen.add(value)
+        if len(entries) >= 2:
+            return 'Table of Contents:\n' + '\n'.join(entries)
+    return ''
+
+
 def _extract_html(raw, url, query, maximum):
     import trafilatura
     from bs4 import BeautifulSoup
@@ -506,6 +561,39 @@ def _extract_html(raw, url, query, maximum):
             text = metadata_description
         method = 'beautifulsoup_structured'
     excerpt = _relevant_excerpt(text, query, maximum)
+    if re.search(r'\b(trama|sinopsis|argumento|contenido|temas|overview|synopsis|plot|summary)\b',
+                 _normalized(query)):
+        # Reserva espacio al índice antes que a publicidad o biografías. Sólo
+        # usa metadatos ya presentes en la misma respuesta HTTP y mantiene el
+        # límite original del pasaje y los controles de acceso/almacenamiento.
+        contents = _bibliographic_contents(soup, max(0, maximum - 450))
+        if contents:
+            overview = ''
+            for heading in soup.find_all(['h2', 'h3', 'h4', 'summary']):
+                label = _normalized(heading.get_text(' ', strip=True)).strip(' :.')
+                if label in {'overview', 'descripcion', 'sinopsis', 'resumen'}:
+                    paragraphs = []
+                    for panel in _inline_section_nodes(soup, heading):
+                        nodes = [panel] if panel.name == 'p' else panel.find_all('p', limit=8)
+                        paragraphs.extend(node.get_text(' ', strip=True) for node in nodes)
+                        if not nodes:
+                            paragraphs.append(panel.get_text(' ', strip=True))
+                    overview = '\n'.join(paragraphs)
+                    if overview:
+                        break
+            overview = overview or text or metadata_description
+            # El primer párrafo mantiene título/autor y objeto de estudio. No
+            # mezcla el índice con obras de la biografía que siga a la reseña.
+            overview = next((line.strip() for line in overview.splitlines()
+                             if len(line.strip()) > 60 and not _INJECTION.search(line)), '')
+            room = min(450, maximum - len(contents) - 1)
+            introduction = overview[:max(0, room)]
+            if len(overview) > room:
+                boundary = max(introduction.rfind('. '), introduction.rfind('; '))
+                if boundary >= 80:
+                    introduction = introduction[:boundary + 1]
+            excerpt = (introduction + '\n' + contents).strip()[:maximum]
+            method += '+structured_contents'
     # Son menciones candidatas, no una afirmación de que sean todos personajes.
     # Solo listas bajo un encabezado explícito de personajes proporcionan nombres.
     mentions = []

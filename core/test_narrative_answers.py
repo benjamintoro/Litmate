@@ -233,7 +233,7 @@ class AutomatedNarrativeQualityTests(SimpleTestCase):
             result = narrative_answer(
                 'Cuéntame sobre la trama de O Exército na história do Brasil', history_brasil)
         self.assertIsNotNone(result)
-        self.assertEqual(result.status, 'answered')
+        self.assertEqual(result.status, 'unavailable')
         self.assertIn('O Exército na história do Brasil', result.text)
         self.assertNotIn('¿De cuál de las obras que comentamos', result.text)
         self.assertNotIn('Lilia Moritz Schwarcz', result.text)
@@ -253,7 +253,7 @@ class AutomatedNarrativeQualityTests(SimpleTestCase):
                    return_value=[BRAZIL_HISTORY_BOOK]):
             result = narrative_answer('O Exército na história do Brasil', history_clarify)
         self.assertIsNotNone(result)
-        self.assertEqual(result.status, 'answered')
+        self.assertEqual(result.status, 'unavailable')
         self.assertIn('O Exército na história do Brasil', result.text)
         self.assertNotIn('¿De cuál de las obras que comentamos', result.text)
 
@@ -265,9 +265,9 @@ class AutomatedNarrativeQualityTests(SimpleTestCase):
             result = narrative_answer(
                 'Cuéntame la trama de O Exército na história do Brasil', history_empty)
         self.assertIsNotNone(result)
-        self.assertEqual(result.status, 'answered')
-        self.assertIn('histórica', result.text.lower())
-        self.assertIn('no ficción', result.text.lower())
+        self.assertEqual(result.status, 'unavailable')
+        self.assertNotIn('no cuenta con una trama', result.text)
+        self.assertFalse(result.diagnostics.get('verified_narrative_answer'))
 
     def test_case_4_sinopsis_conocida_rapida(self):
         from .ai_persistent_router import indexed_answer

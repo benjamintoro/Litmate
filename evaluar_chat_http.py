@@ -5,6 +5,7 @@ vacías con schema_editor SOLO dentro de TemporaryDirectory; Ollama y las
 fuentes públicas son reales. No sustituye búsquedas ni inferencia con mocks.
 """
 import argparse
+import copy
 from collections import Counter
 from datetime import datetime, timezone
 from http.cookiejar import CookieJar
@@ -68,6 +69,8 @@ def main(argv=None):
     parser.add_argument('--context', type=int, default=16384)
     parser.add_argument('--prewarm', action='store_true',
                         help='Precarga el modelo instalado con prompt vacío, sin preparar respuestas.')
+    parser.add_argument('--trace-narrative', action='store_true',
+                        help='Guarda borrador/auditoría narrativa únicamente en el informe local aislado.')
     parser.add_argument('--chat-budget', type=float, default=36,
                         help='Segundos de trabajo literario antes de cerrar el stream.')
     parser.add_argument('--response-budget', type=float, default=42,
@@ -142,6 +145,20 @@ def main(argv=None):
         from django.urls import path
         from django.views.decorators.csrf import ensure_csrf_cookie
         from core.literary_ai_views import chatbot_query, chatbot_finalize
+        narrative_traces = []
+        if args.trace_narrative:
+            from core import ai_narrative_answers
+            original_synthesis = ai_narrative_answers.synthesize_answer
+            def traced_synthesis(message, request, sources, config, **kwargs):
+                row = {'question': message, 'request': copy.deepcopy(request),
+                       'sources': copy.deepcopy(sources), 'stages': []}
+                kwargs['trace'] = lambda stage, value: row['stages'].append(
+                    {'stage': stage, 'output': copy.deepcopy(value)})
+                result, client = original_synthesis(message, request, sources, config, **kwargs)
+                row.update(status=result.status, diagnostics=copy.deepcopy(result.diagnostics))
+                narrative_traces.append(row)
+                return result, client
+            ai_narrative_answers.synthesize_answer = traced_synthesis
         urlpatterns.extend([path('csrf/', ensure_csrf_cookie(lambda request: HttpResponse('ready'))),
                             path('chatbot_query/', chatbot_query), path('chatbot_finalize/', chatbot_finalize)])
         warmup = {'requested': args.prewarm, 'seconds': None, 'generates_answers': False}
@@ -175,6 +192,8 @@ def main(argv=None):
                       'cache_controls': {'empty_answers_each_turn': args.empty_answer_cache_each_turn,
                                          'empty_retrieval_each_turn': args.empty_retrieval_cache_each_turn},
                       'factual_review': 'not_independently_certified', 'turns': []}
+            if args.trace_narrative:
+                report['narrative_traces'] = narrative_traces
             report['source_sha256'] = code_revision(base)
             report['runner_sha256'] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
             report['matrix_sha256'] = hashlib.sha256(args.matrix.read_bytes()).hexdigest() if args.matrix else None

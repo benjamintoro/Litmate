@@ -214,6 +214,55 @@ def _uncertainty_declared(statement):
     return bool(_UNCERTAINTY_DECLARED.search(str(statement or '')))
 
 
+def unsupported_century_claim(statement, evidence, source=None):
+    """Un siglo afirmado necesita respaldo temporal, no una cita tangencial.
+
+    Admite equivalencia literal XVI/16th century sin inferir que el año de
+    publicación, la fecha de recuperación o «actual» prueben la cobertura.
+    """
+    def number(token):
+        token = re.sub(r'(?:st|nd|rd|th)$', '', token)
+        if token.isdigit():
+            return int(token)
+        result, previous = 0, 0
+        for char in reversed(token):
+            digit = {'i': 1, 'v': 5, 'x': 10, 'l': 50, 'c': 100, 'd': 500, 'm': 1000}[char]
+            result += -digit if digit < previous else digit
+            previous = max(previous, digit)
+        return result
+
+    def centuries(text):
+        result = set()
+        value = str(text).casefold()
+        token = r'(?:[ivxlcdm]+|\d{1,2})(?:st|nd|rd|th)?\b'
+        separator = r'\s*(?:,|\by\b|\be\b|\band\b|\ba\b|\bal\b|\bhasta\b|\bto\b|\bthrough\b|[-–—])\s*'
+        sequence = token + '(?:' + separator + token + ')*'
+        groups = re.findall(r'\bsiglos?\s+(' + sequence + ')', value)
+        groups += re.findall(r'\b(' + sequence + r')[-\s]+centur(?:y|ies)\b', value)
+        for group in groups:
+            matches = list(re.finditer(token, group))
+            for index, match in enumerate(matches):
+                current = number(match.group())
+                result.add(current)
+                if index:
+                    previous = number(matches[index - 1].group())
+                    connector = group[matches[index - 1].end():match.start()]
+                    if (re.search(r'[-–—]|\b(?:a|al|hasta|to|through)\b', connector)
+                            and 0 < previous <= current <= 99):
+                        result.update(range(previous, current + 1))
+        return result
+    claim = str(statement)
+    # Un siglo que pertenece al título no afirma la cobertura del contenido.
+    # Sólo se retira la identidad bibliográfica real; los periodos añadidos
+    # fuera de ella mantienen la obligación de evidencia temporal.
+    if isinstance(source, dict):
+        title = (source.get('work_title') if source.get('work_binding_verified') is True
+                 else source.get('title') if source.get('kind') in {'book', 'excerpt'} else '')
+        if title:
+            claim = re.sub(r'(?<!\w)' + re.escape(str(title)) + r'(?!\w)', ' ', claim, flags=re.I)
+    return not centuries(claim) <= centuries(evidence)
+
+
 def factual_statements(text):
     """Segmentos literales del borrador, conservando iniciales y abreviaturas.
 
@@ -592,6 +641,8 @@ def validate_audit(audit, plan, draft, sources, message, *, strict_facts=False):
                 raise ValueError('Las materias del catálogo no respaldan ese estilo, estructura o periodo; usa una descripción que lo confirme o retira el detalle.')
             if source and _catalogue_only_proof_for_narrative(claim['statement'], source, claim['evidence']):
                 raise ValueError('Las materias del catálogo no prueban acontecimientos de la trama; cita el pasaje narrativo de la obra correcta.')
+            if unsupported_century_claim(claim['statement'], claim['evidence'], source):
+                raise RetryableAuditError('La evidencia no respalda el siglo afirmado; retira ese alcance temporal o aporta la prueba correspondiente.')
             if re.search(r'\b(?:personajes?|protagonistas?)\b', message, re.I):
                 names = character_names(claim['statement'])
                 if names and not names <= evidence_words(claim['evidence']):

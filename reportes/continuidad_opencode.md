@@ -1,7 +1,73 @@
 # Continuidad OpenCode — LitMate IA
 
-Actualizado: 23 de octubre de 2026.
+Actualizado: 26 de octubre de 2026.
 Rama: `feature/cuotas-ia-chatbot`.
+
+## Sinopsis y Docker: unidad completada (26 de octubre de 2026)
+
+- Se retomó HEAD `7810561` y se conservaron las modificaciones pendientes de
+  `ai_narrative_answers.py` y `literary_ai_views.py`; no se restauraron archivos.
+- Confirmados los errores: la vista no pasaba configuración al sintetizador;
+  el motor descartaba su contador/uso LLM; la búsqueda genérica agotaba páginas
+  antes de la ruta narrativa; el autor explícito quedaba dentro del título;
+  los subtítulos editoriales se comparaban después de borrar los dos puntos.
+- Se corrigieron esos vínculos, se preservan los homónimos para aclaración y
+  se evita asociar el texto de Tolkien a la ficha homónima de Gary Russell.
+  Se retiró la plantilla histórica no auditada: materias/título no autorizan
+  afirmar que el libro carece de personajes o de trama.
+- La búsqueda narrativa reutiliza las herramientas existentes y consulta
+  SearXNG/DuckDuckGo y páginas públicas permitidas cuando Wikipedia/catálogo
+  no aportan contenido. No modifica `.env` ni utiliza servicios de pago.
+- Docker Desktop/Engine estaban activos. El contenedor `litmate-searxng-1`
+  estaba healthy, sin OOM. Wikipedia devolvía infoboxes que Django ignoraba;
+  `searxng/settings.yml` ahora usa `display_type: [list, infobox]`. Se reinició
+  sólo ese contenedor. Tres búsquedas mediante Django: 0,461–1,385 s.
+  El motor OpenLibrary de la imagen todavía produce fallos en algunas consultas.
+- Fuente editorial real recuperada: ficha McGraw Hill de The Unfinished Nation,
+  HTML permitido por robots, extracción correcta y autor Alan Brinkley literal.
+  Se corrigió su descarte por subtítulo. No se almacena permanentemente esa
+  página ni se convierten respuestas generadas en hechos.
+- Diagnósticos reproducibles nuevos: `diagnosticar_buscador.py` y
+  `diagnosticar_sinopsis.py`; usan Django/SQLite aislados. El segundo puede
+  registrar generación/auditoría reales con `--synthesize`; su traza es local,
+  no se incorpora al texto visible ni a la base de conocimiento.
+- Se recupera el índice editorial desde paneles HTML del mismo documento,
+  incluidos acordeones cerrados. En la ficha real de McGraw Hill aparecen 31
+  títulos de capítulos. Se apartan publicidad y biografías de la redacción.
+- Las pruebas reales detectaron citas tangenciales aprobadas por el auditor.
+  La ruta de índices selecciona un bloque contiguo de temas y restringe el
+  pool de pruebas a pasajes literales de esa fuente. No se unen citas distantes.
+  Siglos/rangos sin respaldo se rechazan; los siglos del título no se confunden
+  con periodos. Se puede retirar una oración rechazada y revalidar íntegramente
+  las restantes; jamás se cambia un veredicto no verificado a supported.
+- Se conserva sólo la petición tras un fallo narrativo, separada del historial
+  aceptado. El seguimiento no pierde la obra ni secuestra recomendaciones
+  nuevas. Las fuentes aceptadas en inglés se reutilizan antes de buscar otra vez.
+- Validación final `pruebas_final_v2.txt`: **1405 pruebas OK, 17,472 s**;
+  JavaScript: **210 comprobaciones OK**; `git diff --check` sin errores.
+- Medición HTTP/SSE real final `http_final_v4.json`, código estable y SQLite
+  temporal: siete turnos answered; Brinkley 14,266 s y seguimiento 8,211 s;
+  Papelucho 0,084 s; Tolkien 2,567 s. Siete bajo 30 s, p95 muestral 14,266 s.
+  La muestra no demuestra precisión global del 99 % ni el p95 de toda la app.
+  Modelo local 9B previamente residente; precarga separada de 0,072 s.
+- Se conservan mediciones fallidas intermedias: `http_final_v1.json` perdió el
+  ensayo tras un rechazo; `http_final_v2.json` detectó approve con una oración
+  inference. Ambos errores se corrigieron y v3/v4 completaron siete turnos.
+- Comprobación final real de Docker `docker_final.json`: running/healthy, sin
+  OOM, sólo loopback. Tres JSON HTTP 200 (0,894–1,145 s); Django 0,431–1,380 s.
+  Open Library sigue fallando parcialmente para El nombre de la rosa; no se
+  confunde salud del contenedor con relevancia o disponibilidad de cada motor.
+- Informe, archivos y comandos: `INFORME_SINOPSIS_DOCKER_20261026.md`.
+  Matriz reproducible sin respuestas preparadas: `core/data/narrative_benchmark.json`.
+  Evidencia local: `reportes/sinopsis_20261026/` (trazas sólo por opt-in).
+- Checkpoint Docker: `0fc5990`. Checkpoint conjunto local:
+  `checkpoint/sinopsis-docker-20261026`; no se publicó ni se hizo push.
+- Próximas mejoras: evaluación amplia con arranque frío, más idiomas/obras y
+  concurrencia; revisar el defecto del motor Open Library sin sustituir la
+  imagen a ciegas. El RAG, conocimiento persistente y worker se conservan;
+  esta unidad no entrena pesos ni modifica embeddings.
+- Sin migraciones, cambios de credenciales, instalación de paquetes, borrado de
+  datos, publicación ni push. Se mantienen diseño, tarjetas, voz y avatares.
 
 ## Recuperación del checkpoint y fase 1 de tramas (23 de octubre de 2026)
 
