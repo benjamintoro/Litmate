@@ -26,6 +26,8 @@ engines:
   # No añadir Google/HTML ni proveedores comerciales para resolver bloqueos.
   - name: wikipedia
     disabled: false
+    # Django consume la lista JSON ``results``; una infobox sola se pierde.
+    display_type: [list, infobox]
   - name: openlibrary
     engine: openlibrary
     categories: [general, books]

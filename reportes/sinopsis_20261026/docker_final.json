@@ -1,0 +1,526 @@
+{
+  "recorded_at": "2026-10-26T13:14:10.216718+00:00",
+  "executed_real_services": true,
+  "docker": {
+    "version": {
+      "Client": {
+        "Version": "29.8.2",
+        "ApiVersion": "1.56",
+        "DefaultAPIVersion": "1.56",
+        "GitCommit": "7fc2dff",
+        "GoVersion": "go1.26.8",
+        "Os": "windows",
+        "Arch": "amd64",
+        "BuildTime": "Wed Sep 30 19:35:42 2026",
+        "Context": "desktop-linux"
+      },
+      "Server": {
+        "Platform": {
+          "Name": "Docker Desktop 4.95.0 (242831)"
+        },
+        "Version": "29.8.2",
+        "ApiVersion": "1.56",
+        "MinAPIVersion": "1.40",
+        "Os": "linux",
+        "Arch": "amd64",
+        "Components": [
+          {
+            "Name": "Engine",
+            "Version": "29.8.2",
+            "Details": {
+              "ApiVersion": "1.56",
+              "Arch": "amd64",
+              "BuildTime": "Wed Sep 30 19:32:25 2026",
+              "Experimental": "false",
+              "GitCommit": "8af9fe3",
+              "GoVersion": "go1.26.8",
+              "KernelVersion": "6.18.54.1-microsoft-standard-WSL2",
+              "MinAPIVersion": "1.40",
+              "Module": "github.com/moby/moby/v2",
+              "ModuleVersion": "v2.0.0+unknown",
+              "Os": "linux"
+            }
+          },
+          {
+            "Name": "containerd",
+            "Version": "v2.3.6",
+            "Details": {
+              "GitCommit": "ee2735368117d2eb259779949d5e75cdafec9761"
+            }
+          },
+          {
+            "Name": "runc",
+            "Version": "1.5.1",
+            "Details": {
+              "GitCommit": "v1.5.1-0-g8f2685a4"
+            }
+          },
+          {
+            "Name": "docker-init",
+            "Version": "0.19.0",
+            "Details": {
+              "GitCommit": "de40ad0"
+            }
+          }
+        ],
+        "GitCommit": "8af9fe3",
+        "GoVersion": "go1.26.8",
+        "KernelVersion": "6.18.54.1-microsoft-standard-WSL2",
+        "BuildTime": "2026-09-30T19:32:25.000000000+00:00"
+      }
+    },
+    "container_state": {
+      "Status": "running",
+      "Running": true,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 1767,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-10-26T12:36:24.744504901Z",
+      "FinishedAt": "2026-10-26T12:36:24.434622943Z",
+      "Health": {
+        "Status": "healthy",
+        "FailingStreak": 0,
+        "Log": [
+          {
+            "Start": "2026-10-26T13:12:06.627421814Z",
+            "End": "2026-10-26T13:12:06.720925742Z",
+            "ExitCode": 0,
+            "Output": ""
+          },
+          {
+            "Start": "2026-10-26T13:12:36.72176651Z",
+            "End": "2026-10-26T13:12:36.811143793Z",
+            "ExitCode": 0,
+            "Output": ""
+          },
+          {
+            "Start": "2026-10-26T13:13:06.811529375Z",
+            "End": "2026-10-26T13:13:06.902521121Z",
+            "ExitCode": 0,
+            "Output": ""
+          },
+          {
+            "Start": "2026-10-26T13:13:36.903134388Z",
+            "End": "2026-10-26T13:13:36.997493964Z",
+            "ExitCode": 0,
+            "Output": ""
+          },
+          {
+            "Start": "2026-10-26T13:14:06.997905102Z",
+            "End": "2026-10-26T13:14:07.09015293Z",
+            "ExitCode": 0,
+            "Output": ""
+          }
+        ]
+      }
+    },
+    "published_ports": {
+      "8080/tcp": [
+        {
+          "HostIp": "127.0.0.1",
+          "HostPort": "8080"
+        }
+      ]
+    }
+  },
+  "api_json": [
+    {
+      "query": "Papelucho y el marciano",
+      "status": "ok",
+      "results_count": 20,
+      "infoboxes_count": 1,
+      "unresponsive_engines": [],
+      "results": [
+        {
+          "title": "Papelucho y el marciano",
+          "url": "https://es.wikipedia.org/wiki/Papelucho_y_el_marciano",
+          "engines": [
+            "wikipedia"
+          ],
+          "has_content": false
+        },
+        {
+          "title": "Papelucho and the Martian",
+          "url": "https://en.wikipedia.org/wiki/Papelucho_and_the_Martian",
+          "engines": [
+            "mwmbl"
+          ],
+          "has_content": true
+        },
+        {
+          "title": "Movie - Papelucho and the Martian - 2007 Watch Online، Video، Tr…",
+          "url": "https://elcinema.com/en/work/2050254/",
+          "engines": [
+            "mwmbl"
+          ],
+          "has_content": true
+        },
+        {
+          "title": "Papelucho - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Papelucho",
+          "engines": [
+            "mwmbl"
+          ],
+          "has_content": true
+        },
+        {
+          "title": "Jay Marciano - Variety500 - Top 500 Entertainment Business Leade…",
+          "url": "https://variety.com/exec/jay-marciano/",
+          "engines": [
+            "mwmbl"
+          ],
+          "has_content": true
+        },
+        {
+          "title": "Roc Marciano",
+          "url": "https://www.rollingstone.com/t/roc-marciano/",
+          "engines": [
+            "mwmbl"
+          ],
+          "has_content": true
+        },
+        {
+          "title": "Marciano Art Foundation Los Angeles | Observer Arts",
+          "url": "https://observer.com/tag/marciano-art-foundation/",
+          "engines": [
+            "mwmbl"
+          ],
+          "has_content": true
+        },
+        {
+          "title": "Roc Marciano: Reloaded Album Review | Pitchfork",
+          "url": "http://pitchfork.com/reviews/albums/17301-reloaded/",
+          "engines": [
+            "mwmbl"
+          ],
+          "has_content": true
+        }
+      ],
+      "http_status": 200,
+      "seconds": 0.944
+    },
+    {
+      "query": "El nombre de la rosa",
+      "status": "partial",
+      "results_count": 131,
+      "infoboxes_count": 1,
+      "unresponsive_engines": [
+        [
+          "openlibrary",
+          "unexpected crash"
+        ]
+      ],
+      "results": [
+        {
+          "title": "El nombre de la rosa",
+          "url": "https://es.wikipedia.org/wiki/El_nombre_de_la_rosa",
+          "engines": [
+            "wikipedia"
+          ],
+          "has_content": true
+        },
+        {
+          "title": "Nombre de encabezado prohibido - Glosario de MDN Web Docs: Defin…",
+          "url": "http://developer.mozilla.org/es/docs/Glossary/Forbidden_header_name",
+          "engines": [
+            "mwmbl"
+          ],
+          "has_content": false
+        },
+        {
+          "title": "Cambiar el nombre | Apple Developer Forums",
+          "url": "http://developer.apple.com/forums/thread/84386",
+          "engines": [
+            "mwmbl"
+          ],
+          "has_content": true
+        },
+        {
+          "title": "Nombre de dominio - Glosario de MDN Web Docs: Definiciones de té…",
+          "url": "https://developer.mozilla.org/es/docs/Glossary/Domain_name",
+          "engines": [
+            "mwmbl"
+          ],
+          "has_content": false
+        },
+        {
+          "title": "Vivaldi en Android: Prepárate para cambiar el nombre de tus pila…",
+          "url": "https://vivaldi.com/?p=392980",
+          "engines": [
+            "mwmbl"
+          ],
+          "has_content": true
+        },
+        {
+          "title": "GitHub - Adau/trails: Récupération du nombre de places restantes…",
+          "url": "https://github.com/Adau/trails",
+          "engines": [
+            "mwmbl"
+          ],
+          "has_content": true
+        },
+        {
+          "title": "El Salvador",
+          "url": "https://en.wikipedia.org/wiki/El_Salvador",
+          "engines": [
+            "mwmbl"
+          ],
+          "has_content": true
+        },
+        {
+          "title": "The Institute for Justice",
+          "url": "https://ij.org/",
+          "engines": [
+            "mwmbl"
+          ],
+          "has_content": true
+        }
+      ],
+      "http_status": 200,
+      "seconds": 0.894
+    },
+    {
+      "query": "El señor de los anillos",
+      "status": "ok",
+      "results_count": 138,
+      "infoboxes_count": 1,
+      "unresponsive_engines": [],
+      "results": [
+        {
+          "title": "El Señor de los Anillos",
+          "url": "https://es.wikipedia.org/wiki/El_Se%C3%B1or_de_los_Anillos",
+          "engines": [
+            "wikipedia"
+          ],
+          "has_content": true
+        },
+        {
+          "title": "El Señor de los Anillos - Details",
+          "url": "https://ifdb.org/viewgame?id=okmu5w815pg1tn93",
+          "engines": [
+            "mwmbl"
+          ],
+          "has_content": false
+        },
+        {
+          "title": "El Señor de los Cielos - NBC.com",
+          "url": "https://www.nbc.com/el-senor-de-los-cielos",
+          "engines": [
+            "mwmbl"
+          ],
+          "has_content": true
+        },
+        {
+          "title": "Anillos de marca de mujer | Lyst",
+          "url": "https://www.lyst.com/es-es/comprar/anillos/",
+          "engines": [
+            "mwmbl"
+          ],
+          "has_content": true
+        },
+        {
+          "title": "La extraña y psicodélica versión soviética de \"El señor de los a…",
+          "url": "https://www.bbc.com/mundo/noticias-56662730",
+          "engines": [
+            "mwmbl"
+          ],
+          "has_content": false
+        },
+        {
+          "title": "El Señor de los Cielos - TheTVDB.com",
+          "url": "http://thetvdb.com/series/the-lord-of-the-skies",
+          "engines": [
+            "mwmbl"
+          ],
+          "has_content": true
+        },
+        {
+          "title": "El señor de los anillos en EL PAÍS",
+          "url": "https://elpais.com/noticias/el-senor-de-los-anillos/",
+          "engines": [
+            "mwmbl"
+          ],
+          "has_content": false
+        },
+        {
+          "title": "Anillos Bohemme de Plata – Arte-Joya",
+          "url": "http://arte-joya.com/collections/anillos-bohemme",
+          "engines": [
+            "mwmbl"
+          ],
+          "has_content": true
+        }
+      ],
+      "http_status": 200,
+      "seconds": 1.145
+    }
+  ],
+  "django_adapter": [
+    {
+      "query": "Papelucho y el marciano",
+      "status": "ok",
+      "results_count": 5,
+      "providers": {},
+      "results": [
+        {
+          "title": "Papelucho and the Martian",
+          "url": "https://en.wikipedia.org/wiki/Papelucho_and_the_Martian",
+          "source": "SearXNG (en.wikipedia.org)"
+        },
+        {
+          "title": "Papelucho - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Papelucho",
+          "source": "SearXNG (en.wikipedia.org)"
+        },
+        {
+          "title": "Rocky Marciano - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Rocky_Marciano",
+          "source": "SearXNG (en.wikipedia.org)"
+        },
+        {
+          "title": "Arif Ali-Shah",
+          "url": "https://en.wikipedia.org/wiki/Arif_Ali-Shah",
+          "source": "SearXNG (en.wikipedia.org)"
+        },
+        {
+          "title": "El marciano by Andy Weir | Goodreads",
+          "url": "https://www.goodreads.com/book/show/25792193-el-marciano",
+          "source": "SearXNG (www.goodreads.com)"
+        }
+      ],
+      "research": {
+        "logical_searches": 0,
+        "page_slots_reserved": 0,
+        "external_seconds": 0.0,
+        "events": [
+          {
+            "stage": "http_request",
+            "provider": "SearXNG",
+            "status": "started",
+            "count": 0
+          },
+          {
+            "stage": "http_request",
+            "provider": "SearXNG",
+            "status": "ok",
+            "count": 20
+          }
+        ],
+        "http_requests_started": 1,
+        "pages_extracted": 0
+      },
+      "seconds": 1.06
+    },
+    {
+      "query": "El nombre de la rosa",
+      "status": "partial",
+      "results_count": 3,
+      "providers": {
+        "openlibrary": "unexpected crash"
+      },
+      "results": [
+        {
+          "title": "El nombre de la rosa",
+          "url": "https://es.wikipedia.org/wiki/El_nombre_de_la_rosa",
+          "source": "SearXNG (es.wikipedia.org)"
+        },
+        {
+          "title": "El Salvador",
+          "url": "https://en.wikipedia.org/wiki/El_Salvador",
+          "source": "SearXNG (en.wikipedia.org)"
+        },
+        {
+          "title": "Il nome della rosa",
+          "url": "https://openlibrary.org//works/OL8996439W",
+          "source": "SearXNG (openlibrary.org)"
+        }
+      ],
+      "research": {
+        "logical_searches": 0,
+        "page_slots_reserved": 0,
+        "external_seconds": 0.0,
+        "events": [
+          {
+            "stage": "http_request",
+            "provider": "SearXNG",
+            "status": "started",
+            "count": 0
+          },
+          {
+            "stage": "http_request",
+            "provider": "SearXNG",
+            "status": "ok",
+            "count": 20
+          }
+        ],
+        "http_requests_started": 1,
+        "pages_extracted": 0
+      },
+      "seconds": 0.431
+    },
+    {
+      "query": "El señor de los anillos",
+      "status": "ok",
+      "results_count": 5,
+      "providers": {},
+      "results": [
+        {
+          "title": "El Señor de los Anillos",
+          "url": "https://es.wikipedia.org/wiki/El_Se%C3%B1or_de_los_Anillos",
+          "source": "SearXNG (es.wikipedia.org)"
+        },
+        {
+          "title": "The Fellowship of the Ring",
+          "url": "https://openlibrary.org//works/OL27513W",
+          "source": "SearXNG (openlibrary.org)"
+        },
+        {
+          "title": "The Lord of the Rings",
+          "url": "https://openlibrary.org//works/OL27448W",
+          "source": "SearXNG (openlibrary.org)"
+        },
+        {
+          "title": "The Return of the King",
+          "url": "https://openlibrary.org//works/OL27455W",
+          "source": "SearXNG (openlibrary.org)"
+        },
+        {
+          "title": "The Two Towers",
+          "url": "https://openlibrary.org//works/OL27479W",
+          "source": "SearXNG (openlibrary.org)"
+        }
+      ],
+      "research": {
+        "logical_searches": 0,
+        "page_slots_reserved": 0,
+        "external_seconds": 0.0,
+        "events": [
+          {
+            "stage": "http_request",
+            "provider": "SearXNG",
+            "status": "started",
+            "count": 0
+          },
+          {
+            "stage": "http_request",
+            "provider": "SearXNG",
+            "status": "ok",
+            "count": 20
+          }
+        ],
+        "http_requests_started": 1,
+        "pages_extracted": 0
+      },
+      "seconds": 1.38
+    }
+  ],
+  "notes": [
+    "Container health is not proof of relevant search results.",
+    "Search hits are candidates, not factual verification.",
+    "No production Django settings/database or secret files loaded."
+  ]
+}
