@@ -5,7 +5,7 @@ from pathlib import Path
 
 from django.core.management.base import BaseCommand, CommandError
 
-from core.literary_learning import (PROVIDERS, REQUIREMENTS, lower_worker_priority,
+from core.literary_learning import (DEFAULT_PROVIDERS, PROVIDERS, REQUIREMENTS, lower_worker_priority,
     provider_order, run_refresh_batch, schedule_known_works)
 
 
@@ -25,7 +25,8 @@ class Command(BaseCommand):
         parser.add_argument('--pause', type=float, default=1)
         parser.add_argument('--enqueue-known', action='store_true',
                             help='Encola identidades existentes con evidencia vencida; no rastrea sitios.')
-        parser.add_argument('--provider', choices=('auto', *PROVIDERS), default='auto')
+        parser.add_argument('--provider', choices=('auto', *PROVIDERS), default='auto',
+            help='Wikipedia es opt-in y sólo consulta introducciones oficiales, sin leer páginas completas.')
         parser.add_argument('--requirement', choices=sorted(REQUIREMENTS), default='metadata')
         parser.add_argument('--stats', action='store_true', help='Lee señales agregadas sin realizar red.')
         parser.add_argument('--delete-usage', action='store_true',
@@ -58,7 +59,7 @@ class Command(BaseCommand):
                     provider = options['provider']
                     if provider == 'auto':
                         eligible = (('wikidata',) if options['requirement'] in {
-                            'characters', 'character_detail', 'relationships'} else PROVIDERS)
+                            'characters', 'character_detail', 'relationships'} else DEFAULT_PROVIDERS)
                         provider = provider_order(usage_stats(database=database),
                             requirement=options['requirement'], eligible=eligible)[0]
                     queued = schedule_known_works(database=database, maximum=options['max_jobs'],

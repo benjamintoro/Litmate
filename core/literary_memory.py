@@ -17,7 +17,7 @@ from urllib.parse import urlsplit
 from .literary_identity import normalize_identity, same_work, stable_work_id, work_identity
 
 OWNER = 'litmate-literary-memory-v1'
-PROVIDERS = {'openlibrary', 'wikidata'}
+PROVIDERS = {'openlibrary', 'wikidata', 'wikipedia'}
 REQUIREMENTS = {'', 'author', 'characters', 'character_detail', 'summary', 'plot',
     'identification', 'identify', 'relationships', 'events', 'ending', 'themes',
     'metadata', 'recommend', 'book_identity', 'publication', 'synopsis', 'bibliography',
@@ -295,11 +295,45 @@ def _literal_facts(items, body, kind):
     for item in items[:24]:
         if not isinstance(item, dict):
             continue
-        keys = ('name', 'role') if kind == 'character_facts' else (
+        keys = ('name', 'role', 'description', 'evidence', 'narrative_role',
+                'classification', 'classification_evidence') if kind == 'character_facts' else (
             'topic', 'subject', 'relation', 'predicate', 'value', 'object', 'evidence', 'scope')
         fact = {key: str(item[key])[:1000] for key in keys if isinstance(item.get(key), str)}
         required = ('name', 'role') if kind == 'character_facts' else ('evidence',)
         if all(fact.get(key) and normalize_identity(fact[key]) in normalized_body for key in required):
+            if kind == 'character_facts':
+                # A name and a role somewhere in the same article do not bind
+                # them together. Preserve a bounded passage connecting both.
+                passage = _character_passage(fact, body)
+                if not passage:
+                    continue
+                fact['evidence'] = passage
+                fact['membership_only'] = bool(re.search(
+                    r'^(?:personaje registrado para esta obra en wikidata|'
+                    r'character (?:listed|registered) for this work in wikidata)$',
+                    normalize_identity(fact['role'])))
+                if fact.get('description') and normalize_identity(fact['description']) not in normalize_identity(passage):
+                    fact.pop('description')
+                if fact.get('narrative_role') and normalize_identity(fact['narrative_role']) not in normalize_identity(passage):
+                    fact.pop('narrative_role')
+                aliases = item.get('aliases', [])
+                # Older structural adapters include a published parenthetic
+                # alias in the label. Split it only when the adapter also
+                # declares that exact alias and the literal passage proves it.
+                parenthetical = re.fullmatch(r'(.+?)\s*\(([^()]{1,180})\)', fact['name'])
+                if (parenthetical and isinstance(aliases, list) and any(
+                        normalize_identity(alias) == normalize_identity(parenthetical.group(2))
+                        for alias in aliases if isinstance(alias, str)) and _supported_character_alias(
+                            parenthetical.group(1), parenthetical.group(2), passage)):
+                    fact['name'] = parenthetical.group(1).strip()
+                fact['aliases'] = [alias for alias in aliases[:12] if isinstance(alias, str)
+                    and 1 < len(alias) <= 180 and _supported_character_alias(fact['name'], alias, passage)
+                    ] if isinstance(aliases, list) else []
+                if not _supported_character_classification(fact, body):
+                    fact.pop('classification', None)
+                    fact.pop('classification_evidence', None)
+                elif not fact.get('narrative_role'):
+                    fact['narrative_role'] = fact['classification']
             # Explicit subject/relation/value must also occur in the evidence;
             # a valid quote is not permission to attach an unrelated statement.
             if kind == 'literary_facts' and any(normalize_identity(fact[key]) not in
@@ -327,6 +361,76 @@ def _literal_facts(items, body, kind):
                     continue
             result.append(fact)
     return result
+
+
+def _character_passage(fact, body):
+    """Returns literal evidence; never manufactures a role from an entity ID."""
+    from .literary_quality import factual_statements
+    evidence = fact.get('evidence', '')
+    name, role = normalize_identity(fact.get('name')), normalize_identity(fact.get('role'))
+    def connected(passage):
+        # Names in a preceding sentence cannot donate their identity to a
+        # different character's description in the following sentence.
+        for clause in factual_statements(passage, strip_markers=False):
+            if name in normalize_identity(clause) and role.rstrip(' .!?') in normalize_identity(clause):
+                return True
+        # A complete multi-sentence role can follow an explicit list label.
+        return bool(re.search(r'(?i)(?<!\w)' + re.escape(str(fact.get('name', '')))
+            + r'\s*[:\u2014\u2013-]\s*' + re.escape(str(fact.get('role', ''))), passage))
+    if evidence:
+        return evidence if (len(evidence) <= 1000 and evidence in body
+            and name in normalize_identity(evidence) and role in normalize_identity(evidence)
+            and connected(evidence)) else ''
+    # Legacy adapters expose a list item, sentence or short paragraph. Do not
+    # join disjoint list entries to associate one character with another's role.
+    for paragraph in re.split(r'[\r\n]+', body):
+        if (len(paragraph) <= 1000 and name in normalize_identity(paragraph)
+                and role in normalize_identity(paragraph) and connected(paragraph)):
+            return paragraph.strip()
+    return ''
+
+
+def _supported_character_alias(name, alias, passage):
+    canonical, alternate, text = (normalize_identity(value) for value in (name, alias, passage))
+    if not canonical or not alternate or canonical == alternate:
+        return False
+    # Both labels must occur in one explicit equivalence clause. Co-occurrence
+    # (e.g. Frodo and Sam) is never an alias declaration.
+    pattern = (r'(?<!\w)' + re.escape(canonical) + r'\s+(?:(?:es|era)\s+)?'
+        r'(?:(?:tambien|mas)\s+)?(?:conocid[oa]\s+como|llamad[oa](?:\s+como)?|also\s+known\s+as|'
+        r'known\s+as|alias)\s+' + re.escape(alternate) + r'(?!\w)')
+    if re.search(pattern, text):
+        return True
+    # Parentheses can express an occupation or kinship. Only accept a proper
+    # label explicitly paired with this name, not a descriptive parenthesis.
+    if (not re.fullmatch(r'[A-ZÁÉÍÓÚÜÑ][\wÁÉÍÓÚÜÑáéíóúüñ .’\'-]{0,179}', alias)
+            or re.search(r'\b(?:protagonista|antagonista|personaje|hobbit|mago|madre|padre|'
+                         r'hermano|hermana|hijo|hija|principal|secundario)\b', alternate)):
+        return False
+    for match in re.finditer(r'(?<!\w)' + re.escape(name) + r'\s*\(([^()]{1,220})\)', passage):
+        if alternate in {normalize_identity(label) for label in match.group(1).split(',')}:
+            return True
+    return False
+
+
+def _supported_character_classification(fact, body):
+    """A published heading applies only until the next structural heading."""
+    wanted, label = normalize_identity(fact.get('classification')), fact.get('classification_evidence', '')
+    synonyms = {'principal': 'main', 'principales': 'main', 'main': 'main',
+        'protagonista': 'main', 'antagonista': 'antagonist', 'antagonist': 'antagonist',
+        'secundario': 'supporting', 'supporting': 'supporting'}
+    if wanted not in synonyms or not label or label not in body:
+        return False
+    position = body.find(fact['evidence'])
+    headings = list(re.finditer(r'(={2,})\s*([^=\n]{1,100}?)\s*\1', body))
+    previous = next((heading for heading in reversed(headings) if heading.end() <= position), None)
+    if previous is None or normalize_identity(previous.group(2)) != normalize_identity(label):
+        return False
+    heading = normalize_identity(previous.group(2))
+    classification = ('antagonist' if re.search(r'\b(?:antagonistas?|villanos?|villains?)\b', heading) else
+        'supporting' if re.search(r'\b(?:secundarios?|supporting)\b', heading) else
+        'main' if re.search(r'\b(?:principal(?:es)?|main|protagonistas?)\b', heading) else '')
+    return bool(classification and synonyms[wanted] == classification)
 
 
 def _assertions(value, book):
@@ -453,14 +557,24 @@ def remember_evidence(books, sources, *, database=None):
             # Removing a character from a refreshed snapshot must not leave a
             # detached historical entity looking current to future graph readers.
             db.execute("DELETE FROM memory_entities WHERE work_id=? AND entity_type='character'", (work_id,))
-            characters = db.execute("SELECT DISTINCT a.subject FROM memory_assertions a "
+            characters = db.execute("SELECT a.subject,a.assertion_id,a.source_id,a.record FROM memory_assertions a "
                 "JOIN memory_sources s ON s.source_id=a.source_id WHERE a.work_id=? "
                 "AND a.predicate='role' AND s.expires_at>?", (work_id, now)).fetchall()
+            entities = {}
             for character in characters:
-                label = character[0]
+                label, assertion_id, source_id, record = character
+                key = normalize_identity(label)
+                value = entities.setdefault(key, {'name': label, 'canonical_name': label,
+                    'work_id': work_id, 'aliases': [], 'assertion_ids': [], 'source_ids': [],
+                    'verification_status': 'requires_source_revalidation'})
+                value['assertion_ids'].append(assertion_id)
+                value['source_ids'].append(source_id)
+                value['aliases'] = list(dict.fromkeys(value['aliases'] + json.loads(record).get('aliases', [])))
+            for value in entities.values():
+                label = value['name']
                 db.execute('INSERT OR IGNORE INTO memory_entities VALUES (?,?,?,?,?)',
                     (_hash(work_id, 'character', normalize_identity(label)), work_id,
-                     'character', label, _json({'name': label})))
+                     'character', label, _json(value)))
         result['works'] = len(seen_works)
         # Also invalidates TTL-sensitive cached reads after a re-verification.
         _bump(db)
@@ -548,8 +662,14 @@ def retrieve_evidence(query, *, books=(), requirement='', database=None, limit=8
             identifiers.extend(row[0] for row in matches)
             identifiers.append(stable_work_id(identity['title'], identity['author']))
         if identifiers:
+            topics = ('characters',) if requirement in {'characters', 'character_detail'} else (
+                'relationships',) if requirement == 'relationships' else ()
+            priority = ('CASE WHEN EXISTS (SELECT 1 FROM memory_assertions a WHERE '
+                'a.source_id=memory_sources.source_id AND a.topic IN (' +
+                ','.join('?' for _ in topics) + ')) THEN 0 ELSE 1 END, ') if topics else ''
             rows = db.execute('SELECT source_id FROM memory_sources WHERE work_id IN (' +
-                ','.join('?' for _ in identifiers) + ') ORDER BY verified_at DESC LIMIT 80', identifiers).fetchall()
+                ','.join('?' for _ in identifiers) + ') ORDER BY ' + priority +
+                'verified_at DESC LIMIT 80', [*identifiers, *topics]).fetchall()
         else:
             terms = re.findall(r'\w{3,}', normalize_identity(query))[:24]
             if not terms:
@@ -582,6 +702,131 @@ def retrieve_evidence(query, *, books=(), requirement='', database=None, limit=8
             if len(returned) >= limit:
                 break
         return list(found.values()), returned
+
+
+def retrieve_character_entities(query='', *, books=(), names=(), requirement='characters',
+                                database=None, limit=12):
+    """Entity retrieval grounded in current source assertions, without HTTP/LLM.
+
+    ``source_supported`` means literal support in the admitted snapshot; it
+    does not claim independent corroboration. Entity rows alone are never used
+    as facts: every result rechecks the source's hash, TTL and conflicts.
+    """
+    if requirement not in {'characters', 'character_detail', 'relationships'}:
+        return []
+    if not isinstance(query, str) or len(query) > 5000:
+        return []
+    limit = max(1, min(int(limit), 40))
+    if not isinstance(books, (list, tuple)) or not isinstance(names, (list, tuple)):
+        return []
+    requested = {normalize_identity(name) for name in names[:12]
+                 if isinstance(name, str) and 0 < len(name) <= 180}
+    with _connection(database) as db:
+        if db is None:
+            return []
+        scope = []
+        for raw in books[:12]:
+            identity = work_identity(raw) if isinstance(raw, dict) else None
+            if not identity:
+                continue
+            scope.extend(row[0] for row in db.execute('SELECT work_id FROM memory_aliases '
+                'WHERE title_key=? AND author_key=?', (normalize_identity(identity['title']),
+                                                     normalize_identity(identity['author']))))
+            scope.append(stable_work_id(identity['title'], identity['author']))
+        if books and not scope:
+            return []
+        # Unscoped free-text search is not permission to scan every character.
+        # Locate candidate works with the existing FTS index, then keep each
+        # entity bound to its own work. Ambiguous isolated names fail closed.
+        if not scope:
+            candidate_books, _ = retrieve_evidence(query or ' '.join(sorted(requested)), requirement=requirement,
+                                                   database=database, limit=20)
+            scope = [book['work_id'] for book in candidate_books]
+        if not scope:
+            return []
+        rows = db.execute('SELECT a.subject,a.record,a.source_id,a.assertion_id FROM memory_assertions a '
+            "WHERE a.predicate='role' AND a.work_id IN (" + ','.join('?' for _ in scope) +
+            ') ORDER BY a.work_id,a.subject,a.assertion_id LIMIT 1000', scope).fetchall()
+        entities, current_sources, now = {}, {}, time.time()
+        for row in rows:
+            source_id = row['source_id']
+            if source_id not in current_sources:
+                current_sources[source_id] = _current_source(db, source_id, now)
+            source = current_sources[source_id]
+            if not source:
+                continue
+            raw = json.loads(row['record'])
+            # Existing snapshots may predate the passage/alias projection.
+            facts = _literal_facts([raw], source['description'], 'character_facts')
+            if not facts:
+                continue
+            fact = facts[0]
+            name, aliases = fact['name'], fact.get('aliases', [])
+            labels = {normalize_identity(name), *(normalize_identity(alias) for alias in aliases)}
+            if requested and not labels & requested:
+                continue
+            work_id = source['work_id']
+            key = (work_id, normalize_identity(name))
+            # Different labels become one entity only through an explicit,
+            # supported alias clause, never a fuzzy match or shared role.
+            for candidate_key, candidate in entities.items():
+                candidate_labels = {normalize_identity(label)
+                                    for label in [candidate['name'], *candidate['aliases']]}
+                if candidate['work_id'] == work_id and labels & candidate_labels:
+                    key = candidate_key
+                    break
+            work = db.execute('SELECT record FROM memory_works WHERE work_id=?', (work_id,)).fetchone()
+            if not work:
+                continue
+            identity = json.loads(work[0])
+            entity = entities.setdefault(key, {'entity_id': _hash(work_id, 'character', normalize_identity(name)),
+                'work_id': work_id, 'work_title': identity['title'], 'work_author': identity['author'],
+                'name': name, 'canonical_name': name, 'aliases': [], 'role': fact['role'],
+                'description': fact.get('description') or fact['role'],
+                'narrative_role': fact.get('narrative_role', ''), 'relations': [], 'evidence': [],
+                'membership_only': fact.get('membership_only', False),
+                'verification_status': 'source_supported', 'independently_corroborated': False})
+            merged_aliases = entity['aliases'] + aliases + ([name] if entity['name'] != name else [])
+            entity['aliases'] = list(dict.fromkeys(alias for alias in merged_aliases
+                                                 if normalize_identity(alias) != normalize_identity(entity['name'])))
+            if entity['membership_only'] and not fact.get('membership_only'):
+                entity.update(role=fact['role'], description=fact.get('description') or fact['role'],
+                    narrative_role=fact.get('narrative_role', ''), membership_only=False)
+            passage = fact['evidence']
+            entity['evidence'].append({'source_id': source_id,
+                'supporting_passage_id': _hash(source_id, source['content_hash'], passage),
+                'text': passage, 'url': source['url'], 'source': source})
+        if requirement == 'relationships':
+            for entity in entities.values():
+                labels = {normalize_identity(label) for label in [entity['name'], *entity['aliases']]}
+                relation_rows = db.execute('SELECT record,source_id FROM memory_assertions WHERE work_id=? '
+                    "AND predicate<>'role' ORDER BY assertion_id LIMIT 1000", (entity['work_id'],)).fetchall()
+                for relation in relation_rows:
+                    source_id = relation['source_id']
+                    if source_id not in current_sources:
+                        current_sources[source_id] = _current_source(db, source_id, now)
+                    source = current_sources[source_id]
+                    if not source:
+                        continue
+                    facts = _literal_facts([json.loads(relation['record'])], source['description'], 'literary_facts')
+                    if not facts:
+                        continue
+                    value = facts[0]
+                    relation_names = {normalize_identity(value.get(key, ''))
+                                      for key in ('subject', 'value', 'object')}
+                    if labels & relation_names and value.get('evidence'):
+                        entity['relations'].append({**value, 'source_id': source_id,
+                            'supporting_passage_id': _hash(source_id, source['content_hash'], value['evidence']),
+                            'source_url': source['url'], 'verification_status': 'source_supported'})
+        # The same isolated character label can identify unrelated works.
+        if requested and not books and len({entity['work_id'] for entity in entities.values()}) > 1:
+            return []
+        query_key = normalize_identity(query)
+        ranked = list(entities.values())
+        ranked.sort(key=lambda entity: (-int(any(re.search(r'(?<!\w)' + re.escape(normalize_identity(label))
+            + r'(?!\w)', query_key) for label in [entity['name'], *entity['aliases']])),
+            -int(bool(entity['relations'])), entity['work_id'], normalize_identity(entity['name'])))
+        return ranked[:limit]
 
 
 def _category(requirement, provider=''):

@@ -11,11 +11,12 @@ import time
 import uuid
 
 from .ai_budget import request_budget
-from .literary_identity import same_work, work_identity
+from .literary_identity import bind_source, same_work, work_identity
 from .literary_sources import error_status, research_scope
 
 
-PROVIDERS = ('openlibrary', 'wikidata')
+DEFAULT_PROVIDERS = ('openlibrary', 'wikidata')
+PROVIDERS = (*DEFAULT_PROVIDERS, 'wikipedia')
 REQUIREMENTS = frozenset({'', 'author', 'characters', 'character_detail', 'summary',
     'identification', 'relationships', 'events', 'ending', 'themes', 'metadata', 'recommend',
     'plot', 'identify', 'book_identity', 'publication', 'synopsis', 'bibliography',
@@ -25,12 +26,15 @@ _FAILURE_CODES = frozenset({'empty', 'unavailable', 'timeout', 'rate_limited', '
     'no_verified_match', 'not_permitted', 'no_evidence', 'invalid_identity'})
 
 
-def provider_order(stats, *, requirement='', eligible=PROVIDERS):
+def provider_order(stats, *, requirement='', eligible=DEFAULT_PROVIDERS):
     """Reordena herramientas, nunca fuentes o afirmaciones por popularidad.
 
     Con menos de ocho verificaciones/fallos conserva el orden original. La
     contribución está acotada a +/-0,15 y la latencia sólo desempata en 0,01.
     Un ``hit`` de caché no se convierte en evidencia de exactitud factual.
+    ``verified`` conserva el nombre histórico del contador de comprobaciones
+    de fuente/identidad/cobertura; no acredita verdad independiente, calidad
+    de una respuesta LLM ni etiquetas para entrenar un modelo de ranking.
     """
     if requirement not in REQUIREMENTS:
         raise ValueError('Tipo de evidencia no admitido')
@@ -98,6 +102,13 @@ def _covers_requirement(work, books, sources, requirement):
         return any(len(str(source.get('description', ''))) >= 60 for source in narrative)
     from .literary_research import assess_evidence
     from .literary_ai import canonical_sources
+    if requirement in {'characters', 'character_detail', 'relationships'}:
+        # P674 proves membership, not a narrative role. Keeping that admitted
+        # statement in memory must not complete a job asking for useful roles.
+        narrative = [{**source, 'character_facts': [fact for fact in source.get('character_facts', [])
+            if isinstance(fact, dict) and not fact.get('membership_only') and not re.search(
+                r'personaje registrado|registered character|character (?:listed|registered) for this work',
+                str(fact.get('role', '')), re.I)]} for source in narrative]
     prompts = {'characters': 'Dime los personajes de ', 'character_detail': 'Dime los personajes de ',
         'relationships': 'Explica la relación entre los personajes de ',
         'events': 'Qué sucede en ', 'ending': 'Cómo termina ', 'scenes': 'Describe escenas de ',
@@ -176,6 +187,9 @@ def run_refresh_batch(*, database=None, max_jobs=2, max_seconds=30, job_seconds=
     proceso detenido deja leases que otro trabajador puede recuperar al vencer.
     CPU/red: hasta 20 tareas, 120 s por lote, 12 s por tarea y una pausa >=1 s.
     El adaptador de cada fuente mantiene además sus límites HTTP existentes.
+    Wikipedia sólo puede consultar su introducción oficial: ``pages=0`` impide
+    leer artículos completos o tablas. Sin evidencia suficiente se reprograma;
+    no se amplía el permiso de almacenamiento ni se inventan roles.
     """
     from .literary_memory import (claim_job, get_work, remember_evidence,
         finish_job, fail_job, record_use, retrieve_evidence, ERRORS)
@@ -192,7 +206,9 @@ def run_refresh_batch(*, database=None, max_jobs=2, max_seconds=30, job_seconds=
     fetch = fetch or _fetch_public_metadata
     start = clock()
     report = {'claimed': 0, 'completed': 0, 'deferred': 0, 'stored': 0,
-              'seconds': 0.0, 'jobs': [], 'llm_calls': 0}
+              'seconds': 0.0, 'jobs': [], 'llm_calls': 0,
+              'verification_scope': 'source_policy_identity_and_requirement_coverage',
+              'independent_factual_corroboration': False}
     for index in range(max_jobs):
         remaining = max_seconds - (clock() - start)
         if remaining < 1:
@@ -222,7 +238,8 @@ def run_refresh_batch(*, database=None, max_jobs=2, max_seconds=30, job_seconds=
                     if status not in {'ok', 'partial'}:
                         code = status if status in _FAILURE_CODES else 'unavailable'
                     else:
-                        matching = [source for source in found[:12] if isinstance(source, dict)
+                        matching = [bind_source(source, work) if source.get('kind') == 'web' else source
+                                    for source in found[:12] if isinstance(source, dict)
                                     and same_work(source, work)]
                         if matching:
                             counts = remember_evidence([work], matching, database=database)
@@ -261,6 +278,9 @@ def run_refresh_batch(*, database=None, max_jobs=2, max_seconds=30, job_seconds=
                 record_use(job['work_id'], requirement, 'failed', provider=provider,
                            latency=elapsed, database=database)
                 report['deferred'] += 1
+                # Admitted introductory content can be useful even when it
+                # does not satisfy this job's character-specific requirement.
+                report['stored'] += stored
         # Ningún texto remoto o excepción se introduce en logs persistentes.
         report['jobs'].append({'work_id': job['work_id'], 'provider': provider,
             'requirement': requirement, 'status': code, 'lease_current': bool(accepted),

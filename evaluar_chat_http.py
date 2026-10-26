@@ -71,6 +71,8 @@ def main(argv=None):
                         help='Precarga el modelo instalado con prompt vacío, sin preparar respuestas.')
     parser.add_argument('--trace-narrative', action='store_true',
                         help='Guarda borrador/auditoría narrativa únicamente en el informe local aislado.')
+    parser.add_argument('--trace-characters', action='store_true',
+                        help='Guarda diagnóstico y pruebas de personajes sólo en este informe local aislado.')
     parser.add_argument('--chat-budget', type=float, default=36,
                         help='Segundos de trabajo literario antes de cerrar el stream.')
     parser.add_argument('--response-budget', type=float, default=42,
@@ -146,6 +148,19 @@ def main(argv=None):
         from django.views.decorators.csrf import ensure_csrf_cookie
         from core.literary_ai_views import chatbot_query, chatbot_finalize
         narrative_traces = []
+        character_traces = []
+        if args.trace_characters:
+            from core import ai_character_answers
+            original_characters = ai_character_answers.character_answer
+            def traced_characters(message, history=(), config=None, **kwargs):
+                result = original_characters(message, history, config, **kwargs)
+                if result is not None:
+                    character_traces.append({'question': message,
+                        'request': ai_character_answers.request_for(message, history, kwargs.get('pending_clarification')),
+                        'status': result.status, 'answer': result.text,
+                        'sources': copy.deepcopy(result.sources), 'diagnostics': copy.deepcopy(result.diagnostics)})
+                return result
+            ai_character_answers.character_answer = traced_characters
         if args.trace_narrative:
             from core import ai_narrative_answers
             original_synthesis = ai_narrative_answers.synthesize_answer
@@ -194,6 +209,8 @@ def main(argv=None):
                       'factual_review': 'not_independently_certified', 'turns': []}
             if args.trace_narrative:
                 report['narrative_traces'] = narrative_traces
+            if args.trace_characters:
+                report['character_traces'] = character_traces
             report['source_sha256'] = code_revision(base)
             report['runner_sha256'] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
             report['matrix_sha256'] = hashlib.sha256(args.matrix.read_bytes()).hexdigest() if args.matrix else None

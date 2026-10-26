@@ -3,6 +3,93 @@
 Actualizado: 26 de octubre de 2026.
 Rama: `feature/cuotas-ia-chatbot`.
 
+## Personajes verificados y límite de Wikipedia (26 de octubre de 2026)
+
+- Punto de partida: HEAD `5039697`, rama `feature/cuotas-ia-chatbot`, cuatro
+  commits por delante de `origin`. Se conservaron los cambios pendientes de la
+  unidad anterior; no se restauró ni se sobrescribió trabajo existente.
+- Objetivo: que las preguntas de personajes de cualquier obra recuperen
+  evidencia publicada y respondan con procedencia y auditoría, sin depender de
+  *El Señor de los Anillos* ni de respuestas preparadas.
+- Causa del fallo intermitente reproducida: Wikimedia aplica desde 2026 un
+  límite de **10 solicitudes/minuto** a clientes sin identificar y **200** a
+  clientes con un `User-Agent` que incluya contacto. `_agent()` enviaba
+  `LitMate/Local-1.0` sin URL ni correo. Una sonda real recibió HTTP 429 tras
+  diez peticiones, con `Retry-After: 37`; el mismo lote con un `User-Agent`
+  identificado completó 20/20 respuestas HTTP 200.
+- Se corrigió `_agent()` para incluir el contacto configurado en
+  `LITMATE_BOOKS_CONTACT` y, si falta, la URL pública del repositorio. No se
+  añadieron credenciales ni se modificó `.env`.
+- `PublicFetchError` conserva ahora el `Retry-After` del 429. `cooldown_seconds`
+  acepta segundos o fecha HTTP y lo limita a 5–600 s; ya no sustituye un plazo
+  oficial de 37 s por el valor genérico de 30 s.
+- El cooldown pasó de una clave global a una clave por host
+  (`es.wikipedia.org` / `en.wikipedia.org`). Un 429 en español ya no impide
+  probar inglés: si hay resultados ingleses la respuesta es `partial`; si no
+  hay datos y ambos hosts están en pausa, el estado sigue siendo `cooldown`.
+- La ruta de personajes añade `external_research` a sus diagnósticos: número de
+  solicitudes HTTP, lecturas reservadas y eventos acotados, sin consulta ni
+  contenido del lector. Esto permite medir búsquedas y lecturas sin depender
+  sólo del estado final.
+- Se preservó la lectura estructural: TextExtracts primero y Parse siempre en
+  consultas de personajes; anexos vinculados por título exacto, listas `<dt>`,
+  enlaces wiki iniciales y rechazo de navegación, adaptaciones y secuelas.
+- Pruebas actualizadas para el comportamiento real: las consultas de personajes
+  hacen tres llamadas a la API (búsqueda, artículo completo y Parse) y consumen
+  dos lecturas oficiales; una prueba de 429 ya no contamina el cooldown de la
+  siguiente. No se relajó ninguna validación.
+
+### Comprobaciones ejecutadas
+
+```text
+.\venv\Scripts\python.exe verificar_proyecto.py core
+-> 1486 pruebas OK en 19.492 s
+
+.\venv\Scripts\python.exe manage.py test core.test_character_extraction core.test_character_memory core.test_character_quality_regression core.test_wikipedia_character_tables core.test_web_search --keepdb
+-> 157 pruebas OK en 3.779 s
+```
+
+La suite usa SQLite en memoria y almacenes temporales; no migra ni toca datos de
+producción. Las pruebas dirigidas anteriores (168) también pasaron antes de
+añadir el diagnóstico de investigación; la cifra final verificada es la de
+arriba.
+
+### Benchmark HTTP/SSE real
+
+`core/data/character_benchmark.json`, 14 turnos reales, Ollama local y fuentes
+públicas reales, bases auxiliares vacías. Salida:
+`reportes/personajes_20261026/benchmark_final.json`.
+
+| Medición | Resultado |
+|---|---:|
+| Turnos answered | 14/14 |
+| p50 / media / p95 / máximo | 0,1125 / 3,698 / 19,602 / 19,602 s |
+| Turnos <5 s / <10 s / <30 s | 12 / 12 / 14 |
+| Solicitudes HTTP externas | 25 iniciadas y 25 OK |
+| Lecturas de página reservadas | 14 |
+| Llamadas al modelo | 4 (dos respuestas de antagonistas/relación) |
+| HTTP 429 / cooldown | 0 |
+
+Los 12 turnos de personajes tienen auditoría `approve` y todas sus afirmaciones
+quedaron `supported`; los otros dos turnos resuelven recomendación y sinopsis
+sin modelo. Las respuestas con síntesis (antagonistas y relación Frodo/Sam)
+conservan sus fuentes y la auditoría; no se presentan como certificación
+factual independiente. La recuperación directa devolvió 12 hechos para *Cien
+años de soledad*, *Orgullo y prejuicio* y *Don Quijote de la Mancha*, 10 para
+*Harry Potter y la piedra filosofal* y 0 para *Papelucho y el marciano*; este
+último se respondió desde conocimiento local con dos hechos auditados.
+
+`source_files_changed_during_run=false`. No se ejecutaron migraciones, no se
+instalaron paquetes, no se modificó `.env`, no se borraron datos y no se hizo
+push. Checkpoint local: `checkpoint/personajes-verificados-20261026`.
+
+Limitaciones: el p95 de 19,6 s corresponde a dos síntesis con el modelo 9B; no
+demuestra el p95 de toda la aplicación ni exactitud factual independiente. El
+contacto público del `User-Agent` puede sustituirse por
+`LITMATE_BOOKS_CONTACT` en un despliegue. La siguiente revisión debe mantener
+el límite por host y repetir la matriz con arranque frío y fuentes externas
+distintas.
+
 ## Sinopsis y Docker: unidad completada (26 de octubre de 2026)
 
 - Se retomó HEAD `7810561` y se conservaron las modificaciones pendientes de

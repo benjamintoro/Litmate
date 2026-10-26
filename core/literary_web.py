@@ -52,8 +52,9 @@ _STOP = {'el', 'la', 'los', 'las', 'un', 'una', 'de', 'del', 'en', 'y', 'que',
 
 class PublicFetchError(ValueError):
     """Fallo tipado, sin incluir direcciones privadas ni cuerpos en registros."""
-    def __init__(self, code):
+    def __init__(self, code, *, retry_after=None):
         self.code = code
+        self.retry_after = retry_after
         super().__init__(code)
 
 
@@ -186,7 +187,10 @@ def _secure_fetch(url, *, allowed_domains, deadline, maximum, accept, headers=No
         if 300 <= status < 400:
             raise PublicFetchError('redirect_blocked')
         if status == 429:
-            raise PublicFetchError('rate_limited')
+            # Se conserva el plazo oficial para que el cooldown no se quede
+            # corto (reintentos prematuros) ni bloquee más de lo indicado.
+            raise PublicFetchError('rate_limited',
+                                   retry_after=response.getheader('Retry-After'))
         if status >= 500:
             raise PublicFetchError('service_unavailable')
         if status != 200:
@@ -356,7 +360,97 @@ def _plain(value, maximum=300):
     return re.sub(r'\s+', ' ', str(value or '')).strip()[:maximum]
 
 
-def character_table_passage(html, *, context='', maximum=1800):
+_CHARACTER_SPOILER = re.compile(
+    r'\b(?:muert[eo]|muere|revela|final|descendient|hijo de Paul)\w*|'
+    r'\b(?:asesin[oó]|asesinaron)\b|'
+    r'\b(?:instrucciones|prompt|api key|ignora|contrase[nñ]a)\b', re.I)
+
+
+def _character_role_score(value):
+    """Utilidad de una función publicada; no asigna una función nueva."""
+    value = _normalized(value)
+    return sum(weight for pattern, weight in (
+        (r'\b(?:protagonista|antagonista|protagonist|antagonist|villain)\b', 12),
+        (r'\b(?:companero|amigo|amiga|protector|companion|friend)\b|\bacompan', 8),
+        (r'\b(?:mision|mission|combatir|portador|encargado|encargada)\b|'
+         r'\b(?:forma|formando) parte|\bintegra|\bparticip', 7),
+        (r'\b(?:capitan|lider|guia|rey|reina|maestro|maestra|commander|leader)\b', 4),
+    ) if re.search(pattern, value))
+
+
+def _character_description(text, context='', *, prefer_first=False):
+    text = re.sub('[\u200b-\u200f\u2060\ufeff]', '', _plain(text, 1600))
+    from .literary_quality import factual_statements
+    # Conserva iniciales (J. R. R. Tolkien) y abreviaturas como parte de la
+    # misma oración publicada; no corta el predicado en la primera letra.
+    sentences = [sentence for sentence in factual_statements(text, strip_markers=False)
+                 if 12 <= len(sentence) <= 280
+                 and not _CHARACTER_SPOILER.search(sentence)
+                 and not _ADAPTATION_LABEL.search(_normalized(sentence))]
+    if not sentences:
+        return ''
+    value = _normalized(context)
+    requested = bool(re.search(r'\b(?:antagonistas?|villanos?|relacion|parentesco|relationship)\b', value))
+    # Bajo un subtítulo nominal el párrafo entero describe a esa persona: la
+    # primera oración aceptable es la definición publicada. Elegir la de mayor
+    # puntuación podía quedarse con una frase tangencial («su obra maestra»).
+    if prefer_first and not requested:
+        return sentences[0]
+
+    def score(sentence):
+        normalized = _normalized(sentence)
+        bonus = 0
+        if re.search(r'\b(?:antagonistas?|villanos?)\b', value):
+            bonus = 30 * bool(re.search(r'\b(?:antagonista|villano|villain|antagonist)\b', normalized))
+        elif re.search(r'\b(?:relacion|parentesco|relationship)\b', value):
+            bonus = 20 * bool(re.search(r'\b(?:amigo|amiga|companero|hermano|hermana|'
+                r'padre|madre|hijo|hija|esposo|esposa|friend|brother|sister)\b', normalized))
+        return bonus + _character_role_score(sentence)
+    return max(sentences, key=score)
+
+
+def _linked_character_name(node, label):
+    """Nombre más completo publicado en el enlace de esa misma entidad.
+
+    No sigue el enlace ni infiere apellidos del parentesco. Una etiqueta ajena
+    al título, o un href que contradice su atributo title, conserva el nombre
+    visible. Esto impide convertir un enlace mal rotulado en otro personaje.
+    """
+    anchor = next((item for item in node.find_all('a', limit=5)
+                   if _normalized(item.get_text(' ', strip=True)) == _normalized(label)), None)
+    if anchor is None:
+        return label, []
+    stated = _plain(anchor.get('title', ''), 100)
+    href = str(anchor.get('href') or '')
+    try:
+        parsed = urlsplit(href)
+    except ValueError:
+        return label, []
+    linked = ''
+    if ((not parsed.scheme and not parsed.netloc)
+            or (parsed.scheme == 'https' and (parsed.hostname or '') in
+                {'es.wikipedia.org', 'en.wikipedia.org'})):
+        if parsed.path.startswith('/wiki/'):
+            linked = unquote(parsed.path[len('/wiki/'):]).replace('_', ' ')
+        elif parsed.path.startswith('./'):
+            linked = unquote(parsed.path[2:]).replace('_', ' ')
+    def canonical(value):
+        return re.sub(r'(?i)\s*\((?:personaje ficticio|personaje|character)\)\s*$', '', value).strip()
+    stated, linked = canonical(stated), canonical(linked)
+    if stated and linked and _normalized(stated) != _normalized(linked):
+        return label, []
+    candidate = stated or linked
+    if (not candidate or candidate == label or len(candidate) > 70
+            or not re.fullmatch(r'[A-ZÁÉÍÓÚÑ][\wÁÉÍÓÚÜÑáéíóúüñ .’\'-]{0,69}', candidate)
+            or len(candidate.split()) > 6
+            or any(not word[:1].isupper() and word not in {'de', 'del', 'la', 'los', 'las', 'y', 'van', 'von', 'da', 'di'}
+                   for word in candidate.split())
+            or not re.search(r'(?<!\w)' + re.escape(_normalized(label)) + r'(?!\w)', _normalized(candidate))):
+        return label, []
+    return candidate, [label]
+
+
+def _character_table_content(html, *, context='', maximum=1800, appendix=False):
     """Conserva filas literales de tablas bajo un encabezado de personajes.
 
     Solo admite columnas explícitas de nombre/descripción, nunca un reparto
@@ -364,15 +458,18 @@ def character_table_passage(html, *, context='', maximum=1800):
     El llamador debe verificar antes la identidad y procedencia de la página.
     """
     from bs4 import BeautifulSoup
-    soup = BeautifulSoup(str(html or ''), 'html.parser')
+    soup = html if isinstance(html, BeautifulSoup) else BeautifulSoup(str(html or ''), 'html.parser')
+    empty = {'passage': '', 'character_facts': []}
     if _INJECTION.search(soup.get_text(' ', strip=True)):
-        return ''
+        return empty
     adaptation = re.compile(r'\b(?:adaptaciones?|adaptations?|cine|cinematografic\w*|'
         r'peliculas?|films?|movies?|television|televisiv\w*|videojuegos?|video games?|cast|reparto)\b')
     rows = []
     for heading in soup.find_all(['h2', 'h3', 'h4']):
         label = _normalized(heading.get_text(' ', strip=True))
-        if not re.fullmatch(r'(?:personajes(?: principales)?|(?:main )?characters|character list)', label):
+        if not _character_label(label, appendix=appendix):
+            continue
+        if _wikipedia_chrome(heading):
             continue
         level = int(heading.name[1])
         ancestor_level, adaptation_parent = level, False
@@ -398,6 +495,8 @@ def character_table_passage(html, *, context='', maximum=1800):
                 continue
             if blocked_level is not None:
                 continue
+            if _wikipedia_chrome(node):
+                continue
             table_rows = node.find_all('tr', recursive=True)
             if not table_rows:
                 continue
@@ -410,7 +509,9 @@ def character_table_passage(html, *, context='', maximum=1800):
             roles = [i for i, item in enumerate(labels) if item in {'resumen', 'descripcion', 'description', 'summary', 'role', 'papel'}]
             if len(names) != 1 or len(roles) != 1:
                 continue
-            for row in table_rows[1:31]:
+            # Las filas separadoras no consumen el cupo de personajes. Algunas
+            # tablas intercalan una fila vacía tras cada entrada.
+            for row in table_rows[1:81]:
                 cells = row.find_all(['th', 'td'], recursive=False)
                 if len(cells) != len(labels) or any(cell.get('rowspan') or cell.get('colspan') for cell in cells):
                     continue
@@ -418,27 +519,345 @@ def character_table_passage(html, *, context='', maximum=1800):
                     for note in cell.select('sup, .reference, .mw-ref'):
                         note.decompose()
                 name = _plain(cells[names[0]].get_text(' ', strip=True), 90)
-                role = _plain(cells[roles[0]].get_text(' ', strip=True), 1000)
-                # Una oración publicada, no un resumen generado ni un corte a
-                # mitad de frase. El resto del párrafo puede contener spoilers.
-                role = re.split(r'(?<=[.!?])\s+(?=[A-ZÁÉÍÓÚÑ])', role, maxsplit=1)[0]
+                name, aliases = _linked_character_name(cells[names[0]], name)
+                # Una oración completa publicada que explique la función antes
+                # que una genealogía tangencial; nunca un resumen generado.
+                role = _character_description(cells[roles[0]].get_text(' ', strip=True), context)
                 if (not re.fullmatch(r'[A-ZÁÉÍÓÚÑ][^\n,:;]{0,64}', name)
                         or len(name.split()) > 6 or not 12 <= len(role) <= 280
                         or adaptation.search(_normalized(role))):
                     continue
-                rows.append((name, role))
+                rows.append((name, role, heading.get_text(' ', strip=True), aliases))
     value = _normalized(context)
-    rows.sort(key=lambda row: not bool(re.search(r'(?<!\w)' + re.escape(_normalized(row[0])) + r'(?!\w)', value)))
-    lines, seen = ['== Personajes principales =='], set()
-    for name, role in rows:
-        line = name + ': ' + role
-        if _normalized(name) in seen or len('\n'.join(lines + [line])) > maximum:
+    rows.sort(key=lambda row: (not bool(re.search(r'(?<!\w)' + re.escape(_normalized(row[0])) + r'(?!\w)', value)),
+                              -_character_role_score(row[1])))
+    # «Personajes» no demuestra que todos sean principales. La selección de
+    # funciones narrativas necesita el rótulo o la descripción publicados.
+    lines, seen, facts, previous = ['== Personajes =='], set(), [], ''
+    for name, role, label, aliases in rows:
+        display = name + (' (' + ', '.join(aliases) + ')' if aliases else '')
+        line = display + ': ' + role
+        classification = _character_classification(label)
+        extra = ['=== ' + label + ' ==='] if classification and label != previous else []
+        if _normalized(name) in seen or len('\n'.join(lines + extra + [line])) > maximum:
             continue
+        if extra:
+            lines.extend(extra)
+            previous = label
         lines.append(line)
+        fact = {'name': name, 'role': role, 'evidence': line}
+        if aliases:
+            fact['aliases'] = aliases
+        if classification:
+            fact.update(classification=classification, classification_evidence=label)
+        facts.append(fact)
         seen.add(_normalized(name))
         if len(seen) == 12:
             break
-    return '\n'.join(lines) if len(lines) > 2 else ''
+    return {'passage': '\n'.join(lines), 'character_facts': facts} if len(facts) >= 2 else empty
+
+
+def character_table_passage(html, *, context='', maximum=1800):
+    return _character_table_content(html, context=context, maximum=maximum)['passage']
+
+
+_CHARACTER_LABEL = re.compile(
+    r'^(?:(?:personajes|protagonistas?|antagonistas?|villanos?)'
+    r'(?:\s+(?:principales|secundarios|femeninos|masculinos|y|e|del|de|la|el|los|las|'
+    r'libro|novela|obra|historia|relato|cuento|saga|serie)){0,5}|'
+    r'(?:main |supporting |female |male )?characters'
+    r'(?:\s+(?:in|of|from)\s+(?:the\s+)?(?:book|novel|story|work))?|'
+    r'character list|protagonists?|antagonists?|villains?)$')
+_ADAPTATION_LABEL = re.compile(
+    r'\b(?:adaptaciones?|adaptations?|cine|cinematografic\w*|peliculas?|films?|movies?|'
+    r'television|televisiv\w*|videojuegos?|video games?|cast|reparto)\b')
+# Secciones de servicio que nunca describen personajes de la obra. En los
+# anexos el documento entero está activo, así que hay que cerrar expresamente
+# referencias, bibliografía y menús finales.
+_NON_CONTENT_LABEL = re.compile(
+    r'^(?:referencias|references|notas|notes|bibliografia|bibliography|'
+    r'enlaces externos|external links|vease tambien|see also|lecturas adicionales|'
+    r'further reading|fuentes|sources|categoria|category|galeria|gallery|'
+    r'premios|awards|adaptaciones|adaptations|cine|television|videojuegos|'
+    r'musica|curiosidades|trivia)\b')
+# Encabezados de grupo que podrían parecer un nombre propio. No se convierten
+# en personajes aunque el párrafo siguiente los describa.
+_GENERIC_CHARACTER_NAME = re.compile(
+    r'^(?:personajes?|protagonistas?|antagonistas?|villanos?|los|las|el|la|un|una|'
+    r'unos|unas|otros|otras|familia|dinastia|casa|tripulacion|equipo|grupo|elenco|'
+    r'reparto|plantel|pandilla|clan|orden|ejercito|armada|comunidad|pueblo|ciudad|'
+    r'reino|gobierno|generacion|primera|segunda|tercera|cuarta|'
+    r'quinta|sexta|septima|octava|argumento|trama|sinopsis|resumen|contexto|'
+    r'introduccion|prologo|epilogo|multimedia|datos|imagenes|galeria|referencias|'
+    r'bibliografia|enlaces|vease|notas|adaptaciones?|cine|television|musica|'
+    r'curiosidades|premios|criticas|analisis|apendice|anexo|indice|categoria|'
+    r'historia|publicacion|recepcion|tematica|estilo|obra|libro|novela|cuento|'
+    r'saga|serie|volumen|capitulo|seccion|principales|secundarios|femeninos|'
+    r'masculinos)\b')
+_CHROME_CLASSES = frozenset({
+    'navbox', 'mw-authority-control', 'mw-mf-linked-projects', 'infobox', 'metadata',
+    'reflist', 'references', 'reference', 'gallery', 'thumb', 'hatnote', 'rellink',
+    'mw-editsection', 'toc', 'catlinks', 'noprint', 'mw-references-wrap',
+    'sistersitebox', 'side-box', 'ambox', 'mbox', 'portal', 'mw-jump-link',
+    'shortdescription', 'mw-indicators'})
+
+
+def _wikipedia_chrome(node):
+    """Detecta menús, infobox, autoridades y referencias de una página wiki."""
+    for parent in [node, *node.parents]:
+        if getattr(parent, 'name', '') in {'nav', 'footer', 'aside'}:
+            return True
+        classes = parent.get('class') or ()
+        if isinstance(classes, str):
+            classes = classes.split()
+        if set(classes) & _CHROME_CLASSES:
+            return True
+        if str(parent.get('id') or '') in {'toc', 'catlinks', 'mw-navigation'}:
+            return True
+    return False
+
+
+def _plausible_character_name(value):
+    """Nombre propio publicado; nunca un rótulo de sección o de navegación."""
+    value = re.sub(r'\s*\[[^\]]*\]\s*', '', _plain(value, 100)).strip()
+    if (not value or len(value) > 70 or not 1 <= len(value.split()) <= 6
+            or not re.match(r'^[A-ZÁÉÍÓÚÑ]', value)
+            or _GENERIC_CHARACTER_NAME.match(_normalized(value))
+            or not re.fullmatch(r"[A-Za-zÁÉÍÓÚÜÑáéíóúüñ .’'()/-]+", value)):
+        return ''
+    return value
+
+
+def _character_label(label, *, appendix=False):
+    value = _normalized(label)
+    if _CHARACTER_LABEL.fullmatch(value):
+        return True
+    # «Principales» sólo es una lista de personajes dentro de un anexo cuyo
+    # título ya identifica la obra; fuera de ese contexto no autoriza nada.
+    return bool(appendix and value in {'principales', 'principales personajes'})
+
+
+def _character_classification(label):
+    value = _normalized(label)
+    for marker, classification in (('principal', 'principal'), ('main character', 'principal'),
+            ('secundari', 'secundario'), ('supporting character', 'secundario'),
+            ('antagonist', 'antagonista'), ('villan', 'antagonista'),
+            ('protagonist', 'protagonista')):
+        if marker in value:
+            return classification
+    return ''
+
+
+def character_content(html, *, context='', title='', maximum=1800):
+    """Extrae descripciones publicadas de listas, definiciones y subtítulos.
+
+    Un enlace en una categoría no demuestra ni función narrativa ni pertenencia
+    a la novela original. Sólo se leen secciones explícitas de personajes o un
+    anexo/lista de personajes identificado por el título del documento. La
+    identidad bibliográfica se comprueba posteriormente, fuera del extractor.
+    """
+    from bs4 import BeautifulSoup
+    soup = html if isinstance(html, BeautifulSoup) else BeautifulSoup(str(html or ''), 'html.parser')
+    empty = {'passage': '', 'character_facts': []}
+    if _INJECTION.search(soup.get_text(' ', strip=True)):
+        return empty
+    document_title = str(title or (soup.title.get_text(' ', strip=True) if soup.title else ''))
+    first_heading = soup.find('h1')
+    if not document_title and first_heading:
+        document_title = first_heading.get_text(' ', strip=True)
+    normalized_title = _normalized(document_title)
+    if (re.search(r'^(?:categoria|category)\s*:', normalized_title)
+            or _ADAPTATION_LABEL.search(normalized_title)):
+        return empty
+    appendix = bool(re.search(r'^(?:anexo\s*:\s*)?(?:lista de )?personajes\s+(?:de|del)\s+|'
+        r'^(?:list of )?characters (?:in|of|from)\s+', normalized_title))
+    rows, seen = [], set()
+
+    def render(records):
+        lines, previous = ['== Personajes =='], ''
+        for record in records:
+            label = record.get('classification_evidence', '')
+            if label and label != previous:
+                lines.append('=== ' + label + ' ===')
+                previous = label
+            lines.append(record['evidence'])
+        return '\n'.join(lines)
+
+    def add(name, role, classification='', classification_evidence='', published_aliases=(),
+            *, prefer_first=False):
+        if len(rows) >= 12:
+            return False
+        name, role = _plain(name, 100), _character_description(role, context,
+                                                                prefer_first=prefer_first)
+        if len(name) > 70:
+            return False  # El contrato canónico admite 70 caracteres; nunca cortar un nombre.
+        if (not re.fullmatch(r'[A-ZÁÉÍÓÚÑ][^\n,:;]{0,89}', name)
+                or len(name.split()) > 9 or not 12 <= len(role) <= 280
+                or _ADAPTATION_LABEL.search(_normalized(role))
+                or _INJECTION.search(name + ' ' + role)):
+            return False
+        # Mantiene las exclusiones previas del parser de personajes: una lista
+        # general no autoriza revelar un desenlace o publicar instrucciones.
+        if _CHARACTER_SPOILER.search(role):
+            return False
+        if re.match(r'(?i)^(?:art[ií]culo principal|v[eé]ase|referencias?|nota|'
+                    r'personajes?|bibliograf[ií]a|enlaces? externos?)\b', name):
+            return False
+        # Conserva como alias sólo nombres explícitos entre paréntesis, nunca
+        # una relación/ocupación que aparezca en la descripción.
+        aliases = list(published_aliases)
+        alias_match = re.fullmatch(r'(.+?)\s*\(([^()]{1,65})\)', name)
+        if alias_match and re.fullmatch(r'[A-ZÁÉÍÓÚÑ][\wÁÉÍÓÚÜÑáéíóúüñ .’\'-]{0,64}', alias_match.group(2)):
+            aliases = [alias_match.group(2)]
+        published_alias = re.search(r'(?i)\b(?:llamad[oa]|apodad[oa])\s+[«“"]([^»”"\n]{1,65})[»”"]', role)
+        if published_alias and re.fullmatch(r'[A-ZÁÉÍÓÚÑ][\wÁÉÍÓÚÜÑáéíóúüñ .’\'-]{0,64}', published_alias.group(1)):
+            aliases.append(published_alias.group(1))
+        if not published_alias:
+            published_alias = re.search(r'\b(?:[Ll]lamad[oa]|[Aa]nteriormente llamad[oa])\s+'
+                r'([A-ZÁÉÍÓÚÑ][\wÁÉÍÓÚÜÑáéíóúüñ’\'-]*(?:\s+[A-ZÁÉÍÓÚÑ][\wÁÉÍÓÚÜÑáéíóúüñ’\'-]*){0,3})\s*,', role)
+            if published_alias:
+                aliases.append(published_alias.group(1))
+        key = _normalized(name)
+        if key in seen:
+            return False
+        display = name + (' (' + ', '.join(published_aliases) + ')' if published_aliases else '')
+        evidence = display + ': ' + role
+        record = {'name': name, 'role': role, 'evidence': evidence}
+        if classification:
+            record['classification'] = classification
+            record['classification_evidence'] = classification_evidence
+        if aliases:
+            record['aliases'] = list(dict.fromkeys(aliases))
+        if len(render([*rows, record])) > maximum:
+            return False
+        rows.append(record)
+        seen.add(key)
+        return True
+
+    def name_role(node, classification, classification_evidence):
+        for note in node.select('sup, .reference, .mw-ref'):
+            note.decompose()
+        value = node.get_text(' ', strip=True)
+        match = re.match(r'^([A-ZÁÉÍÓÚÑ][^\n,;:]{0,89})\s*[:—–]\s*(\S.*)$', value)
+        if match:
+            add(match.group(1), match.group(2), classification, classification_evidence)
+            return
+        # Un nombre marcado en negrita seguido de una definición es una
+        # estructura editorial explícita, no reconocimiento de nombres libres.
+        marked = node.find(['b', 'strong'], recursive=False)
+        if marked:
+            name = marked.get_text(' ', strip=True)
+            if value.startswith(name):
+                role = value[len(name):].strip(' :—–-,')
+                add(name, role, classification, classification_evidence)
+                return
+        # Muchas listas wiki enlazan el nombre sin negrita y continúan con una
+        # aposición o con «es/fue». Se exige que el enlace abra la entrada para
+        # no convertir cualquier mención del texto en el sujeto de la frase.
+        for anchor in node.find_all('a', href=True)[:6]:
+            name = _plausible_character_name(anchor.get_text(' ', strip=True))
+            if not name:
+                continue
+            position = value.find(name)
+            if position < 0:
+                continue
+            before = value[:position]
+            if before and not re.fullmatch(r'(?i)(?:el|la|los|las|un|una)\s+', before):
+                continue
+            role = value[position + len(name):]
+            role = re.sub(r'^[\s,;:—–-]+', '', role)
+            role = re.sub(r'(?i)^(?:es|fue|era)\s+', '', role)
+            if len(role) < 12:
+                continue
+            add(name, role, classification, classification_evidence)
+            return
+
+    # Las tablas conservan su extractor estricto de columnas, reparto y
+    # límites. El resto amplía formatos, sin admitir tablas arbitrarias.
+    table_content = _character_table_content(soup, context=context, maximum=maximum,
+                                             appendix=appendix)
+    for fact in table_content['character_facts']:
+        add(fact['name'], fact['role'], fact.get('classification', ''),
+            fact.get('classification_evidence', ''), fact.get('aliases', ()))
+    active_level = 0 if appendix else None
+    classification, classification_evidence = '', ''
+    blocked_level, named_heading, definition_heading = None, '', ''
+    for node in soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'dl', 'p']):
+        if node.find_parent(['nav', 'footer', 'aside', 'table']) or _wikipedia_chrome(node):
+            continue
+        if node.name.startswith('h'):
+            level = int(node.name[1])
+            label = _normalized(node.get_text(' ', strip=True))
+            if blocked_level is not None and level <= blocked_level:
+                blocked_level = None
+            if _NON_CONTENT_LABEL.match(label):
+                active_level, classification = None, ''
+                classification_evidence = ''
+                blocked_level, named_heading, definition_heading = level, '', ''
+                continue
+            if _ADAPTATION_LABEL.search(label):
+                blocked_level, named_heading, definition_heading = level, '', ''
+                continue
+            if blocked_level is not None:
+                continue
+            if _character_label(label, appendix=appendix):
+                active_level, classification, named_heading = level, _character_classification(label), ''
+                definition_heading = ''
+                classification_evidence = node.get_text(' ', strip=True) if classification else ''
+                continue
+            if active_level is not None and active_level > 0 and level <= active_level:
+                active_level, classification = (0, '') if appendix else (None, '')
+                classification_evidence = ''
+            named_heading = node.get_text(' ', strip=True) if active_level is not None and level > (active_level or 1) else ''
+            definition_heading = ''
+            continue
+        if active_level is None or blocked_level is not None:
+            continue
+        if node.name in {'ul', 'ol'}:
+            if node.find_parent(['ul', 'ol']):
+                continue
+            for item in node.find_all('li', recursive=False)[:40]:
+                name_role(item, classification, classification_evidence)
+        elif node.name == 'dl':
+            for definition in node.find_all('dt', recursive=False)[:40]:
+                name = _plausible_character_name(definition.get_text(' ', strip=True))
+                if not name:
+                    continue
+                detail = definition.find_next_sibling()
+                if detail and detail.name == 'dd':
+                    add(name, detail.get_text(' ', strip=True), classification,
+                        classification_evidence, prefer_first=True)
+                else:
+                    # Wikipedia separa a veces la definición del término:
+                    # <dl><dt>Nombre</dt></dl><p>Descripción...</p>.
+                    definition_heading = name
+        elif not node.find_parent(['li', 'dd']):
+            role = node.get_text(' ', strip=True)
+            heading = named_heading or definition_heading
+            name = _plausible_character_name(heading)
+            if name:
+                # El párrafo describe al sujeto del subtítulo aunque no repita
+                # su nombre; la evidencia conserva el rótulo publicado.
+                if add(name, role, classification, classification_evidence,
+                       prefer_first=True):
+                    named_heading = definition_heading = ''
+            elif heading:
+                named_heading = definition_heading = ''
+        if len(rows) >= 12:
+            break
+    if not rows:
+        return empty
+    # Para páginas de listas/anexos, los primeros nombres no necesariamente
+    # son los principales: preferir menciones de la introducción sin cambiar
+    # la clasificación publicada ni inventar importancia narrativa.
+    value = _normalized(context)
+    rows.sort(key=lambda row: not bool(re.search(r'(?<!\w)' + re.escape(_normalized(row['name'])) + r'(?!\w)', value)))
+    return {'passage': render(rows),
+            'character_facts': rows}
+
+
+def character_content_passage(html, *, context='', title='', maximum=1800):
+    return character_content(html, context=context, title=title, maximum=maximum)['passage']
 
 
 def _normalized(value):
@@ -561,6 +980,19 @@ def _extract_html(raw, url, query, maximum):
             text = metadata_description
         method = 'beautifulsoup_structured'
     excerpt = _relevant_excerpt(text, query, maximum)
+    identity_text = title + ' ' + ' '.join(node.get_text(' ', strip=True)
+        for node in soup.find_all('p', limit=3))[:1000]
+    structured_characters = {'passage': '', 'character_facts': []}
+    if re.search(r'\b(?:personajes?|protagonistas?|antagonistas?|villanos?|characters?|'
+                 r'quien es|quienes son|relacion|relationship)\b', _normalized(query)):
+        structured_characters = character_content(soup, title=title,
+            context=text[:1200], maximum=maximum)
+        if structured_characters['passage']:
+            passage = structured_characters['passage']
+            if not all(fact['name'] in excerpt and fact['role'] in excerpt
+                       for fact in structured_characters['character_facts']):
+                method += '+structured_characters'
+            excerpt = passage
     if re.search(r'\b(trama|sinopsis|argumento|contenido|temas|overview|synopsis|plot|summary)\b',
                  _normalized(query)):
         # Reserva espacio al índice antes que a publicidad o biografías. Sólo
@@ -610,6 +1042,8 @@ def _extract_html(raw, url, query, maximum):
                     if name and len(name.split()) <= 6 and not _INJECTION.search(name):
                         mentions.append(name)
     return {'title': title, 'site': site, 'description': excerpt, 'excerpt': excerpt,
+            'identity_text': identity_text,
+            'character_facts': structured_characters['character_facts'],
             'headings': headings, 'character_mentions': list(dict.fromkeys(mentions))[:15],
             'injection_detected': injection, 'extraction_method': method}
 

@@ -86,11 +86,14 @@ class WikipediaReadingBudgetTests(SimpleTestCase):
                      'title': 'Papelucho y el marciano'}
         with research_scope(2, 15, 3), \
                 patch('core.literary_search.search_duckduckgo', return_value=snippets), \
-                patch('core.literary_search.read_json_url', side_effect=[self.intro, self.article]) as api, \
+                patch('core.literary_search.read_json_url',
+                      side_effect=[self.intro, self.article, {'parse': {}}]) as api, \
                 patch('core.literary_search.read_public_page', return_value=extracted) as html:
             results = _retrieve_web(self.query)
-            self.assertEqual(api.call_count, 2)
-            self.assertEqual(html.call_count, 2)
+            # Introducción + artículo completo + Parse consumen dos lecturas
+            # oficiales; el cupo restante se comparte con una página HTML.
+            self.assertEqual(api.call_count, 3)
+            self.assertEqual(html.call_count, 1)
             self.assertFalse(reserve_page())
         self.assertTrue(any(item.get('read_mode') == 'pasaje de sección de artículo público'
                             for item in results))

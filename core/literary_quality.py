@@ -263,17 +263,21 @@ def unsupported_century_claim(statement, evidence, source=None):
     return not centuries(claim) <= centuries(evidence)
 
 
-def factual_statements(text):
+def factual_statements(text, *, strip_markers=True):
     """Segmentos literales del borrador, conservando iniciales y abreviaturas.
 
     Comparte los límites entre el esquema del auditor y su validador. No decide
     qué es cierto ni elimina cláusulas de una frase. Cada segmento sigue siendo
-    una subcadena del original; únicamente se quita el marcador de una lista.
-    No se truncan frases largas, que también deben auditarse completas.
+    una subcadena del original; únicamente se quita el marcador de una lista
+    cuando ``strip_markers`` es verdadero (contrato del auditor). Los
+    extractores que exigen una subcadena literal pasan ``False`` para no
+    convertir el marcador en parte de la prueba. No se truncan frases largas,
+    que también deben auditarse completas.
     """
     statements = []
     for original in str(text or '').splitlines():
-        line = re.sub(r'^\s*(?:[-+*]\s+|\d{1,2}[.)]\s+)', '', original).strip()
+        line = (re.sub(r'^\s*(?:[-+*]\s+|\d{1,2}[.)]\s+)', '', original)
+                if strip_markers else original).strip()
         start = 0
         for boundary in re.finditer(r'''[.!?]+[»”"']*(?=\s|$)''', line):
             prefix = line[:boundary.start()]

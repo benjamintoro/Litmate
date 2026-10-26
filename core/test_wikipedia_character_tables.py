@@ -145,19 +145,22 @@ class WikipediaCharacterApiTests(SimpleTestCase):
             self.assertEqual(sources[0]['character_facts'], [])
             self.assertNotIn('Ana:', sources[0]['description'])
 
-    def test_existing_name_role_evidence_avoids_the_parse_request(self):
+    def test_existing_name_role_evidence_is_reread_with_parse(self):
         text = '== Personajes ==\nAna: Ella dirige la estación lunar.\nBruno: Él es el capitán de la nave.'
         with research_scope(), patch('core.literary_search._wikipedia_fetch', side_effect=[
-                self.search_data(), self.full_data(text)]) as fetch:
+                self.search_data(), self.full_data(text), self.parse_data()]) as fetch:
             sources = _search_wikipedia('"Cuaderno lunar" personajes')
-        self.assertEqual(fetch.call_count, 2)
+        self.assertEqual(fetch.call_count, 3)
+        self.assertEqual(parse_qs(urlsplit(fetch.call_args.args[0]).query)['action'], ['parse'])
         self.assertEqual(len(sources[0]['character_facts']), 2)
 
-    def test_no_explicit_character_heading_does_not_trigger_an_extra_parse_request(self):
+    def test_no_explicit_character_heading_is_still_reread_with_parse(self):
         with research_scope(), patch('core.literary_search._wikipedia_fetch', side_effect=[
-                self.search_data(), self.full_data('Un resumen narrativo sin datos de personajes.')]) as fetch:
+                self.search_data(), self.full_data('Un resumen narrativo sin datos de personajes.'),
+                self.parse_data()]) as fetch:
             _search_wikipedia('"Cuaderno lunar" personajes')
-        self.assertEqual(fetch.call_count, 2)
+        self.assertEqual(fetch.call_count, 3)
+        self.assertEqual(parse_qs(urlsplit(fetch.call_args.args[0]).query)['action'], ['parse'])
 
     def test_shared_page_limit_prevents_the_parse_request(self):
         with research_scope(), patch('core.literary_search._wikipedia_fetch', side_effect=[

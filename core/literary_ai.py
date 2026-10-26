@@ -997,7 +997,8 @@ def canonical_sources(items, maximum=8):
                      'memory_source_id', 'last_verified_at', 'policy'):
             if name in item:
                 source[name] = clean_text(item[name], 220)
-        for name in ('work_binding_verified', 'permanent_index_allowed', 'injection_detected', 'memory_verified'):
+        for name in ('work_binding_verified', 'permanent_index_allowed', 'injection_detected',
+                     'memory_verified', 'character_appendix'):
             if name in item:
                 source[name] = item[name] is True
         if isinstance(item.get('attribution'), dict):
@@ -1022,9 +1023,18 @@ def canonical_sources(items, maximum=8):
         if kind == 'web':
             source['identity_text'] = clean_text(item.get('identity_text'), 1200)
             facts = item.get('character_facts')
-            source['character_facts'] = [{'name': clean_text(fact.get('name'), 70), 'role': clean_text(fact.get('role'), 280)}
-                for fact in (facts if isinstance(facts, list) else [])[:12] if isinstance(fact, dict)
-                and fact.get('name') and fact.get('role')]
+            source['character_facts'] = []
+            for fact in (facts if isinstance(facts, list) else [])[:12]:
+                if not isinstance(fact, dict) or not fact.get('name') or not fact.get('role'):
+                    continue
+                value = {'name': clean_text(fact['name'], 70), 'role': clean_text(fact['role'], 280)}
+                for field in ('evidence', 'classification', 'classification_evidence'):
+                    if fact.get(field):
+                        value[field] = clean_text(fact[field], 300)
+                if isinstance(fact.get('aliases'), list):
+                    value['aliases'] = [clean_text(alias, 70) for alias in fact['aliases'][:8]
+                                        if isinstance(alias, str) and alias.strip()]
+                source['character_facts'].append(value)
         for field_name in ('synopsis', 'research_summary', 'synopsis_source_url', 'description_source',
                            'image_url', 'subtitle', 'publisher', 'published_date', 'language', 'page_count',
                            'isbns', 'categories', 'preview_url', 'read_url', 'viewability', 'public_domain'):

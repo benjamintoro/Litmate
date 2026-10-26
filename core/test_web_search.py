@@ -9,7 +9,9 @@ from django.test import SimpleTestCase, override_settings
 from .ai_budget import BudgetExpired, current_deadline, request_budget
 from .ai_quick_answers import isbn_lookup_answer, reference_answer, verified_book_list_answer, web_reference_answer
 from .literary_ai import ChatResult, LiteraryAssistant
-from .literary_search import search_duckduckgo, search_wikipedia
+from .literary_search import (_agent, _wikipedia_cooldown_key, _wikipedia_fetch,
+                              search_duckduckgo, search_wikipedia)
+from .literary_web import PublicFetchError
 
 
 DDG_HTML = '''<!doctype html><html><body><table>
@@ -103,6 +105,44 @@ class WikipediaCacheTests(SimpleTestCase):
             search_wikipedia('Nana Emile Zola offline')
             search_wikipedia('Nana Emile Zola offline')
         self.assertEqual(fetch.call_count, 2)
+
+    def test_accented_and_unaccented_lookups_do_not_share_a_cache_entry(self):
+        accented = dict(self.SOURCE, title='El Señor de los Anillos')
+        unaccented = dict(self.SOURCE, title='El Senor de los Anillos')
+        with patch('core.literary_search._search_wikipedia',
+                   side_effect=[[accented], [unaccented]]) as fetch, \
+                request_budget(time.monotonic() + 5):
+            first = search_wikipedia('personajes de señor de los anillos')
+            second = search_wikipedia('personajes de senor de los anillos')
+        self.assertEqual(first[0]['title'], 'El Señor de los Anillos')
+        self.assertEqual(second[0]['title'], 'El Senor de los Anillos')
+        self.assertEqual(fetch.call_count, 2)
+
+    def test_spanish_rate_limit_does_not_hide_english_results(self):
+        cache.set(_wikipedia_cooldown_key('es.wikipedia.org'), 'rate_limited', 30)
+        english = dict(self.SOURCE, title='Nana', language='en')
+        with patch('core.literary_search._search_wikipedia',
+                   return_value=[english]) as fetch, \
+                request_budget(time.monotonic() + 5):
+            result = search_wikipedia('personajes de Nana')
+        fetch.assert_called_once()
+        self.assertEqual(fetch.call_args.kwargs['language'], 'en')
+        self.assertEqual(result[0]['title'], 'Nana')
+        self.assertEqual(result.status, 'partial')
+
+    def test_rate_limit_cooldown_is_scoped_to_the_affected_host(self):
+        with patch('core.literary_search.read_json_url',
+                   side_effect=PublicFetchError('rate_limited', retry_after='37')):
+            with self.assertRaises(PublicFetchError):
+                _wikipedia_fetch('https://es.wikipedia.org/w/api.php?action=query')
+        self.assertEqual(cache.get(_wikipedia_cooldown_key('es.wikipedia.org')), 'rate_limited')
+        self.assertIsNone(cache.get(_wikipedia_cooldown_key('en.wikipedia.org')))
+
+    def test_wikipedia_user_agent_always_identifies_the_installation(self):
+        with override_settings(LITMATE_BOOKS_CONTACT=''):
+            self.assertIn('https://github.com/benjamintoro/Litmate', _agent())
+        with override_settings(LITMATE_BOOKS_CONTACT='lector@example.org'):
+            self.assertIn('lector@example.org', _agent())
 
 
 class VerifiedBookListAnswerTests(SimpleTestCase):

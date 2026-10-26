@@ -5,11 +5,12 @@ import logging
 import re
 import socket
 import time
+import unicodedata
 from datetime import datetime, timezone
 from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import urlencode, urlsplit, parse_qs
+from urllib.parse import urlencode, urlsplit, parse_qs, quote
 from urllib.request import Request, build_opener
 from django.conf import settings
 from django.core.cache import cache
@@ -63,12 +64,31 @@ def _retrieval_embedder():
 
 
 def _agent():
+    # Wikimedia distingue entre clientes sin identificar (10 req/min) y
+    # clientes con un User-Agent de contacto (200 req/min). Sin URL o correo,
+    # un turno real agota el cupo en pocas lecturas y bloquea las obras
+    # siguientes. El contacto configurado tiene prioridad; el repositorio
+    # público identifica la instalación cuando no existe otro dato.
     contact = clean_text(getattr(settings, 'LITMATE_BOOKS_CONTACT', ''), 100)
-    return ('LitMate/Local-1.0' + (' (' + contact + ')' if contact else '')).encode('ascii', 'ignore').decode()
+    contact = contact or 'https://github.com/benjamintoro/Litmate'
+    return ('LitMate/Local-1.0 (' + contact + '; literary research)').encode(
+        'ascii', 'ignore').decode()
 
 
 def _cache_key(prefix, query):
     return prefix + hashlib.sha256(query.encode()).hexdigest()
+
+
+def _cache_fingerprint(value):
+    """Separa consultas que sólo difieren en acentos.
+
+    La búsqueda de Wikipedia no es equivalente para «señor» y «senor»: la
+    segunda puede devolver secuelas o adaptaciones antes que la obra. Por eso
+    la caché conserva las marcas diacríticas; sólo unifica mayúsculas y espacios.
+    """
+    text = unicodedata.normalize('NFC', str(value or ''))
+    text = ''.join(char for char in text if unicodedata.category(char) != 'Cf')
+    return re.sub(r'\s+', ' ', text).strip().casefold()
 
 
 def _cached(key):
@@ -946,9 +966,61 @@ def read_public_web_page(url, query, *, details=False):
     return result.get('description', '') if result.get('status') == 'ok' else ''
 
 
+_WIKIPEDIA_ARTICLES = {'el', 'la', 'los', 'las', 'un', 'una', 'unos', 'unas',
+                        'de', 'del', 'the', 'a', 'an', 'of'}
+_WIKIPEDIA_DERIVATIVE = re.compile(
+    r'\b(?:pelicula|film|serie de television|videojuego|banda sonora|soundtrack|'
+    r'cinematografic\w*|juego de (?:cartas|rol|mesa|tablero))\b')
+_WIKIPEDIA_MEDIA_QUALIFIER = re.compile(
+    r'\b(?:pelicula|film|serie|videojuego|album|banda sonora|soundtrack|cancion|juego)\b')
+
+
+def _wikipedia_title_tokens(value):
+    """Palabras significativas para comparar una consulta con un título."""
+    value = re.sub(r'(?i)\bintitle\s*:\s*', ' ', str(value or ''))
+    return [word for word in re.findall(r'\w+', normalized(value))
+            if word not in STOPWORDS and word not in _WIKIPEDIA_ARTICLES]
+
+
+def _wikipedia_page_rank(page, identity_query, focus):
+    """Prefiere la obra exacta frente a secuelas, adaptaciones y anexos.
+
+    Wikipedia ordena por relevancia de búsqueda, pero una consulta sin tildes
+    puede colocar la obra principal después de varias secuelas. La nota sólo se
+    usa para elegir entre los candidatos ya devueltos por la API; no inventa
+    títulos ni identifica la obra por sí sola.
+    """
+    title = normalized(page.get('title'))
+    parenthetical = re.search(r'\s*\(([^)]*)\)\s*$', title)
+    core = title[:parenthetical.start()].strip() if parenthetical else title
+    title_words = _wikipedia_title_tokens(core)
+    wanted_words = _wikipedia_title_tokens(identity_query)
+    rank = 0
+    if title_words and title_words == wanted_words:
+        rank += 30
+    elif title_words and wanted_words[:len(title_words)] == title_words:
+        # El artículo es el título base y la consulta añade autor u otra pista.
+        rank += 8
+    rank += 2 * len(set(title_words) & set(wanted_words))
+    if focus and any(word in title for word in focus):
+        rank += 3
+    if parenthetical:
+        qualifier = normalized(parenthetical.group(1))
+        if re.search(r'\b(?:novela|libro|book|novel)\b', qualifier):
+            rank += 2
+        elif re.search(r'\b(?:desambiguacion|disambiguation)\b', qualifier):
+            rank -= 20
+        elif _WIKIPEDIA_MEDIA_QUALIFIER.search(qualifier):
+            rank -= 20
+    if _WIKIPEDIA_DERIVATIVE.search(core):
+        rank -= 20
+    return rank
+
+
 def _detail_focus(query):
     value = normalized(query)
-    if re.search(r'\bpersonajes?|\bprotagonistas?|\bcharacters?|\bcaracterizacion', value):
+    if re.search(r'\b(?:personajes?|protagonistas?|antagonistas?|villanos?|characters?|'
+                 r'caracterizacion|relacion|parentesco)\b|\bquien es\b', value):
         return ('personajes', 'protagonistas', 'characters', 'main characters', 'character list')
     if re.search(r'\bargumento|\btrama|\bresumen|\bsinopsis|\bdesenlace|\bfinal\b', value):
         return ('argumento', 'trama', 'sinopsis', 'plot', 'resumen', 'desenlace', 'final')
@@ -1190,12 +1262,16 @@ def search_searx(query):
                                     for item in failures if isinstance(item, list) and len(item) >= 2})
 
 
+def _wikipedia_cooldown_key(host):
+    return 'litmate_wikipedia_cooldown:' + str(host or 'wikipedia.org')
+
+
 def search_wikipedia(query):
     """API oficial: español primero; inglés solo si falta una página utilizable."""
     # Sólo se conserva durante un turno real. Los comandos y las pruebas deben
     # observar cada petición y no recibir páginas de otra consulta/contexto.
     active = current_deadline() is not None
-    cache_name = _cache_key('litmate_local_wikipedia_v2:', normalized(query) + ':pages='
+    cache_name = _cache_key('litmate_local_wikipedia_v4:', _cache_fingerprint(query) + ':pages='
                             + str(getattr(settings, 'LITMATE_RESEARCH_MAX_PAGES', 3)))
     if active:
         cached = _cached(cache_name)
@@ -1210,6 +1286,10 @@ def search_wikipedia(query):
                    and word not in STOPWORDS | {'the', 'with', 'of', 'una', 'del',
                        'personajes', 'principales', 'argumento', 'trama', 'sinopsis'}}
     for language in ('es', 'en'):
+        # El límite es por host: un 429 en español no impide probar inglés.
+        if cache.get(_wikipedia_cooldown_key(language + '.wikipedia.org')):
+            statuses[language] = 'cooldown'
+            continue
         try:
             result = _search_wikipedia(query, language=language)
             statuses[language] = 'ok' if result else 'empty'
@@ -1227,8 +1307,14 @@ def search_wikipedia(query):
         except Exception as exc:
             statuses[language] = error_status(exc)
     failed = any(value not in {'ok', 'empty'} for value in statuses.values())
-    return finish(SearchResults(spanish_alternatives, status=('partial' if spanish_alternatives else 'unavailable')
-                         if failed else 'ok' if spanish_alternatives else 'empty',
+    if (not spanish_alternatives and 'cooldown' in statuses.values()
+            and all(value in {'cooldown', 'empty'} for value in statuses.values())):
+        status = 'cooldown'
+    elif failed:
+        status = 'partial' if spanish_alternatives else 'unavailable'
+    else:
+        status = 'ok' if spanish_alternatives else 'empty'
+    return finish(SearchResults(spanish_alternatives, status=status,
                          providers={'Wikipedia (' + key + ')': value for key, value in statuses.items()}))
 
 
@@ -1237,25 +1323,119 @@ def _wikipedia_fetch(url):
     try:
         result = read_json_url(url, headers={'User-Agent': _agent()}, timeout=6)
     except Exception as exc:
-        record_research_event('http_request', 'Wikipedia', error_status(exc))
+        status = error_status(exc)
+        if status == 'rate_limited':
+            # Un 429 sostenido no debe convertirse en una ráfaga de reintentos
+            # dentro del mismo turno ni en la siguiente pregunta del lector.
+            # La pausa se limita al host afectado: la Wikipedia inglesa sigue
+            # disponible aunque la española haya agotado su cupo.
+            cache.set(_wikipedia_cooldown_key(urlsplit(url).hostname), status,
+                      cooldown_seconds(exc))
+        record_research_event('http_request', 'Wikipedia', status)
         raise
     record_research_event('http_request', 'Wikipedia', 'ok')
     return result
 
 
-def _wikipedia_table_page(candidate, page_id, endpoint):
+def _wikipedia_appendix_links(html, work_title, *, current_title=''):
+    """Anexos de personajes enlazados por el artículo de la obra.
+
+    Sólo acepta enlaces internos cuyo título sea un anexo de personajes de
+    esa misma obra. Un enlace a una adaptación, a una saga o a una página de
+    desambiguación no se convierte en una segunda obra.
+    """
+    from bs4 import BeautifulSoup
+    from urllib.parse import unquote
+    soup = BeautifulSoup(str(html or ''), 'html.parser')
+    work = normalized(work_title)
+    work = re.sub(r'^(?:el|la|los|las|the)\s+', '', work)
+    if not work:
+        return []
+    current = normalized(current_title)
+    links, seen = [], set()
+    for anchor in soup.find_all('a', href=True):
+        href = str(anchor.get('href') or '')
+        if not href.startswith('/wiki/'):
+            continue
+        target = unquote(href[len('/wiki/'):].split('#', 1)[0]).replace('_', ' ')
+        norm = normalized(target)
+        if not norm or norm == current or norm in seen:
+            continue
+        match = re.match(r'^(?:anexo\s*:\s*)?(?:lista de )?(?:personajes|characters)\s+'
+                         r'(?:de|del|of|in)\s+(.+)$', norm)
+        if not match:
+            continue
+        rest = match.group(1).strip()
+        rest = re.sub(r'^(?:la |el |los |las )?(?:novela|obra|libro|serie|saga|historia)\s+',
+                      '', rest)
+        bare = re.sub(r'^(?:el|la|los|las|the)\s+', '', rest)
+        if bare != work:
+            continue
+        seen.add(norm)
+        links.append(target)
+    return links
+
+
+def _wikipedia_parse_document(candidate, page_id, endpoint, *, query=''):
+    """Lee la página completa por Parse y conserva listas y tablas."""
     parsed = _wikipedia_fetch(endpoint + urlencode({'action': 'parse', 'format': 'json',
-        'pageid': page_id, 'prop': 'text', 'disableeditsection': 1, 'disabletoc': 1}))
+        'pageid': page_id, 'prop': 'text|revid', 'disableeditsection': 1, 'disabletoc': 1}))
     article = parsed.get('parse') if isinstance(parsed, dict) else None
     if (not isinstance(article, dict) or str(article.get('pageid')) != page_id
             or normalized(article.get('title')) != normalized(candidate.get('title'))):
         return None
-    from .literary_web import character_table_passage
+    from .literary_web import character_content
     html = article.get('text')
     html = html.get('*') if isinstance(html, dict) else html
-    passage = character_table_passage(html, context=candidate.get('extract', ''))
-    facts = character_facts(passage)
-    return {**candidate, 'extract': passage, 'character_facts': facts} if len(facts) >= 2 else None
+    title = article.get('title') or candidate.get('title', '')
+    content = character_content(html, context=candidate.get('extract', '') + '\n' + query,
+                                title=title)
+    revision = article.get('revid')
+    return {**candidate,
+            'extract': content['passage'],
+            'character_facts': content['character_facts'],
+            'parse_read': True,
+            'appendix_titles': _wikipedia_appendix_links(html, candidate.get('title', ''),
+                                                          current_title=title),
+            'revisions': ([{'revid': revision}] if type(revision) is int and revision > 0
+                          else candidate.get('revisions', []))}
+
+
+def _wikipedia_table_page(candidate, page_id, endpoint, *, query=''):
+    parsed = _wikipedia_parse_document(candidate, page_id, endpoint, query=query)
+    if parsed is None or not parsed.get('character_facts'):
+        return parsed
+    return parsed
+
+
+def _wikipedia_appendix_page(title, work_candidate, endpoint, *, query=''):
+    """Lee un anexo enlazado y devuelve sólo sus hechos literales de personajes."""
+    parsed = _wikipedia_fetch(endpoint + urlencode({'action': 'parse', 'format': 'json',
+        'page': title, 'prop': 'text|revid', 'disableeditsection': 1, 'disabletoc': 1}))
+    article = parsed.get('parse') if isinstance(parsed, dict) else None
+    if (not isinstance(article, dict) or not article.get('title')
+            or normalized(article.get('title')) != normalized(title)):
+        return None
+    from .literary_web import character_content
+    html = article.get('text')
+    html = html.get('*') if isinstance(html, dict) else html
+    content = character_content(html, context=work_candidate.get('extract', '') + '\n' + query,
+                                title=article.get('title') or title)
+    if not content['character_facts']:
+        return None
+    host = urlsplit(endpoint).hostname or 'es.wikipedia.org'
+    revision = article.get('revid')
+    return {**work_candidate,
+            'pageid': article.get('pageid', work_candidate.get('pageid')),
+            'title': article.get('title') or title,
+            'extract': content['passage'],
+            'character_facts': content['character_facts'],
+            'character_appendix': True,
+            'work_title': work_candidate.get('title', ''),
+            'fullurl': 'https://' + host + '/wiki/' + quote(
+                str(article.get('title') or title).replace(' ', '_'), safe=':'),
+            'revisions': ([{'revid': revision}] if type(revision) is int and revision > 0
+                          else [])}
 
 
 def _search_wikipedia(query, *, language='es'):
@@ -1275,7 +1455,8 @@ def _search_wikipedia(query, *, language='es'):
         # del prefijo de conversación y fuera de un título entrecomillado.
         remaining = re.sub(r'(?i)^\s*(?:por favor[,\s]+)?(?:dime|dame|busca|búscame|buscame|'
             r'encuentra|muéstrame|muestrame|describe|háblame|hablame|cuéntame|cuentame)\b\s*', '', remaining)
-        identity_query = re.sub(r'(?i)\b(?:personajes?|protagonistas?|principales?|descripci[oó]n|'
+        identity_query = re.sub(r'(?i)\b(?:personajes?|protagonistas?|antagonistas?|villanos?|'
+            r'secundarios?|femeninos?|principales?|descripci[oó]n|'
             r'describe|caracter[ií]sticas?|argumento|trama|sinopsis|resumen|temas?|an[aá]lisis|'
             r'ideas?|interpreta(?:ci[oó]n)?|acontecimientos?|escenas?|desenlace|final|relaci[oó]n)\b', ' ', remaining)
         identity_query = re.sub(r'\s+', ' ', identity_query).strip()
@@ -1284,7 +1465,10 @@ def _search_wikipedia(query, *, language='es'):
         if not identity_query:
             identity_query = query
     params = {'action': 'query', 'format': 'json', 'generator': 'search',
-              'gsrsearch': identity_query, 'gsrlimit': 2,
+              # Una consulta de detalle necesita varios candidatos: la obra
+              # principal puede aparecer después de secuelas o adaptaciones.
+              # Diez introducciones acotadas no amplían las lecturas completas.
+              'gsrsearch': identity_query, 'gsrlimit': 10 if focus else 2,
               'gsrnamespace': '0|104' if focus else 0, 'prop': 'extracts|info|revisions', 'rvprop': 'ids',
               'inprop': 'url', 'explaintext': 1, 'exintro': 1, 'exchars': 1200}
     if language not in {'es', 'en'}:
@@ -1342,8 +1526,7 @@ def _search_wikipedia(query, *, language='es'):
         pages = [page for page in pages if not re.search(
             r'\((?:pelicula|film|serie|videojuego)\b', normalized(page.get('title', '')))]
     if focus and pages:
-        pages.sort(key=lambda page: (any(word in normalized(page.get('title')) for word in focus),
-                                    '(novela)' in normalized(page.get('title'))), reverse=True)
+        pages.sort(key=lambda page: _wikipedia_page_rank(page, identity_query, focus), reverse=True)
         candidate = pages[0]
         page_id = str(candidate.get('pageid', ''))
         # El artículo completo es una lectura de evidencia igual que una página
@@ -1356,7 +1539,7 @@ def _search_wikipedia(query, *, language='es'):
                 if focus[0] == 'personajes' and reserved >= page_limit:
                     # Si solo queda una lectura, Parse puede obtener la tabla
                     # que TextExtracts omitiría. No se amplía el presupuesto.
-                    full_page = _wikipedia_table_page(candidate, page_id, endpoint)
+                    full_page = _wikipedia_table_page(candidate, page_id, endpoint, query=query)
                 else:
                     details = {'action': 'query', 'format': 'json', 'pageids': page_id,
                                'prop': 'extracts|info|revisions', 'rvprop': 'ids', 'inprop': 'url', 'explaintext': 1,
@@ -1366,22 +1549,44 @@ def _search_wikipedia(query, *, language='es'):
                 if isinstance(full_page, dict) and full_page.get('extract'):
                     pages[0] = {**candidate, **full_page,
                                 'identity_text': clean_text(candidate.get('extract'), 1200),
-                                'character_facts': character_facts(full_page['extract']) if focus[0] == 'personajes' else [],
+                                'character_facts': (full_page.get('character_facts') or
+                                    character_facts(full_page['extract'])) if focus[0] == 'personajes' else [],
                                 'extract': relevant_passage(full_page['extract'], query),
                                 'literary_section_read': True}
-                    # TextExtracts omite tablas: una sección de personajes puede
-                    # contener solo su encabezado. Parse es otra API oficial y
-                    # se consulta únicamente para recuperar esa evidencia.
-                    if (focus[0] == 'personajes' and not pages[0]['character_facts']
-                            and re.match(r'(?i)^==\s*(?:Personajes|Characters|Main characters|Character list)\b', pages[0]['extract'])
+                    # TextExtracts omite tablas y la estructura de listas. Los
+                    # anexos pueden usar un subtítulo por personaje en vez de
+                    # un capítulo literal «Personajes». Parse conserva ambos
+                    # formatos con el mismo pageid/título y cupo compartido.
+                    # Se relee siempre en consultas de personajes: el heurístico
+                    # de texto plano no distingue una lista de una mención.
+                    if (focus[0] == 'personajes' and full_page.get('parse_read') is not True
                             and reserve_page()):
                         try:
-                            table = _wikipedia_table_page(candidate, page_id, endpoint)
-                            if table:
-                                pages[0]['extract'] = table['extract']
-                                pages[0]['character_facts'] = table['character_facts']
+                            table = _wikipedia_table_page(candidate, page_id, endpoint, query=query)
+                            if table and table.get('character_facts'):
+                                pages[0] = {**candidate, **table,
+                                            'identity_text': clean_text(candidate.get('extract'), 1200),
+                                            'extract': relevant_passage(table['extract'], query),
+                                            'literary_section_read': True}
+                            elif table and table.get('appendix_titles'):
+                                # La obra principal puede no tener sección de
+                                # personajes y remitir a un anexo oficial.
+                                for appendix_title in table['appendix_titles'][:2]:
+                                    if not reserve_page():
+                                        break
+                                    appendix = _wikipedia_appendix_page(
+                                        appendix_title, candidate, endpoint, query=query)
+                                    if appendix:
+                                        pages[0] = {**appendix,
+                                                    'identity_text': clean_text(
+                                                        candidate.get('extract'), 1200),
+                                                    'extract': relevant_passage(
+                                                        appendix['extract'], query),
+                                                    'literary_section_read': True}
+                                        break
                         except Exception as exc:
-                            logger.warning('IA: tabla de Wikipedia no disponible (%s)', type(exc).__name__)
+                            logger.warning('IA: tabla de Wikipedia no disponible (%s)',
+                                           type(exc).__name__)
             except Exception as exc:
                 logger.warning('IA: sección de Wikipedia no disponible (%s)', type(exc).__name__)
     return [{'title': page.get('title'), 'author': 'Fuente web', 'description': page.get('extract'),
@@ -1390,6 +1595,11 @@ def _search_wikipedia(query, *, language='es'):
              # identidad: para eso está identity_text.
              'identity_text': page.get('identity_text') or clean_text(page.get('extract'), 1200),
              'character_facts': page.get('character_facts', []),
+             # Un anexo conserva la obra de la que fue descubierto para que la
+             # validación posterior pueda vincularlo sin confundirlo con una
+             # secuela o una adaptación.
+             **({'work_title': page['work_title'], 'character_appendix': True}
+                if page.get('character_appendix') is True and page.get('work_title') else {}),
              'kind': 'web', 'url': trusted_url(page.get('fullurl')),
              **_wikipedia_storage_metadata(page),
              'source': 'Wikipedia', 'read_mode': 'pasaje de sección de artículo público' if page.get(
@@ -1448,7 +1658,7 @@ def retrieve_web(query):
 
 def _web_cache_key(query):
     engines = getattr(settings, 'LITMATE_SEARXNG_ENGINES', ('wikipedia', 'openlibrary', 'mwmbl'))
-    return _cache_key('litmate_local_web_v14:', query + ':es,en:' + repr(engines) + ':'
+    return _cache_key('litmate_local_web_v15:', query + ':es,en:' + repr(engines) + ':'
                      + str(getattr(settings, 'LITMATE_AI_USE_SEARXNG', True))
                      + ':' + str(getattr(settings, 'LITMATE_AI_USE_WEB', True)))
 
@@ -1544,9 +1754,11 @@ def _retrieve_web(query):
                                   if isinstance(extracted, dict) else 'unsupported_type', count=int(bool(body)))
             if body:
                 source = {**source, 'description': body, 'read_mode': 'pasaje de página pública',
-                          'identity_text': str(extracted.get('title', '')) + ' ' + body[:1000],
+                          'identity_text': extracted.get('identity_text') or
+                              str(extracted.get('title', '')) + ' ' + body[:1000],
                           'trust': 'untrusted_data', 'permanent_index_allowed': False}
-                for field in ('extraction_method', 'headings', 'character_mentions', 'injection_detected', 'site'):
+                for field in ('extraction_method', 'headings', 'character_mentions',
+                              'character_facts', 'injection_detected', 'site'):
                     source[field] = extracted.get(field)
         except Exception as exc:
             record_research_event('page_read', 'web', error_status(exc))

@@ -3,6 +3,8 @@ import time
 import threading
 from contextlib import contextmanager
 from contextvars import ContextVar
+from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 from functools import wraps
 from urllib.error import HTTPError, URLError
 
@@ -137,10 +139,40 @@ def error_status(error):
     return 'invalid_response' if isinstance(error, (ValueError, TypeError)) else 'unavailable'
 
 
+def _retry_after_seconds(value):
+    """Segundos de Retry-After; admite la forma numérica y la fecha HTTP."""
+    if value is None:
+        return None
+    text = str(value).strip()
+    if not text:
+        return None
+    try:
+        return int(float(text))
+    except (TypeError, ValueError):
+        pass
+    try:
+        target = parsedate_to_datetime(text)
+        if target.tzinfo is None:
+            target = target.replace(tzinfo=timezone.utc)
+        return int((target - datetime.now(timezone.utc)).total_seconds())
+    except (TypeError, ValueError, OverflowError):
+        return None
+
+
 def cooldown_seconds(error):
+    """Pausa mínima para respetar un límite remoto.
+
+    ``PublicFetchError`` conserva el Retry-After del 429; los errores de
+    urllib lo exponen en ``headers``. El mínimo de 5 s evita una ráfaga de
+    reintentos cuando el servidor no informa un plazo.
+    """
+    retry_after = getattr(error, 'retry_after', None)
+    if retry_after is not None:
+        seconds = _retry_after_seconds(retry_after)
+        if seconds is not None:
+            return max(5, min(seconds, 600))
     if isinstance(error, HTTPError):
-        try:
-            return max(5, min(int(error.headers.get('Retry-After', '30')), 600))
-        except (TypeError, ValueError, AttributeError):
-            pass
+        seconds = _retry_after_seconds(error.headers.get('Retry-After'))
+        if seconds is not None:
+            return max(5, min(seconds, 600))
     return 30

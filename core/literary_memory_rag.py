@@ -89,6 +89,16 @@ def build_memory_index(*, database=None, index=None, embedder=None, maximum=5000
     if not sources:
         report['reason'] = 'no_fresh_sources'
         return report
+    # Individual facts may legitimately be shorter than the chunker's minimum.
+    # Keep them in the structured store instead of inventing padding or failing
+    # the complete derived index because one short character role has no chunk.
+    eligible = [source for source in sources if len(re.sub(r'\s+', ' ',
+                                                          source['description']).strip()) >= 30]
+    report['short_sources_skipped'] = len(sources) - len(eligible)
+    sources = eligible
+    if not sources:
+        report['reason'] = 'no_indexable_sources'
+        return report
     destination.parent.mkdir(parents=True, exist_ok=True)
     fd, raw_snapshot = tempfile.mkstemp(prefix='litmate-memory-index-', suffix='.sqlite3',
                                       dir=destination.parent)
@@ -120,23 +130,37 @@ def build_memory_index(*, database=None, index=None, embedder=None, maximum=5000
         snapshot.unlink(missing_ok=True)
 
 
-def search_memory_semantic(query, *, database=None, index=None, embedder=None, limit=6):
+def search_memory_semantic(query, *, books=(), database=None, index=None, embedder=None, limit=6):
     """Recupera candidatos y rehidrata su fuente vigente desde el almacén.
 
     Con embedder=None usa exclusivamente BM25, sin HTTP ni carga de modelos.
     El híbrido necesita un embedder local pasado explícitamente por el llamador.
     Las métricas de ranking nunca se convierten en confianza factual.
     """
-    from .literary_memory import get_current_source, get_work
+    from .literary_memory import get_current_source, get_work, retrieve_evidence
     if not isinstance(query, str) or not query.strip() or len(query) > 5000:
         return [], []
     limit = max(1, min(int(limit), 8))
+    if not isinstance(books, (list, tuple)):
+        return [], []
+    requested_books = list(books[:12])
+    scope = [work_identity(book) for book in books[:12] if isinstance(book, dict) and work_identity(book)]
+    if books and not scope:
+        return [], []
     try:
         destination = index_path(index, database=database)
         if not destination.is_file():
             return [], []
         _owned_index(destination)
-        fragments = retrieve_fragments(query, destination, maximum=8, embedder=embedder)
+        if scope:
+            # Resolve confirmed title aliases to the canonical identity used by
+            # index_documents before ranking, not after a global top-eight.
+            known, _ = retrieve_evidence('', books=list(books), database=database, limit=20)
+            identities = [*scope, *(work_identity(book) for book in known)]
+        else:
+            identities = None
+        fragments = retrieve_fragments(query, destination, maximum=8, embedder=embedder,
+                                       book_identities=identities)
     except (OSError, ValueError, sqlite3.Error):
         return [], []
     sources, books, seen_sources, seen_works = [], [], set(), set()
@@ -149,7 +173,8 @@ def search_memory_semantic(query, *, database=None, index=None, embedder=None, l
         if not source:
             continue
         book = get_work(source['work_id'], database=database)
-        if not book or not same_work(source, book):
+        if (not book or not same_work(source, book)
+                or (scope and not any(same_work(source, requested) for requested in requested_books))):
             continue
         sources.append(source)
         if book['work_id'] not in seen_works:

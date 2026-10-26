@@ -58,6 +58,7 @@ def _safe_diagnostics(result, client):
                'answer_cache_hit', 'exact_cache_hit', 'semantic_cache_hit')
     allowed += ('exact_answer_cache_hit',)
     allowed += ('verified_narrative_answer', 'narrative_synthesized', 'partial_evidence')
+    allowed += ('verified_character_answer', 'character_count')
     values = {key: diagnostics[key] for key in allowed
               if type(diagnostics.get(key)) in {int, float, bool}}
     if diagnostics.get('work_type') in {'fiction', 'nonfiction', 'unknown'}:
@@ -126,12 +127,17 @@ def rate_allowed(request):
 def remember(request, state, message, result, elapsed_ms, client, *, topic_context=None):
     topic_changed = remember_topic(state, message, topic_context)
     if not result.remember:
-        if result.status == 'unavailable' and result.diagnostics.get('narrative_failure'):
-            from .ai_narrative_answers import request_for
+        if result.status == 'unavailable' and (result.diagnostics.get('narrative_failure')
+                                              or result.diagnostics.get('character_failure')):
+            if result.diagnostics.get('character_failure'):
+                from .ai_character_answers import request_for
+            else:
+                from .ai_narrative_answers import request_for
             pending = request_for(message, state.get('turns', []), state.get('pending_clarification'))
             if pending and pending.get('title') and not pending.get('ambiguous'):
                 task = {'summary': 'Dime la trama', 'characters': 'Dime los personajes',
-                        'protagonist': 'Quién es el protagonista'}[pending['task']]
+                        'protagonist': 'Quién es el protagonista', 'character': 'Dime la trama',
+                        'relationship': 'Dime la trama'}[pending['task']]
                 query = task + ' de ' + pending['title']
                 if pending.get('author_hint'):
                     query += ' del autor ' + pending['author_hint']
@@ -354,6 +360,14 @@ def _compute_answer_impl(message, history, topic_context, *, pending_clarificati
             except BudgetExpired:
                 pass
         if getattr(settings, 'LITMATE_AI_QUICK_ANSWERS', True):
+            # Resolver personajes antes de las rutas bibliográficas: una
+            # pertenencia P674 de Wikidata no sustituye una función narrativa.
+            from .ai_character_answers import character_answer
+            character = character_answer(message, history, config=settings,
+                                          pending_clarification=pending_clarification)
+            if character is not None:
+                return character, SimpleNamespace(usage=character.diagnostics.get('usage', {}),
+                    provider='verified-character-evidence', calls=character.diagnostics.get('model_calls', 0))
             from .ai_persistent_router import indexed_answer, research_answer
             with measure_stage('knowledge_lookup'):
                 indexed = indexed_answer(message, history, topic_context=topic_context)

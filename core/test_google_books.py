@@ -754,17 +754,23 @@ class DirectedWikipediaRetrievalTests(SimpleTestCase):
                   'extract': self.INTRODUCTION, 'fullurl': 'https://es.wikipedia.org/wiki/Horizonte'}}}}
         full = {'query': {'pages': {'42': {**intro['query']['pages']['42'],
                  'extract': self.INTRODUCTION * 50 + '\n' + self.CHARACTERS}}}}
-        with patch('core.literary_search.read_json_url', side_effect=[intro, full]) as fetch:
+        # Las consultas de personajes releen siempre el HTML por Parse para
+        # conservar listas y tablas que TextExtracts puede omitir.
+        with patch('core.literary_search.read_json_url',
+                   side_effect=[intro, full, {'parse': {}}]) as fetch:
             sources = search_wikipedia('"Horizonte" Elena Torres personajes principales descripción')
-        self.assertEqual(fetch.call_count, 2)
+        self.assertEqual(fetch.call_count, 3)
         search_params = parse_qs(urlsplit(fetch.call_args_list[0].args[0]).query)
         detail_params = parse_qs(urlsplit(fetch.call_args_list[1].args[0]).query)
+        parse_params = parse_qs(urlsplit(fetch.call_args_list[2].args[0]).query)
         self.assertNotIn('personajes', search_params['gsrsearch'][0])
         self.assertEqual(search_params['gsrnamespace'], ['0|104'])
         self.assertEqual(detail_params['pageids'], ['42'])
         self.assertNotIn('exintro', detail_params)
         self.assertNotIn('exchars', detail_params)
         self.assertEqual(detail_params['exsectionformat'], ['wiki'])
+        self.assertEqual(parse_params['action'], ['parse'])
+        self.assertEqual(parse_params['pageid'], ['42'])
         self.assertIn('Nora:', sources[0]['description'])
         self.assertIn('sección', sources[0]['read_mode'])
 

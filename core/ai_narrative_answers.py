@@ -186,6 +186,13 @@ def bound_sources(request, sources):
         return (page['kind'] == 'web' and not page.get('injection_detected')
                 and not page.get('conflicts_with') and not _is_adaptation_page(page))
 
+    def appendix_page(page):
+        # El anexo fue descubierto desde el artículo principal y su título ya
+        # contiene el título de la obra. No se confunde con una secuela: la
+        # identidad se limita al work_title verificado por ese descubrimiento.
+        return bool(page.get('character_appendix') is True and page.get('work_title')
+                    and _title(page['work_title']) == _title(title))
+
     books = [source for source in sources if source['kind'] == 'book'
              and title_matches(title, source)
              and source['author'] not in {'Autor no informado', 'Fuente web'}
@@ -224,7 +231,8 @@ def bound_sources(request, sources):
         # No basta contener el título: X II, una película y una biografía son
         # otros documentos aunque compartan todas las palabras de la búsqueda.
         page_title = _title(page['title'])
-        explicit_title = page_title == _title(title) or _has_subtitle(page['title'], title)
+        explicit_title = (page_title == _title(title) or _has_subtitle(page['title'], title)
+                          or appendix_page(page))
         if not explicit_title and not any(same_work(page, book) for book in books):
             continue
         identity = normalize_identity(page.get('identity_text', ''))
@@ -259,7 +267,7 @@ def bound_sources(request, sources):
             # La atribución conserva el título realmente publicado, no el título
             # auxiliar utilizado para comprobar una desambiguación por autor.
             page = {**page, 'title': published_title}
-        elif (len(title.split()) < 2 or not re.search(
+        elif not ((appendix_page(page) or len(title.split()) >= 2) and re.search(
                 r'\b(?:novela|libro|obra|ensayo|novel|book|historia)\b', identity)):
             continue
         pages.append(page)

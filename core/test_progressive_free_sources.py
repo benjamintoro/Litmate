@@ -72,6 +72,11 @@ class SupplementarySourceProvenanceTests(SimpleTestCase):
 
 
 class ProgressiveWikipediaTests(SimpleTestCase):
+    def setUp(self):
+        # Un 429 simulado por una prueba no debe ocultar las llamadas de la
+        # siguiente: el cooldown es estado real de la caché compartida.
+        cache.clear()
+
     def response(self, language='en'):
         return {'query': {'pages': {'123': {'pageid': 123, 'title': 'A documented book',
             'extract': 'A documented book is a book by Ana Robles about an observatory and its researchers.',

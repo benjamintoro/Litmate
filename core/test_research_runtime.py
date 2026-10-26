@@ -12,7 +12,7 @@ from django.test import SimpleTestCase, override_settings
 from .ai_budget import request_budget
 from .literary_ai import canonical_sources
 from .literary_quality import AUDIT_SCHEMA, validate_audit
-from .literary_sources import SearchResults, error_status
+from .literary_sources import SearchResults, cooldown_seconds, error_status
 from .literary_web import PublicFetchError, extract_public_page, read_public_json
 from .local_llm import OllamaJSON
 from .test_ai_quality import PLAN, audit_for
@@ -98,6 +98,15 @@ class LocalAuditRuntimeRegressionTests(SimpleTestCase):
 
 
 class PublicFailureClassificationTests(SimpleTestCase):
+    def test_rate_limit_cooldown_respects_the_server_retry_after(self):
+        self.assertEqual(cooldown_seconds(PublicFetchError(
+            'rate_limited', retry_after='37')), 37)
+        self.assertEqual(cooldown_seconds(PublicFetchError(
+            'rate_limited', retry_after='9999')), 600)
+        self.assertEqual(cooldown_seconds(PublicFetchError(
+            'rate_limited', retry_after='no-es-un-plazo')), 30)
+        self.assertEqual(cooldown_seconds(PublicFetchError('rate_limited')), 30)
+
     def test_transport_failures_are_not_misreported_as_invalid_model_responses(self):
         expected = {'http_403': 'access_denied', 'http_401': 'unauthorized',
                     'service_unavailable': 'unavailable', 'connection_failed': 'unavailable',
