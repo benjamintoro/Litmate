@@ -12,9 +12,10 @@ from django.core.management import call_command
 from django.core.management.base import CommandError
 from django.test import SimpleTestCase
 
-from .literary_ranking import (FEATURES, FixtureBM25, evaluate, features, fingerprint,
-    index_retriever, load_dataset, ranking_metrics, reciprocal_rank_fusion, split_by_work,
-    train_candidate, training_readiness, validate_dataset)
+from .literary_ranking import (EXPERIMENTAL_LABEL_STATUSES, FEATURES, FixtureBM25,
+    evaluate, experimental_readiness, features, fingerprint, index_retriever,
+    load_dataset, ranking_metrics, reciprocal_rank_fusion, split_by_work,
+    train_candidate, train_experimental_candidate, training_readiness, validate_dataset)
 
 
 class RankingEvaluationTests(SimpleTestCase):
@@ -160,6 +161,32 @@ class RankingEvaluationTests(SimpleTestCase):
         self.assertFalse(report['model_activated'])
         self.assertEqual(report['dataset_sha256'], fingerprint(data))
         self.assertIn('test', report['evaluation'])
+
+    def test_experimental_candidate_uses_declared_nonhuman_labels_without_activation(self):
+        data = self.dataset(20)
+        experimental = experimental_readiness(data)
+        self.assertTrue(experimental['ready'], experimental['reasons'])
+        self.assertFalse(experimental['production_eligible'])
+        self.assertEqual(experimental['label_trust'], 'declared_non_human')
+        # La misma selección no satisface la compuerta de producción.
+        self.assertFalse(training_readiness(data)['ready'])
+        report = train_experimental_candidate(data, epochs=4)
+        self.assertTrue(report['trained'], report)
+        self.assertTrue(report['experimental'])
+        self.assertFalse(report['human_labels'])
+        self.assertFalse(report['activation_eligible'])
+        self.assertFalse(report['model_activated'])
+        self.assertIn('experimental', report['scope'])
+        self.assertEqual(report['label_statuses'], sorted(EXPERIMENTAL_LABEL_STATUSES))
+        self.assertIn('test', report['evaluation'])
+        self.assertIn('limitation', report)
+
+    def test_experimental_candidate_still_requires_a_holdout_split(self):
+        data = self.dataset(2)
+        report = train_experimental_candidate(data, epochs=4)
+        self.assertFalse(report['trained'])
+        self.assertFalse(report['activation_eligible'])
+        self.assertIn('reasons', report['readiness'])
 
     def test_duplicate_paraphrases_do_not_bypass_sample_gate(self):
         data = self.dataset(40)

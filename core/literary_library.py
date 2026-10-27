@@ -691,6 +691,7 @@ def list_library_books(query, database, limit=12):
 def retrieve_library(query, database, maximum=4, *, books=None, embedder=None, index=None):
     """Reutiliza FTS/BM25 y RRF semántico actuales, con identidad bibliográfica."""
     from .local_rag import retrieve_fragments
+    from .literary_research import looks_like_front_matter
     if not Path(database).is_file():
         return []
     retrieval_db = Path(index) if index is not None else Path(database)
@@ -735,6 +736,10 @@ def retrieve_library(query, database, maximum=4, *, books=None, embedder=None, i
                 language=item['language'], original_sha256=item['sha256'],
                 rights=item['rights'], extraction_version=VERSION, complete_work=False,
                 source='Biblioteca literaria local', read_mode='fragmento del original autorizado')
+            # La compuerta de sinopsis se calcula sobre el fragmento completo,
+            # antes de que canonical_sources recorte la descripción. Así un
+            # prefacio largo no se vuelve «narrativa» al perder sus marcas.
+            source['front_matter'] = looks_like_front_matter({**source, 'kind': 'excerpt'})
     verified = [source for source in sources if source.get('original_sha256')]
     if index is not None and not verified:
         return retrieve_library(query, database, maximum, books=books)

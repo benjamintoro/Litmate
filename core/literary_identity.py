@@ -148,6 +148,83 @@ def title_matches(title, book):
     return bool(identity and normalize_identity(_literal_title(title)) in _titles(identity))
 
 
+def book_named_in_message(book, message):
+    """Comprueba el título canónico o un alias confirmado dentro de la consulta."""
+    identity = work_identity(book)
+    value = normalize_identity(message)
+    return bool(identity and value and any(
+        title and title in value for title in _titles(identity)))
+
+
+_WEB_TITLE_SEPARATORS = (' - ', ' | ', ' – ', ' — ', ' / ', ': ')
+_WEB_SUFFIX_WORDS = (
+    'wikipedia', 'la enciclopedia', 'enciclopedia', 'resumen', 'analisis',
+    'sinopsis', 'argumento', 'trama', 'personajes', 'ficha', 'opiniones',
+    'resena', 'critica', 'libro', 'novela', 'texto', 'guia', 'estudio',
+    'comentario', 'introduccion', 'prologo', 'edicion',
+)
+_WEB_SUFFIX_HOSTS = (
+    'wikipedia', 'lecturalia', 'culturagenial', 'aibooksummarizer',
+    'resumenlibro', 'planetadelibros', 'cervantesvirtual', 'textos.info',
+    'losresumenes', 'capsulasliterarias', 'austen.com', 'gutenberg',
+    'archive.org', 'americanliterature',
+)
+
+
+def _web_suffix_is_safe(suffix, author):
+    """Acepta sufijos de sitio o de ficha, nunca un volumen distinto.
+
+    «Orgullo y prejuicio: zombis» no es la misma obra; «Orgullo y prejuicio -
+    Wikipedia» sí puede serlo si además aparece la autoría en el texto.
+    """
+    suffix = suffix.strip(' .,;:|/-–—')
+    if not suffix:
+        return True
+    if author and (suffix == author or suffix.startswith(author + ' ')):
+        return True
+    if re.match(r'^(?:de|por|by)\s+' + (re.escape(author) if author else r'$'), suffix):
+        return True
+    if any(suffix.startswith(host) for host in _WEB_SUFFIX_HOSTS):
+        return True
+    return any(re.match(r'^' + re.escape(word) + r'(?:\b|$)', suffix)
+               for word in _WEB_SUFFIX_WORDS)
+
+
+def web_title_matches(title, book):
+    """Reconoce el título canónico dentro del título de una página pública.
+
+    Los buscadores añaden « - Wikipedia», «: resumen y personajes» o el nombre
+    del sitio. Se exige que el prefijo coincida exactamente con la obra o alias
+    y que el resto sea un descriptor de página; los subtítulos de sagas no se
+    recortan.
+    """
+    identity = work_identity(book)
+    if not identity:
+        return False
+    known = _titles(identity)
+    normalized = normalize_identity(_literal_title(title))
+    if normalized in known:
+        return True
+    author = normalize_identity(identity.get('author'))
+    if author:
+        trimmed = re.sub(r'\s*[,/]\s*(?:de|por|by)\s+' + re.escape(author)
+                         + r'(?:\b|$).*$', '', normalized).strip()
+        if trimmed in known:
+            return True
+        normalized = trimmed or normalized
+    for canonical in known:
+        if not canonical:
+            continue
+        if normalized.startswith(canonical + ' ') and _web_suffix_is_safe(
+                normalized[len(canonical):], author):
+            return True
+        for separator in _WEB_TITLE_SEPARATORS:
+            if normalized.startswith(canonical + separator) and _web_suffix_is_safe(
+                    normalized[len(canonical) + len(separator):], author):
+                return True
+    return False
+
+
 def same_work(source, book):
     """Coincidencia exacta, alias confirmado o identificadores bibliográficos.
 
@@ -161,7 +238,8 @@ def same_work(source, book):
         return False
     if source.get('kind') == 'web' and source.get('work_binding_verified') is not True:
         identity_text = normalize_identity(source.get('identity_text', ''))
-        if not title_matches(source.get('title'), book):
+        if not (title_matches(source.get('title'), book)
+                or web_title_matches(source.get('title'), book)):
             return False
         author = normalize_identity(book_identity['author'])
         tokens = author.split()

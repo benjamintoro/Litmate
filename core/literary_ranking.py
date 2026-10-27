@@ -22,6 +22,12 @@ FEATURES = ('body_overlap', 'title_overlap', 'author_overlap', 'phrase_match', '
 MINIMUM = {'train_pairs': 200, 'train_works': 20, 'train_queries': 80,
            'validation_pairs': 60, 'validation_works': 8, 'validation_queries': 20,
            'test_pairs': 60, 'test_works': 8, 'test_queries': 20}
+# El entrenamiento experimental usa juicios declarados por el agente o por el
+# banco curado. Sirve para investigar el pipeline; nunca habilita producción.
+EXPERIMENTAL_LABEL_STATUSES = ('agent_reviewed', 'curated_test')
+EXPERIMENTAL_MINIMUM = {'train_pairs': 20, 'train_works': 3, 'train_queries': 6,
+                        'validation_pairs': 4, 'validation_works': 1, 'validation_queries': 2,
+                        'test_pairs': 4, 'test_works': 1, 'test_queries': 2}
 
 
 def _normal(value):
@@ -221,6 +227,41 @@ def features(query, document, *, lexical_position=0):
         1 / lexical_position if lexical_position > 0 else 0.]
 
 
+def _human_query(query):
+    return (query.get('label_status') == 'human_reviewed'
+            and query.get('label_evidence_verified') is True)
+
+
+def _experimental_query(query, statuses):
+    return query.get('label_status') in statuses
+
+
+def _label_counts(queries, documents, works, name, statuses, reasons, *,
+                  require_evidence=False):
+    """Cuenta pares únicos sin convertir documentos no juzgados en negativos."""
+    labels = [(query, identifier, grade) for query in queries
+              if query.get('label_status') in statuses
+              and (not require_evidence or query.get('label_evidence_verified') is True)
+              for identifier, grade in query['qrels'].items()
+              if documents[identifier]['work_id'] in works]
+    unique = {}
+    for query, identifier, grade in labels:
+        key = (query['work_id'], _normal(query['text']).strip(), identifier)
+        if key in unique and unique[key][2] != grade:
+            reasons.append(name + '_conflicting_duplicate_labels')
+        unique[key] = (query, identifier, grade)
+    labels = list(unique.values())
+    counts = {
+        name + '_pairs': len(labels),
+        name + '_works': len({q['work_id'] for q, _, _ in labels}),
+        name + '_queries': len({(q['work_id'], _normal(q['text']).strip())
+                                for q, _, _ in labels}),
+    }
+    if not {0, 1}.issubset({int(grade > 0) for _, _, grade in labels}):
+        reasons.append(name + '_needs_positive_and_negative_labels')
+    return counts
+
+
 def training_readiness(dataset, partitions=None):
     """Exige etiquetas humanas explícitas y cobertura, no presume revisión."""
     validate_dataset(dataset)
@@ -235,58 +276,89 @@ def training_readiness(dataset, partitions=None):
             reasons.append('work_leakage')
         used_works |= works
         # A negative from a held-out work may not become a training example.
-        labels = [(query, identifier, grade) for query in queries
-                  if query.get('label_status') == 'human_reviewed'
-                  and query.get('label_evidence_verified') is True
-                  for identifier, grade in query['qrels'].items()
-                  if documents[identifier]['work_id'] in works]
-        # Duplicating IDs or the same paraphrase does not increase sample size.
-        unique = {}
-        for query, identifier, grade in labels:
-            key = (query['work_id'], _normal(query['text']).strip(), identifier)
-            if key in unique and unique[key][2] != grade:
-                reasons.append(name + '_conflicting_duplicate_labels')
-            unique[key] = (query, identifier, grade)
-        labels = list(unique.values())
-        counts[name + '_pairs'] = len(labels)
-        counts[name + '_works'] = len({q['work_id'] for q, _, _ in labels})
-        counts[name + '_queries'] = len({(q['work_id'], _normal(q['text']).strip())
-                                        for q, _, _ in labels})
-        if not {0, 1}.issubset({int(grade > 0) for _, _, grade in labels}):
-            reasons.append(name + '_needs_positive_and_negative_labels')
+        counts.update(_label_counts(queries, documents, works, name,
+                                    {'human_reviewed'}, reasons,
+                                    require_evidence=True))
+        if any(query.get('label_status') == 'human_reviewed'
+               and query.get('label_evidence_verified') is not True for query in queries):
+            reasons.append(name + '_human_labels_need_evidence_review')
     reasons.extend('insufficient_' + key for key, minimum in MINIMUM.items() if counts[key] < minimum)
     return {'ready': not reasons, 'counts': counts, 'minimum': MINIMUM.copy(),
             'reasons': list(dict.fromkeys(reasons)), 'model_activated': False}
+
+
+def experimental_readiness(dataset, partitions=None, *, label_statuses=EXPERIMENTAL_LABEL_STATUSES):
+    """Prepara un modelo de investigación con juicios declarados, nunca producción.
+
+    La compuerta humana sigue siendo independiente. Este informe sólo comprueba
+    que hay obras, consultas y pares suficientes para ejecutar el optimizador y
+    evaluar en holdouts separados por obra.
+    """
+    validate_dataset(dataset)
+    statuses = set(label_statuses)
+    if not statuses or not statuses.issubset(set(EXPERIMENTAL_LABEL_STATUSES)):
+        raise ValueError('Estados de etiqueta no permitidos para el experimento')
+    partitions = partitions or split_by_work(dataset)
+    documents = {document['id']: document for document in dataset['documents']}
+    counts, reasons = {}, []
+    used_works = set()
+    for name in ('train', 'validation', 'test'):
+        queries = [query for query in partitions.get(name, [])
+                   if query.get('label_status') in statuses]
+        works = {query['work_id'] for query in queries}
+        if used_works & works:
+            reasons.append('work_leakage')
+        used_works |= works
+        counts.update(_label_counts(queries, documents, works, name, statuses, reasons))
+        if not queries:
+            reasons.append(name + '_labels_missing')
+    reasons.extend('insufficient_' + key for key, minimum in EXPERIMENTAL_MINIMUM.items()
+                   if counts.get(key, 0) < minimum)
+    return {'ready': not reasons, 'counts': counts, 'minimum': EXPERIMENTAL_MINIMUM.copy(),
+            'reasons': list(dict.fromkeys(reasons)), 'model_activated': False,
+            'production_eligible': False, 'experimental': True,
+            'label_statuses': sorted(statuses), 'label_trust': 'declared_non_human'}
 
 
 def _sigmoid(score):
     return 1 / (1 + math.exp(-max(-30., min(30., score))))
 
 
-def train_candidate(dataset, *, epochs=160, rate=.08, max_seconds=30., max_pairs=50000):
-    """Regresión logística L2 pequeña; sólo tras suficientes etiquetas de calidad.
-
-    El holdout test se consulta una vez, después de congelar hiperparámetros.
-    Retorna artefacto inactivo y veredicto; no hay integración automática al chat.
-    """
+def _validate_training_options(*, epochs, rate, max_seconds, max_pairs):
     if type(epochs) is not int or not 1 <= epochs <= 1000 or not 0 < rate <= .5:
         raise ValueError('Configuración de entrenamiento fuera de límites')
     if (not isinstance(max_seconds, (int, float)) or not math.isfinite(max_seconds)
             or not 0 < max_seconds <= 300 or type(max_pairs) is not int
             or not 200 <= max_pairs <= 50000):
         raise ValueError('Presupuesto de entrenamiento fuera de límites')
+
+
+def _candidate_rejection_reasons(evaluation):
+    reasons = []
+    for name, pair in evaluation.items():
+        before, after = pair['baseline']['metrics'], pair['candidate']['metrics']
+        if after['ndcg@10'] < before['ndcg@10'] + .01:
+            reasons.append(name + '_ndcg_gain_below_0.01')
+        for key in ('recall@5', 'recall@10', 'mrr', 'work_identification_correct'):
+            if after[key] + 1e-9 < before[key]:
+                reasons.append(name + '_regression_' + key)
+        if pair['candidate']['latency_seconds']['p95'] > max(
+                .02, pair['baseline']['latency_seconds']['p95'] * 1.5):
+            reasons.append(name + '_latency_regression')
+    return reasons
+
+
+def _fit_candidate(dataset, partitions, *, eligible, readiness, label, experimental,
+                   label_statuses, human_labels, epochs, rate, max_seconds, max_pairs):
+    """Ajusta el mismo optimizador para la compuerta humana o el modo experimental."""
     started = time.monotonic()
-    partitions = split_by_work(dataset)
-    readiness = training_readiness(dataset, partitions)
-    if not readiness['ready']:
-        return {'trained': False, 'readiness': readiness, 'reason': 'insufficient_trusted_labels'}
     documents = {document['id']: document for document in dataset['documents']}
     with closing(FixtureBM25(dataset)) as baseline:
         rows = []
         works = {query['work_id'] for query in partitions['train']}
         seen = set()
         for query in partitions['train']:
-            if query.get('label_status') != 'human_reviewed' or query.get('label_evidence_verified') is not True:
+            if not eligible(query):
                 continue
             positions = {identifier: rank for rank, identifier in enumerate(baseline(query), 1)}
             for identifier, grade in query['qrels'].items():
@@ -297,7 +369,11 @@ def train_candidate(dataset, *, epochs=160, rate=.08, max_seconds=30., max_pairs
                         return {'trained': False, 'reason': 'training_pair_budget_exhausted',
                                 'readiness': readiness, 'model_activated': False}
                     rows.append((features(query, documents[identifier],
-                                          lexical_position=positions.get(identifier, 0)), int(grade > 0)))
+                                          lexical_position=positions.get(identifier, 0)),
+                                 int(grade > 0)))
+        if not rows:
+            return {'trained': False, 'reason': 'no_eligible_training_pairs',
+                    'readiness': readiness, 'model_activated': False}
         weights, bias = [0.] * len(FEATURES), 0.
         for _ in range(epochs):
             if time.monotonic() - started > max_seconds:
@@ -321,31 +397,76 @@ def train_candidate(dataset, *, epochs=160, rate=.08, max_seconds=30., max_pairs
             return sorted(candidates, key=lambda identifier: (-score(identifier), positions[identifier]))
         evaluation = {}
         for name in ('validation', 'test'):
-            trusted = [query for query in partitions[name]
-                       if query.get('label_status') == 'human_reviewed'
-                       and query.get('label_evidence_verified') is True]
-            evaluation[name] = {'baseline': evaluate(dataset, baseline, queries=trusted),
-                                'candidate': evaluate(dataset, rerank, queries=trusted, label='logistic_l2')}
-    reasons = []
-    for name, pair in evaluation.items():
-        before, after = pair['baseline']['metrics'], pair['candidate']['metrics']
-        if after['ndcg@10'] < before['ndcg@10'] + .01:
-            reasons.append(name + '_ndcg_gain_below_0.01')
-        for key in ('recall@5', 'recall@10', 'mrr', 'work_identification_correct'):
-            if after[key] + 1e-9 < before[key]:
-                reasons.append(name + '_regression_' + key)
-        if pair['candidate']['latency_seconds']['p95'] > max(.02, pair['baseline']['latency_seconds']['p95'] * 1.5):
-            reasons.append(name + '_latency_regression')
-    return {'trained': True, 'version': VERSION, 'dataset_sha256': fingerprint(dataset),
-        'scope': 'offline_declared_dataset_bm25_not_production_index',
+            eligible_queries = [query for query in partitions[name] if eligible(query)]
+            if not eligible_queries:
+                return {'trained': False, 'reason': name + '_labels_missing',
+                        'readiness': readiness, 'model_activated': False}
+            evaluation[name] = {
+                'baseline': evaluate(dataset, baseline, queries=eligible_queries),
+                'candidate': evaluate(dataset, rerank, queries=eligible_queries,
+                                      label=label)}
+    reasons = _candidate_rejection_reasons(evaluation)
+    report = {'trained': True, 'version': VERSION, 'dataset_sha256': fingerprint(dataset),
+        'scope': ('experimental_offline_nonhuman_labels_bm25_not_production_index'
+                  if experimental else 'offline_declared_dataset_bm25_not_production_index'),
         'features': list(FEATURES), 'weights': weights, 'bias': bias,
         'epochs': epochs, 'learning_rate': rate, 'readiness': readiness,
         'training_and_evaluation_seconds': time.monotonic() - started,
         'evaluation': evaluation, 'retrieval_candidate_eligible': not reasons,
         'activation_eligible': False,
         'rejection_reasons': reasons, 'model_activated': False,
-        'activation_pending': 'independent_factual_and_resource_evaluation',
-        'limitation': 'Retrieval judgments do not establish factual answer quality; independent review required.'}
+        'activation_pending': ('human_reviewed_labels_and_independent_factual_review'
+                               if experimental else 'independent_factual_and_resource_evaluation'),
+        'experimental': experimental, 'human_labels': human_labels,
+        'label_statuses': sorted(label_statuses),
+        'limitation': ('Declared non-human labels only exercise the pipeline; they do not '
+                       'establish production quality or activate a model.'
+                       if experimental else
+                       'Retrieval judgments do not establish factual answer quality; '
+                       'independent review required.')}
+    return report
+
+
+def train_candidate(dataset, *, epochs=160, rate=.08, max_seconds=30., max_pairs=50000):
+    """Regresión logística L2 pequeña; sólo tras suficientes etiquetas de calidad.
+
+    El holdout test se consulta una vez, después de congelar hiperparámetros.
+    Retorna artefacto inactivo y veredicto; no hay integración automática al chat.
+    """
+    _validate_training_options(epochs=epochs, rate=rate, max_seconds=max_seconds,
+                               max_pairs=max_pairs)
+    partitions = split_by_work(dataset)
+    readiness = training_readiness(dataset, partitions)
+    if not readiness['ready']:
+        return {'trained': False, 'readiness': readiness, 'reason': 'insufficient_trusted_labels'}
+    return _fit_candidate(dataset, partitions, eligible=_human_query, readiness=readiness,
+        label='logistic_l2', experimental=False, label_statuses=('human_reviewed',),
+        human_labels=True, epochs=epochs, rate=rate, max_seconds=max_seconds,
+        max_pairs=max_pairs)
+
+
+def train_experimental_candidate(dataset, *, label_statuses=EXPERIMENTAL_LABEL_STATUSES,
+                                 epochs=160, rate=.08, max_seconds=30., max_pairs=50000):
+    """Entrena un candidato de investigación con juicios no humanos declarados.
+
+    No es un modelo de producción: no se activa, no se integra al chat y sus
+    métricas sólo miden recuperación sobre el dataset declarado. La compuerta
+    ``human_reviewed`` + ``label_evidence_verified`` sigue intacta.
+    """
+    _validate_training_options(epochs=epochs, rate=rate, max_seconds=max_seconds,
+                               max_pairs=max_pairs)
+    statuses = tuple(label_statuses)
+    partitions = split_by_work(dataset)
+    readiness = experimental_readiness(dataset, partitions, label_statuses=statuses)
+    if not readiness['ready']:
+        return {'trained': False, 'readiness': readiness,
+                'reason': 'insufficient_experimental_labels', 'model_activated': False,
+                'experimental': True, 'activation_eligible': False}
+    return _fit_candidate(dataset, partitions,
+        eligible=lambda query: _experimental_query(query, set(statuses)),
+        readiness=readiness, label='logistic_l2_experimental', experimental=True,
+        label_statuses=statuses, human_labels=False, epochs=epochs, rate=rate,
+        max_seconds=max_seconds, max_pairs=max_pairs)
 
 
 def index_retriever(dataset, index, *, embedder=None):

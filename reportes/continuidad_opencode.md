@@ -5,10 +5,10 @@ Rama: `feature/cuotas-ia-chatbot`.
 
 ## Expansión de conocimiento local y checkpoint (27 de octubre de 2026)
 
-- Punto de partida: HEAD `e142c63`, rama `feature/cuotas-ia-chatbot`. Se
-  conservó todo el trabajo pendiente de Codex; no se hizo `reset`, `clean`,
-  checkout destructivo ni push. El informe detallado está en
-  `reportes/expansion_conocimiento_litmate.md`.
+- Punto de partida de la unidad: HEAD `e142c63`; HEAD actual `d5b01b8`, rama
+  `feature/cuotas-ia-chatbot`. Se conservó todo el trabajo pendiente de Codex;
+  no se hizo `reset`, `clean`, checkout destructivo ni push. El informe detallado
+  está en `reportes/expansion_conocimiento_litmate.md`.
 - Biblioteca: **12 libros activos**, **6.393 fragmentos de origen**, **561
   capítulos/secciones** y **9.656.545 bytes**. Se añadieron *La Regenta*
   (Gutenberg 17073) y *Marianela* (Gutenberg 17340), con SHA-256 y revisión de
@@ -31,11 +31,27 @@ Rama: `feature/cuotas-ia-chatbot`.
   españoles con evidencia Open Library y se incluyó la revisión de la
   biblioteca y el flag semántico en la caché. El alias resuelve identidad, no
   certifica una sinopsis.
+- Evidencia introductoria: `retrieve_library` marca `front_matter` sobre el
+  fragmento completo antes del recorte; `assess_evidence` rechaza portadas,
+  prefacios y listas de materias (`Temas del catálogo`) como sinopsis. Cuando hay
+  una sinopsis web vinculada, `literary_ai` retira esos fragmentos locales del
+  contexto; si no hay web, conserva el respaldo local sin convertirlo en trama.
+- Investigación externa: se reconocen sufijos seguros de título web
+  (`- Wikipedia`, `: resumen`, nombre del sitio) sólo con autoría coincidente, y
+  el filtro de candidatos usa alias confirmados para no perder la obra local.
+  Una tarjeta de libro no verificada se descarta si su título/autor aparecen en
+  la web; una tarjeta inventada sigue el fallback seguro existente.
 - Configuración: `LITMATE_LIBRARY_DB`, `LITMATE_LIBRARY_RAG_DB` y
   `LITMATE_LIBRARY_SEMANTIC_CHAT`. El último sigue **desactivado por defecto**.
-- Pruebas: suite completa `core` **1.626 OK en 25,938 s**; integración
-  `core.test_ai_library_router` **12/12 OK**. Las advertencias de Wikipedia,
-  TTS y semántica son pruebas de degradación controlada.
+- Pruebas: dirigidas de esta fase
+  (`core.test_literary_research`, `core.test_hybrid_ai`,
+  `core.test_literary_identity`, `core.test_literary_ranking`):
+  **125/125 OK en 1,369 s**. Suite completa `core`: **1.636 pruebas, 4 fallos y
+  2 errores en 228,839 s**; no está verde. Los casos abiertos están en
+  `test_ai_public_details` y `test_chat_deadline`, archivos no modificados en
+  esta fase. Log: `reportes/expansion_20261027/suite_core_20261027.txt`.
+  Las advertencias de Wikipedia, TTS y semántica sí son pruebas de degradación
+  controlada.
 - Recuperación real de 12 libros: léxica Recall@5 **0,4333**, nDCG@10
   **0,3398**, p50 **0,2231 s**; híbrida Recall@5 **0,6333**, Recall@10
   **0,7333**, nDCG@10 **0,5542**, p50 **0,2837 s**, 30 llamadas de embedding y
@@ -49,20 +65,37 @@ Rama: `feature/cuotas-ia-chatbot`.
   `answered` pero atribuyó la carta a Elizabeth Lavenza; el fragmento local y
   la novela la atribuyen al padre, Alphonse. El estado `answered` **no es una
   certificación factual**. El caso se conserva como fallo de calidad.
-- Fallback externo: «¿De qué trata Orgullo y prejuicio?» con web habilitada
-  quedó `unavailable` en modo léxico y semántico; no se demostró que las fuentes
-  externas rescataran ese caso. La recuperación léxica devuelve material
-  introductorio de la edición, no una sinopsis completa.
-- Learning-to-rank: **no entrenado ni activo**. `training_readiness.ready` es
-  `false`; hay cero pares/obras/consultas y faltan etiquetas
-  `human_reviewed` + `label_evidence_verified`. No se cambiaron pesos de Ollama
-  ni se instalaron dependencias.
-- Checkpoint local: el commit incluye código, pruebas, alias e informes; no se
-  hace push. Los corpus, bases e índices de `data/biblioteca/`,
-  `data/adquisicion/` y `data/corpus_autorizado/` quedan fuera de Git.
+- Investigación externa real: «¿De qué trata Orgullo y prejuicio?» ya no se
+  detiene en el front matter. En `consulta_orgullo_web_20261027_run2.json`
+  quedó `answered`, con una búsqueda web, cuatro fuentes (tres vinculadas) y
+  `front_matter_excluded=4`; el texto fue una lista de pasajes atribuidos, no
+  una sinopsis. Esa ejecución precedió al arreglo de alias y usó una identidad
+  provisional, no el `work_id` local. `..._final.json` escaló y excluyó el front
+  matter, pero la auditoría rechazó un acontecimiento sin respaldo
+  (`quality_rejected`).
+  `..._resumen_breve.json` respondió con un pasaje narrativo local, no con web.
+  La escalada y el vínculo están demostrados; una sinopsis web coherente y
+  estable no. `answered` no certifica verdad factual.
+- Límite externo: `simple_literary_route` puede devolver `candidates=[]` para un
+  resumen; una obra ausente de la biblioteca no tiene identidad local contra la
+  que vincular páginas web. La web puede consultarse, pero no se garantiza una
+  respuesta final. Queda como brecha conocida, no como cobertura completa.
+- Learning-to-rank: candidato **experimental** con etiquetas
+  `agent_reviewed`/`curated_test`, no activo y no elegible para producción.
+  `training_readiness.ready=false` con cero pares/obras/consultas; la compuerta
+  exige 200 pares, 20 obras y 80 consultas. Fixture de 16 obras: validación
+  nDCG@10 0,9529 → 0,9590, prueba 0,8069 → 0,8069. Biblioteca de 5 obras:
+  validación 0,8552 → 0,8552, prueba 0,9385 → 0,9385. Ambos rechazados por
+  ganancia < 0,01; `human_labels=false`, `activation_eligible=false`,
+  `model_activated=false`. No se cambiaron pesos de Ollama ni se instalaron
+  dependencias.
+- Checkpoint local: HEAD actual `d5b01b8`; los cambios de esta fase se guardan
+  en un commit local sin push. Los corpus, bases e índices de
+  `data/biblioteca/`, `data/adquisicion/` y `data/corpus_autorizado/` quedan
+  fuera de Git.
 - Siguiente paso: no activar semántica ni ranking por defecto. Primero hay que
-  corregir la auditoría/atribución factual, mejorar la recuperación de material
-  introductorio y recolectar etiquetas humanas verificadas.
+  corregir la auditoría/atribución factual, cerrar la brecha de obras sin
+  candidato local y recolectar etiquetas humanas verificadas.
 
 ## Personajes verificados y límite de Wikipedia (26 de octubre de 2026)
 

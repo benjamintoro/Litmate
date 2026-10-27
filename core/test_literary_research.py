@@ -1,7 +1,8 @@
 """Suficiencia y candidatos se calculan desde evidencia recibida, sin búsquedas."""
 from django.test import SimpleTestCase
 
-from .literary_research import (assess_evidence, public_research_queries,
+from .literary_research import (assess_evidence, looks_like_catalogue_metadata,
+                                looks_like_front_matter, public_research_queries,
                                 rank_candidates, resolve_verified_request)
 from .test_literary_identity import BOOK, PUBLIC
 
@@ -14,6 +15,56 @@ class LiteraryResearchTests(SimpleTestCase):
             result = assess_evidence(question, [synopsis], [BOOK])
             self.assertFalse(result['sufficient'])
             self.assertTrue(result['queries'])
+
+    def test_front_matter_excerpt_does_not_suppress_external_research(self):
+        title_page = {**BOOK, 'kind': 'excerpt', 'locator': 'capítulo/sección 1: Inicio',
+                      'description': (
+                          '[Illustration: EDITORIAL PUBLISHER]\n'
+                          f'{BOOK["title"]}\nby {BOOK["author"]}\n'
+                          'CONTENTS\nPREFACE\nThe author explains the book and its plot.')}
+        self.assertTrue(looks_like_front_matter(title_page))
+        result = assess_evidence('¿De qué trata?', [title_page], [BOOK])
+        self.assertFalse(result['sufficient'])
+        self.assertEqual(result['missing'], ['synopsis'])
+        self.assertTrue(result['queries'])
+
+    def test_editorial_criticism_without_headings_is_not_plot_evidence(self):
+        criticism = {**BOOK, 'kind': 'excerpt', 'locator': 'capítulo/sección 1: Inicio',
+                     'description': (
+                         '_The author gives the reader a book whose plot and characters '
+                         'are discussed here with the novel and the story as examples. '
+                         'The critic compares this work with the narrative of another novelist._')}
+        self.assertTrue(looks_like_front_matter(criticism))
+        self.assertFalse(assess_evidence('¿De qué trata?', [criticism], [BOOK])['sufficient'])
+
+    def test_narrative_excerpt_still_supports_a_synopsis(self):
+        narrative = {**BOOK, 'kind': 'excerpt', 'locator': 'capítulo/sección 2: Chapter I',
+                     'description': (
+                         'Papelucho walked to the window and said: «Det, I can see your '
+                         'planet tonight.» Det answered that he wanted to return home. '
+                         'Papelucho promised to help his friend find a way back before '
+                         'the next full moon, and both began to plan the journey.')}
+        self.assertFalse(looks_like_front_matter(narrative))
+        self.assertTrue(assess_evidence('¿De qué trata?', [narrative], [BOOK])['sufficient'])
+
+    def test_a_very_short_catalogue_description_is_not_a_full_synopsis(self):
+        short = {**BOOK, 'description': 'Papelucho conoce a Det.'}
+        result = assess_evidence('¿De qué trata?', [short], [BOOK])
+        self.assertFalse(result['sufficient'])
+        self.assertTrue(result['queries'])
+
+    def test_long_catalogue_subject_list_is_not_a_synopsis(self):
+        topics = {**BOOK, 'kind': 'book', 'description': (
+            'Temas del catálogo: Fiction, Romance, Historical, Regency, '
+            'British and Irish fiction, Classic Literature, Family, Friendship, '
+            'Social Class, Marriage, Coming of Age, Satire, Literary Fiction, '
+            'Nineteenth Century, England, Courtship, Manners and Customs.')}
+        self.assertGreaterEqual(len(topics['description']), 180)
+        self.assertTrue(looks_like_catalogue_metadata(topics))
+        result = assess_evidence('¿De qué trata?', [topics], [BOOK])
+        self.assertFalse(result['sufficient'])
+        self.assertEqual(result['missing'], ['synopsis'])
+        self.assertTrue(result['queries'])
 
     def test_character_roles_require_literal_support_and_correct_work(self):
         self.assertTrue(assess_evidence('Dime los personajes', [BOOK, PUBLIC], [BOOK])['sufficient'])

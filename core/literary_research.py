@@ -25,6 +25,102 @@ VAGUE = set('escena escenas mujer hombre persona protagonista protagonistas pers
             'niñas pequeño pequeña hermana hermano bosque'.split())
 VAGUE = {normalize_identity(item) for item in VAGUE}
 
+# Una edición completa suele empezar con portada, prefacio, índice o crítica
+# editorial. Esos pasajes identifican la obra, pero no describen su trama. Se
+# excluyen sólo como prueba de sinopsis: nunca se borran de las fuentes ni se
+# usan para inferir hechos que el texto no diga.
+FRONT_MATTER_MARKERS = (
+    'preface', 'prologo', 'proemio', 'introduccion', 'introduction',
+    'contenido', 'contents', 'indice', 'index', 'list of illustrations',
+    'nota preliminar', 'advertencia', 'dedicatoria', 'copyright',
+    'project gutenberg', 'transcriber', 'produced by', 'published by',
+    'publisher', 'all rights reserved', 'tasa', 'testimonio de las erratas',
+)
+META_DISCOURSE_MARKERS = (
+    'the author', 'the book', 'the novel', 'the reader', 'the story',
+    'the plot', 'the character', 'the characters', 'the text', 'this work',
+    'the present book', 'the narrative', 'the writer', 'the novelist',
+    'the critic', 'the preface', 'the introduction',
+)
+CRITICAL_FIRST_PERSON = (
+    'i suppose', 'for my part', 'seems to me', 'i propose', 'i declare',
+    'in my opinion', 'the present book', 'its author',
+)
+CRITICAL_VOCABULARY = (
+    'author', 'authors', 'book', 'books', 'novel', 'novels', 'reader',
+    'readers', 'plot', 'story', 'stories', 'character', 'characters',
+    'critic', 'criticism', 'narrative', 'fiction', 'novelist', 'preface',
+    'introduction',
+)
+# Una descripción de catálogo muy breve sirve para una ficha, no para una
+# sinopsis. Con evidencia local escasa se prefiere ampliar con fuentes públicas;
+# si no hay red, el pasaje breve sigue disponible como respaldo parcial.
+MIN_SYNOPSIS_CHARS = 180
+
+
+def _has_direct_speech(text):
+    return bool(re.search(r'[«»“”"]|\s--\s|\n--', text))
+
+
+def looks_like_front_matter(source):
+    """Detecta portadas, índices, prefacios y crítica editorial, no narrativa.
+
+    Es una compuerta conservadora para la suficiencia de una sinopsis. Un falso
+    positivo sólo provoca una búsqueda externa adicional; el pasaje local sigue
+    disponible como fuente parcial. No se aplica a fichas bibliográficas ni a
+    páginas web, cuyo contrato de lectura ya está verificado.
+    """
+    if not isinstance(source, dict):
+        return False
+    if source.get('front_matter') is True:
+        return True
+    if source.get('kind') != 'excerpt':
+        return False
+    text = normalize_identity(source.get('description'))
+    if len(text) < 60:
+        return False
+    headings = sum(marker in text for marker in FRONT_MATTER_MARKERS)
+    meta = sum(marker in text for marker in META_DISCOURSE_MARKERS)
+    locator = normalize_identity(source.get('locator'))
+    opening = any(marker in locator for marker in ('inicio', 'start', 'front', 'portada'))
+    # «CONTENTS» y «PREFACE» juntos son una firma inequívoca de paratexto.
+    if headings >= 2:
+        return True
+    if headings and (opening or 'project gutenberg' in text or 'transcriber' in text):
+        return True
+    # La crítica introductoria no suele citar diálogo y acumula vocabulario
+    # sobre «el autor», «el libro», «la trama» o «los personajes».
+    if not _has_direct_speech(text):
+        if meta >= 4:
+            return True
+        if meta >= 2 and text.count('_') >= 4 and any(
+                marker in text for marker in CRITICAL_FIRST_PERSON):
+            return True
+        vocabulary = sum(1 for marker in CRITICAL_VOCABULARY
+                         if re.search(r'(?<!\w)' + re.escape(marker) + r'(?!\w)', text))
+        if vocabulary >= 3 and text.count('_') >= 4:
+            return True
+    return False
+
+
+CATALOGUE_METADATA_PREFIXES = (
+    'temas del catalogo', 'materias', 'subject', 'subjects', 'generos',
+    'categorias', 'catalog topics', 'topics', 'temas',
+)
+
+
+def looks_like_catalogue_metadata(source):
+    """Una lista de materias o géneros no es una sinopsis, aunque sea larga."""
+    if not isinstance(source, dict):
+        return False
+    if source.get('catalogue_metadata') is True:
+        return True
+    text = normalize_identity(source.get('description'))
+    if not text:
+        return False
+    return any(re.match(r'^' + re.escape(prefix) + r'(?:\s|:)', text)
+               for prefix in CATALOGUE_METADATA_PREFIXES)
+
 
 def _words(text):
     return re.findall(r'[a-z0-9]+', normalize_identity(text))
@@ -441,9 +537,18 @@ def assess_evidence(message, sources, selected_books=None, intent=''):
         elif requirement == 'bibliography':
             enough = any(work_identity(source) for source in relevant)
         elif requirement in {'synopsis', 'recommendation', 'comparison'}:
-            enough = any(work_identity(source) and len(str(source.get('description') or '').strip()) >= 60 for source in relevant)
+            minimum = 60 if requirement == 'recommendation' else MIN_SYNOPSIS_CHARS
+            def _narrative_synopsis(source):
+                # Una ficha bibliográfica puede describir la obra; un fragmento
+                # del original sólo cuenta si no es portada, índice o prefacio.
+                return (bool(work_identity(source))
+                        and len(str(source.get('description') or '').strip()) >= minimum
+                        and not looks_like_front_matter(source)
+                        and not looks_like_catalogue_metadata(source))
+            enough = any(_narrative_synopsis(source) for source in relevant)
             if requirement == 'comparison' and books:
-                enough = len(books) >= 2 and all(any(same_work(source, book) and len(str(source.get('description') or '')) >= 60
+                enough = len(books) >= 2 and all(any(same_work(source, book)
+                                                       and _narrative_synopsis(source)
                                                        for source in relevant) for book in books)
         elif requirement in {'characters', 'character_detail', 'relationships'}:
             for source in relevant:

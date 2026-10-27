@@ -7,8 +7,9 @@ from pathlib import Path
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 
-from core.literary_ranking import (FixtureBM25, evaluate, index_retriever, load_dataset,
-    split_by_work, train_candidate, training_readiness)
+from core.literary_ranking import (FixtureBM25, evaluate, experimental_readiness,
+    index_retriever, load_dataset, split_by_work, train_candidate,
+    train_experimental_candidate, training_readiness)
 
 
 class Command(BaseCommand):
@@ -25,6 +26,8 @@ class Command(BaseCommand):
         parser.add_argument('--split', choices=('all', 'train', 'validation', 'test'), default='all')
         parser.add_argument('--precision-k', type=int, default=5)
         parser.add_argument('--train-candidate', action='store_true')
+        parser.add_argument('--experimental-candidate', action='store_true',
+                            help='Entrena un candidato de investigación con etiquetas no humanas; no lo activa.')
 
     def handle(self, *args, **options):
         output = options.get('output')
@@ -46,6 +49,7 @@ class Command(BaseCommand):
                     'queries': len(rows), 'works': sorted({q['work_id'] for q in rows})}
                     for name, rows in partitions.items()},
                 'training_readiness': training_readiness(dataset),
+                'experimental_readiness': experimental_readiness(dataset),
                 'generative_calls': 0, 'external_http_calls': 0,
                 'factual_answer_accuracy': 'not_measured',
                 'entity_extraction_precision': 'not_measured',
@@ -77,6 +81,8 @@ class Command(BaseCommand):
                     report['mode'] = 'offline_curated_fixture_retrieval_not_end_to_end'
                 if options['train_candidate']:
                     report['candidate'] = train_candidate(dataset)
+                if options['experimental_candidate']:
+                    report['experimental_candidate'] = train_experimental_candidate(dataset)
                 report['python_peak_traced_bytes'] = tracemalloc.get_traced_memory()[1]
                 report['memory_scope'] = 'Python allocations only; excludes SQLite/native/GPU/RSS'
             finally:

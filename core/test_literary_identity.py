@@ -2,8 +2,9 @@
 from django.test import SimpleTestCase
 from unittest.mock import Mock
 
-from .literary_identity import (bind_source, confirmed_aliases, resolve_followup_context,
-                                same_work, title_matches, work_identity)
+from .literary_identity import (bind_source, book_named_in_message, confirmed_aliases,
+                                resolve_followup_context, same_work, title_matches,
+                                work_identity)
 from .literary_quality import resolve_followup_books
 
 
@@ -23,6 +24,21 @@ PUBLIC = {'kind': 'web', 'source': 'Editorial SM', 'title': BOOK['title'],
 
 
 class LiteraryIdentityTests(SimpleTestCase):
+    def test_web_title_suffix_binds_only_with_author_identity(self):
+        page = {**PUBLIC, 'title': BOOK['title'] + ' - Wikipedia, la enciclopedia libre',
+                'identity_text': f'{BOOK["title"]} es un libro de {BOOK["author"]}.'}
+        self.assertTrue(bind_source(page, BOOK).get('work_binding_verified'))
+        without_author = {**page, 'identity_text': 'Una página sobre esta obra.'}
+        self.assertFalse(bind_source(without_author, BOOK).get('work_binding_verified'))
+        different_volume = {**page, 'title': BOOK['title'] + ': el regreso del marciano'}
+        self.assertFalse(bind_source(different_volume, BOOK).get('work_binding_verified'))
+
+    def test_book_named_in_message_accepts_confirmed_alias(self):
+        self.assertTrue(book_named_in_message(
+            BOOK, '¿De qué trata Diario secreto de Papelucho y el marciano?'))
+        self.assertTrue(book_named_in_message(BOOK, '¿De qué trata Papelucho y el marciano?'))
+        self.assertFalse(book_named_in_message(BOOK, '¿De qué trata otra obra?'))
+
     def test_alias_requires_bibliographic_provenance(self):
         self.assertTrue(title_matches('Papelucho y el marciano', BOOK))
         for change in ({'confirmed_aliases': ['Papelucho y el marciano']},

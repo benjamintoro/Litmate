@@ -999,7 +999,7 @@ def canonical_sources(items, maximum=8):
             if name in item:
                 source[name] = clean_text(item[name], 220)
         for name in ('work_binding_verified', 'permanent_index_allowed', 'injection_detected',
-                     'memory_verified', 'character_appendix'):
+                     'memory_verified', 'character_appendix', 'front_matter'):
             if name in item:
                 source[name] = item[name] is True
         if isinstance(item.get('attribution'), dict):
@@ -1597,7 +1597,9 @@ class LiteraryAssistant:
                             if route['intent'] in {'analysis', 'summary', 'author'} else CLARIFICATION)
                 return ChatResult(question, 'clarification', diagnostics=diagnostics)
             if route['intent'] in {'analysis', 'summary', 'author'} and not route['followup']:
-                named = [book for book in route['candidates'] if normalized(book['title']) in normalized(message)]
+                from .literary_identity import book_named_in_message
+                named = [book for book in route['candidates']
+                         if book_named_in_message(book, message)]
                 if named:
                     route = {**route, 'candidates': named}
             from .literary_quality import (PLAN_PROMPT, AUDIT_PROMPT, RetryableAuditError,
@@ -1969,6 +1971,30 @@ class LiteraryAssistant:
                 rejected_claims = []
                 retryable_audit = False
                 try:
+                    # Si sólo hay páginas web, una tarjeta de libro con
+                    # source_id=0 no está verificada. Se descarta la tarjeta,
+                    # no el texto: la respuesta sigue exigiendo citas web reales.
+                    if (context.get('allow_web_only_recommendations')
+                            and isinstance(draft, dict) and draft.get('status') == 'answer'
+                            and draft.get('books')):
+                        def _supported_by_web(book):
+                            title = normalized(book.get('title'))
+                            author = normalized(book.get('author'))
+                            if not title:
+                                return False
+                            return any(source.get('kind') == 'web' and title in normalized(
+                                ' '.join(str(source.get(field) or '') for field in
+                                         ('title', 'description', 'identity_text')))
+                                and (not author or author in normalized(
+                                    ' '.join(str(source.get(field) or '') for field in
+                                             ('title', 'description', 'identity_text'))))
+                                for source in sources)
+                        supported = [book for book in draft['books']
+                                     if isinstance(book, dict) and _supported_by_web(book)]
+                        if supported:
+                            diagnostics['unverified_book_cards_removed'] = len(supported)
+                            draft = {**draft, 'books': [book for book in draft['books']
+                                                       if book not in supported]}
                     # La ficha identifica la obra de las tarjetas aunque los roles
                     # se citen desde otra página. Completa sólo esa referencia de
                     # identidad comprobada; nunca corrige títulos/autores inventados.
@@ -2314,7 +2340,14 @@ class LiteraryAssistant:
                         result = [source for source in result if not re.search(
                             r'\((?:pel[ií]cula|film|movie)\)', str(source.get('title', '')), re.I)]
                     for book in route['candidates'][:2]:
-                        result = [bind_source(source, book) for source in result]
+                        # Un título de página puede contener el autor («... - Jane
+                        # Austen - Sitio»). Se usa como identidad de la página, no
+                        # como prueba de su contenido. La descripción sigue siendo
+                        # dato externo no confiable.
+                        result = [bind_source({**source, 'identity_text': ' '.join(
+                            str(source.get(field) or '') for field in
+                            ('identity_text', 'title', 'description'))[:2000]}, book)
+                            for source in result]
                     found.extend(result[:4])
                     if provider_status:
                         diagnostics.setdefault('research_statuses', []).append(provider_status)
@@ -2339,6 +2372,16 @@ class LiteraryAssistant:
             merged = canonical_sources([source for source in merged
                 if source['kind'] not in {'book', 'excerpt'}
                 or topic_matches({**source, 'kind': 'book'}, message)])
+        if (route['intent'] == 'summary' and found
+                and any(source.get('work_binding_verified') for source in found)):
+            # Ya hay una sinopsis externa vinculada. Las portadas y prefacios
+            # locales identifican la edición, pero no deben sostener la trama ni
+            # aparecer como citas de resumen. Si la web no estaba disponible, se
+            # conservan como respaldo local.
+            kept = [source for source in merged if not source.get('front_matter')]
+            if kept:
+                diagnostics['front_matter_excluded'] = len(merged) - len(kept)
+                merged = kept
         return merged
 
     @staticmethod

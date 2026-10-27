@@ -271,6 +271,39 @@ class EngineAndBudgetTests(unittest.TestCase):
         web.assert_not_called()
         content.assert_called_once()
 
+    def test_front_matter_only_does_not_suppress_multi_source_research(self):
+        route = {**ROUTE, 'intent': 'summary', 'queries': [BOOK['title']],
+                 'candidates': [{'title': BOOK['title'], 'author': BOOK['author']}]}
+        front_matter = {**BOOK, 'kind': 'excerpt', 'locator': 'capítulo/sección 1: Inicio',
+                        'front_matter': True,
+                        'description': ('[Illustration: PUBLISHER]\nCONTENTS\nPREFACE\n'
+                                        'The author introduces the book and its plot.')}
+        web_source = {**BOOK, 'kind': 'web', 'source': 'Wikipedia',
+                      'title': BOOK['title'] + ' - Wikipedia, la enciclopedia libre',
+                      'url': 'https://es.wikipedia.org/wiki/Diario_secreto_de_Papelucho',
+                      'read_mode': 'pasaje de página pública',
+                      'identity_text': f'{BOOK["title"]} es una novela de {BOOK["author"]}.',
+                      'description': ('Papelucho escribe un diario con las aventuras que vive '
+                                      'junto a Det, su amigo marciano, y su familia.')}
+        draft = {**DRAFT, 'text': 'Papelucho comparte sus aventuras con Det, su amigo marciano [2].',
+                 'basis': 'sources', 'citations': [2],
+                 'books': [{'title': BOOK['title'], 'author': BOOK['author'], 'source_id': 0}]}
+        web = Mock(return_value=[web_source])
+        llm = FakeLLM(route=route, answer=draft)
+        result = LiteraryAssistant(llm, lambda q: [], web_search=web,
+                                   content_search=lambda m, c: [front_matter],
+                                   research_enabled=True, allow_web_only=True).reply(
+                                       f'¿De qué trata {BOOK["title"]}? Incluye los temas principales.')
+        self.assertTrue(web.called, result.diagnostics)
+        self.assertEqual(result.diagnostics['web_searches'], 1)
+        self.assertTrue(any(source['kind'] == 'web' for source in result.sources))
+        source = next(source for source in result.sources if source['kind'] == 'web')
+        self.assertTrue(source.get('work_binding_verified'))
+        self.assertEqual(result.diagnostics.get('front_matter_excluded'), 1)
+        self.assertEqual(result.status, 'answered', result.diagnostics)
+        self.assertEqual(result.books, [])
+        self.assertEqual(result.diagnostics.get('unverified_book_cards_removed'), 1)
+
     def test_indexed_quote_can_be_answered_instead_of_always_requesting_upload(self):
         route = {**ROUTE, 'intent': 'analysis'}
         draft = {**DRAFT, 'text': '“' + QUOTE + '” [1].', 'basis': 'excerpt'}
