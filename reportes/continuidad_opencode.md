@@ -5,8 +5,9 @@ Rama: `feature/cuotas-ia-chatbot`.
 
 ## Expansión de conocimiento local y checkpoint (27 de octubre de 2026)
 
-- Punto de partida de la unidad: HEAD `e142c63`; HEAD actual `d5b01b8`, rama
-  `feature/cuotas-ia-chatbot`. Se conservó todo el trabajo pendiente de Codex;
+- Punto de partida de la unidad: HEAD `e142c63`; checkpoint de código de esta
+  fase: `b3ac40d`, rama `feature/cuotas-ia-chatbot`. Se conservó todo el trabajo
+  pendiente de Codex;
   no se hizo `reset`, `clean`, checkout destructivo ni push. El informe detallado
   está en `reportes/expansion_conocimiento_litmate.md`.
 - Biblioteca: **12 libros activos**, **6.393 fragmentos de origen**, **561
@@ -89,10 +90,10 @@ Rama: `feature/cuotas-ia-chatbot`.
   ganancia < 0,01; `human_labels=false`, `activation_eligible=false`,
   `model_activated=false`. No se cambiaron pesos de Ollama ni se instalaron
   dependencias.
-- Checkpoint local: HEAD actual `d5b01b8`; los cambios de esta fase se guardan
-  en un commit local sin push. Los corpus, bases e índices de
-  `data/biblioteca/`, `data/adquisicion/` y `data/corpus_autorizado/` quedan
-  fuera de Git.
+- Checkpoint local: código de esta fase en `b3ac40d`; esta nota de continuidad
+  se guarda en un commit documental posterior, sin push. Los corpus, bases e
+  índices de `data/biblioteca/`, `data/adquisicion/` y
+  `data/corpus_autorizado/` quedan fuera de Git.
 - Siguiente paso: no activar semántica ni ranking por defecto. Primero hay que
   corregir la auditoría/atribución factual, cerrar la brecha de obras sin
   candidato local y recolectar etiquetas humanas verificadas.
