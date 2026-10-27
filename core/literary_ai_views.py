@@ -268,7 +268,7 @@ def _model_answer(message, history, topic_context, retrieval_message):
             except (TimeoutError, OSError, ValueError):
                 found = []
             backup = reference_answer(message, found, query=queries[0],
-                intent=(route or {}).get('intent', 'analysis'))
+                intent=(route or {}).get('intent', 'analysis'), history=history)
             if backup is not None:
                 backup.diagnostics.update(original_failure=result.diagnostics, web_backup=True)
                 result = backup

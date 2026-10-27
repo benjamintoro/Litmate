@@ -544,13 +544,16 @@ def _explicit_reference_target(message):
     por el lector. No convierte pronombres, recuerdos o materias en títulos.
     La intención puede conservar varias tareas y seguir en el pipeline completo.
     """
-    value = request_text(message).lstrip(' ¿¡')
+    value = request_text(message).lstrip(' ¿?¡')
     first = re.split(r'[?!]|\.\s', value, maxsplit=1)[0].strip(' .')
     match = re.match(r'^(?:quien escribio|(?:en que ano|cuando) se publico)\s+(.+)$', first)
     if match is None:
         match = re.match(r'^(?:y\s+)?(?:quien(?:es)?|cual(?:es)?|dime|dame)\b.*?'
                          r'\b(?:personajes?|protagonistas?|personaje principal)'
                          r'(?: principales)?\s+(?:de|del)\s+(.+)$', first)
+    if match is None:
+        match = re.match(r'^(?:que|cual) personaje\s+(?:de|del)\s+(.+?)\s+'
+                         r'(?:se llama|tiene (?:el )?nombre)\b', first)
     if match is None:
         return ''
     title = re.sub(r'^(?:el|la)\s+(?:libro|novela|obra)\s+', '', match.group(1))
@@ -562,7 +565,32 @@ def _explicit_reference_target(message):
     return title
 
 
-def reference_answer(message, sources, *, query=None, intent='recommend', limit=4):
+def _contextual_reference_sources(message, sources, history):
+    """Un respaldo parcial conserva la obra; compartir «Anillo» no la identifica.
+
+    Usa sólo identidades ya aceptadas o el título explícito de una pregunta de
+    personajes. No convierte la respuesta anterior del modelo en evidencia.
+    """
+    from .ai_narrative_answers import request_for, bound_sources
+    context = None
+    target = _explicit_reference_target(message)
+    value = normalized(message)
+    if target and re.search(r'\b(?:personajes?|protagonistas?)\b', value):
+        context = {'task': 'characters', 'title': target, 'targets': [], 'ambiguous': False}
+    elif history and re.search(r'\b(?:ese|esa|esos|esas|su|sus|anterior|'
+                               r'ese personaje|el protagonista|el antagonista)\b', value):
+        context = request_for('Dime la trama de ese libro', history)
+        if context and context.get('ambiguous'):
+            return []
+    if not context or not context.get('title'):
+        return sources
+    known_books = [book for turn in sanitized_history(list(history)) for book in turn['books']]
+    bound = bound_sources({**context, 'task': 'characters'}, [*sources, *known_books])
+    urls = {source['url'] for source in bound if source.get('kind') == 'web'}
+    return [source for source in sources if source.get('kind') != 'web' or source.get('url') in urls]
+
+
+def reference_answer(message, sources, *, query=None, intent='recommend', limit=4, history=()):
     """Publica pasajes atribuidos y enlaces reales; no los convierte en fichas.
 
     La auditoría comprueba la copia literal, no certifica la veracidad de una
@@ -573,6 +601,7 @@ def reference_answer(message, sources, *, query=None, intent='recommend', limit=
     from .literary_ai import LiteraryAssistant, forbidden_output
     from .literary_search import STOPWORDS
     from .literary_web import public_text_has_injection
+    sources = _contextual_reference_sources(message, canonical_sources(sources, 16), history)
     terms = set(re.findall(r'\w{3,}', normalized(query or message))) - STOPWORDS - {
         'recomiendame', 'recomiendas', 'puedes', 'podrias', 'cuentame', 'hablame',
         'analiza', 'analisis', 'resume', 'resumen', 'sinopsis', 'trata', 'autor',

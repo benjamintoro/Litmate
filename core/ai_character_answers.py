@@ -46,8 +46,44 @@ def _clean_question(message):
     return re.sub(r'^(?:necesito|quiero)(?: saber| conocer)?\s+', 'dime ', value)
 
 
-def _previous_names(history):
+def _unquote_title(value):
+    """Retira sólo un envoltorio balanceado, conservando comillas del título."""
+    value = value.strip(' .,')
+    pairs = {'«': '»', '“': '”', '"': '"', "'": "'"}
+    while len(value) >= 2 and pairs.get(value[0]) == value[-1]:
+        value = value[1:-1].strip()
+    return value
+
+
+def _previous_names(history, *, title='', required_role=''):
+    """Referencias de conversación respaldadas por personajes de la obra activa.
+
+    La pregunta anterior identifica al sujeto; su respuesta generada no prueba
+    que un personaje sea protagonista o antagonista. Esos papeles se resuelven
+    sólo desde el predicado literal de la fuente aceptada.
+    """
     if not history:
+        return []
+    if title:
+        turn = history[-1]
+        request = {'task': 'characters', 'focus': 'all', 'title': title,
+                   'targets': turn['books'], 'names': [], 'ambiguous': False}
+        facts = _facts(request, _bound(request, turn['sources']))
+        value = _clean_question(turn['question'])
+        role = required_role or ('main' if re.fullmatch(
+            r'(?:y )?(?:quien|cual) es (?:el |la |su )?(?:protagonista|personaje principal)', value)
+            else 'antagonist' if re.fullmatch(
+                r'(?:y )?(?:quien|cual) es (?:el |la |su )?(?:antagonista|villano|villana)', value) else '')
+        if role:
+            names = list(dict.fromkeys(fact['name'] for fact in facts if fact['classification'] == role))
+            return names if len(names) == 1 else []
+        explicit = re.fullmatch(r'(?:y )?(?:quien (?:es|era)|hablame(?: mas)? (?:de|sobre)|'
+                                r'que (?:sucede|pasa|ocurre) con) (.+)', value)
+        if explicit:
+            wanted = explicit.group(1)
+            names = list(dict.fromkeys(fact['name'] for fact in facts if _name_in(wanted, fact['name'])
+                or any(normalize_identity(wanted) == normalize_identity(alias) for alias in fact['aliases'])))
+            return names if len(names) == 1 else []
         return []
     value = _clean_question(history[-1]['question'])
     pair = re.search(r'(?:relacion (?:tienen|entre)|relacion hay entre) (.+?) y (.+)', value)
@@ -69,16 +105,26 @@ def request_for(message, history=(), pending_clarification=None):
     task, focus, title, names = '', 'all', '', []
     pair = re.fullmatch(r'(?:(?:explicame|dime) (?:la )?)?(?:que relacion tienen|'
                         r'que relacion hay entre|relacion entre) (.+?) y (.+)', value)
-    pronoun = re.fullmatch(r'(?:y )?(?:cual es|explicame)? ?(?:su|la) relacion con (.+)', value)
+    pronoun = re.fullmatch(r'(?:y )?(?:(?:cual es|explicame)? ?(?:su|la) relacion con|'
+                          r'que relacion tiene con) (.+)', value)
+    role_object = re.fullmatch(r'(?:y )?que relacion tiene (?:ese|este|el|la) '
+                              r'(antagonista|villano|villana|protagonista|personaje) con (.+)', value)
+    implicit_target = ''
     if pair:
         task, names = 'relationship', list(pair.groups())
     elif pronoun:
-        task, names = 'relationship', [*_previous_names(history)[:1], pronoun.group(1)]
+        task, implicit_target = 'relationship', pronoun.group(1)
+    elif role_object:
+        # La relación con un objeto necesita evidencia distinta de una relación
+        # entre dos personajes. Conservar la intención literaria sin convertir
+        # «el Anillo» o «el mapa» en una nueva obra o un concepto ajeno.
+        task, implicit_target = 'relationship', role_object.group(2)
     elif re.fullmatch(r'(?:explicame )?la relacion entre ellos', value):
         task, names = 'relationship', _previous_names(history)
     else:
-        singular = re.fullmatch(r'(?:y )?(?:(?:quien|cual) es )?(?:el |su )?'
-                               r'(?:protagonista|personaje principal)(?: (?:de|del) (.+))?', value)
+        singular = re.fullmatch(r'(?:y )?(?:(?:quien|cual) es )?(?:el |la |su )?'
+                               r'(protagonista|personaje principal|antagonista|villano|villana)'
+                               r'(?: (?:de|del) (.+))?', value)
         listing = re.fullmatch(r'(?:y )?(?:(?:dime|dame|describe|enumera|busca|'
                               r'cuales son|quienes son) )?(?:(?:los|las|sus) )?'
                               r'(personajes|protagonistas|antagonistas|villanos)'
@@ -89,7 +135,8 @@ def request_for(message, history=(), pending_clarification=None):
         individual = re.fullmatch(r'(?:y )?(?:quien (?:es|era)|hablame(?: mas)? (?:de|sobre)|'
                                  r'que (?:sucede|pasa|ocurre) con) (.+)', value)
         if singular:
-            task, focus, title = 'protagonist', 'main', singular.group(1) or ''
+            task, focus, title = ('characters', 'antagonist', singular.group(2) or '') if singular.group(1) in {
+                'antagonista', 'villano', 'villana'} else ('protagonist', 'main', singular.group(2) or '')
         elif listing:
             kind, qualifier, title = listing.groups()
             task, title = 'characters', title or ''
@@ -109,12 +156,12 @@ def request_for(message, history=(), pending_clarification=None):
     if names and names[0] in {'ese personaje', 'este personaje', 'el', 'ella'}:
         names = _previous_names(history)[:1]
     targets = []
-    title = title.strip(' «»".,')
+    title = _unquote_title(title)
     # Recuperar acentos y ñ del texto original antes de consultar catálogos.
     # La normalización compara; no debe convertir «señor» en otro término de búsqueda.
     original = message.strip(' ¿?¡!.,')
     if title:
-        tail = ' '.join(original.split()[-len(title.split()):])
+        tail = _unquote_title(' '.join(original.split()[-len(title.split()):]))
         if normalize_identity(tail) == normalize_identity(title):
             title = tail
     if normalize_identity(title) in _DEICTIC or (not title and task in {'character', 'relationship'}):
@@ -126,6 +173,15 @@ def request_for(message, history=(), pending_clarification=None):
             return {'task': task, 'focus': focus, 'title': '', 'targets': [], 'names': names, 'ambiguous': True}
         else:
             title = ''
+    if implicit_target:
+        role = ('antagonist' if role_object and role_object.group(1) in {
+            'antagonista', 'villano', 'villana'} else 'main' if role_object
+            and role_object.group(1) == 'protagonista' else '')
+        subjects = _previous_names(history, title=title, required_role=role)
+        names = [*subjects[:1], implicit_target]
+        if (not subjects or role_object or re.match(r'^(?:el|la|los|las|un|una)\s+', implicit_target)):
+            return {'task': task, 'focus': focus, 'title': title, 'targets': targets,
+                    'names': names, 'ambiguous': True, 'author_hint': ''}
     from .literary_research import public_research_queries
     if (title and not public_research_queries(title)) or any(not public_research_queries(name) for name in names):
         return None
@@ -423,21 +479,52 @@ def _relationship_fact(fact, names):
     raw = re.sub(r'(?i)^(?:tambi[eé]n |m[aá]s )?(?:llamad[oa]|conocid[oa] como)\s+[^,]+,\s*', '', raw)
     value = normalize_identity(raw)
     value = re.sub(r'^' + re.escape(normalize_identity(fact['name'])) + r'\s*', '', value)
+    # Una ocupación previa no borra el parentesco/vecindad explícitos del
+    # sujeto. No saltamos verbos ni cláusulas sobre una tercera persona.
+    value = re.sub(r'^(?:(?:es|era|fue) )?(?:(?:el|la|un|una) )?'
+                   r'(?:labrador|campesino|campesina|granjero|granjera|agricultor|agricultora) '
+                   r'(?=vecin[oa]\b)', '', value)
     # Sólo el predicado del sujeto. Una cláusula sobre Aragorn no describe
     # por extensión la relación entre los dos oyentes del relato.
     if not re.match(r'^(?:(?:es|era|fue) )?(?:(?:el|la|un|una|fiel|leal) )?'
                     r'(?:amig\w*|companer\w*|herman\w*|padre|madre|hij\w*|'
                     r'espos\w*|pareja|aliad\w*|enemig\w*|mentor\w*|escudero|'
-                    r'sirviente|protector|jardinero|acompana|ayuda|protege|se casa|se caso|'
+                    r'sirviente|protector|jardinero|vecino|vecina|acompana|ayuda|protege|se casa|se caso|'
                     r'se enamora|se enamoro)\b', value):
         return False
     # La relación tiene que predicar algo del sujeto y el otro personaje,
     # no describir una tercera pareja mencionada en el mismo pasaje.
     return bool(re.search(r'\b(?:amig\w*|companer\w*|herman\w*|padre|madre|hij\w*|'
-        r'espos\w*|pareja|aliad\w*|enemig\w*|mentor\w*|escudero|sirviente|protector)'
+        r'espos\w*|pareja|aliad\w*|enemig\w*|mentor\w*|escudero|sirviente|protector|vecin[oa])'
         r'(?:\s+y\s+\w+)?\s+(?:de|del|con)\s+(?:su amo\s+)?' + other + r'(?!\w)', value)
         or re.search(r'\b(?:acompana|ayuda|protege)\s+(?:a\s+)?' + other + r'(?!\w)', value)
         or re.search(r'\b(?:se casa|se caso|se enamora|se enamoro)\s+(?:con|de)\s+' + other + r'(?!\w)', value))
+
+
+def _task_facts(request, facts):
+    """Una lista general no acredita cualquier papel o pareja consultados."""
+    task, focus = request['task'], request['focus']
+    if task == 'relationship':
+        names = request['names']
+        return [fact for fact in facts if len(names) == 2
+                and all(_name_in(name, fact['proof']) for name in names)
+                and _relationship_fact(fact, names)]
+    if task == 'character':
+        matching = [fact for fact in facts if any(_name_in(name, fact['name'])
+                    or any(normalize_identity(name) == normalize_identity(alias) for alias in fact['aliases'])
+                    for name in request['names'])]
+        return matching if len({normalize_identity(fact['name']) for fact in matching}) <= 1 else []
+    if task == 'protagonist':
+        explicit = [fact for fact in facts if fact['classification'] == 'main'
+                    and re.search(r'\b(?:protagonista|personaje principal)\b', normalize_identity(fact['role']))]
+        return explicit or [fact for fact in facts if fact['classification'] == 'main']
+    if focus in {'main', 'antagonist', 'supporting'}:
+        return [fact for fact in facts if fact['classification'] == focus]
+    if focus == 'female':
+        return [fact for fact in facts if re.match(r'^(?:(?:es|era|fue) )?(?:(?:una|la) )?'
+                r'(?:mujer|personaje femenino|princesa|elfa|hechicera|matriarca|hija|esposa|'
+                r'sobrina|hermana)\b', normalize_identity(fact['role']))]
+    return facts
 
 
 def answer_from_sources(message, request, sources):
@@ -459,34 +546,8 @@ def answer_from_sources(message, request, sources):
         return None
     if assess_evidence(message, bound, books, 'analysis')['contradictory']:
         return None
-    facts = _facts(request, bound)
+    facts = _task_facts(request, _facts(request, bound))
     task, focus = request['task'], request['focus']
-    if task == 'relationship':
-        names = request['names']
-        if len(names) != 2:
-            return None
-        facts = [fact for fact in facts if all(_name_in(name, fact['proof']) for name in names)
-                 and _relationship_fact(fact, names)]
-    elif task == 'character':
-        facts = [fact for fact in facts if any(_name_in(name, fact['name'])
-                 or any(normalize_identity(name) == normalize_identity(alias) for alias in fact['aliases'])
-                 for name in request['names'])]
-        if len({normalize_identity(fact['name']) for fact in facts}) > 1:
-            return None
-    elif task == 'protagonist':
-        explicit = [fact for fact in facts if fact['classification'] == 'main'
-                    and re.search(r'\b(?:protagonista|personaje principal)\b', normalize_identity(fact['role']))]
-        # Una sección publicada «Principales» acredita la categoría sin repetir
-        # la palabra en cada ficha. Sólo se usa como respaldo cuando la fuente
-        # no declara un protagonista explícito; nunca se presenta como si lo
-        # hiciera.
-        facts = explicit or [fact for fact in facts if fact['classification'] == 'main']
-    elif focus in {'main', 'antagonist', 'supporting'}:
-        facts = [fact for fact in facts if fact['classification'] == focus]
-    elif focus == 'female':
-        facts = [fact for fact in facts if re.match(r'^(?:(?:es|era|fue) )?(?:(?:una|la) )?'
-                  r'(?:mujer|personaje femenino|princesa|elfa|hechicera|matriarca|hija|esposa|'
-                  r'sobrina|hermana)\b', normalize_identity(fact['role']))]
     # La extracción de fuentes con derechos reservados se parafrasea mediante
     # la síntesis/auditoría; la vía literal se reserva a conocimiento abierto.
     facts = [fact for fact in facts if _licensed(fact['source'])]
@@ -665,7 +726,7 @@ def _character_answer(message, history=(), config=None, *, pending_clarification
                     result.diagnostics['character_trace'] = trace
                     return result
     bound = _bound(request, known)
-    if config and any(source['kind'] == 'web' and _facts(request, [source]) for source in bound):
+    if config and _task_facts(request, _facts(request, bound)):
         from .ai_narrative_answers import synthesize_answer
         result, client = synthesize_answer(message, request, bound, config)
         result.diagnostics.update(character_trace=trace, model_calls=client.calls, usage=client.usage)

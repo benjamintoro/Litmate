@@ -60,7 +60,7 @@ def memory_snapshot():
     return {}
 
 
-def main(argv=None):
+def main(argv=None, *, message_selector=None, turn_observer=None, continue_run=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--matrix', type=Path)
     parser.add_argument('--case', action='append', default=[])
@@ -73,6 +73,8 @@ def main(argv=None):
                         help='Guarda borrador/auditoría narrativa únicamente en el informe local aislado.')
     parser.add_argument('--trace-characters', action='store_true',
                         help='Guarda diagnóstico y pruebas de personajes sólo en este informe local aislado.')
+    parser.add_argument('--trace-audit', action='store_true',
+                        help='Conserva fuentes/afirmaciones del resultado real para revisión de este corpus público de prueba.')
     parser.add_argument('--chat-budget', type=float, default=36,
                         help='Segundos de trabajo literario antes de cerrar el stream.')
     parser.add_argument('--response-budget', type=float, default=42,
@@ -157,6 +159,18 @@ def main(argv=None):
         from core.literary_ai_views import chatbot_query, chatbot_finalize
         narrative_traces = []
         character_traces = []
+        audit_traces = []
+        if args.trace_audit:
+            from core import literary_ai_views
+            original_answer = literary_ai_views._answer_with_cache
+            def traced_answer(message, *positional, **kwargs):
+                result, client = original_answer(message, *positional, **kwargs)
+                audit_traces.append({'question': message, 'status': result.status,
+                    'answer': result.text, 'books': copy.deepcopy(result.books),
+                    'sources': copy.deepcopy(result.sources),
+                    'diagnostics': copy.deepcopy(result.diagnostics)})
+                return result, client
+            literary_ai_views._answer_with_cache = traced_answer
         if args.trace_characters:
             from core import ai_character_answers
             original_characters = ai_character_answers.character_answer
@@ -222,12 +236,17 @@ def main(argv=None):
                 report['narrative_traces'] = narrative_traces
             if args.trace_characters:
                 report['character_traces'] = character_traces
+            if args.trace_audit:
+                report['audit_traces'] = audit_traces
             report['source_sha256'] = code_revision(base)
             report['runner_sha256'] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
             report['matrix_sha256'] = hashlib.sha256(args.matrix.read_bytes()).hexdigest() if args.matrix else None
             args.output.parent.mkdir(parents=True, exist_ok=True)
             try:
                 for case in cases:
+                    if continue_run is not None and not continue_run(report, case, None):
+                        report['stopped_by_limit'] = True
+                        break
                     cookies = CookieJar()
                     client = build_opener(ProxyHandler({}), HTTPCookieProcessor(cookies))
                     with client.open(origin + '/csrf/', timeout=2) as response:
@@ -235,13 +254,20 @@ def main(argv=None):
                     csrf = next(cookie.value for cookie in cookies if cookie.name == 'csrftoken')
                     messages = [item for item in case['messages'] for _ in range(args.repeat)]
                     for index, item in enumerate(messages, 1):
+                        if continue_run is not None and not continue_run(report, case, index):
+                            report['stopped_by_limit'] = True
+                            break
                         if args.empty_answer_cache_each_turn:
                             from core.ai_answer_cache import delete_owner_cache
                             delete_owner_cache()
                         if args.empty_retrieval_cache_each_turn:
                             from django.core.cache import cache
                             cache.clear()  # Únicamente caché de este servidor temporal.
-                        message = item['text']
+                        message = (message_selector(case, index, item,
+                            [row for row in report['turns'] if row['case'] == case['id']])
+                            if message_selector is not None else item['text'])
+                        if not isinstance(message, str) or not message.strip():
+                            raise ValueError('El selector debe devolver una pregunta literal no vacía.')
                         request = Request(origin + '/chatbot_query/',
                             data=json.dumps({'message': message, 'progress': args.progressive}).encode('utf-8'),
                             headers={'Content-Type': 'application/json', 'X-CSRFToken': csrf}, method='POST')
@@ -311,6 +337,8 @@ def main(argv=None):
                             'model_calls': int(calls) if calls is not None else None,
                             'answer': text, 'source_urls': re.findall(r'https://\S+', text)}
                         report['turns'].append(row)
+                        if turn_observer is not None:
+                            turn_observer(report, row)
                         samples = [turn['seconds'] for turn in report['turns']]
                         ordered = sorted(samples)
                         report['metrics'] = {'turns': len(samples), 'p50_seconds': statistics.median(samples),
@@ -332,7 +360,7 @@ def main(argv=None):
                 connections.close_all()
             report['source_files_changed_during_run'] = code_revision(base) != report['source_sha256']
             args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
-        print(json.dumps(report['metrics']), flush=True)
+        print(json.dumps(report.get('metrics', {'turns': 0})), flush=True)
     return int(any(not row['under_response_budget'] or not row['completed_sse'] for row in report['turns']))
 
 

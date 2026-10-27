@@ -585,6 +585,126 @@ def _claim_has_wrong_work(statement, source, sources, *, draft_text=''):
     return bool(unambiguous and not any(same_work(source, book) for book in unambiguous))
 
 
+_LETTER = r'(?i:\b(?:carta|cartas|letter|letters|mensaje|message)\b)'
+_CORRESPONDENCE_NAME = (r'[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ]+(?:[’\'-][A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+)?'
+    r'(?:\s+(?:(?:de|del|van|von)\s+)?[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ]+){0,4}')
+_SEND = r'(?i:escribe|escribió|escribio|escribía|escribia|envía|envia|envió|envio|remite|remitió|remitio|writes?|wrote|sends?|sent)'
+_RECEIVE = r'(?i:recibe|recibió|recibio|recibía|recibia|receives?|received)'
+_NEGATED = r'(?i:(?:no|nunca|not|never|did not|does not|do not)\s+)'
+_KINSHIP = {'padre': 'father', 'father': 'father', 'madre': 'mother', 'mother': 'mother',
+            'hermano': 'brother', 'brother': 'brother', 'hermana': 'sister', 'sister': 'sister'}
+_CORRESPONDENCE_BOUNDARY = re.compile(
+    r'(?i);|\b(?:while|whereas|mientras|pero|but|although|aunque|and|y)\b')
+_LETTER_OBJECT = re.compile(r'(?i)^\s*(?:(?:a|an|the|una?|la|el|su|mi|otra?|'
+    r'this|that|my|his|her|your|their)\s+)?(?:(?:short|long|brief|new|last|first|'
+    r'second|following|breve|larga?|nueva?|ultima|última|primera|segunda)\s+){0,3}' + _LETTER)
+
+
+def _correspondence_frames(text):
+    """Relaciones explícitas de correspondencia; no es un analizador universal.
+
+    Sirve como barrera de atribución para acciones identificables en español e
+    inglés. Un nombre que sólo aparece como lector en otra cláusula no acredita
+    ser remitente. No infiere identidades a partir de parentescos anónimos.
+    """
+    text = _literal(text).replace('**', '')
+    if not re.search(_LETTER, text):
+        return []
+
+    def entity(value, role=False):
+        value = ''.join(c for c in unicodedata.normalize('NFD', value.casefold())
+                        if unicodedata.category(c) != 'Mn')
+        return ('kinship', _KINSHIP[value]) if role else ('name', value)
+
+    def named_subject(match, clause):
+        # En «el padre de Víctor escribe», Víctor no es el sujeto de escribe.
+        return not re.search(r'(?i)\b(?:de|del|of)\s*$', clause[:match.start()])
+
+    def correspondence_tail(match, clause):
+        # Escribir un poema mientras otra persona lee una carta no demuestra
+        # escribir esa carta. Exige objeto de correspondencia o una relativa
+        # inequívoca: «la carta que Ana escribió a Bruno».
+        tail = match['tail']
+        relative = re.search(_LETTER + r'(?i:\s+(?:que|that|which)\s*)$',
+                             clause[:match.start()])
+        return tail if _LETTER_OBJECT.search(tail) or relative else None
+
+    frames = []
+    clauses = (part for sentence in factual_statements(text)
+               for part in _CORRESPONDENCE_BOUNDARY.split(sentence))
+    for clause in clauses:
+        if not re.search(_LETTER, clause):
+            continue
+        for match in re.finditer(r'(?P<name>' + _CORRESPONDENCE_NAME + r')\s+'
+                r'(?i:(?:le|les)\s+)?(?P<negative>' + _NEGATED + r')?(?:' + _SEND + r')\b'
+                r'(?P<tail>[^.!?]*)', clause):
+            if not named_subject(match, clause):
+                continue
+            tail = correspondence_tail(match, clause)
+            if tail is None:
+                continue
+            recipient = re.search(r'(?i:\b(?:a|para|to)\s+)(' + _CORRESPONDENCE_NAME + r')', tail)
+            frames.append({'sender': entity(match['name']),
+                'recipient': entity(recipient[1]) if recipient else None,
+                'negative': bool(match['negative'])})
+        for match in re.finditer(r'(?P<name>' + _CORRESPONDENCE_NAME + r')\s+'
+                r'(?P<negative>' + _NEGATED + r')?(?:' + _RECEIVE + r')\b'
+                r'(?P<tail>[^.!?]*)', clause):
+            if not named_subject(match, clause):
+                continue
+            tail = correspondence_tail(match, clause)
+            if tail is None:
+                continue
+            sender = re.search(_LETTER + r'(?i:\s+(?:de|from)\s+)('
+                               + _CORRESPONDENCE_NAME + r')', tail)
+            if sender:
+                frames.append({'sender': entity(sender[1]), 'recipient': entity(match['name']),
+                               'negative': bool(match['negative'])})
+        # Construcciones nominales y pasivas que identifican al autor de la carta.
+        for match in re.finditer(_LETTER + r'(?i:\s+(?:(?:was|is|era|es|fue)\s+)?'
+                r'(?:(?:written|sent|escrita|enviada)\s+)?(?:de|from|by|por)\s+)('
+                + _CORRESPONDENCE_NAME + r')(?P<tail>[^.!?]*)', clause):
+            recipient = re.search(r'(?i:\b(?:a|para|to)\s+)(' + _CORRESPONDENCE_NAME + r')', match['tail'])
+            frames.append({'sender': entity(match[1]),
+                'recipient': entity(recipient[1]) if recipient else None, 'negative': False})
+        # «from my father» puede traducirse «de su padre», pero no «de Clara».
+        for match in re.finditer(_LETTER + r'(?i:\s+(?:(?:was|is|era|es|fue)\s+)?'
+                r'(?:de|from)\s+(?:(?:my|his|her|your|su|mi|el|la)\s+)?'
+                r'(padre|madre|hermano|hermana|father|mother|brother|sister)\b)', clause):
+            frames.append({'sender': entity(match[1], role=True), 'recipient': None, 'negative': False})
+        for match in re.finditer(r'(?i:\b(?:el|la|su|mi)\s+'
+                r'(padre|madre|hermano|hermana|father|mother|brother|sister)'
+                r'(?:\s+de\s+[^,;:]{1,65}?)?\s+(?:(?:le|les)\s+)?)'
+                r'(?P<negative>' + _NEGATED + r')?(?:' + _SEND + r')\b(?P<tail>[^.!?]*)', clause):
+            if correspondence_tail(match, clause) is None:
+                continue
+            frames.append({'sender': entity(match[1], role=True), 'recipient': None,
+                           'negative': bool(match['negative'])})
+    return frames
+
+
+def _unsupported_correspondence_attribution(statement, evidence):
+    """Una cita literal no demuestra un remitente/destinatario añadido por IA."""
+    requested = _correspondence_frames(statement)
+    if not requested:
+        return False
+    observed = _correspondence_frames(evidence)
+
+    def same_role(first, second):
+        if first == second:
+            return True
+        if (not isinstance(first, tuple) or not isinstance(second, tuple)
+                or first[0] != 'name' or second[0] != 'name'):
+            return False
+        # Un nombre abreviado conserva componentes completos. Compartir sólo
+        # «Ana» no equipara «Ana Ríos» y «Ana Robles».
+        return first[1].startswith(second[1] + ' ') or second[1].startswith(first[1] + ' ')
+
+    return any(not any(all(same_role(candidate.get(key), value) for key, value in frame.items()
+                           if value is not None) for candidate in observed)
+               for frame in requested)
+
+
 @timed_stage('audit')
 def validate_audit(audit, plan, draft, sources, message, *, strict_facts=False):
     if (not isinstance(audit, dict) or set(audit) != set(AUDIT_SCHEMA['properties'])
@@ -647,6 +767,9 @@ def validate_audit(audit, plan, draft, sources, message, *, strict_facts=False):
                 raise ValueError('Las materias del catálogo no prueban acontecimientos de la trama; cita el pasaje narrativo de la obra correcta.')
             if unsupported_century_claim(claim['statement'], claim['evidence'], source):
                 raise RetryableAuditError('La evidencia no respalda el siglo afirmado; retira ese alcance temporal o aporta la prueba correspondiente.')
+            if _unsupported_correspondence_attribution(claim['statement'], claim['evidence']):
+                raise RetryableAuditError('La prueba no respalda esa atribución de remitente, '
+                    'destinatario o papel en la correspondencia; corrige el sujeto o cita un pasaje que lo identifique.')
             if re.search(r'\b(?:personajes?|protagonistas?)\b', message, re.I):
                 names = character_names(claim['statement'])
                 if names and not names <= evidence_words(claim['evidence']):

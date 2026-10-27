@@ -943,6 +943,59 @@ def safe_source_url(value):
         return ''
 
 
+def _keep_character_snapshot(previous, candidate):
+    """Deduplica una lectura estructurada sin separar hechos y su procedencia.
+
+    Una introducción del historial y la sección de personajes pueden compartir
+    URL. La longitud no decide cuál responde mejor. Esta promoción estrecha
+    exige la misma revisión/licencia de Wikipedia y predicados literales; las
+    demás fuentes mantienen su contrato de deduplicación existente.
+    """
+    if previous['kind'] != 'web' or not (previous.get('character_facts') or candidate.get('character_facts')):
+        return False
+    if previous.get('source') != 'Wikipedia' and candidate.get('source') != 'Wikipedia':
+        return False
+    from urllib.parse import urlsplit
+    from .literary_memory import _character_passage
+    from .literary_web import public_text_has_injection
+
+    def admitted(source):
+        attribution = source.get('attribution', {})
+        return (source.get('source') == 'Wikipedia' and source.get('license') == 'CC-BY-SA-4.0'
+            and urlsplit(source.get('url', '')).hostname in {'es.wikipedia.org', 'en.wikipedia.org'}
+            and attribution.get('authors') == 'Wikipedia contributors'
+            and attribution.get('license_url') == 'https://creativecommons.org/licenses/by-sa/4.0/'
+            and attribution.get('url') == source.get('url')
+            and attribution.get('title') == source.get('title')
+            and str(attribution.get('revision_id', '')).isdigit()
+            and not source.get('injection_detected') and not source.get('conflicts_with')
+            and not public_text_has_injection(source.get('description', '') + ' '
+                                             + source.get('identity_text', ''))
+            and 'fragmento del buscador' not in normalized(source.get('read_mode', '')))
+
+    # Retener un snapshot completo es preferible a mezclar su atribución con
+    # otro cuerpo, incluso si el duplicado declara otra licencia o revisión.
+    if not admitted(previous) or not admitted(candidate):
+        return True
+    if previous['attribution']['revision_id'] != candidate['attribution']['revision_id']:
+        return True
+    for field in ('work_title', 'work_author', 'work_id'):
+        if previous.get(field) and candidate.get(field) and previous[field] != candidate[field]:
+            return True
+
+    def supported(source):
+        return [fact for fact in source.get('character_facts', [])
+                if _character_passage(fact, source['description'])]
+
+    old_facts, new_facts = supported(previous), supported(candidate)
+    if len(new_facts) > len(old_facts):
+        identifier = previous['id']
+        replacement = {**candidate, 'id': identifier, 'character_facts': new_facts}
+        previous.clear()
+        previous.update(replacement)
+    return True
+
+
 def canonical_sources(items, maximum=8):
     sources, seen = [], {}
     if not isinstance(items, list):
@@ -961,7 +1014,13 @@ def canonical_sources(items, maximum=8):
         key = kind, normalized(title), normalized(author), str(discriminator)[:1500]
         if key in seen:
             previous = seen[key]
-            description = clean_text(item.get('description'), 1000)
+            # Normalizar cada snapshot por separado evita adjuntar hechos del
+            # nuevo pasaje a la introducción antigua (o atribuir otro revision).
+            if kind == 'web' and (previous.get('character_facts') or item.get('character_facts')):
+                candidate = canonical_sources([item], 1)[0]
+                if _keep_character_snapshot(previous, candidate):
+                    continue
+            description = clean_text(item.get('description'), 1800 if kind in {'book', 'web'} else 1000)
             if len(description) > len(previous['description']):
                 previous['description'] = description
                 previous['read_mode'] = clean_text(item.get('read_mode'), 60) or previous['read_mode']
@@ -1378,10 +1437,10 @@ class LiteraryAssistant:
             fallback.diagnostics['early_grounded_fallback'] = True
         return fallback
 
-    def _web_reference_fallback(self, sources, intent, diagnostics, *, message=''):
+    def _web_reference_fallback(self, sources, intent, diagnostics, *, message='', history=()):
         """Conserva sólo referencias literales auditadas, nunca el borrador fallido."""
         from .ai_quick_answers import reference_answer
-        result = reference_answer(message, sources, intent=intent)
+        result = reference_answer(message, sources, intent=intent, history=history)
         if result is not None:
             result.diagnostics.update(diagnostics, web_reference_fallback=True)
         return result
@@ -2238,7 +2297,8 @@ class LiteraryAssistant:
                 return author_fallback
             if self.allow_web_only and not any(
                     s['kind'] in {'book', 'excerpt'} for s in sources):
-                web_fallback = self._web_reference_fallback(sources, route['intent'], diagnostics, message=message)
+                web_fallback = self._web_reference_fallback(sources, route['intent'], diagnostics,
+                    message=message, history=history)
                 if web_fallback is not None:
                     return web_fallback
             return ChatResult(
@@ -2260,7 +2320,7 @@ class LiteraryAssistant:
             current_sources = locals().get('sources') or []
             if self.allow_web_only and not requires_exact_text(message) and not has_excerpt(message):
                 web_fallback = self._web_reference_fallback(
-                    current_sources, current_route.get('intent', ''), diagnostics, message=message)
+                    current_sources, current_route.get('intent', ''), diagnostics, message=message, history=history)
                 if web_fallback is not None:
                     return web_fallback
             text = {'contexto_demasiado_extenso': 'Esta consulta necesita más contexto del disponible. '

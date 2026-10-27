@@ -32,6 +32,32 @@ PUBLIC = {'title': 'Dune (novela)', 'author': 'Fuente web', 'kind': 'web', 'sour
 QUESTION = 'Dime los personajes principales de «Dune»'
 
 
+class CharacterQuestionDelimiterTests(SimpleTestCase):
+    """El título conserva acentos, pero no sus comillas de presentación."""
+
+    def test_character_request_does_not_restore_outer_title_quotes(self):
+        from .ai_character_answers import request_for
+        for opening, closing in [('«', '»'), ('“', '”'), ('"', '"'), ("'", "'")]:
+            with self.subTest(opening=opening):
+                request = request_for('Dime los personajes de ' + opening + 'Dune' + closing)
+                self.assertIsNotNone(request)
+                self.assertEqual(request['title'], 'Dune')
+
+    def test_quoted_work_retains_accents_and_its_confirmed_history_identity(self):
+        from .ai_character_answers import request_for
+        book = {**BOOK, 'title': 'El jardín remoto'}
+        history = [{'accepted': True, 'question': 'Hablemos de esta novela',
+                    'answer': 'Podemos comentarla.', 'books': [book], 'sources': [book]}]
+        request = request_for('Ahora dime los personajes de «El jardín remoto»', history)
+        self.assertEqual(request['title'], 'El jardín remoto')
+        self.assertEqual(request['targets'][0]['title'], book['title'])
+
+    def test_inner_quoted_words_remain_part_of_the_title(self):
+        from .ai_character_answers import request_for
+        request = request_for('Dime los personajes de «El caso de “Ana”»')
+        self.assertEqual(request['title'], 'El caso de “Ana”')
+
+
 class PublicCharactersTests(SimpleTestCase):
     def answer(self, books=None, public=None, message=QUESTION, history=None):
         catalog = Mock(return_value=copy.deepcopy([BOOK] if books is None else books))

@@ -265,7 +265,11 @@ def research_answer(message, history):
         pages = _bound_work_pages(known, title)
         if not pages:
             return None
-        result = reference_answer(message, pages, query=message,
+        # Conservar la identidad que ya desambiguó estas páginas. Sin ella,
+        # un título corto como «Nana» pierde su autoría al validar el respaldo.
+        books = [source for source in known if source.get('kind') == 'book'
+                 and _work_title(source.get('title')) == _work_title(title)]
+        result = reference_answer(message, [*pages, *books], query=message,
                                   intent='summary' if summary else 'analysis')
         if result is not None:
             result.diagnostics['progressive_reference'] = True
