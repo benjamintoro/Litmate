@@ -79,6 +79,11 @@ def main(argv=None):
                         help='Segundos máximos que espera el cliente HTTP.')
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--no-web', action='store_true')
+    parser.add_argument('--library', type=Path,
+                        help='Biblioteca autorizada existente, sólo lectura; por defecto el corpus está vacío.')
+    parser.add_argument('--library-index', type=Path, help='Índice derivado de esa biblioteca, sólo lectura.')
+    parser.add_argument('--library-semantic', action='store_true',
+                        help='Embeddings locales en chat: medir separadamente de la recuperación léxica.')
     parser.add_argument('--progressive', action='store_true', help='Mide SSE temprano + POST de finalización real.')
     parser.add_argument('--repeat', type=int, default=1, help='Repite cada turno en su conversación, sin preparar respuestas.')
     parser.add_argument('--empty-answer-cache-each-turn', action='store_true')
@@ -127,6 +132,9 @@ def main(argv=None):
             LITMATE_KNOWLEDGE_DB=root / 'knowledge.sqlite3',
             LITMATE_KNOWLEDGE_RAG_DB=root / 'knowledge-rag.sqlite3',
             LITMATE_RAG_DB=root / 'rag.sqlite3',
+            LITMATE_LIBRARY_DB=args.library.resolve() if args.library else root / 'library.sqlite3',
+            LITMATE_LIBRARY_RAG_DB=args.library_index.resolve() if args.library_index else root / 'library-rag.sqlite3',
+            LITMATE_LIBRARY_SEMANTIC_CHAT=args.library_semantic,
             LITMATE_USE_EXISTING_QUOTAS=False, LITMATE_AI_REQUESTS_PER_MINUTE=1000,
             LITMATE_USE_GOOGLE_BOOKS_API=False, GOOGLE_BOOKS_API_KEY='',
             LITMATE_LOCAL_MODEL=args.model, LITMATE_LOCAL_GUARD_MODEL=args.model,
@@ -202,7 +210,10 @@ def main(argv=None):
                        'web_enabled': not args.no_web, 'chat_budget_seconds': args.chat_budget,
                        'response_budget_seconds': args.response_budget,
                       'progressive': args.progressive, 'repeat': args.repeat,
-                      'knowledge_setup': 'empty_auxiliary_databases_with_bundled_catalogue',
+                      'knowledge_setup': ('empty_auxiliary_databases_with_bundled_catalogue_and_readonly_library'
+                                          if args.library else 'empty_auxiliary_databases_with_bundled_catalogue'),
+                      'library': str(args.library.resolve()) if args.library else None,
+                      'library_semantic': args.library_semantic,
                       'resource_scope': 'python_server_process_only_not_ollama_or_gpu',
                       'cache_controls': {'empty_answers_each_turn': args.empty_answer_cache_each_turn,
                                          'empty_retrieval_each_turn': args.empty_retrieval_cache_each_turn},

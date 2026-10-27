@@ -44,3 +44,9 @@ reportes/
 # Archivos de sistema operativo
 .DS_Store
 Thumbs.db
+
+# Corpus autorizado y descargas oficiales: datos derivados, nunca commits masivos.
+data/biblioteca/
+data/adquisicion/
+data/corpus_autorizado/
+data/biblioteca_rag/

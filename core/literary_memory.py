@@ -42,7 +42,9 @@ def _path(database=None):
     path = path.resolve()
     from django.conf import settings
     forbidden = [getattr(settings, key, '') for key in
-        ('LITMATE_KNOWLEDGE_DB', 'LITMATE_KNOWLEDGE_RAG_DB', 'LITMATE_RAG_DB')]
+        ('LITMATE_KNOWLEDGE_DB', 'LITMATE_KNOWLEDGE_RAG_DB', 'LITMATE_RAG_DB',
+         'LITMATE_AI_RUNTIME_DB', 'LITMATE_AI_STREAM_DB', 'LITMATE_AI_ANSWER_CACHE_DB',
+         'LITMATE_LITERARY_MEMORY_RAG_DB', 'LITMATE_LIBRARY_DB', 'LITMATE_LIBRARY_RAG_DB')]
     forbidden.extend(item.get('NAME', '') for item in getattr(settings, 'DATABASES', {}).values()
                      if item.get('ENGINE', '').endswith('sqlite3'))
     if any(str(value) not in {'', ':memory:'} and path == Path(value).resolve()
@@ -242,6 +244,30 @@ def _projection(source, book):
             'license': 'Open Library bibliographic facts; rights vary',
             'policy': 'openlibrary-minimal-metadata-v1', 'provider': 'openlibrary',
             'read_mode': 'metadatos bibliográficos; no sinopsis ni texto de la obra'}
+    # Los permisos del catálogo no se extienden a novelas, traducciones,
+    # portadas, resúmenes o notas copiadas dentro de un registro.
+    metadata_policy = None
+    if (origin == 'BNE' and source.get('storage_policy') == 'bne-catalog-cc0-v1'
+            and source.get('license') == 'CC0-1.0' and source.get('kind') == 'book'
+            and urlsplit(url).hostname in {'datos.bne.es', 'catalogo.bne.es'}
+            and re.fullmatch(r'/resource/[A-Za-z0-9_-]{1,80}', urlsplit(url).path)):
+        metadata_policy = ('bne-catalog-cc0-v1', 'bne')
+    if (origin == 'Project Gutenberg'
+            and source.get('storage_policy') == 'gutenberg-catalog-public-domain-v1'
+            and source.get('license') == 'CC0-1.0' and source.get('kind') == 'book'
+            and _origin(url, 'www.gutenberg.org')
+            and re.fullmatch(r'/ebooks/[1-9]\d{0,8}', urlsplit(url).path)):
+        metadata_policy = ('gutenberg-catalog-public-domain-v1', 'gutenberg')
+    if metadata_policy:
+        metadata = _work(source)
+        if not metadata:
+            return None
+        body = metadata['title'] + ', de ' + metadata['author'] + '.'
+        if metadata.get('categories'):
+            body += '\nTemas del catálogo: ' + ', '.join(metadata['categories'])
+        return {**metadata, 'url': url, 'description': body, 'license': 'CC0-1.0',
+            'policy': metadata_policy[0], 'provider': metadata_policy[1],
+            'read_mode': 'metadatos del catálogo; no sinopsis ni texto de la obra'}
     if origin == 'Wikidata' and _origin(url, 'www.wikidata.org') and re.fullmatch(
             r'/wiki/Q\d+', urlsplit(url).path) and source.get('license') in {'CC0', 'CC0-1.0'}:
         book = _work(source)
@@ -520,7 +546,7 @@ def remember_evidence(books, sources, *, database=None):
                 db.execute('INSERT OR IGNORE INTO memory_history VALUES (?,?,?,?,?,?)',
                     (_hash(source_id, previous['content_hash']), source_id, work_id,
                      previous['retrieved_at'], previous['content_hash'], previous['record']))
-            ttl = 30 * 86400 if value['provider'] in {'curated', 'openlibrary'} else 7 * 86400
+            ttl = 30 * 86400 if value['provider'] in {'curated', 'openlibrary', 'bne', 'gutenberg'} else 7 * 86400
             db.execute('INSERT INTO memory_sources VALUES (?,?,?,?,?,?,?,?,?,?) '
                 'ON CONFLICT(source_id) DO UPDATE SET policy=excluded.policy,'
                 'retrieved_at=excluded.retrieved_at,verified_at=excluded.verified_at,'

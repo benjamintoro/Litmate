@@ -11,14 +11,14 @@ from urllib.parse import urlsplit
 
 BIBLIOGRAPHIC_ORIGINS = {
     'Google Books API', 'Catálogo LitMate', 'Open Library', 'Wikidata',
-    'Conocimiento literario local', 'Biblioteca literaria local',
+    'Conocimiento literario local', 'Biblioteca literaria local', 'BNE', 'Project Gutenberg',
 }
 IDENTITY_DOMAINS = (
     'openlibrary.org', 'wikidata.org', 'books.google.com', 'books.google.es',
     'memoriachilena.gob.cl', 'bibliotecanacionaldigital.gob.cl', 'bnchile.gob.cl',
     'literaturasm.cl', 'literaturasm.com', 'penguinlibros.com',
     'planetadelibros.com', 'anagrama-ed.es', 'fce.com.mx', 'cervantesvirtual.com',
-    'ci.nii.ac.jp', 'rae.es',
+    'ci.nii.ac.jp', 'rae.es', 'datos.bne.es', 'catalogo.bne.es', 'www.gutenberg.org',
 )
 UNKNOWN_AUTHORS = {'', 'autor no informado', 'autor desconocido', 'fuente web'}
 

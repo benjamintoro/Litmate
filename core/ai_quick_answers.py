@@ -48,6 +48,9 @@ def quick_knowledge_sources(query, maximum=8):
     from .literary_knowledge import search_knowledge, _score, knowledge_sources
     from .literary_identity import same_work
     local = search_knowledge(query, maximum=maximum)
+    from .ai_library_router import library_catalogue
+    # Son fichas de originales con permiso explícito; no textos generados.
+    local.extend(library_catalogue(query))
     # El índice persistente devuelve evidencia pública vigente, nunca textos
     # generados ni respuestas de otro lector. La suficiencia se verifica después.
     from .literary_memory import retrieve_evidence

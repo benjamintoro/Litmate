@@ -12,6 +12,7 @@ from functools import lru_cache
 from pathlib import Path
 from .ai_progress import measure_stage
 from .literary_ai import clean_text, normalized
+from .ai_budget import check_budget
 
 logger = logging.getLogger('litmate')
 STOPWORDS = {'el', 'la', 'los', 'las', 'de', 'del', 'en', 'un', 'una', 'que',
@@ -72,7 +73,8 @@ def _metadata(db):
         return {}
 
 
-def index_documents(folder, database, *, embedder=None, progress=None, metadata=None):
+def index_documents(folder, database, *, embedder=None, progress=None, metadata=None,
+                    vector_cache=None, vector_cache_max_bytes=256_000_000):
     folder, database = Path(folder).resolve(), Path(database).resolve()
     if not folder.is_dir():
         raise ValueError('No existe la carpeta de libros')
@@ -84,12 +86,23 @@ def index_documents(folder, database, *, embedder=None, progress=None, metadata=
     metadata = metadata or {}
     if not isinstance(metadata, dict):
         raise ValueError('Los metadatos deben relacionar nombres de archivo con fichas')
+    incremental = None
+    if vector_cache is not None:
+        if embedder is None:
+            raise ValueError('La caché de vectores requiere embeddings locales')
+        from .library_vector_cache import LibraryVectorCache, validate_library_metadata
+        validate_library_metadata(files, metadata)
+        if Path(vector_cache).resolve() in {folder / path.name for path in files}:
+            raise ValueError('La caché no puede reemplazar documentos originales')
     database.parent.mkdir(parents=True, exist_ok=True)
     fd, staging = tempfile.mkstemp(prefix='litmate-rag-', suffix='.sqlite3', dir=database.parent)
     os.close(fd)
     previous = None
     count, indexed, dimension = 0, 0, None
     try:
+        if vector_cache is not None:
+            incremental = LibraryVectorCache(vector_cache, folder, database, identity,
+                                              maximum=vector_cache_max_bytes)
         if identity and database.is_file():
             previous = sqlite3.connect(database.as_uri() + '?mode=ro', uri=True)
             previous_metadata = _metadata(previous)
@@ -112,10 +125,13 @@ def index_documents(folder, database, *, embedder=None, progress=None, metadata=
                 nonlocal dimension
                 if not pending:
                     return
+                check_budget()
                 missing, vectors = [], {}
                 for item in pending:
                     cached = previous.execute('SELECT dimension, vector FROM rag_vectors '
                         'WHERE chunk_id=?', (item['chunk_id'],)).fetchone() if previous else None
+                    if not cached and incremental is not None:
+                        cached = incremental.get(item['chunk_id'])
                     if cached and len(cached[1]) == cached[0] * 4:
                         vectors[item['rowid']] = (cached[0], cached[1])
                     else:
@@ -128,6 +144,9 @@ def index_documents(folder, database, *, embedder=None, progress=None, metadata=
                         raise ValueError('Faltan embeddings')
                     for item, vector in zip(missing, generated):
                         vectors[item['rowid']] = (len(vector), struct.pack('<' + 'f' * len(vector), *vector))
+                    if incremental is not None:
+                        incremental.put_batch([(item['chunk_id'], *vectors[item['rowid']]) for item in missing])
+                check_budget()
                 for item in pending:
                     size, blob = vectors[item['rowid']]
                     if dimension is not None and dimension != size:
@@ -138,6 +157,7 @@ def index_documents(folder, database, *, embedder=None, progress=None, metadata=
                 pending.clear()
 
             for path in files:
+                check_budget()
                 if '__' not in path.stem:
                     raise ValueError('Usa Titulo__Autor en el nombre: ' + path.name)
                 title, author = (clean_text(part.replace('_', ' '), 220)
@@ -161,6 +181,7 @@ def index_documents(folder, database, *, embedder=None, progress=None, metadata=
                 document_hash = hashlib.sha256()
                 with path.open('rb') as content:
                     for block in iter(lambda: content.read(1024 * 1024), b''):
+                        check_budget()
                         document_hash.update(block)
                 digest = document_hash.hexdigest()[:16]
                 document_id = hashlib.sha256((digest + title + '\0' + author).encode()).hexdigest()[:24]
@@ -175,6 +196,7 @@ def index_documents(folder, database, *, embedder=None, progress=None, metadata=
                     if total_chars > 12_000_000:
                         raise ValueError('Texto demasiado extenso: ' + path.name)
                     for offset, fragment in _chunks(body):
+                        check_budget()
                         count += 1
                         if count > 60000:
                             raise ValueError('La colección supera 60000 fragmentos')
@@ -200,12 +222,15 @@ def index_documents(folder, database, *, embedder=None, progress=None, metadata=
         if previous is not None:
             previous.close()
             previous = None
+        check_budget()
         os.replace(staging, database)
         _vector_matrix.cache_clear()
         return indexed, count
     finally:
         if previous is not None:
             previous.close()
+        if incremental is not None:
+            incremental.close()
         Path(staging).unlink(missing_ok=True)
 
 
@@ -271,6 +296,17 @@ def retrieve_fragments(query, database, maximum=4, *, embedder=None,
         allowed = _book_filter(db, query, book_titles, book_identities)
         if allowed == []:
             return []
+        identity_only = False
+        if allowed is not None:
+            scoped = db.execute('SELECT title,author FROM documents WHERE document_id IN ('
+                + ','.join('?' for _ in allowed) + ')', allowed).fetchall()
+            identity_terms = {word for row in scoped for label in row
+                              for word in re.findall(r'\w+', normalized(label))}
+            # El título ya sirvió para filtrar la obra. Puntuarlo otra vez en
+            # cada fragmento favorecía introducciones y capítulos arbitrarios.
+            content_terms = [term for term in terms if term not in identity_terms]
+            identity_only = bool(terms and not content_terms)
+            terms = content_terms
         conditions, params = [], []
         if allowed is not None:
             conditions.append('document_id IN (' + ','.join('?' for _ in allowed) + ')')
@@ -285,7 +321,14 @@ def retrieve_fragments(query, database, maximum=4, *, embedder=None,
         match = ' OR '.join('"' + t + '"*' for t in terms)
         lexical = db.execute('SELECT rowid FROM chunks WHERE chunks MATCH ?' + where
             + ' ORDER BY bm25(chunks, 0.3, 0.2, 1.0), rowid LIMIT 32', [match, *params]).fetchall() if terms else []
-        ranking = {row[0]: 1 / (60 + rank) for rank, row in enumerate(lexical, 1)}
+        identity_fallback = (identity_only or not lexical) and allowed is not None and not page
+        if identity_fallback:
+            # Una solicitud sólo por título no acredita una trama completa.
+            # Ofrece el inicio del original al generador para un alcance parcial.
+            lexical = db.execute('SELECT rowid FROM chunks WHERE ' + ' AND '.join(conditions)
+                                 + ' ORDER BY rowid LIMIT 32', params).fetchall()
+        ranking = {row[0]: (0.01 if identity_fallback else 1) / (60 + rank)
+                   for rank, row in enumerate(lexical, 1)}
         metadata = _metadata(db)
         if embedder is not None and metadata.get('version') == 'hybrid-v2' and not page:
             try:

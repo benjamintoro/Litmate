@@ -58,6 +58,13 @@ def apply_ai_settings(target, base_dir):
         # SQLite auxiliares: conocimiento público con procedencia y resultados
         # privados efímeros separados. No requieren migraciones de Django.
         LITMATE_LITERARY_MEMORY_DB=Path(os.getenv('LITMATE_LITERARY_MEMORY_DB', str(Path(base_dir) / 'data' / 'literary_memory.sqlite3'))),
+        # Biblioteca local de originales autorizados y su índice derivado. Las
+        # rutas son configurables para no mezclar corpus de distintas máquinas.
+        LITMATE_LIBRARY_DB=Path(os.getenv('LITMATE_LIBRARY_DB', str(Path(base_dir) / 'data' / 'biblioteca' / 'biblioteca.sqlite3'))),
+        LITMATE_LIBRARY_RAG_DB=Path(os.getenv('LITMATE_LIBRARY_RAG_DB', str(Path(base_dir) / 'data' / 'biblioteca' / 'rag.sqlite3'))),
+        # La recuperación semántica de la biblioteca es opcional mientras no se
+        # valide extremo a extremo la latencia y la calidad de respuesta.
+        LITMATE_LIBRARY_SEMANTIC_CHAT=flag('LITMATE_LIBRARY_SEMANTIC_CHAT', False),
         LITMATE_AI_ANSWER_CACHE_DB=Path(os.getenv('LITMATE_AI_ANSWER_CACHE_DB', str(Path(base_dir) / 'data' / 'litmate_answers.sqlite3'))),
         LITMATE_AI_STREAM_DB=Path(os.getenv('LITMATE_AI_STREAM_DB', str(Path(base_dir) / 'data' / 'litmate_ia_stream.sqlite3'))),
         LITMATE_BOOKS_CONTACT=os.getenv('LITMATE_BOOKS_CONTACT', '').strip(),

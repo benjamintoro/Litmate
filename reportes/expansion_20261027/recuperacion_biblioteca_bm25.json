@@ -1,0 +1,768 @@
+{
+  "dataset": "core\\data\\library_retrieval_benchmark.json",
+  "documents": 15,
+  "works": 5,
+  "split": "all",
+  "partitions": {
+    "train": {
+      "queries": 18,
+      "works": [
+        "pg-work:120",
+        "pg-work:1342",
+        "pg-work:84"
+      ]
+    },
+    "validation": {
+      "queries": 6,
+      "works": [
+        "pg-work:11"
+      ]
+    },
+    "test": {
+      "queries": 6,
+      "works": [
+        "pg-work:345"
+      ]
+    }
+  },
+  "training_readiness": {
+    "ready": false,
+    "counts": {
+      "train_pairs": 0,
+      "train_works": 0,
+      "train_queries": 0,
+      "validation_pairs": 0,
+      "validation_works": 0,
+      "validation_queries": 0,
+      "test_pairs": 0,
+      "test_works": 0,
+      "test_queries": 0
+    },
+    "minimum": {
+      "train_pairs": 200,
+      "train_works": 20,
+      "train_queries": 80,
+      "validation_pairs": 60,
+      "validation_works": 8,
+      "validation_queries": 20,
+      "test_pairs": 60,
+      "test_works": 8,
+      "test_queries": 20
+    },
+    "reasons": [
+      "train_needs_positive_and_negative_labels",
+      "validation_needs_positive_and_negative_labels",
+      "test_needs_positive_and_negative_labels",
+      "insufficient_train_pairs",
+      "insufficient_train_works",
+      "insufficient_train_queries",
+      "insufficient_validation_pairs",
+      "insufficient_validation_works",
+      "insufficient_validation_queries",
+      "insufficient_test_pairs",
+      "insufficient_test_works",
+      "insufficient_test_queries"
+    ],
+    "model_activated": false
+  },
+  "generative_calls": 0,
+  "external_http_calls": 0,
+  "factual_answer_accuracy": "not_measured",
+  "entity_extraction_precision": "not_measured",
+  "relation_accuracy": "not_measured",
+  "unsupported_claim_rate": "not_measured",
+  "evaluation": {
+    "version": "literary-ranking-v1",
+    "dataset_sha256": "e0927320dd8902ed90709e1a997b1397ca74070016638ac492a7fea6699d5769",
+    "method": "production_index_bm25",
+    "queries": 30,
+    "metrics": {
+      "recall@5": 0.0,
+      "recall@10": 0.0,
+      "precision@5": 0.0,
+      "mrr": 0.0,
+      "ndcg@10": 0.0,
+      "judged_fraction@10": 0.0,
+      "work_identification_correct": 1.0
+    },
+    "latency_seconds": {
+      "mean": 0.14970297334172453,
+      "p50": 0.14535120001528412,
+      "p95": 0.18843760003801435
+    },
+    "scope": "retrieval_only_not_chat_or_factual_accuracy",
+    "results": [
+      {
+        "id": "pg-84-1-es",
+        "work_id": "pg-work:84",
+        "ranking": [
+          "unjudged:4807e0c22c0a2caaf5fad67ff9f01b7bcf5677cf04a648c49ff6ab73e35ec19a",
+          "unjudged:74647a55faf8ec37bdfebe61bcaae1b580a3d351db752ed448f32cc886bc89b2",
+          "unjudged:d7334cbf45bcd84fec265797de837b22e622e4f69265e357f742293566f12ba6",
+          "unjudged:e3c69d3c003857f003e964747ad207157319ebde1e6520ce2d58794b83b1b406",
+          "unjudged:1c75f98a13786cc9ecaa7d8057825a7ea6f6a0719e291d6476689d79f8a44b15",
+          "unjudged:77fad2c32c9a3e522ee9b46fda2d738641f4dbdf0ff978295e032a5990d29a4a",
+          "unjudged:cdafad0f1998d1c73038a50956bd91f385cb4705c1087c238cf898e9baddcf43",
+          "unjudged:4899f44ee90e7fae97f67535ffaf39d59cbb0f61d221187d2a96a8b824be3946"
+        ],
+        "latency_seconds": 0.12605039996560663,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-84-1-en",
+        "work_id": "pg-work:84",
+        "ranking": [
+          "unjudged:8c0a992c823fe3b4735ed2249f9b28cf94bc191ad33d3f8aaf1c4873ff8e75b0",
+          "unjudged:ffbefd570e003bdb530c2e457aec372a3b45accf9f5af5b2612e1ceef2968cbd",
+          "unjudged:33d08db6980fd9ed663f74dd336dae05a122d476a5573a74de60059795f08d14",
+          "unjudged:4899f44ee90e7fae97f67535ffaf39d59cbb0f61d221187d2a96a8b824be3946",
+          "unjudged:f2024c65bccd361748ad8d7f9ddb022c9fdb001eadf099a1bc2c0390cf449180",
+          "unjudged:17491563717b2db6185b83876e1a8a5c266894219c608bf566760d7371132623",
+          "unjudged:ed47a1af35767e57adfc9c53f2be2c7f15aaa95e8444e4df025a3bd9c4bc42e5",
+          "unjudged:8bf822b40b9f61d3d3754186ea14276ebe57f9842373e4dd28454d970c73b833"
+        ],
+        "latency_seconds": 0.13878249999834225,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-84-2-es",
+        "work_id": "pg-work:84",
+        "ranking": [
+          "unjudged:005e214442fee48d3909b998aefa033233813e70701bbee7e8a69ccf0258f2b1",
+          "unjudged:c1662dbaa877470f5c67a1b173a27a8e256992a27d8f2fad98b826b0eca28a06",
+          "unjudged:3a9e2d004069ecb975444949e89c85797844f66e41d48dce37bda1262af235fc",
+          "unjudged:74647a55faf8ec37bdfebe61bcaae1b580a3d351db752ed448f32cc886bc89b2",
+          "unjudged:68a5aa1343d41e6f4042a6228612d82083fd4e9351d2349c4bbb1a5cb0f9da4b",
+          "unjudged:a3c81fe035ce647d4f13a1b7edbf8e11ad494c1af1512a5abd934206082ebc04",
+          "unjudged:834eb129f83e0f04738dbfbab85d22c21c0eb5ea07b835aec1abc6c1606fec43",
+          "unjudged:e2a2a2e88ae52fbf313bae58e90ba13ab646dc4fdde435a6f617ee80e640e709"
+        ],
+        "latency_seconds": 0.14285399997606874,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-84-2-en",
+        "work_id": "pg-work:84",
+        "ranking": [
+          "unjudged:005e214442fee48d3909b998aefa033233813e70701bbee7e8a69ccf0258f2b1",
+          "unjudged:74647a55faf8ec37bdfebe61bcaae1b580a3d351db752ed448f32cc886bc89b2",
+          "unjudged:c1662dbaa877470f5c67a1b173a27a8e256992a27d8f2fad98b826b0eca28a06",
+          "unjudged:7ac8949c76de40a9e30e15c6d42ea30537f24972846f57bdb0cbc8c1943bd33e",
+          "unjudged:53d1ea063315b3eeccd46d966bda6af7c6d7a7508f55e0621b4f8bf884fee3c0",
+          "unjudged:8ea8e4af9e053a3b7926b93a14dcda7a804677269cca3b2dde93d3ab0129a468",
+          "unjudged:ef8bdf94f29dc91f1bdb249435919de1494e97cc078d2cfe92a30b8d2cb30ba0",
+          "unjudged:bb82858e1929a793696da24ef42d2230e44a839c3c5c2bfbc6dbedbb7d4b14aa"
+        ],
+        "latency_seconds": 0.1233061000239104,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-84-3-es",
+        "work_id": "pg-work:84",
+        "ranking": [
+          "unjudged:9c4fa8b2d4f018a5183369f0d872bfc30902e508c5615d0406f230b5222ed85b",
+          "unjudged:0e9f103eaa111835e254acb386bdfd77a93021bb7ce6243fd2e7e4c4de9eeb1d",
+          "unjudged:9a569e4da36042a4f09c0867a6750391882de270e274b0b7ed0980576cddb5af",
+          "unjudged:2c839edd22ddc3625376a238b44d5281bbc1702f6e2154d6c108df0c24a94e5c",
+          "unjudged:e66ca9868ae279f5881c28424ae44654a884b071f4ff208584d2f66ca706f566",
+          "unjudged:9efa5ddbcabcc4ff2a2c7111b8ec7f43456b6b3c7aa12eda55c0fd70f187e8f8",
+          "unjudged:49fdd8401d2694abd1188f17e3ffc2a3c61571a113f30702b9883c29ee8af383",
+          "unjudged:b594e2a7a8ae31c537d21b1d69634e439071e55cf375a38fc0934a4cf07ab7a4"
+        ],
+        "latency_seconds": 0.11264379997737706,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-84-3-en",
+        "work_id": "pg-work:84",
+        "ranking": [
+          "unjudged:9c4fa8b2d4f018a5183369f0d872bfc30902e508c5615d0406f230b5222ed85b",
+          "unjudged:9a569e4da36042a4f09c0867a6750391882de270e274b0b7ed0980576cddb5af",
+          "unjudged:e66ca9868ae279f5881c28424ae44654a884b071f4ff208584d2f66ca706f566",
+          "unjudged:2c839edd22ddc3625376a238b44d5281bbc1702f6e2154d6c108df0c24a94e5c",
+          "unjudged:22d2d26e5b1920902a5035cfa94e5566d762c9e324ea391ddc5429eb3d00e7d2",
+          "unjudged:00f627a6355844c2d85521e4ab1e881c089d241628d0f25b510687fa2eb58ba4",
+          "unjudged:b594e2a7a8ae31c537d21b1d69634e439071e55cf375a38fc0934a4cf07ab7a4",
+          "unjudged:60d948a3250e08f6494a9d2751d7e674b43616378abb8145de0cb7771aa8a249"
+        ],
+        "latency_seconds": 0.1319425000110641,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-345-1-es",
+        "work_id": "pg-work:345",
+        "ranking": [
+          "unjudged:3f9e84b6ad5289794b37ee6aabfe76534cb3b515794a6168fb385fd1688637ac",
+          "unjudged:227f73239400086e5ab8f5bf2b75ae9f4be9cf21b708208879126282f23e759b",
+          "unjudged:7fe5a5987f0c01bddd1d20bf95c48e2f25d92d2ba41beda307826a9b94a5ff42",
+          "unjudged:d2367d1d2c55bed11d82c8982ef0e65848b39c5e986d0919634b70d6845ee655",
+          "unjudged:d252d40f8f303e33f2ae0531934b89e3ef41b768b12b777e58d52e3b82bcc5d9",
+          "unjudged:5c3c623b831a27c0a5100f05273bcaca3347e670d338575c9b5521576ab7fea0",
+          "unjudged:a4a34bec4bd0060ca4b2a953fb8df08aa23e6db159b43e182044a96c21d640dc",
+          "unjudged:45b3ec10d61f97608b64a71d50716038dd6184080525eac22903433b332a6bad"
+        ],
+        "latency_seconds": 0.12540550000267103,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-345-1-en",
+        "work_id": "pg-work:345",
+        "ranking": [
+          "unjudged:d252d40f8f303e33f2ae0531934b89e3ef41b768b12b777e58d52e3b82bcc5d9",
+          "unjudged:a4a34bec4bd0060ca4b2a953fb8df08aa23e6db159b43e182044a96c21d640dc",
+          "unjudged:5c3c623b831a27c0a5100f05273bcaca3347e670d338575c9b5521576ab7fea0",
+          "unjudged:d8e42bb6ac68622aa195070012bcbbedee95b4d78033348b403dd266217f8476",
+          "unjudged:d2367d1d2c55bed11d82c8982ef0e65848b39c5e986d0919634b70d6845ee655",
+          "unjudged:2c90a833a83b72b07418e55926e58b7e337ce5aa1957ca94508637fca69c576f",
+          "unjudged:091a1719888d9fe9d173396371e22c35413264a3fe30eca9d7affb0200688f84",
+          "unjudged:258577bc96cedf0728c963426e039ae48321706ca065091fb010dd8468681586"
+        ],
+        "latency_seconds": 0.15209610003512353,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-345-2-es",
+        "work_id": "pg-work:345",
+        "ranking": [
+          "unjudged:90e568eafebc4c91e1b03963df1fe48dd85e2581b6a7604e840e759f2df39aa9",
+          "unjudged:82f0f2956a49e96db7f8c97f72488ed2722bcfcbca365b18b1c9c73df95c490c",
+          "unjudged:30f92aff3a7ed9b9ba00aae1e9aedd73d58e33261571f48bb906a65b6d6b5545",
+          "unjudged:5829e2609c2e4763f0bae832e8284e3f61b376caa11bec939df7ffcb00deefb1",
+          "unjudged:7a88c10fabd3547bd839fc8c7bda383e7681c150b66171286641765ab686c4af",
+          "unjudged:4c5c6e3e93bd21b82b164f6929851e25e86d01693fe2698f40f2bd557f2cbe90",
+          "unjudged:bfa8dbe3f9e586d513d12fb5b367a8776bed77db67dac1c3439c0e2949882eea",
+          "unjudged:bc8bbd17b4d9be0cbc9f523de51b65d41013f320e66d4cf55ec9a1dee8577263"
+        ],
+        "latency_seconds": 0.13353569997707382,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-345-2-en",
+        "work_id": "pg-work:345",
+        "ranking": [
+          "unjudged:c22678cb22cc24f740513ec0b7bb038720dda1ab266704ad146c59932261c6ca",
+          "unjudged:d74b217f326be8381a12ff5754b877ebbb6aab2912c278f0d5c35ba2960888a1",
+          "unjudged:3be579f9a689984f8c53c8dee54bdd4c2b24bcc13ebafb91396bf0218ffd6781",
+          "unjudged:17ed4f668ba9a7db51e67c6a44559f6209ddb72374920f7840b447eb57e71a6b",
+          "unjudged:8bd0c9a59cd8d4dabc478f44d85d9b9f8877fe40d6e0c80e68a31c1d2cdbe1e0",
+          "unjudged:7417639e9d86bfcb64e1e685fe3e5c8be3f96a0a6de33acc4a0599a9cec409bc",
+          "unjudged:73ba9de72cdbee995880366c2cdde324ae821e6911b6dfb282fce7e858223247",
+          "unjudged:7fe5a5987f0c01bddd1d20bf95c48e2f25d92d2ba41beda307826a9b94a5ff42"
+        ],
+        "latency_seconds": 0.1344134000246413,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-345-3-es",
+        "work_id": "pg-work:345",
+        "ranking": [
+          "unjudged:90e568eafebc4c91e1b03963df1fe48dd85e2581b6a7604e840e759f2df39aa9",
+          "unjudged:82f0f2956a49e96db7f8c97f72488ed2722bcfcbca365b18b1c9c73df95c490c",
+          "unjudged:30f92aff3a7ed9b9ba00aae1e9aedd73d58e33261571f48bb906a65b6d6b5545",
+          "unjudged:5829e2609c2e4763f0bae832e8284e3f61b376caa11bec939df7ffcb00deefb1",
+          "unjudged:7a88c10fabd3547bd839fc8c7bda383e7681c150b66171286641765ab686c4af",
+          "unjudged:4c5c6e3e93bd21b82b164f6929851e25e86d01693fe2698f40f2bd557f2cbe90",
+          "unjudged:bfa8dbe3f9e586d513d12fb5b367a8776bed77db67dac1c3439c0e2949882eea",
+          "unjudged:bc8bbd17b4d9be0cbc9f523de51b65d41013f320e66d4cf55ec9a1dee8577263"
+        ],
+        "latency_seconds": 0.13908310001716018,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-345-3-en",
+        "work_id": "pg-work:345",
+        "ranking": [
+          "unjudged:02950df299652ddf1acf2996ba68f5894c8401a407252e81c00c5f4908b0dda1",
+          "unjudged:e27869199cd7355a91ee58ca7b29b095c757a1e0076d801a77afce7e21a6df93",
+          "unjudged:3788be0b45bff0bc9fe7fe43e5cfb8a2bc6bab0d15f94030c8a2f175751b4c4b",
+          "unjudged:10e9885b4bc421d5551e10f0cedc94451bb7bacf45f6824c82250fa8ad01981c",
+          "unjudged:13b9a41f3cb1e98f38f87de27063dbdbf6e160f7ee11d7fb4d2cc21a53ffe94f",
+          "unjudged:aa7f392260e00c626bdfe1aee36da997269d8f052f4a7af04b50e297eec42845",
+          "unjudged:ec4de41d7d04bbb30019c26e1495906fe0f453c9c1652c23b24047d12e5723ab",
+          "unjudged:987d227ab1c77b39b6a1c9670fcb306feec8272ae44d70f1874fd96a3713fcf7"
+        ],
+        "latency_seconds": 0.14255739998770878,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-1342-1-es",
+        "work_id": "pg-work:1342",
+        "ranking": [
+          "unjudged:d89ae755e98901538f961ad618a7506f2969467739b83c60dfddbf88cab1e166",
+          "unjudged:001ff144f1749c11c983ceaa800df3531d0c18af35f72ac41f36b4bb535cc0d7",
+          "unjudged:96c6b30588ddece655fd3af457ab08aab0ca23c45997e4ebfe276dc36e607c7b",
+          "unjudged:dfedf862fefdff5052ad08709a9a6e3e0141620ccc36ef149932b82ff57385b1",
+          "unjudged:e952465ac2423bd83e26ad5f9a0dc08d992e9ad35f1a2497928ce149fb499e41",
+          "unjudged:e4aa5327609d703893adada497125521dfc12a3c524349fa1267f1888616c739",
+          "unjudged:b227cd663a3cea495c8acf34e153a0c470dd2d5ad567fe2de0ade5f4433f7ffc",
+          "unjudged:2df0418ff9ea762109bc275f25e8f4c0a698330f7cd8aa34fd5c0ed90c0650c9"
+        ],
+        "latency_seconds": 0.15509359998395666,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-1342-1-en",
+        "work_id": "pg-work:1342",
+        "ranking": [
+          "unjudged:651608ba8939347f494bd2d54e4020cc1414c97a1f8396950aec3e81b6082983",
+          "unjudged:887ed7d6e3ca34db762c28b7e4dcd718bfdf9a71e83a2bc2fa14543debf4d7c9",
+          "unjudged:8c5e8e7e2182450226d04a84ec1b4aafc9a19aed127dba420fe9f9c0eb775a27",
+          "unjudged:b52f010ab0bc641b4c8e0b5e2b377bb89229a5a9269b3babba5a5e45aef7ace0",
+          "unjudged:f522483404a67f7dca6d782ba9587e5296efee791ed3a0888c986e41d91c078f",
+          "unjudged:03d206de6095d6cf21c3870cf2eb5abc8cc3603188bd166218bb49fc827d7df2",
+          "unjudged:b65b493390d1fec65c312f1e70ee06afcce47af53d338d6bda2f0e84848c829a",
+          "unjudged:e952465ac2423bd83e26ad5f9a0dc08d992e9ad35f1a2497928ce149fb499e41"
+        ],
+        "latency_seconds": 0.1884672999731265,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-1342-2-es",
+        "work_id": "pg-work:1342",
+        "ranking": [
+          "unjudged:9784ba63a2ab865237348e27861a236705b2c8ab7b794d5270be6872485323c2",
+          "unjudged:1fde1853695d06bc407f38470b2560e7f05c31dd2903882428df2ef679d3bb81",
+          "unjudged:516bfdff1f226d74fd936cf5658da9ce5aa13fbfe394d1794f09bffe629e364c",
+          "unjudged:82ecd6f0dec94983db5afba88c4897dd2fb21dcc0ccdcfa963d79d54c7cd78ea",
+          "unjudged:a1eb780df45eef0bad223a8f5fd0a219c742f20ec211833acaac6efaf03c090a",
+          "unjudged:d03005d8b1f4a7ab3b387db1589cf8c64d59f9601f0288b2383b7b724d38bbf6",
+          "unjudged:465989ae81e137766e77510297aff0d38adf55516a42152f58394ab1d623d915",
+          "unjudged:a643d0c745ddf1553cdc69c56dba77393c42bde7fa533831c2659014db1e78d0"
+        ],
+        "latency_seconds": 0.15184629999566823,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-1342-2-en",
+        "work_id": "pg-work:1342",
+        "ranking": [
+          "unjudged:516bfdff1f226d74fd936cf5658da9ce5aa13fbfe394d1794f09bffe629e364c",
+          "unjudged:130525452b2beba1ac42d11554ffda7bf0cc031ed940060ca0f647ff7f98c638",
+          "unjudged:03d206de6095d6cf21c3870cf2eb5abc8cc3603188bd166218bb49fc827d7df2",
+          "unjudged:00a09ab39c1de3800c1f246e13b3fe2f8d7c7dc1e0c482c87bdee640c4d04916",
+          "unjudged:a643d0c745ddf1553cdc69c56dba77393c42bde7fa533831c2659014db1e78d0",
+          "unjudged:1fde1853695d06bc407f38470b2560e7f05c31dd2903882428df2ef679d3bb81",
+          "unjudged:a1eb780df45eef0bad223a8f5fd0a219c742f20ec211833acaac6efaf03c090a",
+          "unjudged:c5b3a0e7dd6c46fd4e2a78284f10e5a3f55e35d901403649ce556c6220a223f3"
+        ],
+        "latency_seconds": 0.18843760003801435,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-1342-3-es",
+        "work_id": "pg-work:1342",
+        "ranking": [
+          "unjudged:50799b0c027457747c5b311a77563dc2dcffb2d556b99656270ee7bfabac2008",
+          "unjudged:9e6d6e3f3c2b01181fb5c4aa2c2a3d7a719072d34f1327b3fabe5d6af6d61169",
+          "unjudged:257c6b2a5f3690c26528e24fc242c4299749853763bf418a7b41064d06b399e8",
+          "unjudged:7df02b83950de4c98db5b4b9c38a2b632a7dc94d3122815d2f75e8df1af230f1",
+          "unjudged:88353e3f538b5d816476606b516d549a2bba189044fe6b5e78bd504383e721b6",
+          "unjudged:d4fc9aebf9468068457b719bfdd070bbddc68b3ed7a1e2aa88365ab745506f3a",
+          "unjudged:24849eb8139c14e3b799b3a63e4ab76292a1a50da95d58377603f639b2e6d046",
+          "unjudged:bfa43e156e478ab43cdfd4f4464adb690dde2147cfadcaefc11ed2fc24d6baf2"
+        ],
+        "latency_seconds": 0.14535120001528412,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-1342-3-en",
+        "work_id": "pg-work:1342",
+        "ranking": [
+          "unjudged:1008e4cf341146c4b4d7d5ba376e2247193bedeb3654e35db9d6745c48e39c15",
+          "unjudged:7d3fc538fabc42fdd44c8b764c1f3884422a80a81093b42183fb47c2c7c4b5b8",
+          "unjudged:80b68c01506636001241e51f0b20db4d5dcf72df6bb5634da579bacd2400a6ce",
+          "unjudged:6174d3340fa5bda97cec7033cf1d29223dd27579af216abc309a30b569a52893",
+          "unjudged:d618a7bea36352ae9dbc9cb8dd1ef5d8b90b2f0e0ae69b20eb776246c287e07b",
+          "unjudged:1048c04f98e18909804f39b6668d786fd2e03b728229956454b049fcca50b661",
+          "unjudged:130525452b2beba1ac42d11554ffda7bf0cc031ed940060ca0f647ff7f98c638",
+          "unjudged:6f76532512ea1f93d6cf95dfb4036dd401837267041eb5951c652bf905f22c39"
+        ],
+        "latency_seconds": 0.17648850003024563,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-11-1-es",
+        "work_id": "pg-work:11",
+        "ranking": [
+          "unjudged:8f9c14bf9f935b0818fd253173d7b26bfc7f6d2b5887b963456df8cfa0e9b3f9",
+          "unjudged:1787bee9fcf5ea33b29639432aa0f6a6058f5a6c887320e362781e530cb021e2",
+          "unjudged:8d8b0ad6a2ae69a24b93718d75c6c5c7f02626326ff020fc7caa599d33f78dcd",
+          "unjudged:de2c5df98aba57208b4d6b85a128ae04f063743a60ac168edf7ea369baf3a19c",
+          "unjudged:84f79692d01497497a0f0af73b69def17d047f2fb2bfaf5e818f1748c001c69e",
+          "unjudged:3a60dff13162240d583bb415976a88a1fc2e5c5940d179bd0c6d3579b4ceace3",
+          "unjudged:afea22092a84b77f8b1df2659170c99fad18258e01427175f3cad847bfe0dc6f",
+          "unjudged:f9ab7cde495223c17ac60d9a580984041ad2412d82495857a3e4de430fc86f36"
+        ],
+        "latency_seconds": 0.15813410002738237,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-11-1-en",
+        "work_id": "pg-work:11",
+        "ranking": [
+          "unjudged:eba8ca750f4c3378b355ff5b428e0707f6ee9c949080bebf41cde7de48912564",
+          "unjudged:0ffa49d83dabc69281f7ad049c164078c764cb1403790a124a9596bd4d7f222a",
+          "unjudged:1ca4eea9ef0852b340df02370b1d71937a7ee778b43c6faa3b7e1faf63c28950",
+          "unjudged:498533629904dae399827aea314fe4e808633a4a06f16e2876e24233e12e6bdd",
+          "unjudged:25ec6f79e68e9047810768f398e95f31e2ef81c0aa3a5ca6fa51fa09894aab67",
+          "unjudged:656e5500c0123de04a3ed08b42cb5ac2ed920c7bf9b75d72a9e9c4bc49b748ef",
+          "unjudged:c08feb7eca8cc6684d2642ca13aa3afcc54cfa50ec9f87d72f3cea7c9994b120",
+          "unjudged:c498a721ce6d6673411e8aec6d6d6a19b22b5bd958727862e3c9ea12a980300f"
+        ],
+        "latency_seconds": 0.18067070003598928,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-11-2-es",
+        "work_id": "pg-work:11",
+        "ranking": [
+          "unjudged:8f9c14bf9f935b0818fd253173d7b26bfc7f6d2b5887b963456df8cfa0e9b3f9",
+          "unjudged:1787bee9fcf5ea33b29639432aa0f6a6058f5a6c887320e362781e530cb021e2",
+          "unjudged:8d8b0ad6a2ae69a24b93718d75c6c5c7f02626326ff020fc7caa599d33f78dcd",
+          "unjudged:de2c5df98aba57208b4d6b85a128ae04f063743a60ac168edf7ea369baf3a19c",
+          "unjudged:84f79692d01497497a0f0af73b69def17d047f2fb2bfaf5e818f1748c001c69e",
+          "unjudged:3a60dff13162240d583bb415976a88a1fc2e5c5940d179bd0c6d3579b4ceace3",
+          "unjudged:afea22092a84b77f8b1df2659170c99fad18258e01427175f3cad847bfe0dc6f",
+          "unjudged:f9ab7cde495223c17ac60d9a580984041ad2412d82495857a3e4de430fc86f36"
+        ],
+        "latency_seconds": 0.13337330002104864,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-11-2-en",
+        "work_id": "pg-work:11",
+        "ranking": [
+          "unjudged:9dfbff4bcc0c2b9969521f0ee12fc2329edb1a49f1a68d609a0158f975e258e0",
+          "unjudged:498533629904dae399827aea314fe4e808633a4a06f16e2876e24233e12e6bdd",
+          "unjudged:c1d591523fa2b1a5f4e0237c29a575dcebfb434000b41b1dbc056b560ab6b3f9",
+          "unjudged:0b71517798dbb8d6573a43c8644367666e9d5fc7519c4dd7978e8e4cbddc5c2a",
+          "unjudged:820269005865243be4dc7d69766897411a10448c10db9ab751a99f78ab62491b",
+          "unjudged:8f9c14bf9f935b0818fd253173d7b26bfc7f6d2b5887b963456df8cfa0e9b3f9",
+          "unjudged:f74e998f0a1960b4538ecbb946dd4b2f0324460145a2a77d92e9bc293a00bdeb",
+          "unjudged:25ec6f79e68e9047810768f398e95f31e2ef81c0aa3a5ca6fa51fa09894aab67"
+        ],
+        "latency_seconds": 0.18361369997728616,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-11-3-es",
+        "work_id": "pg-work:11",
+        "ranking": [
+          "unjudged:8f9c14bf9f935b0818fd253173d7b26bfc7f6d2b5887b963456df8cfa0e9b3f9",
+          "unjudged:1787bee9fcf5ea33b29639432aa0f6a6058f5a6c887320e362781e530cb021e2",
+          "unjudged:8d8b0ad6a2ae69a24b93718d75c6c5c7f02626326ff020fc7caa599d33f78dcd",
+          "unjudged:de2c5df98aba57208b4d6b85a128ae04f063743a60ac168edf7ea369baf3a19c",
+          "unjudged:84f79692d01497497a0f0af73b69def17d047f2fb2bfaf5e818f1748c001c69e",
+          "unjudged:3a60dff13162240d583bb415976a88a1fc2e5c5940d179bd0c6d3579b4ceace3",
+          "unjudged:afea22092a84b77f8b1df2659170c99fad18258e01427175f3cad847bfe0dc6f",
+          "unjudged:f9ab7cde495223c17ac60d9a580984041ad2412d82495857a3e4de430fc86f36"
+        ],
+        "latency_seconds": 0.15155239996965975,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-11-3-en",
+        "work_id": "pg-work:11",
+        "ranking": [
+          "unjudged:c4901a62ac4602fa08c14d216ad583da67c5221be4fd8a89f109594a458e5ed9",
+          "unjudged:e36e7ddfe78f5544c51f70e20f5c8b61277378de84de048539120fdaf6a8ff24",
+          "unjudged:14f67d243573ac2ccf6fccdd4a586f50b3818e3f7ec379a34590e01bcd93390e",
+          "unjudged:3a60dff13162240d583bb415976a88a1fc2e5c5940d179bd0c6d3579b4ceace3",
+          "unjudged:79003c2c413a36628051973600bbf25d8a5f11a6d9992d8af2f228c7ecc203c6",
+          "unjudged:822c3d930de71e8b0b17ec6212eb9700884ebb4f0aec883bfbd140018ffbb6bc",
+          "unjudged:f29599a4c61a852078f25597f74399bcd7788faa6d60683d02bc041894886bb6",
+          "unjudged:54acf5d7a71c1233ff16067161297c44c6530beec21628aa4038d0c80faed22a"
+        ],
+        "latency_seconds": 0.1577017999952659,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-120-1-es",
+        "work_id": "pg-work:120",
+        "ranking": [
+          "unjudged:9b50001d8031280a0cf6d7c41402669dd7183935beeedf5504fa823a5413537a",
+          "unjudged:52bcca5b19435b5cb0787f1c8aac42690cc67af5f5ca1c4dd1771d952851f3a9",
+          "unjudged:f63791ab37f6f662b95356bf7da7553faafc50e4c96ec882b515827a78ed0414",
+          "unjudged:d568f7cc6e8bca0bd14a0067fa104af7c50d8914d6bf1462b09f085d58b3dd73",
+          "unjudged:a50669719c25e1917ab35e17f3f9445b23ff95d9b85096ea42a9a5824c8ca42e",
+          "unjudged:390f81d03d40df410aa76c95051427cb7d2d99a111c8f7b6a382b415ed56bdd1",
+          "unjudged:fcd1c60710952184e7ede7094fd8922dea61adee4080c30ed74561f57fb28f71",
+          "unjudged:172cb7b791641f3aca31923bdc369afab3f579666c8a01385075782956a3dd7f"
+        ],
+        "latency_seconds": 0.12532010005088523,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-120-1-en",
+        "work_id": "pg-work:120",
+        "ranking": [
+          "unjudged:9b50001d8031280a0cf6d7c41402669dd7183935beeedf5504fa823a5413537a",
+          "unjudged:52bcca5b19435b5cb0787f1c8aac42690cc67af5f5ca1c4dd1771d952851f3a9",
+          "unjudged:390f81d03d40df410aa76c95051427cb7d2d99a111c8f7b6a382b415ed56bdd1",
+          "unjudged:a279e807332ec20266b6078fe8a502a9b82f6159ac5ee6e86a2bf302ceaf43eb",
+          "unjudged:c83d30b8a2cb4c8e25d397467202d4478a8368f2794344edd6883e81c4d05e2b",
+          "unjudged:82af9f312b9ac68e21c65600ee10aec3fb121004c308a2d669cef3bfbd82bc0f",
+          "unjudged:fcd1c60710952184e7ede7094fd8922dea61adee4080c30ed74561f57fb28f71",
+          "unjudged:be136461ac753e0c3d6a805e02288d8a55598987b0e117143173a062e8b06ed7"
+        ],
+        "latency_seconds": 0.17708540003513917,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-120-2-es",
+        "work_id": "pg-work:120",
+        "ranking": [
+          "unjudged:b2cb63562918d8c018313a7e00b4c171aaaffd340e4bcb2af8afb63bffbecd9f",
+          "unjudged:0b625e8a49283989c40469f78f59d18318e0356715eb64c0ef4073d402ba60dc",
+          "unjudged:9563088d95770d6fff04c841c3f23b3125d7191644a26a3e7f2e5fbfd6a6afaf",
+          "unjudged:52bcca5b19435b5cb0787f1c8aac42690cc67af5f5ca1c4dd1771d952851f3a9",
+          "unjudged:bb3807c6d6bc0f1e7244cdde0db70c5d979c28e8779f5f2c1da306230c639022",
+          "unjudged:335d3d2497aac2543649d057cd4d972b19fe09dcbe976958bc34742e590068bf",
+          "unjudged:a350864cf6b542e8f55e5105b1bca3590e991286121d9c42e7d201765d8d98b9",
+          "unjudged:c2f9000a85c820b94673adf5e6e3cd32ba12599abcd26abe37377f0bba67e747"
+        ],
+        "latency_seconds": 0.13166220003040507,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-120-2-en",
+        "work_id": "pg-work:120",
+        "ranking": [
+          "unjudged:52bcca5b19435b5cb0787f1c8aac42690cc67af5f5ca1c4dd1771d952851f3a9",
+          "unjudged:bb3807c6d6bc0f1e7244cdde0db70c5d979c28e8779f5f2c1da306230c639022",
+          "unjudged:b2cb63562918d8c018313a7e00b4c171aaaffd340e4bcb2af8afb63bffbecd9f",
+          "unjudged:d1f3b79360790703d0dd3953d761ef664846f4f175e6538a6fd8e9adb0907816",
+          "unjudged:0b625e8a49283989c40469f78f59d18318e0356715eb64c0ef4073d402ba60dc",
+          "unjudged:9563088d95770d6fff04c841c3f23b3125d7191644a26a3e7f2e5fbfd6a6afaf",
+          "unjudged:db85d65adbdabde4b7bf7a24a44ab1c0afa0db61f4df1f2ea30f5897edbf1d39",
+          "unjudged:574718912a6b89cbf1b3446df14662b70a516df1f76cdf52296fdd1d9b4f3077"
+        ],
+        "latency_seconds": 0.17820010002469644,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-120-3-es",
+        "work_id": "pg-work:120",
+        "ranking": [
+          "unjudged:2130da7d0d14fa3fc784c4474081ae60d5077a4bce3005c3b7b86abb3b2fcf9b",
+          "unjudged:6309cdb121511670c50225341c6c960bf0b83d9d099789534d0a871df45f7c29",
+          "unjudged:d568f7cc6e8bca0bd14a0067fa104af7c50d8914d6bf1462b09f085d58b3dd73",
+          "unjudged:fcd1c60710952184e7ede7094fd8922dea61adee4080c30ed74561f57fb28f71",
+          "unjudged:d1f3b79360790703d0dd3953d761ef664846f4f175e6538a6fd8e9adb0907816",
+          "unjudged:d8048f832bbd6a2cbad32c5438c9023fdcf83db97882855389177188ad1addc4",
+          "unjudged:0e1aefe6ed704b8a016e51c393168944f478499deb28fad9211c3e79da25208c",
+          "unjudged:e3a8be46ed25add4c11046a043efb63189871f57da9d1dcce1a83503da4f55ab"
+        ],
+        "latency_seconds": 0.15161530004115775,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      },
+      {
+        "id": "pg-120-3-en",
+        "work_id": "pg-work:120",
+        "ranking": [
+          "unjudged:2130da7d0d14fa3fc784c4474081ae60d5077a4bce3005c3b7b86abb3b2fcf9b",
+          "unjudged:0d8eedf763e7acae2b2a6f6b499f7ce4ac003896218f12a445f9196df2473d80",
+          "unjudged:fcd1c60710952184e7ede7094fd8922dea61adee4080c30ed74561f57fb28f71",
+          "unjudged:e3a8be46ed25add4c11046a043efb63189871f57da9d1dcce1a83503da4f55ab",
+          "unjudged:d568f7cc6e8bca0bd14a0067fa104af7c50d8914d6bf1462b09f085d58b3dd73",
+          "unjudged:6309cdb121511670c50225341c6c960bf0b83d9d099789534d0a871df45f7c29",
+          "unjudged:9b50001d8031280a0cf6d7c41402669dd7183935beeedf5504fa823a5413537a",
+          "unjudged:d8048f832bbd6a2cbad32c5438c9023fdcf83db97882855389177188ad1addc4"
+        ],
+        "latency_seconds": 0.15380510000977665,
+        "work_identification_correct": true,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "judged_fraction@10": 0.0
+      }
+    ]
+  },
+  "mode": "real_local_index_retrieval_not_end_to_end",
+  "maximum_returned_by_existing_api": 8,
+  "local_embedding_http_possible": false,
+  "retrieval_diagnostics": {
+    "semantic_requested": false,
+    "embedding_calls": 0,
+    "embedding_failures": 0
+  },
+  "semantic_execution_confirmed": false,
+  "python_peak_traced_bytes": 365464,
+  "memory_scope": "Python allocations only; excludes SQLite/native/GPU/RSS"
+}

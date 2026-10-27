@@ -1,7 +1,68 @@
 # Continuidad OpenCode — LitMate IA
 
-Actualizado: 26 de octubre de 2026.
+Actualizado: 27 de octubre de 2026.
 Rama: `feature/cuotas-ia-chatbot`.
+
+## Expansión de conocimiento local y checkpoint (27 de octubre de 2026)
+
+- Punto de partida: HEAD `e142c63`, rama `feature/cuotas-ia-chatbot`. Se
+  conservó todo el trabajo pendiente de Codex; no se hizo `reset`, `clean`,
+  checkout destructivo ni push. El informe detallado está en
+  `reportes/expansion_conocimiento_litmate.md`.
+- Biblioteca: **12 libros activos**, **6.393 fragmentos de origen**, **561
+  capítulos/secciones** y **9.656.545 bytes**. Se añadieron *La Regenta*
+  (Gutenberg 17073) y *Marianela* (Gutenberg 17340), con SHA-256 y revisión de
+  derechos en el manifiesto local. Los originales y bases están ignorados por
+  Git.
+- Catálogo: **300 registros españoles** aceptados de Project Gutenberg en
+  **46.108** filas escaneadas, **0 errores** y **109,1553 s**. El ledger quedó
+  con **2.298 registros** (2.296 Gutenberg + 2 Open Library), **0 relaciones**
+  y **2.298 eventos de outbox en `done`**. Los checkpoints inglés
+  (`offset=2.706`) y español (`offset=46.108`) siguen reanudables
+  (`finished=0`).
+- Índice: `data/biblioteca/rag.sqlite3` reconstruido para 12 libros:
+  **11.289 fragmentos**, **11.289 vectores**, modelo `embeddinggemma:latest`,
+  digest `85462619ee721b466c5927d109d4cb765861907d5417b9109caebc4e614679f1`,
+  dimensión 768, `hybrid-v2`, **53,368181 s**. Se corrigió la idempotencia del
+  comando con `CREATE TABLE IF NOT EXISTS` e `INSERT OR REPLACE`.
+- Integración: la biblioteca local ahora alimenta también la ruta general de
+  contenido, no sólo narración/personajes. Se corrigió el enlace cuando la
+  ficha externa trae subtítulo o autor abreviado, se añadieron siete alias
+  españoles con evidencia Open Library y se incluyó la revisión de la
+  biblioteca y el flag semántico en la caché. El alias resuelve identidad, no
+  certifica una sinopsis.
+- Configuración: `LITMATE_LIBRARY_DB`, `LITMATE_LIBRARY_RAG_DB` y
+  `LITMATE_LIBRARY_SEMANTIC_CHAT`. El último sigue **desactivado por defecto**.
+- Pruebas: suite completa `core` **1.626 OK en 25,938 s**; integración
+  `core.test_ai_library_router` **12/12 OK**. Las advertencias de Wikipedia,
+  TTS y semántica son pruebas de degradación controlada.
+- Recuperación real de 12 libros: léxica Recall@5 **0,4333**, nDCG@10
+  **0,3398**, p50 **0,2231 s**; híbrida Recall@5 **0,6333**, Recall@10
+  **0,7333**, nDCG@10 **0,5542**, p50 **0,2837 s**, 30 llamadas de embedding y
+  0 fallos. Es recuperación, no exactitud factual.
+- Chat HTTP/SSE aislado, `qwen3.5:4b`, contexto 16.384, sin web, presupuesto
+  75/90 s: léxico final **2/5 respondidas**, p50 **9,336 s**, máximo
+  **12,863 s**; semántico final **2/5 respondidas**, p50 **9,782 s**, máximo
+  **17,219 s**. Repeticiones idénticas dieron 3/5 y 2/5: el resultado no es
+  determinista y no se debe presentar una sola ejecución como mejora estable.
+- Revisión factual: en la ejecución semántica final, *Frankenstein* quedó
+  `answered` pero atribuyó la carta a Elizabeth Lavenza; el fragmento local y
+  la novela la atribuyen al padre, Alphonse. El estado `answered` **no es una
+  certificación factual**. El caso se conserva como fallo de calidad.
+- Fallback externo: «¿De qué trata Orgullo y prejuicio?» con web habilitada
+  quedó `unavailable` en modo léxico y semántico; no se demostró que las fuentes
+  externas rescataran ese caso. La recuperación léxica devuelve material
+  introductorio de la edición, no una sinopsis completa.
+- Learning-to-rank: **no entrenado ni activo**. `training_readiness.ready` es
+  `false`; hay cero pares/obras/consultas y faltan etiquetas
+  `human_reviewed` + `label_evidence_verified`. No se cambiaron pesos de Ollama
+  ni se instalaron dependencias.
+- Checkpoint local: el commit incluye código, pruebas, alias e informes; no se
+  hace push. Los corpus, bases e índices de `data/biblioteca/`,
+  `data/adquisicion/` y `data/corpus_autorizado/` quedan fuera de Git.
+- Siguiente paso: no activar semántica ni ranking por defecto. Primero hay que
+  corregir la auditoría/atribución factual, mejorar la recuperación de material
+  introductorio y recolectar etiquetas humanas verificadas.
 
 ## Personajes verificados y límite de Wikipedia (26 de octubre de 2026)
 

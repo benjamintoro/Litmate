@@ -1,0 +1,46 @@
+{
+  "date_local": "2026-10-27",
+  "test_type": "real_official_wikipedia_api_and_isolated_sqlite",
+  "production_data_modified": false,
+  "llm_calls": 0,
+  "query": "El Señor de los Anillos",
+  "confirmed_author": "J. R. R. Tolkien",
+  "measured_acquisition_seconds": 0.6226,
+  "command_result": {
+    "status": "ok",
+    "accepted": 1,
+    "inserted": 1,
+    "sources": 1
+  },
+  "stored_books": 1,
+  "stored_sources": 1,
+  "ledger": {
+    "exists": true,
+    "records": 1,
+    "datasets": 0,
+    "pending": 0,
+    "staged": 0,
+    "by_provider": {
+      "wikipedia": 1
+    }
+  },
+  "evidence": [
+    {
+      "title": "El Señor de los Anillos",
+      "work_title": "El Señor de los Anillos",
+      "work_author": "J. R. R. Tolkien",
+      "url": "https://es.wikipedia.org/wiki/El_Se%C3%B1or_de_los_Anillos",
+      "license": "CC-BY-SA-4.0",
+      "policy": "wikipedia-cc-by-sa-4.0-v1",
+      "revision_id": "176013982",
+      "content_hash": "e72008a5161c1b53d1b4d6434e0a5f0a74d502934b5316b4d3487278d2a0a0a2",
+      "memory_verified": true
+    }
+  ],
+  "negative_query_observation": {
+    "query": "El Señor de los Anillos J. R. R. Tolkien",
+    "status": "ok",
+    "accepted": 0,
+    "reason_observed": "provider_returned_author_biography_and_letters_not_requested_book; same_work_rejected_both"
+  }
+}

@@ -55,9 +55,10 @@ def _revision():
     from django.conf import settings
     from .literary_knowledge import knowledge_revision
     from .literary_memory import revision
+    from .ai_library_router import library_revision
     paths = [Path(__file__).parent / 'data' / 'verified_readings.json',
              Path(__file__).parent / 'data' / 'topic_reference.json']
-    return [POLICY, knowledge_revision(settings), revision(),
+    return [POLICY, knowledge_revision(settings), revision(), library_revision(),
             [(str(path), path.stat().st_mtime_ns, path.stat().st_size) for path in paths]]
 
 

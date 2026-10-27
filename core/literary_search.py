@@ -866,13 +866,22 @@ def retrieve_book_content(message, candidates):
     if candidates:
         knowledge_query += ' ' + str(candidates[0].get('title', ''))
     facts = search_knowledge(knowledge_query, maximum=5)
+    from .ai_library_router import (library_books_for_query, library_fragments,
+                                     library_revision)
+    # El catálogo público puede devolver una edición con subtítulo y otro
+    # nombre abreviado del autor. Si la consulta nombra una obra local, esa
+    # identidad verificada prevalece para no perder el original autorizado.
+    local_books = library_books_for_query(message, candidates)
+    semantic = bool(getattr(settings, 'LITMATE_LIBRARY_SEMANTIC_CHAT', False))
+    facts.extend(library_fragments(message, local_books or candidates,
+                                   semantic=semantic, maximum=4))
     if not database.is_file():
         return facts
     query = clean_text(message, 1800)
     titles = [b.get('title', '') for b in candidates[:2] if isinstance(b, dict)]
     identities = [b for b in candidates[:2] if isinstance(b, dict) and b.get('author')]
-    key = _cache_key('litmate_content_v3:', query + repr(titles) + repr(identities)
-        + str(database.stat().st_mtime_ns)
+    key = _cache_key('litmate_content_v4:', query + repr(titles) + repr(identities)
+        + str(database.stat().st_mtime_ns) + repr(library_revision())
         + str(getattr(settings, 'LITMATE_RAG_SEMANTIC', True))
         + getattr(settings, 'LITMATE_EMBED_MODEL', 'embeddinggemma:latest'))
     cached = _cached(key)

@@ -592,6 +592,10 @@ def _character_answer(message, history=(), config=None, *, pending_clarification
     if result is not None:
         result.diagnostics['character_trace'] = [{'stage': 'stored_content', 'facts': result.diagnostics['character_count']}]
         return result
+    from .ai_library_router import character_answer_from_library
+    local = character_answer_from_library(message, request, config)
+    if local is not None and local.status == 'answered':
+        return local
     if request['task'] == 'character' and not getattr(settings, 'LITMATE_AI_USE_WEB', True):
         return None  # Sin evidencia de personaje, conservar la ruta de autores.
     if getattr(settings, 'LITMATE_AI_USE_WEB', True):

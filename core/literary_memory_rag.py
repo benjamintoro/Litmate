@@ -21,7 +21,8 @@ from .local_rag import index_documents, retrieve_fragments
 
 OWNER = 'litmate-literary-memory-rag-v1'
 POLICIES = frozenset({'curated-original-v1', 'openlibrary-minimal-metadata-v1',
-                     'wikidata-statements-v1', 'wikipedia-cc-by-sa-4.0-v1'})
+                     'wikidata-statements-v1', 'wikipedia-cc-by-sa-4.0-v1',
+                     'bne-catalog-cc0-v1', 'gutenberg-catalog-public-domain-v1'})
 
 
 def index_path(index=None, *, database=None):

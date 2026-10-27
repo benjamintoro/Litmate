@@ -994,7 +994,8 @@ def canonical_sources(items, maximum=8):
         # Procedencia interna: no confundir el autor de una página con la obra.
         for name in ('work_id', 'work_title', 'work_author', 'license', 'fact_kind', 'trust', 'extraction_method', 'site', 'claim_verification', 'character_scope',
                      'verified_at', 'expires_at', 'source_id', 'evidence_hash', 'policy_id',
-                     'memory_source_id', 'last_verified_at', 'policy'):
+                     'memory_source_id', 'last_verified_at', 'policy',
+                     'library_document_id', 'original_sha256', 'edition', 'extraction_version'):
             if name in item:
                 source[name] = clean_text(item[name], 220)
         for name in ('work_binding_verified', 'permanent_index_allowed', 'injection_detected',
@@ -1578,6 +1579,15 @@ class LiteraryAssistant:
                 route = {**route, 'decision': 'allow', 'followup': True,
                          'candidates': followup['books'],
                          'intent': 'analysis' if route['intent'] in {'conversation', 'identify'} else route['intent']}
+            if route['intent'] in {'analysis', 'summary', 'author'}:
+                # Si el lector nombra una obra local, su identidad revisada
+                # precede a una ficha externa con subtítulo o autor abreviado.
+                # No se añade ninguna obra que no aparezca en la consulta.
+                from .ai_library_router import library_books_for_query
+                local_books = library_books_for_query(message, route['candidates'])
+                if local_books:
+                    route = {**route, 'candidates': local_books + route['candidates']}
+                    diagnostics['local_library_catalogue'] = len(local_books)
             if route['decision'] == 'clarify' or (route['followup'] and not history):
                 # La clasificación no es una salida aprobada: no publicamos su
                 # texto libre, que podría contener una respuesta fuera del ámbito.

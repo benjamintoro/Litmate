@@ -432,6 +432,12 @@ def retrieve_sources(message, request, history):
     known.extend(source for turn in sanitized_history(history) for source in turn['sources'])
     if direct_answer(message, request, known) is not None:
         return bound_sources(request, known)
+    from .ai_library_router import sources_for_request
+    local_sources = sources_for_request(message, request)
+    if local_sources:
+        request['retrieval_trace'] = [{'stage': 'local_library', 'sources': len(local_sources),
+            'content': sum(source['kind'] == 'excerpt' for source in local_sources)}]
+        return local_sources
     existing = bound_sources(request, known)
     if request['task'] == 'summary' and any(_content(source) for source in existing):
         # Una fuente de contenido aceptada sigue sirviendo aunque necesite

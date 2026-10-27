@@ -1,0 +1,72 @@
+{
+  "created_at_utc": "2026-10-27T04:26:39.068994+00:00",
+  "mode": "real_http_sse_isolated_database",
+  "model": "qwen3.5:4b",
+  "context": 16384,
+  "prewarm": {
+    "requested": false,
+    "seconds": null,
+    "generates_answers": false
+  },
+  "web_enabled": true,
+  "chat_budget_seconds": 75.0,
+  "response_budget_seconds": 90.0,
+  "progressive": false,
+  "repeat": 1,
+  "knowledge_setup": "empty_auxiliary_databases_with_bundled_catalogue_and_readonly_library",
+  "library": "G:\\Proyecto\\Litmate\\data\\biblioteca\\biblioteca.sqlite3",
+  "library_semantic": false,
+  "resource_scope": "python_server_process_only_not_ollama_or_gpu",
+  "cache_controls": {
+    "empty_answers_each_turn": false,
+    "empty_retrieval_each_turn": false
+  },
+  "factual_review": "not_independently_certified",
+  "turns": [
+    {
+      "case": "consulta_reportada",
+      "turn": 1,
+      "question": "¿De qué trata Orgullo y prejuicio?",
+      "http_status": 200,
+      "status": "unavailable",
+      "completed_sse": true,
+      "seconds": 8.44,
+      "first_text_seconds": 8.438,
+      "first_useful_seconds": null,
+      "first_progress_seconds": null,
+      "progress_phases": [],
+      "diagnostics": {},
+      "stage_totals_ms": {},
+      "delivery_overhead_ms": null,
+      "resources": {
+        "rss_mb": 62.031,
+        "peak_rss_mb": 62.438,
+        "cpu_seconds": 0.1875
+      },
+      "category": "unspecified",
+      "under_response_budget": true,
+      "model_calls": 2,
+      "answer": "No pude confirmar una sinopsis fiable de **Orgullo y prejuicio** con las fuentes disponibles. No quiero mezclarlo con otra obra.",
+      "source_urls": []
+    }
+  ],
+  "source_sha256": "f72251f164d308fe68c319fc1ea4a7d342838fa28eae1d9de6f020edeccfdfd8",
+  "runner_sha256": "20ff389e7f67f4a071847fa17a124c380fa19c121fba26195b7d288b47afe5b0",
+  "matrix_sha256": null,
+  "metrics": {
+    "turns": 1,
+    "p50_seconds": 8.44,
+    "mean_seconds": 8.44,
+    "p95_seconds": 8.44,
+    "max_seconds": 8.44,
+    "under_response_budget": 1,
+    "statuses": {
+      "unavailable": 1
+    },
+    "under_5_seconds": 0,
+    "under_10_seconds": 1,
+    "under_30_seconds": 1,
+    "answered_is_not_factual_certification": true
+  },
+  "source_files_changed_during_run": false
+}

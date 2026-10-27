@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "purpose": "Matriz HTTP/SSE real para comparar recuperación léxica y semántica sobre la biblioteca autorizada local. Las preguntas son de evaluación; no se usan como etiquetas de entrenamiento.",
+  "created_at": "2026-10-27",
+  "cases": [
+    {
+      "id": "frankenstein_carta_william",
+      "mode": "live",
+      "category": "contenido_local",
+      "messages": [
+        {"text": "¿Qué noticia sobre William comunica la carta dirigida a Victor en Frankenstein?"}
+      ]
+    },
+    {
+      "id": "quijote_resumen",
+      "mode": "live",
+      "category": "resumen_local_es",
+      "messages": [
+        {"text": "¿De qué trata Don Quijote?"}
+      ]
+    },
+    {
+      "id": "orgullo_resumen_alias",
+      "mode": "live",
+      "category": "resumen_alias_es",
+      "messages": [
+        {"text": "¿De qué trata Orgullo y prejuicio?"}
+      ]
+    },
+    {
+      "id": "marianela_resumen",
+      "mode": "live",
+      "category": "resumen_local_es",
+      "messages": [
+        {"text": "¿De qué trata Marianela?"}
+      ]
+    },
+    {
+      "id": "dracula_autor",
+      "mode": "live",
+      "category": "autoridad_local",
+      "messages": [
+        {"text": "¿Quién escribió Drácula?"}
+      ]
+    }
+  ]
+}
