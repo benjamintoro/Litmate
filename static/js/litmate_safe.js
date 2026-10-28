@@ -74,7 +74,23 @@
 
     function renderMessage(node, text) {
         // Only the formatter above may create this fixed, escaped HTML structure.
-        node.innerHTML = formatMessageText(text);
+        const value = String(text ?? '').replace(/\r\n?/g, '\n');
+        const marker = '\n\nFuentes de las fichas:\n';
+        const position = value.lastIndexOf(marker);
+        if (position > 0) {
+            const body = value.slice(0, position);
+            const lines = value.slice(position + marker.length).trim().split('\n').map(line => line.trim()).filter(Boolean);
+            const urls = lines.map(line => /^https:\/\/\S+$/i.test(line) ? safeURL(line) : '');
+            // Collapse only a complete, URL-only bibliographic suffix. Any
+            // limitation, copyright note or ordinary prose stays in the body.
+            if (body.trim() && urls.length > 0 && urls.length <= 40 && urls.every(Boolean)) {
+                node.innerHTML = formatMessageText(body) +
+                    '<details class="lm-chat-sources"><summary>Fuentes de las fichas</summary>' +
+                    urls.map(url => formatInlineText(url)).join('<br>') + '</details>';
+                return;
+            }
+        }
+        node.innerHTML = formatMessageText(value);
     }
 
     function getCookie(name, value = typeof document !== 'undefined' ? document.cookie : '') {
@@ -216,11 +232,17 @@
             { label: 'Google Books', hosts: ['books.google.com', 'books.google.cl', 'books.google.es', 'play.google.com',
                 'books.google.com.ar', 'books.google.com.mx', 'books.google.co.uk'] },
             { label: 'Amazon', hosts: ['amazon.com', 'www.amazon.com', 'amazon.es', 'www.amazon.es'] },
-            { label: 'Buscalibre', hosts: ['buscalibre.cl', 'www.buscalibre.cl', 'buscalibre.com', 'www.buscalibre.com'] }
+            { label: 'Buscalibre', hosts: ['buscalibre.cl', 'www.buscalibre.cl', 'buscalibre.com', 'www.buscalibre.com'] },
+            { label: 'Open Library', hosts: ['openlibrary.org'] },
+            { label: 'Wikidata', hosts: ['www.wikidata.org', 'wikidata.org'] }
         ];
         const provider = providers.find(item => item.hosts.includes(host));
         if (!provider || (label && String(label).toLowerCase() !== provider.label.toLowerCase())) return null;
-        return { label: provider.label, url };
+        const search = (provider.label === 'Amazon' && parsed.pathname.replace(/\/$/, '') === '/s') ||
+            (provider.label === 'Buscalibre' && parsed.pathname.replace(/\/$/, '') === '/libros/search') ||
+            (provider.label === 'Google Books' && parsed.pathname.replace(/\/$/, '') === '/books' &&
+                parsed.searchParams.has('q') && !parsed.searchParams.has('id'));
+        return { label: provider.label, url, search };
     }
 
     function coverURL(value) {
@@ -269,7 +291,7 @@
         return books;
     }
 
-    function renderBookCards(container, values) {
+    function renderBookCards(container, values, options = {}) {
         const books = normalizeBooks(values);
         if (!books.length) return null;
         const group = element('section', 'lm-chat-books');
@@ -294,7 +316,17 @@
             }
             cover.appendChild(fallback);
             const details = element('div', 'lm-chat-book-details');
-            details.appendChild(element('h3', 'lm-chat-book-title', book.title));
+            const title = element('h3', 'lm-chat-book-title');
+            if (typeof options.onSelect === 'function') {
+                const select = element('button', 'lm-chat-book-select', book.title);
+                select.type = 'button';
+                select.setAttribute('aria-label', 'Conversar sobre ' + book.title + ', de ' + book.author);
+                select.addEventListener('click', () => options.onSelect(book));
+                title.appendChild(select);
+            } else {
+                title.textContent = book.title;
+            }
+            details.appendChild(title);
             details.appendChild(element('div', 'lm-chat-book-author', book.author));
             top.appendChild(cover);
             top.appendChild(details);
@@ -303,11 +335,11 @@
             if (book.links.length) {
                 const links = element('div', 'lm-chat-book-links');
                 for (const link of book.links) {
-                    const anchor = element('a', 'lm-chat-book-link', link.label);
+                    const anchor = element('a', 'lm-chat-book-link', link.search ? 'Buscar en ' + link.label : link.label);
                     anchor.href = link.url;
                     anchor.target = '_blank';
                     anchor.rel = 'noopener noreferrer';
-                    anchor.setAttribute('aria-label', 'Consultar ' + book.title + ' en ' + link.label);
+                    anchor.setAttribute('aria-label', (link.search ? 'Buscar ' : 'Consultar ') + book.title + ' en ' + link.label);
                     links.appendChild(anchor);
                 }
                 card.appendChild(links);

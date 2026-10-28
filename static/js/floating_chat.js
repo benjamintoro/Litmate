@@ -120,9 +120,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const getCsrfToken = () => LitMateSafe.getCookie('csrftoken');
 
     // Enviar mensaje con streaming SSE
-    if (form) {
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
+    async function sendMessage(e) {
+            if (e) e.preventDefault();
             const text = input.value.trim();
             if (!text || sendBtn.disabled) return;
 
@@ -176,7 +175,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 writer.skip();
                 status.hidden = true;
-                LitMateSafe.renderBookCards(botDiv, suggestedBooks);
+                LitMateSafe.renderBookCards(botDiv, suggestedBooks, {
+                    onSelect: book => {
+                        if (!input || sendBtn.disabled) return;
+                        input.value = 'Háblame de ' + book.title + ' del autor ' + book.author;
+                        return sendMessage();
+                    }
+                });
                 body.scrollTop = body.scrollHeight;
                 avatarController.emotion(text + ' ' + accumulated, answerMood);
                 resetWidgetAvatar(15000);
@@ -193,6 +198,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 sendBtn.disabled = false;
                 input.focus();
             }
-        });
     }
+    if (form) form.addEventListener('submit', sendMessage);
 });

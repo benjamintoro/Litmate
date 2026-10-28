@@ -322,14 +322,16 @@ def bne_record(element):
     return record
 
 
-def _put(db, record):
+def _put(db, record, *, with_status=False):
     identifier = record['provider'] + ':' + record['external_id']
     encoded, now = _json(record), time.time()
     digest = _hash(encoded)
     previous = db.execute('SELECT * FROM acquisition_records WHERE record_id=?', (identifier,)).fetchone()
     if previous:
-        if previous['content_hash'] == digest or previous['revision'] > record.get('revision', 1):
-            return False
+        if previous['content_hash'] == digest:
+            return 'duplicates' if with_status else False
+        if previous['revision'] > record.get('revision', 1):
+            return 'stale' if with_status else False
         db.execute('INSERT OR IGNORE INTO acquisition_history VALUES (?,?,?,?)',
                    (identifier, previous['content_hash'], previous['record'], now))
     db.execute('INSERT OR REPLACE INTO acquisition_records VALUES (?,?,?,?,?,?,?,?,?)',
@@ -348,7 +350,7 @@ def _put(db, record):
         db.execute("UPDATE acquisition_outbox SET state='pending',last_code='' WHERE state<>'staged' "
                    'AND record_id IN (SELECT record_id FROM acquisition_relations WHERE target=?)',
                    (record['external_id'],))
-    return True
+    return ('updated' if previous else 'inserted') if with_status else True
 
 
 def _stored(db, provider, key):
@@ -736,7 +738,8 @@ def query_acquisition(query, *, provider='openlibrary', state_database, memory_d
             fetch = search_wikipedia
     start = time.monotonic()
     try:
-        with request_budget(start + max_seconds), research_scope(maximum=1, seconds=max_seconds, pages=0):
+        with request_budget(start + max_seconds), research_scope(maximum=1, seconds=max_seconds,
+                                                               pages=2 if provider == 'wikipedia' else 0):
             found = fetch(query)
     except (OSError, ValueError, TypeError) as exc:
         from .literary_sources import SearchResults, error_status
@@ -751,6 +754,10 @@ def query_acquisition(query, *, provider='openlibrary', state_database, memory_d
         report.update(status='invalid_response', seconds=round(time.monotonic() - start, 4))
         return report
     found = [source for source in found[:20] if isinstance(source, dict)]
+    if provider == 'wikipedia' and book:
+        from .ai_character_answers import bind_character_profile, _profile_facts
+        found = [_profile_facts(bound, {'names': [bound['title']]}) if
+                 (bound := bind_character_profile(source, book)) else source for source in found]
     books = ([book] if book else [source for source in found if source.get('kind') == 'book'
                                  and work_identity(source)])[:max_results]
     candidates = []

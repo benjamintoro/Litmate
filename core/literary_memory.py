@@ -227,7 +227,7 @@ def _projection(source, book):
     if not url or not same_work(source, book):
         return None
     from .literary_web import public_text_has_injection
-    if public_text_has_injection(str(source.get('description', ''))):
+    if public_text_has_injection(str(source.get('description', '')) + ' ' + str(source.get('identity_text', ''))):
         return None
     title, author = book['title'], book['author']
     origin = str(source.get('source', ''))
@@ -304,6 +304,7 @@ def _projection(source, book):
         body = str(source.get('description', ''))[:1800]
         return {**book, 'title': source['title'], 'author': 'Fuente web', 'kind': 'web',
             'source': origin, 'url': url, 'description': body, 'license': 'CC-BY-SA-4.0',
+            'identity_text': str(source.get('identity_text', ''))[:1200],
             'policy': 'wikipedia-cc-by-sa-4.0-v1', 'provider': 'wikipedia',
             'attribution': {key: str(attribution[key])[:1800] for key in
                             ('authors', 'title', 'url', 'license_url', 'revision_id') if key in attribution},
@@ -326,7 +327,9 @@ def _literal_facts(items, body, kind):
             'topic', 'subject', 'relation', 'predicate', 'value', 'object', 'evidence', 'scope')
         fact = {key: str(item[key])[:1000] for key in keys if isinstance(item.get(key), str)}
         required = ('name', 'role') if kind == 'character_facts' else ('evidence',)
-        if all(fact.get(key) and normalize_identity(fact[key]) in normalized_body for key in required):
+        if all(fact.get(key) and (_character_name_present(fact[key], body)
+                if key == 'name' and kind == 'character_facts'
+                else normalize_identity(fact[key]) in normalized_body) for key in required):
             if kind == 'character_facts':
                 # A name and a role somewhere in the same article do not bind
                 # them together. Preserve a bounded passage connecting both.
@@ -352,9 +355,7 @@ def _literal_facts(items, body, kind):
                         for alias in aliases if isinstance(alias, str)) and _supported_character_alias(
                             parenthetical.group(1), parenthetical.group(2), passage)):
                     fact['name'] = parenthetical.group(1).strip()
-                fact['aliases'] = [alias for alias in aliases[:12] if isinstance(alias, str)
-                    and 1 < len(alias) <= 180 and _supported_character_alias(fact['name'], alias, passage)
-                    ] if isinstance(aliases, list) else []
+                fact['aliases'] = _character_aliases(fact['name'], passage, aliases)
                 if not _supported_character_classification(fact, body):
                     fact.pop('classification', None)
                     fact.pop('classification_evidence', None)
@@ -398,33 +399,55 @@ def _character_passage(fact, body):
         # Names in a preceding sentence cannot donate their identity to a
         # different character's description in the following sentence.
         for clause in factual_statements(passage, strip_markers=False):
-            if name in normalize_identity(clause) and role.rstrip(' .!?') in normalize_identity(clause):
+            if _character_name_present(fact.get('name', ''), clause) and role.rstrip(' .!?') in normalize_identity(clause):
                 return True
         # A complete multi-sentence role can follow an explicit list label.
         return bool(re.search(r'(?i)(?<!\w)' + re.escape(str(fact.get('name', '')))
             + r'\s*[:\u2014\u2013-]\s*' + re.escape(str(fact.get('role', ''))), passage))
     if evidence:
         return evidence if (len(evidence) <= 1000 and evidence in body
-            and name in normalize_identity(evidence) and role in normalize_identity(evidence)
+            and _character_name_present(fact.get('name', ''), evidence) and role in normalize_identity(evidence)
             and connected(evidence)) else ''
     # Legacy adapters expose a list item, sentence or short paragraph. Do not
     # join disjoint list entries to associate one character with another's role.
     for paragraph in re.split(r'[\r\n]+', body):
-        if (len(paragraph) <= 1000 and name in normalize_identity(paragraph)
+        if (len(paragraph) <= 1000 and _character_name_present(fact.get('name', ''), paragraph)
                 and role in normalize_identity(paragraph) and connected(paragraph)):
             return paragraph.strip()
     return ''
+
+
+def _quoted_character_alias(name, alias, passage):
+    tokens = str(name).split()
+    if not 2 <= len(tokens) <= 7 or not 1 < len(alias) <= 70:
+        return False
+    for split in range(1, len(tokens)):
+        prefix = r'\s+'.join(re.escape(token) for token in tokens[:split])
+        suffix = r'\s+'.join(re.escape(token) for token in tokens[split:])
+        if re.search(r'(?<!\w)' + prefix + r'\s+[«“"]' + re.escape(alias)
+                     + r'[»”"]\s+' + suffix + r'(?!\w)', passage, re.I):
+            return True
+    return False
+
+
+def _character_name_present(name, passage):
+    if re.search(r'(?<!\w)' + re.escape(normalize_identity(name)) + r'(?!\w)', normalize_identity(passage)):
+        return True
+    return any(_quoted_character_alias(name, alias, passage)
+               for alias in re.findall(r'[«“"]([^»”"\n]{2,70})[»”"]', passage))
 
 
 def _supported_character_alias(name, alias, passage):
     canonical, alternate, text = (normalize_identity(value) for value in (name, alias, passage))
     if not canonical or not alternate or canonical == alternate:
         return False
+    if _quoted_character_alias(name, alias, passage):
+        return True
     # Both labels must occur in one explicit equivalence clause. Co-occurrence
     # (e.g. Frodo and Sam) is never an alias declaration.
     pattern = (r'(?<!\w)' + re.escape(canonical) + r'\s+(?:(?:es|era)\s+)?'
         r'(?:(?:tambien|mas)\s+)?(?:conocid[oa]\s+como|llamad[oa](?:\s+como)?|also\s+known\s+as|'
-        r'known\s+as|alias)\s+' + re.escape(alternate) + r'(?!\w)')
+        r'known\s+as|apodad[oa]|alias)\s+' + re.escape(alternate) + r'(?!\w)')
     if re.search(pattern, text):
         return True
     # Parentheses can express an occupation or kinship. Only accept a proper
@@ -437,6 +460,29 @@ def _supported_character_alias(name, alias, passage):
         if alternate in {normalize_identity(label) for label in match.group(1).split(',')}:
             return True
     return False
+
+
+def _character_aliases(name, passage, candidates=()):
+    """Extract identity declarations, never infer a nickname from spelling.
+
+    Same parser for fresh answers and durable snapshots. A name/role list
+    separator is legitimate syntax; co-occurrence or a shared first name is
+    not evidence of equivalence. Each returned label is checked against its
+    own canonical subject in the literal passage.
+    """
+    if not isinstance(passage, str) or len(passage) > 1000:
+        return []
+    explicit = re.findall(
+        r'(?:llamad[oa]|conocid[oa] como|known as|apodad[oa]|alias)\s+[«“\"]?'
+        r'((?:(?:el|la|los|las)\s+)?[A-ZÁÉÍÓÚÜÑ][\wáéíóúüñ’\'-]*'
+        r'(?:\s+[A-ZÁÉÍÓÚÜÑ][\wáéíóúüñ’\'-]*){0,5})', passage)
+    declared = list(candidates[:12]) if isinstance(candidates, (list, tuple)) else []
+    declared.extend(re.findall(r'[«“"]([^»”"\n]{2,70})[»”"]', passage))
+    for match in re.finditer(re.escape(name) + r'\s*\(([^()]{1,180})\)', passage):
+        declared.extend(part.strip() for part in match.group(1).split(','))
+    return list(dict.fromkeys(alias for alias in [*declared, *explicit]
+        if isinstance(alias, str) and 1 < len(alias) <= 180
+        and _supported_character_alias(name, alias, passage)))[:12]
 
 
 def _supported_character_classification(fact, body):
@@ -730,6 +776,41 @@ def retrieve_evidence(query, *, books=(), requirement='', database=None, limit=8
         return list(found.values()), returned
 
 
+def _character_entity_keys(records):
+    """Agrupa sólo equivalencias canónicas directas, nunca dos alias iguales.
+
+    Un apodo compartido no es una prueba de identidad. Se examinan todos los
+    pasajes vigentes antes de filtrar la consulta: una ficha titulada con ese
+    apodo tampoco puede elegir al primer propietario que devuelva SQLite.
+    El grafo es efímero, acotado a las aserciones recuperadas y a cada obra.
+    """
+    keys = {(source['work_id'], normalize_identity(fact['name']))
+            for _, fact, source in records}
+    parent = {key: key for key in keys}
+    owners = {}
+    for _, fact, source in records:
+        key = source['work_id'], normalize_identity(fact['name'])
+        for alias in fact.get('aliases', []):
+            label = source['work_id'], normalize_identity(alias)
+            if label != key:
+                owners.setdefault(label, set()).add(key)
+
+    def root(key):
+        while parent[key] != key:
+            parent[key] = parent[parent[key]]
+            key = parent[key]
+        return key
+
+    for label, declared in sorted(owners.items()):
+        # Only a declaration naming another canonical record can join them.
+        # Alias/alias overlap and multiple possible owners remain ambiguous.
+        if label not in keys or len(declared) != 1:
+            continue
+        left, right = root(label), root(next(iter(declared)))
+        parent[max(left, right)] = min(left, right)
+    return {key: root(key) for key in keys}
+
+
 def retrieve_character_entities(query='', *, books=(), names=(), requirement='characters',
                                 database=None, limit=12):
     """Entity retrieval grounded in current source assertions, without HTTP/LLM.
@@ -774,6 +855,7 @@ def retrieve_character_entities(query='', *, books=(), names=(), requirement='ch
             "WHERE a.predicate='role' AND a.work_id IN (" + ','.join('?' for _ in scope) +
             ') ORDER BY a.work_id,a.subject,a.assertion_id LIMIT 1000', scope).fetchall()
         entities, current_sources, now = {}, {}, time.time()
+        records = []
         for row in rows:
             source_id = row['source_id']
             if source_id not in current_sources:
@@ -787,20 +869,13 @@ def retrieve_character_entities(query='', *, books=(), names=(), requirement='ch
             if not facts:
                 continue
             fact = facts[0]
+            records.append((row, fact, source))
+        entity_keys = _character_entity_keys(records)
+        for row, fact, source in records:
+            source_id = row['source_id']
             name, aliases = fact['name'], fact.get('aliases', [])
-            labels = {normalize_identity(name), *(normalize_identity(alias) for alias in aliases)}
-            if requested and not labels & requested:
-                continue
             work_id = source['work_id']
-            key = (work_id, normalize_identity(name))
-            # Different labels become one entity only through an explicit,
-            # supported alias clause, never a fuzzy match or shared role.
-            for candidate_key, candidate in entities.items():
-                candidate_labels = {normalize_identity(label)
-                                    for label in [candidate['name'], *candidate['aliases']]}
-                if candidate['work_id'] == work_id and labels & candidate_labels:
-                    key = candidate_key
-                    break
+            key = entity_keys[(work_id, normalize_identity(name))]
             work = db.execute('SELECT record FROM memory_works WHERE work_id=?', (work_id,)).fetchone()
             if not work:
                 continue
@@ -822,9 +897,15 @@ def retrieve_character_entities(query='', *, books=(), names=(), requirement='ch
             entity['evidence'].append({'source_id': source_id,
                 'supporting_passage_id': _hash(source_id, source['content_hash'], passage),
                 'text': passage, 'url': source['url'], 'source': source})
+        # Shared labels cannot donate a relation to either possible person.
+        label_owners = {}
+        for key, entity in entities.items():
+            for label in [entity['name'], *entity['aliases']]:
+                label_owners.setdefault((entity['work_id'], normalize_identity(label)), set()).add(key)
         if requirement == 'relationships':
             for entity in entities.values():
-                labels = {normalize_identity(label) for label in [entity['name'], *entity['aliases']]}
+                labels = {normalize_identity(label) for label in [entity['name'], *entity['aliases']]
+                          if len(label_owners[(entity['work_id'], normalize_identity(label))]) == 1}
                 relation_rows = db.execute('SELECT record,source_id FROM memory_assertions WHERE work_id=? '
                     "AND predicate<>'role' ORDER BY assertion_id LIMIT 1000", (entity['work_id'],)).fetchall()
                 for relation in relation_rows:
@@ -845,10 +926,12 @@ def retrieve_character_entities(query='', *, books=(), names=(), requirement='ch
                             'supporting_passage_id': _hash(source_id, source['content_hash'], value['evidence']),
                             'source_url': source['url'], 'verification_status': 'source_supported'})
         # The same isolated character label can identify unrelated works.
-        if requested and not books and len({entity['work_id'] for entity in entities.values()}) > 1:
+        selected = [entity for entity in entities.values() if not requested or requested & {
+            normalize_identity(label) for label in [entity['name'], *entity['aliases']]}]
+        if requested and not books and len({entity['work_id'] for entity in selected}) > 1:
             return []
         query_key = normalize_identity(query)
-        ranked = list(entities.values())
+        ranked = selected
         ranked.sort(key=lambda entity: (-int(any(re.search(r'(?<!\w)' + re.escape(normalize_identity(label))
             + r'(?!\w)', query_key) for label in [entity['name'], *entity['aliases']])),
             -int(bool(entity['relations'])), entity['work_id'], normalize_identity(entity['name'])))
@@ -938,6 +1021,55 @@ def record_use(work_id, requirement, outcome, *, provider='', latency=0, databas
             (work_id, requirement, provider, int(outcome in {'hit', 'verified'}),
              int(outcome == 'verified'), int(outcome in {'failed', 'miss'}), elapsed))
         return True
+
+
+def coverage_snapshot(database=None):
+    """Read-only coverage of current evidence, not a claim of deep knowledge.
+
+    Recheck expiry, source hashes, conflicts and literal facts just as retrieval
+    does. Metadata-only descriptions are not summaries; editions/sources are
+    not counted as additional works. Does not create an absent database.
+    """
+    report = {'works_catalogued': 0, 'normalized_title_author_pairs': 0,
+              'authors': 0, 'current_sources': 0, 'works_with_current_sources': 0,
+              'works_with_admitted_descriptions': 0, 'works_with_narrative_facts': 0,
+              'works_with_characters': 0, 'character_entities': 0,
+              'structured_relations': 0, 'open_conflicts': 0,
+              'full_text_coverage': 'measured_separately_in_literary_library'}
+    with _connection(database) as db:
+        if db is None:
+            return report
+        works = [json.loads(row[0]) for row in db.execute('SELECT record FROM memory_works')]
+        report['works_catalogued'] = len(works)
+        report['normalized_title_author_pairs'] = len({
+            (normalize_identity(work['title']), normalize_identity(work['author'])) for work in works})
+        report['authors'] = len({normalize_identity(work['author']) for work in works})
+        report['open_conflicts'] = db.execute("SELECT COUNT(*) FROM memory_conflicts WHERE status='open'").fetchone()[0]
+        current, descriptions, narrative, character_works, entities, relations = (set() for _ in range(6))
+        now = time.time()
+        for row in db.execute('SELECT source_id FROM memory_sources'):
+            source = _current_source(db, row[0], now)
+            if not source:
+                continue
+            report['current_sources'] += 1
+            work_id = source['work_id']
+            current.add(work_id)
+            if source.get('kind') == 'web' and source.get('description'):
+                descriptions.add(work_id)
+            for fact in _literal_facts(source.get('character_facts', []), source['description'], 'character_facts'):
+                character_works.add(work_id)
+                entities.add((work_id, normalize_identity(fact['name'])))
+            for fact in _literal_facts(source.get('literary_facts', []), source['description'], 'literary_facts'):
+                if fact.get('topic') in {'summary', 'plot'}:
+                    narrative.add(work_id)
+                if fact.get('predicate') in {'relationship', 'relation', 'companion', 'parent', 'sibling', 'spouse'}:
+                    relations.add((work_id, fact.get('subject'), fact.get('predicate'), fact.get('object') or fact.get('value')))
+        report.update(works_with_current_sources=len(current),
+                      works_with_admitted_descriptions=len(descriptions),
+                      works_with_narrative_facts=len(narrative),
+                      works_with_characters=len(character_works), character_entities=len(entities),
+                      structured_relations=len(relations))
+    return report
 
 
 def usage_stats(database=None):

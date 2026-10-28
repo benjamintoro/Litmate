@@ -77,6 +77,22 @@ class AnswerCacheTests(SimpleTestCase):
         self.assertTrue(cached.diagnostics['web_reference_quick_answer'])
         self.assertTrue(cached.diagnostics['exact_answer_cache_hit'])
 
+    def test_summary_reference_is_reused_after_stripping_its_own_wrapper(self):
+        from .ai_quick_answers import reference_answer
+        source = {'title': 'El nombre de la rosa', 'author': 'Fuente web',
+                  'description': 'El nombre de la rosa es una novela de Umberto Eco. '
+                                 'La historia sigue a Guillermo de Baskerville en una abadía medieval.',
+                  'url': 'https://es.wikipedia.org/wiki/El_nombre_de_la_rosa',
+                  'kind': 'web', 'source': 'Wikipedia',
+                  'read_mode': 'pasaje de sección de artículo público'}
+        question = '¿De qué trata El nombre de la rosa?'
+        reference = reference_answer(question, [source], intent='summary')
+        self.assertIsNotNone(reference)
+        self.assertTrue(put_answer(question, {}, 'session:a', reference, database=self.path))
+        cached = get_answer(question, {}, 'session:a', database=self.path)
+        self.assertIsNotNone(cached)
+        self.assertTrue(cached.diagnostics['exact_answer_cache_hit'])
+
     def test_a_reference_whose_text_no_longer_matches_its_audit_is_rejected(self):
         from .ai_quick_answers import reference_answer
         source = {'title': 'El nombre de la rosa', 'author': 'Fuente web',

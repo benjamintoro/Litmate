@@ -225,6 +225,35 @@ def web_title_matches(title, book):
     return False
 
 
+def published_title_alias(source, title):
+    """An explicit alternative title in an attributed encyclopedia lead.
+
+    Does not infer identity from a shared prefix or a redirect to a character.
+    Author and publication type must still be checked by the caller.
+    """
+    if not isinstance(source, dict) or source.get('source') != 'Wikipedia':
+        return False
+    attribution = source.get('attribution', {})
+    if (not isinstance(attribution, dict) or source.get('license') != 'CC-BY-SA-4.0'
+            or attribution.get('url') != source.get('url')
+            or attribution.get('title') != source.get('title')
+            or not str(attribution.get('revision_id', '')).isdigit()
+            or attribution.get('authors') != 'Wikipedia contributors'
+            or attribution.get('license_url') != 'https://creativecommons.org/licenses/by-sa/4.0/'):
+        return False
+    if urlsplit(str(source.get('url', ''))).hostname not in {'es.wikipedia.org', 'en.wikipedia.org'}:
+        return False
+    text = normalize_identity(source.get('identity_text', ''))
+    canonical = normalize_identity(_literal_title(source.get('title')))
+    alias = normalize_identity(title)
+    raw = ''.join(c for c in unicodedata.normalize('NFKD', str(source.get('identity_text', '')).casefold())
+                  if not unicodedata.combining(c))
+    return bool(canonical and alias and text.startswith(canonical + ' ')
+        and re.search(r'\b(?:o simplemente|tambien (?:llamad[oa]|conocid[oa] como)|also known as)\s+[«“"]?'
+                      + re.escape(alias).replace(r'\ ', r'\s+')
+                      + r'(?=[»”"]?(?:\s*[(,.;:]|\s+(?:es|fue|is|was)\b|$))', raw[:700]))
+
+
 def same_work(source, book):
     """Coincidencia exacta, alias confirmado o identificadores bibliográficos.
 
@@ -239,7 +268,8 @@ def same_work(source, book):
     if source.get('kind') == 'web' and source.get('work_binding_verified') is not True:
         identity_text = normalize_identity(source.get('identity_text', ''))
         if not (title_matches(source.get('title'), book)
-                or web_title_matches(source.get('title'), book)):
+                or web_title_matches(source.get('title'), book)
+                or any(published_title_alias(source, title) for title in _titles(book_identity))):
             return False
         author = normalize_identity(book_identity['author'])
         tokens = author.split()
@@ -329,6 +359,114 @@ def _title_mention(message, title, author, known_titles):
     return False
 
 
+def _identity_author(source):
+    """Autor publicado en la introducción de una página de obra admitida."""
+    bound = str(source.get('work_author') or '').strip()
+    if bound and normalize_identity(bound) not in UNKNOWN_AUTHORS:
+        return bound
+    text = str(source.get('identity_text') or source.get('description') or '')
+    for marker in (r'escrit[oa]\s+por', r'creada?\s+por', r'obra\s+de', r'autor(?:a)?\s+',
+                   r'escritor(?:a)?\s+', r'novel\s+by\s+'):
+        match = re.search(r'(?i)\b' + marker + r'\b(.{0,120})', text)
+        if not match:
+            continue
+        # No cortar en las iniciales («J. R. R. Tolkien»): sólo cierra la
+        # oración un punto que no sigue a una única letra mayúscula.
+        segment = re.split(r'(?<![A-ZÁÉÍÓÚÑ])[.;]', match.group(1), maxsplit=1)[0]
+        names = re.findall(
+            r'\b(?:[A-ZÁÉÍÓÚÑ]\.|[A-ZÁÉÍÓÚÑ][\wáéíóúüñ\'’\-]+)'
+            r'(?:\s+(?:[A-ZÁÉÍÓÚÑ]\.|[A-ZÁÉÍÓÚÑ][\wáéíóúüñ\'’\-]+)){1,5}', segment)
+        if names:
+            return names[-1].strip()
+    return ''
+
+
+def _verified_web_work(source):
+    """Obra documentada por una introducción Wikipedia verificable.
+
+    Sólo sirve para recordar el orden de las obras ya comentadas. No crea una
+    ficha bibliográfica, no aporta ISBN y no se usa como prueba de contenido.
+    """
+    if (not isinstance(source, dict) or source.get('kind') != 'web'
+            or source.get('source') != 'Wikipedia'
+            or source.get('license') != 'CC-BY-SA-4.0'
+            or source.get('injection_detected') or source.get('conflicts_with')):
+        return {}
+    attribution = source.get('attribution')
+    if not isinstance(attribution, dict):
+        return {}
+    if (attribution.get('authors') != 'Wikipedia contributors'
+            or attribution.get('license_url') != 'https://creativecommons.org/licenses/by-sa/4.0/'
+            or attribution.get('url') != source.get('url')
+            or attribution.get('title') != source.get('title')
+            or not str(attribution.get('revision_id', '')).isdigit()):
+        return {}
+    if 'fragmento del buscador' in normalize_identity(source.get('read_mode', '')):
+        return {}
+    title = str(source.get('work_title') or source.get('title') or '').strip()
+    identity = normalize_identity(source.get('identity_text', ''))
+    token = normalize_identity(title)
+    if (not title or not identity or re.search(r'\b(?:categoria|category|anexo)\b', token)
+            or not re.search(r'(?<!\w)' + re.escape(token) + r'.{0,160}?\b(?:es|fue|era|son)\s+'
+                             r'(?:una?|la|el)\s+(?:novela|libro|obra|saga|serie de novelas)\b', identity)):
+        return {}
+    author = _identity_author(source)
+    if normalize_identity(author) in UNKNOWN_AUTHORS:
+        return {}
+    return {'title': _literal_title(title), 'author': author,
+            'work_id': stable_work_id(title, author), 'source': 'Wikipedia',
+            'url': str(source.get('url') or '')[:1500]}
+
+
+def _history_works(turn):
+    """Restaura las obras de un turno, prefiriendo fichas y luego páginas."""
+    selected = turn.get('context_work')
+    if isinstance(selected, dict) and selected.get('title'):
+        return [selected]
+    works = []
+    for book in turn.get('books') if isinstance(turn.get('books'), list) else []:
+        if isinstance(book, dict) and work_identity(book):
+            works.append(book)
+    if works:
+        return works
+    for source in turn.get('sources') if isinstance(turn.get('sources'), list) else []:
+        work = _verified_web_work(source)
+        if not work:
+            continue
+        if any(same_work(work, previous) or (
+                normalize_identity(work['title']) == normalize_identity(previous['title'])
+                and same_author_name(work['author'], previous['author']))
+               for previous in works):
+            continue
+        works.append(work)
+    return works
+
+
+def _ordinal_works(lists, index, *, returning):
+    """Resuelve un ordinal sin confundir una lista con el orden del chat."""
+    if returning and index == 0 and lists:
+        # «Volvamos al primer libro» retorna al primer título comentado, salvo
+        # que el último turno haya presentado una lista con varias opciones.
+        if len(lists[-1]) > 1:
+            return [lists[-1][0]]
+        first = []
+        for books in lists:
+            for book in books:
+                if not any(same_work(book, previous) for previous in first):
+                    first.append(book)
+        if first:
+            return [first[0]]
+    for books in reversed(lists):
+        if len(books) > index:
+            return [books[index]]
+    flat = []
+    for books in lists:
+        for book in books:
+            if not any(same_work(book, previous) for previous in flat):
+                flat.append(book)
+    return [flat[index]] if len(flat) > index else []
+
+
 def resolve_followup_context(message, history):
     """Resuelve referencias solo sobre turnos aceptados y obras recibidas."""
     message = str(message or '')
@@ -348,9 +486,12 @@ def resolve_followup_context(message, history):
         r'(?:\w+\s+){0,2}(?:parecid[oa]s?|similar(?:es)?)\b', value))
     relation = 'same_author' if same_author else 'similar' if similar else ''
     turns = [turn for turn in history if isinstance(turn, dict) and turn.get('accepted', True) is True] if isinstance(history, list) else []
-    lists = [[book for book in turn.get('books', []) if isinstance(book, dict) and work_identity(book)]
-             for turn in turns]
-    known_titles = {title for books in lists for book in books
+    lists = [_history_works(turn) for turn in turns]
+    from .literary_research import is_topic_recommendation
+    selection_lists = [_history_works({**turn, 'context_work': None})
+                       if turn.get('intent') == 'recommend' or is_topic_recommendation(turn.get('question', ''))
+                       else books for turn, books in zip(turns, lists)]
+    known_titles = {title for books in selection_lists for book in books
                     for title in _titles(work_identity(book))}
     # Corrección explícita: «no, el otro libro». Se resuelve sólo si hay una
     # obra activa y otra distinta en la lista inmediatamente anterior; con dos
@@ -387,13 +528,15 @@ def resolve_followup_context(message, history):
         index = {'primero': 0, 'primer': 0, 'primera': 0, 'segundo': 1, 'segunda': 1,
                  'tercero': 2, 'tercer': 2, 'tercera': 2, 'cuarto': 3, 'cuarta': 3,
                  'quinto': 4, 'quinta': 4}[ordinal.group(1)]
-        for books in reversed(lists):
-            if len(books) > index:
-                return {**result, 'books': [books[index]], 'reason': relation or 'ordinal'}
+        returning = bool(re.search(r'\b(?:volvamos|volver|regresemos|retomemos|'
+                                   r'vuelve|regresa|retoma)\b', value))
+        selected = _ordinal_works(selection_lists, index, returning=returning)
+        if selected:
+            return {**result, 'books': selected, 'reason': relation or 'ordinal'}
         return result
     # Un título explícito conocido cambia la obra activa aunque haya otra más reciente.
     named = []
-    for books in reversed(lists):
+    for books in reversed(selection_lists):
         for book in books:
             titles = _titles(work_identity(book))
             matches = [title for title in titles if len(title) >= 4
@@ -438,12 +581,13 @@ def resolve_followup_context(message, history):
         for books in reversed(lists):
             if not books:
                 continue
-            authors = {normalize_identity(work_identity(book)['author']) for book in books}
+            authors = {normalize_identity(work_identity(book).get('author')) for book in books}
             if len(books) == 1 or (relation == 'same_author' and len(authors) == 1):
                 return {**result, 'books': books, 'reason': relation}
             return {**result, 'ambiguous': True, 'reason': relation}
         return {**result, 'reason': relation}
-    referential = bool(re.search(r'\b(?:sus|su|ese|esa|este|esta|el mismo|la misma|y sus|y que|y quien|que sucede con|que paso con|que pasa con|quien es)\b', value))
+    referential = bool(re.search(r'\b(?:sus|su|ese|esa|este|esta|el mismo|la misma|y sus|y que|y quien|que sucede con|que paso con|que pasa con|quien es|'
+                                r'quien (?:debia|debe|acompana|destruye|ayuda|protege|salva))\b', value))
     short_continuation = bool(re.match(r'^(?:y )?(?:los |las )?(?:personajes|protagonistas|final|trama|argumento)\b', value))
     if not (referential or short_continuation):
         return result

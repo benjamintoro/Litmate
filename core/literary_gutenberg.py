@@ -158,7 +158,8 @@ def import_catalog(path, *, state_database, memory_database, source_url=CATALOG_
         raise ValueError('El catálogo cambió; utiliza otro nombre de archivo para su nueva versión.')
     skip = previous['records'] if previous else 0
     report = {'provider': 'gutenberg', 'dry_run': dry_run, 'accepted': 0, 'scanned': 0,
-              'filtered': 0, 'rejected': 0, 'inserted': 0, 'duplicates': 0, 'complete': False,
+              'filtered': 0, 'rejected': 0, 'inserted': 0, 'updated': 0, 'stale': 0,
+              'duplicates': 0, 'complete': False,
               'offset_before': skip, 'offset_after': skip, 'sha256': digest}
     writable = _connect(state_database, write=True) if not dry_run else None
     try:
@@ -192,10 +193,10 @@ def import_catalog(path, *, state_database, memory_database, source_url=CATALOG_
                     inserted = None
                     with writable:
                         if record:
-                            inserted = _put(writable, record)
+                            inserted = _put(writable, record, with_status=True)
                         _checkpoint(writable, dataset, 'gutenberg', source_url, digest, number, number, False)
                     if inserted is not None:
-                        report['inserted' if inserted else 'duplicates'] += 1
+                        report[inserted] += 1
             else:
                 report['complete'] = True
         if signature != (path.stat().st_size, path.stat().st_mtime_ns):

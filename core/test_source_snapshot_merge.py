@@ -39,6 +39,15 @@ class SourceSnapshotMergeTests(SimpleTestCase):
                 self.assertEqual(merged[0]['description'], FACT['evidence'])
                 self.assertEqual(merged[0]['character_facts'], [FACT])
 
+    def test_promoted_character_snapshot_keeps_the_introduction_as_narrative_context(self):
+        intro = deepcopy(INTRO)
+        intro['description'] = (TITLE + ' narra el viaje de Rafael para destruir el mapa. '
+                                'El enemigo que lo persigue es el señor oscuro Sauron.')
+        merged = canonical_sources([intro, snapshot()])[0]
+        self.assertEqual(merged['description'], FACT['evidence'])
+        self.assertEqual(merged['narrative_context'], intro['description'])
+        self.assertEqual(merged['character_facts'], [FACT])
+
     def test_description_facts_and_extraction_metadata_form_one_snapshot(self):
         old, fresh = deepcopy(INTRO), snapshot()
         old.update(extraction_method='introduction_only', fact_ids=['old-intro'])

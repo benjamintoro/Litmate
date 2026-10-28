@@ -1,0 +1,27 @@
+Using existing test database for alias 'default'...
+.............................F.......F.................
+======================================================================
+FAIL: test_conflicting_kinship_sources_are_not_silently_selected_by_order (core.test_character_quality_regression.CharacterEvidenceRegressionTests.test_conflicting_kinship_sources_are_not_silently_selected_by_order)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\Proyecto\Litmate\core\test_character_quality_regression.py", line 370, in test_conflicting_kinship_sources_are_not_silently_selected_by_order
+    self.assertTrue(result is None or result.status != 'answered',
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    'Una contradicción explícita de parentesco exige investigar o reconocer incertidumbre.')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : Una contradicción explícita de parentesco exige investigar o reconocer incertidumbre.
+
+======================================================================
+FAIL: test_same_title_with_a_different_author_does_not_establish_work_identity (core.test_character_quality_regression.CharacterEvidenceRegressionTests.test_same_title_with_a_different_author_does_not_establish_work_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\Proyecto\Litmate\core\test_character_quality_regression.py", line 333, in test_same_title_with_a_different_author_does_not_establish_work_identity
+    self.assertTrue(result is None or result.status != 'answered')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 55 tests in 2.270s
+
+FAILED (failures=2)
+Preserving test database for alias 'default'...

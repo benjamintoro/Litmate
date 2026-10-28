@@ -58,13 +58,18 @@ class CharacterContextResolutionTests(SimpleTestCase):
         self.assertEqual([normalize_identity(name) for name in request['names']],
                          ['rafael de la vega', 'clara'])
 
-    def test_character_object_relation_stays_literary_when_object_evidence_is_missing(self):
-        request = request_for('¿Qué relación tiene ese antagonista con el mapa?', history(
+    def test_character_object_relation_uses_the_literal_role_not_the_generated_answer(self):
+        question = '¿Qué relación tiene ese antagonista con el mapa?'
+        request = request_for(question, history(
             '¿Quién es el antagonista?', '**Vera**: Es la antagonista que intenta recuperar el mapa.'))
         self.assertIsNotNone(request)
-        self.assertEqual(request['task'], 'relationship')
-        self.assertTrue(request['ambiguous'])
+        self.assertEqual(request['task'], 'object_relation')
+        self.assertFalse(request['ambiguous'])
         self.assertEqual(request['title'], BOOK['title'])
+        from .ai_character_answers import object_relation_answer
+        result = object_relation_answer(question, request, [deepcopy(PAGE)])
+        self.assertIsNotNone(result)
+        self.assertIn('recuperar el mapa', result.text)
 
     def test_generated_answer_alone_cannot_prove_the_referred_antagonist(self):
         page = deepcopy(PAGE)

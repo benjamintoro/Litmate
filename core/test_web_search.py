@@ -387,23 +387,23 @@ class WebOnlyAssistantTests(SimpleTestCase):
             quality_checks=True, require_book_sources=True, allow_web_only=True,
             research_enabled=True, fast_recommendations=True), contexts
 
-    def test_web_only_answer_is_cited_and_still_passes_strict_auditing(self):
+    def test_web_articles_alone_cannot_replace_recommended_books(self):
         bot, contexts = self.build()
         with patch('core.literary_knowledge.search_knowledge', return_value=[]):
             result = bot.reply('recomiendame libros sobre la revolucion francesa')
-        self.assertEqual(result.status, 'answered', result.diagnostics)
+        # Article-only recommendation was the old policy and caused the card
+        # regression. An empty catalogue must now remain an honest limitation.
+        self.assertEqual(result.status, 'clarification', result.diagnostics)
         self.assertEqual(result.books, [])
-        self.assertEqual(result.diagnostics['claim_checks'], 1)
-        self.assertIn('https://example.org/revolucion', result.text)
-        self.assertTrue(contexts[0]['allow_web_only_recommendations'])
-        self.assertTrue(contexts[0]['all_factual_claims_required'])
+        self.assertTrue(result.diagnostics['book_sources_missing'])
+        self.assertEqual(contexts, [])  # No pointless answer/audit/repair cycle.
 
     def test_web_sources_never_authorize_invented_book_cards(self):
         bot, _ = self.build(invented=True)
         with patch('core.literary_knowledge.search_knowledge', return_value=[]):
             result = bot.reply('recomiendame libros sobre la revolucion francesa')
-        self.assertEqual(result.status, 'answered', result.diagnostics)
-        self.assertTrue(result.diagnostics['web_reference_fallback'])
+        self.assertEqual(result.status, 'clarification', result.diagnostics)
+        self.assertTrue(result.diagnostics['book_sources_missing'])
         self.assertEqual(result.books, [])
         self.assertNotIn('Libro inventado', result.text)
 

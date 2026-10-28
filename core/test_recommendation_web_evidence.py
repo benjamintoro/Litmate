@@ -75,7 +75,7 @@ class SourceEvidenceLLM(FakeLLM):
             citations.append(evidence[0]['web_source_id'])
             detail = SUMMARY
         else:
-            detail = 'Una opción para explorar el espacio y la ciencia ficción.'
+            detail = ''
         return {'status': 'answer', 'basis': 'sources',
                 'text': f'1. **{book["title"]} — {book["author"]}**: {detail}',
                 'citations': citations, 'needs_web': self.needs_web and stage == 'answer',

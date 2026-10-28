@@ -227,9 +227,34 @@ def search_openlibrary(query, *, details=True):
 def _openlibrary_description(value):
     value = value.get('value') if isinstance(value, dict) else value
     value = clean_text(value, 1600) if isinstance(value, str) else ''
-    return '' if normalized(value).strip(' .') in {
+    text = normalized(value)
+    if text.strip(' .') in {
         'publisher description', 'no description available',
-        'sin descripcion', 'sin descripcion disponible'} else value
+        'sin descripcion', 'sin descripcion disponible'}:
+        return ''
+    # Some work records put an ISBD physical extent in description. A count,
+    # dimensions and illustration abbreviations are metadata, not a synopsis.
+    # Reject only a complete physical statement; numbers inside prose and
+    # genuinely short descriptions remain valid.
+    units = {'p', 'pp', 'pag', 'pags', 'pagina', 'paginas', 'page', 'pages',
+             'h', 'hoja', 'hojas', 'leaf', 'leaves', 'v', 'vol', 'vols',
+             'volume', 'volumes', 'tomo', 'tomos', 'cm', 'mm', 'in', 'inch', 'inches'}
+    attributes = {'ill', 'il', 'ilus', 'illustration', 'illustrations', 'ilustraciones',
+                  'map', 'maps', 'mapa', 'mapas', 'col', 'color', 'coloured', 'colored',
+                  'port', 'ports', 'portrait', 'portraits', 'retrato', 'retratos',
+                  'plate', 'plates', 'lam', 'laminas', 'table', 'tables', 'tabla', 'tablas',
+                  'diag', 'diags', 'diagram', 'diagrams', 'facs', 'facsims', 'fold'}
+    tokens = re.findall(r'[^\W\d_]+|\d+(?:[.,]\d+)?|[^\w\s]', text)
+    roman = re.compile(r'(?=[mdclxvi]+$)m{0,3}(?:cm|cd|d?c{0,3})'
+                       r'(?:xc|xl|l?x{0,3})(?:ix|iv|v?i{0,3})')
+    def quantity(token):
+        return bool(re.fullmatch(r'\d+(?:[.,]\d+)?', token)
+                    or (token not in units and roman.fullmatch(token)))
+    if (units.intersection(tokens) and any(quantity(token) for token in tokens)
+            and all(token in units | attributes | {'.', ',', ':', ';', '(', ')', '[', ']', '+', '-', '/', '×'}
+                    or quantity(token) for token in tokens)):
+        return ''
+    return value
 
 
 def _openlibrary_edition_aliases(source, edition, *, evidence_url):
@@ -442,6 +467,60 @@ def _openlibrary_detail(work_id, *, editions, reads):
             except Exception:
                 pass
         return None
+
+
+def enrich_discovery_book_records(sources):
+    """Añade sinopsis opcionales a dos fichas verificadas, sin rehacer búsquedas.
+
+    El enriquecimiento usa el caché, limitador HTTP y cupo de páginas del
+    recuperador existente. Su presupuesto local deja un margen de publicación
+    al turno padre; fallos o datos ausentes nunca eliminan las fichas obtenidas.
+    No interpreta materias de catálogo como argumento ni consulta URLs ajenas.
+    """
+    if not isinstance(sources, list):
+        return []
+    result = [dict(source) if isinstance(source, dict) else source for source in sources]
+    from .ai_catalog_fallback import _topic_catalogue_origin
+    from .literary_web import public_text_has_injection
+    try:
+        available = budget_timeout(2.25) - .25
+        if available <= 0:
+            return result
+        reads, visited = {'used': 0}, set()
+        with request_budget(time.monotonic() + min(2., available)):
+            for source in result:
+                if (not isinstance(source, dict) or source.get('synopsis')
+                        or source.get('research_summary') or len(visited) >= 2):
+                    continue
+                work_id = str(source.get('book_id', ''))
+                try:
+                    url = urlsplit(source.get('url', ''))
+                    trusted = (_topic_catalogue_origin(source)
+                        and 'Open Library' in str(source.get('source', '')).split(' / ')
+                        and re.fullmatch(r'/works/OL\d+W', work_id)
+                        and url.scheme == 'https' and url.hostname == 'openlibrary.org'
+                        and not url.username and not url.password and not url.port
+                        and not url.query and not url.fragment and url.path.rstrip('/') == work_id)
+                except (TypeError, ValueError):
+                    trusted = False
+                if (not trusted or work_id in visited or public_text_has_injection(
+                        str(source.get('description', '')))):
+                    continue
+                visited.add(work_id)
+                detail = _openlibrary_detail(work_id, editions=False, reads=reads)
+                if not isinstance(detail, dict) or detail.get('key') != work_id:
+                    continue
+                synopsis = _openlibrary_description(detail.get('description'))
+                if not synopsis or public_text_has_injection(synopsis):
+                    continue
+                source.update(synopsis=synopsis, synopsis_source_url=source['url'],
+                    description_source='Open Library, registro de obra',
+                    read_mode='ficha y descripción bibliográfica; no texto de la obra')
+                source['description'] = (str(source.get('description') or '')
+                    + '\nSinopsis del registro bibliográfico: ' + synopsis).strip()
+    except (BudgetExpired, TimeoutError, OSError, ValueError):
+        pass  # La tarjeta original sigue siendo válida aunque falte sinopsis.
+    return result
 
 
 def _search_openlibrary(query, *, details=True):
@@ -1023,6 +1102,15 @@ def _wikipedia_page_rank(page, identity_query, focus):
             rank -= 20
     if _WIKIPEDIA_DERIVATIVE.search(core):
         rank -= 20
+    # A year in the title does not label an adaptation. Prefer the publication
+    # type explicitly declared in the introduction before spending page reads.
+    intro = normalized(page.get('extract', ''))[:900]
+    book_type = re.search(r'\b(?:es|fue|is|was) (?:una?|an?|the) (?:\w+ ){0,3}(?:novela|novel|libro|book|obra literaria)\b', intro)
+    media_type = re.search(r'\b(?:es|fue|is|was) (?:una?|an?|the) (?:\w+ ){0,4}(?:pelicula|cortometraje|film|movie|videojuego)\b', intro)
+    if media_type and (not book_type or media_type.start() < book_type.start()):
+        rank -= 60
+    elif book_type:
+        rank += 20
     return rank
 
 

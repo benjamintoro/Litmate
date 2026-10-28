@@ -406,7 +406,7 @@ class FastChatEndpointTests(TestCase):
         discovery.assert_called_once()
 
     @override_settings(LITMATE_AI_USE_WEB=True)
-    def test_empty_discovery_returns_web_references_without_waiting_for_model(self):
+    def test_empty_recommendation_discovery_does_not_publish_articles_as_books(self):
         web_source = {'id': 1, 'title': 'Página pública sobre la Revolución francesa',
                       'author': 'Fuente web', 'description': 'Resumen documentado del tema.',
                       'source': 'DuckDuckGo', 'url': 'https://example.org/revolucion-francesa',
@@ -414,14 +414,22 @@ class FastChatEndpointTests(TestCase):
                       'read_mode': 'pasaje de página pública', 'retrieved_at': ''}
         answer = ChatResult('Referencias web documentadas [1].', 'answered', True,
                             sources=[web_source], basis='sources', intent='recommend')
+        # The old contract explicitly required an article dump. The reader's
+        # recommendation contract now requires verified books or an honest
+        # failure; the existing model/tool route gets a chance to resolve them.
+        assistant = Mock()
+        assistant.reply.return_value = ChatResult('No pude verificar libros con esos filtros.', 'unavailable')
+        provider = SimpleNamespace(usage={}, provider='test', calls=1)
         with patch('core.literary_search.retrieve_discovery_books', return_value=[]), \
-                patch('core.ai_quick_answers.web_reference_answer', return_value=answer), \
-                patch('core.literary_ai_views.build_assistant') as model:
+                patch('core.ai_quick_answers.web_reference_answer', return_value=answer) as references, \
+                patch('core.literary_search.retrieve_web', return_value=[web_source]), \
+                patch('core.literary_ai_views.build_assistant', return_value=(assistant, provider)) as model:
             response = self.post('recomiendame libros sobre la revolucion francesa')
             text = self.text(response)
-        self.assertEqual(response['X-LitMate-Status'], 'answered')
-        self.assertIn('Referencias web documentadas', text)
-        model.assert_not_called()
+        self.assertEqual(response['X-LitMate-Status'], 'unavailable')
+        self.assertNotIn('Referencias web documentadas', text)
+        references.assert_not_called()
+        model.assert_called_once()
 
     def test_exact_quote_without_local_text_asks_for_the_passage_without_inference(self):
         with patch('core.literary_search.retrieve_book_content', return_value=[]), \

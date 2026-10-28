@@ -35,6 +35,7 @@ def request_for(message, history=(), pending_clarification=None):
     # Se mantiene el título original (incluidos sus acentos) al retirar órdenes.
     raw = message.strip(' ¿?¡!.,')
     raw = re.sub(r'(?i)^(?:por favor[ ,]+)', '', raw)
+    raw = re.sub(r'(?i)^ahora\s+(?=(?:h[aá]blame|habla|hablemos|cu[eé]ntame)\b)', '', raw)
     patterns = [
         ('summary', r'(?:(?:necesito|quiero|dame|dime|cu[eé]ntame|expl[ií]came)\s+)?'
          r'(?:sobre\s+)?(?:(?:el|la|un|una)\s+)?'
@@ -48,7 +49,8 @@ def request_for(message, history=(), pending_clarification=None):
          r'de qu[eé] va|qu[eé] cuenta|qu[eé] explica|qu[eé] temas aborda|cu[eé]ntame la historia de|qu[eé] acontecimientos analiza|'
          r'qu[eé] acontecimientos hist[oó]ricos analiza|'
          r'qu[eé] pasa en|qu[eé] sucede en|qu[eé] sucede en la historia de|'
-         r'h[aá]blame de|resume|res[uú]meme|resumen de|sinopsis de)\s*(.*)'),
+         r'h[aá]blame (?:de|del)\s+|habla (?:de|del)\s+|hablemos (?:de|del)\s+|'
+         r'resume|res[uú]meme|resumen de|sinopsis de)\s*(.*)'),
         ('summary', r'(?:c[oó]mo termina)(?:\s+(?:en|el libro|la novela|la obra))?\s*(.*)'),
         ('characters', r'(?:(?:y|dime|dame|describe|enumera|necesito)\s+)?'
          r'(?:(?:qui[eé]nes|cu[aá]les)\s+son\s+)?(?:los |sus |los principales )?'
@@ -102,7 +104,10 @@ def request_for(message, history=(), pending_clarification=None):
         title, author_hint = explicit.group(1), explicit.group(2)
     history = sanitized_history(list(history))
     targets = []
-    deictic = not title or request_text(title) in {
+    ordinal_reference = bool(re.fullmatch(
+        r'(?:(?:el|la) )?(?:primero|primer|primera|segundo|segunda|tercero|tercer|tercera|'
+        r'cuarto|cuarta|quinto|quinta)(?: libro| novela| obra| titulo)?', request_text(title)))
+    deictic = ordinal_reference or not title or request_text(title) in {
         'ese', 'esa', 'este', 'esa obra', 'ese libro', 'el anterior', 'la anterior',
         'la historia', 'el libro', 'este libro', 'la novela', 'esta novela',
         'este ensayo', 'ese ensayo', 'el libro que mencionaste anteriormente',
@@ -141,6 +146,10 @@ def request_for(message, history=(), pending_clarification=None):
             if len(targets) != 1:
                 return {'task': task, 'title': '', 'targets': [], 'ambiguous': len(targets) > 1}
             title = targets[0]['title']
+            # Reader intent with no verified author is a search target only.
+            # Passing it as a book would incorrectly require same_work proof.
+            if targets[0].get('identity_status') == 'reader_request' and not targets[0].get('author'):
+                targets = []
     else:
         for turn in history:
             for book in turn['books']:
@@ -179,6 +188,7 @@ def _has_subtitle(value, title):
 def bound_sources(request, sources):
     """Coincidencia de obra exacta; prefijos de saga/adaptaciones no sirven."""
     from .ai_quick_answers import _is_adaptation_page
+    from .literary_identity import published_title_alias, _identity_author
     sources = canonical_sources(sources, 24)
     title = request['title']
     targets = request['targets']
@@ -209,7 +219,8 @@ def bound_sources(request, sources):
         # Sólo un artículo de la obra con título exacto y autor comprobado
         # permite resolver ese conflicto; el orden del catálogo no lo permite.
         supported = [book for book in books if any(page.get('source') == 'Wikipedia'
-            and normalize_identity(page.get('title')) == normalize_identity(title)
+            and (normalize_identity(page.get('title')) == normalize_identity(title)
+                 or published_title_alias(page, title))
             and same_work(page, book) for page in sources if usable_page(page))]
         if len({normalize_identity(book['author']) for book in supported}) == 1:
             books = supported
@@ -232,8 +243,8 @@ def bound_sources(request, sources):
         # otros documentos aunque compartan todas las palabras de la búsqueda.
         page_title = _title(page['title'])
         explicit_title = (page_title == _title(title) or _has_subtitle(page['title'], title)
-                          or appendix_page(page))
-        if not explicit_title and not any(same_work(page, book) for book in books):
+                          or appendix_page(page) or published_title_alias(page, title))
+        if not explicit_title and not any(same_work(page, book) for book in [*books, *targets]):
             continue
         identity = normalize_identity(page.get('identity_text', ''))
         if (request.get('author_hint') and normalize_identity(request['author_hint']) not in identity
@@ -267,7 +278,9 @@ def bound_sources(request, sources):
             # La atribución conserva el título realmente publicado, no el título
             # auxiliar utilizado para comprobar una desambiguación por autor.
             page = {**page, 'title': published_title}
-        elif not ((appendix_page(page) or len(title.split()) >= 2) and re.search(
+        elif not ((appendix_page(page) or len(title.split()) >= 2
+                   or any(same_work(page, target) for target in targets)
+                   or (published_title_alias(page, title) and _identity_author(page))) and re.search(
                 r'\b(?:novela|libro|obra|ensayo|novel|book|historia)\b', identity)):
             continue
         pages.append(page)
@@ -281,10 +294,27 @@ def bound_sources(request, sources):
 
 def _content(source):
     if source['kind'] == 'book':
-        if source.get('policy') == 'openlibrary-minimal-metadata-v1':
+        # Una ficha mínima/temática no demuestra el argumento del libro.
+        # Las descripciones enriquecidas se aceptan solo con procedencia
+        # bibliográfica o vínculo a la página de la que se recuperaron.
+        if source.get('policy') == 'openlibrary-minimal-metadata-v1' and not (
+                source.get('synopsis') and source.get('description_source') or
+                source.get('research_summary') and source.get('synopsis_source_url')):
             return ''
-        return source.get('synopsis', '') or (source.get('description', '')
-            if source.get('source') == 'Conocimiento literario local' else '')
+        synopsis = source.get('synopsis')
+        if isinstance(synopsis, str) and synopsis.strip():
+            return synopsis
+        research = source.get('research_summary')
+        if (isinstance(research, str) and research.strip()
+                and source.get('synopsis_source_url')):
+            return research
+        if source.get('source') == 'Conocimiento literario local':
+            return source.get('description', '')
+        if source.get('description_source') and set(str(source.get('source') or '').split(' / ')) & {
+                'Open Library', 'Google Books API', 'Catálogo LitMate'}:
+            from .books_google import source_synopsis
+            return source_synopsis(source)
+        return ''
     text = source.get('description', '')
     # Las páginas editoriales suelen continuar con la biografía y otras
     # publicaciones del autor. Ese bloque no describe el libro consultado.
@@ -373,6 +403,13 @@ def direct_answer(message, request, sources):
             continue  # Las descripciones editoriales se parafrasean, no se copian.
         if request['task'] == 'summary':
             lines = _sentences(source)
+            goal = request.get('required_goal')
+            if goal:
+                # A mission is not evidence that the action was completed.
+                # Keep the entire literal sentence and the existing audit.
+                pattern = r'\b(?:para|debe|debia|tiene que|tenia que) ' + re.escape(goal) + r'(?!\w)'
+                lines = [line for line in lines if re.search(pattern, normalize_identity(line))
+                         and not re.search(r'\b(?:no|nunca|jamas)\b', normalize_identity(line))]
         else:
             lines = []
             for fact in source.get('character_facts', []):
@@ -419,6 +456,30 @@ def direct_answer(message, request, sources):
         # la página o la sinopsis de la que salieron las oraciones.
         return _publish(message, request, sources, text, audit)
     return None
+
+
+def goal_answer(message, history):
+    """Reuse an already accepted passage for a narrow question about a goal.
+
+    No research, generated facts or subject guessed from a keyword. The answer
+    is the full attributed sentence, audited through direct_answer as usual.
+    Other tenses and missing/ambiguous evidence use the existing pipeline.
+    """
+    if not isinstance(message, str) or has_excerpt(message) or obvious_rejection(message):
+        return None
+    value = normalize_identity(message)
+    match = re.fullmatch(r'quien (?:debe|debia|tiene que|tenia que) (.{5,180})', value)
+    if not match:
+        return None
+    request = request_for('Dime la trama de ese libro', history)
+    if not request or not request.get('title') or request.get('ambiguous'):
+        return None
+    request['required_goal'] = match.group(1)
+    sources = [source for turn in sanitized_history(list(history)) for source in turn['sources']]
+    result = direct_answer(message, request, sources)
+    if result:
+        result.diagnostics['local_goal_answer'] = True
+    return result
 
 
 def retrieve_sources(message, request, history):
@@ -666,8 +727,19 @@ def synthesize_answer(message, request, sources, config, *, trace=None):
     from .literary_ai import build_assistant, ProviderUnavailable
     from .literary_quality import AUDIT_PROMPT, validate_audit, unsupported_century_claim
     from .literary_evidence import validate_evidence
-    sources = [{**source, 'description': _content(source)} if source['kind'] == 'web'
-               else source for source in sources]
+    # El enriquecimiento puede entregar un resumen en research_summary y
+    # mantener description como metadatos. El auditor valida narrative_context,
+    # pero antes ese resumen no llegaba a ese campo ni se podía citar.
+    prepared_sources = []
+    for source in sources:
+        content = _content(source)
+        if source['kind'] == 'web':
+            prepared_sources.append({**source, 'description': content})
+        elif source['kind'] == 'book' and content and content != source.get('description', ''):
+            prepared_sources.append({**source, 'narrative_context': content})
+        else:
+            prepared_sources.append(source)
+    sources = prepared_sources
     assistant, client = build_assistant(config, search=lambda query: [], web_search=lambda query: [])
     kind = work_type(sources)
     resolved_message = (f'Explica el contenido, los temas y el enfoque documentados de {request["title"]}. '

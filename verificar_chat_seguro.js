@@ -146,6 +146,19 @@ async function clientRequest(file, status = 200, books = []) {
         nodes['floating-chat-trigger'].handlers.click(event);
         check(descendants(nodes[bodyId]).filter(node => node.className === 'lm-chat-book-card').length === cards.length, file + ': conserva tarjetas al reabrir');
     }
+    if (cards.length) {
+        const select = descendants(cards[0]).find(node => node.tagName === 'BUTTON');
+        check(select && select.type === 'button', file + ': selección de ficha accesible sin submit accidental');
+        nodes[sendId].disabled = true;
+        await select.handlers.click(event);
+        check(calls.filter(call => call.url === '/chatbot_query/').length === 1,
+            file + ': no selecciona tarjetas durante otro envío');
+        nodes[sendId].disabled = false;
+        await select.handlers.click(event);
+        const selectedCalls = calls.filter(call => call.url === '/chatbot_query/');
+        check(selectedCalls.length === 2 && JSON.parse(selectedCalls[1].options.body).message ===
+            'Háblame de Dune del autor Frank Herbert', file + ': selección conserva título y autor en el flujo habitual');
+    }
 }
 
 async function main() {
@@ -241,6 +254,62 @@ async function main() {
     const noSynopsisHost = new MockNode();
     Safe.renderBookCards(noSynopsisHost, [{ ...CARD, synopsis: '' }]);
     check(!descendants(noSynopsisHost).some(node => node.className === 'lm-chat-book-synopsis'), 'no inventa copy de sinopsis ausente');
+
+    const catalogueLinks = Safe.normalizeBooks([{ ...CARD, links: [
+        { label: 'Open Library', url: 'https://openlibrary.org/works/OL123W' },
+        { label: 'Wikidata', url: 'https://www.wikidata.org/wiki/Q123' },
+        { label: 'Open Library', url: 'https://openlibrary.org.evil.example/works/OL123W' },
+        { label: 'Amazon', url: 'https://openlibrary.org/works/OL456W' }
+    ] }])[0].links;
+    check(catalogueLinks.length === 2 && catalogueLinks.map(link => link.label).join(',') === 'Open Library,Wikidata',
+        'catálogos oficiales sobreviven al filtro sin aceptar dominios parecidos o etiquetas falsas');
+    const searchHost = new MockNode();
+    Safe.renderBookCards(searchHost, [{ ...CARD, links: [
+        ...CARD.links,
+        { label: 'Google Books', url: 'https://books.google.com/books?q=Dune+Frank+Herbert' }
+    ] }]);
+    const searchButtons = descendants(searchHost).filter(node => node.tagName === 'A');
+    check(searchButtons.some(node => node.textContent === 'Buscar en Amazon') &&
+        searchButtons.some(node => node.textContent === 'Buscar en Buscalibre'), 'búsquedas comerciales identificadas, sin afirmar productos');
+    const googleSearchHost = new MockNode();
+    Safe.renderBookCards(googleSearchHost, [{ ...CARD, links: [
+        { label: 'Google Books', url: 'https://books.google.com/books?q=Dune+Frank+Herbert' }
+    ] }]);
+    check(descendants(googleSearchHost).some(node => node.tagName === 'A' && node.textContent === 'Buscar en Google Books'),
+        'búsqueda Google Books identificada frente a una ficha concreta');
+    let selectedCard;
+    const selectableHost = new MockNode();
+    Safe.renderBookCards(selectableHost, [CARD], { onSelect: book => { selectedCard = book; } });
+    const titleButton = descendants(selectableHost).find(node => node.tagName === 'BUTTON');
+    check(titleButton && titleButton.textContent === CARD.title && titleButton.type === 'button', 'título seleccionable mantiene el texto y un botón nativo');
+    check(!selectedCard, 'mostrar recomendaciones no selecciona una obra por sí solo');
+    titleButton.handlers.click();
+    check(selectedCard.title === CARD.title && selectedCard.author === CARD.author, 'callback de selección recibe identidad bibliográfica');
+    const sourcedMessage = new MockNode();
+    const bibliography = '**Una lectura** para explorar.\n\nFuentes de las fichas:\n' +
+        'https://openlibrary.org/works/OL123W\nhttps://books.google.com/books?id=abc';
+    Safe.renderMessage(sourcedMessage, bibliography);
+    check(sourcedMessage.innerHTML.includes('<details') &&
+        sourcedMessage.innerHTML.includes('<summary>Fuentes de las fichas</summary>') &&
+        sourcedMessage.innerHTML.includes('<strong>Una lectura</strong>'), 'pie bibliográfico inequívoco queda plegable sin ocultar la respuesta');
+    check((sourcedMessage.innerHTML.match(/rel="noopener noreferrer"/g) || []).length === 2,
+        'fuentes plegables mantienen enlaces externos seguros');
+    Safe.renderMessage(sourcedMessage, bibliography);
+    check((sourcedMessage.innerHTML.match(/<details/g) || []).length === 1,
+        'redibujar un mensaje durante SSE no duplica su sección de fuentes');
+    Safe.renderMessage(sourcedMessage, bibliography + '\nLa evidencia no confirma la trama.');
+    check(!sourcedMessage.innerHTML.includes('<details') && sourcedMessage.innerHTML.includes('no confirma la trama'),
+        'un aviso o explicación tras las URLs nunca se oculta como bibliografía');
+    Safe.renderMessage(sourcedMessage, '**Resultado**\n\nFuentes de las fichas:\nhttps://example.org/\" onclick=\"alert(1)');
+    check(!sourcedMessage.innerHTML.includes('<details') && !/<a\b[^>]*\sonclick=/i.test(sourcedMessage.innerHTML),
+        'URL bibliográfica insegura no se convierte en sección plegable ni HTML activo');
+    Safe.renderMessage(sourcedMessage, '**Resultado**\n\nFuentes de las fichas:\njavascript:alert(1)');
+    check(!sourcedMessage.innerHTML.includes('<details') && !sourcedMessage.innerHTML.includes('href="javascript:'),
+        'fuente de esquema inseguro queda como texto, sin ejecución');
+    Safe.renderMessage(sourcedMessage, '**Resultado**\n\nFuentes de las fichas:\nhttps://');
+    check(!sourcedMessage.innerHTML.includes('<details'), 'URL incompleta de un stream permanece visible hasta ser válida');
+    Safe.renderMessage(sourcedMessage, bibliography);
+    check((sourcedMessage.innerHTML.match(/<details/g) || []).length === 1, 'finalizar el stream conserva un único pie bibliográfico');
     delete global.document;
 
     const typeClock = clock(), textNode = new MockNode();

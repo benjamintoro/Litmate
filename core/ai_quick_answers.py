@@ -22,6 +22,11 @@ from .literary_language import request_text
 REFERENCE_PREFIX = 'Encontré estas referencias relacionadas con tu consulta:\n\n'
 REFERENCE_SUFFIX = ('\n\nSon pasajes atribuidos a sus fuentes, no fichas bibliográficas ni una verificación '
                     'independiente de todos sus datos. No puedo confirmar con ellos todas las partes de tu consulta.')
+# Una sinopsis o un análisis no es una lista de referencias: la envoltura debe
+# presentar la respuesta parcial con naturalidad sin prometer una ficha.
+SUMMARY_PREFIX = 'Esto es lo que dicen las fuentes consultadas:\n\n'
+SUMMARY_SUFFIX = ('\n\nLos pasajes son literales y están atribuidos a sus fuentes; no sustituyen la lectura '
+                  'de la obra ni confirman por sí solos todos sus datos.')
 
 
 @lru_cache(maxsize=1)
@@ -58,6 +63,15 @@ def quick_knowledge_sources(query, maximum=8):
     try:
         with measure_stage('knowledge_lookup'):
             books, sources = retrieve_evidence(query, limit=maximum)
+            # Wikipedia snapshots are web evidence; their work identity lives
+            # in memory_works, not in an additional catalogue source row.
+            # Keep that returned identity or scoped character/plot evidence
+            # becomes unusable despite having passed storage validation.
+            for book in books:
+                if (any(same_work(source, book) for source in sources)
+                        and not any(source.get('kind') == 'book' and same_work(source, book)
+                                    for source in [*local, *sources])):
+                    local.append(book)
             # No fusionar una redacción original con la URL de otra ficha.
             # Los metadatos mínimos no desplazan una sinopsis ya revisada.
             protected = [s for s in local if s.get('kind') == 'book'] + list(_bundled())
@@ -189,8 +203,14 @@ def _simple_topic_request(message, query):
     # Elimina únicamente materias reconocidas y palabras de petición. Un
     # subtema no cubierto («submarinos», «frente oriental») conserva el flujo normal.
     residue = request_text(query)
+    # Match every facet against the original query. Removing an overlapping
+    # subject first can destroy a longer geographical phrase from the same
+    # dictionary ("history of ..."), falsely leaving an unknown restriction.
+    covered = set()
     for row in (*profile['subjects'], *profile['places']):
-        residue = re.sub(row[1], ' ', residue)
+        for match in re.finditer(row[1], residue):
+            covered.update(range(match.start(), match.end()))
+    residue = ''.join(' ' if index in covered else char for index, char in enumerate(residue))
     residue = re.sub(r'\b(?:en|idioma) (?:espanol|castellano|ingles|frances|aleman|portugues|japones)\b', ' ', residue)
     allowed = set('hola por favor recomiendame recomienda recomiendas recomendas recomendarme '
                   'recomendar recomendarias recomendases sugiereme sugieres sugeris que puedo podria '
@@ -582,6 +602,13 @@ def _contextual_reference_sources(message, sources, history):
         context = request_for('Dime la trama de ese libro', history)
         if context and context.get('ambiguous'):
             return []
+    elif history:
+        from .literary_identity import resolve_followup_context
+        reference = resolve_followup_context(message, list(history))
+        if len(reference['books']) == 1 and not reference['ambiguous']:
+            book = reference['books'][0]
+            context = {'task': 'characters', 'title': book['title'],
+                       'targets': [book] if book.get('author') else [], 'ambiguous': False}
     if not context or not context.get('title'):
         return sources
     known_books = [book for turn in sanitized_history(list(history)) for book in turn['books']]
@@ -699,7 +726,10 @@ def reference_answer(message, sources, *, query=None, intent='recommend', limit=
         validate_audit(audit, plan, draft, sources, message, strict_facts=True)
     except (ValueError, TypeError):
         return None
-    draft['text'] = (REFERENCE_PREFIX + draft['text'] + REFERENCE_SUFFIX)
+    if intent in {'summary', 'analysis'}:
+        draft['text'] = (SUMMARY_PREFIX + draft['text'] + SUMMARY_SUFFIX)
+    else:
+        draft['text'] = (REFERENCE_PREFIX + draft['text'] + REFERENCE_SUFFIX)
     return LiteraryAssistant._publish(draft, sources, intent,
         {'web_reference_quick_answer': True, 'partial_answer': True, 'reference_audit': audit})
 

@@ -309,7 +309,9 @@ def remember_topic(state, message, context=None, *, now=None):
         identity = frozenset(_topic_words(subject))
         recent = [topic for topic in recent if frozenset(_topic_words(topic['subject'])) != identity]
         recent.append(state['topic'])
-        state.pop('active_work', None)
+        # The recommendation topic is independent of the reader's selected
+        # work. reset_work_context limits retrieval for this request; it must
+        # not erase the work that the reader can return to afterwards.
     elif (isinstance(context, dict) and context.get('explicit_change')) or not _current_topic(state, now):
         state.pop('topic', None)
     if recent:

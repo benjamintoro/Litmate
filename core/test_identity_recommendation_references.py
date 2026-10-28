@@ -16,6 +16,22 @@ def history(*lists):
     return [{'accepted': True, 'books': books, 'sources': []} for books in lists]
 
 
+def web_work(title, author):
+    from urllib.parse import quote
+    url = 'https://es.wikipedia.org/wiki/' + quote(title.replace(' ', '_'))
+    identity = title + ' es una novela escrita por ' + author + '.'
+    return {'kind': 'web', 'title': title, 'author': 'Fuente web', 'source': 'Wikipedia',
+            'url': url, 'description': identity, 'identity_text': identity,
+            'license': 'CC-BY-SA-4.0', 'read_mode': 'extracto de introducción',
+            'attribution': {'authors': 'Wikipedia contributors', 'title': title, 'url': url,
+                            'revision_id': '12345',
+                            'license_url': 'https://creativecommons.org/licenses/by-sa/4.0/'}}
+
+
+def web_history(*works):
+    return [{'accepted': True, 'books': [], 'sources': [work]} for work in works]
+
+
 class RecommendationReferenceTests(SimpleTestCase):
     def test_other_book_from_same_author_keeps_only_accepted_active_identity(self):
         for message in ('Otro del mismo autor', 'Recomiéndame libros de ese autor',
@@ -117,3 +133,25 @@ class RecommendationReferenceTests(SimpleTestCase):
         result = resolve_followup_context('Háblame del segundo', history([DUNE, PAPELUCHO]))
         self.assertEqual(result['books'], [PAPELUCHO])
         self.assertEqual(result['reason'], 'ordinal')
+
+    def test_web_only_history_restores_the_order_of_works_for_ordinals(self):
+        lotr = web_work('El Señor de los Anillos', 'J. R. R. Tolkien')
+        harry = web_work('Harry Potter y la piedra filosofal', 'J. K. Rowling')
+        turns = web_history(lotr, harry)
+        result = resolve_followup_context(
+            'Volvamos al primer libro. ¿Quién debía destruir el Anillo?', turns)
+        self.assertEqual([book['title'] for book in result['books']],
+                         ['El Señor de los Anillos'])
+        self.assertEqual(result['reason'], 'ordinal')
+        self.assertFalse(result['ambiguous'])
+        result = resolve_followup_context('Háblame del segundo', turns)
+        self.assertEqual([book['title'] for book in result['books']],
+                         ['Harry Potter y la piedra filosofal'])
+
+    def test_a_character_profile_is_not_mistaken_for_the_history_work(self):
+        snape = web_work('Severus Snape', 'J. K. Rowling')
+        snape['identity_text'] = ('Severus Snape es un personaje ficticio de la serie de novelas '
+                                  'Harry Potter de J. K. Rowling.')
+        snape['description'] = snape['identity_text']
+        result = resolve_followup_context('Háblame del primero', web_history(snape))
+        self.assertEqual(result['books'], [])

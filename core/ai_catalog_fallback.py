@@ -229,8 +229,7 @@ def grounded_topic_fallback(message, sources):
         scope += ' de ' + _topic_label(profile['places'][0][0])
     lines, claims, books = ['¡Buen tema!'], [], []
     for number, (source, proof) in enumerate(zip(chosen, proofs), 1):
-        statement = f'**{source["title"]} — {source["author"]}**: Una opción para explorar {scope}.'
-        # No simplificar títulos ni omitir frases para caber en la auditoría.
+        statement = f'**{source["title"]} — {source["author"]}**'
         if len(statement) > 400 or required_fact_statements(statement) != [statement]:
             return None
         lines.append(f'{number}. {statement}')

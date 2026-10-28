@@ -1030,3 +1030,133 @@ analizador sólo comprobaba términos obligatorios y prohibidos.
 6. Evaluar una segunda reparación acotada para respuestas largas: hoy una
    respuesta con datos concretos no respaldados puede terminar en
    `unavailable` en lugar de una versión corregida.
+
+## Corrección de protagonista (2026-10-27)
+
+- Función modificada: `_facts` en `core/ai_character_answers.py` (extracción de roles desde descripciones cuando no hay `character_facts`), y `answer_from_sources` (fallback a fuentes web con rol narrativo explícito).
+- Prueba: `core.test_protagonist_from_description` (2 tests OK).
+- Resultado: protagonista se resuelve desde evidencia bibliográfica verificada; sin evidencia, no se inventa.
+## Corrección de seguimiento (2026-10-27)
+
+- Problema 3 corregido: "busca nuevamente" reutiliza la consulta original pendiente.
+- Archivos modificados: core/literary_ai_views.py.
+- Prueba: core.test_retry_followup OK.
+- Problemas 1 y 2 (sinopsis/tramas) pendientes de investigación más profunda.
+## Corrección definitiva (intento) — 2026-10-27
+
+- Reproducción HTTP/SSE confirmó pérdida de contexto.
+- Causa raíz no aislada en este lote (historial persistido no instrumentado).
+- No se aplicaron cambios de memoria no verificados.
+- Próxima acción: instrumentar history/active_work en el endpoint y repetir.
+## Reproducción HTTP/SSE de memoria (2026-10-27)
+
+- Endpoint real ejecutado con Ollama local.
+- Resultado: 1 answered, 2 unavailable, 3 clarification, 4 answered, 5 unavailable,
+  6 rejected, 7 answered, 8 clarification.
+- Confirmado: pérdida de contexto de obra activa tras resumen y tras "Volvamos al primer libro".
+- No se implementó corrección en este lote por falta de causa raíz mínima verificada.
+- Próxima acción: instrumentar historial persistido y active_work en el endpoint.
+## Validación final y memoria (2026-10-27)
+
+- Funciones reconstruidas verificadas presentes.
+- Pruebas dirigidas: 24 OK.
+- Suite general: 1732 tests, 4 fallos + 2 errores, todos preexistentes/environmentales
+  (red/BD), no introducidos por esta recuperación.
+- Memoria: se analizó `.test-tmp/out_memoria`; 5 incidencias de aclaración.
+  No se reprodujo un fallo mínimo en `request_for` con historial estándar.
+  Se requiere reproducir por HTTP/SSE con el historial real para aislar la causa.
+  No se aplicó corrección de memoria en este lote para evitar cambios no verificados.
+## Recuperación de funcionalidad — object_relation_answer (2026-10-27)
+
+- Causa: `git checkout` descartó cambios no confirmados en `core/ai_character_answers.py`,
+  eliminando `object_relation_answer` (y `premise_answer`). La regresión afectaba
+  `test_character_object_relation_uses_the_literal_role_not_the_generated_answer`.
+- Funcionalidad reconstruida: `object_relation_answer` y soporte de tarea `object_relation`
+  en `request_for`, más `premise_answer` para desbloquear pruebas.
+- Archivos modificados: `core/ai_character_answers.py`.
+- Pruebas ejecutadas:
+  - `core.test_character_context_resolution`: 9 OK
+  - `core.test_character_false_premise`: 8 OK
+  - `core.test_character_quality_regression`: clases SimpleTestCase OK
+  - `core.test_context_reference_scope`: 7 OK
+- Limitaciones: implementación equivalente, no recuperación exacta del código original.
+  `object_relation_answer` prioriza rol literal y pasajes con marcadores de relación;
+  no inventa relaciones por coexistencia. Copia de seguridad en
+  `G:/Proyecto/Litmate_security_backup`.
+- Problemas pendientes: clase `CharacterProgressiveViewRegressionTests` (TestCase, BD)
+  no se ejecutó en esta sesión.
+
+## Codex — depuración específica de memoria HTTP/SSE (2026-10-27)
+
+Se retomó el estado real de `feature/cuotas-ia-chatbot`, HEAD `28c7cab`, preservando modificaciones anteriores. No se usaron comandos destructivos de Git ni se tocó `Litmate_security_backup`. Se hicieron copias separadas antes de intervenir. Informe completo: `reportes/auditoria_conversacional/correccion_memoria_codex.md`.
+
+Primera discrepancia comprobada: el primer turno de `.test-tmp/out_memoria/captura_001.json` sustituía «El Señor de los Anillos» por tres tarjetas de volúmenes generadas sin fuentes (`source_id=0`). `remember` persistía esas tarjetas y `_history_works` las interpretaba como tres obras activas: el siguiente personaje llegaba al resolvedor con título vacío/ambigüedad. El mínimo real con «Háblame de…» ya respondía antes (2,950/3,817 s); no se presenta como fallo. La variante «Habla de…» y la respuesta con tres tarjetas se reprodujeron con proveedores deterministas en dos solicitudes HTTP/SSE: 3 pruebas, 4 fallos antes; pasan después.
+
+Cambios de esta tarea: módulo pequeño `core/literary_focus.py` sobre la sesión existente; selección del foco antes del worker; conservación separada de intención, metadatos y evidencia; preservación de foco ante `unavailable`; `work_order` acotado y retorno determinista sin LLM; no se mutan las fichas de turnos previos. Normalización conserva `context_work`. Parser reconoce «Habla de/Hablemos de/Ahora háblame de» y no convierte el título en personaje. Referencias de acción mantienen el alcance de la obra en el fallback web. Consulta del acompañante del protagonista exige evidencia de acompañamiento, reutilizando fuentes de la obra tras la navegación.
+
+Instrumentación: se reutilizó `_memory_trace`, apagada por defecto, con contexto normalizado/resuelto, resultado y persistencia también en `chatbot_finalize`. Sólo se generaron trazas de conversaciones sintéticas. Archivos de producción intervenidos: `literary_focus`, `literary_ai_views`, `literary_ai`, `literary_identity`, `ai_narrative_answers`, `ai_character_answers`, `ai_quick_answers`. Pruebas: `test_http_work_focus`, `test_memory_trace`, `test_context_reference_scope`. El resto del diff preexistente se conservó.
+
+Validación: 104 pruebas dirigidas OK; suite general del código final de producción, 1.731 pruebas OK en 25,407 s (luego se añadió una prueba de ventana/retorno aprobada en el lote dirigido). Tres regresiones inicialmente detectadas se corrigieron en código. SQLite temporal, sin migrar ni modificar bases del proyecto. Las seis incidencias de informes previos no aparecieron en esta ejecución; no se asumen ambientales sin evidencia.
+
+Captura real definitiva con Ollama `litmate-qwen35-text:9b-q4_K_M`, HTTP/SSE/finalización y sesiones distintas: `memoria_codex_final.json`, matriz `memoria_codex_matriz.json`, trazas `memoria_codex_final_trazas.jsonl`. Código sin cambios durante la ejecución. 16 turnos: 12 answered, 4 unavailable, 0 clarification; media 3,962 s, p50 2,278 s, p95 35,074 s; 15/16 <30 s. Los cambios LOTR→Harry→LOTR y Quijote→Frankenstein→Quijote se conservaron. D (fallo controlado) y E (sesiones independientes) se probaron con proveedores simulados, no se presentan como conversaciones reales de Ollama.
+
+Mejora puntual: C6 «¿Quién acompaña al protagonista?» bajó de 31,994 s/5 inferencias en `memoria_codex_BC.json` a 0,125 s/0 inferencias y 0 HTTP en la captura final; responde Sancho, retirando la inclusión indebida de Dulcinea. No extrapolar ese cambio a todo el asistente.
+
+Pendientes explícitos: A3 recibe correctamente Frodo/Sam y LOTR pero no consigue evidencia específica suficiente; C3/C4 conservan Frankenstein pero fallan en la unión de identidad/contenido; B6 vuelve a LOTR pero el pipeline de ruta/plan/generación/auditoría/reparación alcanza 35 s y termina sin respuesta válida. El fallback ya no publica el resultado de Voldemort de la captura intermedia. El p95 <30 s y la tasa de error <1 % **no están acreditados**. Continuar desde esas capturas sin volver a auditar genéricamente ni convertir el contenido del modelo en hechos.
+
+## Lote 01 — Generalización de alias e ingesta incremental (2026-10-27)
+
+Encargo: adjunto `6794e393-781f-4d36-bca3-d7dc0ebc6f7d/Texto pegado.txt`. Se trabajó por un lote concreto, sin reescritura general ni reglas por título. Informe reproducible: `reportes/generalizacion_20261027_lote01/resultados.md`.
+
+- Conservados rama `feature/cuotas-ia-chatbot`, HEAD `28c7cab` y cambios anteriores. Copia separada de código/diff en `reportes/diagnostico_para_revision/generalizacion_20261027_01/`. No hubo migraciones, instalaciones, cambios de .env, commits ni push.
+- Defecto: las relaciones exigían nombres literales pese a disponer de alias explícitos en fichas de la misma obra. La memoria sólo conservaba alias entregados por el adaptador, sin extraer declaraciones literales. Se unificó `_character_aliases` en `literary_memory` y se agregó resolución de los dos participantes en `ai_character_answers`, con rechazo de alias compartidos y sin reescribir evidencias. La relación literal sin ficha del segundo participante sigue permitida; una regresión inicialmente detectada se corrigió conservando su prueba.
+- Desarrollo sintético: 2 fallos iniciales / 3 casos; después pasan. Validación controlada independiente sobre entidades de cinco obras: 0/5 antes frente a 5/5 después usando el módulo de copia previa y los mismos validadores. **Son fixtures lingüísticos, no citas públicas ni exactitud factual real de esas novelas.** Negación, coaparición, ocupaciones, contaminación de obra y colisiones siguen rechazadas.
+- HTTP/SSE real independiente: `chat_independiente.json`, 11 turnos, 7 answered y 4 unavailable, p50 2,460 s, p95 5,412 s, 0 llamadas LLM por uso de rutas extractivas. Pip responde; Sam, La Maga, Sméagol y Boo siguen sin evidencia suficiente. No se declara arreglada la cobertura general. Tras la corrección de compatibilidad se comprobó con código final Grandes esperanzas/Pip: 2/2, 2,642 y 2,124 s (`chat_final_compatibilidad.json`). Ambos archivos tienen código estable durante su captura.
+- Ingesta mejorada: `_put(with_status=True)` distingue inserted/updated/duplicates/stale sin romper su interfaz booleana previa; `literary_gutenberg` registra estos contadores. `coverage_snapshot` mide sólo fuentes vigentes/permitidas y separa metadatos, descripciones, personajes y relaciones; no crea bases ausentes.
+- Ingesta real, **sin descargar textos**: catálogo oficial Gutenberg ya descargado, SHA `ebf4f6e54a34dddbcd26ca8a5ef593c9cf3e0ab8b331628ea7a49170a196a07e`, lote español de 30 aceptados. 2.967 escaneados, 30 insertados/proyectados, 1.825 filtrados, 1.112 rechazados por formato/autoría/tipo, 0 errores, 7,9391 s. Cursor 46.108→49.075, reanudable. Antes de escribir se respaldaron las dos SQLite públicas en `backup_publico_previo/`; no se tocó la DB Django. Repetición exacta: 30 duplicados; proyección repetida: 0. Ledger 2.298→2.328, obras únicas 2.201→2.230, autores normalizados 817→828, fuentes 2.328→2.358. Personajes/relaciones/textos no crecieron.
+- Recuperación de las 29 obras realmente nuevas, sólo título/autor: Recall@5 0→27/29 (0,9310), MRR@5 0→0,8966; p50 2,258 ms, p95 4,813 ms después. No es evaluación de argumentos ni mejora del ranking por sí misma. Faltan en top 5 Agua de Nieve (Novela) y Despertar Para Morir (Novela).
+- **195 pruebas dirigidas OK; 1.742 generales OK en 27,582 s**. Primera suite detectó una regresión, reparada sin relajar el test. Logs y comparación en el directorio del lote. No se añadieron modelos, dependencias, conectores, facturación ni tareas permanentes.
+- Siguiente lote: descubrimiento/vinculación de evidencia de alias con APIs existentes y validación con un nuevo grupo C; B ya fue observado. Después identidad bibliográfica general (Frankenstein y variantes), recuperación y ciclo lento de cinco inferencias del Anillo. No volver a ingerir ciegamente: `ingestar_lote.py` rechaza una repetición accidental si existe el informe; continuar con un informe/copia nuevos desde el checkpoint existente.
+
+## Lote 2 — Profundidad e integración de memoria pública (2026-10-27)
+
+Encargo: adjunto `be475916-0bc9-43e8-bd38-4465bd1e8950/Texto pegado.txt`. Informe específico con causas, capturas y comandos: `reportes/generalizacion_20261027_lote02/resultados.md`. Conservados rama, HEAD y cambios anteriores. Copias de código/diff en `reportes/diagnostico_para_revision/generalizacion_20261027_02/` y de SQLite públicas en el directorio del lote. Sin migraciones, instalaciones, .env, cambios visuales, commits o push.
+
+- Extracción: se ignoraban párrafos de definición y el encabezado «Personajes relevantes»; se recortaba antes de priorizar al personaje pedido. Se corrige en `literary_web`, con 64 candidatos internos/12 fichas y 1.800 caracteres finales, sólo en secciones declaradas. Reproducción: 3 fallos de 4 antes; pasan después.
+- Alias/perfiles: comprobación estricta de nombre completo con apodo entrecomillado intercalado, reutilizada en prueba literal y persistencia. `bind_character_profile` exige novela y autor concretos, no un universo o tomo por parecido. Sam queda respaldado por su perfil oficial y la relación con Frodo por el pasaje de la obra. La Maga/Lucía se recupera en Rayuela. Boo y Sméagol siguen pendientes: narrativa sin sección/ficha y vinculación al tomo/declaración de nombre original, respectivamente. No se escribieron excepciones por título.
+- Identidad: prioridad de tipo publicado frente a adaptaciones con año; alias bibliográfico explícito «o simplemente X», con atribución/revisión/licencia y autoría, no recorte de prefijos. La sinopsis de Frankenstein ya responde desde la novela. No se reconstruyeron todos los ISBN/traducciones/ediciones.
+- Anillo: `goal_answer` reutiliza la oración literal de una misión ya aceptada, con la misma auditoría estricta; no la usa para afirmar una acción consumada. Misma conversación de seis turnos: última pregunta 35,074 s/unavailable/5 inferencias → 0,070 s/answered/0 inferencias/0 HTTP. La conversación posterior aún tuvo una abstención sobre Harry; no ocultarla.
+- Fallo compartido adicional demostrado por benchmark sin web: `quick_knowledge_sources` descartaba los libros devueltos separadamente por la memoria cuando sólo había fuentes web. La evidencia quedaba sin identidad bibliográfica. Se conserva esa identidad sin relajar validadores ni crear hechos. La nueva prueba fallaba antes y pasa después. Las futuras proyecciones Wikipedia retienen introducción bibliográfica y se comprueban inyecciones también en ella.
+- Ingesta real: 8 consultas configurables, 6 aceptadas/5 obras con contenido; Wikipedia con cupo de 2 lecturas por consulta, no otros proveedores. 10 metadatos franceses Gutenberg desde archivo oficial ya existente; cursor francés 0→1.318, español permanece 49.075. Tiempo total 20,186 s. Ledger 2.328→2.343, pares título/autor 2.230→2.245, autores 828→832, fuentes vigentes 2.358→2.377; obras con descripción 2→7, con personajes 1→3, etiquetas canónicas con papel 12→37, alias respaldados 0→4. Relaciones estructuradas y textos completos añadidos: 0. Repetición de 5 registros finales: 5 duplicados; proyección repetida: 0. No confundir escrituras `inserted` históricas de query_acquisition con obras nuevas: usar estados del almacén.
+- El nuevo `--memory-snapshot` copia sólo una memoria pública validada a la SQLite temporal del benchmark; origen RO, sesiones nuevas. Misma copia/SHA, mismas 11 preguntas, HTTP/SSE real y fuentes externas deshabilitadas: antes del puente 0 answered; después 8 answered y 3 unavailable; LLM 16→7; media 4,971→1,930 s; p95 35,045→12,020 s. Sam 0,462 s; La Maga 0,153 s. No es comparación directa con las distintas preguntas online del lote 1. No se acredita error <1 %.
+- Grupo C independiente no se usó para ajustar el algoritmo: Jane Eyre sólo obtuvo introducción y no personajes (2 abstenciones), Narnia no se vinculó (1 abstención); La tregua se rechazó por desambiguación; El origen de las especies respondió desde contenido almacenado. Mantener estos fallos como evidencia, no afirmar generalización completa.
+- 247 pruebas dirigidas OK (8,310 s) y 1.759 generales OK (27,594 s). Benchmark detectó un choque de nombre de variable en el runner, corregido. Conservar tanto las capturas fallidas como las posteriores. Código estable durante las capturas completas. Recall@5/MRR@5 1,0 sobre 10 consultas de nuevos metadatos franceses; no implica comprensión narrativa.
+- Producción intervenida: literary_web/search/identity, ai_character_answers, ai_narrative_answers, ai_quick_answers, literary_memory/acquisition y literary_ai_views. Runner evaluar_chat_http ampliado. Nuevas pruebas de extracción, perfil, alias publicado, misión, puente persistente y copia de memoria pública. Modelos, embeddings, configuración y diseño conservados; APIs nuevas de pago: ninguna.
+- Siguiente lote: grupo D nuevo para narrativa sin sección y nombres originales (Boo/Sméagol como desarrollo); desambiguación tipada y traducciones (La tregua/Narnia); profundidad de Jane Eyre; relaciones estructuradas respaldadas; estadísticas de escrituras de consultas. Continuar mediante otro directorio/informe/manifiesto, sin repetir accidentalmente este lote ni alterar el backup previo.
+
+## Fase 1 — Estabilización, lote 1 (2026-10-27)
+
+- Informe completo: `reportes/estabilizacion_20261027_lote01/resultados.md`. Antes de editar se revisaron el estado real y el lote 2 más reciente. Copias de los dos módulos y diff previo en `reportes/diagnostico_para_revision/estabilizacion_20261027_01/`; conservarlos junto a todos los respaldos anteriores.
+- Dos correcciones de identidad: `_profile_name_in` deja de sustituir/omitir nombres intermedios y reutiliza la comprobación estricta con alias entrecomillado; `retrieve_character_entities` agrupa sólo equivalencias canónicas explícitas por obra, sin fusionar personajes por alias compartidos. La ambigüedad también protege la atribución de relaciones. No requiere migraciones ni reindexación.
+- Regresión creada antes de corregir: siete pruebas iniciales, nueve fallos incluyendo subtests. Archivo final nuevo `core/test_identity_stabilization.py`, 11 pruebas. 119 dirigidas OK (4,327 s), 1.770 generales OK (28,906 s), diff sin errores de espacios. El envoltorio de consola de la suite falló al imprimir CP1252 después del OK; se conservaron el log completo y copia UTF-8. No confundirlo con un fallo de tests.
+- Comparación reproducible cargando módulos previos desde el respaldo, mismas SQLite temporales, sin reemplazar código real: 4/9→9/9 comprobaciones controladas; recuperación p95 2,329→2,032 ms en 60 muestras por modo, 0 LLM/HTTP y bases sin cambios. No es exactitud literaria global ni prueba de aceleración general.
+- HTTP/SSE real, misma copia pública SHA c6b158883dde1c028b81ed1263ee4107a1266cbd5c3eaa8532ce6832e0cfeb4a, sin Internet: primera captura 7/11 answered, p95 10,162 s; confirmación 8/11, p95 9,691 s; 7 LLM por captura, 0 HTTP, todos los turnos <30 s. Primera captura pudo coincidir parcialmente con la salida de la suite: usar confirmación para latencia aislada. Preservar ambas. Víctor volvió a abstenerse en una: generación/citas siguen inestables. Sam y La Maga responden. Jane Eyre y Narnia siguen sin evidencia suficiente.
+- Revisión de pertinencia pendiente: resumen de Frankenstein centrado en la criatura y fuentes de novela/perfil mezcladas. `work_binding_verified` no prueba suficiencia para la tarea de resumen. No llamar correctas todas las respuestas sólo por tener fuentes/auditoría.
+- Grupo D controlado: Montecristo, Fantasma de la ópera y Vuelta al mundo con fixtures lingüísticos auditados; no citas públicas verificadas. Prueba web real independiente de Montecristo/Dantès y Jekyll/Hyde: 4 abstenciones, 22 HTTP iniciados, 0 LLM, 0 páginas extraídas; SearXNG devuelve resultados, pero el cupo de tres lecturas ya está consumido antes de leer candidatos web. Congelar estos fallos como casos observados. Próximo grupo independiente: E.
+- Próximo lote: reproducir agotamiento del cupo antes de evidencia útil y mejorar asignación/reutilización de lecturas; separar perfil/obra/sinopsis; después citas y reparaciones del pipeline general, Boo/Sméagol y traducciones. `premise_answer` es un helper no conectado con una inferencia negativa insegura: no activarlo sin arreglar/auditar.
+- Sólo producción `ai_character_answers.py` y `literary_memory.py` modificados en este lote; se conservaron sus cambios previos. Diseño, personalidad, voz, avatares, modelos y validadores intactos. Memoria pública origen con SHA sin cambios. Sin instalaciones, .env, settings, migraciones, ingesta, commits/push ni APIs pagadas nuevas.
+
+## Regresión de recomendaciones y tarjetas — cierre 2026-10-28
+
+- Pedido adjunto repetido verificado como idéntico; se continuó sobre el árbol real, sin revertir avances. Informe completo `reportes/regresion_tarjetas_20261027/resultados.md` (directorio del inicio 27/10). Respaldo previo de módulos/docs, diff y pruebas antiguas en `reportes/diagnostico_para_revision/tarjetas_recomendaciones_20261027/`.
+- Caso exacto reproducido por HTTP real: Colombia devolvía cuatro artículos, 0 tarjetas, 4,975 s. Causa principal `_simple_topic_request`: borraba «historia» antes de reconocer «historia de Colombia», no invocaba discovery y views publicaba web_reference_answer. Se consumen spans sobre el texto original. No se añadieron títulos/países especiales.
+- Eliminada la sustitución de recomendaciones por artículos en fallback temprano, backup de modelo complejo y excepción allow_web_only_recommendations. Caché namespace `extractive-answer-v3-verified-book-cards` y guardia contra respuestas de artículos sin tarjetas; no se borraron datos. Nuevos candidatos desde pares literales web se confirman en catálogos, máx3; probado con mocks, no afirmar activación real de ese fallback en esta batería.
+- Sinopsis opcionales OL: hasta2 registros, presupuesto2s/caché/cupo existente, sin perder fichas ante errores. Una captura detectó extensión física «316 p. :22 cm» como descripción: regresión y filtro físico general añadidos. No inventar sinopsis ni interpretar materias como trama.
+- Memoria: remember_topic y remember_focus conservan active_work al recomendar; no se promueve automáticamente una sugerencia en la compatibilidad de sesiones. Intentrecommend persiste en historial; selección explícita usa tarjetas separadas del foco. Corregido «Háblame del segundo libro» que quedaba como «l segundo libro». F conserva Frankenstein tras recomendar; el segundo libro pasa a activo y Frankenstein a previous_work.
+- Frontend conserva estética y contrato. Whitelist añade sólo OpenLibrary/Wikidata oficiales, botones de búsqueda Google/Amazon/Buscalibre explícitos, títulos seleccionables accesibles mediante envío existente. Fuentes con sufijo HTTPS inequívoco plegables; avisos/prosa/URLs inseguras nunca se ocultan. Voz/avatar intactos.
+- Primera batería real 8/9: relacionados con Dune se abstuvo por autores abreviados en texto. Nueva ruta pura por materias específicas/autor completo usa validadores existentes, excluye base/ediciones/repetidos y no certifica semejanza argumental. Categorías genéricas no bastan. La descripción primaria no vuelca materias como sinopsis.
+- Comprobación final `http_comprobacion_final.json`, código estable: Colombia3 tarjetas/3,523s; terror5/3,025s; Chile3/3,200s; romance catalogadoJapón3/3,039s; tres relacionados con Dune3/3,544s. Estas recomendaciones usan0LLM. Total9turnos:8answered/1unavailable, media6,293s, p95/máximo22,485s, todos<30s. La abstención es el resumen inicial de Frankenstein17,530s/0LLM; se conserva como pendiente, no ocultarla. Dune resumen22,485s/2LLM. Primeras/finales capturas y diagnósticos se conservan, sin extrapolar exactitud global.
+- SSE directo Colombia3tarjetas/3,165s; igualdad exacta con payload progresivo finalización JSON. Capturas QA Edge con renderer/CSS reales: Colombia3portadas/12enlaces y terror5portadas/2sinopsis/20enlaces, callbacks correctos, passed=true. Son páginas QA locales, no navegación autenticada completa. Equivalencia visual con payload final y hashes en equivalencia_visual.json.
+- 54 nuevas regresiones dirigidas OK (0,307s), 1.824 generales OK (28,498s), Node230OK. Cinco pruebas históricas que exigían artículos como recomendaciones o borrar foco se actualizaron a la política solicitada, con respaldos y regresiones nuevas; no se desactivaron validadores. Ver logs completos del directorio.
+- Pendientes: contenidos/Frankenstein y fallos anteriores, cobertura de subgéneros y restricciones complejas, idiomas/nacionalidad/transliteraciones y sinopsis ausentes. Japón como materia no prueba autor japonés. No garantizar calidad literaria o error<1% por match de metadatos.
+- Sin paquetes/modelos nuevos, .env/settings, migraciones, datos privados/producción, cambios globales de UI, commits/push o APIs pagadas. Reiniciar Django y Ctrl+F5 para cargar cambios; comandos y reproducción en el informe.

@@ -15,7 +15,7 @@ import time
 
 # Cambiar el namespace evita reutilizar referencias admitidas antes de los
 # filtros de identidad, sin borrar registros ni datos de conversaciones.
-POLICY = 'extractive-answer-v2'
+POLICY = 'extractive-answer-v3-verified-book-cards'
 
 
 def _path(database=None):
@@ -100,10 +100,14 @@ def _answer_body(text):
         text = text.split(marker, 1)[0]
     # La referencia parcial añade una introducción y un alcance que no forman
     # parte de las frases auditadas por reference_answer.
-    from .ai_quick_answers import REFERENCE_PREFIX, REFERENCE_SUFFIX
-    if text.startswith(REFERENCE_PREFIX):
-        text = text[len(REFERENCE_PREFIX):]
-    text = text.split(REFERENCE_SUFFIX, 1)[0]
+    from .ai_quick_answers import (REFERENCE_PREFIX, REFERENCE_SUFFIX,
+                                   SUMMARY_PREFIX, SUMMARY_SUFFIX)
+    for prefix in (REFERENCE_PREFIX, SUMMARY_PREFIX):
+        if text.startswith(prefix):
+            text = text[len(prefix):]
+            break
+    for suffix in (REFERENCE_SUFFIX, SUMMARY_SUFFIX):
+        text = text.split(suffix, 1)[0]
     # LiteraryAssistant._publish añade «\n\n[1] Título\nURL» por cada web.
     return re.split(r'\n\n\[\d+\] ', text, maxsplit=1)[0]
 
@@ -112,6 +116,11 @@ def _validate(message, result):
     from .literary_ai import has_excerpt, obvious_rejection, requires_exact_text, validate_draft
     from .literary_evidence import validate_evidence
     from .literary_quality import validate_audit
+    from .literary_research import is_topic_recommendation
+    if is_topic_recommendation(message):
+        from .ai_presentation import build_book_cards
+        if not build_book_cards(result):
+            return False  # Stale article dumps cannot bypass the repaired route.
     if (result.status != 'answered' or not result.remember or result.basis != 'sources'
             or has_excerpt(message) or obvious_rejection(message) or requires_exact_text(message)
             or not result.sources or len(result.sources) > 12):

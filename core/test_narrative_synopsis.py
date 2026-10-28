@@ -33,6 +33,45 @@ TOLKIEN_PAGE = {'kind': 'web', 'title': 'El Señor de los Anillos', 'author': 'F
 
 
 class SynopsisRegressionTests(SimpleTestCase):
+    def test_verified_research_summary_survives_content_selection(self):
+        from .ai_narrative_answers import _content
+        candidate = {**HISTORY_BOOK, 'synopsis': '',
+                     'research_summary': 'El texto investiga la vida en una ciudad portuaria.',
+                     'synopsis_source_url': 'https://example.org/descripcion'}
+        self.assertEqual(_content(candidate), candidate['research_summary'])
+        missing_provenance = {**candidate, 'synopsis_source_url': ''}
+        self.assertEqual(_content(missing_provenance), '')
+
+    def test_minimal_catalogue_metadata_is_not_evidence_of_plot(self):
+        from .ai_narrative_answers import _content
+        candidate = {**HISTORY_BOOK, 'policy': 'openlibrary-minimal-metadata-v1',
+                     'description': 'Temas del catálogo: historia.'}
+        self.assertEqual(_content(candidate), '')
+
+    def test_synthesis_places_verified_enrichment_in_auditable_context(self):
+        from .ai_narrative_answers import synthesize_answer
+        from .literary_ai import canonical_sources
+        title = 'Historia del puerto'
+        message = 'Dime la trama de Historia del puerto de Ana Robles'
+        summary = 'La obra estudia el comercio y la navegación en la ciudad portuaria.'
+        candidate = {**HISTORY_BOOK, 'title': title, 'author': 'Ana Robles',
+                     'research_summary': summary,
+                     'synopsis_source_url': 'https://example.org/descripcion'}
+        seen = []
+        class Stub:
+            calls = 0
+            usage = {}
+            stage_timings = []
+            def __call__(self, stage, prompt, context, model):
+                seen.append((stage, context['sources'][0]))
+                raise TimeoutError('prueba controlada sin modelo')
+        with patch('core.literary_ai.build_assistant', return_value=(
+                SimpleNamespace(answer_model='dummy', guard_model='dummy'), Stub())):
+            result, _ = synthesize_answer(message, request_for(message),
+                                          canonical_sources([candidate]), SimpleNamespace())
+        self.assertEqual(result.status, 'unavailable')
+        self.assertEqual(seen[0][1]['narrative_context'], summary)
+
     def test_explicit_author_and_short_title_bind_to_real_publisher_subtitle(self):
         req = request_for('Dime la trama de The Unfinished Nation de Alan Brinkley')
         self.assertEqual(req['title'], HISTORY_BOOK['title'])

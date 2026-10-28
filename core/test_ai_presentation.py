@@ -93,9 +93,30 @@ class BookCardTests(SimpleTestCase):
 
     def test_missing_cover_and_synopsis_remain_missing_instead_of_being_invented(self):
         source = {key: value for key, value in SOURCE.items() if key not in {'image_url', 'synopsis'}}
+        source['description'] = 'Temas del catálogo: literatura y ficción.'
         card = build_book_cards(result([source]))[0]
         self.assertEqual(card['image_url'], '')
         self.assertEqual(card['synopsis'], '')
+
+    def test_verified_editorial_description_populates_card_without_synopsis_field(self):
+        source = {**SOURCE, 'synopsis': '',
+                  'description_source': 'Google Books, descripción editorial',
+                  'description': 'Una joven encuentra una carta que cambia su vida.'}
+        card = build_book_cards(result([source]))[0]
+        self.assertEqual(card['synopsis'], source['description'])
+
+    def test_subjects_and_unverified_descriptions_do_not_become_plot_cards(self):
+        for description in ('Temas del catálogo: Terror, Literatura.',
+                            'Ficha comercial con datos de edición.'):
+            with self.subTest(description=description):
+                source = {**SOURCE, 'synopsis': '', 'description': description}
+                self.assertEqual(build_book_cards(result([source]))[0]['synopsis'], '')
+
+    def test_research_summary_with_source_provenance_populates_card(self):
+        source = {**SOURCE, 'synopsis': '', 'research_summary': 'Una autora investiga un misterio familiar.',
+                  'synopsis_source_url': 'https://example.org/obra'}
+        self.assertEqual(build_book_cards(result([source]))[0]['synopsis'],
+                         source['research_summary'])
 
     def test_canonical_sources_preserve_synopsis_and_image_for_card_rendering(self):
         source = canonical_sources([SOURCE])[0]

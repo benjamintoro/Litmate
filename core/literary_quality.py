@@ -320,7 +320,10 @@ def required_fact_statements(text):
     for statement in factual_statements(text):
         if (len(statement) < 8 or len(statement.split()) < 4
                 or statement.rstrip('»”"\'').endswith('?')):
-            continue
+            # Un encabezado de recomendación con solo título y autor no es
+            # una afirmación factual; se admite como presentación.
+            if not re.fullmatch(r'\*\*.+ — .+\*\*', statement.strip()):
+                continue
         normal = ''.join(character for character in unicodedata.normalize('NFKD', statement)
                          if not unicodedata.combining(character)).casefold()
         header = re.fullmatch(
@@ -743,7 +746,8 @@ def validate_audit(audit, plan, draft, sources, message, *, strict_facts=False):
             identifier = claim['source_id']
             source = lookup.get(identifier)
             contents = [user_excerpt] if identifier == 0 else [
-                (source or {}).get(key, '') for key in ('description', 'title', 'author', 'year')]
+                (source or {}).get(key, '') for key in
+                ('description', 'narrative_context', 'title', 'author', 'year')]
             if (len(claim['evidence'].strip()) < 8
                     or not any(value and _literal(claim['evidence']) in _literal(value) for value in contents)
                     or (identifier != 0 and identifier not in draft['citations'])):

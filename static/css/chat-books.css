@@ -131,6 +131,16 @@
     margin: 0 0 7px;
     overflow-wrap: anywhere;
 }
+.lm-chat-book-select {
+    border: 0;
+    padding: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: inherit;
+    cursor: pointer;
+}
+.lm-chat-book-select:focus-visible { outline: 2px solid #d5b984; outline-offset: 3px; }
 #chat-body-page .lm-chat-book-author,
 #floating-chat-body .lm-chat-book-author {
     color: #d5b984;

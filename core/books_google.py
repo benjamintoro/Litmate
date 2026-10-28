@@ -368,7 +368,8 @@ def book_topic_profile(query):
                              reading['excluded_genres'])
     # Solo activar restricciones de materia ante un tema explícito. "¿Quién
     # escribió El arte de la guerra?" continúa siendo una búsqueda de título.
-    requested = bool(re.search(r'\b(?:recomiend\w*|busc\w*|libros?|obras?|books?|sobre)\b', value))
+    requested = bool(re.search(r'\b(?:recomiend\w*|busc\w*|libros?|obras?|books?|'
+                               r'novelas?|lecturas?|titulos?|ensayos?|sobre)\b', value))
     standalone = bool(subjects and places and len(value.split()) <= 8)
     structured = bool(subjects and (requested or standalone))
     if structured:

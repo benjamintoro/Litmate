@@ -24,6 +24,14 @@ QUESTION = '¿Qué relación tiene ese antagonista con el Anillo?'
 
 
 class ContextReferenceScopeTests(SimpleTestCase):
+    def test_implicit_action_keeps_selected_work_and_rejects_other_saga(self):
+        from .ai_quick_answers import reference_answer
+        turns = [{**HISTORY[0], 'context_work': {'title': NOVEL['title'], 'author': ''}}]
+        foreign = {**MATH, 'title': 'El anillo de Voldemort',
+                   'description': 'Dumbledore destruye el anillo de Voldemort.'}
+        self.assertIsNone(reference_answer('¿Quién debía destruir el Anillo?',
+                                          [foreign], history=turns, intent='analysis'))
+
     @override_settings(LITMATE_AI_USE_WEB=True, LITMATE_AI_CATALOG_FALLBACK=False)
     def test_http_worker_backup_does_not_replace_the_active_novel_by_algebra(self):
         from .literary_ai_views import _model_answer
@@ -46,6 +54,14 @@ class ContextReferenceScopeTests(SimpleTestCase):
         self.assertIsNotNone(result)
         self.assertEqual(result.status, 'answered')
         self.assertEqual(result.sources[0]['url'], NOVEL['url'])
+        self.assertIn('Frodo', result.text)
+
+    def test_summary_fallback_reads_as_an_answer_not_a_reference_list(self):
+        from .ai_quick_answers import reference_answer, SUMMARY_PREFIX
+        result = reference_answer('¿De qué trata El Señor de los Anillos?', [NOVEL], intent='summary')
+        self.assertIsNotNone(result)
+        self.assertTrue(result.text.startswith(SUMMARY_PREFIX))
+        self.assertNotIn('Encontré estas referencias', result.text)
         self.assertIn('Frodo', result.text)
 
     def test_explicit_work_cannot_be_replaced_by_a_character_from_another_saga(self):

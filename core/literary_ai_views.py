@@ -1,6 +1,7 @@
 """Endpoint de IA compatible con el chat principal y el flotante existentes."""
 import hashlib
 import json
+import os
 import logging
 import copy
 import secrets
@@ -33,6 +34,26 @@ from .ai_progress import (emit_phase, measure_stage, progress_scope, snapshot_me
 
 logger = logging.getLogger('litmate')
 HISTORY_KEY = 'litmate_literary_chat_local_v1'
+
+_TRACE_ENV = 'LITMATE_TRACE_MEMORY'
+_TRACE_PATH = os.environ.get('LITMATE_TRACE_MEMORY_PATH',
+                            os.path.join('reportes', 'auditoria_conversacional', 'trazas_memoria.jsonl'))
+
+
+def _memory_trace_enabled():
+    return os.environ.get(_TRACE_ENV, '').lower() in {'1', 'true', 'yes', 'on'}
+
+
+def _memory_trace(event):
+    if not _memory_trace_enabled():
+        return
+    path = os.environ.get('LITMATE_TRACE_MEMORY_PATH', _TRACE_PATH)
+    try:
+        os.makedirs(os.path.dirname(path) or '.', exist_ok=True)
+        with open(path, 'a', encoding='utf-8') as handle:
+            handle.write(json.dumps(event, ensure_ascii=False) + '\n')
+    except OSError:
+        pass
 STREAM_NONCE_KEY = 'litmate_ai_stream_owner_v1'
 
 
@@ -59,6 +80,7 @@ def _safe_diagnostics(result, client):
     allowed += ('exact_answer_cache_hit',)
     allowed += ('verified_narrative_answer', 'narrative_synthesized', 'partial_evidence')
     allowed += ('verified_character_answer', 'character_count')
+    allowed += ('discovery_candidates', 'verified_recommendations')
     values = {key: diagnostics[key] for key in allowed
               if type(diagnostics.get(key)) in {int, float, bool}}
     if diagnostics.get('work_type') in {'fiction', 'nonfiction', 'unknown'}:
@@ -127,17 +149,21 @@ def rate_allowed(request):
 def remember(request, state, message, result, elapsed_ms, client, *, topic_context=None):
     topic_changed = remember_topic(state, message, topic_context)
     if not result.remember:
+        # The requested work is reader intent, not a rejected answer/fact.
+        request.session[HISTORY_KEY] = state
+        request.session.modified = True
         if result.status == 'unavailable' and (result.diagnostics.get('narrative_failure')
                                               or result.diagnostics.get('character_failure')):
             if result.diagnostics.get('character_failure'):
                 from .ai_character_answers import request_for
             else:
                 from .ai_narrative_answers import request_for
-            pending = request_for(message, state.get('turns', []), state.get('pending_clarification'))
+            from .literary_focus import focus_history
+            pending = request_for(message, focus_history(state), state.get('pending_clarification'))
             if pending and pending.get('title') and not pending.get('ambiguous'):
                 task = {'summary': 'Dime la trama', 'characters': 'Dime los personajes',
                         'protagonist': 'Quién es el protagonista', 'character': 'Dime la trama',
-                        'relationship': 'Dime la trama'}[pending['task']]
+                        'relationship': 'Dime la trama'}.get(pending['task'], 'Dime la trama')
                 query = task + ' de ' + pending['title']
                 if pending.get('author_hint'):
                     query += ' del autor ' + pending['author_hint']
@@ -167,11 +193,10 @@ def remember(request, state, message, result, elapsed_ms, client, *, topic_conte
         remembered_books.append({**book, **work_identity(source),
                                 'source': source.get('source', ''), 'url': source.get('url', '')})
     turn = {'accepted': True, 'question': message, 'answer': result.text[:5000],
-            'sources': result.sources[:8], 'books': remembered_books, 'basis': result.basis}
-    if len(remembered_books) == 1:
-        state['active_work'] = work_identity(remembered_books[0])
-    elif remembered_books:
-        state.pop('active_work', None)
+            'sources': result.sources[:8], 'books': remembered_books, 'basis': result.basis,
+            'intent': result.intent}
+    from .literary_focus import remember_focus
+    remember_focus(state, turn)
     state['turns'] = (state.get('turns', []) + [turn])[-MAX_HISTORY:]
     if request.user.is_authenticated:
         try:
@@ -214,11 +239,15 @@ def _model_answer(message, history, topic_context, retrieval_message):
     """
     from .literary_ai import looks_literary, normalized, requires_exact_text, has_excerpt, simple_literary_route
     from .literary_identity import resolve_followup_context
-    from .literary_research import public_research_queries
+    from .literary_research import public_research_queries, is_topic_recommendation
     from .literary_search import retrieve_web
     from .literary_sources import SearchResults
     reference = resolve_followup_context(message, history)
     route = simple_literary_route(message)
+    recommendation = (is_topic_recommendation(retrieval_message)
+                      or is_topic_recommendation(message)
+                      or topic_context.get('intent') == 'recommend'
+                      or reference.get('reason') in {'similar', 'same_author'})
     eligible = (getattr(settings, 'LITMATE_AI_USE_WEB', True)
                 and not requires_exact_text(message) and not has_excerpt(message)
                 and not reference['ambiguous']
@@ -260,7 +289,8 @@ def _model_answer(message, history, topic_context, retrieval_message):
                     'Esta vez no pude verificar suficientes opciones. No necesitas reformular '
                     'la petición; puedes volver a intentarlo.', 'unavailable',
                     diagnostics={**result.diagnostics, 'clear_topic_not_ambiguity': True})
-        if result.status == 'unavailable' and pending is not None:
+        if (result.status == 'unavailable' and pending is not None
+                and not recommendation):
             from .ai_quick_answers import reference_answer
             try:
                 waiting = budget_timeout(8)
@@ -307,6 +337,27 @@ def _answer_with_cache(message, history, topic_context, cache_state, cache_owner
                        request_metrics=None, request_started=None):
     """Sólo datos copiados del lector; ninguna sesión/ORM dentro del worker."""
     from .ai_answer_cache import get_answer, put_answer
+    topic_context = dict(topic_context)
+    memory_context = topic_context.pop('_memory_context', {})
+    from .literary_focus import focus_history
+    history = focus_history(cache_state)
+    if memory_context:
+        from .literary_ai import sanitized_history
+        from .ai_character_answers import request_for as character_request
+        from .ai_narrative_answers import request_for as narrative_request
+        normalized_history = sanitized_history(history)
+        _memory_trace({**memory_context, 'phase': 'D_normalized_history',
+            'function': '_answer_with_cache/focus_history/sanitized_history',
+            'history': [{'question': turn['question'],
+                         'book_titles': [book.get('title') for book in turn['books']],
+                         'context_work': turn.get('context_work'),
+                         'source_count': len(turn['sources'])} for turn in normalized_history],
+            'active_work_used': cache_state.get('active_work')})
+        resolved = character_request(message, history, cache_state.get('pending_clarification'))
+        narrative = narrative_request(message, history, cache_state.get('pending_clarification'))
+        _memory_trace({**memory_context, 'phase': 'E_resolver',
+                      'function': 'request_for', 'character_request': resolved,
+                      'narrative_request': narrative})
     enabled = getattr(settings, 'LITMATE_AI_QUICK_ANSWERS', True)
     with progress_scope() as progress:
         def measured(result, client):
@@ -315,6 +366,16 @@ def _answer_with_cache(message, history, topic_context, cache_state, cache_owner
                 metrics = merge_metrics(request_metrics, metrics,
                     offset_ms=max(0., (progress['start'] - request_started) * 1000))
             result.diagnostics['progress_metrics'] = metrics
+            if memory_context:
+                _memory_trace({**memory_context, 'phase': 'F_after_answer',
+                    'function': '_answer_with_cache', 'result_status': result.status,
+                    'result_reason': result.diagnostics.get('character_failure')
+                        or result.diagnostics.get('narrative_failure')
+                        or result.diagnostics.get('provider_error'),
+                    'sources': [{'id': source.get('id'), 'title': source.get('title')}
+                                for source in result.sources],
+                    'audit_decision': result.diagnostics.get('audit', {}).get('decision'),
+                    'stage_totals_ms': metrics.get('stage_totals_ms', {})})
             return result, client
 
         if enabled:
@@ -325,6 +386,10 @@ def _answer_with_cache(message, history, topic_context, cache_state, cache_owner
         pending_clarification = cache_state.get('pending_clarification')
         compute_context = ({**topic_context, '_pending_clarification': pending_clarification}
                           if isinstance(pending_clarification, dict) else topic_context)
+        if cache_state.get('_focus_navigation') and cache_state.get('active_work'):
+            result = ChatResult('Volvamos a **' + cache_state['active_work']['title'] +
+                                '**. ¿Qué te gustaría comentar?', 'answered', True)
+            return measured(result, SimpleNamespace(usage={}, provider='conversation-focus', calls=0))
         result, client = _compute_answer(message, history, compute_context)
         if enabled:
             try:
@@ -368,6 +433,29 @@ def _compute_answer_impl(message, history, topic_context, *, pending_clarificati
             if character is not None:
                 return character, SimpleNamespace(usage=character.diagnostics.get('usage', {}),
                     provider='verified-character-evidence', calls=character.diagnostics.get('model_calls', 0))
+            from .ai_related_recommendations import related_recommendation_answer
+            from .literary_search import retrieve_discovery_books, enrich_discovery_book_records
+            related_candidates = 0
+
+            def related_search(query):
+                nonlocal related_candidates
+                found = retrieve_discovery_books(query)
+                related_candidates += len(found)
+                return enrich_discovery_book_records(found)
+
+            try:
+                with request_budget(time.monotonic() + budget_timeout(6)):
+                    related = related_recommendation_answer(message, history, related_search)
+            except (BudgetExpired, TimeoutError, OSError, ValueError):
+                related = None
+            if related is not None:
+                related.diagnostics.update(discovery_candidates=related_candidates,
+                                           verified_recommendations=len(related.books))
+                return related, SimpleNamespace(usage={}, provider='verified-related-books', calls=0)
+            from .ai_narrative_answers import goal_answer
+            goal = goal_answer(message, history)
+            if goal is not None:
+                return goal, SimpleNamespace(usage={}, provider='verified-existing-goal-evidence', calls=0)
             from .ai_persistent_router import indexed_answer, research_answer
             with measure_stage('knowledge_lookup'):
                 indexed = indexed_answer(message, history, topic_context=topic_context)
@@ -404,6 +492,7 @@ def _compute_answer_impl(message, history, topic_context, *, pending_clarificati
                 return direct, SimpleNamespace(usage={}, provider='verified-local-facts', calls=0)
             from .literary_research import is_topic_recommendation
             if is_topic_recommendation(retrieval_message):
+                from .ai_quick_answers import verified_book_list_answer
                 from .literary_search import retrieve_discovery_books
                 from .literary_ai import requested_book_count
                 from .books_google import topic_matches
@@ -422,6 +511,8 @@ def _compute_answer_impl(message, history, topic_context, *, pending_clarificati
                                    if source.get('kind') == 'book'
                                    and topic_matches(source, query)) >= minimum
                     last_discovery = retrieve_discovery_books(query, accept=enough)
+                    from .literary_search import enrich_discovery_book_records
+                    last_discovery = enrich_discovery_book_records(last_discovery)
                     return last_discovery
 
                 try:
@@ -438,32 +529,46 @@ def _compute_answer_impl(message, history, topic_context, *, pending_clarificati
                 except BudgetExpired:
                     direct = None
                 if direct is not None:
+                    direct.diagnostics.update(discovery_candidates=len(last_discovery or []),
+                                              verified_recommendations=len(direct.books))
                     return direct, SimpleNamespace(usage={}, provider='verified-discovery', calls=0)
                 if last_discovery and any(source.get('kind') == 'book'
                                           for source in last_discovery):
                     # Las fichas ya verificadas se publican sin esperar al
                     # modelo: una lista bibliográfica honesta es preferible a
                     # un turno agotado por una síntesis que no llega.
-                    from .ai_quick_answers import verified_book_list_answer
                     book_direct = verified_book_list_answer(message, last_discovery,
                         history=history, topic_context=topic_context)
                     if book_direct is not None:
+                        book_direct.diagnostics.update(discovery_candidates=len(last_discovery),
+                                                       verified_recommendations=len(book_direct.books))
                         return book_direct, SimpleNamespace(
                             usage={}, provider='verified-discovery-list', calls=0)
-                if getattr(settings, 'LITMATE_AI_USE_WEB', True):
-                    # Sin una respuesta local validada, una búsqueda general
-                    # real permite responder con páginas citadas en pocos
-                    # segundos, sin dejar que el modelo lento agote el reloj y
-                    # devuelva un mensaje vacío.
-                    from .ai_quick_answers import web_reference_answer
+                from .ai_quick_answers import _simple_topic_request
+                if (getattr(settings, 'LITMATE_AI_USE_WEB', True)
+                        and _simple_topic_request(message, retrieval_message)):
+                    from .ai_recommendation_candidates import resolve_recommendation_candidates
+                    from .literary_search import retrieve_web
                     try:
-                        with request_budget(time.monotonic() + budget_timeout(9)):
-                            web_direct = web_reference_answer(message, query=retrieval_message)
-                    except BudgetExpired:
-                        web_direct = None
-                    if web_direct is not None:
-                        return web_direct, SimpleNamespace(
-                            usage={}, provider='web-references', calls=0)
+                        with request_budget(time.monotonic() + budget_timeout(7)):
+                            pages = retrieve_web(retrieval_message)
+                            verified = resolve_recommendation_candidates(
+                                retrieval_message, pages, retrieve_discovery_books)
+                        if verified:
+                            book_direct = verified_book_list_answer(message, verified,
+                                history=history, topic_context=topic_context)
+                            if book_direct is not None:
+                                book_direct.diagnostics.update(
+                                    discovery_candidates=len(verified),
+                                    verified_recommendations=len(book_direct.books),
+                                    bibliographic_candidates_from_web=True)
+                                return book_direct, SimpleNamespace(
+                                    usage={}, provider='verified-web-discovery-list', calls=0)
+                    except (BudgetExpired, TimeoutError, OSError, ValueError):
+                        pass
+                # Recommendations without sufficient verified books continue
+                # through the existing model/tool pipeline. Discovery articles
+                # are evidence to investigate, not a substitute book response.
             else:
                 from .ai_quick_answers import catalogue_lookup_answer
                 from .literary_search import retrieve_books
@@ -732,6 +837,11 @@ def chatbot_finalize(request):
                 with measure_stage('finalization'):
                     remember(request, state, payload['message'], result, elapsed_ms, client,
                              topic_context=payload['topic_context'])
+                    _memory_trace({**payload['topic_context'].get('_memory_context', {}),
+                        'phase': 'G_after_persist', 'function': 'chatbot_finalize/remember',
+                        'result_status': result.status, 'turns_after': len(state.get('turns', [])),
+                        'active_work_after': state.get('active_work'),
+                        'work_order': state.get('work_order', [])})
                 final_metrics = snapshot_metrics()
             result.diagnostics['progress_metrics'] = merge_metrics(
                 result.diagnostics.get('progress_metrics', {}), final_metrics,
@@ -767,6 +877,21 @@ def chatbot_query(request):
     if not isinstance(message, str) or not message.strip() or len(message) > MAX_MESSAGE:
         return JsonResponse({'response': f'Escribe un mensaje de hasta {MAX_MESSAGE} caracteres.'}, status=400)
     message = message.strip()
+    # Reutilizar la consulta original cuando el usuario pide reintentar.
+    _retry_patterns = ('busca nuevamente', 'intenta otra vez', 'busca más información',
+                       'investiga mejor', 'explícamelo mejor', 'dame más detalles',
+                       'intentalo otra vez')
+    _normalized_msg = message.lower()
+    if any(pattern in _normalized_msg for pattern in _retry_patterns):
+        _state = request.session.get(HISTORY_KEY, {})
+        _pending = _state.get('pending_clarification') if isinstance(_state, dict) else None
+        if isinstance(_pending, dict) and _pending.get('original_query'):
+            message = _pending['original_query']
+        elif isinstance(_state, dict) and _state.get('turns'):
+            _last = _state['turns'][-1]
+            if isinstance(_last, dict) and _last.get('question'):
+                message = _last['question']
+    run_id = secrets.token_hex(8)
     if not rate_allowed(request):
         response = JsonResponse({'response': 'Has enviado demasiadas solicitudes. Espera un minuto.'}, status=429)
         response['Retry-After'] = '60'
@@ -789,15 +914,44 @@ def chatbot_query(request):
     # modificada antes de consumir el stream, así que el historial sigue
     # disponible y se evita duplicar la latencia de MySQL/TiDB.
     owner = 'user:' + str(request.user.pk) if request.user.is_authenticated else 'anonymous'
+    memory_context = ({'run_id': run_id, 'conversation': stable_session_owner(request)[:16]}
+                      if _memory_trace_enabled() else {})
+    _memory_trace({**memory_context, 'phase': 'A_before_load', 'message': message})
     with progress_scope() as progress:
         with measure_stage('conversation'):
             state = request.session.get(HISTORY_KEY, {})
             if (not isinstance(state, dict) or state.get('owner') != owner
                     or not isinstance(state.get('turns'), list)):
                 state = {'owner': owner, 'turns': []}
+            # Backward compatibility for sessions predating explicit focus.
+            if not state.get('active_work') and isinstance(state.get('turns'), list) and state['turns']:
+                last = state['turns'][-1]
+                books = last.get('books') if isinstance(last, dict) else None
+                from .literary_research import is_topic_recommendation
+                if (last.get('intent') != 'recommend' and not is_topic_recommendation(last.get('question', ''))
+                        and isinstance(books, list) and len(books) == 1 and isinstance(books[0], dict)):
+                    book = books[0]
+                    identity = {key: book.get(key) for key in
+                                ('work_id', 'title', 'author', 'confirmed_aliases', 'isbns')
+                                if book.get(key) is not None}
+                    if identity.get('title'):
+                        state['active_work'] = identity
+            turns_before = list(state.get('turns', []))
+            active_before = copy.deepcopy(state.get('active_work'))
+            from .literary_focus import prepare_focus
+            prepare_focus(state, message)
             topic_context = resolve_topic_context(message, state)
+            if memory_context:
+                memory_context['turn'] = state.get('_trace_turn', 0) + 1
+                state['_trace_turn'] = memory_context['turn']
+                topic_context['_memory_context'] = memory_context
         request_metrics = merge_metrics({}, snapshot_metrics(),
             offset_ms=max(0., (progress['start'] - start) * 1000))
+    _memory_trace({**memory_context, 'phase': 'B_after_load', 'turns_before': len(turns_before),
+                   'active_work_before': active_before, 'active_work_selected': state.get('active_work'),
+                   'history_questions': [turn.get('question') for turn in turns_before],
+                   'topic_context': topic_context})
+    _memory_trace({**memory_context, 'phase': 'C_before_answer'})
     if remember_topic(state, message, topic_context):
         # La intención del lector existe aunque falle el proveedor.
         # Se conserva aparte del historial de respuestas aceptadas.
@@ -833,6 +987,10 @@ def chatbot_query(request):
     result.diagnostics.update(elapsed_ms=elapsed_ms, chat_budget_seconds=chat_timeout(settings),
                               model_calls=getattr(client, 'calls', 0))
     remember(request, state, message, result, elapsed_ms, client, topic_context=topic_context)
+    _state_after = request.session.get(HISTORY_KEY, {})
+    _memory_trace({**memory_context, 'phase': 'G_after_persist', 'result_status': result.status,
+                   'turns_after': len(_state_after.get('turns', [])),
+                   'active_work_after': _state_after.get('active_work')})
     response = stream_result(result)
     response['Server-Timing'] = f'chat;dur={elapsed_ms}'
     response['X-LitMate-Status'] = result.status

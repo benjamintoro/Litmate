@@ -290,6 +290,12 @@ no alcanzan para responder una parte, dilo con precisión y ofrece la referencia
 real disponible en lugar de un rechazo vacío.'''
 
 ANSWER_PROMPT += '''
+Una petición de recomendaciones necesita obras individuales verificadas en
+sources, con título y autor asociados a su ficha. Los artículos que enumeran
+libros sirven para descubrir candidatos y buscar sus fichas; nunca sustituyen
+las recomendaciones ni autorizan una respuesta exitosa con books vacío.'''
+
+ANSWER_PROMPT += '''
 Si hay requested_topic o resolved_request, conserva esa materia durante toda
 la respuesta. «Cualquiera» o «distintos artistas» continúa dentro de ese tema.
 No sustituyas libros de arte por novelas que mencionan un artista. Explica
@@ -970,6 +976,7 @@ def _keep_character_snapshot(previous, candidate):
             and str(attribution.get('revision_id', '')).isdigit()
             and not source.get('injection_detected') and not source.get('conflicts_with')
             and not public_text_has_injection(source.get('description', '') + ' '
+                                             + source.get('narrative_context', '') + ' '
                                              + source.get('identity_text', ''))
             and 'fragmento del buscador' not in normalized(source.get('read_mode', '')))
 
@@ -991,6 +998,13 @@ def _keep_character_snapshot(previous, candidate):
     if len(new_facts) > len(old_facts):
         identifier = previous['id']
         replacement = {**candidate, 'id': identifier, 'character_facts': new_facts}
+        # La sinopsis de la introducción no se pierde cuando la misma URL se
+        # relee como lista de personajes. Se conserva aparte para que los
+        # papeles narrativos (protagonista, antagonista, enemigo) sigan
+        # teniendo una prueba literal y atribuida.
+        narrative = previous.get('narrative_context', '') or previous.get('description', '')
+        if narrative and narrative not in replacement.get('description', ''):
+            replacement['narrative_context'] = narrative[:1800]
         previous.clear()
         previous.update(replacement)
     return True
@@ -1050,6 +1064,8 @@ def canonical_sources(items, maximum=8):
             'read_mode': clean_text(item.get('read_mode'), 60),
             'retrieved_at': clean_text(item.get('retrieved_at'), 40),
         }
+        if item.get('narrative_context'):
+            source['narrative_context'] = clean_text(item['narrative_context'], 1800)
         # Procedencia interna: no confundir el autor de una página con la obra.
         for name in ('work_id', 'work_title', 'work_author', 'license', 'fact_kind', 'trust', 'extraction_method', 'site', 'claim_verification', 'character_scope',
                      'verified_at', 'expires_at', 'source_id', 'evidence_hash', 'policy_id',
@@ -1140,13 +1156,24 @@ def sanitized_history(history):
                               'author': clean_text(book.get('author'), 220)})
         # Reserva evidencia por obra, en vez de conservar siempre las dos primeras fichas.
         available = canonical_sources(item.get('sources', []), 8)
-        from .literary_identity import same_work
+        from .literary_identity import same_work, work_identity
         relevant = [s for s in available if any(same_work(s, b) for b in books)]
         chosen = canonical_sources(relevant + available, 6)
         turns.append({'accepted': True, 'question': clean_text(item.get('question'), 600),
                       'answer': clean_text(item.get('answer'), 1200),
                       'books': books,
                       'sources': chosen})
+        if item.get('intent') == 'recommend':
+            turns[-1]['intent'] = 'recommend'
+        focus = item.get('context_work')
+        if isinstance(focus, dict) and isinstance(focus.get('title'), str):
+            turns[-1]['context_work'] = {
+                'title': clean_text(focus['title'], 220),
+                'author': clean_text(focus.get('author'), 220),
+                'identity_status': 'reader_request',
+                **work_identity(focus)}
+        if item.get('context_only') is True:
+            turns[-1]['context_only'] = True
     return turns
 
 
@@ -1439,6 +1466,9 @@ class LiteraryAssistant:
 
     def _web_reference_fallback(self, sources, intent, diagnostics, *, message='', history=()):
         """Conserva sólo referencias literales auditadas, nunca el borrador fallido."""
+        from .literary_research import is_topic_recommendation
+        if intent == 'recommend' or is_topic_recommendation(message):
+            return None  # Artículos de descubrimiento no son recomendaciones.
         from .ai_quick_answers import reference_answer
         result = reference_answer(message, sources, intent=intent, history=history)
         if result is not None:
@@ -1882,7 +1912,7 @@ class LiteraryAssistant:
                 else:
                     sources = recommendation_sources(sources, requested,
                         different_authors=different_authors)
-            web_only = (self.allow_web_only
+            web_only = (self.allow_web_only and route['intent'] != 'recommend'
                         and not any(s['kind'] in {'book', 'excerpt'} for s in sources)
                         and any(s['kind'] == 'web' and s.get('url') for s in sources))
             context = {'message': message, 'intent': route['intent'],
@@ -2005,7 +2035,7 @@ class LiteraryAssistant:
                     queries=plan['search_queries'] if plan else None, seen=web_queries_seen)
                 context['sources'] = sources
                 context['web_search_completed'] = True
-                web_only = (self.allow_web_only
+                web_only = (self.allow_web_only and route['intent'] != 'recommend'
                             and not any(s['kind'] in {'book', 'excerpt'} for s in sources)
                             and any(s['kind'] == 'web' and s.get('url') for s in sources))
                 context['allow_web_only_recommendations'] = web_only
@@ -2233,7 +2263,7 @@ class LiteraryAssistant:
                                 queries=audit['search_queries'], seen=web_queries_seen,
                                 prefer_new=True)
                             context.update({'sources': sources, 'web_search_completed': True})
-                            web_only = (self.allow_web_only
+                            web_only = (self.allow_web_only and route['intent'] != 'recommend'
                                         and not any(s['kind'] in {'book', 'excerpt'} for s in sources)
                                         and any(s['kind'] == 'web' and s.get('url') for s in sources))
                             context['allow_web_only_recommendations'] = web_only

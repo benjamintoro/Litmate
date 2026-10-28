@@ -66,7 +66,7 @@ class RecommendationProvenanceTests(SimpleTestCase):
         self.assertEqual((answer, records), before)
 
     def test_catalogue_topic_and_identity_recommendations_do_not_require_web(self):
-        for explanation in ('Una opción para explorar la ciencia ficción y el espacio.',
+        for explanation in ('',
                             'Una novela de ciencia ficción sobre colonias espaciales.',
                             'Una opción para quienes buscan ciencia ficción espacial.'):
             answer = draft(f'**{TITLE} — {AUTHOR}**: {explanation}')
@@ -158,7 +158,7 @@ class RecommendationProvenanceTests(SimpleTestCase):
     def test_numbered_other_work_description_is_not_assigned_to_mapped_book(self):
         other = {'id': 8, 'kind': 'book', 'title': 'Otra expedición', 'author': 'Otra Autora',
                  'description': 'Una expedición descubre un mundo desconocido.'}
-        text = (f'1. **{TITLE} — {AUTHOR}**: Una opción para explorar la ciencia ficción.\n\n'
+        text = (f'1. **{TITLE} — {AUTHOR}**\n\n'
                 '2. **Otra expedición — Otra Autora**\n\nUna expedición descubre otro planeta.')
         answer = draft(text, [3, 8])
         answer['books'].append({'title': other['title'], 'author': other['author'], 'source_id': 8})

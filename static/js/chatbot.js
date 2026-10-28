@@ -194,7 +194,13 @@ document.addEventListener('DOMContentLoaded', () => {
             // de animación al presupuesto de espera del lector.
             writer.skip();
             status.hidden = true;
-            LitMateSafe.renderBookCards(botMessageDiv, suggestedBooks);
+            LitMateSafe.renderBookCards(botMessageDiv, suggestedBooks, {
+                onSelect: book => {
+                    if (!chatInput || (sendBtn && sendBtn.disabled)) return;
+                    chatInput.value = 'Háblame de ' + book.title + ' del autor ' + book.author;
+                    return sendMessage();
+                }
+            });
             scrollToBottom();
             applySmartEmotion(userMessage + ' ' + accumulatedText, answerMood);
             resetToDefault(15000);

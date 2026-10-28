@@ -29,6 +29,27 @@ from wsgiref.simple_server import WSGIServer, WSGIRequestHandler, make_server
 urlpatterns = []
 
 
+def copy_public_memory_snapshot(source, destination):
+    """Copy an opted-in public literary store, never a session/Django DB.
+
+    Workers continue to write only inside the benchmark's TemporaryDirectory.
+    The source is validated by the existing owner/schema guard and opened RO.
+    """
+    import sqlite3
+    from contextlib import closing
+    from core.literary_memory import _connection
+    source, destination = Path(source), Path(destination)
+    if source.is_symlink() or not source.is_file() or destination.exists():
+        raise ValueError('Indica una memoria pública existente y un destino nuevo.')
+    with _connection(source):
+        pass
+    with closing(sqlite3.connect(source.resolve().as_uri() + '?mode=ro', uri=True)) as src:
+        with closing(sqlite3.connect(destination)) as dst:
+            src.backup(dst)
+    return {'path': str(source.resolve()), 'sha256_copy': hashlib.sha256(destination.read_bytes()).hexdigest(),
+            'mode': 'validated_public_memory_copy_source_readonly'}
+
+
 def code_revision(base):
     digest = hashlib.sha256()
     files = [path for path in (base / 'core').rglob('*.py') if not path.name.startswith('test')]
@@ -86,6 +107,8 @@ def main(argv=None, *, message_selector=None, turn_observer=None, continue_run=N
     parser.add_argument('--library-index', type=Path, help='Índice derivado de esa biblioteca, sólo lectura.')
     parser.add_argument('--library-semantic', action='store_true',
                         help='Embeddings locales en chat: medir separadamente de la recuperación léxica.')
+    parser.add_argument('--memory-snapshot', type=Path,
+                        help='Copia una memoria literaria pública validada al entorno aislado; no modifica el origen.')
     parser.add_argument('--progressive', action='store_true', help='Mide SSE temprano + POST de finalización real.')
     parser.add_argument('--repeat', type=int, default=1, help='Repite cada turno en su conversación, sin preparar respuestas.')
     parser.add_argument('--empty-answer-cache-each-turn', action='store_true')
@@ -147,6 +170,8 @@ def main(argv=None, *, message_selector=None, turn_observer=None, continue_run=N
             LITMATE_AI_USE_WIKIDATA=not args.no_web, LITMATE_RAG_SEMANTIC=True)
         import django
         django.setup()
+        public_memory_snapshot = (copy_public_memory_snapshot(args.memory_snapshot, root / 'memory.sqlite3')
+                           if args.memory_snapshot else None)
         from django.apps import apps
         from django.db import connection, connections
         with connection.schema_editor() as editor:
@@ -166,6 +191,7 @@ def main(argv=None, *, message_selector=None, turn_observer=None, continue_run=N
             def traced_answer(message, *positional, **kwargs):
                 result, client = original_answer(message, *positional, **kwargs)
                 audit_traces.append({'question': message, 'status': result.status,
+                    'intent': result.intent,
                     'answer': result.text, 'books': copy.deepcopy(result.books),
                     'sources': copy.deepcopy(result.sources),
                     'diagnostics': copy.deepcopy(result.diagnostics)})
@@ -227,6 +253,7 @@ def main(argv=None, *, message_selector=None, turn_observer=None, continue_run=N
                       'knowledge_setup': ('empty_auxiliary_databases_with_bundled_catalogue_and_readonly_library'
                                           if args.library else 'empty_auxiliary_databases_with_bundled_catalogue'),
                       'library': str(args.library.resolve()) if args.library else None,
+                      'public_memory_snapshot': public_memory_snapshot,
                       'library_semantic': args.library_semantic,
                       'resource_scope': 'python_server_process_only_not_ollama_or_gpu',
                       'cache_controls': {'empty_answers_each_turn': args.empty_answer_cache_each_turn,
@@ -274,6 +301,7 @@ def main(argv=None, *, message_selector=None, turn_observer=None, continue_run=N
                         cpu_start = time.process_time()
                         start, first_useful, first_phase, done, text = time.monotonic(), None, None, False, ''
                         phases, diagnostics = [], {}
+                        book_cards, sse_book_cards = [], []
                         ready = None
                         try:
                             with client.open(request, timeout=args.response_budget) as response:
@@ -288,6 +316,9 @@ def main(argv=None, *, message_selector=None, turn_observer=None, continue_run=N
                                         done = True
                                         break
                                     payload = json.loads(event)
+                                    if isinstance(payload.get('books'), list):
+                                        sse_book_cards = payload['books']
+                                        book_cards = payload['books']
                                     if payload.get('stage'):
                                         if first_phase is None:
                                             first_phase = time.monotonic() - start
@@ -306,6 +337,7 @@ def main(argv=None, *, message_selector=None, turn_observer=None, continue_run=N
                                     body = json.load(response)
                                     status, text = body['status'], body['response']
                                     diagnostics = body.get('diagnostics', {})
+                                    book_cards = body.get('books', [])
                                     calls = diagnostics.get('model_calls')
                                     first_useful = time.monotonic() - start
                         except HTTPError as exc:
@@ -314,6 +346,14 @@ def main(argv=None, *, message_selector=None, turn_observer=None, continue_run=N
                         except Exception as exc:
                             http_status, status, calls = None, type(exc).__name__, None
                         elapsed = time.monotonic() - start
+                        # Sólo sesión de este cliente efímero, nunca producción.
+                        from django.contrib.sessions.backends.signed_cookies import SessionStore
+                        from core.literary_ai_views import HISTORY_KEY
+                        cookie_value = next((cookie.value for cookie in cookies
+                            if cookie.name == settings.SESSION_COOKIE_NAME), None)
+                        session_state = SessionStore(session_key=cookie_value).get(HISTORY_KEY, {})
+                        conversation_focus = {key: copy.deepcopy(session_state.get(key))
+                                              for key in ('active_work', 'previous_work')}
                         progress = (diagnostics.get('progress_metrics')
                                     if isinstance(diagnostics, dict) else None)
                         work_ms = progress.get('elapsed_ms') if isinstance(progress, dict) else None
@@ -335,6 +375,9 @@ def main(argv=None, *, message_selector=None, turn_observer=None, continue_run=N
                             'category': case.get('category', 'unspecified'),
                             'under_response_budget': elapsed <= args.response_budget,
                             'model_calls': int(calls) if calls is not None else None,
+                            'book_cards': book_cards, 'sse_book_cards': sse_book_cards,
+                            'card_delivery': 'finalize_json' if ready else 'sse_metadata',
+                            'conversation_focus': conversation_focus,
                             'answer': text, 'source_urls': re.findall(r'https://\S+', text)}
                         report['turns'].append(row)
                         if turn_observer is not None:

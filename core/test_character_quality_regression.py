@@ -203,7 +203,7 @@ class CharacterEvidenceRegressionTests(SimpleTestCase):
             self.assertGreaterEqual(len(claim['evidence'].strip()), 8)
             source = source_by_id[claim['source_id']]
             self.assertTrue(any(claim['evidence'] in source.get(field, '')
-                                for field in ('description', 'title', 'author', 'year')))
+                                for field in ('description', 'narrative_context', 'title', 'author', 'year')))
 
     def test_known_questions_explain_characters_from_the_correct_book(self):
         cases = [
@@ -224,6 +224,41 @@ class CharacterEvidenceRegressionTests(SimpleTestCase):
                 self.assert_explanation(result, expected)
                 unrelated = 'Papelucho' if sources is TOLKIEN else 'Sauron'
                 self.assertNotIn(unrelated, result.text)
+
+    def test_short_published_name_resolves_the_full_character_identity(self):
+        # «Sam» es la forma breve publicada de «Samsagaz Gamyi»; la relación
+        # debe resolverse sin relajar la prueba de la obra ni la del sujeto.
+        result = self.answer('¿Qué relación tienen Frodo y Sam?', TOLKIEN)
+        self.assert_explanation(result, ['Frodo', 'Samsagaz'])
+        history = accepted_history(TOLKIEN)
+        history[-1].update(question='¿Quién es Frodo?',
+                           answer='**Frodo Bolsón**: protagonista de la novela.')
+        result = self.answer('¿Qué relación tiene con Sam?', TOLKIEN, history=history)
+        self.assert_explanation(result, ['Frodo', 'Samsagaz'])
+
+    def test_antagonist_role_comes_from_a_preserved_narrative_introduction(self):
+        sources = evidence('El Señor de los Anillos', 'J. R. R. Tolkien', [
+            ('Frodo Bolsón', 'Es el protagonista hobbit que debe destruir el Anillo Único.'),
+            ('Sauron', 'Sauron es un ainu, uno de los maiar.'),
+        ])
+        sources[1]['narrative_context'] = (
+            'La novela narra el viaje del protagonista principal, Frodo Bolsón, '
+            'para destruir el Anillo Único y la consiguiente guerra que provocará '
+            'el enemigo para recuperarlo, ya que es la principal fuente de poder '
+            'de su creador, el señor oscuro Sauron.')
+        result = self.answer('¿Quién es el antagonista?', sources)
+        self.assert_explanation(result, ['Sauron'])
+        self.assertNotIn('Frodo Bolsón:', result.text)
+
+    def test_an_object_of_enmity_is_not_promoted_to_antagonist(self):
+        sources = evidence('Cuaderno lunar', 'Ana Robles', [
+            ('Frodo', 'Es un hobbit de la Comarca.'),
+            ('Sauron', 'Sauron es un ainu, uno de los maiar.'),
+        ])
+        sources[1]['narrative_context'] = 'Frodo teme al enemigo de Sauron desde el primer capítulo.'
+        result = self.answer('¿Quién es el antagonista?', sources)
+        self.assertTrue(result is None or result.status != 'answered',
+                        '«Enemigo de Sauron» describe a Sauron como objeto, no como antagonista.')
 
     def test_cc0_original_facts_with_a_license_note_remain_publishable(self):
         source = evidence('Cuaderno lunar', 'Ana Robles', [

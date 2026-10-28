@@ -120,7 +120,9 @@ class SpaceTopicMemoryTests(SimpleTestCase):
         self.assertNotIn('Papelucho', context['query'])
         self.assertTrue(book_search_profile(context['query'])['fiction'])
         remember_topic(state, REQUEST, context, now=1000)
-        self.assertNotIn('active_work', state)
+        # Retrieval resets its work filter for this recommendation, while the
+        # selected work remains available to return to after the suggestions.
+        self.assertEqual(state['active_work'], book)
         self.assertEqual(len(state['turns']), 1)
 
     def test_the_next_elliptical_request_keeps_the_confirmed_topic_request(self):

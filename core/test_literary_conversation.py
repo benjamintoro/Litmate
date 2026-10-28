@@ -197,7 +197,7 @@ class PendingTopicEndpointTests(TestCase):
         self.query('estoy buscando un libro sobre arte japones')
         state = self.client.session[HISTORY_KEY]
         self.assertEqual(state['turns'], [turn])
-        self.assertNotIn('active_work', state)
+        self.assertEqual(state['active_work'], source)
         self.assertEqual(state['topic']['subject'], 'arte japones')
         self.assertTrue(self.assistant.reply.call_args.kwargs['topic_context']['reset_work_context'])
 

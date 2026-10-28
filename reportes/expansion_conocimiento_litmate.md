@@ -426,3 +426,62 @@ ranking y no se instalaron paquetes. La implementación es Python puro.
 - El siguiente paso no es entrenar: es etiquetar humanamente, corregir la
   auditoría/atribución y cerrar la brecha de obras sin candidato local antes de
   activar ranking o semántica por defecto.
+
+## 12. Lote posterior: generalización de alias y ampliación de catálogo (2026-10-27)
+
+Esta sección registra una ejecución posterior; no convierte los resultados históricos anteriores en una suite aprobada ni sustituye sus capturas. Informe detallado: `generalizacion_20261027_lote01/resultados.md`.
+
+La ingesta reutilizó el catálogo oficial ya descargado, el ledger, staging por SHA-256, outbox, proyección y FTS. Se verificaron las políticas oficiales antes de ejecutarla. **No se descargaron textos ni se otorgaron permisos de obras por disponer de metadatos.** Se respaldaron ledger y memoria pública con SQLite backup; no se tocó la base Django.
+
+| Métrica | Antes | Después |
+| --- | ---: | ---: |
+| Registros de ledger | 2.298 | 2.328 |
+| Obras únicas en memoria | 2.201 | 2.230 |
+| Autores normalizados | 817 | 828 |
+| Fuentes vigentes | 2.328 | 2.358 |
+| Obras con descripción web admitida | 2 | 2 |
+| Obras con evidencia de personajes | 1 | 1 |
+| Etiquetas de personajes con papel literal | 12 | 12 |
+| Relaciones estructuradas | 0 | 0 |
+| Textos originales activos en biblioteca | 12 | 12 |
+
+Lote español: 2.967 registros escaneados, 30 aceptados/insertados/proyectados, 0 actualizados, 1.825 filtrados, 1.112 rechazados por formato/autoría/tipo, 0 errores, **7,9391 s**. Cursor **46.108→49.075**, `complete=false`, 0 pendientes/staged. La repetición exacta devuelve 30 duplicados y la proyección repetida incorpora 0 fuentes. Treinta registros producen 29 obras nuevas y una fuente de una obra ya presente. Artefacto: `generalizacion_20261027_lote01/ingesta_real.json`.
+
+Se corrigió la medición del importador: ahora distingue inserciones, actualizaciones, duplicados y revisiones antiguas; conserva historial y no degrada una revisión nueva. La nueva lectura `coverage_snapshot` separa metadatos de evidencia de contenido y no crea una base inexistente. Sus cifras se limitan a `literary_memory`; la biblioteca y el conocimiento curado se miden por separado.
+
+En 29 consultas de identificación por título/autor de las obras nuevas, Recall@5 pasó de 0 a **27/29 (0,9310)** y MRR@5 de 0 a **0,8966**; recuperación local p50 **2,258 ms**, p95 **4,813 ms**. Es aumento de cobertura, no mejora demostrada de comprensión ni del ranking. Agua de Nieve (Novela) y Despertar Para Morir (Novela) siguen fuera del top 5. No se calcularon métricas de relevancia graduada sin etiquetas adecuadas.
+
+También se unificó la extracción de alias explícitos y su uso en relaciones de una misma obra, sin nombres de libros programados en la lógica. Validación controlada independiente: 0/5→5/5 casos sobre la misma evidencia; son fixtures lingüísticos, no citas reales ni hechos verificados de sus novelas. El chat HTTP/SSE independiente respondió **7/11**, con **4 abstenciones**; p50 **2,460 s**, p95 **5,412 s**. Sam, La Maga, Sméagol y Boo siguen sin evidencia suficiente. No se presenta como solución literaria general completa ni p95 universal: esas rutas no llamaron al modelo.
+
+**195 pruebas dirigidas y 1.742 generales aprobadas** en el lote posterior. Quedan pendientes adquisición/vinculación de perfiles y alias, identidad bibliográfica general, ranking de dos obras recién incorporadas y reducción del pipeline lento del Anillo. No se añadieron conectores, paquetes, modelos, entrenamiento, APIs de pago o tareas permanentes; se conserva la semántica de biblioteca opt-in y el ranking experimental inactivo. Continuar mediante lotes con informes y copias nuevos, respetando el checkpoint existente.
+
+## 13. Lote 2: contenido utilizable y puente de recuperación (2026-10-27)
+
+Informe: `generalizacion_20261027_lote02/resultados.md`; adquisición: `ingesta_real.json`; prueba de utilidad: `chat_memoria_sin_red_despues.json` dentro de ese directorio. No sustituye las mediciones históricas.
+
+Se reutilizó el pipeline y se verificaron políticas oficiales. 8 consultas Wikipedia limitadas, 6 admitidas para 5 obras con contenido enciclopédico, sin LLM; 10 registros de catálogo francés, sin descargar textos. La ingesta duró 20,186 s, con copias previas de las dos SQLite públicas y sin tocar la base Django. Las consultas rechazadas no se asociaron a novelas por parecido: La tregua devolvió desambiguación y Narnia resultados de cine/intérpretes.
+
+| Métrica del almacén | Lote 1 | Lote 2 |
+| --- | ---: | ---: |
+| Registros ledger | 2.328 | 2.343 |
+| Pares título/autor representados | 2.230 | 2.245 |
+| Autores normalizados | 828 | 832 |
+| Fuentes vigentes | 2.358 | 2.377 |
+| Obras con descripción enciclopédica | 2 | 7 |
+| Obras con evidencia de personajes | 1 | 3 |
+| Etiquetas canónicas con papel literal | 12 | 37 |
+| Alias respaldados en pasajes vigentes | 0 | 4 |
+| Relaciones estructuradas | 0 | 0 |
+| Textos completos añadidos | 0 | 0 |
+
+Estas cifras no afirman deduplicación universal de traducciones ni comprensión profunda de los 15 pares nuevos. Los pasajes de relaciones pueden responderse literalmente sin que se haya creado un grafo. Los datos enciclopédicos conservan revisión, atribución y licencia CC BY-SA; la disponibilidad en Gutenberg no se transforma en permiso para descargar novelas en Chile.
+
+Catálogo francés: 1.318 escaneados, 10 insertados/proyectados, 1.040 filtrados y 268 rechazados por formato/autoría/tipo; 3,4423 s; cursor 0→1.318. Cursor español conservado en 49.075. Ledger final sin pendientes/staged. Repetición de los cinco registros Wikipedia finales: cinco duplicados; proyección repetida: cero. Los contadores históricos `inserted` por consulta incluyen escrituras/actualizaciones: las obras nuevas se midieron mediante estados del almacén, sin sumarlos como si fueran obras distintas.
+
+Se corrigió una brecha compartida de recuperación: la ruta rápida descartaba las identidades de obra que el almacén devuelve aparte de sus fuentes web. Ahora se conservan sin relajar verificaciones. Se añaden definiciones de párrafos en secciones de personajes y selección antes del recorte; se guardan alias explícitos entrecomillados; los perfiles requieren obra y autor concretos. Futuras proyecciones conservan también la introducción bibliográfica, con controles de inyección. No hay excepciones de títulos en producción.
+
+Utilidad real: mismo snapshot público/SHA y mismas 11 preguntas, HTTP/SSE con fuentes externas deshabilitadas. Antes del puente: 0 answered; después: 8 answered y 3 unavailable; LLM 16→7, p95 35,045→12,020 s. Sam y La Maga respondieron en 0,462/0,153 s desde memoria. Víctor respondió por la ruta general con evidencia local en 12,020 s. No equivale a certificación humana de cada afirmación. Jane Eyre no obtuvo personajes; Narnia no se vinculó; Boo/Sméagol siguen pendientes. El origen de las especies respondió desde un pasaje almacenado. El grupo C ya fue observado: no volver a llamarlo ciego en un lote futuro.
+
+La sinopsis de Frankenstein se vincula mediante variante explícita publicada y tipo de obra, sin un alias manual. La pregunta del Anillo reutiliza una misión previamente aceptada, con auditoría: 35,074→0,070 s, 0 LLM/HTTP. No confunde misión con consumación. Estas mejoras no garantizan latencia o precisión universal.
+
+247 pruebas dirigidas y 1.759 generales aprobadas. Las 10 consultas nuevas de catálogo francés tuvieron Recall@5/MRR@5 1,0; no se presenta como mejora de comprensión ni comparación equivalente con el 27/29 del lote 1. No hubo paquetes, proveedores comerciales, modelos nuevos, entrenamiento, migraciones, cambios visuales o de `.env`, commits ni push. Siguiente lote: narrativa/perfiles ausentes con grupo D, desambiguación/ediciones/traducciones, profundidad de fuentes sin secciones convencionales y relaciones estructuradas respaldadas.

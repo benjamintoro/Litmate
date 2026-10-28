@@ -563,7 +563,7 @@ def character_table_passage(html, *, context='', maximum=1800):
 
 _CHARACTER_LABEL = re.compile(
     r'^(?:(?:personajes|protagonistas?|antagonistas?|villanos?)'
-    r'(?:\s+(?:principales|secundarios|femeninos|masculinos|y|e|del|de|la|el|los|las|'
+    r'(?:\s+(?:principales|relevantes|secundarios|femeninos|masculinos|y|e|del|de|la|el|los|las|'
     r'libro|novela|obra|historia|relato|cuento|saga|serie)){0,5}|'
     r'(?:main |supporting |female |male )?characters'
     r'(?:\s+(?:in|of|from)\s+(?:the\s+)?(?:book|novel|story|work))?|'
@@ -685,7 +685,7 @@ def character_content(html, *, context='', title='', maximum=1800):
 
     def add(name, role, classification='', classification_evidence='', published_aliases=(),
             *, prefer_first=False):
-        if len(rows) >= 12:
+        if len(rows) >= 64:
             return False
         name, role = _plain(name, 100), _character_description(role, context,
                                                                 prefer_first=prefer_first)
@@ -728,8 +728,6 @@ def character_content(html, *, context='', title='', maximum=1800):
             record['classification_evidence'] = classification_evidence
         if aliases:
             record['aliases'] = list(dict.fromkeys(aliases))
-        if len(render([*rows, record])) > maximum:
-            return False
         rows.append(record)
         seen.add(key)
         return True
@@ -843,7 +841,11 @@ def character_content(html, *, context='', title='', maximum=1800):
                     named_heading = definition_heading = ''
             elif heading:
                 named_heading = definition_heading = ''
-        if len(rows) >= 12:
+            else:
+                # Paragraph definitions under a declared character section
+                # use the same subject checks as list items (bold or link).
+                name_role(node, classification, classification_evidence)
+        if len(rows) >= 64:
             break
     if not rows:
         return empty
@@ -851,9 +853,21 @@ def character_content(html, *, context='', title='', maximum=1800):
     # son los principales: preferir menciones de la introducción sin cambiar
     # la clasificación publicada ni inventar importancia narrativa.
     value = _normalized(context)
-    rows.sort(key=lambda row: not bool(re.search(r'(?<!\w)' + re.escape(_normalized(row['name'])) + r'(?!\w)', value)))
-    return {'passage': render(rows),
-            'character_facts': rows}
+    requested = _normalized(str(context).rsplit('\n', 1)[-1])
+    def priority(row):
+        labels = [row['name'], *row.get('aliases', [])]
+        exact = any(re.search(r'(?<!\w)' + re.escape(_normalized(label)) + r'(?!\w)', requested)
+                    for label in labels)
+        return (not exact, not bool(re.search(r'(?<!\w)' + re.escape(_normalized(row['name'])) + r'(?!\w)', value)))
+    rows.sort(key=priority)
+    selected = []
+    for row in rows:
+        if len(selected) >= 12:
+            break
+        if len(render([*selected, row])) <= maximum:
+            selected.append(row)
+    return {'passage': render(selected) if selected else '',
+            'character_facts': selected}
 
 
 def character_content_passage(html, *, context='', title='', maximum=1800):
