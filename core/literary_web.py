@@ -370,7 +370,7 @@ def _character_role_score(value):
     """Utilidad de una función publicada; no asigna una función nueva."""
     value = _normalized(value)
     return sum(weight for pattern, weight in (
-        (r'\b(?:protagonista|antagonista|protagonist|antagonist|villain)\b', 12),
+        (r'\b(?:protagonista|personaje principal|antagonista|protagonist|main character|antagonist|villain)\b', 12),
         (r'\b(?:companero|amigo|amiga|protector|companion|friend)\b|\bacompan', 8),
         (r'\b(?:mision|mission|combatir|portador|encargado|encargada)\b|'
          r'\b(?:forma|formando) parte|\bintegra|\bparticip', 7),
@@ -506,7 +506,8 @@ def _character_table_content(html, *, context='', maximum=1800, appendix=False):
                    for item in labels):
                 continue
             names = [i for i, item in enumerate(labels) if item in {'nombre', 'personaje', 'name', 'character'}]
-            roles = [i for i, item in enumerate(labels) if item in {'resumen', 'descripcion', 'description', 'summary', 'role', 'papel'}]
+            roles = [i for i, item in enumerate(labels) if re.fullmatch(
+                r'(?:resumen|descripcion|description|summary|role|papel)(?: (?:del? )?(?:personaje|character))?',item)]
             if len(names) != 1 or len(roles) != 1:
                 continue
             # Las filas separadoras no consumen el cupo de personajes. Algunas
@@ -648,6 +649,72 @@ def _character_classification(label):
     return ''
 
 
+_NARRATIVE_ROLE_HEAD = (r'(?:(?:un|una|el|la)\s+)?(?:protagonista|antagonista|narrador|'
+    r'navegante|estudiante|cient[ií]fic[oa]|m[eé]dic[oa]|capit[aá]n|rey|reina|'
+    r'h[eé]roe|hero[ií]na|hij[oa]|padre|madre|espos[oa]|amig[oa]|sirvient[ea]|'
+    r'criad[oa]|pretendiente|dios(?:a)?|ninfa|hechicera|c[ií]clope|criatura)\b')
+
+
+def distinct_character_mentions(facts):
+    """Suppress underspecified surname-only duplicates for display/coverage.
+
+    This does not create an alias, merge entities or erase source assertions.
+    A shorter compound surname sharing a nominal role in the same passage
+    cannot safely count as an additional distinct person. Full names stay.
+    """
+    facts = [fact for fact in facts if isinstance(fact, dict)]
+    def head(fact):
+        value = _normalized(fact.get('role', ''))
+        return re.sub(r'^(?:(?:es|era|fue) )?(?:un |una |el |la )?', '', value).split(' ', 1)[0]
+    result = []
+    for fact in facts:
+        name = _normalized(fact.get('name', ''))
+        if len(name.split()) >= 2 and any(
+                _normalized(other.get('name', '')).endswith(' ' + name)
+                and head(fact) == head(other) and head(fact)
+                for other in facts if other is not fact):
+            continue
+        result.append(fact)
+    return result
+
+
+def narrative_character_facts(text, names=()):
+    """Explicit nominal appositions/copulas, with contiguous original evidence.
+
+    With HTML, names come from links. For an already scoped stored plot, require
+    a proper name with at least two capitalized components; no free cooccurrence.
+    """
+    name_pattern = ('|'.join(re.escape(name) for name in sorted(set(names), key=len, reverse=True)) if names else
+        r'[A-ZÁÉÍÓÚÑ][\w’\'-]+(?:\s+(?:(?:de|del)\s+)?[A-ZÁÉÍÓÚÑ][\w’\'-]+){1,3}')
+    pattern = (r'(?<!\w)(?P<name>' + name_pattern + r')(?!\w)\s*'
+        r'(?:,\s*|(?:es|era|fue)\s+)(?P<role>' + _NARRATIVE_ROLE_HEAD + r'[^,;.!?\n—–()]{0,230})')
+    result = []
+    for match in re.finditer(pattern, str(text or '')[:60000]):
+        name, role, proof = match['name'].strip(), match['role'].strip(), match.group(0).strip()
+        if (12 <= len(role) <= 280 and len(proof) <= 300 and not _CHARACTER_SPOILER.search(proof)
+                and not _ADAPTATION_LABEL.search(_normalized(proof))):
+            result.append({'name': name, 'role': role, 'evidence': proof})
+        if len(result) >= 32:
+            break
+    # A preposition forces a nominal phrase («del héroe marino Ión»).
+    # Do not treat a verb or a nearby mention as the character's role.
+    prefix_names = name_pattern if names else r'[A-ZÁÉÍÓÚÑ][\w’\'-]+(?:\s+[A-ZÁÉÍÓÚÑ][\w’\'-]+){0,3}'
+    prefix = (r'\b(?:del|al|de la|a la)\s+(?P<role>(?:h[eé]roe|hero[ií]na|rey|reina|'
+              r'capit[aá]n|navegante)(?:\s+[a-záéíóúüñ]{3,20})?)\s+'
+              r'(?P<name>' + prefix_names + r')(?!\w)')
+    for match in re.finditer(prefix, str(text or '')[:60000]):
+        result.append({'name': match['name'], 'role': match['role'], 'evidence': match.group(0)})
+    # Una frase nominal explícita admite también nombres sin hipervínculo.
+    # No infiere de quién es hermano/sirviente ni convierte menciones en roles.
+    nominal_name = name_pattern if names else r'[A-ZÁÉÍÓÚÑ][\w’\'-]+(?:\s+[A-ZÁÉÍÓÚÑ][\w’\'-]+){0,3}'
+    nominal=(r'(?i:su|el|la|un|una)\s+(?P<role>(?i:herman[oa] (?:menor|mayor)|'
+             r'sirvient[ea] de la familia|criad[oa] de la familia))\s*(?:[—–]\s*)?'
+             r'(?P<name>'+nominal_name+r')(?!\w)')
+    for match in re.finditer(nominal,str(text or '')[:60000]):
+        result.append({'name':match['name'],'role':match['role'],'evidence':match.group(0)})
+    return result
+
+
 def character_content(html, *, context='', title='', maximum=1800):
     """Extrae descripciones publicadas de listas, definiciones y subtítulos.
 
@@ -684,7 +751,7 @@ def character_content(html, *, context='', title='', maximum=1800):
         return '\n'.join(lines)
 
     def add(name, role, classification='', classification_evidence='', published_aliases=(),
-            *, prefer_first=False):
+            *, prefer_first=False, literal_evidence=''):
         if len(rows) >= 64:
             return False
         name, role = _plain(name, 100), _character_description(role, context,
@@ -721,7 +788,9 @@ def character_content(html, *, context='', title='', maximum=1800):
         if key in seen:
             return False
         display = name + (' (' + ', '.join(published_aliases) + ')' if published_aliases else '')
-        evidence = display + ': ' + role
+        evidence = literal_evidence or display + ': ' + role
+        if literal_evidence and (name not in literal_evidence or role not in literal_evidence):
+            return False
         record = {'name': name, 'role': role, 'evidence': evidence}
         if classification:
             record['classification'] = classification
@@ -736,6 +805,12 @@ def character_content(html, *, context='', title='', maximum=1800):
         for note in node.select('sup, .reference, .mw-ref'):
             note.decompose()
         value = node.get_text(' ', strip=True)
+        inverse = re.match(r'(?i:el|la)\s+(?P<role>(?i:protagonista(?: por antonomasia| principal)?|'
+            r'personaje principal(?: femenino| masculino)?|antagonista(?: principal)?))\s+(?i:es|era|fue)\s+'
+            r'(?P<name>[A-ZÁÉÍÓÚÑ][\w’\'-]*(?:\s+[A-ZÁÉÍÓÚÑ][\w’\'-]*){0,4})(?=[,.;:]|$)',value)
+        if inverse:
+            add(inverse['name'],inverse['role'],literal_evidence=inverse.group(0))
+            return
         match = re.match(r'^([A-ZÁÉÍÓÚÑ][^\n,;:]{0,89})\s*[:—–]\s*(\S.*)$', value)
         if match:
             add(match.group(1), match.group(2), classification, classification_evidence)
@@ -847,6 +922,39 @@ def character_content(html, *, context='', title='', maximum=1800):
                 name_role(node, classification, classification_evidence)
         if len(rows) >= 64:
             break
+    # Some works publish roles inside the plot rather than in a Characters
+    # section. Accept only explicit linked subject + nominal apposition/copula,
+    # preserving its original contiguous span. A linked mention, location or
+    # neighbouring character does not establish that role.
+    from .literary_identity import is_literary_identity
+    narrative_level, blocked = (1 if is_literary_identity(context) else None), False
+    for node in soup.find_all(['h2', 'h3', 'h4', 'p']):
+        if _wikipedia_chrome(node) or node.find_parent(['nav', 'aside', 'footer', 'table']):
+            continue
+        if node.name.startswith('h'):
+            label, level = _normalized(node.get_text(' ', strip=True)), int(node.name[1])
+            if _ADAPTATION_LABEL.search(label) or _NON_CONTENT_LABEL.match(label):
+                narrative_level, blocked = None, True
+            elif label in {'argumento', 'trama', 'sinopsis', 'plot', 'la obra', 'estructura del poema'}:
+                narrative_level, blocked = level, False
+            elif narrative_level is not None and level <= narrative_level:
+                narrative_level = None
+            continue
+        if narrative_level is None or blocked:
+            continue
+        for note in node.select('sup, .reference, .mw-ref'):
+            note.decompose()
+        text = node.get_text(' ', strip=True)
+        for fact in narrative_character_facts(text):
+            add(fact['name'], fact['role'], prefer_first=True, literal_evidence=fact['evidence'])
+        for anchor in node.find_all('a', href=True):
+            if not str(anchor['href']).startswith(('/wiki/', './')):
+                continue
+            name = _plausible_character_name(anchor.get_text(' ', strip=True))
+            if not name:
+                continue
+            for fact in narrative_character_facts(text, [name]):
+                add(name, fact['role'], prefer_first=True, literal_evidence=fact['evidence'])
     if not rows:
         return empty
     # Para páginas de listas/anexos, los primeros nombres no necesariamente
@@ -926,6 +1034,33 @@ def _inline_section_nodes(soup, heading):
     return siblings
 
 
+def _catalogue_table(soup, maximum):
+    """Campos rotulados de una misma ficha, sin mezclar tablas ni seguir enlaces.
+
+    Son metadatos publicados, no una licencia de almacenamiento ni una prueba
+    de los acontecimientos narrados en los capítulos.
+    """
+    labels = {'titulo': 'title', 'title': 'title', 'autor': 'author', 'author': 'author',
+              'autores': 'author', 'authors': 'author', 'contenido': 'contents',
+              'contenidos': 'contents', 'contents': 'contents', 'resumen': 'summary'}
+    for table in soup.find_all('table', limit=10):
+        fields = {}
+        for row in table.find_all('tr', limit=50):
+            if row.find_parent('table') is not table:
+                continue
+            cells = row.find_all(['th', 'td'], recursive=False)
+            if len(cells) != 2:
+                continue
+            label = _normalized(cells[0].get_text(' ', strip=True)).strip(' :.')
+            key = labels.get(label)
+            value = _plain(cells[1].get_text(' ', strip=True), maximum)
+            if key and value and not _INJECTION.search(value):
+                fields.setdefault(key, value)
+        if fields.get('title') and fields.get('author'):
+            return fields
+    return {}
+
+
 def _bibliographic_contents(soup, maximum):
     """Recupera títulos de capítulos publicados, no el texto de los capítulos.
 
@@ -935,6 +1070,9 @@ def _bibliographic_contents(soup, maximum):
     """
     labels = {'table of contents', 'tabla de contenido', 'tabla de contenidos',
               'indice', 'indice de contenido', 'indice de contenidos', 'indice del libro'}
+    catalogue = _catalogue_table(soup, maximum)
+    if catalogue.get('contents'):
+        return 'Table of Contents:\n' + catalogue['contents'][:max(0, maximum - 19)]
     for heading in soup.find_all(['h2', 'h3', 'h4', 'summary', 'button']):
         if _normalized(heading.get_text(' ', strip=True)).strip(' :.') not in labels:
             continue
@@ -994,8 +1132,12 @@ def _extract_html(raw, url, query, maximum):
             text = metadata_description
         method = 'beautifulsoup_structured'
     excerpt = _relevant_excerpt(text, query, maximum)
+    catalogue = _catalogue_table(soup, min(maximum, 1800))
     identity_text = title + ' ' + ' '.join(node.get_text(' ', strip=True)
         for node in soup.find_all('p', limit=3))[:1000]
+    if catalogue:
+        identity_text = ('Título: ' + catalogue['title'] + '. Autor: ' + catalogue['author']
+                         + '. ' + identity_text)[:1500]
     structured_characters = {'passage': '', 'character_facts': []}
     if re.search(r'\b(?:personajes?|protagonistas?|antagonistas?|villanos?|characters?|'
                  r'quien es|quienes son|relacion|relationship)\b', _normalized(query)):
@@ -1057,6 +1199,7 @@ def _extract_html(raw, url, query, maximum):
                         mentions.append(name)
     return {'title': title, 'site': site, 'description': excerpt, 'excerpt': excerpt,
             'identity_text': identity_text,
+            'bibliographic_title': catalogue.get('title', ''),
             'character_facts': structured_characters['character_facts'],
             'headings': headings, 'character_mentions': list(dict.fromkeys(mentions))[:15],
             'injection_detected': injection, 'extraction_method': method}

@@ -71,47 +71,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'litmate_project.wsgi.application'
 
-# --- DATABASE CONFIGURATION (Local SQLite / TiDB Cloud MySQL) ---
-USE_SQLITE = os.getenv('USE_SQLITE', 'False').lower() in ('true', '1', 'yes')
-
-if USE_SQLITE or not os.getenv('DB_HOST'):
-    # Base de datos local SQLite
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-else:
-    # Base de datos en la nube (TiDB Cloud / MySQL)
-    ssl_ca = os.getenv('DB_SSL_CA')
-    if not ssl_ca:
-        try:
-            import certifi
-            ssl_ca = certifi.where()
-        except ImportError:
-            for ca_path in ['/etc/ssl/certs/ca-certificates.crt', '/etc/pki/tls/certs/ca-bundle.crt']:
-                if os.path.exists(ca_path):
-                    ssl_ca = ca_path
-                    break
-
-    db_options = {
-        'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-    }
-    if ssl_ca:
-        db_options['ssl'] = {'ca': ssl_ca}
-
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.getenv('DB_NAME', 'test'),
-            'USER': os.getenv('DB_USER'),
-            'PASSWORD': os.getenv('DB_PASSWORD'),
-            'HOST': os.getenv('DB_HOST'),
-            'PORT': os.getenv('DB_PORT', '4000'),
-            'OPTIONS': db_options,
-        }
-    }
+# Database selection is explicit and keeps legacy .env deployments unchanged.
+# DB_ENGINE overrides USE_SQLITE; no credentials are embedded in code.
+from .database_settings import database_config
+DATABASES = {'default': database_config(BASE_DIR)}
+USE_SQLITE = DATABASES['default']['ENGINE'] == 'django.db.backends.sqlite3'
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [

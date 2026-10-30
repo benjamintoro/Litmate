@@ -202,8 +202,36 @@ def resolve_topic_context(message, state, *, now=None):
     message = str(message or '')
     normal = _normalized(message)
     previous = _current_topic(state, now)
+    from .literary_genres import requested_categories
+    normalized_message=_normalized(message).strip('¿?¡!., ')
+    # Cambios y rechazos elípticos siguen dentro de la conversación literaria.
+    change=re.fullmatch(r'ahora (?:de |sobre )?(.+)',message.strip('¿?¡!., '),re.I)
+    if change and requested_categories(change[1]):
+        subject=_safe_subject(change[1])
+        return {'subject':subject,'intent':'recommend','query':_topic_query(subject),
+            'followup':False,'explicit_change':True,'reset_work_context':True}
+    elliptical=bool(re.fullmatch(r'(?:otro|otra)(?: que no sea es[eo])?|dame diferentes|ya lei es[eo]|'
+        r'no me gusto ninguno|recomiendame otros del mismo genero|dame algo mas oscuro|'
+        r'que no sea de .{2,100}',normalized_message))
+    explainable = bool(re.fullmatch(r'(?:recomiendame|dame|sugiereme) (?:otro|otra|algun|alguna) '
+        r'(?:libro|obra|novela) (?:del|de la) que (?:puedas (?:contarme|explicarme|decirme) mas|'
+        r'tengas (?:mas )?informacion)', normalized_message))
+    elliptical = elliptical or explainable
+    if previous and (elliptical or normalized_message.startswith('ya lei ')):
+        subject=previous['subject']
+        if 'mas oscuro' in normalized_message and 'fantasy' in requested_categories(subject):
+            subject='fantasía oscura'
+        return {'subject':subject,'intent':'recommend','query':_topic_query(subject),
+            'followup':True,'explicit_change':False,'reset_work_context':True,
+            **_language_field(previous.get('language',''))}
     from .literary_research import is_topic_recommendation
     subject = _explicit_subject(message) if is_topic_recommendation(message) else ''
+    if not subject and is_topic_recommendation(message):
+        from .literary_genres import TAXONOMY
+        direct=re.fullmatch(r'(?:recomiendame|dame|quiero|busco|necesito)\s+'
+            r'(?:(?:\d+|tres|cuatro|cinco|algunos)\s+)?(?:(?:libros|novelas)\s+)?(.+)',normalized_message)
+        if direct and any(direct[1] in row['aliases'] for row in TAXONOMY.values()):
+            subject=direct[1]
     if subject:
         subject = _safe_subject(_without_language_preference(subject))
     requested_locale = requested_language(message)

@@ -1,0 +1,5 @@
+# Local connection is direct, not behind a reverse proxy. Never trust arbitrary
+# forwarded headers or a whole Docker/private subnet to suppress a warning.
+# Keep the upstream bot-detection defaults; server.limiter remains as before.
+[botdetection]
+trusted_proxies = []

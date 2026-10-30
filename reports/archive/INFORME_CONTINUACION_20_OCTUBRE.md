@@ -60,7 +60,7 @@ $env:LITMATE_USE_GOOGLE_BOOKS_API='False'
 .\venv\Scripts\python.exe manage.py runserver 127.0.0.1:8000
 ```
 
-Mantener abiertos Ollama y Docker Desktop. No ejecutar migraciones para estas mejoras. La preparación de las fichas autorizadas se describe en `README_ASISTENTE_IA.md`; no añade novelas completas sin permiso.
+Mantener abiertos Ollama y Docker Desktop. No ejecutar migraciones para estas mejoras. La preparación de las fichas autorizadas se describe en `docs/guides/README_ASISTENTE_IA.md`; no añade novelas completas sin permiso.
 
 ```powershell
 .\venv\Scripts\python.exe -B verificar_proyecto.py core suscripciones

@@ -102,7 +102,13 @@ def sources_for_request(message, request):
         # palabra del original. Recuperar el inicio sirve sólo como evidencia
         # parcial: el auditor sigue decidiendo qué puede contestarse con ella.
         fragments = library_fragments(book['title'], [book], maximum=4)
-    fragments = [source for source in fragments if source.get('library_document_id') == book['library_document_id']]
+    def paratext(source):
+        text = normalized(source.get('description',''))
+        return ((re.match(r'^(?:chapter|capitulo)\s+(?:[ivxlcdm]+|\d+)\b',text)
+                 and len(text.split()) < 12)
+                or ('copyright' in text and re.search(r'\b(?:printed|publishers|contents)\b',text)))
+    fragments = [source for source in fragments if source.get('library_document_id') == book['library_document_id']
+                 and not paratext(source)]
     if not fragments:
         return []
     # El lector ve fragmentos parciales aunque el original esté completo.
@@ -115,6 +121,12 @@ def character_answer_from_library(message, request, config):
     sources = sources_for_request(message, request)
     if not sources:
         return None
+    if request.get('focus') in {'main','antagonist'}:
+        marker = (r'\b(?:protagonist\w*|personajes? principales?|main characters?|central characters?)\b'
+                  if request['focus'] == 'main' else r'\b(?:antagonist\w*|villan\w*)\b')
+        if not any(re.search(marker,normalized(source.get('description',''))) for source in sources
+                   if source.get('kind') == 'excerpt'):
+            return None  # Mere appearances cannot prove this classification.
     from .ai_narrative_answers import synthesize_answer
     result, client = synthesize_answer(message, request, sources, config)
     result.diagnostics.update(local_library=True, model_calls=client.calls, usage=client.usage,

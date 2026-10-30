@@ -171,7 +171,7 @@ Se conservan pruebas del catálogo y funciones existentes. Las comprobaciones
 reales de Docker, fuentes y Qwen se registran aparte: un test simulado no prueba
 disponibilidad externa ni exactitud universal.
 
-Comandos e inicio están documentados en README_ASISTENTE_IA.md. El diagnóstico
+Comandos e inicio están documentados en docs/guides/README_ASISTENTE_IA.md. El diagnóstico
 normal no hace conexiones; --live --sin-fuentes prueba únicamente la inferencia
 local sin consultar fuentes externas. Nunca imprime credenciales.
 
@@ -211,7 +211,7 @@ reportes JSON permanecen locales, excluidos de Git.
 | Recuperación y red | core/literary_search.py, core/ai_http.py, core/local_rag.py |
 | Preparación y diagnóstico | core/management/commands/indexar_libros.py, core/management/commands/diagnosticar_ia.py, verificar_proyecto.py |
 | Configuración | litmate_project/ai_settings.py, .env.example, requirements-ia-pc.txt, docker-compose.ia.yml, searxng/settings.yml, iniciar_buscador.py |
-| Documentación y regresiones | README_ASISTENTE_IA.md, core/test_local_ai.py |
+| Documentación y regresiones | docs/guides/README_ASISTENTE_IA.md, core/test_local_ai.py |
 
 | Grupo | Creados |
 | --- | --- |
@@ -248,7 +248,7 @@ La colección de novelas data/litmate_rag.sqlite3 sigue sin preparar: no se
 disponía de novelas autorizadas para cargar. Las cuatro fichas originales sí
 habilitan recuperación semántica real, pero son una colección inicial pequeña.
 Para ampliar cobertura hay que aportar textos autorizados o fichas originales
-con referencias y permisos; los comandos están en README_ASISTENTE_IA.md.
+con referencias y permisos; los comandos están en docs/guides/README_ASISTENTE_IA.md.
 
 ## Comprobación de costos y decisiones del titular
 
@@ -368,7 +368,7 @@ node verificar_chat_seguro.js
 ```
 
 La ampliación de la colección requiere material autorizado; no requiere nuevas
-claves comerciales. README_ASISTENTE_IA.md explica --metadatos e indexar_libros.
+claves comerciales. docs/guides/README_ASISTENTE_IA.md explica --metadatos e indexar_libros.
 Queda pendiente comprobar manualmente voz, micrófono y avatares en el navegador
 del usuario, revisar la cuenta de TiDB y decidir qué documentos autorizados
 añadir. No se impone contratar servicios externos para continuar.

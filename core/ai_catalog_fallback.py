@@ -103,6 +103,15 @@ def _topic_catalogue_origin(source):
         return host in {'www.wikidata.org', 'wikidata.org'} and bool(re.fullmatch(r'/wiki/Q\d+', path))
     if 'CiNii Books' in origins:
         return host == 'ci.nii.ac.jp' and bool(re.fullmatch(r'/ncid/[A-Za-z0-9]+/?', path))
+    metadata_policy = {'Project Gutenberg': ('www.gutenberg.org', r'/ebooks/[1-9]\d{0,8}',
+                                             'gutenberg-catalog-public-domain-v1'),
+                       'BNE': ('datos.bne.es', r'/resource/[A-Za-z0-9_-]{1,80}', 'bne-catalog-cc0-v1')}
+    for origin, (expected_host, pattern, policy) in metadata_policy.items():
+        if origin in origins:
+            return (url.scheme == 'https' and not url.username and not url.password
+                    and url.port in {None, 443} and not url.query and not url.fragment
+                    and host == expected_host and bool(re.fullmatch(pattern, path))
+                    and source.get('policy') == policy and source.get('license') == 'CC0-1.0')
     return False
 
 

@@ -86,7 +86,7 @@ def _safe_diagnostics(result, client):
     if diagnostics.get('work_type') in {'fiction', 'nonfiction', 'unknown'}:
         values['work_type'] = diagnostics['work_type']
     if diagnostics.get('narrative_failure') in {'audit_not_approved', 'insufficient_content',
-            'model_not_configured', 'ValueError', 'TypeError', 'ProviderUnavailable', 'BudgetExpired', 'TimeoutError'}:
+            'model_not_configured', 'retrieval_unavailable', 'ValueError', 'TypeError', 'ProviderUnavailable', 'BudgetExpired', 'TimeoutError'}:
         values['narrative_failure'] = diagnostics['narrative_failure']
     metrics = diagnostics.get('progress_metrics', {})
     if isinstance(metrics, dict):
@@ -147,6 +147,17 @@ def rate_allowed(request):
 
 
 def remember(request, state, message, result, elapsed_ms, client, *, topic_context=None):
+    if getattr(settings, 'LITMATE_AUTO_ENRICHMENT', True):
+        # Only public work IDs + outcome codes reach the existing durable queue.
+        # Never persist the message, session, username or correction text here.
+        try:
+            from .continuous_knowledge import observe_answer
+            from .literary_focus import focus_history
+            result.diagnostics['knowledge_gap'] = observe_answer(message, result, focus_history(state))
+        except Exception as exc:
+            logger.warning('Knowledge gap observation skipped: %s', type(exc).__name__)
+    from .genre_recommendations import remember_recommendations
+    remember_recommendations(state,message,topic_context or {},result)
     topic_changed = remember_topic(state, message, topic_context)
     if not result.remember:
         # The requested work is reader intent, not a rejected answer/fact.
@@ -192,8 +203,15 @@ def remember(request, state, message, result, elapsed_ms, client, *, topic_conte
         source = records.get(book.get('source_id'), book)
         remembered_books.append({**book, **work_identity(source),
                                 'source': source.get('source', ''), 'url': source.get('url', '')})
+    audit = result.diagnostics.get('audit', {})
+    cited = {claim.get('source_id') for claim in audit.get('claims', [])
+             if isinstance(claim, dict) and claim.get('verdict') == 'supported'}
+    # La memoria acota fuentes de nuevo al preparar el siguiente turno. La
+    # evidencia que respaldó la respuesta debe preceder a fichas no utilizadas,
+    # conservando sus IDs y la relación bibliográfica, no sólo el texto generado.
+    remembered_sources = sorted(result.sources, key=lambda source: source.get('id') not in cited)
     turn = {'accepted': True, 'question': message, 'answer': result.text[:5000],
-            'sources': result.sources[:8], 'books': remembered_books, 'basis': result.basis,
+            'sources': remembered_sources[:8], 'books': remembered_books, 'basis': result.basis,
             'intent': result.intent}
     from .literary_focus import remember_focus
     remember_focus(state, turn)
@@ -339,6 +357,8 @@ def _answer_with_cache(message, history, topic_context, cache_state, cache_owner
     from .ai_answer_cache import get_answer, put_answer
     topic_context = dict(topic_context)
     memory_context = topic_context.pop('_memory_context', {})
+    if cache_state.get('recommendations'):
+        topic_context['recommendation_state'] = cache_state['recommendations']
     from .literary_focus import focus_history
     history = focus_history(cache_state)
     if memory_context:
@@ -361,11 +381,16 @@ def _answer_with_cache(message, history, topic_context, cache_state, cache_owner
     enabled = getattr(settings, 'LITMATE_AI_QUICK_ANSWERS', True)
     with progress_scope() as progress:
         def measured(result, client):
+            from .literary_presentation_language import prepare_presentation
+            client = prepare_presentation(result, message, client)
             metrics = snapshot_metrics()
             if request_metrics is not None and request_started is not None:
                 metrics = merge_metrics(request_metrics, metrics,
                     offset_ms=max(0., (progress['start'] - request_started) * 1000))
             result.diagnostics['progress_metrics'] = metrics
+            reported_calls = result.diagnostics.get('model_calls',0)
+            result.diagnostics['model_calls'] = max(reported_calls if type(reported_calls) is int else 0,
+                                                   metrics.get('model_calls_started',0))
             if memory_context:
                 _memory_trace({**memory_context, 'phase': 'F_after_answer',
                     'function': '_answer_with_cache', 'result_status': result.status,
@@ -425,6 +450,10 @@ def _compute_answer_impl(message, history, topic_context, *, pending_clarificati
             except BudgetExpired:
                 pass
         if getattr(settings, 'LITMATE_AI_QUICK_ANSWERS', True):
+            from .genre_recommendations import genre_answer
+            genre_result=genre_answer(message,history,topic_context)
+            if genre_result is not None:
+                return genre_result,SimpleNamespace(usage={},provider='verified-genre-catalogue',calls=0)
             # Resolver personajes antes de las rutas bibliográficas: una
             # pertenencia P674 de Wikidata no sustituye una función narrativa.
             from .ai_character_answers import character_answer
@@ -452,7 +481,10 @@ def _compute_answer_impl(message, history, topic_context, *, pending_clarificati
                 related.diagnostics.update(discovery_candidates=related_candidates,
                                            verified_recommendations=len(related.books))
                 return related, SimpleNamespace(usage={}, provider='verified-related-books', calls=0)
-            from .ai_narrative_answers import goal_answer
+            from .ai_narrative_answers import goal_answer, comparison_answer
+            comparison = comparison_answer(message, history)
+            if comparison is not None:
+                return comparison, SimpleNamespace(usage={}, provider='verified-context-comparison', calls=0)
             goal = goal_answer(message, history)
             if goal is not None:
                 return goal, SimpleNamespace(usage={}, provider='verified-existing-goal-evidence', calls=0)
@@ -897,10 +929,16 @@ def chatbot_query(request):
         response['Retry-After'] = '60'
         return response
     if obvious_rejection(message):
-        return stream_result(ChatResult(REFUSAL, 'rejected'))
+        from .literary_presentation_language import prepare_presentation
+        result = ChatResult(REFUSAL, 'rejected')
+        prepare_presentation(result, message, SimpleNamespace(usage={}, provider='local', calls=0))
+        return stream_result(result)
     social = local_social(message)
     if social:
-        return stream_result(ChatResult(social, 'social'))
+        from .literary_presentation_language import prepare_presentation
+        result = ChatResult(social, 'social')
+        prepare_presentation(result, message, SimpleNamespace(usage={}, provider='local', calls=0))
+        return stream_result(result)
     if getattr(settings, 'LITMATE_USE_EXISTING_QUOTAS', False):
         quota_ok, quota_info = cuota_disponible(request)
         if not quota_ok:

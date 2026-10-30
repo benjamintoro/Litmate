@@ -67,12 +67,19 @@ def _cache_set(key, data, seconds):
         pass
 
 
-def _request(path, params, *, fetch=None):
+def _request(path, params, *, fetch=None, respect_cooldown=False):
+    from .literary_web import PublicFetchError
     if not getattr(settings, 'LITMATE_USE_GOOGLE_BOOKS_API', True):
         raise BooksUnavailable('disabled')
     key = str(getattr(settings, 'GOOGLE_BOOKS_API_KEY', '')).strip()
     if not key or key.startswith(('tu_', 'YOUR_')):
         raise BooksUnavailable('missing_key')
+    pause_key = 'google_books_provider_pause:' + hashlib.sha256(key.encode()).hexdigest()
+    use_pause = fetch is None or respect_cooldown
+    if use_pause:
+        paused = _cache_get(pause_key)
+        if isinstance(paused,str) and paused in {'quota_exceeded', 'access_or_quota'}:
+            raise BooksUnavailable(paused)
     params = {**params, 'key': key}
     headers = {'User-Agent': 'LitMate/2.0', 'Accept': 'application/json'}
     for attempt in range(2):
@@ -83,6 +90,18 @@ def _request(path, params, *, fetch=None):
             break
         except BudgetExpired:
             raise
+        except PublicFetchError as exc:
+            # El lector seguro no lanza HTTPError de urllib. Conservar sus
+            # códigos evita ocultar un 429 como caída genérica y repetirlo.
+            code = {'rate_limited':'quota_exceeded','http_429':'quota_exceeded',
+                    'http_403':'access_or_quota','access_denied':'access_or_quota',
+                    'http_401':'invalid_key','http_400':'invalid_query','http_404':'not_found',
+                    'timeout':'timeout','invalid_json':'invalid_response',
+                    'unsupported_type':'invalid_response'}.get(exc.code,'unavailable')
+            if use_pause and code in {'quota_exceeded','access_or_quota'}:
+                from .literary_sources import cooldown_seconds
+                _cache_set(pause_key,code,max(180,cooldown_seconds(exc)))
+            raise BooksUnavailable(code) from None
         except HTTPError as exc:
             if attempt == 0 and exc.code in {500, 502, 503, 504}:
                 # Una sola repetición para fallos transitorios, dentro del
@@ -120,7 +139,7 @@ def search_volumes(query, max_results=8, language=None, *, fetch=None, use_cache
     cache_enabled = fetch is None if use_cache is None else use_cache is True
     if isinstance(cached, list) and cache_enabled:
         return cached
-    data = _request('volumes', params, fetch=fetch)
+    data = _request('volumes', params, fetch=fetch, respect_cooldown=use_cache is True)
     items = data.get('items') or []
     if not isinstance(items, list):
         raise BooksUnavailable('invalid_response')
@@ -143,7 +162,8 @@ def get_volume(volume_id, *, fetch=None, use_cache=None):
     cache_enabled = fetch is None if use_cache is None else use_cache is True
     if isinstance(cached, dict) and cache_enabled:
         return cached
-    data = _request('volumes/' + quote(volume_id, safe=''), {'projection': 'full'}, fetch=fetch)
+    data = _request('volumes/' + quote(volume_id, safe=''), {'projection': 'full'}, fetch=fetch,
+                    respect_cooldown=use_cache is True)
     if (not isinstance(data.get('volumeInfo'), dict)
             or not isinstance(data['volumeInfo'].get('title'), str) or not data['volumeInfo']['title'].strip()):
         raise BooksUnavailable('invalid_response')
@@ -402,6 +422,19 @@ def topic_matches(source, query):
         return False
     if not profile['structured']:
         return True
+    general_history = (any(row[0]=='history' for row in profile['subjects'])
+                       and not reading['fiction'])
+    query_text = _normalized(query)
+    if general_history:
+        # Una ambientación histórica no convierte ficción/drama en historia
+        # documental. La historia literaria es un subcampo que debe pedirse.
+        if re.search(r'\b(?:drama|plays?|teatro|theatre|theater)\b',category_text) and not re.search(
+                r'\b(?:literary criticism|history and criticism|critica literaria)\b',category_text):
+            return False
+        specialized_literature = re.search(r'\b(?:literary criticism|critica literaria)\b',category_text) or re.search(
+            r'\b(?:historia de la literatura|history of literature|literary history)\b',_normalized(source.get('title')))
+        if specialized_literature and not re.search(r'\b(?:literatura|literature|literary|cultural|cultura)\b',query_text):
+            return False
     text = _normalized(' '.join([str(source.get('title') or ''), str(source.get('subtitle') or ''),
                                 source_synopsis(source), category_text]))
     if (not book_search_profile(query)['fiction'] and not any(row[0] == 'poetry' for row in profile['subjects'])
@@ -458,7 +491,7 @@ def source_synopsis(source):
     if isinstance(research, str) and research.strip():
         return _text(research, 1200)
     description = str(source.get('description') or '')
-    if description.startswith('Temas del catálogo:'):
+    if re.search(r'\bTemas del catálogo\s*:', description, re.I):
         return ''
     marker = re.search(r'sinopsis editorial\s*:\s*', description, re.I)
     if marker:
@@ -466,6 +499,22 @@ def source_synopsis(source):
     if not re.search(r'\b(?:ISBN|Editorial|Publicaci[oó]n|P[aá]ginas|Idioma)\s*:', description, re.I):
         return _text(description, 1600)
     return ''
+
+
+def content_coverage(source):
+    """Señal de selección, no certificación factual ni sinopsis inventada.
+
+    Reutiliza la suficiencia del lector de contenido: materias, publicidad y
+    snippets no equivalen a una descripción que pueda explicar después.
+    """
+    if source.get('llm_generated') or source.get('generated_by'):
+        return 0
+    from .ai_narrative_answers import _task_content
+    from .literary_quality import factual_statements
+    text = _task_content({'task': 'summary'}, source)
+    if not text:
+        return 0
+    return 2 if len(factual_statements(text)) >= 2 else 1
 
 
 def rank_book_sources(sources, query, *, distinct_works=False):
@@ -481,7 +530,7 @@ def rank_book_sources(sources, query, *, distinct_works=False):
         if not topic_matches(source, query):
             continue
         if source.get('kind') == 'excerpt':
-            ranked.append((100, position, source))
+            ranked.append((100, position, source, 100, content_coverage(source)))
             continue
         title = _normalized(source.get('title'))
         categories = source.get('categories') or []
@@ -516,21 +565,29 @@ def rank_book_sources(sources, query, *, distinct_works=False):
         if fiction and not genre and not re.search(r'\bfiction\b|\bficcion\b|\bnovela\b', text):
             continue
         score = (12 if category_match else 6 if genre_match else 0)
+        relevance = score
         score += (3 if synopsis else 0) + (2 if source.get('author') else 0)
         score += (2 if source.get('language') == 'es' else 0)
         score += (1 if 'Google Books' in str(source.get('source')) else 0)
         if topic['structured']:
             for facet in topic['subjects']:
+                if any(re.search(r'(?<!\w)' + re.escape(term) + r'(?!\w)', text) for term in facet[2]):
+                    relevance += 7
                 if any(re.search(r'(?<!\w)' + re.escape(term) + r'(?!\w)', title) for term in facet[2]):
                     score += 7
             for facet in topic['places']:
+                if any(re.search(r'(?<!\w)' + re.escape(term) + r'(?!\w)', text) for term in facet[2]):
+                    relevance += 3
                 if any(re.search(r'(?<!\w)' + re.escape(term) + r'(?!\w)', title) for term in facet[2]):
                     score += 3
             if any(facet[0] == 'history' for facet in topic['subjects']) and re.search(
                     r'\b(?:biography|memoirs?|autobiography|biografia)\b', categories):
                 score -= 3
-        ranked.append((score, position, source))
-    ranked.sort(key=lambda row: (-row[0], row[1]))
+                relevance -= 3
+        ranked.append((score, position, source, relevance, content_coverage(source)))
+    # Primero pertinencia; entre equivalentes, contenido recuperable. El
+    # idioma/proveedor siguen desempatando sin premiar publicidad extensa.
+    ranked.sort(key=lambda row: (-row[3], -row[4], -row[0], row[1]))
     if distinct_works:
         # Una edición en español de la misma obra evita recomendar primero
         # su edición inglesa sólo por tener categorías editoriales más completas.
@@ -539,7 +596,7 @@ def rank_book_sources(sources, query, *, distinct_works=False):
         ranked = [row for row in ranked if row[2].get('language') == 'es' or
                   (_normalized(row[2].get('title')), _normalized(row[2].get('author'))) not in spanish]
     selected, seen = [], set()
-    for score, position, source in ranked:
+    for score, position, source, relevance, coverage in ranked:
         identity = (_normalized(source.get('title')), _normalized(source.get('author')))
         if distinct_works and identity in seen:
             continue
@@ -554,10 +611,17 @@ def volume_source(item):
     access = item.get('accessInfo') if isinstance(item.get('accessInfo'), dict) else {}
     volume_id = str(item.get('id', ''))[:100]
     authors = info.get('authors') or []
+    author_labels = [_text(a,120) for a in authors[:5] if isinstance(a,str)] if isinstance(authors,list) else []
+    names = [re.sub(r'\s*[-–—]\s*(?:Autor/a|Compilador/a(?: o Editor/a)?|Editor/a|Traductor/a)\s+',
+                    ' ', name, flags=re.I).strip() for name in author_labels]
     identifiers = info.get('industryIdentifiers') if isinstance(info.get('industryIdentifiers'), list) else []
     isbns = [_text(i.get('identifier'), 20) for i in identifiers
              if isinstance(i, dict) and i.get('type') in {'ISBN_10', 'ISBN_13'}]
     metadata = []
+    if names != author_labels:
+        metadata.append('Responsabilidades bibliográficas del proveedor: ' + '; '.join(author_labels))
+    if info.get('subtitle'):
+        metadata.append('Subtítulo: ' + _text(info['subtitle'], 220))
     for label, value in [('Editorial', info.get('publisher')), ('Publicación', info.get('publishedDate')),
                          ('Páginas', info.get('pageCount')), ('Idioma', info.get('language'))]:
         if value:
@@ -575,11 +639,13 @@ def volume_source(item):
     images = info.get('imageLinks') if isinstance(info.get('imageLinks'), dict) else {}
     image_url = next((url for url in [safe_cover_url(images.get(name))
                      for name in ('thumbnail', 'smallThumbnail', 'small', 'medium', 'large')] if url), '')
-    return {'title': _text(info.get('title'), 220), 'subtitle': _text(info.get('subtitle'), 220),
-            'author': ', '.join(_text(a, 120) for a in authors[:5]) if isinstance(authors, list) else '',
+    source = {'title': _text(info.get('title'), 220), 'subtitle': _text(info.get('subtitle'), 220),
+            'author': ', '.join(names),
             'description': '\n'.join(metadata), 'synopsis': description, 'image_url': image_url,
             'year': str(info.get('publishedDate', ''))[:4],
             'source': 'Google Books API', 'book_id': volume_id, 'kind': 'book', 'url': link,
+            **({'description_source': 'Google Books API, descripción editorial',
+                'synopsis_source_url': link} if description else {}),
             'publisher': _text(info.get('publisher'), 120),
             'published_date': _text(info.get('publishedDate'), 30),
             'language': _text(info.get('language'), 10),
@@ -592,3 +658,10 @@ def volume_source(item):
             'public_domain': access.get('publicDomain') is True,
             'read_mode': 'ficha y sinopsis; vista previa externa' if access.get('viewability') in {
                 'PARTIAL', 'ALL_PAGES'} else 'ficha y sinopsis bibliográfica'}
+    composite = source['title'] + ': ' + source['subtitle']
+    if source['subtitle'] and source['author'] and len(composite)<=220 and re.fullmatch(r'[A-Za-z0-9_-]{1,100}',volume_id):
+        source['confirmed_aliases']=[{'title':composite,'author':source['author'],
+            'source_url':'https://books.google.com/books?'+urlencode({'id':volume_id}),
+            'evidence':'Google Books API: título '+source['title']+'; subtítulo '+source['subtitle']+
+                       '; autor '+source['author']+'; título compuesto '+composite}]
+    return source

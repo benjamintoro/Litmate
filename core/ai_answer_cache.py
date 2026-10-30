@@ -15,7 +15,7 @@ import time
 
 # Cambiar el namespace evita reutilizar referencias admitidas antes de los
 # filtros de identidad, sin borrar registros ni datos de conversaciones.
-POLICY = 'extractive-answer-v3-verified-book-cards'
+POLICY = 'extractive-answer-v8-literary-coverage'
 
 
 def _path(database=None):
@@ -56,9 +56,10 @@ def _revision():
     from .literary_knowledge import knowledge_revision
     from .literary_memory import revision
     from .ai_library_router import library_revision
+    from .bibliographic_repository import repository_revision
     paths = [Path(__file__).parent / 'data' / 'verified_readings.json',
              Path(__file__).parent / 'data' / 'topic_reference.json']
-    return [POLICY, knowledge_revision(settings), revision(), library_revision(),
+    return [POLICY, knowledge_revision(settings), revision(), library_revision(), repository_revision(),
             [(str(path), path.stat().st_mtime_ns, path.stat().st_size) for path in paths]]
 
 

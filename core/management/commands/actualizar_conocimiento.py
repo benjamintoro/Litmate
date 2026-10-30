@@ -31,11 +31,30 @@ class Command(BaseCommand):
         parser.add_argument('--stats', action='store_true', help='Lee señales agregadas sin realizar red.')
         parser.add_argument('--delete-usage', action='store_true',
                             help='Elimina sólo señales agregadas; conserva libros, fuentes y trabajos.')
+        parser.add_argument('--continuous', action='store_true', help='Un lote narrativo incremental, sin proceso residente.')
+        parser.add_argument('--max-works', type=int, default=5)
+        parser.add_argument('--work-id', action='append', default=[])
+        parser.add_argument('--stop-file', type=Path)
+        parser.add_argument('--min-free-gb', type=float, default=10)
+        parser.add_argument('--max-rss-mb', type=float, default=512)
+        parser.add_argument('--no-reindex', action='store_true')
+        parser.add_argument('--project-mysql', action='store_true', help='Referencias aditivas al catálogo MySQL existente.')
 
     def handle(self, *args, **options):
         from core.literary_memory import default_path, initialize_store, usage_stats, delete_usage
         database = options.get('database') or default_path()
         try:
+            if options.get('continuous'):
+                if any(options.get(key) for key in ('watch', 'enqueue_known', 'stats', 'delete_usage')):
+                    raise ValueError('--continuous es un lote único; no se combina con otros modos.')
+                from core.continuous_knowledge import run_continuous_batch
+                report = run_continuous_batch(database=database, maximum=options['max_works'],
+                    work_ids=options['work_id'], max_jobs=options['max_jobs'], max_seconds=options['max_seconds'],
+                    job_seconds=options['job_seconds'], pause_seconds=options['pause'],
+                    stop_file=options['stop_file'], min_free_gb=options['min_free_gb'], max_rss_mb=options['max_rss_mb'],
+                    reindex=not options['no_reindex'], project_mysql=options['project_mysql'])
+                self.stdout.write(json.dumps(report, ensure_ascii=False))
+                return
             if options.get('delete_usage'):
                 deleted = delete_usage(database=database)
                 self.stdout.write(json.dumps({'deleted_usage_rows': deleted, 'network': False}))

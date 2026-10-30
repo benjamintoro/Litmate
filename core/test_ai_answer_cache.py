@@ -66,7 +66,7 @@ class AnswerCacheTests(SimpleTestCase):
                   'url': 'https://es.wikipedia.org/wiki/El_nombre_de_la_rosa',
                   'kind': 'web', 'source': 'Wikipedia',
                   'read_mode': 'pasaje de sección de artículo público'}
-        question = '¿De qué trata El nombre de la rosa?'
+        question = 'Referencias bibliográficas de El nombre de la rosa'
         reference = reference_answer(question, [source])
         self.assertIsNotNone(reference)
         self.assertTrue(put_answer(question, {}, 'session:a', reference, database=self.path))
@@ -77,7 +77,7 @@ class AnswerCacheTests(SimpleTestCase):
         self.assertTrue(cached.diagnostics['web_reference_quick_answer'])
         self.assertTrue(cached.diagnostics['exact_answer_cache_hit'])
 
-    def test_summary_reference_is_reused_after_stripping_its_own_wrapper(self):
+    def test_explicit_reference_is_reused_after_stripping_its_own_wrapper(self):
         from .ai_quick_answers import reference_answer
         source = {'title': 'El nombre de la rosa', 'author': 'Fuente web',
                   'description': 'El nombre de la rosa es una novela de Umberto Eco. '
@@ -85,8 +85,8 @@ class AnswerCacheTests(SimpleTestCase):
                   'url': 'https://es.wikipedia.org/wiki/El_nombre_de_la_rosa',
                   'kind': 'web', 'source': 'Wikipedia',
                   'read_mode': 'pasaje de sección de artículo público'}
-        question = '¿De qué trata El nombre de la rosa?'
-        reference = reference_answer(question, [source], intent='summary')
+        question = 'Referencias bibliográficas de El nombre de la rosa'
+        reference = reference_answer(question, [source], intent='recommend')
         self.assertIsNotNone(reference)
         self.assertTrue(put_answer(question, {}, 'session:a', reference, database=self.path))
         cached = get_answer(question, {}, 'session:a', database=self.path)
@@ -99,7 +99,7 @@ class AnswerCacheTests(SimpleTestCase):
                   'description': 'El nombre de la rosa es una novela de Umberto Eco.',
                   'url': 'https://es.wikipedia.org/wiki/El_nombre_de_la_rosa',
                   'kind': 'web', 'source': 'Wikipedia'}
-        question = '¿De qué trata El nombre de la rosa?'
+        question = 'Referencias bibliográficas de El nombre de la rosa'
         reference = reference_answer(question, [source])
         self.assertIsNotNone(reference)
         reference.text = reference.text.replace('Umberto Eco', 'Un autor inventado')

@@ -24,6 +24,9 @@ def build_book_cards(result):
     """Conserva orden de respuesta y exige la misma identidad que en la fuente."""
     if result.status != 'answered':
         return []
+    presentation = result.diagnostics.get('language_presentation', {})
+    localized = {(card.get('id'), card.get('title'), card.get('author')): card.get('synopsis', '')
+                 for card in presentation.get('cards', []) if isinstance(card, dict)}
     sources = {source.get('id'): source for source in result.sources if isinstance(source, dict)}
     cards, seen = [], set()
     for book in result.books[:5]:
@@ -42,7 +45,7 @@ def build_book_cards(result):
         query = title + (' ' + author if author and author != 'Autor no informado' else '')
         google_url = allowed_url(source.get('url'), GOOGLE_HOSTS)
         google_url = google_url or allowed_url(source.get('preview_url'), GOOGLE_HOSTS)
-        original = allowed_url(source.get('url'), {'openlibrary.org', 'www.wikidata.org', 'wikidata.org'})
+        original = allowed_url(source.get('url'), {'openlibrary.org', 'www.wikidata.org', 'wikidata.org','www.gutenberg.org'})
         if not google_url and original:
             # A catalogue record permits a clearly labelled search, never a
             # fabricated Google volume ID or a claim of product availability.
@@ -50,8 +53,8 @@ def build_book_cards(result):
         if google_url:
             links.append({'label': 'Google Books', 'url': google_url})
         if original:
-            links.append({'label': 'Open Library' if urlsplit(original).hostname == 'openlibrary.org'
-                          else 'Wikidata', 'url': original})
+            labels={'openlibrary.org':'Open Library','www.gutenberg.org':'Project Gutenberg'}
+            links.append({'label':labels.get(urlsplit(original).hostname,'Wikidata'),'url':original})
         links.extend([
             {'label': 'Amazon', 'url': 'https://www.amazon.com/s?' + urlencode({'k': query, 'i': 'stripbooks'})},
             {'label': 'Buscalibre', 'url': 'https://www.buscalibre.cl/libros/search?' + urlencode({'q': query})},
@@ -68,7 +71,11 @@ def build_book_cards(result):
                     set(str(source.get('source') or '').split(' / ')) & {'Google Books API', 'Open Library'}):
                 from .books_google import source_synopsis
                 synopsis = source_synopsis(source)
-        cards.append({'id': str(source.get('book_id') or source.get('id', '')),
+        card_id = str(source.get('book_id') or source.get('id', ''))
+        # Sólo sustituir el campo narrativo. Identidad, portada y enlaces
+        # siguen pasando todas las comprobaciones originales en cada lectura.
+        synopsis = localized.get((card_id, title, author), synopsis)
+        cards.append({'id': card_id,
                       'title': title, 'author': author,
                       'synopsis': clean_text(synopsis, 420),
                       'image_url': cover_url(source.get('image_url')),

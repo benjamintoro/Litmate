@@ -53,6 +53,11 @@ def quick_knowledge_sources(query, maximum=8):
     from .literary_knowledge import search_knowledge, _score, knowledge_sources
     from .literary_identity import same_work
     local = search_knowledge(query, maximum=maximum)
+    from .bibliographic_repository import lookup_sources
+    # Una identidad mínima nueva no desplaza una ficha narrativa ya verificada.
+    protected = [source for source in [*local, *_bundled()] if source.get('description')]
+    local.extend(source for source in lookup_sources(query, maximum=maximum)
+                 if not any(same_work(source, old) for old in protected))
     from .ai_library_router import library_catalogue
     # Son fichas de originales con permiso explícito; no textos generados.
     local.extend(library_catalogue(query))
@@ -142,6 +147,63 @@ def _character_detail(message, targets, sources):
         return None
     return ChatResult(text + '\n\nFuente de la ficha: ' + page['url'], 'answered', True, selected,
                       draft['books'], 'sources', 'analysis', {'verified_character_followup': True, 'audit': audit})
+
+
+def _stored_relationship(message, targets, sources):
+    """Resuelve una relación explícita almacenada, sin inferir vínculos nuevos."""
+    value = request_text(message).strip('¿?¡!., ')
+    if (not re.fullmatch(r'(?:que|cual) relacion (?:existe |hay )?entre .+', value)
+            or re.search(r'[;\n]|\b(?:ademas|tambien|porque|compara|analiza|explica)\b', value)):
+        return None
+    from .literary_identity import same_work, normalize_identity, work_identity
+    from .literary_memory import _literal_facts
+    from .literary_quality import required_fact_statements, validate_audit
+    from .literary_evidence import validate_evidence
+    books = [source for source in sources if source['kind']=='book' and
+        ((len(targets)==1 and same_work(source,targets[0])) or
+         (not targets and normalize_identity(source['title']) in value))]
+    if len({(normalized(book['title']),normalized(book['author'])) for book in books})!=1:
+        return None
+    book=books[0]
+    matches=[]
+    for source in sources:
+        if not source.get('memory_verified') or source['kind']!='web' or not same_work(source,book):
+            continue
+        for fact in _literal_facts(source.get('literary_facts',[]),source['description'],'literary_facts'):
+            subject,relation,obj=fact.get('subject',''),fact.get('relation',''),fact.get('value','')
+            if (fact.get('topic')=='relationships' and subject and relation and obj and
+                    normalize_identity(subject) in value and normalize_identity(obj) in value):
+                remaining=re.sub(r'^(?:que|cual) relacion (?:existe |hay )?entre ','',value)
+                identity=work_identity(book)
+                titles=[book['title'],*(alias['title'] for alias in identity.get('confirmed_aliases',[]))]
+                for title in titles:
+                    remaining=re.sub(r'\s+en\s+(?:(?:el libro|la novela)\s+)?'+
+                        re.escape(normalize_identity(title))+r'$','',remaining)
+                pair=(normalize_identity(subject),normalize_identity(obj))
+                if remaining not in {pair[0]+' y '+pair[1],pair[1]+' y '+pair[0]}:
+                    continue
+                matches.append((source,fact))
+    if len({(f['subject'],f['relation'],f['value']) for _,f in matches})!=1:
+        return None
+    page,fact=matches[0]
+    selected=canonical_sources([book,page])
+    page=selected[1]
+    text=f'En **{book["title"]}**, **{fact["subject"]}** es {fact["relation"]} de **{fact["value"]}**.'
+    draft={'status':'answer','basis':'sources','text':text,'citations':[1,2],'needs_web':False,
+           'books':[{'title':book['title'],'author':book['author'],'source_id':1}]}
+    plan={'questions':[message],'search_queries':[],'needs_contents':False,'needs_fresh_sources':False,'spoilers_requested':False}
+    audit={'decision':'approve','only_books':True,'coverage':[{'question_id':1,'status':'answered'}],
+        'claims':[{'statement':statement,'verdict':'supported','source_id':2,'evidence':fact['evidence']}
+                  for statement in required_fact_statements(text)],'search_queries':[],'issues':[]}
+    try:
+        validate_draft(draft,selected)
+        validate_evidence(draft,selected,message)
+        validate_audit(audit,plan,draft,selected,message,strict_facts=True)
+    except (ValueError,TypeError):
+        return None
+    suffix='\nWikipedia contributors · CC BY-SA 4.0.' if page.get('license')=='CC-BY-SA-4.0' else ''
+    return ChatResult(text+'\n\nFuente: '+page['url']+suffix,'answered',True,selected,draft['books'],
+                      'sources','analysis',{'verified_stored_relationship':True,'audit':audit,'model_calls':0})
 
 
 def _validated_result(message, chosen, *, recommendation=False):
@@ -312,6 +374,9 @@ def quick_answer(message, history=None, *, topic_context=None, search=None):
     verified = resolve_verified_request(message, known)
     reference = resolve_followup_context(message, history)
     targets = verified['books'] or (reference['books'] if not reference['ambiguous'] else [])
+    relationship = _stored_relationship(message, targets, known)
+    if relationship is not None:
+        return relationship
     detail = _character_detail(message, targets, known)
     if detail is not None:
         return detail
@@ -333,6 +398,7 @@ def quick_answer(message, history=None, *, topic_context=None, search=None):
         result.text += '\n\nFuente de la ficha: ' + source['url']
         return result
     narrative = [source for source in candidates if source.get('policy') != 'openlibrary-minimal-metadata-v1'
+                 and not re.search(r'\bTemas del catálogo\s*:',source.get('description',''),re.I)
                  and 'metadatos bibliogr' not in source.get('read_mode', '').lower()
                  and source.get('source') != 'Wikidata']
     return _validated_result(message, narrative[:1]) if narrative else None
@@ -395,7 +461,8 @@ def catalogue_lookup_answer(message, history, search):
         return ChatResult(draft['text'] + '\n\nFuente: ' + source['url'], 'answered', True,
                           [source], draft['books'], 'sources', 'author', {'catalogue_quick_lookup': True})
     from .books_google import source_synopsis
-    if (source.get('policy') == 'openlibrary-minimal-metadata-v1'
+    if (source.get('policy') in {'openlibrary-minimal-metadata-v1',
+                               'gutenberg-catalog-public-domain-v1', 'bne-catalog-cc0-v1'}
             or 'metadatos bibliogr' in source.get('read_mode', '').lower()
             or source.get('source') == 'Wikidata'):
         return None
@@ -531,8 +598,15 @@ def _is_adaptation_page(source):
     if re.search(r'\b(?:es|son|fue|is|are|was)\s+(?:un|una|an?|the)\s+'
                  r'(?:\w+\s+){0,5}(?:band|banda|grupo musical|music group)\b', introduction):
         return True
-    return bool(re.search(r'\b(?:pelicula|film|serie de television|miniserie|'
-                          r'telenovela|musical|adaptacion cinematografica|videojuego)\b', title))
+    if re.search(r'\b(?:pelicula|film|serie de television|miniserie|'
+                 r'telenovela|musical|adaptacion cinematografica|videojuego|anime)\b', title):
+        return True
+    # A literary introduction may mention its later adaptation. Conversely,
+    # an anime's introduction may mention the manga it is based on. Order
+    # distinguishes those identities; a shared name alone does not.
+    adaptation = re.search(r'\b(?:pelicula|film|serie de television|anime|serie de animacion)\b', introduction)
+    literary = re.search(r'\b(?:novelas?|libros?|novels?|books?|manga|comics?|historietas?)\b', introduction)
+    return bool(adaptation and (not literary or adaptation.start() < literary.start()))
 
 
 def _literal_snippet(text, terms):
@@ -625,6 +699,19 @@ def reference_answer(message, sources, *, query=None, intent='recommend', limit=
     """
     if has_excerpt(message) or obvious_rejection(message) or requires_exact_text(message):
         return None
+    # Narrative generation/auditing already runs before this last-resort path.
+    # A literal search excerpt is not a verified answer to a content question.
+    # Reuse the same deterministic checks, without a second LLM/research loop;
+    # if they cannot answer, preserve the caller's honest unavailable result.
+    from .ai_narrative_answers import request_for, direct_answer
+    request = request_for(message, history)
+    if request is not None:
+        return direct_answer(message, request, sources)
+    if intent in {'summary', 'analysis'}:
+        return None
+    from .literary_research import evidence_requirements
+    if 'synopsis' in evidence_requirements(message, intent):
+        return None  # An unrecognized phrasing is not permission to dump snippets.
     from .literary_ai import LiteraryAssistant, forbidden_output
     from .literary_search import STOPWORDS
     from .literary_web import public_text_has_injection

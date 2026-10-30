@@ -94,6 +94,7 @@ def research_snapshot():
     with state['lock']:
         events = [dict(event) for event in state['events']]
         return {'logical_searches': state['searches'], 'page_slots_reserved': state['pages'],
+                'page_slots_limit': state['max_pages'],
                 'external_seconds': round(state['seconds'], 3), 'events': events,
                 'http_requests_started': sum(event['stage'] == 'http_request'
                                              and event['status'] == 'started' for event in events),

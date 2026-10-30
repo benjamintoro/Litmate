@@ -1,18 +1,2 @@
-# Python 3.12 recomendado; las pruebas locales también se verifican en el venv existente.
-# No instalar además el antiguo requirements.txt: contiene paquetes incompatibles.
-Django>=5.2.18,<5.3
-python-dotenv>=1.2,<2
-PyMySQL>=1.2.3,<2
-certifi>=2025.1
-requests>=2.32,<3
-Pillow>=11,<13
-edge-tts>=7,<8
-# Compatibilidad: core/views.py antiguo importa esta librería. La nueva IA NO la usa.
-groq>=0.30,<2
-numpy>=2,<3
-pypdf>=6,<7
-# Extracción de páginas públicas: gratuitas, sin cliente ni facturación remota.
-trafilatura==2.3.1
-beautifulsoup4==4.15.0
-# Sólo se usa cuando eliges CACHE_URL y LITMATE_AI_LOCK_BACKEND=redis.
-redis>=5,<7
+# Alias compatible con las guías existentes; una única lista de dependencias.
+-r requirements.txt

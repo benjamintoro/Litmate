@@ -120,8 +120,10 @@ class WikipediaCharacterApiTests(SimpleTestCase):
     def test_a_literal_quoted_title_beginning_with_dime_is_not_modified(self):
         with patch('core.literary_search._wikipedia_fetch', return_value={'query': {}}) as fetch:
             _search_wikipedia('"Dime quién soy" personajes')
-        query = parse_qs(urlsplit(fetch.call_args.args[0]).query)['gsrsearch'][0]
+        query = parse_qs(urlsplit(fetch.call_args_list[0].args[0]).query)['gsrsearch'][0]
         self.assertIn('intitle:"Dime quién soy"', query)
+        exact = parse_qs(urlsplit(fetch.call_args_list[1].args[0]).query)['titles'][0]
+        self.assertIn('Dime quién soy', exact)
 
     def test_empty_text_extract_character_section_uses_verified_parse_api(self):
         with research_scope(), patch('core.literary_search._wikipedia_fetch', side_effect=[
@@ -180,6 +182,14 @@ class WikipediaCharacterApiTests(SimpleTestCase):
         self.assertEqual(parse_qs(urlsplit(fetch.call_args.args[0]).query)['action'], ['parse'])
         self.assertEqual(snapshot['page_slots_reserved'], 3)
         self.assertEqual(len(sources[0]['character_facts']), 2)
+
+    def test_nested_one_page_scope_overrides_the_global_three_page_setting(self):
+        from django.test import override_settings
+        with override_settings(LITMATE_RESEARCH_MAX_PAGES=3), research_scope(pages=1), patch(
+                'core.literary_search._wikipedia_fetch', side_effect=[self.search_data(),self.parse_data()]) as fetch:
+            found = _search_wikipedia('"Cuaderno lunar" personajes')
+        self.assertEqual(parse_qs(urlsplit(fetch.call_args.args[0]).query)['action'], ['parse'])
+        self.assertTrue(found[0]['character_facts'])
 
     def test_parse_api_failure_preserves_the_previous_read_without_inventing_facts(self):
         with research_scope(), patch('core.literary_search._wikipedia_fetch', side_effect=[

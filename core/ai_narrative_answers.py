@@ -21,6 +21,8 @@ from .literary_language import request_text
 
 def request_for(message, history=(), pending_clarification=None):
     """Reconoce una sola tarea literal, sin adivinar títulos ni hechos."""
+    if isinstance(message, str):
+        message = re.sub(r'(?i)^\s*(?:hola|buenos días|buenas tardes|buenas noches)[,.!:]+\s*', '', message)
     if (not isinstance(message, str) or has_excerpt(message) or obvious_rejection(message)
             or requires_exact_text(message) or compound_literary_request(message)
             or re.search(r'[;\n\r]|[.!?]\s+\S', message)):
@@ -30,14 +32,16 @@ def request_for(message, history=(), pending_clarification=None):
                  r'(?:final|desenlace|dime|explica|resume|quien|que|como|personajes?)\b', value):
         return None
     if re.search(r'\b(?:contrasena|password|correo|email|ignora|instrucciones|'
-                 r'pelicula|videojuego|manga|capitulo|pagina|spoilers?|desenlace|final)\b', value):
+                 r'pelicula|videojuego|capitulo|pagina|spoilers?|desenlace|final)\b', value):
         return None
     # Se mantiene el título original (incluidos sus acentos) al retirar órdenes.
     raw = message.strip(' ¿?¡!.,')
+    raw = re.sub(r'(?i)^(?:hola|buenos días|buenas tardes|buenas noches)[,!: ]+\s*', '', raw)
     raw = re.sub(r'(?i)^(?:por favor[ ,]+)', '', raw)
     raw = re.sub(r'(?i)^ahora\s+(?=(?:h[aá]blame|habla|hablemos|cu[eé]ntame)\b)', '', raw)
+    raw = re.sub(r'(?i)^(?:dime|expl[ií]came)\s+(?=de qu[eé] trata\b|qu[eé] temas aborda\b)', '', raw)
     patterns = [
-        ('summary', r'(?:(?:necesito|quiero|dame|dime|cu[eé]ntame|expl[ií]came)\s+)?'
+        ('summary', r'(?:(?:cu[aá]l es|necesito|quiero|dame|dime|cu[eé]ntame|expl[ií]came)\s+)?'
          r'(?:sobre\s+)?(?:(?:el|la|un|una)\s+)?'
          r'(?:trama|argumento|sinopsis|resumen|contenido|acontecimientos(?: principales)?)'
          r'(?:\s+(?:de|del)\s+(.+))?'),
@@ -47,7 +51,7 @@ def request_for(message, history=(), pending_clarification=None):
          r'(?:\s+(?:de|del)\s+(.+))?'),
         ('summary', r'(?:y\s+)?(?:de qu[eé] trata|cu[eé]ntame de qu[eé] trata|cu[eé]ntame sobre|'
          r'de qu[eé] va|qu[eé] cuenta|qu[eé] explica|qu[eé] temas aborda|cu[eé]ntame la historia de|qu[eé] acontecimientos analiza|'
-         r'qu[eé] acontecimientos hist[oó]ricos analiza|'
+         r'qu[eé] acontecimientos hist[oó]ricos analiza|qu[eé] per[ií]odos(?: hist[oó]ricos)? aborda|'
          r'qu[eé] pasa en|qu[eé] sucede en|qu[eé] sucede en la historia de|'
          r'h[aá]blame (?:de|del)\s+|habla (?:de|del)\s+|hablemos (?:de|del)\s+|'
          r'resume|res[uú]meme|resumen de|sinopsis de)\s*(.*)'),
@@ -75,12 +79,23 @@ def request_for(message, history=(), pending_clarification=None):
             pending_request = request_for(pending_clarification.get('original_query', ''), history)
     if not match:
         history_list = sanitized_history(list(history))
+        ordinal = re.fullmatch(r'(?:y\s+)?((?:el|la)\s+(?:primero|primer|primera|segundo|segunda|'
+            r'tercero|tercer|tercera|cuarto|cuarta|quinto|quinta)(?: libro| novela| obra)?)', value)
+        previous_index = next((i for i in range(len(history_list)-1,-1,-1)
+            if not history_list[i].get('context_only') and history_list[i].get('question')), None)
+        previous_task = (request_for(history_list[previous_index]['question'], history_list[:previous_index])
+                         if ordinal and previous_index is not None else None)
+        if ordinal and previous_task is None:
+            previous_task = pending_request
         short_reply = (2 <= len(raw) <= 120
                        and not re.search(r'\b(?:no|si|gracias|adios|hola)\b', raw.lower()))
         previous_clarification = bool(history_list and short_reply and re.search(
             r'¿De cuál de las obras|¿De qué libro|Dime el título|cuál de|indica el libro',
             history_list[-1].get('answer', ''), re.I))
-        if previous_clarification:
+        if ordinal and previous_task and previous_task.get('task') in {'summary','characters','protagonist'}:
+            task = previous_task['task']
+            extracted_raw = ordinal.group(1)
+        elif previous_clarification:
             task = 'summary'
             extracted_raw = raw
         elif (pending_request and pending_clarification.get('status') == 'clarification'
@@ -92,12 +107,14 @@ def request_for(message, history=(), pending_clarification=None):
             return None
     else:
         extracted_raw = match.group(1) if match.groups() else ''
-    title = re.sub(r'(?i)^(?:el|la)\s+(?:libro|novela|obra)\s+', '', extracted_raw or '')
+    requested_format = 'manga' if re.match(r'(?i)^(?:el )?manga\s+', extracted_raw or '') else ''
+    title = re.sub(r'(?i)^(?:(?:el|la)\s+(?:libro|novela|obra)|(?:el\s+)?manga)\s+', '', extracted_raw or '')
     title = title.strip(' «»“”"\'')
     author_hint = ''
     explicit = re.fullmatch(r'(.{2,180}?)\s+(?:del autor|de la autora)\s+(.{3,100})', title, re.I)
     if not explicit:
-        candidate = re.fullmatch(r'(.{2,180})\s+de\s+([A-ZÁÉÍÓÚÑ][\w.\-]+(?:\s+[A-ZÁÉÍÓÚÑ][\w.\-]+){1,5})', title)
+        candidate = re.fullmatch(r'(.{2,180})\s+de\s+([A-ZÁÉÍÓÚÑ][\w.\-]+(?:\s+'
+            r'(?:(?:de|del|la|las|los|y|van|von|da|di)\s+){0,2}[A-ZÁÉÍÓÚÑ][\w.\-]+){1,5})', title)
         if candidate and not re.match(r'(?i)^(?:el|la|los|las|un|una|the)\b', candidate.group(2)):
             explicit = candidate
     if explicit:
@@ -113,7 +130,8 @@ def request_for(message, history=(), pending_clarification=None):
         'este ensayo', 'ese ensayo', 'el libro que mencionaste anteriormente',
         'que mencionaste anteriormente'}
     if deictic:
-        if pending_request and pending_request.get('title') and not pending_request.get('ambiguous'):
+        if (not ordinal_reference and pending_request and pending_request.get('title')
+                and not pending_request.get('ambiguous')):
             title = pending_request['title']
             author_hint = pending_request.get('author_hint', '')
             return {'task': task, 'title': title, 'targets': pending_request.get('targets', []),
@@ -159,7 +177,7 @@ def request_for(message, history=(), pending_clarification=None):
                     targets.append(book)
     if not 2 <= len(title) <= 180 or len(title.split()) > 18:
         return None
-    has_book_marker = bool(re.search(r'[«"“].{2,180}[»”"]', raw) or re.search(
+    has_book_marker = bool(author_hint or re.search(r'[«"“].{2,180}[»”"]', raw) or re.search(
         r'\b(?:libro|novela|obra|cuento|poema|ensayo|trama|argumento|sinopsis|resumen)\b', raw.lower()))
     if not targets and not has_book_marker and re.match(r'^(?:la |el )?(?:historia|vida|arte|ciencia|filosofia)\s+(?:de|del)\b',
                                                         request_text(title)):
@@ -167,8 +185,11 @@ def request_for(message, history=(), pending_clarification=None):
     from .literary_research import public_research_queries
     if not public_research_queries(title):
         return None
-    return {'task': task, 'title': title, 'targets': targets, 'author_hint': author_hint,
-            'ambiguous': len(targets) > 1}
+    request = {'task': task, 'title': title, 'targets': targets, 'author_hint': author_hint, 'format': requested_format,
+               'ambiguous': len(targets) > 1}
+    if task == 'summary' and re.search(r'\bque periodos(?: historicos)? aborda\b', value):
+        request['summary_focus'] = 'periods'
+    return request
 
 
 def _title(value):
@@ -188,13 +209,26 @@ def _has_subtitle(value, title):
 def bound_sources(request, sources):
     """Coincidencia de obra exacta; prefijos de saga/adaptaciones no sirven."""
     from .ai_quick_answers import _is_adaptation_page
-    from .literary_identity import published_title_alias, _identity_author
-    sources = canonical_sources(sources, 24)
+    from .literary_identity import published_title_alias, _identity_author, is_literary_identity
+    # Normalizar el lote acotado antes de limitar las identidades pertinentes.
+    # El historial y las fichas locales pueden ocupar las primeras 24 plazas;
+    # no deben expulsar el detalle recién recuperado de la obra solicitada.
+    # canonical_sources conserva su tope de 80 entradas; la salida sigue en 8.
+    sources = canonical_sources(sources, 80)
     title = request['title']
     targets = request['targets']
+    def document_title_match(page):
+        # Omitted articles are a search convenience, not a catalogue merge.
+        # An independently identified literary page may answer without attaching
+        # its facts to a differently titled book record.
+        bare = lambda value: re.sub(r'^(?:el|la|los|las|the)\s+', '', _title(value))
+        return (_title(page['title']) == _title(title) or (page.get('source') == 'Wikipedia'
+            and bare(page['title']) == bare(title) and is_literary_identity(page.get('identity_text', ''))))
     def usable_page(page):
         return (page['kind'] == 'web' and not page.get('injection_detected')
-                and not page.get('conflicts_with') and not _is_adaptation_page(page))
+                and not page.get('conflicts_with') and not _is_adaptation_page(page)
+                and (request.get('format') != 'manga' or re.search(r'\bmanga\b',
+                     normalized(page.get('identity_text', '')))))
 
     def appendix_page(page):
         # El anexo fue descubierto desde el artículo principal y su título ya
@@ -212,9 +246,17 @@ def bound_sources(request, sources):
         urls = {}
         for book in books:
             if book.get('url'):
-                urls.setdefault(book['url'], set()).add(normalize_identity(book['author']))
-        if any(len(authors) > 1 for authors in urls.values()):
-            return books  # El mismo registro con autores opuestos es una contradicción.
+                urls.setdefault(book['url'], []).append(book)
+        for group in urls.values():
+            labels = {normalize_identity(book['author']) for book in group}
+            if len(labels) <= 1:
+                continue
+            # A shared record is not enough to overlook contrary authors.
+            # Only a middle-name variation may proceed to the independent
+            # publication check below; this does not create a stored alias.
+            names = [label.split() for label in labels]
+            if any(len(parts) < 2 for parts in names) or len({(p[0], p[-1]) for p in names}) > 1:
+                return books
         # Una ficha de una guía de cine puede tener el título de la novela.
         # Sólo un artículo de la obra con título exacto y autor comprobado
         # permite resolver ese conflicto; el orden del catálogo no lo permite.
@@ -223,6 +265,9 @@ def bound_sources(request, sources):
                  or published_title_alias(page, title))
             and same_work(page, book) for page in sources if usable_page(page))]
         if len({normalize_identity(book['author']) for book in supported}) == 1:
+            # Resolve the answer against an independent exact-title/author
+            # publication. Do not merge the contradictory catalogue records or
+            # infer author aliases from a shared surname/identifier.
             books = supported
         else:
             return books  # La desambiguación necesita conservar sus candidatos.
@@ -237,17 +282,25 @@ def bound_sources(request, sources):
                 and not intro.strip() in page['description']):
             # La introducción recuperada de la misma página suele explicar el
             # conflicto sin revelar el desenlace de la sección Argumento.
-            page = {**page, 'description': intro, 'read_mode': 'extracto de introducción',
-                    'literary_facts': [], 'character_facts': [], 'permanent_index_allowed': False}
+            if _task_content(request, page):
+                page = {**page, 'narrative_context': intro}
+            else:
+                page = {**page, 'description': intro, 'read_mode': 'extracto de introducción',
+                        'literary_facts': [], 'character_facts': [], 'permanent_index_allowed': False}
         # No basta contener el título: X II, una película y una biografía son
         # otros documentos aunque compartan todas las palabras de la búsqueda.
         page_title = _title(page['title'])
-        explicit_title = (page_title == _title(title) or _has_subtitle(page['title'], title)
+        explicit_title = (document_title_match(page) or _has_subtitle(page['title'], title)
                           or appendix_page(page) or published_title_alias(page, title))
         if not explicit_title and not any(same_work(page, book) for book in [*books, *targets]):
             continue
         identity = normalize_identity(page.get('identity_text', ''))
-        if (request.get('author_hint') and normalize_identity(request['author_hint']) not in identity
+        hint_words = normalize_identity(request.get('author_hint', '')).split()
+        identity_words = identity.split()
+        author_in_identity = bool(hint_words and any(same_author_name(
+            request['author_hint'], ' '.join(identity_words[i:i + len(hint_words)]))
+            for i in range(len(identity_words) - len(hint_words) + 1)))
+        if (request.get('author_hint') and not author_in_identity
                 and not any(same_work(page, book) for book in books)):
             continue
         if re.search(r'\b(?:puede referirse|may refer to|desambiguacion)\b', identity):
@@ -265,10 +318,10 @@ def bound_sources(request, sources):
                 comparable = {**comparable, 'title': subtitle_book['title']}
             book = next((book for book in books if same_work(page, book) or same_work(comparable, book)), None)
             if book is None:
-                if (not targets and not request.get('author_hint') and len(title.split()) >= 3
-                        and normalize_identity(page['title']) == normalize_identity(title)
-                        and page['source'] == 'Wikipedia' and re.search(
-                            r'\b(?:novela|novel|libro|book)\b', identity)):
+                if (not targets and not request.get('author_hint') and (len(title.split()) >= 3
+                        or (document_title_match(page) and _title(page['title']) != _title(title)))
+                        and document_title_match(page)
+                        and page['source'] == 'Wikipedia' and is_literary_identity(identity)):
                     # La página verifica la obra pedida, pero no esa ficha
                     # homónima. Se responde desde la página sin asociar sus
                     # hechos ni tarjetas al autor equivocado del catálogo.
@@ -279,13 +332,18 @@ def bound_sources(request, sources):
             # auxiliar utilizado para comprobar una desambiguación por autor.
             page = {**page, 'title': published_title}
         elif not ((appendix_page(page) or len(title.split()) >= 2
+                   or re.search(r'\bes (?:un|una) (?:serie de )?manga\b', identity)
                    or any(same_work(page, target) for target in targets)
-                   or (published_title_alias(page, title) and _identity_author(page))) and re.search(
-                r'\b(?:novela|libro|obra|ensayo|novel|book|historia)\b', identity)):
+                   or (published_title_alias(page, title) and _identity_author(page)))
+                  and (is_literary_identity(identity) or re.search(r'\bhistoria\b', identity))):
             continue
         pages.append(page)
     if not pages and independent_pages:
         books, pages = [], independent_pages
+    # Entre identidades ya verificadas, conservar la ficha descriptiva; el
+    # primer registro local puede ser sólo título/autor. Nunca ampliar aquí
+    # coincidencias de obra, autores o ediciones para conseguir una sinopsis.
+    books.sort(key=lambda book: (bool(_task_content(request, book)), bool(_scope_subtitle(book))), reverse=True)
     from .literary_research import assess_evidence
     if assess_evidence(title, [*books, *pages], books, 'summary')['contradictory']:
         return []
@@ -329,22 +387,67 @@ def _content(source):
 
 def _sentences(source):
     from .literary_quality import factual_statements
-    text = _content(source)
-    headed = bool(re.match(r'\s*==+\s*(?:Argumento|Trama|Sinopsis|Resumen|Contenido)\s*==+', text, re.I))
-    text = re.sub(r'==+[^=]+==+', ' ', text)
-    sentences = factual_statements(text)
+    if source.get('evidence_scope') in {'characters','relationships'}:
+        return []  # Un papel individual no es el argumento de toda la obra.
+    text = _task_content({'task': 'summary'}, source)
+    headed = bool(re.match(r'\s*==+\s*(?:Argumento|Trama|Sinopsis|Resumen|Contenido|La obra)\s*==+', text, re.I))
+    body = re.sub(r'==+[^=]+==+', ' ', text)
+    sentences = [(line, False) for line in factual_statements(source.get('narrative_context', ''))]
+    sentences.extend((line, headed) for line in factual_statements(body))
     selected = []
-    for sentence in sentences:
+    for sentence, in_section in sentences:
+        if len(sentence) > 300:
+            # Keep a complete main clause, never a character/word cutoff. A
+            # final purpose adjunct is optional; its removal does not assert
+            # anything new. The original passage remains available to audit.
+            adjunct = re.search(r',\s+(?:con (?:el propósito|el proposito|el objetivo|el fin) de|(?:el|la) cual)\b', sentence, re.I)
+            if adjunct and 30 <= adjunct.start() <= 299:
+                sentence = sentence[:adjunct.start()].rstrip() + '.'
         if not sentence.endswith(('.', '!', '?')) or not 30 <= len(sentence) <= 300:
             continue
         value = normalized(sentence)
-        if not headed and not re.search(r'\b(?:narra|trata|sigue|historia se|viaj\w*|'
+        if re.match(r'^(?:se expone un resumen|marca el paso|concilio de|invocacion a)\b', value):
+            continue
+        if in_section and re.match(r'^(?:exhortacion|encuentro|consejo|concilio)\b', value):
+            prose = re.search(r'\b(?:Con|Mientras|Cuando|Durante|Tras)\s', sentence)
+            if prose:
+                sentence = sentence[prose.start():]
+                value = normalized(sentence)
+        if re.match(r'^(?:(?:este|esta|el|la) (?:primer|segundo|tercer|primero|segunda|tercera)?\s*)?bloque\b', value):
+            continue  # A structural outline is not a self-contained plot premise.
+        if re.match(r'^(?:este encuentro|esta situacion|cabe mencionar|cabe destacarse)\b', value):
+            continue
+        if value.startswith('incluye ') and re.search(r'\b(?:cantos?|relatos retrospectivos)\b', value):
+            continue
+        if not selected and re.match(r'^(?:alli|entonces|al volver)\b', value):
+            continue
+        if not in_section and not re.search(r'\b(?:narra|trata|sigue|historia se|viaj\w*|'
                 r'busca|descubre|investiga|aborda|explica|describe|relata|explora|se centra)\b', value):
             continue
+        if normalized(sentence) in {normalized(line) for line in selected}:
+            continue
         selected.append(sentence)
-        if len(selected) == 3 or sum(len(item.split()) for item in selected) >= 75:
+        if len(selected) == 24:
             break
-    return selected
+    # Read the bounded passage before choosing: five opening sentences can
+    # describe only a prologue while a published overview is already present.
+    # Preserve literal sentences, their order and all factual audit checks.
+    overview = [line for line in selected if re.match(
+        r'^(?:la (?:historia|novela|obra|serie)(?: principal)? (?:sigue|narra|relata|se centra)|'
+        r'conforme transcurre (?:la|el)|a lo largo de (?:la historia|la novela|la obra))\b', normalized(line))]
+    if len(selected) > 5 and overview:
+        chosen = {selected[0], *overview[:3]}
+        for line in selected:
+            if len(chosen) >= 5:
+                break
+            chosen.add(line)
+        selected = [line for line in selected if line in chosen]
+    result = []
+    for line in selected[:5]:
+        result.append(line)
+        if sum(len(item.split()) for item in result) >= 160:
+            break
+    return result
 
 
 def _spanish(source):
@@ -354,15 +457,72 @@ def _spanish(source):
     return spanish >= 3 and spanish > english
 
 
+def _task_content(request, source):
+    """Identity, membership and character biographies do not prove a plot.
+
+    This is a retrieval stopping rule, not a factual verdict. Publication still
+    requires the existing source binding, evidence and strict audit validators.
+    A descriptive catalogue label alone must not prevent a web investigation.
+    """
+    text = _content(source)
+    if not text or source.get('read_mode') == 'fragmento del buscador':
+        return ''
+    task = request['task']
+    if task != 'summary':
+        facts = [fact for fact in source.get('character_facts', []) if isinstance(fact, dict)
+                 and fact.get('name') and fact.get('role') and fact['role'] in text
+                 and 'personaje registrado' not in normalized(fact['role'])]
+        if task == 'protagonist':
+            return text if any(re.search(r'\b(?:protagonista|personaje principal)\b', normalized(fact['role']))
+                               for fact in facts) else ''
+        return text if len(facts) >= 2 else ''
+    if 'Table of Contents:' in text and work_type([source]) == 'fiction':
+        # Un índice permite ubicar capítulos; sus títulos no prueban lo que
+        # sucede en una novela. Sólo su descripción previa puede cerrar la búsqueda.
+        text = text.split('Table of Contents:',1)[0].strip()
+        if not text:
+            return ''
+    from .literary_search import main_work_plot
+    if not main_work_plot(text) or re.search(r'\bTemas del catálogo\s*:',text,re.I):
+        return ''
+    if source.get('evidence_scope') in {'characters', 'relationships', 'historical_context', 'adaptations'}:
+        return ''
+    value = normalized(text)
+    if re.match(r'^personajes\s*\(', value) or 'personaje registrado para esta obra' in value:
+        return ''
+    # A bound character article remains about that character, not the entire
+    # work. Do not use its biography as a substitute for the work's synopsis.
+    if (source.get('kind') == 'web' and source.get('work_title')
+            and _title(source['title']) != _title(source['work_title'])
+            and re.search(r'\bes (?:un|una|uno de los) personajes?\b', normalized(source.get('identity_text') or text))):
+        return ''
+    headed = re.search(r'==+\s*(?:argumento|trama|sinopsis|resumen|contenido|la obra|plot|synopsis|summary|premise)\s*==+', value)
+    action = re.search(r'\b(?:narra|relata|trata|sigue|busca|descubre|investiga|aborda|explica|describe|'
+        r'explora|cuenta|viaja|estudia|analiza|presenta|se centra|tells|follows|recounts|seeks|discovers|investigates|explores|'
+        r'examines|studies|presents|traces|describes|centers|centres|story of|story follows|table of contents)\b', value)
+    nonfiction_scope = (source.get('kind') == 'book' and source.get('description_source')
+        and work_type([source]) == 'nonfiction' and re.search(
+            r'\b(?:esta obra|este libro|la obra|el libro|this book|this work)\s+'
+            r'(?:es|ofrece|is)\s+(?:una?|an?)\s+'
+            r'(?:historia|estudio|ensayo|biografia|history|study)\b', value))
+    nonfiction_collection = (source.get('kind') == 'book' and source.get('description_source')
+        and work_type([source])=='nonfiction' and re.search(
+            r'\b(?:reune[n]?|recoge[n]?|contiene[n]?|compila[n]?|constituye[n]?|ofrece[n]?|'
+            r'presenta[n]?|analiza[n]?|estudia[n]?|compilacion de|coleccion de|ponencias|actas del)\b',value))
+    catalogue_contents = ('structured_contents' in source.get('extraction_method', '')
+                          and 'Table of Contents:' in text)
+    return text if headed or action or nonfiction_scope or nonfiction_collection or catalogue_contents else ''
+
+
 def work_type(sources):
     """Guía de redacción, derivada del contenido/materias; nunca del título solo."""
     text = normalized(' '.join(_content(source) + ' ' + ' '.join(source.get('categories', []))
                                + ' ' + ' '.join(source.get('subjects', [])) for source in sources))
-    if re.search(r'\b(?:novela|novel|fiction|ficcion)\b', re.sub(
+    if re.search(r'\b(?:novelas?|novels?|fiction|ficcion)\b', re.sub(
             r'\b(?:non[- ]fiction|no ficcion)\b', 'nonfiction', text)):
         return 'fiction'
     if re.search(r'\b(?:nonfiction|non[- ]fiction|no ficcion|textbooks?|ensayos?|essay|'
-                 r'biograph\w*|biograf\w*|history|historia|academic\w*|historiograf\w*)\b', text):
+                 r'biograph\w*|biograf\w*|history|historia|academic\w*|historiograf\w*|literary criticism|critica literaria)\b', text):
         return 'nonfiction'
     return 'unknown'
 
@@ -370,27 +530,40 @@ def work_type(sources):
 def _publish(message, request, sources, text, audit):
     books = [{'title': source['title'], 'author': source['author'], 'source_id': source['id']}
              for source in sources if source['kind'] == 'book'][:1]
-    urls = list(dict.fromkeys(source['url'] for source in sources if source['url']))
+    cited = {claim.get('source_id') for claim in audit.get('claims', [])
+             if claim.get('verdict') == 'supported'}
+    urls = list(dict.fromkeys(source['url'] for source in sources if source['url'] and source['id'] in cited))
     footer = '\n\nFuente: ' + '\n'.join(urls)
-    if any(source.get('license') == 'CC-BY-SA-4.0' for source in sources):
+    if any(source.get('license') == 'CC-BY-SA-4.0' and source['id'] in cited for source in sources):
         footer += '\nWikipedia contributors · CC BY-SA 4.0.'
+    from .literary_enrichment import has_development
+    coverage = ('development_excerpt' if any(source['id'] in cited and has_development(source) for source in sources)
+                else 'premise')
     return ChatResult(text + footer, 'answered', True, sources, books, 'sources',
                       'summary' if request['task'] == 'summary' else 'analysis',
                       {'verified_narrative_answer': True, 'audit': audit,
-                       'work_type': work_type(sources), 'model_calls': 0})
+                       'work_type': work_type(sources), 'model_calls': 0,
+                       **({'narrative_coverage':coverage,'partial_evidence':coverage=='premise'} if request['task']=='summary' else {})})
 
 
 def direct_answer(message, request, sources):
     """Sólo oraciones/roles completos y literales; no envuelve un pasaje ajeno."""
     if not request or not request['title'] or request['ambiguous']:
         return None
+    if request.get('summary_focus') == 'periods':
+        return metadata_content_answer(message, request, sources)
     from .literary_quality import required_fact_statements, validate_audit
     from .literary_evidence import validate_evidence
     from .literary_web import public_text_has_injection
     sources = bound_sources(request, sources)
     if len({normalized(source['author']) for source in sources if source['kind'] == 'book'}) > 1:
         return None
-    for source in sources:
+    from .literary_enrichment import has_development
+    candidates = (sorted(sources, key=lambda source: (has_development(source),len(_sentences(source))), reverse=True)
+                  if request['task'] == 'summary' else sources)
+    for source in candidates:
+        if source.get('read_mode') == 'fragmento del buscador':
+            continue  # Discovery text is not a retrieved, licensed content passage.
         if public_text_has_injection(source['description']):
             continue
         if not _spanish(source):
@@ -399,10 +572,23 @@ def direct_answer(message, request, sources):
                     or (str(source.get('license', '')).startswith('CC0-1.0')
                         and source.get('source') == 'Conocimiento literario local')
                     or source.get('source') == 'Wikipedia')
-        if not licensed:
-            continue  # Las descripciones editoriales se parafrasean, no se copian.
+        excerpt_mode = (not licensed and request['task']=='summary' and source['kind']=='book'
+                        and source.get('source') in {'Google Books API','Open Library'}
+                        and bool(source.get('description_source')))
+        if not licensed and not excerpt_mode:
+            continue
         if request['task'] == 'summary':
+            outline = bool(re.match(r'\s*==+\s*La obra\s*==+', source['description'], re.I))
             lines = _sentences(source)
+            if excerpt_mode:
+                from .literary_quality import factual_statements
+                contents=_content(source)
+                sentences = factual_statements(contents)
+                opening = sentences[:1]
+                opening += [re.split(r'[,;]', line, maxsplit=1)[0].strip() for line in sentences[:1]]
+                options = [line for line in [*opening, *sentences]
+                           if 8<=len(line.split())<=25 and len(line)<=280]
+                lines=options[:1]
             goal = request.get('required_goal')
             if goal:
                 # A mission is not evidence that the action was completed.
@@ -426,15 +612,28 @@ def direct_answer(message, request, sources):
                 continue
         if not lines:
             continue
-        text = ' '.join(lines) if request['task'] == 'summary' else '\n'.join('- ' + line for line in lines)
+        def display_line(line):
+            if request['task'] != 'summary':
+                return line
+            # Remove only editorial language/transliteration notes. The full
+            # original sentence, including its note, remains the cited proof.
+            value = re.sub(r'\([^()]*\b(?:en griego|en lat[ií]n|al modo latino|t[ií]tulo original)[^()]*\)', '', line, flags=re.I)
+            return re.sub(r'\s+([,.;!?])', r'\1', re.sub(r'\s{2,}', ' ', value)).strip()
+        displays = [display_line(line) for line in lines]
+        text = ' '.join(displays) if request['task'] == 'summary' else '\n'.join('- ' + line for line in displays)
+        if excerpt_mode:
+            text='«'+text+('»' if text.endswith(('.', '!', '?')) else '…»')
         claims = []
         for statement in required_fact_statements(text):
-            proof = next((line for line in lines if statement in line or statement == line), '')
+            comparable=statement.strip('«»').rstrip('…') if excerpt_mode else statement
+            proof = next((original for original, displayed in zip(lines, displays)
+                          if comparable in displayed or comparable == displayed), '')
             # Un punto añadido para presentación no cambia el pasaje que prueba
             # el papel; la prueba completa debe seguir existiendo en la fuente.
-            if proof and proof not in source['description']:
+            contents = (source['description'], source.get('narrative_context', ''))
+            if proof and not any(proof in content for content in contents):
                 proof = proof.rstrip('.')
-            if not proof or proof not in source['description']:
+            if not proof or not any(proof in content for content in contents):
                 break
             claims.append({'statement': statement, 'verdict': 'supported',
                            'source_id': source['id'], 'evidence': proof})
@@ -454,8 +653,123 @@ def direct_answer(message, request, sources):
             continue
         # El book queda para identidad/tarjetas; la prueba de trama siempre es
         # la página o la sinopsis de la que salieron las oraciones.
-        return _publish(message, request, sources, text, audit)
+        result = _publish(message, request, sources, text, audit)
+        if excerpt_mode:
+            result.diagnostics.update(editorial_excerpt=True,narrative_coverage='editorial_excerpt',partial_evidence=True)
+        if request['task'] == 'summary' and outline and len(lines) < 2:
+            result.diagnostics['outline_needs_synthesis'] = True
+        return result
     return None
+
+
+def _scope_subtitle(source):
+    """Un subtítulo de edición prueba alcance, nunca una trama reconstruida."""
+    subtitle = source.get('subtitle', '')
+    if (source.get('kind') != 'book' or work_type([source]) != 'nonfiction'
+            or not isinstance(subtitle, str) or not 8 <= len(subtitle) <= 260
+            or source.get('source') not in {'Open Library', 'Google Books API'}
+            or subtitle not in source.get('description', '')
+            or not re.search(r'\b(?:desde|hasta|durante|entre|siglo|historia|estudio|ensayo|'
+                             r'evoluci[oó]n|or[ií]genes|under|during|history|from)\b', subtitle, re.I)):
+        return ''
+    from .literary_web import public_text_has_injection
+    return '' if public_text_has_injection(subtitle) else subtitle
+
+
+def _metadata_result(message, sources, entries, *, comparison=False, focus=''):
+    """Publica metadatos literales con las validaciones factuales habituales."""
+    from .literary_quality import required_fact_statements, validate_audit
+    from .literary_evidence import validate_evidence
+    paragraphs, claims = [], []
+    for source, subtitle in entries:
+        text = f'**{source["title"]} — {source["author"]}**. Subtítulo: «{subtitle}».'
+        paragraphs.append(text)
+        for statement in required_fact_statements(text):
+            claims.append({'statement': statement, 'verdict': 'supported',
+                           'source_id': source['id'], 'evidence': subtitle})
+    text = '\n\n'.join(paragraphs)
+    limitation = ('Esta comparación se limita al alcance indicado en los subtítulos; '
+                  'no puedo confirmar diferencias de enfoque con estos datos.' if comparison else
+                  '' if focus == 'periods' else
+                  'Ese es el alcance indicado en el subtítulo; todavía no tengo una descripción más detallada.')
+    if limitation:
+        text += '\n\n' + limitation
+        for statement in required_fact_statements(limitation):
+            claims.append({'statement': statement, 'verdict': 'unverified', 'source_id': 0, 'evidence': ''})
+    # Las limitaciones no añaden hechos sobre el contenido de los libros.
+    draft = {'status': 'answer', 'basis': 'sources', 'text': text, 'needs_web': False,
+             'citations': [s['id'] for s, _ in entries],
+             'books': [{'title': s['title'], 'author': s['author'], 'source_id': s['id']} for s, _ in entries]}
+    plan = {'questions': [message], 'search_queries': [], 'needs_contents': False,
+            'needs_fresh_sources': False, 'spoilers_requested': False}
+    audit = {'decision': 'approve', 'only_books': True, 'claims': claims,
+             'coverage': [{'question_id': 1, 'status': 'uncertain'}], 'issues': [], 'search_queries': []}
+    try:
+        validate_draft(draft, sources)
+        validate_evidence(draft, sources, message)
+        validate_audit(audit, plan, draft, sources, message, strict_facts=True)
+    except (ValueError, TypeError):
+        return None
+    result = _publish(message, {'task': 'summary'}, sources, text, audit)
+    result.books = draft['books']
+    result.intent = 'analysis' if comparison else 'summary'
+    result.diagnostics.update(partial_evidence=True, narrative_coverage='bibliographic_scope',
+                              metadata_scope_answer=True, model_calls=0)
+    return result
+
+
+def metadata_content_answer(message, request, sources):
+    if not request or request.get('task') != 'summary' or request.get('ambiguous'):
+        return None
+    sources = bound_sources(request, sources)
+    entries = [(s, _scope_subtitle(s)) for s in sources if _scope_subtitle(s)]
+    return _metadata_result(message, sources, entries[:1],focus=request.get('summary_focus','')) if entries else None
+
+
+def comparison_answer(message, history):
+    """Compara una referencia ordinal con la obra activa, sin planificar con LLM."""
+    value = request_text(message)
+    if not re.fullmatch(r'(?:en )?que se diferencia (?:de|del|de la) (?:el |la )?'
+                       r'(?:primero|primera|segundo|segunda|tercero|tercera|cuarto|cuarta|quinto|quinta)'
+                       r'(?: libro| novela| obra)?(?: que recomendaste)?', value.strip(' ¿?.,!')):
+        return None
+    turns = sanitized_history(list(history or []))
+    selected = resolve_followup_context(message, turns)
+    # La referencia ordinal pertenece a la lista recomendada; la obra activa
+    # pertenece al último turno que identificó una sola obra.
+    active = next((turn['books'] for turn in reversed(turns) if len(turn['books']) == 1), [])
+    other = selected['books']
+    if selected['ambiguous'] or len(active) != 1 or len(other) != 1 or same_work(active[0], other[0]):
+        return None
+    context_sources = [s for turn in turns for s in turn['sources']
+                       if any(same_work(s, book) for book in [*active, *other])]
+    if work_type(context_sources) == 'fiction':
+        return None  # La comparación literaria existente conserva su síntesis.
+    sources, entries = [], []
+    content_available, nonfiction = [], []
+    for book in (active[0], other[0]):
+        req = {'task': 'summary', 'title': book['title'], 'targets': [book],
+               'author_hint': book.get('author', ''), 'ambiguous': False, 'metadata_focus': True}
+        found = retrieve_sources('Dime de qué trata ' + book['title'], req, turns)
+        bound = bound_sources(req, found)
+        content_available.append(any(_task_content(req, s) for s in bound))
+        nonfiction.append(work_type(bound) == 'nonfiction')
+        entry = next((s for s in bound if _scope_subtitle(s)), None)
+        if entry:
+            sources.append(entry)
+    sources = canonical_sources(sources, 2)
+    if len(sources) == 2:
+        entries = [(s, _scope_subtitle(s)) for s in sources]
+        return _metadata_result(message, sources, entries, comparison=True)
+    if all(content_available) or not all(nonfiction):
+        return None
+    # Una limitación específica conserva las identidades y evita 35 s de
+    # generación fallida; no presenta los metadatos como comparación completa.
+    text = (f'Estamos comparando **{active[0]["title"]}**, de {active[0]["author"]}, '
+            f'con **{other[0]["title"]}**, de {other[0]["author"]}. '
+            'Todavía no tengo descripciones verificadas suficientes de ambas obras para explicar sus diferencias.')
+    return ChatResult(text, 'unavailable', True, canonical_sources([*active, *other], 2),
+                      [], 'sources', 'analysis', {'model_calls': 0, 'comparison_insufficient_evidence': True})
 
 
 def goal_answer(message, history):
@@ -482,6 +796,109 @@ def goal_answer(message, history):
     return result
 
 
+def _adaptation_candidates(request, sources):
+    """A film is a separate document, never an alias of its related book."""
+    from .ai_quick_answers import _is_adaptation_page
+    compact = lambda title: _title(title).replace(' ', '')
+    candidates = []
+    for source in canonical_sources(sources, 24):
+        attribution = source.get('attribution', {})
+        if (source['kind'] != 'web' or source.get('source') != 'Wikipedia'
+                or source.get('license') != 'CC-BY-SA-4.0' or source.get('injection_detected')
+                or source.get('conflicts_with') or source.get('read_mode') == 'fragmento del buscador'
+                or not _is_adaptation_page(source) or not str(attribution.get('revision_id', '')).isdigit()
+                or attribution.get('url') != source['url']
+                or compact(source['title']) != compact(request['title'])):
+            continue
+        intro = source.get('identity_text', '')
+        if re.search(r'\b(?:es|is) (?:una?|an?)\b.{0,90}\b(?:pelicula|film)\b', normalized(intro)):
+            candidates.append({**source, 'description': intro})
+    exact = [source for source in candidates if normalize_identity(source['title']) == normalize_identity(request['title'])]
+    return exact if exact else candidates
+
+
+def adaptation_answer(message, request, sources):
+    """Explain a documented literary connection and ask which medium is wanted."""
+    if request.get('targets') or request.get('format') or re.search(
+            r'\b(?:novela|manga|poema|libro|obra teatral)\b', normalized(message)):
+        return None
+    candidates = _adaptation_candidates(request, sources)
+    if len(candidates) != 1:
+        return None
+    from .literary_quality import factual_statements, required_fact_statements, validate_audit
+    from .literary_evidence import validate_evidence
+    source = canonical_sources(candidates, 1)[0]
+    statements = factual_statements(source['description'])
+    identity = next((line for line in statements if len(line) <= 300 and re.search(
+        r'\bes (?:una?|la)\b.{0,90}\bpelicula\b', normalized(line))), '')
+    if not identity:
+        return None  # Foreign text follows the existing translation/research route.
+    relation = next((line for line in statements if len(line) <= 300 and re.search(
+        r'\b(?:basad\w*|inspir\w*)\b', normalized(line)) and re.search(
+        r'\b(?:novela|libro|obra|poema)\b', normalized(line))), '')
+    text = identity + ('\n\n' + relation if relation else '')
+    question = ('¿Quieres explorar esa obra literaria o buscas una adaptación en libro?' if relation else
+                '¿Buscas una adaptación en libro? Si tienes una edición concreta, dime su título o autor.')
+    draft = {'status': 'clarify', 'basis': 'sources', 'text': text, 'citations': [source['id']],
+             'books': [], 'needs_web': False}
+    plan = {'questions': [message], 'search_queries': [], 'needs_contents': False,
+            'needs_fresh_sources': False, 'spoilers_requested': False}
+    audit = {'decision': 'approve', 'only_books': True, 'issues': [], 'search_queries': [],
+        'coverage': [{'question_id': 1, 'status': 'uncertain'}],
+        'claims': [{'statement': line, 'source_id': source['id'], 'evidence': line, 'verdict': 'supported'}
+                   for line in required_fact_statements(text)]}
+    try:
+        validate_draft(draft, [source]); validate_evidence(draft, [source], message)
+        validate_audit(audit, plan, draft, [source], message, strict_facts=True)
+    except (ValueError, TypeError):
+        return None
+    result = _publish(message, {**request, 'task': 'relationship'}, [source], text + '\n\n' + question, audit)
+    result.status = 'clarification'
+    result.diagnostics.update(adaptation_relation=bool(relation), adaptation_identity=True)
+    return result
+
+
+def _google_work_sources(request, author):
+    """Una ampliación por autor tras un vacío, sin aceptar el primer resultado."""
+    from .literary_search import search_google
+    from .books_google import search_volumes, volume_source, BooksUnavailable
+    title = request['title']
+    # Los catálogos suelen indexar título y subtítulo en campos separados.
+    # Ampliar la consulta no modifica la identidad que se comprueba al volver.
+    parts = re.split(r'[:：]', title, maxsplit=1)
+    query = 'intitle:"' + parts[0].replace('"', ' ') + '"'
+    if len(parts) == 2:
+        query += ' ' + parts[1].replace('"', ' ')
+    if author:
+        query += ' inauthor:"' + author.replace('"', ' ') + '"'
+    retrieved = search_google(query)
+    sources = list(retrieved)
+    if getattr(retrieved, 'status', 'ok') not in {'ok', 'empty', 'partial'}:
+        _retrieval_failure(request, 'Google Books', getattr(retrieved, 'status', 'unavailable'))
+        return sources
+    if (not author or any(_task_content(request, s) for s in bound_sources(request, sources))):
+        return sources
+    try:
+        # El índice de inauthor puede omitir una ficha que sí aparece por nombre.
+        # Máximo tres consultas; el vínculo título/autor se exige después.
+        candidates = [volume_source(item) for item in search_volumes(author, max_results=8)]
+    except BooksUnavailable as error:
+        _retrieval_failure(request, 'Google Books', error.code)
+        return sources
+    matched = bound_sources(request, candidates)
+    if not any(_task_content(request,s) for s in matched):
+        try:
+            # El título sin operadores recupera volúmenes que no aparecen en
+            # los ocho primeros resultados del autor. Máximo tres consultas,
+            # siempre dentro del presupuesto compartido y sin reintentar cuota.
+            discovery = (parts[1] + ' ' + author) if len(parts) == 2 else title
+            candidates.extend(volume_source(item) for item in search_volumes(discovery,max_results=8))
+            matched = bound_sources(request,candidates)
+        except BooksUnavailable as error:
+            _retrieval_failure(request, 'Google Books', error.code)
+    return [*sources, *matched]
+
+
 def retrieve_sources(message, request, history):
     from django.conf import settings
     from .ai_quick_answers import quick_knowledge_sources
@@ -490,17 +907,72 @@ def retrieve_sources(message, request, history):
     if not title or request['ambiguous']:
         return []
     known = quick_knowledge_sources(title, maximum=16)
-    known.extend(source for turn in sanitized_history(history) for source in turn['sources'])
-    if direct_answer(message, request, known) is not None:
+    accepted_sources = [source for turn in sanitized_history(history) for source in turn['sources']]
+    known.extend(accepted_sources)
+    # Detalle de la identidad recomendada, antes de una búsqueda general. La
+    # clave de obra y el enlace works de cada edición impiden cruces homónimos.
+    if request['task'] == 'summary' and getattr(settings, 'LITMATE_AI_USE_OPENLIBRARY', True):
+        from .literary_search import (_openlibrary_detail, _openlibrary_description,
+                                      _openlibrary_edition_metadata)
+        existing = bound_sources(request, known)
+        for book in existing[:1]:
+            key = book.get('book_id') or urlsplit(book.get('url', '')).path
+            internal_id = book.get('book_id', '')
+            if (internal_id.startswith('sqlkb:') and urlsplit(book.get('url','')).hostname == 'openlibrary.org'):
+                key = urlsplit(book['url']).path
+            if (book.get('kind') != 'book' or not re.fullmatch(r'/works/OL\d+W', key)
+                    or (_content(book) and not request.get('metadata_focus')) or _scope_subtitle(book)):
+                continue
+            reads = {'used': 0}
+            detail = _openlibrary_detail(key, editions=False, reads=reads)
+            if not detail or detail.get('key') != key or not title_matches(detail.get('title'), book):
+                continue
+            book = {**book, 'book_id': key}
+            subtitle = detail.get('subtitle')
+            if isinstance(subtitle, str) and 0 < len(subtitle) <= 260:
+                book.update(subtitle=subtitle,
+                            description=book['description'] + '\nSubtítulo del registro de obra: ' + subtitle)
+            synopsis = _openlibrary_description(detail.get('description'))
+            if synopsis:
+                book.update(synopsis=synopsis, description=book['description'] + '\n' + synopsis,
+                            description_source='Open Library, registro de obra', synopsis_source_url=book['url'])
+            elif not _scope_subtitle(book):
+                editions = _openlibrary_detail(key, editions=True, reads=reads)
+                for edition in (editions or {}).get('entries', [])[:5]:
+                    if _openlibrary_edition_metadata(book, edition):
+                        break
+            # La clave SQL y el identificador oficial tienen responsabilidades
+            # distintas. La consulta usa el segundo; la ficha conserva el primero.
+            if internal_id.startswith('sqlkb:'):
+                book['book_id'] = internal_id
+            known.insert(0, book)
+    from .literary_enrichment import has_development
+    needs_development = (request['task']=='summary' and getattr(settings,'LITMATE_AI_USE_WEB',True)
+        and any(s.get('memory_verified') and s.get('evidence_scope')=='summary' and _task_content(request,s) for s in known)
+        and not any(has_development(s) for s in known))
+    def sparse_intro(source):
+        from .literary_quality import factual_statements
+        content = _task_content(request, source)
+        meaningful = (len(_sentences(source)) if _spanish(source) else sum(
+            bool(_task_content(request, {**source, 'description': line}))
+            for line in factual_statements(content) if len(line) >= 30))
+        return (request['task'] == 'summary' and bool(content)
+                and not any(source.get('url') == accepted.get('url')
+                            and source.get('description') == accepted.get('description') for accepted in accepted_sources)
+                and not re.search(r'==+\s*(?:argumento|trama|la obra|plot|sinopsis)\s*==+', content, re.I)
+                and meaningful < 2)
+    if direct_answer(message, request, known) is not None and not needs_development and not (
+            getattr(settings, 'LITMATE_AI_USE_WEB', True) and any(sparse_intro(s) for s in known)):
         return bound_sources(request, known)
     from .ai_library_router import sources_for_request
     local_sources = sources_for_request(message, request)
-    if local_sources:
+    if local_sources and not needs_development:
         request['retrieval_trace'] = [{'stage': 'local_library', 'sources': len(local_sources),
             'content': sum(source['kind'] == 'excerpt' for source in local_sources)}]
         return local_sources
+    known.extend(local_sources)
     existing = bound_sources(request, known)
-    if request['task'] == 'summary' and any(_content(source) for source in existing):
+    if request['task'] == 'summary' and not needs_development and any(_task_content(request, source) and not sparse_intro(source) for source in existing):
         # Una fuente de contenido aceptada sigue sirviendo aunque necesite
         # traducción y no pueda pasar por la ruta extractiva en español. No
         # se reutiliza el texto generado como hecho ni se reabre Internet.
@@ -512,12 +984,27 @@ def retrieve_sources(message, request, history):
     authors = {book['author'] for book in known if book['kind'] == 'book' and title_matches(title, book)}
     author = request.get('author_hint') or (next(iter(authors)) if len(authors) == 1 else '')
     jobs = []
+    def provider_result(provider, function):
+        result = function()
+        status = getattr(result, 'status', 'ok')
+        if status not in {'ok', 'empty', 'partial', 'disabled'}:
+            _retrieval_failure(request, provider, status)
+        return result
+    if (request['task'] == 'summary' and getattr(settings, 'LITMATE_USE_GOOGLE_BOOKS_API', False)
+            and not any(_task_content(request, source) for source in existing)):
+        # Reutiliza el proveedor y su control de cuota/no facturación. El título
+        # y autor son objetivos de búsqueda; bound_sources comprueba coincidencias.
+        jobs.append(lambda: _google_work_sources(request, author))
     if getattr(settings, 'LITMATE_AI_USE_WEB', True):
         query = '"' + title.replace('"', ' ') + '"' + (' ' + author if author else '') + ' ' + label
-        jobs.append(lambda: search_wikipedia(query))
+        jobs.append(lambda: provider_result('Wikipedia', lambda: search_wikipedia(query)))
     if not any(book['kind'] == 'book' and title_matches(title, book) for book in known) and getattr(
             settings, 'LITMATE_AI_USE_OPENLIBRARY', True):
-        jobs.append(lambda: search_openlibrary(title + (' ' + author if author else ''), details=False))
+        identity_query = 'intitle:"' + title.replace('"',' ') + '"'
+        if author:
+            identity_query += ' inauthor:"' + author.replace('"',' ') + '"'
+        jobs.append(lambda: provider_result('Open Library', lambda: search_openlibrary(
+            identity_query, details=False)))
     if not author and getattr(settings, 'LITMATE_AI_USE_WIKIDATA', True):
         from .literary_wikidata import search_wikidata
         jobs.append(lambda: search_wikidata(title))
@@ -537,21 +1024,25 @@ def retrieve_sources(message, request, history):
                 for future in pending:
                     future.cancel()
     bound = bound_sources(request, known)
+    request['adaptation_sources'] = _adaptation_candidates(request, known)
     request['retrieval_trace'] = [{'stage': 'bibliographic', 'sources': len(known),
         'bound': len(bound), 'content': sum(bool(_content(source)) for source in bound),
         'providers': sorted({source.get('source', '') for source in known})}]
+    if request['adaptation_sources'] and adaptation_answer(message, request, request['adaptation_sources']):
+        return bound
     # El artículo de Wikipedia puede no existir; una ficha sin sinopsis no
     # cierra la investigación. El buscador existente lee páginas permitidas
     # con los mismos límites HTTP/robots y sin extraer HTML de Google.
     if (getattr(settings, 'LITMATE_AI_USE_WEB', True)
-            and not any(_content(source) for source in bound)):
-        known.extend(_discover_content(title, author))
+            and not any(_task_content(request, source) for source in bound)):
+        with request_budget(time.monotonic() + budget_timeout(8)):
+            known.extend(_discover_content(title, author, request=request))
         bound = bound_sources(request, known)
         request['retrieval_trace'].append({'stage': 'content_discovery', 'sources': len(known),
             'bound': len(bound), 'content': sum(bool(_content(source)) for source in bound),
             'providers': sorted({source.get('source', '') for source in known})})
     if (getattr(settings, 'LITMATE_AI_USE_WEB', True)
-            and not any(_content(source) for source in bound)):
+            and not any(_task_content(request, source) for source in bound)):
         from .literary_search import retrieve_web
         query = '"' + title.replace('"', ' ') + '"' + (' ' + author if author else '') + ' book description'
         try:
@@ -565,7 +1056,7 @@ def retrieve_sources(message, request, history):
             'providers': sorted({source.get('source', '') for source in known})})
     # Una obra no novelística puede no tener artículo propio. Su descripción
     # oficial sirve para síntesis, pero no se licencia ni persiste como CC0.
-    if request['task'] == 'summary' and not any(_content(source) for source in bound):
+    if request['task'] == 'summary' and not any(_task_content(request, source) for source in bound):
         from .literary_search import _openlibrary_detail, _openlibrary_description
         for index, book in enumerate(bound):
             path = urlsplit(book['url']).path
@@ -578,7 +1069,10 @@ def retrieve_sources(message, request, history):
                 book['subjects'] = detail['subjects']
             synopsis = _openlibrary_description(detail.get('description'))
             if synopsis:
-                book = {**book, 'description': synopsis, 'synopsis': synopsis,
+                description = book['description']
+                if synopsis not in description:
+                    description += '\n' + synopsis
+                book = {**book, 'description': description, 'synopsis': synopsis,
                         'read_mode': 'descripción del registro bibliográfico; no texto de la obra',
                         'description_source': 'Open Library, registro de obra'}
                 for field in ('memory_verified', 'policy'):
@@ -592,7 +1086,15 @@ def retrieve_sources(message, request, history):
     return bound
 
 
-def _discover_content(title, author):
+def _retrieval_failure(request, provider, status):
+    """Sólo códigos de fallo; nunca URLs, cuerpos privados ni excepciones crudas."""
+    if request is not None:
+        item = {'provider': provider, 'status': str(status)[:60]}
+        if item not in request.setdefault('retrieval_failures', []):
+            request['retrieval_failures'].append(item)
+
+
+def _discover_content(title, author, *, request=None):
     """Lee hasta dos páginas de resultados reales; conserva todos los guardas.
 
     SearXNG local precede a la ampliación general. No ejecuta URLs del modelo
@@ -603,43 +1105,67 @@ def _discover_content(title, author):
                                   read_public_page, read_public_web_page, trusted_url)
     from .literary_sources import reserve_page, record_research_event
     query = '"' + title.replace('"', ' ') + '"' + (' ' + author if author else '')
-    providers = ([search_searx] if getattr(settings, 'LITMATE_AI_USE_SEARXNG', False) else [])
-    providers += [search_duckduckgo]
-    found, reads = [], 0
-    for search in providers:
+    # Segundo intento con términos de edición, sin relajar la identidad al
+    # aceptar resultados. Las comillas largas pueden ocultar fichas válidas.
+    parts = re.split(r'[:：]', title, maxsplit=1)
+    relaxed = (parts[-1] + (' ' + author if author else '')).strip()
+    searches = [query, relaxed]
+    searx_enabled = getattr(settings, 'LITMATE_AI_USE_SEARXNG', False)
+    found, reads, seen_urls = [], 0, set()
+    for search_query in dict.fromkeys(searches):
         if reads >= 2:
             break
         try:
             with measure_stage('web_search'):
-                candidates = list(search(query))
+                retrieved = search_searx(search_query, web=True) if searx_enabled else search_duckduckgo(search_query)
+                if (searx_enabled and getattr(retrieved, 'status', '') in {'unavailable','cooldown'}
+                        and not getattr(retrieved, 'providers', {})):
+                    retrieved = search_duckduckgo(search_query)
+                status = getattr(retrieved, 'status', 'ok')
+                if status not in {'ok', 'empty', 'disabled'}:
+                    _retrieval_failure(request, 'web', status)
+                candidates = list(retrieved)
         except (OSError, ValueError, TimeoutError):
+            _retrieval_failure(request, 'web', 'unavailable')
             continue
-        candidates = [source for source in candidates if _title(title) in _title(source.get('title', ''))]
+        candidates = [source for source in candidates if _title(title) in _title(
+            source.get('title', '') + ' ' + source.get('description', ''))]
         candidates.sort(key=lambda source: urlsplit(source.get('url', '')).path.lower().endswith('.pdf'))
         for source in candidates:
+            url = source.get('url', '')
+            if url in seen_urls:
+                continue
+            seen_urls.add(url)
             host = (urlsplit(source.get('url', '')).hostname or '').lower()
             if host.endswith('openlibrary.org') or host.startswith('books.google.'):
                 continue  # Estos catálogos se consultan mediante sus APIs.
             if reads >= 2 or not reserve_page():
                 break
             reads += 1
-            url = source.get('url', '')
             reader = read_public_page if trusted_url(url) else read_public_web_page
             try:
                 page = reader(url, query + ' argumento contenido overview', details=True)
             except (OSError, ValueError, TimeoutError):
                 continue
             status = page.get('status', 'unsupported_type') if isinstance(page, dict) else 'unsupported_type'
+            if status != 'ok':
+                _retrieval_failure(request, 'public_page', status)
             body = page.get('description', '') if isinstance(page, dict) and status == 'ok' else ''
             record_research_event('page_read', 'web', status, count=int(bool(body)))
             if not body or page.get('injection_detected'):
                 continue
-            found.append({**source, 'description': body,
-                'identity_text': str(page.get('title', '')) + ' ' + body,
+            found.append({**source, 'title': page.get('bibliographic_title') or source['title'],
+                'description': body,
+                'identity_text': page.get('identity_text') or (str(page.get('title', '')) + ' ' + body),
                 'read_mode': 'pasaje de página pública', 'trust': 'untrusted_data',
                 'permanent_index_allowed': False, 'retrieved_at': page.get('retrieved_at', ''),
                 'headings': page.get('headings', []), 'extraction_method': page.get('extraction_method', '')})
-            return found  # La identidad y la suficiencia se comprueban después.
+            # Una ficha vacía o una página homónima no consume el segundo
+            # intento útil. La identidad y la suficiencia se exigen al cerrar.
+            check = request or {'task':'summary','title':title,'author_hint':author,
+                                'targets':[],'ambiguous':False}
+            if any(_task_content(check, item) for item in bound_sources(check, found)):
+                return found
     return found
 
 
@@ -648,6 +1174,14 @@ Devuelve el contrato JSON de respuesta recibido, sin una lista de referencias,
 sin "Pasaje recuperado", sin citas entre comillas ni encabezados de buscador.
 Usa español natural. Para summary escribe un párrafo breve de 2–4 oraciones
 que explique de qué trata la obra. No rellenes longitud con información ausente.
+Prioriza la premisa, el conflicto y las acciones documentadas del protagonista;
+no sustituyas el argumento por fechas de publicación, ventas o adaptaciones.
+No incluyas notas de edición, transliteraciones, índices ni rótulos de capítulos:
+utiliza los acontecimientos documentados para explicar la historia en párrafos.
+Puedes unir hechos compatibles de varias fuentes, sin repetir fragmentos.
+Conserva el formato de la obra consultada: mencionar una adaptación no permite
+trasladar sus acontecimientos al original. Las fuentes se presentan aparte;
+no incluyas URLs, números de referencia ni títulos de páginas en el texto.
 Para personajes, 2–5 nombres con
 su papel; para protagonista, identifica al personaje, sin narrar otros detalles.
 Sólo usa las descripciones de sources: no inventes hechos, relaciones, nombres
@@ -688,6 +1222,28 @@ def unavailable_answer(request):
                       + '** con las fuentes disponibles. No quiero mezclarlo con otra obra.', 'unavailable')
 
 
+def insufficient_content_answer(request, sources):
+    """Falta de datos distinta de una consulta interrumpida técnicamente."""
+    failures = request.get('retrieval_failures', [])
+    if failures:
+        return ChatResult('Hay un problema temporal al consultar las fuentes de este libro. '
+            'Puedes volver a intentarlo en unos instantes.', 'unavailable', diagnostics={
+                'narrative_failure': 'retrieval_unavailable', 'retrieval_failures': failures, 'model_calls': 0})
+    sources = bound_sources(request, sources)
+    books = [{'title': source['title'], 'author': source['author'], 'source_id': source['id']}
+             for source in sources if source['kind'] == 'book'][:1]
+    # La interfaz no presenta tarjetas nuevas para status=unavailable. Sólo
+    # aludir a las que ya identificó un turno aceptado, nunca a esta lista interna.
+    prior_cards = bool(books and any(target.get('url') and target.get('identity_status') != 'reader_request'
+                                    for target in request.get('targets', [])))
+    text = 'Actualmente no tengo la información de este libro :('
+    text += (' pero si deseas puedes buscarla en los sitios de venta que te proporcioné' if prior_cards
+             else ' Si me indicas el autor o la edición, puedo intentar identificarlo mejor.')
+    text = '**' + request['title'] + '**\n\n' + text
+    return ChatResult(text, 'unavailable', sources=sources, books=books, basis='sources',
+                      intent='summary', diagnostics={'narrative_failure': 'insufficient_content', 'model_calls': 0})
+
+
 def _supported_summary(draft, audit, plan, sources, message):
     """Retira oraciones rechazadas y vuelve a validar todas las que se publican.
 
@@ -725,13 +1281,17 @@ def _supported_summary(draft, audit, plan, sources, message):
 def synthesize_answer(message, request, sources, config, *, trace=None):
     """Dos llamadas máximas: redacción y auditoría completa, sin reparación ciega."""
     from .literary_ai import build_assistant, ProviderUnavailable
-    from .literary_quality import AUDIT_PROMPT, validate_audit, unsupported_century_claim
+    from .literary_quality import (AUDIT_PROMPT, validate_audit, unsupported_century_claim,
+                                  unsupported_character_list_claim)
     from .literary_evidence import validate_evidence
     # El enriquecimiento puede entregar un resumen en research_summary y
     # mantener description como metadatos. El auditor valida narrative_context,
     # pero antes ese resumen no llegaba a ese campo ni se podía citar.
     prepared_sources = []
     for source in sources:
+        # The stopping rule controls when to investigate, not what evidence
+        # the auditor may inspect. Keep original editorial descriptions intact;
+        # the full audit still decides which factual claims they actually prove.
         content = _content(source)
         if source['kind'] == 'web':
             prepared_sources.append({**source, 'description': content})
@@ -742,15 +1302,28 @@ def synthesize_answer(message, request, sources, config, *, trace=None):
     sources = prepared_sources
     assistant, client = build_assistant(config, search=lambda query: [], web_search=lambda query: [])
     kind = work_type(sources)
-    resolved_message = (f'Explica el contenido, los temas y el enfoque documentados de {request["title"]}. '
+    medium = request.get('format', '')
+    if not medium:
+        # The original is identified before its adaptation, never from a search
+        # snippet alone. Do not classify an anime page as a manga by mention.
+        for source in sources:
+            intro = normalized(source.get('identity_text', ''))
+            if source.get('kind') == 'web' and re.search(r'\bes (?:un|una|una serie de) manga\b', intro):
+                medium = 'manga'
+                break
+    resolved_message = (message + '\n' + f'Explica el contenido, los temas y el enfoque documentados de {request["title"]}. '
                         'Es una consulta de no ficción; no se solicitan una trama inventada ni personajes.'
                         if kind == 'nonfiction' and request['task'] == 'summary' else message)
+    if medium == 'manga':
+        resolved_message = (f'Explica la trama del manga {request["title"]}. '
+            'Describe el manga original. No lo presentes como una serie de manga y anime: '
+            'la adaptación animada es otro formato y no se ha solicitado. Usa sólo los hechos documentados.')
     plan = {'questions': [resolved_message], 'search_queries': [], 'needs_contents': True,
             'needs_fresh_sources': False, 'spoilers_requested': False}
     context = {'message': resolved_message, 'reader_request': message,
                'intent': 'summary' if request['task'] == 'summary' else 'analysis',
                'sources': sources, 'selected_books': [s for s in sources if s['kind'] == 'book'],
-               'work_type': kind, 'facts_only': request['task'] != 'summary',
+               'work_type': kind, 'literary_format': medium, 'facts_only': request['task'] != 'summary',
                'content_source_ids': [s['id'] for s in sources if _content(s)],
                'narrative_contract': {'book_cards_from_verified_identity': True},
                'plan': plan, 'has_user_excerpt': False, 'all_factual_claims_required': True,
@@ -803,6 +1376,19 @@ def synthesize_answer(message, request, sources, config, *, trace=None):
                 context['generation_evidence_only'] = True
     try:
         generation_context = context
+        if request['task'] == 'summary' and not context.get('generation_evidence_only'):
+            # Do not turn character membership/biographies into plot facts.
+            # The audit retains the full original sources separately.
+            projected = []
+            for source in sources:
+                if _task_content(request, source):
+                    projected.append(source)
+                elif source['kind'] == 'book':
+                    projected.append({key: value for key, value in source.items()
+                                      if key in {'id', 'kind', 'title', 'author', 'source', 'url'}})
+            generation_context = {**context, 'sources': projected,
+                'selected_books': [source for source in projected if source['kind'] == 'book'],
+                'content_source_ids': [source['id'] for source in sources if _task_content(request, source)]}
         if context.get('generation_evidence_only'):
             descriptions = {unit['source_id']: unit['evidence'] for unit in context['task_evidence']}
             generation_sources = []
@@ -835,6 +1421,7 @@ def synthesize_answer(message, request, sources, config, *, trace=None):
         # afirmado. Este control refuerza su decisión y retira toda la oración,
         # sin inventar una prueba ni alterar las que sí están respaldadas.
         temporal_rejections = 0
+        character_list_rejections = 0
         if isinstance(output, dict) and isinstance(output.get('claims'), list):
             output = {**output, 'claims': [dict(claim) if isinstance(claim, dict) else claim
                                          for claim in output['claims']]}
@@ -845,7 +1432,11 @@ def synthesize_answer(message, request, sources, config, *, trace=None):
                                                      source_lookup.get(claim.get('source_id')))):
                     claim.update(verdict='unverified', evidence='', source_id=0)
                     temporal_rejections += 1
-            if temporal_rejections:
+                elif (isinstance(claim, dict) and claim.get('verdict') == 'supported'
+                        and unsupported_character_list_claim(claim.get('statement', ''), claim.get('evidence', ''))):
+                    claim.update(verdict='unverified', evidence='', source_id=0)
+                    character_list_rejections += 1
+            if temporal_rejections or character_list_rejections:
                 output = {**output, 'decision': 'repair', 'search_queries': []}
             elif (output.get('decision') == 'approve' and any(
                     isinstance(claim, dict) and claim.get('verdict') in {'unverified', 'inference'}
@@ -870,18 +1461,24 @@ def synthesize_answer(message, request, sources, config, *, trace=None):
             failure = unavailable_answer(request)
             failure.diagnostics['narrative_failure'] = 'audit_not_approved'
             return failure, client
-        result = _publish(message, request, sources, draft['text'], audit)
+        published_text = draft['text']
+        if pruned is not None:
+            # Keep the limitation visible in the body, before the source footer.
+            published_text += '\n\nEste resumen se centra en el planteamiento de la obra.'
+        result = _publish(message, request, sources, published_text, audit)
         result.diagnostics['narrative_synthesized'] = True
         result.diagnostics['partial_evidence'] = partial
         result.diagnostics['temporal_claims_rejected'] = temporal_rejections
+        result.diagnostics['character_list_claims_rejected'] = character_list_rejections
         if pruned is not None:
-            result.text += '\n\nEs lo que pude respaldar con la descripción consultada.'
             result.diagnostics['unsupported_sentences_removed'] = True
         result.diagnostics.update(model_calls=client.calls, usage=client.usage,
                                   stage_timings=getattr(client, 'stage_timings', []))
         return result, client
     except (ProviderUnavailable, ValueError, TypeError, TimeoutError) as error:
         result = unavailable_answer(request)
+        if isinstance(error, (ProviderUnavailable, TimeoutError)):
+            result.text = 'El servicio de IA no pudo completar la consulta. Vuelve a intentar en unos instantes.'
         result.diagnostics.update(narrative_failure=type(error).__name__,
             narrative_failure_detail=str(error)[:300], model_calls=client.calls,
             usage=client.usage, stage_timings=getattr(client, 'stage_timings', []))
@@ -900,16 +1497,34 @@ def narrative_answer(message, history=None, config=None, *, pending_clarificatio
     6. Si hay pasajes descriptivos, sintetiza y audita con el modelo.
     7. Si no hay información suficiente, explica honestamente la limitación sin bucles.
     """
+    history = history or []
     req = request_for(message, history, pending_clarification)
     if not req or not req['title'] or req['ambiguous']:
         return None
     from .literary_identity import normalize_identity
     sources = retrieve_sources(message, req, history)
 
-    # 1. Intento directo con texto verificado / licenciado (ultra-rápido, < 100 ms)
+    # Evidencia literal primero; síntesis editorial acotada con respaldo seguro.
     direct = direct_answer(message, req, sources)
     if direct is not None:
+        from .literary_quality import factual_statements
+        editorial = (direct.diagnostics.get('editorial_excerpt') and any(
+            len(_content(source)) > 400 or len(factual_statements(_content(source))) >= 2
+            for source in sources if _task_content(req, source)))
+        if (direct.diagnostics.get('outline_needs_synthesis') or editorial) and config:
+            with request_budget(time.monotonic() + budget_timeout(18)):
+                rendered, client = synthesize_answer(message, req, sources, config)
+            if rendered.status == 'answered':
+                return rendered
+            direct.diagnostics.update(model_calls=client.calls, usage=client.usage,
+                synthesis_fallback_reason=rendered.diagnostics.get('narrative_failure'))
         return direct
+    metadata = metadata_content_answer(message, req, sources)
+    if metadata is not None and not any(_task_content(req, s) for s in sources):
+        return metadata
+    adapted = adaptation_answer(message, req, req.get('adaptation_sources', []))
+    if adapted is not None:
+        return adapted
 
     # 2. Revisar si hay libros identificados en las fuentes
     book_candidates = [s for s in sources if s.get('kind') == 'book' and title_matches(req['title'], s)]
@@ -927,7 +1542,7 @@ def narrative_answer(message, history=None, config=None, *, pending_clarificatio
 
     # La clasificación de género orienta la redacción: no sustituye evidencia
     # ni autoriza una plantilla que afirme hechos sobre capítulos/personajes.
-    if any(_content(s) for s in sources) and config:
+    if any(_task_content(req, s) for s in sources) and config:
         result, client = synthesize_answer(message, req, sources, config)
         result.diagnostics.update(model_calls=client.calls, usage=client.usage,
             stage_timings=getattr(client, 'stage_timings', []), work_type=work_type(sources),
@@ -935,8 +1550,9 @@ def narrative_answer(message, history=None, config=None, *, pending_clarificatio
         return result
 
     # 5. Si no se puede confirmar sinopsis fiable
-    result = unavailable_answer(req)
+    result = (insufficient_content_answer(req, sources) if not any(_task_content(req, s) for s in sources)
+              else unavailable_answer(req))
     result.diagnostics.update(work_type=work_type(sources),
         narrative_trace=req.get('retrieval_trace', []), model_calls=0,
-        narrative_failure='insufficient_content' if not any(_content(s) for s in sources) else 'model_not_configured')
+        narrative_failure=result.diagnostics.get('narrative_failure', 'model_not_configured'))
     return result

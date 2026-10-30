@@ -22,6 +22,25 @@ class Session(dict):
 
 
 class NarrativeFailureContextTests(SimpleTestCase):
+    @override_settings(LITMATE_AUTO_ENRICHMENT=False)
+    def test_remember_preserves_the_cited_passage_before_unused_source_snapshots(self):
+        from .literary_ai import sanitized_history
+        sources=canonical_sources([{**OTHER,'description':'Ficha bibliográfica.'}]+[
+            {'kind':'web','source':'Wikipedia','title':'Cuaderno lunar',
+             'identity_text':'Cuaderno lunar es una novela de Pablo Vidal.',
+             'description':'Otro pasaje publicado sobre un personaje de la novela.',
+             'url':'https://es.wikipedia.org/wiki/Cuaderno_lunar?section='+str(i)} for i in range(7)],8)
+        sources[-1]['description']='El autómata es referido como criatura o guardián.'
+        response=ChatResult(sources[-1]['description'],'answered',True,sources,
+            [{'title':OTHER['title'],'author':OTHER['author'],'source_id':1}],
+            'sources','summary',{'audit':{'claims':[{'verdict':'supported','source_id':8}]}})
+        request=SimpleNamespace(session=Session(),user=SimpleNamespace(is_authenticated=False))
+        state={'turns':[]}
+        remember(request,state,'Dime la trama',response,1,
+                 SimpleNamespace(calls=0,usage={},provider='test'),topic_context={})
+        remembered=sanitized_history(state['turns'])
+        self.assertTrue(any('referido como' in s['description'] for s in remembered[0]['sources']))
+
     def history(self):
         return [{'accepted': True, 'question': 'Otra lectura', 'answer': 'Cuaderno lunar.',
                  'books': [OTHER], 'sources': canonical_sources([OTHER])}]

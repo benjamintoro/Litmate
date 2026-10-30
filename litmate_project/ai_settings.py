@@ -47,6 +47,8 @@ def apply_ai_settings(target, base_dir):
         LITMATE_SEARXNG_URL=os.getenv('LITMATE_SEARXNG_URL', 'http://127.0.0.1:8080'),
         LITMATE_SEARXNG_ENGINES=tuple(x.strip() for x in os.getenv(
             'LITMATE_SEARXNG_ENGINES', 'wikipedia,openlibrary,mwmbl').split(',') if x.strip()),
+        LITMATE_SEARXNG_WEB_ENGINES=tuple(x.strip() for x in os.getenv(
+            'LITMATE_SEARXNG_WEB_ENGINES', 'mwmbl,duckduckgo').split(',') if x.strip()),
         LITMATE_RESEARCH_ENABLED=flag('LITMATE_RESEARCH_ENABLED'),
         LITMATE_RESEARCH_TIMEOUT=float(os.getenv('LITMATE_RESEARCH_TIMEOUT', '15')),
         LITMATE_RESEARCH_MAX_SEARCHES=int(os.getenv('LITMATE_RESEARCH_MAX_SEARCHES', '2')),
@@ -58,6 +60,8 @@ def apply_ai_settings(target, base_dir):
         # SQLite auxiliares: conocimiento público con procedencia y resultados
         # privados efímeros separados. No requieren migraciones de Django.
         LITMATE_LITERARY_MEMORY_DB=Path(os.getenv('LITMATE_LITERARY_MEMORY_DB', str(Path(base_dir) / 'data' / 'literary_memory.sqlite3'))),
+        # Outcome categories only; no private prompts or user corrections as facts.
+        LITMATE_AUTO_ENRICHMENT=flag('LITMATE_AUTO_ENRICHMENT', True),
         # Biblioteca local de originales autorizados y su índice derivado. Las
         # rutas son configurables para no mezclar corpus de distintas máquinas.
         LITMATE_LIBRARY_DB=Path(os.getenv('LITMATE_LIBRARY_DB', str(Path(base_dir) / 'data' / 'biblioteca' / 'biblioteca.sqlite3'))),

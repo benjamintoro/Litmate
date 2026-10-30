@@ -323,7 +323,7 @@ class WebReferenceAnswerTests(SimpleTestCase):
 
 @override_settings(LITMATE_AI_USE_WEB=True, LITMATE_AI_CATALOG_FALLBACK=False)
 class GeneralBookBackupTests(SimpleTestCase):
-    def test_unknown_book_uses_recovered_sources_even_if_the_model_expires(self):
+    def test_unknown_book_does_not_publish_raw_sources_if_the_model_expires(self):
         from .literary_ai_views import _model_answer
         source = {'title': 'La novela desconocida: editorial', 'kind': 'web',
                   'url': 'https://example.org/desconocida',
@@ -341,10 +341,10 @@ class GeneralBookBackupTests(SimpleTestCase):
                 patch('core.literary_ai_views.build_assistant', return_value=(assistant, client)), \
                 request_budget(deadline):
             result, _ = _model_answer('Analiza la novela desconocida', [], {}, 'Analiza la novela desconocida')
-        self.assertEqual(result.status, 'answered')
+        self.assertEqual(result.status, 'unavailable')
         self.assertEqual(result.books, [])
-        self.assertTrue(result.diagnostics['web_backup'])
-        self.assertIn(source['url'], result.text)
+        self.assertNotIn('web_backup', result.diagnostics)
+        self.assertNotIn(source['url'], result.text)
         self.assertLess(deadlines[0], deadline)
         fetch.assert_called_once()
 

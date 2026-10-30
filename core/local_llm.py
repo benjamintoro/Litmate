@@ -187,7 +187,7 @@ class OllamaJSON:
         self.last_error_detail = ''
         self._inference_metrics = {}
         try:
-            operation = ('audit' if stage in {'audit', 'review'} else
+            operation = ('audit' if stage in {'audit', 'review', 'language_verify'} else
                          'repair' if stage == 'repair' else
                          'routing' if stage in {'route', 'route_rescue', 'plan'} else 'generation')
             with measure_stage(operation):
@@ -222,6 +222,10 @@ class OllamaJSON:
             answer_stage = stage in {'answer', 'repair', 'answer_web'}
             schema = (ANSWER_SCHEMA if answer_stage else AUDIT_SCHEMA if stage == 'audit'
                       else PLAN_SCHEMA if stage == 'plan' else REVIEW_SCHEMA if stage == 'review' else ROUTE_SCHEMA)
+            if stage in {'language_translate', 'language_verify'}:
+                from .literary_presentation_language import translation_schema
+                schema = translation_schema(data.get('texts', data.get('translations', {})),
+                                            verify=stage == 'language_verify')
             if stage in {'route', 'route_rescue', 'plan', 'review'}:
                 schema = copy.deepcopy(schema)
                 if stage in {'route', 'route_rescue'}:
@@ -518,6 +522,9 @@ class OllamaJSON:
                 output_tokens = 1536
             if self.interactive and not answer_stage:
                 output_tokens = min(output_tokens, 512 if stage == 'audit' else 256)
+            if stage == 'language_translate':
+                # Varios campos cortos en una única llamada, no una por tarjeta.
+                output_tokens = min(2048, max(512, sum(len(value) for value in data['texts'].values()) // 2 + 256))
             request_tokens = output_tokens
             raw = ''
             for request_attempt in range(2):
@@ -533,6 +540,8 @@ class OllamaJSON:
                 if 'thinking' in (info.get('capabilities') or []):
                     payload['think'] = self.thinking if answer_stage else False
                 self.calls += 1
+                from .ai_progress import record_model_call
+                record_model_call()
                 result = read_json_url(local_origin(self.base_url) + '/api/chat',
                     payload=payload, headers={'Content-Type': 'application/json'},
                     timeout=self._remaining(), local=True)

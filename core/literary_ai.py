@@ -1025,7 +1025,16 @@ def canonical_sources(items, maximum=8):
         discriminator = (item.get('book_id', '') if kind == 'excerpt' else
                          item.get('url', '') if kind == 'web' else
                          item.get('book_id', '') if 'Google Books' in str(item.get('source', '')) else '')
-        key = kind, normalized(title), normalized(author), str(discriminator)[:1500]
+        scope = item.get('evidence_scope', '') if (item.get('memory_verified') is True
+            and item.get('policy') == 'wikipedia-cc-by-sa-4.0-v1'
+            and isinstance(item.get('evidence_scope'), str)
+            and item.get('evidence_scope') in {'summary','characters','relationships','themes','events','historical_context','adaptations'}) else ''
+        if (not scope and item.get('memory_verified') is True and kind == 'web'
+                and item.get('policy') == 'wikipedia-cc-by-sa-4.0-v1' and item.get('character_facts')):
+            # Snapshots anteriores al enriquecimiento por secciones: los roles
+            # no deben desplazar la trama del historial que comparte su URL.
+            scope = 'characters'
+        key = kind, normalized(title), normalized(author), str(discriminator)[:1500], scope
         if key in seen:
             previous = seen[key]
             # Normalizar cada snapshot por separado evita adjuntar hechos del
@@ -1049,6 +1058,15 @@ def canonical_sources(items, maximum=8):
                         previous[field_name] = _bibliographic_value(field_name, item[field_name])
                 previous['url'] = safe_source_url(item.get('url')) or previous['url']
                 previous['book_id'] = clean_text(item.get('book_id'), 120) or previous['book_id']
+            elif ('Open Library' in origin and item.get('book_id')
+                  and item.get('book_id') == previous.get('book_id')
+                  and re.fullmatch(r'/works/OL\d+W', str(item['book_id']))):
+                # El registro mínimo y el detalle de la misma obra comparten
+                # clave. No conservar sólo el texto descartando su procedencia.
+                for field_name in ('synopsis', 'description_source', 'synopsis_source_url',
+                                   'subtitle', 'isbns', 'categories'):
+                    if item.get(field_name) and not previous.get(field_name):
+                        previous[field_name] = _bibliographic_value(field_name, item[field_name])
             continue
         if len(sources) >= maximum:
             continue
@@ -1064,6 +1082,8 @@ def canonical_sources(items, maximum=8):
             'read_mode': clean_text(item.get('read_mode'), 60),
             'retrieved_at': clean_text(item.get('retrieved_at'), 40),
         }
+        if scope:
+            source['evidence_scope'] = scope
         if item.get('narrative_context'):
             source['narrative_context'] = clean_text(item['narrative_context'], 1800)
         # Procedencia interna: no confundir el autor de una página con la obra.
@@ -1094,7 +1114,7 @@ def canonical_sources(items, maximum=8):
         if isinstance(item.get('literary_facts'), list):
             source['literary_facts'] = [
                 {name: clean_text(fact.get(name), 700) for name in
-                  ('subject', 'relation', 'value', 'evidence', 'source_url', 'fact_kind', 'topic', 'type')}
+                  ('subject', 'relation', 'value', 'evidence', 'source_url', 'fact_kind', 'topic', 'type', 'scope')}
                 for fact in item['literary_facts'][:12] if isinstance(fact, dict)]
         if kind == 'web':
             source['identity_text'] = clean_text(item.get('identity_text'), 1200)

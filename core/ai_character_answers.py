@@ -122,6 +122,10 @@ def request_for(message, history=(), pending_clarification=None):
                              r'(?:protagonista|personaje principal)', value)
     pair = re.fullmatch(r'(?:(?:explicame|dime) (?:la )?)?(?:que relacion tienen|'
                         r'que relacion hay entre|relacion entre) (.+?) y (.+)', value)
+    if not pair:
+        pair = re.fullmatch(r'(?:(?:explicame|dime) )?que relacion (?:tiene|mantiene) (.+?) con (.+)', value)
+        if pair and re.fullmatch(r'(?:ese|este|el|la) (?:antagonista|villano|villana|protagonista|personaje)', pair[1]):
+            pair = None  # Preserve the existing role/object resolution and ambiguity guard.
     pronoun = re.fullmatch(r'(?:y )?(?:(?:cual es|explicame)? ?(?:su|la) relacion con|'
                           r'que relacion tiene con) (.+)', value)
     role_object = re.fullmatch(r'(?:y )?que relacion tiene (?:ese|este|el|la) '
@@ -232,8 +236,15 @@ def request_for(message, history=(), pending_clarification=None):
             if matches:
                 targets = matches
                 break
+    author_hint = ''
+    if title and re.search(r'\b(?:del autor|de la autora)\b', title, re.I):
+        from .ai_narrative_answers import request_for as narrative_request
+        identity = narrative_request('Dime la trama de ' + title, history)
+        if identity and identity.get('author_hint'):
+            title, author_hint = identity['title'], identity['author_hint']
+            targets = identity.get('targets', [])
     return {'task': task, 'focus': focus, 'title': title, 'targets': targets, 'names': names,
-            'ambiguous': False, 'object_name': object_name, 'author_hint': ''}
+            'ambiguous': False, 'object_name': object_name, 'author_hint': author_hint}
 
 
 def _query_title(title, source):
@@ -253,6 +264,7 @@ def _bound(request, sources):
         return re.sub(r'^(?:el|la|los|las|the) ', '', normalize_identity(value))
 
     books = [source for source in sources if source['kind'] == 'book' and _query_title(title, source)
+             and (not request.get('author_hint') or same_author_name(request['author_hint'], source.get('author','')))
              and (not request['targets'] or any(same_work(source, book) for book in request['targets']))]
     if books:
         title = _query_title(title, books[0])
@@ -293,6 +305,14 @@ def _bound(request, sources):
                 page.update(work_title=book['title'], work_author=book['author'],
                             work_id=book.get('work_id', ''), work_binding_verified=True)
                 break
+    if request.get('task') == 'relationship':
+        from .literary_entity_facts import profile_creation_relations, published_designations
+        # El límite de ocho fuentes sigue vigente. Antes de aplicarlo, reservar
+        # los pasajes que prueban una relación o denominación publicada; muchas
+        # fichas de personajes no deben desplazar la prueba complementaria.
+        sources.sort(key=lambda page: (
+            page['kind'] != 'book',
+            not bool(profile_creation_relations(page) or published_designations(page.get('description', '')))))
     return bound_sources(adapted, sources)
 
 
@@ -316,18 +336,22 @@ def bind_character_profile(page, book):
     """Bind only a literal literary profile naming this work and its author."""
     from .ai_quick_answers import _is_adaptation_page
     if (not isinstance(page, dict) or page.get('kind') != 'web' or page.get('source') != 'Wikipedia'
-            or page.get('injection_detected') or page.get('conflicts_with') or _is_adaptation_page(page)
-            or not _fictional_profile(page, [str(page.get('title', ''))])):
+            or page.get('injection_detected') or page.get('conflicts_with') or _is_adaptation_page(page)):
         return None
     intro = normalize_identity(page.get('identity_text', ''))
     title, author = normalize_identity(book.get('title')), normalize_identity(book.get('author'))
+    from .literary_identity import is_literary_identity
     if (not title or not author or author in {'fuente web', 'autor no informado'}
             or not re.search(r'(?<!\w)' + re.escape(title) + r'(?!\w)', intro)
             or not re.search(r'(?<!\w)' + re.escape(author) + r'(?!\w)', intro)
-            or not re.search(r'\b(?:novela|novelas|libro|libros)\b', intro)):
+            or not is_literary_identity(intro)):
         return None
-    return {**page, 'work_title': book['title'], 'work_author': book['author'],
-            'work_id': book.get('work_id', ''), 'work_binding_verified': True}
+    bound = {**page, 'work_title': book['title'], 'work_author': book['author'],
+             'work_id': book.get('work_id', ''), 'work_binding_verified': True}
+    from .literary_entity_facts import profile_topic_facts
+    if not (_fictional_profile(page, [str(page.get('title', ''))]) or profile_topic_facts(bound)):
+        return None
+    return bound
 
 
 def _profile_name_in(name, text):
@@ -353,7 +377,7 @@ def _fictional_profile(page, names):
         if not any(_profile_name_in(name, sentence) for name in names):
             continue
         value = normalize_identity(sentence)
-        if not re.search(r'\bpersonajes?\b', value):
+        if not re.search(r'\b(?:personajes?|protagonistas?|antagonistas?)\b', value):
             continue
         if not re.search(r'\b(?:es|era|fue|considerad\w*|descrit\w*|aparece|pertenece)\b', value):
             continue
@@ -367,7 +391,7 @@ def _fictional_profile(page, names):
 def _profile_role(name, sentence):
     """Retira el sujeto del perfil sin cortar iniciales ni alias publicados."""
     value = sentence.strip()
-    match = re.match(r'(?i)^\s*' + re.escape(name) + r'(?!\w)', value)
+    match = re.match(r'(?i)^\s*(?:(?:el|la|los|las)\s+)?' + re.escape(name) + r'(?!\w)', value)
     if match:
         rest = value[match.end():]
     else:
@@ -386,7 +410,15 @@ def _profile_role(name, sentence):
 
 def _profile_facts(page, request):
     """Frases completas de la introducción, manteniendo nombre y predicado."""
-    if not _profile_match(page, request['names']):
+    names = request['names']
+    from .literary_entity_facts import profile_topic_facts
+    topic_facts = profile_topic_facts(page)
+    if topic_facts and (not names or any(_profile_name_in(name, page['title']) for name in names)):
+        return {**page, 'character_facts': [*topic_facts, *page.get('character_facts', [])][:12]}
+    if (not names and request.get('task') in {'characters', 'protagonist'}
+            and page.get('work_binding_verified') is True):
+        names = [str(page.get('title', ''))]
+    if not _profile_match(page, names):
         return page
     name = re.sub(r'\s*\([^)]*\)\s*$', '', page['title'])
     facts = list(page.get('character_facts', []))
@@ -426,6 +458,12 @@ def _proof(source, fact):
     declared = fact.get('evidence', '')
     if declared and declared == connected and len(declared) <= 300:
         return declared
+    # Prefer the recovered list entry over a paragraph containing its heading.
+    # Classification scope is evaluated at the entry, not at the heading itself.
+    for separator in (': ', ', ', ' — ', ' – ', ' - '):
+        literal = name + separator + role
+        if literal in body and len(literal) <= 300:
+            return literal
     for passage in factual_statements(body, strip_markers=False):
         if name in passage and role.rstrip('.') in passage and 8 <= len(passage) <= 300:
             return passage
@@ -439,6 +477,10 @@ def _proof(source, fact):
 
 
 def _classification(fact, source):
+    from .literary_entity_facts import profile_topic_fact
+    if (source.get('work_binding_verified') and profile_topic_fact(fact, source.get('description',''))
+            and normalize_identity(source.get('work_title','')) in normalize_identity(fact.get('role',''))):
+        return 'main'
     raw_role = fact['role']
     role = normalize_identity(raw_role)
     name = normalize_identity(fact['name'])
@@ -448,6 +490,12 @@ def _classification(fact, source):
                            raw_role, re.I)
     if referenced:
         other_raw = re.split(r'\s+(?:y|pero|que)\s+|[,.]', referenced.group(1), maxsplit=1)[0].strip()
+        author = source.get('work_author','')
+        author_match = re.search(r'(?<!\w)'+re.escape(author)+r'(?!\w)',other_raw,re.I) if author else None
+        if source.get('work_binding_verified') and author_match:
+            # The author is bibliographic attribution, not the name of a
+            # different novel. A preceding actual title still keeps its case.
+            other_raw = other_raw[:author_match.start()].strip()
         other = normalize_identity(other_raw)
         current = normalize_identity(source.get('work_title') or source['title'])
         def bare(value):
@@ -517,6 +565,9 @@ def _facts(request, sources):
                 or 'fragmento del buscador' in normalized(source.get('read_mode', ''))):
             continue
         facts_list = list(source.get('character_facts', []))
+        if not facts_list and re.match(r'\s*==+\s*(?:Argumento|Trama|Plot)\s*==+', source['description'], re.I):
+            from .literary_web import narrative_character_facts
+            facts_list.extend(narrative_character_facts(source['description']))
         if not facts_list:
             # Extraer hechos literales del formato "Nombre: papel" cuando el
             # proveedor no entregó character_facts estructurados, pero solo si
@@ -526,14 +577,22 @@ def _facts(request, sources):
                 if not re.search(r'\b(?:protagonista|antagonista|villano|narrador|acompañante|escudero)\b', role, re.I):
                     continue
                 facts_list.append({'name': match.group(1).strip(), 'role': role.strip()})
-        for fact in facts_list:
+        from .literary_web import distinct_character_mentions
+        for fact in distinct_character_mentions(facts_list):
             proof = _proof(source, fact)
             if not proof:
                 continue
             from .literary_memory import _character_aliases
             aliases = _character_aliases(fact['name'], proof, fact.get('aliases', []))
+            classification = _classification(fact,source)
+            from .literary_memory import _supported_character_classification
+            declared_main = (normalize_identity(fact.get('classification')) in {'main','principal','principales','protagonista'}
+                             and _supported_character_classification({**fact,'evidence':proof},source['description']))
+            main_role = bool(re.match(r'^(?:(?:es|era|fue) )?(?:(?:el|la|un|una) )?'
+                r'(?:principal antagonista|antagonista principal)\b',normalize_identity(fact['role'])))
             result.append({'name': fact['name'], 'role': fact['role'], 'aliases': aliases,
-                           'classification': _classification(fact, source), 'proof': proof, 'source': source})
+                           'classification': classification,'main_character':classification=='main' or declared_main or main_role,
+                           'proof': proof, 'source': source})
     return result
 
 
@@ -603,7 +662,8 @@ def _task_facts(request, facts):
                     and re.search(r'\b(?:protagonista|personaje principal)\b', normalize_identity(fact['role']))]
         return explicit or [fact for fact in facts if fact['classification'] == 'main']
     if focus in {'main', 'antagonist', 'supporting'}:
-        return [fact for fact in facts if fact['classification'] == focus]
+        return ([fact for fact in facts if fact.get('main_character',fact['classification']=='main')]
+                if focus == 'main' else [fact for fact in facts if fact['classification'] == focus])
     if focus == 'female':
         return [fact for fact in facts if re.match(r'^(?:(?:es|era|fue) )?(?:(?:una|la) )?'
                 r'(?:mujer|personaje femenino|princesa|elfa|hechicera|matriarca|hija|esposa|'
@@ -686,17 +746,29 @@ def answer_from_sources(message, request, sources):
         return None
     if assess_evidence(message, bound, books, 'analysis')['contradictory']:
         return None
+    if request['task'] == 'relationship':
+        explicit = profile_relationship_answer(message, request, bound)
+        if explicit is not None:
+            return explicit
     facts = _task_facts(request, _facts(request, bound))
     task, focus = request['task'], request['focus']
     # La extracción de fuentes con derechos reservados se parafrasea mediante
     # la síntesis/auditoría; la vía literal se reserva a conocimiento abierto.
     facts = [fact for fact in facts if _licensed(fact['source'])]
+    owners = {}
+    for fact in facts:
+        for alias in fact['aliases']:
+            owners.setdefault(normalize_identity(alias),set()).add(normalize_identity(fact['name']))
     unique, selected = set(), []
     for fact in facts:
         name = normalize_identity(fact['name'])
-        if name not in unique:
+        # Only explicit, validated equivalences in this bound work count.
+        # A nickname shared by two canonical people stays ambiguous.
+        candidates = owners.get(name,set())
+        identity = next(iter(candidates)) if len(candidates) == 1 else name
+        if identity not in unique:
             selected.append(fact)
-            unique.add(name)
+            unique.add(identity)
         if len(selected) >= (1 if task in {'character', 'relationship', 'protagonist'} else 10):
             break
     if not selected:
@@ -710,6 +782,9 @@ def answer_from_sources(message, request, sources):
             return None
         claims.append({'statement': statement, 'source_id': fact['source']['id'],
                        'verdict': 'supported', 'evidence': fact['proof']})
+    if task == 'characters' and len(selected) < 2:
+        # Estado de cobertura, no otra afirmación sobre los personajes.
+        text += '\n\nLista parcial.'
     draft = {'status': 'answer', 'basis': 'sources', 'text': text, 'books': [],
              'citations': sorted({fact['source']['id'] for fact in selected}), 'needs_web': False}
     audit = {'decision': 'approve', 'only_books': True, 'claims': claims,
@@ -725,6 +800,84 @@ def answer_from_sources(message, request, sources):
     result = _publish(message, request, bound, text, audit)
     result.diagnostics.update(verified_character_answer=True, character_count=len(selected),
                               character_task=task, character_focus=focus)
+    if task == 'characters' and len(selected) < 2:
+        result.diagnostics['partial_evidence'] = True
+    if (task=='characters' and focus=='all' and len(selected)<=2 and all(
+            normalize_identity(fact['source']['title'])==normalize_identity(fact['name'])
+            and normalize_identity(fact['source'].get('work_title'))!=normalize_identity(fact['source']['title'])
+            for fact in selected)):
+        result.diagnostics['partial_evidence']=True
+    return result
+
+
+def profile_relationship_answer(message, request, sources):
+    """A scoped named creator and explicit published noun designations."""
+    from .literary_entity_facts import profile_creation_relations, published_designations
+    from .literary_quality import required_fact_statements, validate_audit
+    from .literary_evidence import validate_evidence
+    from .ai_narrative_answers import _publish
+    names = request.get('names', [])
+    if len(names) != 2:
+        return None
+    bare = lambda name: re.sub(r'^(?:el|la|los|las)\s+', '', normalize_identity(name))
+    designations = [item for source in sources for item in published_designations(source.get('description',''))]
+    relations = [(source, relation) for source in sources if _licensed(source)
+                 for relation in profile_creation_relations(source)]
+    known_names = {bare(fact['name']) for fact in _facts(request, sources)}
+    known_names.update(bare(relation['subject']) for source, relation in relations)
+    found = []
+    for source in sources:
+        if not _licensed(source):
+            continue
+        for relation in profile_creation_relations(source):
+            actor, entity = bare(relation['subject']), bare(relation['value'])
+            for first, second in (names, list(reversed(names))):
+                reference_actor = bare(first)
+                matching = {name for name in known_names
+                            if name == reference_actor or name.startswith(reference_actor + ' ')}
+                unique_short_name = (len(reference_actor) >= 3 and actor.startswith(reference_actor + ' ')
+                                     and matching == {actor})
+                if reference_actor not in {actor, 'creador'} and not unique_short_name:
+                    continue
+                reference = bare(second)
+                direct = reference == entity
+                described = any(reference in {bare(alias) for alias in item['aliases']}
+                    and entity.startswith(bare(item['subject'])+' de ')
+                    for item in designations)
+                if direct or described:
+                    found.append((source, relation))
+    if len({(s['url'], r['subject'], r['value']) for s,r in found}) != 1:
+        return None
+    source, relation = found[0]
+    proof = relation['role_evidence']
+    text = relation['subject']+' es su creador: le otorga la vida'+(
+        ' durante un experimento.' if re.search(r'\bexperimento\b', proof, re.I) else '.')
+    statements = [(text, source, proof)]
+    for page in sources:
+        if not _licensed(page) or not re.match(r'\s*==+\s*(?:Argumento|Trama)\b', page.get('description',''), re.I):
+            continue
+        for line in factual_statements(page['description']):
+            if (len(line) <= 300 and _name_in(relation['subject'], line)
+                    and re.search(r'\b(?:rechaza|reprocha|se enfrenta)\b', line, re.I)):
+                statements.append((line,page,line)); break
+        if len(statements) == 2:
+            break
+    text = '\n\n'.join(line for line,unused,proof in statements)
+    claims = [{'statement':statement,'verdict':'supported','source_id':page['id'],'evidence':proof}
+              for line,page,proof in statements for statement in required_fact_statements(line)]
+    draft = {'status':'answer','basis':'sources','text':text,'books':[],
+        'citations':sorted({p['id'] for unused,p,proof in statements}),'needs_web':False}
+    plan = {'questions':[message],'search_queries':[],'needs_contents':True,'needs_fresh_sources':False,'spoilers_requested':False}
+    audit = {'decision':'approve','only_books':True,'claims':claims,
+        'coverage':[{'question_id':1,'status':'answered'}],'issues':[],'search_queries':[]}
+    try:
+        validate_draft(draft,sources); validate_evidence(draft,sources,message)
+        validate_audit(audit,plan,draft,sources,message,strict_facts=True)
+    except (TypeError,ValueError):
+        return None
+    result = _publish(message,request,sources,text,audit)
+    result.diagnostics.update(verified_relationship_answer=True, model_calls=0, character_count=2, relationship_subject=relation['subject'],
+                              relationship_object=relation['value'])
     return result
 
 
@@ -851,6 +1004,57 @@ def character_answer(message, history=(), config=None, *, pending_clarification=
     return _with_research_diagnostics(result)
 
 
+def _character_profiles(request, known):
+    """Two bounded API lookups for names already supported by this work.
+
+    A list with roles is not sufficient evidence of principal/antagonist rank.
+    Fetch definitions instead of repeating a generic book search or an LLM.
+    """
+    if request.get('_profiles_attempted'):
+        return [], request
+    bound = _bound(request, known)
+    facts = _facts(request, bound)
+    if not facts or request.get('focus') not in {'main','antagonist'}:
+        return [], request
+    from .literary_identity import _verified_web_work
+    references = [source for source in bound if source['kind']=='book']
+    references.extend(identity for source in bound if (identity := _verified_web_work(source)))
+    if not references:
+        return [], request
+    # Names with an explicit function but no requested rank are better lookup
+    # candidates than the already classified protagonist. Title-name overlap
+    # prioritizes discovery only; it never assigns a role or merges identities.
+    unresolved = [fact for fact in facts if not (fact.get('main_character') if request['focus']=='main'
+                                               else fact['classification']=='antagonist')]
+    words = set(normalize_identity(request['title']).split())-{'el','la','los','las','de','del','the'}
+    unresolved.sort(key=lambda fact:not bool(words & set(normalize_identity(fact['name']).split())))
+    names = list(dict.fromkeys(fact['name'] for fact in unresolved))[:2]
+    from .literary_search import search_wikipedia
+    from .ai_budget import pool_in_budget, submit_with_budget, request_budget, budget_timeout
+    from concurrent.futures import wait
+    pages = []
+    with request_budget(time.monotonic()+budget_timeout(4)):
+        with pool_in_budget(2) as pool:
+            jobs = [submit_with_budget(pool, search_wikipedia, name) for name in names]
+            done, pending = wait(jobs, timeout=budget_timeout(4))
+            for job in done:
+                try:
+                    for page in job.result():
+                        for work in references:
+                            profile = bind_character_profile(page, work)
+                            if profile is not None:
+                                pages.append(profile); break
+                except (OSError,ValueError,TimeoutError):
+                    continue
+            for job in pending:
+                job.cancel()
+    # A verified public work can scope a profile without inventing a catalogue
+    # card. The existing target, when present, retains precedence.
+    scoped = {**request, '_profiles_attempted':True,
+              'targets': request.get('targets') or references[:1]}
+    return pages, scoped
+
+
 def _character_answer(message, history=(), config=None, *, pending_clarification=None):
     request = request_for(message, history, pending_clarification)
     if request is None:
@@ -879,11 +1083,13 @@ def _character_answer(message, history=(), config=None, *, pending_clarification
             entities = retrieve_character_entities(message, books=targets, names=(), requirement=requirement)
             known.extend(item['source'] for entity in entities for item in entity['evidence'])
         result = answer_from_sources(message, request, known)
-    if result is not None:
+    best_partial = result if result is not None and result.diagnostics.get('partial_evidence') else None
+    if result is not None and best_partial is None:
         result.diagnostics['character_trace'] = [{'stage': 'stored_content', 'facts': result.diagnostics['character_count']}]
         return result
     from .ai_library_router import character_answer_from_library
-    local = character_answer_from_library(message, request, config)
+    local = (None if best_partial is not None and getattr(settings,'LITMATE_AI_USE_WEB',True)
+             else character_answer_from_library(message, request, config))
     if local is not None and local.status == 'answered':
         return local
     if request['task'] == 'character' and not getattr(settings, 'LITMATE_AI_USE_WEB', True):
@@ -891,7 +1097,8 @@ def _character_answer(message, history=(), config=None, *, pending_clarification
     if getattr(settings, 'LITMATE_AI_USE_WEB', True):
         from .ai_budget import pool_in_budget, submit_with_budget
         from concurrent.futures import wait
-        query = (request['title'].replace('"', ' ') + ' personajes ' + ' '.join(request['names'])
+        label = ' personajes principales ' if request.get('focus') == 'main' else ' personajes '
+        query = (request['title'].replace('"', ' ') + label + ' '.join(request['names'])
                  if request['title'] else '"' + request['names'][0] + '"')
         jobs = [lambda: search_wikipedia(query)]
         if request['title'] and not any(source.get('kind') == 'book' and _query_title(request['title'], source) for source in known):
@@ -913,10 +1120,19 @@ def _character_answer(message, history=(), config=None, *, pending_clarification
         bound = _bound(request, known)
         trace.append({'stage': 'bibliographic', 'sources': len(bound), 'facts': len(_facts(request, bound))})
         result = answer_from_sources(message, request, known)
-        if result is not None:
+        if result is not None and not result.diagnostics.get('partial_evidence'):
             persist_sources(result.sources)
             result.diagnostics['character_trace'] = trace
             return result
+        best_partial = result or best_partial
+        if request.get('focus') in {'main','antagonist'}:
+            profiles, request = _character_profiles(request, known)
+            known.extend(profiles)
+            result = answer_from_sources(message, request, known)
+            if result is not None:
+                persist_sources(result.sources)
+                result.diagnostics['character_trace'] = [*trace, {'stage':'verified_profiles','sources':len(profiles)}]
+                return result
         if not request['title']:
             # Si era una consulta por un autor real, se conserva su ruta normal.
             if not any(_profile_match(source, request['names']) for source in known):
@@ -954,6 +1170,9 @@ def _character_answer(message, history=(), config=None, *, pending_clarification
                     persist_sources(result.sources)
                     result.diagnostics['character_trace'] = trace
                     return result
+    if best_partial is not None:
+        best_partial.diagnostics['character_trace'] = trace
+        return best_partial
     bound = _bound(request, known)
     if config and _task_facts(request, _facts(request, bound)):
         from .ai_narrative_answers import synthesize_answer

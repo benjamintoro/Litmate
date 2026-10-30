@@ -278,10 +278,15 @@ def factual_statements(text, *, strip_markers=True):
     for original in str(text or '').splitlines():
         line = (re.sub(r'^\s*(?:[-+*]\s+|\d{1,2}[.)]\s+)', '', original)
                 if strip_markers else original).strip()
+        bibliographic_title=re.search(r'^\s*(?:\d{1,2}[.)]\s*)?\*\*[^*]+\*\*\s*[—–-]\s*',line)
+        title_end=line.find('**',line.find('**')+2) if bibliographic_title else -1
         start = 0
-        for boundary in re.finditer(r'''[.!?]+[»”"']*(?=\s|$)''', line):
+        separators = ' \t\r\n\u200b\u200c\u200d\u200e\u200f\u2060\ufeff'
+        for boundary in re.finditer(r'''[.!?]+[»”"']*(?=[\s\u200b-\u200f\u2060\ufeff]|$)''', line):
+            if bibliographic_title and boundary.start()<title_end:
+                continue  # Auditar el título íntegro; no borrar sus palabras/fechas.
             prefix = line[:boundary.start()]
-            following = line[boundary.end():].lstrip()
+            following = line[boundary.end():].lstrip(separators)
             punctuation = line[boundary.start():boundary.end()].rstrip('»”"\'')
             abbreviation = False
             if punctuation == '.' and following:
@@ -299,11 +304,11 @@ def factual_statements(text, *, strip_markers=True):
                                                       and following[0].islower())
             if abbreviation:
                 continue
-            statement = line[start:boundary.end()].strip()
+            statement = line[start:boundary.end()].strip(separators)
             if statement:
                 statements.append(statement)
             start = boundary.end()
-        remaining = line[start:].strip()
+        remaining = line[start:].strip(separators)
         if remaining:
             statements.append(remaining)
     return statements
@@ -483,6 +488,23 @@ def _catalogue_only_proof_for_narrative(statement, source, evidence):
         proof_words = evidence_words(evidence)
         return bool(proof_words and proof_words <= category_words)
     return False
+
+
+def unsupported_character_list_claim(statement, evidence):
+    """An explicit character list needs the names in its own cited passage.
+
+    This narrow deterministic guard also applies inside a plot answer. It does
+    not infer character roles from membership, nor attempt general NER.
+    """
+    text = str(statement).replace('**', '')
+    marker = re.search(r'\b(?:personajes?|characters?)\b.{0,45}?\b'
+                       r'(?:como|incluyen|son|están|figuran|such as|include|are)\s+', text, re.I)
+    if not marker:
+        return False
+    listing = re.split(r'\b(?:quienes|que|who|which)\b', text[marker.end():], maxsplit=1)[0]
+    names = re.findall(r'\b[A-ZÁÉÍÓÚÑ][\w\'’\-]+', listing)
+    words = evidence_words(evidence)
+    return any(not evidence_words(name) <= words for name in names)
 
 
 def character_names(statement):
@@ -774,6 +796,8 @@ def validate_audit(audit, plan, draft, sources, message, *, strict_facts=False):
             if _unsupported_correspondence_attribution(claim['statement'], claim['evidence']):
                 raise RetryableAuditError('La prueba no respalda esa atribución de remitente, '
                     'destinatario o papel en la correspondencia; corrige el sujeto o cita un pasaje que lo identifique.')
+            if unsupported_character_list_claim(claim['statement'], claim['evidence']):
+                raise RetryableAuditError('La lista de personajes necesita una prueba que incluya los nombres afirmados.')
             if re.search(r'\b(?:personajes?|protagonistas?)\b', message, re.I):
                 names = character_names(claim['statement'])
                 if names and not names <= evidence_words(claim['evidence']):

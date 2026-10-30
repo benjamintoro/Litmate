@@ -48,21 +48,15 @@ class ContextReferenceScopeTests(SimpleTestCase):
         result = reference_answer(QUESTION, [MATH], history=HISTORY, intent='analysis')
         self.assertIsNone(result)
 
-    def test_an_already_identified_novel_page_can_still_be_a_partial_reference(self):
+    def test_unanswered_detail_is_not_replaced_by_partial_references(self):
         from .ai_quick_answers import reference_answer
-        result = reference_answer('¿Y qué pasa con ese Anillo?', [NOVEL], history=HISTORY, intent='analysis')
-        self.assertIsNotNone(result)
-        self.assertEqual(result.status, 'answered')
-        self.assertEqual(result.sources[0]['url'], NOVEL['url'])
-        self.assertIn('Frodo', result.text)
+        result = reference_answer('?Y qu? pasa con ese Anillo?', [NOVEL], history=HISTORY, intent='analysis')
+        self.assertIsNone(result)
 
-    def test_summary_fallback_reads_as_an_answer_not_a_reference_list(self):
-        from .ai_quick_answers import reference_answer, SUMMARY_PREFIX
-        result = reference_answer('¿De qué trata El Señor de los Anillos?', [NOVEL], intent='summary')
-        self.assertIsNotNone(result)
-        self.assertTrue(result.text.startswith(SUMMARY_PREFIX))
-        self.assertNotIn('Encontré estas referencias', result.text)
-        self.assertIn('Frodo', result.text)
+    def test_summary_without_licensed_content_is_not_a_reference_list(self):
+        from .ai_quick_answers import reference_answer
+        result = reference_answer('?De qu? trata El Se?or de los Anillos?', [NOVEL], intent='summary')
+        self.assertIsNone(result)
 
     def test_explicit_work_cannot_be_replaced_by_a_character_from_another_saga(self):
         from .ai_quick_answers import reference_answer

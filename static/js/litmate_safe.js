@@ -35,7 +35,7 @@
             while (candidate.endsWith(')') && (candidate.match(/\)/g) || []).length > (candidate.match(/\(/g) || []).length) candidate = candidate.slice(0, -1);
             const url = safeURL(candidate);
             output += url
-                ? '<a href="' + escapeHTML(url) + '" target="_blank" rel="noopener noreferrer">' + escapeHTML(candidate) + '</a>' + escapeHTML(match[0].slice(candidate.length))
+                ? '<a href="' + escapeHTML(url) + '" target="_blank" rel="noopener noreferrer">' + escapeHTML(new URL(url).hostname.replace(/^www\./, '')) + '</a>' + escapeHTML(match[0].slice(candidate.length))
                 : escapeHTML(match[0]);
             previous = match.index + match[0].length;
         }
@@ -72,25 +72,93 @@
         return node;
     }
 
+    const attributionKey = Symbol('literaryAttribution');
+
+    function renderAttributions(container, nodes) {
+        // Read only messages still displayed in this document. No persistent
+        // reading history or cross-user attribution registry is created.
+        const messages = nodes || document.querySelectorAll('[data-lm-attributed]');
+        const urls = [...new Set(Array.from(messages).flatMap(node => node[attributionKey] || []))];
+        const link = (url, label) => '<a href="' + escapeHTML(url) +
+            '" target="_blank" rel="noopener noreferrer">' + escapeHTML(label) + '</a>';
+        const title = url => {
+            const path = new URL(url).pathname.split('/').pop() || 'Artículo original';
+            try { return decodeURIComponent(path).replace(/_/g, ' '); }
+            catch (error) { return 'Artículo original'; }
+        };
+        container.innerHTML = urls.length ? '<p>Selección o adaptación de contenido de los colaboradores de Wikipedia. ' +
+            'Cada artículo enlaza su historial de autores. Licencia ' +
+            link('https://creativecommons.org/licenses/by-sa/4.0/', 'CC BY-SA 4.0') + '.</p><ul>' +
+            urls.map(url => '<li>' + link(url, title(url)) + '</li>').join('') + '</ul>' :
+            '<p>No hay contenido con atribución adicional en los mensajes mostrados.</p>';
+    }
+
+    function setupAttributions() {
+        const trigger = document.getElementById('lm-attributions-link');
+        const dialog = document.getElementById('lm-attributions-dialog');
+        const contents = document.getElementById('lm-attributions-content');
+        if (!trigger || !dialog || !contents || !dialog.showModal) return;
+        trigger.addEventListener('click', event => {
+            event.preventDefault();
+            renderAttributions(contents);
+            dialog.showModal();
+        });
+    }
+    if (typeof document !== 'undefined' && document.getElementById) {
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', setupAttributions);
+        else setupAttributions();
+    }
+
     function renderMessage(node, text) {
+        node[attributionKey] = [];
         // Only the formatter above may create this fixed, escaped HTML structure.
-        const value = String(text ?? '').replace(/\r\n?/g, '\n');
-        const marker = '\n\nFuentes de las fichas:\n';
+        const value = String(text ?? '').replace(/\r\n?/g, '\n').replace(
+            'Es lo que pude respaldar con la descripción consultada.',
+            'Este resumen se centra en el planteamiento de la obra.');
+        const markers = ['\n\nFuentes de las fichas:\n', '\n\nFuentes consultadas:\n', '\n\nFuente: ', '\n\nFuentes:\n',
+            '\n\nMás sobre los personajes: ', '\n\nFuente de la ficha: '];
+        const marker = markers.find(candidate => value.lastIndexOf(candidate) > 0) || markers[0];
         const position = value.lastIndexOf(marker);
         if (position > 0) {
             const body = value.slice(0, position);
-            const lines = value.slice(position + marker.length).trim().split('\n').map(line => line.trim()).filter(Boolean);
+            const suffix = value.slice(position + marker.length).trim();
+            if (!suffix) {
+                node.innerHTML = formatMessageText(body);
+                return;
+            }
+            const attribution = '\nWikipedia contributors · CC BY-SA 4.0.';
+            const credit = suffix.endsWith(attribution) ? attribution.slice(1) : '';
+            const lines = (credit ? suffix.slice(0, -attribution.length) : suffix).split('\n').map(line => line.trim()).filter(Boolean);
             const urls = lines.map(line => /^https:\/\/\S+$/i.test(line) ? safeURL(line) : '');
             // Collapse only a complete, URL-only bibliographic suffix. Any
             // limitation, copyright note or ordinary prose stays in the body.
             if (body.trim() && urls.length > 0 && urls.length <= 40 && urls.every(Boolean)) {
-                node.innerHTML = formatMessageText(body) +
-                    '<details class="lm-chat-sources"><summary>Fuentes de las fichas</summary>' +
-                    urls.map(url => formatInlineText(url)).join('<br>') + '</details>';
+                // Historical recommendation footers remain in server metadata;
+                // cards already provide their bibliographic links. Attribution
+                // and narrative sources must remain visible.
+                if (marker === markers[0] && !credit) {
+                    node.innerHTML = formatMessageText(body);
+                    return;
+                }
+                const link = (url, label) => '<a href="' + escapeHTML(url) +
+                    '" target="_blank" rel="noopener noreferrer">' + escapeHTML(label) + '</a>';
+                const reading = '<p class="lm-chat-sources">Si quieres profundizar, puedes consultar ' +
+                    link(urls[0], 'esta lectura complementaria') + '.</p>';
+                const extra = urls.slice(1).map((url, index) => link(url, 'Lectura ' + (index + 2))).join(' · ');
+                if (credit) {
+                    node[attributionKey] = urls;
+                    node.setAttribute('data-lm-attributed', '');
+                }
+                node.innerHTML = formatMessageText(body) + reading +
+                    (extra ? '<div class="lm-chat-sources">' + extra + '</div>' : '');
                 return;
             }
         }
-        node.innerHTML = formatMessageText(value);
+        // Historical and incomplete streamed footers may contain prose, rights
+        // notices or unsafe URLs. Remove just the unwanted heading; preserve
+        // all other text and run it through the same escaping/link policy.
+        node.innerHTML = formatMessageText(value.replace(
+            /(^|\n)(?:\*\*)?Fuentes (?:de las fichas|consultadas):?(?:\*\*)?[ \t]*(?:\n|$)/gi, '$1'));
     }
 
     function getCookie(name, value = typeof document !== 'undefined' ? document.cookie : '') {
@@ -558,7 +626,7 @@
         try { localStorage.setItem(key, String(value)); } catch (error) { /* Private browsing may disable storage. */ }
     }
 
-    return { escapeHTML, safeURL, element, formatMessageText, renderMessage, getCookie,
+    return { escapeHTML, safeURL, element, formatMessageText, renderMessage, renderAttributions, getCookie,
         readChatProblem, readChatResponse, queryChat, normalizeBooks, renderBookCards,
         createTypewriter, avatarForText, createChatAvatar, createChatVoice,
         normalizeVolume, readPreference, savePreference };

@@ -55,7 +55,7 @@ Se consultó únicamente `/api/tags` del servidor Ollama local durante esta revi
 
 El hardware registrado el 20 de octubre en `reportes/modelos_hardware_20261020.json` es Ryzen 5 5500X3D, 31,9 GiB de RAM física y RTX 4060 con 8.188 MiB de VRAM. No se vuelve a presentar esa memoria disponible como una medición de disponibilidad actual. El tamaño de los pesos no incluye memoria de contexto ni otros procesos.
 
-Los informes previos documentan capacidades y licencias de los candidatos en `INFORME_FUENTES_MODELOS.md`. Esta revisión no repitió la comparación de inferencia y no elige un ganador nuevo. Es preferible un modelo conversacional activo y el embedder existente antes que cargar modelos adicionales sin beneficio medido. Un reranker solo estaría justificado con una colección y una evaluación más amplias.
+Los informes previos documentan capacidades y licencias de los candidatos en `reports/archive/INFORME_FUENTES_MODELOS.md`. Esta revisión no repitió la comparación de inferencia y no elige un ganador nuevo. Es preferible un modelo conversacional activo y el embedder existente antes que cargar modelos adicionales sin beneficio medido. Un reranker solo estaría justificado con una colección y una evaluación más amplias.
 
 El ensayo pequeño de recuperación en `reportes/rag_hibrido_20_oct.json` registró 7/8 primeros resultados correctos con BM25 y 8/8 con recuperación híbrida, además de un control negativo sin resultados. Mide recuperación en cuatro fichas, no una tasa de alucinación del chatbot.
 

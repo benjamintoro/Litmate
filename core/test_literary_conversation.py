@@ -58,7 +58,11 @@ class TopicResolutionTests(SimpleTestCase):
             with self.subTest(message=message):
                 context = resolve_topic_context(message, self.state(), now=1001)
                 self.assertFalse(context['followup'])
-                self.assertFalse(context['query'])
+                if message == 'recomiendame ciencia ficción':
+                    self.assertIn('ciencia ficcion', context['query'])
+                    self.assertNotIn('japones', context['query'])
+                else:
+                    self.assertFalse(context['query'])
                 self.assertTrue(context['explicit_change'])
 
     def test_book_detail_is_left_to_verified_work_identity(self):

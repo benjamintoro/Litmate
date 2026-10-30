@@ -14,6 +14,24 @@ from .literary_library import import_manifest, retract_document
 
 
 class LibraryRouterTests(SimpleTestCase):
+    def test_table_of_contents_is_not_sufficient_local_narrative_evidence(self):
+        from .ai_library_router import library_catalogue, sources_for_request
+        self.imported()
+        book = library_catalogue(self.item['title'])[0]
+        fragments = [{**book,'kind':'excerpt','description':'CHAPTER II. A traveller journal'}]
+        with patch('core.ai_library_router.library_fragments',return_value=fragments):
+            self.assertEqual(sources_for_request('Dime la trama',self.request()),[])
+
+    def test_main_character_classification_does_not_trigger_unfounded_local_inference(self):
+        from .ai_library_router import character_answer_from_library
+        source = {'kind':'excerpt','description':'Alicia busca una ciudad junto a Elena. Ambas viajan por el bosque.'}
+        with patch('core.ai_library_router.sources_for_request',return_value=[source]), \
+                patch('core.ai_narrative_answers.synthesize_answer',return_value=(
+                    ChatResult('No puedo clasificar.', 'unavailable'),SimpleNamespace(calls=2,usage={}))) as model:
+            self.assertIsNone(character_answer_from_library('Dime sus personajes principales',
+                {**self.request(),'focus':'main'},SimpleNamespace()))
+            model.assert_not_called()
+
     def setUp(self):
         self.temp = TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)

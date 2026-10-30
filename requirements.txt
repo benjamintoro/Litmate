@@ -1,25 +1,33 @@
-# --- Framework Principal y API ---
-Django
-djangorestframework
+# Dependencias directas de Django y del asistente actual de LitMate.
+# Python >=3.12; versiones comprobadas en el venv existente (Python 3.14.7).
+# pip resuelve las dependencias transitivas; esto no es un lock completo.
 
-# --- Bases de Datos (MySQL y MongoDB) ---
-pymysql
-mysqlclient
-pymongo
-djongo
+# Framework, configuración y controladores MySQL.
+Django==5.2.18
+python-dotenv==1.2.3
+PyMySQL==1.2.3
+mysqlclient==2.3.0
 
-# --- Inteligencia Artificial y LLM ---
-groq
-pinecone-client
-sentence-transformers
-torch
-transformers
-huggingface_hub
+# HTTP, certificados y campos de imagen de Django.
+requests==2.34.2
+certifi==2026.7.22
+Pillow==12.3.0
 
-# --- Utilidades y Herramientas Externas ---
-Pillow
-requests
-googlesearch-python
-python-dotenv
-tqdm
-certifi
+# Voz, PDF, recuperación local y extracción de páginas públicas.
+edge-tts==7.2.8
+pypdf==6.20.1
+numpy==2.5.3
+beautifulsoup4==4.15.0
+trafilatura==2.3.1
+
+# Backend Redis de Django si se configura CACHE_URL; servidor externo.
+redis==8.1.0
+
+# core/views.py todavía importa Groq al cargar las URLs.
+# Instalar el SDK no activa su API; el asistente actual usa Ollama local.
+groq==1.7.0
+
+# Ollama/modelos y Docker/SearXNG se instalan por separado, no mediante pip.
+# Pinecone/SentenceTransformer son opcionales: requirements-legacy-ai.txt.
+# PyMySQL conserva compatibilidad cuando mysqlclient no está disponible.
+# Las rutas activas no requieren DRF ni MongoDB/djongo.

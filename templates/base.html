@@ -347,10 +347,18 @@
                     <a href="{% url 'terminos' %}" class="footer-link">Términos y condiciones</a>
                     <a href="{% url 'cookies' %}" class="footer-link">Política de cookies</a>
                     <a href="{% url 'privacidad' %}" class="footer-link">Política de privacidad</a>
+                    <a href="#lm-attributions-dialog" id="lm-attributions-link" class="footer-link" aria-haspopup="dialog">Atribuciones</a>
                 </div>
             </div>
         </div>
     </footer>
+
+    <dialog id="lm-attributions-dialog" aria-labelledby="lm-attributions-title"
+            class="bg-dark text-light border rounded p-4" style="max-width: min(90vw, 48rem); max-height: 80vh; overflow: auto;">
+        <h2 id="lm-attributions-title" class="h5">Atribuciones de las lecturas</h2>
+        <div id="lm-attributions-content"></div>
+        <form method="dialog"><button class="btn btn-outline-secondary" type="submit">Cerrar</button></form>
+    </dialog>
 
     <!-- BANNER DE COOKIES -->
     <div id="cookieConsentBanner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Consentimiento de cookies" style="display: none;">
@@ -737,7 +745,7 @@
     </script>
 
     <!-- CARGA CONDICIONAL DEL SCRIPT DEL WIDGET FLOTANTE -->
-    <script src="{% static 'js/litmate_safe.js' %}?v=chat-v7"></script>
+    <script src="{% static 'js/litmate_safe.js' %}?v=chat-v8"></script>
     {% if request.path != '/chat/' and request.path != '/chatbot/' %}
     <script src="{% static 'js/floating_chat.js' %}?v=chat-v6"></script>
     {% endif %}

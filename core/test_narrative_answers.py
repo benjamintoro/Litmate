@@ -103,7 +103,7 @@ class NarrativeRequestTests(SimpleTestCase):
                 patch('core.literary_search._openlibrary_description', return_value=synopsis), \
                 patch('core.ai_persistent_router.persist_sources'):
             sources = retrieve_sources(title, request, history_brasil)
-        catalogue.assert_called_once_with(title, details=False)
+        catalogue.assert_called_once_with('intitle:"' + title + '"', details=False)
         self.assertEqual(sources[0]['title'], title)
         self.assertEqual(sources[0]['synopsis'], synopsis)
 

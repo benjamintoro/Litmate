@@ -17,14 +17,17 @@ from urllib.parse import urlsplit
 from .literary_identity import normalize_identity, same_work, stable_work_id, work_identity
 
 OWNER = 'litmate-literary-memory-v1'
+READ_POLICY = 'v2-no-disambiguation'
 PROVIDERS = {'openlibrary', 'wikidata', 'wikipedia'}
-REQUIREMENTS = {'', 'author', 'characters', 'character_detail', 'summary', 'plot',
+EVIDENCE_SCOPES = frozenset({'summary', 'characters', 'relationships', 'themes', 'events', 'historical_context', 'adaptations'})
+REQUIREMENTS = {'', 'author', 'characters', 'character_roster', 'main_characters', 'character_detail', 'summary', 'plot', 'plot_development',
     'identification', 'identify', 'relationships', 'events', 'ending', 'themes',
     'metadata', 'recommend', 'book_identity', 'publication', 'synopsis', 'bibliography',
-    'recommendation', 'content', 'comparison', 'scenes', 'exact_passage'}
+    'recommendation', 'content', 'comparison', 'scenes', 'exact_passage', 'historical_context', 'adaptations', 'genres'}
 OUTCOMES = {'verified', 'failed', 'hit', 'miss'}
 ERRORS = {'unavailable', 'timeout', 'rate_limited', 'invalid_response', 'empty',
-          'access_denied', 'budget_exhausted', 'no_verified_match'}
+          'access_denied', 'budget_exhausted', 'no_verified_match', 'no_evidence',
+          'not_permitted', 'invalid_identity', 'unauthorized', 'cooldown'}
 EXCLUSIVE = {'author', 'autor', 'birth', 'death', 'muerte', 'ending', 'desenlace',
              'identity', 'identidad', 'father', 'mother', 'padre', 'madre', 'publication'}
 
@@ -277,6 +280,8 @@ def _projection(source, book):
         value = {**book, 'url': url, 'kind': source.get('kind'), 'source': origin,
             'description': description, 'license': 'CC0-1.0', 'policy': 'wikidata-statements-v1',
             'provider': 'wikidata', 'claim_verification': 'declaración de Wikidata; no corroboración independiente'}
+        if source.get('evidence_scope') == 'characters' and source.get('kind') == 'web':
+            value['evidence_scope'] = 'characters'
         if source.get('kind') == 'web':
             value.update(work_title=title, work_author=author, work_binding_verified=True,
                          author='Fuente web')
@@ -309,6 +314,8 @@ def _projection(source, book):
             'attribution': {key: str(attribution[key])[:1800] for key in
                             ('authors', 'title', 'url', 'license_url', 'revision_id') if key in attribution},
             'work_title': title, 'work_author': author, 'work_binding_verified': True,
+            **({'evidence_scope': source['evidence_scope']} if isinstance(source.get('evidence_scope'), str)
+               and source['evidence_scope'] in EVIDENCE_SCOPES else {}),
             'character_facts': _literal_facts(source.get('character_facts', []), body, 'character_facts'),
             'literary_facts': _literal_facts(source.get('literary_facts', []), body, 'literary_facts')}
     return None
@@ -396,6 +403,9 @@ def _character_passage(fact, body):
     evidence = fact.get('evidence', '')
     name, role = normalize_identity(fact.get('name')), normalize_identity(fact.get('role'))
     def connected(passage):
+        from .literary_entity_facts import profile_topic_fact
+        if profile_topic_fact({**fact, 'evidence':passage}, body):
+            return True
         # Names in a preceding sentence cannot donate their identity to a
         # different character's description in the following sentence.
         for clause in factual_statements(passage, strip_markers=False):
@@ -582,6 +592,10 @@ def remember_evidence(books, sources, *, database=None):
                 db.execute('INSERT OR IGNORE INTO memory_aliases VALUES (?,?,?)',
                     (normalize_identity(alias), normalize_identity(book['author']), work_id))
             source_id = _hash(work_id, value['provider'], value['url'], value.get('kind', 'book'))
+            if isinstance(value.get('evidence_scope'), str) and value['evidence_scope'] in EVIDENCE_SCOPES:
+                # Cada sección conserva su evidencia y revisión: incorporar
+                # personajes no reemplaza la sinopsis ni el snapshot anterior.
+                source_id = _hash(source_id, value['evidence_scope'])
             value['work_id'] = work_id
             if value.get('kind') == 'web':
                 value.update(work_title=book['title'], work_author=book['author'])
@@ -674,6 +688,14 @@ def _current_source(db, source_id, now, expected_hash=''):
                      (str(source_id), now)).fetchone()
     if not row or (expected_hash and str(expected_hash) != row['content_hash']):
         return None
+    key = 'source_quarantine:'+str(source_id)
+    legacy = db.execute('SELECT value FROM memory_meta WHERE key=?', (key,)).fetchone()
+    if legacy:
+        state = json.loads(legacy[0])
+        if not state.get('content_hash') or state['content_hash'] == row['content_hash']:
+            return None
+    if db.execute('SELECT 1 FROM memory_meta WHERE key=?', (key+':'+row['content_hash'],)).fetchone():
+        return None
     conflict = db.execute('SELECT 1 FROM memory_conflicts c JOIN memory_assertions a '
         'ON a.assertion_id=c.assertion_a OR a.assertion_id=c.assertion_b '
         'JOIN memory_assertions b ON b.assertion_id=c.assertion_a OR b.assertion_id=c.assertion_b '
@@ -683,6 +705,9 @@ def _current_source(db, source_id, now, expected_hash=''):
     if conflict:
         return None
     source = json.loads(row['record'])
+    from .literary_identity import ambiguous_work_page
+    if source.get('kind') == 'web' and ambiguous_work_page(source):
+        return None  # Quarantine legacy snapshots at read time; never erase history.
     source.update(memory_source_id=row['source_id'], content_hash=row['content_hash'],
                   evidence_hash=row['content_hash'], retrieved_at=row['retrieved_at'],
                   last_verified_at=row['verified_at'], expires_at=row['expires_at'],
@@ -696,18 +721,56 @@ def get_current_source(source_id, expected_hash='', *, database=None):
         return _current_source(db, source_id, time.time(), expected_hash) if db else None
 
 
-def export_index_sources(*, database=None, limit=5000):
+def quarantine_source(source_id, reason, *, database=None):
+    """Explicit non-destructive revocation; keeps source, assertions and history.
+
+    Readers and RAG must revalidate through _current_source. Only technical
+    reasons can be recorded; a reader's correction is not a revocation proof.
+    """
+    if (not re.fullmatch(r'[a-f0-9]{64}', str(source_id)) or reason not in {
+            'evaluation_fixture', 'invalid_provenance', 'revoked_license', 'identity_mismatch'}):
+        raise ValueError('Identificador o motivo técnico de cuarentena inválido.')
+    with _connection(database, write=True) as db:
+        db.execute('BEGIN IMMEDIATE')
+        source = db.execute('SELECT content_hash FROM memory_sources WHERE source_id=?', (source_id,)).fetchone()
+        if not source:
+            return False
+        key = 'source_quarantine:'+source_id
+        inserted = db.execute('INSERT OR IGNORE INTO memory_meta VALUES (?,?)',
+            (key+':'+source[0], _json({'reason': reason, 'content_hash': source[0],
+                                   'reviewed_at': time.time(), 'status': 'quarantined'}))).rowcount
+        # Upgrade an earlier whole-source marker without deleting its audit
+        # record. A new independently admitted revision can be used normally.
+        legacy = db.execute('SELECT value FROM memory_meta WHERE key=?', (key,)).fetchone()
+        if legacy:
+            state = json.loads(legacy[0])
+            if not state.get('content_hash'):
+                state.update(content_hash=source[0], status='snapshot_specific')
+                db.execute('UPDATE memory_meta SET value=? WHERE key=?', (_json(state), key))
+        if inserted:
+            _bump(db)
+        return bool(inserted)
+
+
+def export_index_sources(*, database=None, limit=5000, work_ids=()):
     """Inventario autorizado y determinista para el índice auxiliar, sin HTTP.
 
     Cada documento conserva licencia, atribución y hash del snapshot. La mera
     exportación no renueva su verificación ni lo convierte en una novela.
     """
+    if (not isinstance(work_ids,(list,tuple)) or len(work_ids)>100 or any(
+            not re.fullmatch(r'litmate:[a-f0-9]{24}',str(value)) for value in work_ids)):
+        raise ValueError('El índice piloto admite hasta 100 identidades existentes.')
     with _connection(database) as db:
         if db is None:
             return []
         now = time.time()
-        rows = db.execute('SELECT source_id FROM memory_sources WHERE expires_at>? '
-            'ORDER BY source_id LIMIT ?', (now, max(1, min(int(limit), 5000)))).fetchall()
+        scope = ' AND work_id IN ('+','.join('?' for _ in work_ids)+')' if work_ids else ''
+        rows = db.execute('SELECT source_id FROM memory_sources WHERE expires_at>?' + scope +
+            ' ORDER BY CASE WHEN source_id IN (SELECT a.source_id FROM memory_assertions a WHERE '
+            "a.topic IN ('plot','summary','characters','relationships')) "
+            'THEN 0 ELSE 1 END,verified_at DESC,source_id LIMIT ?',
+            (now,*work_ids,max(1,min(int(limit),5000)))).fetchall()
         result = []
         for row in rows:
             source = _current_source(db, row[0], now)
@@ -734,8 +797,9 @@ def retrieve_evidence(query, *, books=(), requirement='', database=None, limit=8
             identifiers.extend(row[0] for row in matches)
             identifiers.append(stable_work_id(identity['title'], identity['author']))
         if identifiers:
-            topics = ('characters',) if requirement in {'characters', 'character_detail'} else (
-                'relationships',) if requirement == 'relationships' else ()
+            topics = ('characters',) if requirement in {'characters', 'character_roster', 'main_characters', 'character_detail'} else (
+                'relationships',) if requirement == 'relationships' else (
+                'summary', 'plot') if requirement in {'summary','plot','synopsis','plot_development'} else ()
             priority = ('CASE WHEN EXISTS (SELECT 1 FROM memory_assertions a WHERE '
                 'a.source_id=memory_sources.source_id AND a.topic IN (' +
                 ','.join('?' for _ in topics) + ')) THEN 0 ELSE 1 END, ') if topics else ''
@@ -964,45 +1028,87 @@ def enqueue_refresh(work_id, requirement='', provider='openlibrary', *, priority
         return jid
 
 
-def claim_job(worker_id, *, lease_seconds=60, database=None):
+def claim_job(worker_id, *, lease_seconds=60, database=None, work_ids=(),requirements=()):
     if not re.fullmatch(r'[A-Za-z0-9_-]{1,64}', str(worker_id)):
         raise ValueError('Identificador técnico del trabajador inválido')
+    if (not isinstance(work_ids, (list, tuple)) or len(work_ids) > 100
+            or any(not re.fullmatch(r'litmate:[a-f0-9]{24}', str(value)) for value in work_ids)):
+        raise ValueError('Selecciona hasta 100 identidades existentes.')
+    if (not isinstance(requirements,(tuple,list)) or len(requirements)>6
+            or any(item not in REQUIREMENTS for item in requirements)):
+        raise ValueError('Requisitos del trabajador inválidos.')
     with _connection(database, write=True) as db:
         db.execute('BEGIN IMMEDIATE')
         now = time.time()
         if db.execute("SELECT 1 FROM memory_jobs WHERE status='running' AND lease_until>? LIMIT 1",
                       (now,)).fetchone():
             return None
-        row = db.execute("SELECT * FROM memory_jobs WHERE (status='pending' AND not_before<=?) "
-            "OR (status='running' AND lease_until<=?) ORDER BY priority DESC,not_before,job_id LIMIT 1",
-            (now, now)).fetchone()
-        if not row:
+        scope = (' AND work_id IN ('+','.join('?' for _ in work_ids)+')') if work_ids else ''
+        if requirements:
+            scope += ' AND requirement IN ('+','.join('?' for _ in requirements)+')'
+        for unused in range(20):
+            row = db.execute("SELECT * FROM memory_jobs WHERE ((status='pending' AND not_before<=?) "
+                "OR (status='running' AND lease_until<=?))" + scope +
+                ' ORDER BY priority DESC,not_before,job_id LIMIT 1', (now, now, *work_ids,*requirements)).fetchone()
+            if not row:
+                return None
+            try:
+                payload = json.loads(row['payload'])
+                public = db.execute('SELECT record FROM memory_works WHERE work_id=?', (row['work_id'],)).fetchone()
+                public = json.loads(public[0]) if public else {}
+                allowed = {'title', 'author', 'last_gap_reason', 'gap_count', 'last_attempt_at',
+                           'last_verification', 'last_completed_at', 'last_failure'}
+                valid = (isinstance(payload, dict) and set(payload) <= allowed
+                         and all(payload.get(key) == public.get(key) and isinstance(payload.get(key), str)
+                                 for key in ('title', 'author')))
+            except (ValueError, TypeError):
+                valid = False
+            if valid:
+                break
+            # Preserve the corrupt row for review; never execute/log its text.
+            db.execute("UPDATE memory_jobs SET status='invalid',last_error='invalid_response',lease_until=0,"
+                       "lease_token='',worker_id='' WHERE job_id=?", (row['job_id'],))
+        else:
             return None
         token = uuid.uuid4().hex
+        payload['last_attempt_at'] = now
         db.execute("UPDATE memory_jobs SET status='running',attempts=attempts+1,lease_until=?,"
-            'lease_token=?,worker_id=? WHERE job_id=?',
-            (now + max(1, min(int(lease_seconds), 300)), token, worker_id, row['job_id']))
+            'lease_token=?,worker_id=?,payload=? WHERE job_id=?',
+            (now + max(1, min(int(lease_seconds), 300)), token, worker_id, _json(payload), row['job_id']))
         result = dict(row)
         result.update(id=row['job_id'], status='running', attempts=row['attempts'] + 1,
-                      lease_token=token, worker_id=worker_id, payload=json.loads(row['payload']))
+                      lease_token=token, worker_id=worker_id, payload=payload)
         return result
 
 
 def finish_job(job_id, *, lease_token='', database=None):
     with _connection(database, write=True) as db:
+        db.execute('BEGIN IMMEDIATE')
+        now = time.time()
+        row = db.execute("SELECT payload FROM memory_jobs WHERE job_id=? AND status='running' "
+                         'AND lease_token=? AND lease_until>?', (str(job_id), str(lease_token), now)).fetchone()
+        if not row:
+            return False
+        try:
+            payload = json.loads(row[0])
+            if not isinstance(payload, dict):
+                return False
+        except (TypeError, ValueError):
+            return False
+        payload.update(last_completed_at=now, last_verification='source_identity_license_and_coverage')
         return bool(db.execute("UPDATE memory_jobs SET status='done',lease_until=0,lease_token='',"
-            "worker_id='',last_error='' WHERE job_id=? AND status='running' AND lease_token=? "
-            'AND lease_until>?', (str(job_id), str(lease_token), time.time())).rowcount)
+            "worker_id='',last_error='',payload=? WHERE job_id=? AND status='running' AND lease_token=? "
+            'AND lease_until>?', (_json(payload), str(job_id), str(lease_token), now)).rowcount)
 
 
-def fail_job(job_id, *, lease_token='', retry_after=60, error_code='unavailable', database=None):
+def fail_job(job_id, *, lease_token='', retry_after=60, error_code='unavailable', database=None, terminal=False):
     if error_code not in ERRORS:
         raise ValueError('Solo se guardan códigos técnicos de error')
     with _connection(database, write=True) as db:
-        return bool(db.execute("UPDATE memory_jobs SET status='pending',not_before=?,lease_until=0,"
+        return bool(db.execute("UPDATE memory_jobs SET status=?,not_before=?,lease_until=0,"
             "lease_token='',worker_id='',last_error=? WHERE job_id=? AND status='running' "
             'AND lease_token=? AND lease_until>?',
-            (time.time() + max(1, min(int(retry_after), 86400)), error_code,
+            ('review' if terminal else 'pending', time.time() + max(1, min(int(retry_after), 86400)), error_code,
              str(job_id), str(lease_token), time.time())).rowcount)
 
 
@@ -1062,8 +1168,10 @@ def coverage_snapshot(database=None):
             for fact in _literal_facts(source.get('literary_facts', []), source['description'], 'literary_facts'):
                 if fact.get('topic') in {'summary', 'plot'}:
                     narrative.add(work_id)
-                if fact.get('predicate') in {'relationship', 'relation', 'companion', 'parent', 'sibling', 'spouse'}:
-                    relations.add((work_id, fact.get('subject'), fact.get('predicate'), fact.get('object') or fact.get('value')))
+                predicate = fact.get('predicate') or fact.get('relation')
+                if (fact.get('topic') == 'relationships' and fact.get('subject') and predicate
+                        and (fact.get('object') or fact.get('value'))):
+                    relations.add((work_id, fact['subject'], predicate, fact.get('object') or fact.get('value')))
         report.update(works_with_current_sources=len(current),
                       works_with_admitted_descriptions=len(descriptions),
                       works_with_narrative_facts=len(narrative),

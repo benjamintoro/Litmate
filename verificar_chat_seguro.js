@@ -286,17 +286,19 @@ async function main() {
     titleButton.handlers.click();
     check(selectedCard.title === CARD.title && selectedCard.author === CARD.author, 'callback de selección recibe identidad bibliográfica');
     const sourcedMessage = new MockNode();
+    Safe.renderMessage(sourcedMessage, '**Resultado**\n\nFuentes de las fichas:\n');
+    check(!sourcedMessage.innerHTML.includes('Fuentes de las fichas'), 'empty recommendation footer is hidden');
     const bibliography = '**Una lectura** para explorar.\n\nFuentes de las fichas:\n' +
         'https://openlibrary.org/works/OL123W\nhttps://books.google.com/books?id=abc';
     Safe.renderMessage(sourcedMessage, bibliography);
-    check(sourcedMessage.innerHTML.includes('<details') &&
-        sourcedMessage.innerHTML.includes('<summary>Fuentes de las fichas</summary>') &&
-        sourcedMessage.innerHTML.includes('<strong>Una lectura</strong>'), 'pie bibliográfico inequívoco queda plegable sin ocultar la respuesta');
-    check((sourcedMessage.innerHTML.match(/rel="noopener noreferrer"/g) || []).length === 2,
-        'fuentes plegables mantienen enlaces externos seguros');
+    check(!sourcedMessage.innerHTML.includes('<details') &&
+        !sourcedMessage.innerHTML.includes('Fuentes de las fichas') &&
+        sourcedMessage.innerHTML.includes('<strong>Una lectura</strong>'), 'recomendaciones sin desplegable de fichas conservan la respuesta');
+    check(!sourcedMessage.innerHTML.includes('openlibrary.org'),
+        'el pie redundante no duplica los enlaces de las tarjetas');
     Safe.renderMessage(sourcedMessage, bibliography);
-    check((sourcedMessage.innerHTML.match(/<details/g) || []).length === 1,
-        'redibujar un mensaje durante SSE no duplica su sección de fuentes');
+    check(!sourcedMessage.innerHTML.includes('<details'),
+        'redibujar un mensaje durante SSE no restaura el pie de fichas');
     Safe.renderMessage(sourcedMessage, bibliography + '\nLa evidencia no confirma la trama.');
     check(!sourcedMessage.innerHTML.includes('<details') && sourcedMessage.innerHTML.includes('no confirma la trama'),
         'un aviso o explicación tras las URLs nunca se oculta como bibliografía');
@@ -309,7 +311,57 @@ async function main() {
     Safe.renderMessage(sourcedMessage, '**Resultado**\n\nFuentes de las fichas:\nhttps://');
     check(!sourcedMessage.innerHTML.includes('<details'), 'URL incompleta de un stream permanece visible hasta ser válida');
     Safe.renderMessage(sourcedMessage, bibliography);
-    check((sourcedMessage.innerHTML.match(/<details/g) || []).length === 1, 'finalizar el stream conserva un único pie bibliográfico');
+    check(!sourcedMessage.innerHTML.includes('<details'), 'finalizar el stream no restaura el pie bibliográfico');
+    Safe.renderMessage(sourcedMessage, 'Una historia verificada.\n\nFuente: https://es.wikipedia.org/wiki/Obra_literaria\nWikipedia contributors · CC BY-SA 4.0.');
+    const attributionPanel = new MockNode();
+    Safe.renderAttributions(attributionPanel, [sourcedMessage]);
+    check(!sourcedMessage.innerHTML.includes('Créditos y licencia') &&
+        !sourcedMessage.innerHTML.includes('<details') &&
+        !sourcedMessage.innerHTML.includes('Fuentes consultadas') &&
+        !sourcedMessage.innerHTML.includes('>es.wikipedia.org</a>') &&
+        sourcedMessage.innerHTML.includes('lectura complementaria</a>') &&
+        sourcedMessage.innerHTML.includes('href="https://es.wikipedia.org/wiki/Obra_literaria"') &&
+        !sourcedMessage.innerHTML.includes('CC BY-SA'),
+        'narración conserva lectura complementaria sin desplegable ni créditos en la burbuja');
+    check(attributionPanel.innerHTML.includes('https://es.wikipedia.org/wiki/Obra_literaria') &&
+        attributionPanel.innerHTML.includes('https://creativecommons.org/licenses/by-sa/4.0/') &&
+        attributionPanel.innerHTML.includes('colaboradores de Wikipedia') &&
+        attributionPanel.innerHTML.includes('adaptación'), 'panel externo conserva artículo, autores, licencia y cambios');
+    const attributionNodes = {'lm-attributions-link':new MockNode('a'),
+        'lm-attributions-dialog':new MockNode('dialog'),'lm-attributions-content':new MockNode()};
+    let modalOpened = false, navigationPrevented = false;
+    attributionNodes['lm-attributions-dialog'].showModal = () => { modalOpened = true; };
+    const attributionBrowser = {URL, document:{readyState:'complete',
+        getElementById:id => attributionNodes[id], querySelectorAll:() => [sourcedMessage]}};
+    vm.createContext(attributionBrowser);
+    vm.runInContext(fs.readFileSync(path.join(__dirname,'static/js/litmate_safe.js'),'utf8'),attributionBrowser);
+    attributionBrowser.LitMateSafe.renderMessage(sourcedMessage,
+        'Historia.\n\nFuente: https://es.wikipedia.org/wiki/Obra_literaria\nWikipedia contributors · CC BY-SA 4.0.');
+    attributionNodes['lm-attributions-link'].handlers.click({preventDefault(){ navigationPrevented = true; }});
+    check(modalOpened && navigationPrevented && attributionNodes['lm-attributions-content'].innerHTML.includes('Obra_literaria'),
+        'enlace general abre diálogo accesible con la atribución de mensajes actuales');
+    check(fs.readFileSync(path.join(__dirname,'templates/base.html'),'utf8').includes('aria-labelledby="lm-attributions-title"'),
+        'diálogo externo tiene nombre accesible y conserva el diseño del chat');
+    Safe.renderMessage(sourcedMessage, 'Nueva respuesta sin atribuciones.');
+    Safe.renderAttributions(attributionPanel, [sourcedMessage]);
+    check(!attributionPanel.innerHTML.includes('Obra_literaria'), 'redibujar no conserva atribuciones de mensajes retirados');
+    for (const label of ['Fuentes consultadas', 'Fuentes de las fichas']) {
+        for (const footer of ['', '\nhttps://example.org/obra', '\nAviso de evidencia parcial.']) {
+            Safe.renderMessage(sourcedMessage, 'Historia anterior.\n\n' + label + ':' + footer);
+            check(!sourcedMessage.innerHTML.includes(label) && !sourcedMessage.innerHTML.includes('<details'),
+                'historial y redibujado SSE no reintroducen ' + label);
+        }
+    }
+    Safe.renderMessage(sourcedMessage, 'Una historia.\n\nFuente: https://example.org/obra\nNo se pudo confirmar el final.');
+    check(!sourcedMessage.innerHTML.includes('<details') && sourcedMessage.innerHTML.includes('No se pudo confirmar'),
+        'no oculta limitaciones como si fueran URLs del pie narrativo');
+    Safe.renderMessage(sourcedMessage, 'Una historia.\n\nFuente: https://example.org/obra');
+    check(sourcedMessage.innerHTML.includes('esta lectura complementaria</a>') &&
+        !sourcedMessage.innerHTML.includes('>example.org</a>'), 'fuente real sin licencia especial usa enlace legible');
+    Safe.renderMessage(sourcedMessage, 'Una historia sin enlace.');
+    check(!sourcedMessage.innerHTML.includes('lectura complementaria'), 'sin enlace no se inventa una invitación');
+    check(!Safe.formatMessageText('https://example.org/una/ruta/muy/larga').includes('>https://'),
+        'enlaces del cuerpo conservan destino pero usan nombres cortos');
     delete global.document;
 
     const typeClock = clock(), textNode = new MockNode();

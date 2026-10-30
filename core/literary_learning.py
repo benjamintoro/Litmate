@@ -11,16 +11,16 @@ import time
 import uuid
 
 from .ai_budget import request_budget
-from .literary_identity import bind_source, same_work, work_identity
+from .literary_identity import bind_source, same_work, work_identity, same_author_name, normalize_identity
 from .literary_sources import error_status, research_scope
 
 
 DEFAULT_PROVIDERS = ('openlibrary', 'wikidata')
 PROVIDERS = (*DEFAULT_PROVIDERS, 'wikipedia')
-REQUIREMENTS = frozenset({'', 'author', 'characters', 'character_detail', 'summary',
+REQUIREMENTS = frozenset({'', 'author', 'characters', 'character_roster', 'main_characters', 'character_detail', 'summary', 'plot_development',
     'identification', 'relationships', 'events', 'ending', 'themes', 'metadata', 'recommend',
     'plot', 'identify', 'book_identity', 'publication', 'synopsis', 'bibliography',
-    'recommendation', 'content', 'comparison', 'scenes', 'exact_passage'})
+    'recommendation', 'content', 'comparison', 'scenes', 'exact_passage', 'historical_context', 'adaptations', 'genres'})
 _FAILURE_CODES = frozenset({'empty', 'unavailable', 'timeout', 'rate_limited', 'cooldown',
     'invalid_response', 'access_denied', 'unauthorized', 'budget_exhausted',
     'no_verified_match', 'not_permitted', 'no_evidence', 'invalid_identity'})
@@ -89,8 +89,12 @@ def _covers_requirement(work, books, sources, requirement):
         return False
     if requirement in {'', 'metadata', 'author', 'bibliography', 'book_identity'}:
         return True
-    if requirement in {'themes', 'recommend', 'recommendation'}:
+    if requirement in {'themes', 'genres', 'recommend', 'recommendation'}:
         return any(source.get('categories') for source in matching)
+    if requirement in {'historical_context', 'adaptations'}:
+        from .literary_memory import _literal_facts
+        return any(fact.get('topic') == requirement for source in matching for fact in
+                   _literal_facts(source.get('literary_facts', []), source.get('description', ''), 'literary_facts'))
     # Las materias/identificadores de un catálogo no son una sinopsis ni
     # prueban escenas, personajes o relaciones.
     narrative = [source for source in matching if source.get('policy') !=
@@ -98,17 +102,45 @@ def _covers_requirement(work, books, sources, requirement):
                  or source.get('policy') == 'curated-original-v1')]
     if not narrative:
         return False
+    if requirement == 'plot_development':
+        from .literary_enrichment import has_development
+        return any(has_development(source) for source in narrative)
+    if requirement == 'character_roster':
+        from .literary_memory import _literal_facts
+        names={normalize_identity(fact['name']) for source in narrative for fact in
+            _literal_facts(source.get('character_facts',[]),source.get('description',''),'character_facts')
+            if not fact.get('membership_only')}
+        return len(names)>=3  # Bounded coverage target, never an exhaustive cast claim.
+    if requirement == 'main_characters':
+        from .ai_character_answers import _facts, _profile_facts
+        from .literary_ai import canonical_sources
+        request = {'title':work['title'],'targets':[work],'task':'characters','names':[],
+                   'focus':'main','ambiguous':False}
+        pages = [_profile_facts(page,request) for page in canonical_sources(narrative,20)]
+        return any(fact.get('main_character') for fact in _facts(request,pages))
+    if requirement == 'relationships':
+        from .literary_memory import _literal_facts
+        # This job asks for an explicit relation, not also a complete cast.
+        # Concrete user questions still bind both participants and undergo the
+        # normal factual audit; this is only the worker's stopping criterion.
+        if any(fact.get('topic') == 'relationships' and fact.get('subject')
+               and (fact.get('relation') or fact.get('predicate')) and (fact.get('value') or fact.get('object'))
+               for source in narrative if not source.get('conflicts_with') and not source.get('injection_detected')
+               for fact in _literal_facts(source.get('literary_facts',[]),source.get('description',''),'literary_facts')):
+            return True
     if requirement in {'summary', 'synopsis', 'plot', 'identification', 'identify'}:
-        return any(len(str(source.get('description', ''))) >= 60 for source in narrative)
+        from .ai_narrative_answers import _task_content
+        return any(_task_content({'task': 'summary'}, source) for source in narrative)
     from .literary_research import assess_evidence
     from .literary_ai import canonical_sources
     if requirement in {'characters', 'character_detail', 'relationships'}:
+        from .literary_web import distinct_character_mentions
         # P674 proves membership, not a narrative role. Keeping that admitted
         # statement in memory must not complete a job asking for useful roles.
-        narrative = [{**source, 'character_facts': [fact for fact in source.get('character_facts', [])
+        narrative = [{**source, 'character_facts': distinct_character_mentions([fact for fact in source.get('character_facts', [])
             if isinstance(fact, dict) and not fact.get('membership_only') and not re.search(
                 r'personaje registrado|registered character|character (?:listed|registered) for this work',
-                str(fact.get('role', '')), re.I)]} for source in narrative]
+                str(fact.get('role', '')), re.I)])} for source in narrative]
     prompts = {'characters': 'Dime los personajes de ', 'character_detail': 'Dime los personajes de ',
         'relationships': 'Explica la relación entre los personajes de ',
         'events': 'Qué sucede en ', 'ending': 'Cómo termina ', 'scenes': 'Describe escenas de ',
@@ -165,31 +197,72 @@ def _bibliographic_query(work, provider):
     return query
 
 
-def _fetch_public_metadata(work, provider):
+def _fetch_public_metadata(work, provider, *, requirement=''):
     query = _bibliographic_query(work, provider)
     if provider == 'openlibrary':
         from .literary_search import search_openlibrary
         return search_openlibrary(query, details=False)
     if provider == 'wikidata':
         from .literary_wikidata import search_wikidata
-        return search_wikidata(query)
+        found = search_wikidata(query)
+        if requirement in {'characters','character_detail'}:
+            from .literary_sources import SearchResults
+            return SearchResults([{**source,'evidence_scope':'characters'} for source in found if source.get('kind')=='web'],
+                status=getattr(found,'status','ok' if found else 'empty'),
+                providers=getattr(found,'providers',{}))
+        return found
     if provider == 'wikipedia':
         from .literary_search import search_wikipedia
-        return search_wikipedia(query)
+        focus = {'characters':'personajes', 'character_roster':'personajes', 'main_characters':'personajes', 'character_detail':'personajes',
+            'relationships':'personajes', 'summary':'argumento', 'plot':'argumento', 'plot_development':'argumento',
+            'synopsis':'argumento', 'events':'argumento', 'themes':'temas', 'genres':'género',
+            'historical_context':'contexto histórico', 'adaptations':'adaptaciones'}.get(requirement)
+        found = search_wikipedia(query + (' '+focus if focus else ''))
+        if requirement == 'main_characters':
+            from .ai_character_answers import _character_profiles, _profile_facts
+            request = {'title':work['title'],'targets':[work],'task':'characters','names':[],
+                       'focus':'main','ambiguous':False}
+            profiles, unused = _character_profiles(request, [{**work,'kind':'book'}, *found])
+            found = [*found, *[_profile_facts(page,request) for page in profiles]]
+        elif requirement == 'relationships':
+            from .literary_memory import retrieve_evidence
+            from .literary_entity_facts import profile_creation_relations
+            from .ai_character_answers import bind_character_profile
+            unused, known = retrieve_evidence(work['title'],books=[work],requirement='relationships',limit=20)
+            names = list(dict.fromkeys(source['title'] for source in known
+                if source.get('memory_verified') and same_work(source,work)
+                and profile_creation_relations(source)))[:2]
+            # Re-fetch the published definitions. A cache read alone is never
+            # reported as fresh verification or used to reset source expiry.
+            additional = []
+            for name in names:
+                for page in search_wikipedia(name):
+                    bound = bind_character_profile(page,work)
+                    if bound is not None:
+                        additional.append(bound)
+            found = [*found,*additional]
+        if focus:
+            from .literary_enrichment import enrich_source
+            from .literary_sources import SearchResults
+            return SearchResults([enrich_source(source, work, requirement) for source in found],
+                                 status=getattr(found, 'status', 'ok' if found else 'empty'),
+                                 providers=getattr(found, 'providers', {}))
+        return found
     raise ValueError('not_permitted')
 
 
 def run_refresh_batch(*, database=None, max_jobs=2, max_seconds=30, job_seconds=8,
-                      pause_seconds=1, worker_id=None, fetch=None, clock=None, sleeper=None):
+                      pause_seconds=1, worker_id=None, fetch=None, clock=None, sleeper=None,
+                      narrative_pages=0, work_ids=(), reuse_fresh=False, stop=None, max_attempts=None, requirements=()):
     """Procesa una cola durable con concurrencia global uno y HTTP acotado.
 
     No descarga novelas, no usa inferencia/embeddings y no bloquea Django. Un
     proceso detenido deja leases que otro trabajador puede recuperar al vencer.
     CPU/red: hasta 20 tareas, 120 s por lote, 12 s por tarea y una pausa >=1 s.
     El adaptador de cada fuente mantiene además sus límites HTTP existentes.
-    Wikipedia sólo puede consultar su introducción oficial: ``pages=0`` impide
-    leer artículos completos o tablas. Sin evidencia suficiente se reprograma;
-    no se amplía el permiso de almacenamiento ni se inventan roles.
+    Por defecto ``pages=0`` conserva sólo introducciones oficiales. El piloto
+    narrativo explícito puede reservar una lectura temática; no cambia los
+    permisos de almacenamiento. Sin evidencia suficiente se reprograma.
     """
     from .literary_memory import (claim_job, get_work, remember_evidence,
         finish_job, fail_job, record_use, retrieve_evidence, ERRORS)
@@ -203,17 +276,26 @@ def run_refresh_batch(*, database=None, max_jobs=2, max_seconds=30, job_seconds=
     if not re.fullmatch(r'[A-Za-z0-9_-]{1,64}', worker_id):
         raise ValueError('Identificador de trabajador inválido')
     clock, sleeper = clock or time.monotonic, sleeper or time.sleep
-    fetch = fetch or _fetch_public_metadata
+    if type(narrative_pages) is not int or narrative_pages not in (0, 1):
+        raise ValueError('La lectura narrativa admite cero o una página por tarea.')
+    if max_attempts is not None and (type(max_attempts) is not int or not 1 <= max_attempts <= 20):
+        raise ValueError('El máximo de intentos debe estar entre 1 y 20.')
     start = clock()
     report = {'claimed': 0, 'completed': 0, 'deferred': 0, 'stored': 0,
-              'seconds': 0.0, 'jobs': [], 'llm_calls': 0,
+              'seconds': 0.0, 'jobs': [], 'llm_calls': 0, 'reused': 0,
               'verification_scope': 'source_policy_identity_and_requirement_coverage',
               'independent_factual_corroboration': False}
     for index in range(max_jobs):
+        if stop is not None and stop():
+            report['stopped'] = 'stop_or_resource_limit'
+            break
         remaining = max_seconds - (clock() - start)
         if remaining < 1:
             break
-        job = claim_job(worker_id, lease_seconds=max(30, int(job_seconds) + 10), database=database)
+        scoped = {'work_ids': work_ids} if work_ids else {}
+        if requirements:
+            scoped['requirements']=requirements
+        job = claim_job(worker_id, lease_seconds=max(30, int(job_seconds) + 10), database=database, **scoped)
         if not job:
             break
         report['claimed'] += 1
@@ -221,7 +303,7 @@ def run_refresh_batch(*, database=None, max_jobs=2, max_seconds=30, job_seconds=
         token = job['lease_token']
         provider, requirement = job.get('provider'), job.get('requirement', '')
         started = clock()
-        code, stored = 'unavailable', 0
+        code, stored, reused = 'unavailable', 0, False
         try:
             if provider not in PROVIDERS or requirement not in REQUIREMENTS:
                 raise ValueError('not_permitted')
@@ -229,29 +311,46 @@ def run_refresh_batch(*, database=None, max_jobs=2, max_seconds=30, job_seconds=
             if not work:
                 raise ValueError('invalid_identity')
             _bibliographic_query(work, provider)
+            if reuse_fresh and job.get('payload', {}).get('last_gap_reason') != 'reader_correction_pending':
+                books, sources = retrieve_evidence(work['title'], books=[work], requirement=requirement,
+                                                   database=database, limit=8)
+                reused = _covers_requirement(work, books, sources, requirement)
+                if reused and narrative_pages and requirement in {'summary', 'plot', 'synopsis'}:
+                    from .literary_enrichment import narrative_coverage
+                    reused = bool(narrative_coverage(database, [work['work_id']]).get('works_with_explicit_plot'))
             # Monotonic real es también el reloj usado por los sockets y el
             # guardián HTTP. El reloj inyectado sólo mide/prueba el planificador.
             with request_budget(time.monotonic() + min(job_seconds, remaining)):
-                with research_scope(maximum=2, seconds=min(job_seconds, remaining), pages=0):
-                    found = fetch(work, provider)
+                with research_scope(maximum=2, seconds=min(job_seconds, remaining),
+                                    pages=narrative_pages if provider == 'wikipedia' else 0):
+                    found = (sources if reused else fetch(work, provider) if fetch else _fetch_public_metadata(work, provider,
+                        requirement=requirement if narrative_pages else ''))
                     status = getattr(found, 'status', 'ok' if found else 'empty')
                     if status not in {'ok', 'partial'}:
                         code = status if status in _FAILURE_CODES else 'unavailable'
                     else:
                         matching = [bind_source(source, work) if source.get('kind') == 'web' else source
                                     for source in found[:12] if isinstance(source, dict)
-                                    and same_work(source, work)]
+                                    and same_work(source, work)
+                                    and (source.get('kind') == 'web'
+                                         or same_author_name(source.get('author'), work['author']))]
                         if matching:
-                            counts = remember_evidence([work], matching, database=database)
+                            counts = {} if reused else remember_evidence([work], matching, database=database)
                             stored = counts.get('sources', 0)
                             if type(stored) is not int or stored < 0:
                                 stored = 0
                             code = 'not_permitted'
-                            if stored:
+                            if reused or stored:
                                 cached_books, cached_sources = retrieve_evidence(work['title'],
                                     books=[work], requirement=requirement, database=database, limit=8)
                                 code = ('ok' if _covers_requirement(work, cached_books, cached_sources,
                                                                    requirement) else 'no_evidence')
+                                if narrative_pages and requirement in {'summary','plot','synopsis'}:
+                                    # Una introducción bibliográfica no completa
+                                    # el trabajo de obtener un argumento literal.
+                                    from .literary_enrichment import narrative_coverage
+                                    if not narrative_coverage(database, [work['work_id']]).get('works_with_explicit_plot'):
+                                        code = 'no_evidence'
                         else:
                             code = 'no_verified_match'
         except Exception as exc:
@@ -263,17 +362,19 @@ def run_refresh_batch(*, database=None, max_jobs=2, max_seconds=30, job_seconds=
         if code == 'ok':
             accepted = finish_job(identifier, lease_token=token, database=database)
             if accepted:
-                record_use(job['work_id'], requirement, 'verified', provider=provider,
+                record_use(job['work_id'], requirement, 'hit' if reused else 'verified', provider=provider,
                            latency=elapsed, database=database)
                 report['completed'] += 1
-                report['stored'] += stored
+                report['stored'] += 0 if reused else stored
+                report['reused'] += int(reused)
         else:
             backoff = min(3600, 60 * (2 ** min(int(job.get('attempts', 1)), 5)))
             if code in {'empty', 'no_verified_match', 'not_permitted', 'no_evidence'}:
                 backoff = max(900, backoff)
             stored_code = code if code in ERRORS else 'unavailable'
             accepted = fail_job(identifier, lease_token=token, retry_after=backoff,
-                                error_code=stored_code, database=database)
+                                error_code=stored_code, database=database,
+                                terminal=max_attempts is not None and int(job.get('attempts', 0)) >= max_attempts)
             if accepted:
                 record_use(job['work_id'], requirement, 'failed', provider=provider,
                            latency=elapsed, database=database)
@@ -284,7 +385,8 @@ def run_refresh_batch(*, database=None, max_jobs=2, max_seconds=30, job_seconds=
         # Ningún texto remoto o excepción se introduce en logs persistentes.
         report['jobs'].append({'work_id': job['work_id'], 'provider': provider,
             'requirement': requirement, 'status': code, 'lease_current': bool(accepted),
-            'seconds': round(elapsed, 3), 'stored': stored if accepted else 0})
+            'seconds': round(elapsed, 3), 'stored': stored if accepted and not reused else 0,
+            'reused': reused})
         if index + 1 < max_jobs:
             wait = min(pause_seconds, max(0.0, max_seconds - (clock() - start)))
             if wait > 0:

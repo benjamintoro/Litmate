@@ -1,6 +1,8 @@
 """Personajes con pruebas públicas: contrato y privacidad sin red ni inferencias."""
 import copy
 import json
+from pathlib import Path
+from tempfile import TemporaryDirectory
 from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
@@ -270,7 +272,25 @@ class CharacterFactParserTests(SimpleTestCase):
                    LITMATE_USE_EXISTING_QUOTAS=False, LITMATE_AI_CATALOG_FALLBACK=False)
 class PublicCharactersEndpointTests(TestCase):
     def setUp(self):
+        temporary = TemporaryDirectory(prefix='litmate-endpoint-test-')
+        self.addCleanup(temporary.cleanup)
+        root = Path(temporary.name)
+        local = override_settings(**{name: root/(name.lower()+'.sqlite3') for name in (
+            'LITMATE_LITERARY_MEMORY_DB', 'LITMATE_LITERARY_MEMORY_RAG_DB',
+            'LITMATE_AI_RUNTIME_DB', 'LITMATE_AI_STREAM_DB', 'LITMATE_AI_ANSWER_CACHE_DB')})
+        local.enable()
+        self.addCleanup(local.disable)
         cache.clear()
+        # The endpoint now uses the audited character service. Feed its real
+        # provider boundary, including the attribution required for quotation.
+        self.public = {**PUBLIC, 'license': 'CC-BY-SA-4.0', 'storage_policy': 'wikipedia-cc-by-sa-4.0-v1',
+            'description': '== Personajes principales ==\n' + PUBLIC['description'],
+            'character_facts': [{**fact, 'classification': 'main',
+                                 'classification_evidence': 'Personajes principales'} for fact in FACTS],
+            'identity_text': 'Dune es una novela de Frank Herbert.',
+            'attribution': {'authors': 'Wikipedia contributors', 'title': PUBLIC['title'],
+                'url': PUBLIC['url'], 'revision_id': '1234',
+                'license_url': 'https://creativecommons.org/licenses/by-sa/4.0/'}}
 
     def read_events(self, response):
         body = b''.join(response.streaming_content).decode('utf-8')
@@ -280,6 +300,7 @@ class PublicCharactersEndpointTests(TestCase):
     def test_verified_character_details_do_not_acquire_a_model_or_consume_a_quota(self):
         cache.set('litmate_local_inference_lock', 'another-active-inference', timeout=60)
         with patch('core.literary_search.search_google', return_value=[BOOK]), \
+                patch('core.ai_quick_answers.quick_knowledge_sources', return_value=[BOOK, self.public]), \
                 patch('core.literary_search.retrieve_books', return_value=[BOOK]), \
                 patch('core.literary_search.retrieve_web', return_value=[PUBLIC]), \
                 patch('core.literary_ai_views.build_assistant') as builder, \
@@ -287,8 +308,8 @@ class PublicCharactersEndpointTests(TestCase):
                 patch('core.literary_ai_views.verificar_y_consumir_cuota') as quota:
             response = self.client.post('/chatbot_query/', json.dumps({'message': QUESTION}),
                                         content_type='application/json')
+            events = self.read_events(response)
         self.assertEqual(response.status_code, 200)
-        events = self.read_events(response)
         self.assertIn('Paul Atreides', ''.join(event['token'] for event in events))
         self.assertEqual(next(event['books'] for event in events if 'books' in event)[0]['title'], 'Dune')
         builder.assert_not_called()
@@ -301,18 +322,21 @@ class PublicCharactersEndpointTests(TestCase):
         user = get_user_model().objects.create_user(username='character-reader')
         self.client.force_login(user)
         with patch('core.literary_search.search_google', return_value=[BOOK]), \
+                patch('core.ai_quick_answers.quick_knowledge_sources', return_value=[BOOK, self.public]), \
                 patch('core.literary_search.retrieve_books', return_value=[BOOK]), \
                 patch('core.literary_search.retrieve_web', return_value=[PUBLIC]), \
                 patch('core.literary_ai_views.build_assistant') as builder:
             response = self.client.post('/chatbot_query/', json.dumps({'message': QUESTION}),
                                         content_type='application/json')
+            self.read_events(response)
         self.assertEqual(response.status_code, 200)
         builder.assert_not_called()
         answer = MensajeIA.objects.get(rol='assistant')
-        self.assertEqual(answer.metadata_json['provider'], 'public-book-details')
+        self.assertEqual(answer.metadata_json['provider'], 'verified-character-evidence')
         self.assertEqual(answer.metadata_json['provider_calls'], 0)
         self.assertEqual(answer.tokens_utilizados, 0)
-        self.assertEqual(answer.metadata_json['sources'][1]['character_facts'], FACTS)
+        self.assertEqual(answer.metadata_json['sources'][1]['character_facts'], self.public['character_facts'])
+        self.assertEqual(answer.metadata_json['sources'][1]['license'], 'CC-BY-SA-4.0')
         self.assertEqual(self.client.session[HISTORY_KEY]['owner'], 'user:' + str(user.pk))
 
     @override_settings(LITMATE_USE_EXISTING_QUOTAS=True)
@@ -342,10 +366,11 @@ class PublicCharactersEndpointTests(TestCase):
         session[HISTORY_KEY] = {'owner': 'user:999999', 'turns': [
             {'accepted': True, 'question': 'Texto de otra persona', 'answer': 'Su historia privada.', 'books': [BOOK]}]}
         session.save()
-        with patch('core.ai_public_details.character_answer', return_value=ChatResult('Falta el título.', 'clarification')) as fast, \
+        with patch('core.ai_character_answers.character_answer', return_value=ChatResult('Falta el título.', 'clarification')) as fast, \
                 patch('core.literary_ai_views.build_assistant') as builder:
             response = self.client.post('/chatbot_query/', json.dumps({'message': 'Dime los personajes del segundo'}),
                                         content_type='application/json')
+            self.read_events(response)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(fast.call_args.args[1], [])
         builder.assert_not_called()

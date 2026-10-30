@@ -1,6 +1,6 @@
 # Fuentes gratuitas y modelos locales de LitMate
 
-Revisión e implementación del 20 de octubre de 2026. Este documento complementa `INFORME_BUSQUEDA_LITERARIA.md`. Las pruebas de fuentes descritas aquí usan HTTP real, sin cargar `.env`, sin consultar TiDB y sin ejecutar migraciones. No se ha modificado la interfaz, las tarjetas, la voz ni los avatares.
+Revisión e implementación del 20 de octubre de 2026. Este documento complementa `reports/archive/INFORME_BUSQUEDA_LITERARIA.md`. Las pruebas de fuentes descritas aquí usan HTTP real, sin cargar `.env`, sin consultar TiDB y sin ejecutar migraciones. No se ha modificado la interfaz, las tarjetas, la voz ni los avatares.
 
 ## Continuación del 21 de octubre: ediciones y procedencia
 

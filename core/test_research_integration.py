@@ -529,6 +529,10 @@ class FreeResearchFallbackIntegrationTests(SimpleTestCase):
         self.assertTrue(source['work_binding_verified'])
         self.assertEqual(source['kind'], 'web')
         self.assertIn('sección de artículo', source['read_mode'])
-        self.assertEqual(source['literary_facts'][0]['topic'], 'events')
+        # La sección Argumento se tipifica como trama, sin prometer que un
+        # párrafo breve sea un desarrollo completo ni texto literal del libro.
+        self.assertEqual(source['literary_facts'][0]['topic'], 'plot')
+        self.assertEqual(source['literary_facts'][0]['scope'], 'premise')
+        self.assertIn('events', [fact['topic'] for fact in source['literary_facts']])
         self.assertNotIn('película diferente', source['description'])
         self.assertTrue(assess_evidence('¿Qué sucede con Det?', [source], [BOOK])['sufficient'])

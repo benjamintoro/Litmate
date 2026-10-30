@@ -117,24 +117,17 @@ class PersistentRouterTests(SimpleTestCase):
 
     @override_settings(LITMATE_AI_USE_WEB=True, LITMATE_AI_USE_OPENLIBRARY=True,
                        LITMATE_AI_USE_WIKIDATA=False)
-    def test_summary_publishes_an_audited_web_reference_without_llm(self):
+    def test_summary_does_not_publish_fragments_without_bound_content(self):
         with TemporaryDirectory() as temporary, override_settings(
                 LITMATE_LITERARY_MEMORY_DB=Path(temporary) / 'memory.sqlite3'), \
                 patch('core.literary_search.search_openlibrary', return_value=[]), \
                 patch('core.literary_search.search_wikipedia', return_value=[dict(ROSE_PAGE)]):
             result = research_answer('¿De qué trata El nombre de la rosa?', [])
-        self.assertIsNotNone(result)
-        self.assertEqual(result.status, 'answered')
-        self.assertTrue(result.diagnostics['persistent_research_route'])
-        self.assertTrue(result.diagnostics['progressive_reference'])
-        self.assertTrue(result.diagnostics['web_reference_quick_answer'])
-        self.assertTrue(result.diagnostics['partial_answer'])
-        self.assertIn('Umberto Eco', result.text)
-        self.assertIn('es.wikipedia.org', result.text)
+        self.assertIsNone(result)
 
     @override_settings(LITMATE_AI_USE_WEB=True, LITMATE_AI_USE_OPENLIBRARY=True,
                        LITMATE_AI_USE_WIKIDATA=False)
-    def test_protagonist_without_character_facts_keeps_a_partial_reference(self):
+    def test_protagonist_without_character_facts_does_not_publish_partial_references(self):
         page = {**ROSE_PAGE, 'title': 'Nana (novela)', 'url': 'https://es.wikipedia.org/wiki/Nana_(novela)',
                 'identity_text': 'Nana (novela) de Émile Zola.',
                 'description': 'Nana es una novela de Émile Zola sobre una joven que se convierte en cortesana.'}
@@ -143,9 +136,7 @@ class PersistentRouterTests(SimpleTestCase):
                 patch('core.literary_search.search_openlibrary', return_value=[dict(NANA_BOOK)]), \
                 patch('core.literary_search.search_wikipedia', return_value=[page]):
             result = research_answer('¿Quién es el protagonista de Nana?', [])
-        self.assertIsNotNone(result)
-        self.assertTrue(result.diagnostics['web_reference_quick_answer'])
-        self.assertIn('Émile Zola', result.text)
+        self.assertIsNone(result)
 
     @override_settings(LITMATE_AI_USE_WEB=True, LITMATE_AI_USE_OPENLIBRARY=True,
                        LITMATE_AI_USE_WIKIDATA=False)
@@ -164,10 +155,13 @@ class PersistentRouterTests(SimpleTestCase):
                 patch('core.literary_search.search_openlibrary', return_value=[dict(NANA_BOOK)]), \
                 patch('core.literary_search.search_wikipedia', return_value=[decoy, zola]):
             result = research_answer('¿Quién es el protagonista de Nana?', [])
-        self.assertIsNotNone(result)
-        self.assertIn('Zola', result.text)
-        self.assertIn('Anne Coupeau', result.text)
-        self.assertNotIn('Palahniuk', result.text)
+        # Correct identity alone cannot manufacture a validated character role.
+        self.assertIsNone(result)
+        from .ai_narrative_answers import bound_sources, request_for
+        bound = bound_sources(request_for('¿Quién es el protagonista de Nana?'),
+                              [NANA_BOOK, decoy, zola])
+        self.assertTrue(any('Anne Coupeau' in source['description'] for source in bound))
+        self.assertFalse(any('Palahniuk' in source['description'] for source in bound))
 
     @override_settings(LITMATE_AI_USE_WEB=True, LITMATE_AI_USE_OPENLIBRARY=True,
                        LITMATE_AI_USE_WIKIDATA=False)

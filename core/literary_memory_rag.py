@@ -70,7 +70,7 @@ def _snapshot_metadata(source):
 
 
 def build_memory_index(*, database=None, index=None, embedder=None, maximum=5000,
-                       max_seconds=300, progress=None):
+                       max_seconds=300, progress=None, work_ids=()):
     """Construye un índice derivado y reutiliza vectores de la versión anterior.
 
     El destino final sólo se sustituye cuando el snapshot completo y su marcador
@@ -79,12 +79,14 @@ def build_memory_index(*, database=None, index=None, embedder=None, maximum=5000
     un staging interrumpido no es un checkpoint de nuevos vectores ya calculados.
     """
     import time
-    from .literary_memory import export_index_sources, revision
+    from .literary_memory import export_index_sources, revision, READ_POLICY
     maximum = max(1, min(int(maximum), 5000))
     max_seconds = max(1., min(float(max_seconds), 300.))
     destination = index_path(index, database=database)
+    if work_ids and destination.exists():
+        raise ValueError('Un índice parcial necesita un destino nuevo; no reemplaza otro índice.')
     _owned_index(destination)
-    sources = export_index_sources(database=database, limit=maximum)
+    sources = export_index_sources(database=database, limit=maximum, work_ids=work_ids)
     report = {'sources': len(sources), 'documents': 0, 'chunks': 0,
               'semantic': embedder is not None, 'index_updated': False, 'index': str(destination)}
     if not sources:
@@ -122,7 +124,8 @@ def build_memory_index(*, database=None, index=None, embedder=None, maximum=5000
                     metadata=metadata, progress=progress)
             with closing(sqlite3.connect(snapshot)) as db, db:
                 db.executemany('INSERT OR REPLACE INTO rag_metadata VALUES (?,?)',
-                    [('managed_by', OWNER), ('memory_revision', revision(database=database))])
+                    [('managed_by', OWNER), ('memory_revision', revision(database=database)),
+                     ('verification_policy', READ_POLICY)])
             _owned_index(snapshot)
             os.replace(snapshot, destination)
             report.update(documents=documents, chunks=chunks, index_updated=True)

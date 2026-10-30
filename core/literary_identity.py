@@ -23,10 +23,25 @@ IDENTITY_DOMAINS = (
 UNKNOWN_AUTHORS = {'', 'autor no informado', 'autor desconocido', 'fuente web'}
 
 
+def is_literary_identity(text):
+    """Published literary form; a format label does not infer a genre."""
+    return bool(re.search(r'\b(?:novelas?|libros?|obras?|ensayos?|novels?|books?|manga|comics?|'
+        r'historietas?|poemas?|poetry|epopeyas?|epic poem|plays?|obra teatral|tragedia)\b',
+        normalize_identity(text)))
+
+
 def normalize_identity(value):
     value = ''.join(c for c in unicodedata.normalize('NFKD', str(value or '').casefold())
                     if not unicodedata.combining(c))
     return re.sub(r'\W+', ' ', value).strip()
+
+
+def ambiguous_work_page(source):
+    """A disambiguation index mentions works but is not evidence about one."""
+    text = normalize_identity(source.get('identity_text') or source.get('extract')
+                              or source.get('description', ''))[:500]
+    return (isinstance(source.get('pageprops'), dict) and 'disambiguation' in source['pageprops']
+            or bool(re.search(r'\b(?:puede referirse a|may refer to|desambiguacion|disambiguation)\b', text)))
 
 
 def same_author_name(first, second):
@@ -262,6 +277,8 @@ def same_work(source, book):
     """
     if not isinstance(source, dict) or not isinstance(book, dict):
         return False
+    if source.get('kind') == 'web' and ambiguous_work_page(source):
+        return False
     book_identity = work_identity(book)
     if not book_identity:
         return False
@@ -283,10 +300,23 @@ def same_work(source, book):
                               for offset in range(max(0, len(identity_text.split()) - len(tokens) + 1))))
         if not full_name_present:
             return False
-        adaptation = re.search(r'\b(?:pelicula|serie de television|adaptacion|film|movie)\b', identity_text)
-        novel = re.search(r'\b(?:novela|libro|novel|book)\b', identity_text)
+        adaptation = re.search(r'\b(?:pelicula|serie de television|adaptacion|film|movie|anime|serie de animacion)\b', identity_text)
+        novel = re.search(r'\b(?:novelas?|libros?|novels?|books?|manga|comics?|historietas?)\b', identity_text)
         return not (adaptation and (not novel or adaptation.start() < novel.start()))
     source_identity = work_identity(source)
+    if source_identity and _titles(source_identity) & _titles(book_identity):
+        def anchors(item):
+            if not _known_origin(item):return set()
+            parts=urlsplit(str(item.get('url','')))
+            host=(parts.hostname or '').lower()
+            known=(host in {'www.wikidata.org','wikidata.org'} and re.fullmatch(r'/wiki/Q\d+',parts.path)
+                or host=='openlibrary.org' and re.fullmatch(r'/works/OL\d+W',parts.path)
+                or host=='www.gutenberg.org' and re.fullmatch(r'/ebooks/\d+',parts.path)
+                or host in {'es.wikipedia.org','en.wikipedia.org'} and parts.path.startswith('/wiki/'))
+            return {(host,parts.path)} if known and parts.scheme=='https' else set()
+        # Un identificador bibliográfico compartido verifica las variantes;
+        # parecido del nombre o un apellido común no lo hacen.
+        if anchors(source) & anchors(book):return True
     if not source_identity or not same_author_name(source_identity['author'], book_identity['author']):
         return False
     if _titles(source_identity) & _titles(book_identity):
@@ -365,8 +395,13 @@ def _identity_author(source):
     if bound and normalize_identity(bound) not in UNKNOWN_AUTHORS:
         return bound
     text = str(source.get('identity_text') or source.get('description') or '')
+    attributed = re.search(r'\b(?i:atribuid[oa]\s+(?:a|al)|attributed\s+to)\s+'
+        r'(?:(?i:poeta|autor|autora|escritor|escritora)\s+(?:[a-záéíóúüñ]+\s+){0,2})?'
+        r'([A-ZÁÉÍÓÚÑ][\wÁÉÍÓÚÜÑáéíóúüñ’\'-]+)(?=[.,;:]|$)', text)
+    if attributed:
+        return attributed.group(1)
     for marker in (r'escrit[oa]\s+por', r'creada?\s+por', r'obra\s+de', r'autor(?:a)?\s+',
-                   r'escritor(?:a)?\s+', r'novel\s+by\s+'):
+                   r'escritor(?:a)?\s+', r'novel\s+by\s+', r'(?:novela|libro|poema(?:\s+épico)?)\s+de\s+'):
         match = re.search(r'(?i)\b' + marker + r'\b(.{0,120})', text)
         if not match:
             continue
@@ -407,8 +442,8 @@ def _verified_web_work(source):
     identity = normalize_identity(source.get('identity_text', ''))
     token = normalize_identity(title)
     if (not title or not identity or re.search(r'\b(?:categoria|category|anexo)\b', token)
-            or not re.search(r'(?<!\w)' + re.escape(token) + r'.{0,160}?\b(?:es|fue|era|son)\s+'
-                             r'(?:una?|la|el)\s+(?:novela|libro|obra|saga|serie de novelas)\b', identity)):
+            or not re.search(r'(?<!\w)' + re.escape(token) + r'.{0,400}?\b(?:es|fue|era|son)\s+'
+                             r'(?:una?|la|el)\s+(?:novela|libro|obra|saga|serie de novelas|poema|epopeya)\b', identity)):
         return {}
     author = _identity_author(source)
     if normalize_identity(author) in UNKNOWN_AUTHORS:

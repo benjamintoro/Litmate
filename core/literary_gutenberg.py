@@ -130,11 +130,18 @@ def _bounded_lines(stream, deadline):
 
 def import_catalog(path, *, state_database, memory_database, source_url=CATALOG_URL,
                    max_records=1000, max_scanned=100000, max_seconds=120,
-                   max_storage_mb=128, languages=('es', 'en'), dry_run=False, rdf=False):
+                   max_storage_mb=128, languages=('es', 'en'), dry_run=False, rdf=False,
+                   selected_ids=None):
     """Streaming y checkpoint ordinal+SHA256; una repetición no duplica libros."""
     from .literary_acquisition import (_limits, _path, _memory_path, _fingerprint, _connect, _hash, _json,
         _storage_limit, _put, _checkpoint, drain_projection, verify_and_release)
     _limits(max_records, max_scanned, max_seconds, max_storage_mb)
+    if selected_ids is not None:
+        if (not isinstance(selected_ids, (tuple, list, set, frozenset))
+                or not 1 <= len(selected_ids) <= 10000
+                or any(not re.fullmatch(r'[1-9]\d{0,7}', str(value)) for value in selected_ids)):
+            raise ValueError('La selección requiere entre 1 y 10000 IDs válidos de catálogo.')
+        selected_ids = frozenset(str(value) for value in selected_ids)
     memory_database = _memory_path(memory_database)
     if (not isinstance(languages, (tuple, list)) or len(languages) > 20
             or any(not isinstance(value, str) or not re.fullmatch(r'[a-z]{2,3}', value) for value in languages)):
@@ -147,8 +154,9 @@ def import_catalog(path, *, state_database, memory_database, source_url=CATALOG_
     started, path = time.monotonic(), Path(path)
     deadline = started + max_seconds
     digest, signature = _fingerprint(path, deadline=deadline, clock=time.monotonic)
+    selection_key = '' if selected_ids is None else '\0selection:' + _hash(_json(sorted(selected_ids)))
     dataset = _hash('gutenberg\0' + str(path.resolve()) + '\0' + source_url + '\0'
-                    + _json(sorted(languages)))
+                    + _json(sorted(languages)) + selection_key)
     previous = None
     db = _connect(state_database)
     if db is not None:
@@ -181,7 +189,8 @@ def import_catalog(path, *, state_database, memory_database, source_url=CATALOG_
                 report['offset_after'] = number
                 if not record:
                     report['rejected'] += 1
-                elif languages and not set(languages).intersection(record['languages']):
+                elif ((selected_ids is not None and record['external_id'] not in selected_ids)
+                      or (languages and not set(languages).intersection(record['languages']))):
                     record = None
                     report['filtered'] += 1
                 else:
@@ -189,7 +198,9 @@ def import_catalog(path, *, state_database, memory_database, source_url=CATALOG_
                     record['provenance'] = {'dataset_url': source_url, 'dataset_sha256': digest,
                                             'admission': 'staged',
                                             'record_number': number, 'license_scope': 'catalog_metadata_only'}
-                if writable:
+                # Las filas seleccionadas siempre tienen checkpoint atómico;
+                # los descartes se agrupan para no confirmar miles de filtros.
+                if writable and (selected_ids is None or record is not None or report['scanned'] % 250 == 0):
                     inserted = None
                     with writable:
                         if record:

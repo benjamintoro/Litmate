@@ -29,7 +29,7 @@ def progress_scope(callback=None):
         yield existing
         return
     state = {'start': time.monotonic(), 'callback': callback,
-             'lock': threading.Lock(), 'events': [], 'timings': [], 'last': None}
+             'lock': threading.Lock(), 'events': [], 'timings': [], 'last': None, 'model_calls_started':0}
     token = _current.set(state)
     try:
         yield state
@@ -87,6 +87,14 @@ def measure_stage(name):
                 state['timings'].append(row)
 
 
+def record_model_call():
+    """Count actual inference HTTP attempts across every client in this turn."""
+    state = _current.get()
+    if state is not None:
+        with state['lock']:
+            state['model_calls_started'] += 1
+
+
 def snapshot_metrics():
     """Devuelve métricas serializables; nunca prompts, consultas o URLs."""
     state = _current.get()
@@ -99,6 +107,7 @@ def snapshot_metrics():
         for row in rows:
             totals[row['stage']] = round(totals.get(row['stage'], 0) + row['elapsed_ms'], 3)
         return {'stage_timings': rows, 'stage_totals_ms': totals,
+                'model_calls_started':state['model_calls_started'],
                 'progress_events': phases,
                 'first_phase_emitted_ms': phases[0]['elapsed_ms'] if phases else None,
                 'elapsed_ms': round((time.monotonic() - state['start']) * 1000, 3)}
@@ -121,7 +130,7 @@ def sanitize_metrics(value):
         return {}
     def number(item):
         return type(item) in {int, float} and math.isfinite(item) and item >= 0
-    clean = {key: value[key] for key in ('elapsed_ms', 'first_phase_emitted_ms') if number(value.get(key))}
+    clean = {key: value[key] for key in ('elapsed_ms', 'first_phase_emitted_ms', 'model_calls_started') if number(value.get(key))}
     totals = value.get('stage_totals_ms', {})
     if isinstance(totals, dict):
         clean['stage_totals_ms'] = {key: item for key, item in totals.items() if key in _NAMES and number(item)}
@@ -168,6 +177,7 @@ def merge_metrics(first, second, *, offset_ms=0):
     for stage, duration in right.get('stage_totals_ms', {}).items():
         totals[stage] = round(totals.get(stage, 0) + duration, 3)
     result = {'stage_timings': timings, 'stage_totals_ms': totals,
+              'model_calls_started':left.get('model_calls_started',0)+right.get('model_calls_started',0),
               'progress_events': events[:64],
               'elapsed_ms': round(max(left.get('elapsed_ms', 0),
                                       right.get('elapsed_ms', 0) + offset_ms), 3)}

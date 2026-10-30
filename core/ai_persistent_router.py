@@ -19,10 +19,29 @@ from .literary_language import request_text
 def persist_sources(sources):
     """Guarda pruebas del recuperador, nunca una respuesta redactada por IA."""
     from .literary_memory import remember_evidence
+    from .literary_identity import _verified_web_work
+    # A cached catalogue identity is still an anchor, although reading it must
+    # not refresh its verification date. A licensed work article can supply a
+    # public identity without inventing an edition, ISBN or catalogue card.
+    books = [s for s in sources if s.get('kind') == 'book']
+    if not books:
+        books = [identity for source in sources if (identity := _verified_web_work(source))]
     # Leer del índice no constituye una verificación nueva de la fuente.
     sources = [s for s in sources if not s.get('memory_verified')]
-    books = [s for s in sources if s.get('kind') == 'book']
-    bound = [bind_source(s, book) for s in sources for book in books if same_work(s, book)]
+    from .ai_character_answers import bind_character_profile, _profile_facts
+    from .literary_enrichment import enrich_source
+    bound = []
+    for source in sources:
+        for book in books:
+            profile = bind_character_profile(source, book)
+            candidate = profile or source
+            if not same_work(candidate, book):
+                continue
+            candidate = bind_source(candidate, book)
+            if profile:
+                candidate = _profile_facts(candidate, {'names':[], 'task':'characters'})
+                candidate = enrich_source(candidate, book, 'characters')
+            bound.append(candidate)
     if books and bound:
         return remember_evidence(books, bound)
     return {}
