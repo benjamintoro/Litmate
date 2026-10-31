@@ -1,0 +1,821 @@
+{
+  "authenticBrowserCapture": true,
+  "externalNetworkTested": false,
+  "origin": "http://127.0.0.1:8006",
+  "frames": [
+    {
+      "file": "frame-000.png",
+      "seconds": 8.1658598
+    },
+    {
+      "file": "frame-001.png",
+      "seconds": 9.330209199999999
+    },
+    {
+      "file": "frame-002.png",
+      "seconds": 10.682622799999999
+    },
+    {
+      "file": "frame-003.png",
+      "seconds": 11.895312699999998
+    },
+    {
+      "file": "frame-004.png",
+      "seconds": 17.7022263
+    }
+  ],
+  "conversation": [
+    {
+      "question": "Hola",
+      "answer": "¡Hola! Qué gusto leerte. Soy LitMate, tu compañera de lecturas. Podemos charlar, descubrir tu próximo libro o comentar esa historia que te dejó pensando. ¿Cómo va tu día?"
+    },
+    {
+      "question": "Recomiéndame un libro",
+      "answer": "Has utilizado tu consulta gratuita de invitado. Para seguir conversando con LitMate, inicia sesión o crea una cuenta y elige tu plan. El plan gratuito no requiere tarjeta."
+    },
+    {
+      "question": "Recomiéndame dos novelas de fantasía en español",
+      "answer": "¡Claro!\n\n\nHarry Potter y el misterio del príncipe — J.K. Rowling.\n\n\nChoque de Reyes (Canción de Hielo y Fuego 2) — George R.R. Martin.\n\n¿Cuál te interesa más?\nPARA SEGUIR LEYENDO\nHarry Potter y el misterio del príncipe\nJ.K. Rowling\nHarry descubre un viejo libro de pociones perteneciente al misterioso 'Príncipe Mestizo' y junto a Dumbledore desentraña los secretos del pasado de Voldemort.\nBuscar en Google Books\nBuscar en Amazon\nBuscar en Buscalibre\nChoque de Reyes (Canción de Hielo y Fuego 2)\nGeorge R.R. Martin\nLa Guerra de los Cinco Reyes desgarra los Siete Reinos, mientras un cometa rojo cruza los cielos anunciando sangre y fuego.\nBuscar en Google Books\nBuscar en Amazon\nBuscar en Buscalibre"
+    },
+    {
+      "question": "Cuéntame más del segundo",
+      "answer": "Choque de Reyes (Canción de Hielo y Fuego 2) — George R.R. Martin: La Guerra de los Cinco Reyes desgarra los Siete Reinos, mientras un cometa rojo cruza los cielos anunciando sangre y fuego.\nPARA SEGUIR LEYENDO\nChoque de Reyes (Canción de Hielo y Fuego 2)\nGeorge R.R. Martin\nLa Guerra de los Cinco Reyes desgarra los Siete Reinos, mientras un cometa rojo cruza los cielos anunciando sangre y fuego.\nBuscar en Google Books\nBuscar en Amazon\nBuscar en Buscalibre"
+    }
+  ],
+  "navigation": [
+    {
+      "path": "/chat/",
+      "ready": true,
+      "localBrokenImages": [],
+      "externalBrokenImages": [],
+      "loadedImages": 4,
+      "previewNotice": false,
+      "navigationMethod": "direct-url"
+    },
+    {
+      "path": "/registro/",
+      "ready": true,
+      "localBrokenImages": [],
+      "externalBrokenImages": [],
+      "loadedImages": 5,
+      "previewNotice": false,
+      "navigationMethod": "existing-link-click"
+    },
+    {
+      "path": "/suscripciones/planes/",
+      "ready": true,
+      "localBrokenImages": [],
+      "externalBrokenImages": [],
+      "loadedImages": 5,
+      "previewNotice": false,
+      "navigationMethod": "existing-link-click"
+    }
+  ],
+  "mobileChecks": [
+    {
+      "case": "guest_actions",
+      "passed": true
+    },
+    {
+      "case": "registration",
+      "passed": true
+    },
+    {
+      "case": "cover_elements",
+      "total": 2,
+      "loaded": 2,
+      "pending": 0,
+      "failed": 0,
+      "passed": true
+    },
+    {
+      "width": 320,
+      "height": 568,
+      "horizontalOverflow": false,
+      "inputWidth": 127,
+      "formLeft": 29,
+      "formRight": 291,
+      "viewportWidth": 320,
+      "cards": 2,
+      "passed": true
+    },
+    {
+      "width": 360,
+      "height": 640,
+      "horizontalOverflow": false,
+      "inputWidth": 167,
+      "formLeft": 29,
+      "formRight": 331,
+      "viewportWidth": 360,
+      "cards": 2,
+      "passed": true
+    },
+    {
+      "width": 375,
+      "height": 667,
+      "horizontalOverflow": false,
+      "inputWidth": 182,
+      "formLeft": 29,
+      "formRight": 346,
+      "viewportWidth": 375,
+      "cards": 2,
+      "passed": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "horizontalOverflow": false,
+      "inputWidth": 197,
+      "formLeft": 29,
+      "formRight": 361,
+      "viewportWidth": 390,
+      "cards": 2,
+      "passed": true
+    },
+    {
+      "width": 414,
+      "height": 896,
+      "horizontalOverflow": false,
+      "inputWidth": 221,
+      "formLeft": 29,
+      "formRight": 385,
+      "viewportWidth": 414,
+      "cards": 2,
+      "passed": true
+    },
+    {
+      "width": 430,
+      "height": 932,
+      "horizontalOverflow": false,
+      "inputWidth": 237,
+      "formLeft": 29,
+      "formRight": 401,
+      "viewportWidth": 430,
+      "cards": 2,
+      "passed": true
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "horizontalOverflow": false,
+      "inputWidth": 226,
+      "formLeft": 349,
+      "formRight": 713,
+      "viewportWidth": 762,
+      "cards": 2,
+      "passed": true
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "horizontalOverflow": false,
+      "inputWidth": 527,
+      "formLeft": 88,
+      "formRight": 750,
+      "viewportWidth": 838,
+      "cards": 2,
+      "passed": true
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "horizontalOverflow": false,
+      "inputWidth": 408,
+      "formLeft": 490,
+      "formRight": 1084,
+      "viewportWidth": 1274,
+      "cards": 2,
+      "passed": true
+    },
+    {
+      "case": "reading_earlier_not_interrupted",
+      "top": 1330,
+      "scrollHeight": 1832,
+      "clientHeight": 502,
+      "passed": false
+    },
+    {
+      "case": "reduced_viewport_keyboard_simulation",
+      "top": 938.96875,
+      "bottom": 984.96875,
+      "viewport": 360,
+      "passed": false
+    }
+  ],
+  "sessionPreservedAcrossNavigation": null,
+  "errors": [],
+  "http": [
+    {
+      "path": "/chat/",
+      "status": 200,
+      "mimeType": "text/html",
+      "seconds": 0.5918119999999999
+    },
+    {
+      "path": "/static/css/styles.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 0.6407847999999999
+    },
+    {
+      "path": "/static/css/subscriptions.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 0.6456786
+    },
+    {
+      "path": "/static/css/pages.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 0.6462171999999999
+    },
+    {
+      "path": "/static/css/books.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 0.6464731999999999
+    },
+    {
+      "path": "/static/css/litmate-minimal.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 0.6504131999999999
+    },
+    {
+      "path": "/static/css/auth.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 0.6510381
+    },
+    {
+      "path": "/static/css/dark-mode.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 0.6539278
+    },
+    {
+      "path": "/static/css/chat-books.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 0.6558982
+    },
+    {
+      "path": "/static/assets/img/litmate_navbar-logo.png",
+      "status": 200,
+      "mimeType": "image/png",
+      "seconds": 0.6580396
+    },
+    {
+      "path": "/static/assets/img/litmate_navbar-logo-light.png",
+      "status": 200,
+      "mimeType": "image/png",
+      "seconds": 0.6590514
+    },
+    {
+      "path": "/static/assets/img/avatar/cuerpo.jpg",
+      "status": 200,
+      "mimeType": "image/jpeg",
+      "seconds": 0.6680693
+    },
+    {
+      "path": "/static/css/reader-mobile.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 0.6689761999999999
+    },
+    {
+      "path": "/static/js/scripts.js",
+      "status": 200,
+      "mimeType": "text/javascript",
+      "seconds": 0.7196581999999999
+    },
+    {
+      "path": "/static/js/litmate_safe.js",
+      "status": 200,
+      "mimeType": "text/javascript",
+      "seconds": 0.7243065
+    },
+    {
+      "path": "/static/js/reader-transport.js",
+      "status": 200,
+      "mimeType": "text/javascript",
+      "seconds": 0.7252702999999999
+    },
+    {
+      "path": "/static/js/chatbot.js",
+      "status": 200,
+      "mimeType": "text/javascript",
+      "seconds": 0.7280702
+    },
+    {
+      "path": "/static/assets/img/chatbot.jpg",
+      "status": 200,
+      "mimeType": "image/jpeg",
+      "seconds": 1.4624134
+    },
+    {
+      "path": "/api/cuota-ia/",
+      "status": 200,
+      "mimeType": "application/json",
+      "seconds": 1.5060435
+    },
+    {
+      "path": "/static/assets/favicon.ico",
+      "status": 200,
+      "mimeType": "image/x-icon",
+      "seconds": 1.5518002999999998
+    },
+    {
+      "path": "/static/assets/img/avatar/pensativa.png",
+      "status": 200,
+      "mimeType": "image/png",
+      "seconds": 2.2386224
+    },
+    {
+      "path": "/chatbot_query/",
+      "status": 200,
+      "mimeType": "text/event-stream",
+      "seconds": 2.2854353
+    },
+    {
+      "path": "/static/assets/img/avatar/feliz.png",
+      "status": 200,
+      "mimeType": "image/png",
+      "seconds": 2.2908685
+    },
+    {
+      "path": "/api/cuota-ia/",
+      "status": 200,
+      "mimeType": "application/json",
+      "seconds": 2.2923160000000005
+    },
+    {
+      "path": "/api/miku-tts/",
+      "status": 503,
+      "mimeType": "application/json",
+      "seconds": 2.2966760000000006
+    },
+    {
+      "path": "/chatbot_query/",
+      "status": 429,
+      "mimeType": "application/json",
+      "seconds": 2.7572763
+    },
+    {
+      "path": "/api/cuota-ia/",
+      "status": 200,
+      "mimeType": "application/json",
+      "seconds": 2.7654515
+    },
+    {
+      "path": "/static/assets/img/avatar/sin%20conexion.png",
+      "status": 200,
+      "mimeType": "image/png",
+      "seconds": 2.7670155
+    },
+    {
+      "path": "/registro/",
+      "status": 200,
+      "mimeType": "text/html",
+      "seconds": 3.2834307000000003
+    },
+    {
+      "path": "/static/css/styles.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 3.3027514
+    },
+    {
+      "path": "/static/css/litmate-minimal.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 3.3035801
+    },
+    {
+      "path": "/static/css/books.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 3.3041713
+    },
+    {
+      "path": "/static/css/auth.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 3.3048204
+    },
+    {
+      "path": "/static/css/subscriptions.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 3.3053025000000003
+    },
+    {
+      "path": "/static/css/pages.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 3.3056991000000004
+    },
+    {
+      "path": "/static/css/dark-mode.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 3.3062167000000002
+    },
+    {
+      "path": "/static/css/chat-books.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 3.3066593
+    },
+    {
+      "path": "/static/assets/img/litmate_navbar-logo.png",
+      "status": 200,
+      "mimeType": "image/png",
+      "seconds": 3.3070204000000003
+    },
+    {
+      "path": "/static/assets/img/litmate_navbar-logo-light.png",
+      "status": 200,
+      "mimeType": "image/png",
+      "seconds": 3.3075530000000004
+    },
+    {
+      "path": "/static/assets/img/avatar/cuerpo.jpg",
+      "status": 200,
+      "mimeType": "image/jpeg",
+      "seconds": 3.3082919
+    },
+    {
+      "path": "/static/js/scripts.js",
+      "status": 200,
+      "mimeType": "text/javascript",
+      "seconds": 3.3096415
+    },
+    {
+      "path": "/static/js/litmate_safe.js",
+      "status": 200,
+      "mimeType": "text/javascript",
+      "seconds": 3.3103351
+    },
+    {
+      "path": "/static/js/reader-transport.js",
+      "status": 200,
+      "mimeType": "text/javascript",
+      "seconds": 3.3111378
+    },
+    {
+      "path": "/static/assets/img/avatar/icon.jpg",
+      "status": 200,
+      "mimeType": "image/jpeg",
+      "seconds": 3.3190608000000004
+    },
+    {
+      "path": "/static/assets/img/about-bg.jpg",
+      "status": 200,
+      "mimeType": "image/jpeg",
+      "seconds": 3.363315
+    },
+    {
+      "path": "/static/js/floating_chat.js",
+      "status": 200,
+      "mimeType": "text/javascript",
+      "seconds": 3.3640088
+    },
+    {
+      "path": "/api/cuota-ia/",
+      "status": 200,
+      "mimeType": "application/json",
+      "seconds": 3.3894228
+    },
+    {
+      "path": "/suscripciones/planes/",
+      "status": 200,
+      "mimeType": "text/html",
+      "seconds": 3.8755814
+    },
+    {
+      "path": "/suscripciones/planes/",
+      "status": 200,
+      "mimeType": "text/html",
+      "seconds": 3.9036552
+    },
+    {
+      "path": "/static/css/styles.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 3.9220330000000003
+    },
+    {
+      "path": "/static/css/litmate-minimal.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 3.9225214
+    },
+    {
+      "path": "/static/css/books.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 3.9229945
+    },
+    {
+      "path": "/static/css/auth.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 3.9234876000000005
+    },
+    {
+      "path": "/static/css/subscriptions.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 3.9239788000000004
+    },
+    {
+      "path": "/static/css/pages.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 3.9245319
+    },
+    {
+      "path": "/static/css/dark-mode.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 3.9249887000000006
+    },
+    {
+      "path": "/static/css/chat-books.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 3.925389
+    },
+    {
+      "path": "/static/assets/img/litmate_navbar-logo.png",
+      "status": 200,
+      "mimeType": "image/png",
+      "seconds": 3.9258577
+    },
+    {
+      "path": "/static/assets/img/litmate_navbar-logo-light.png",
+      "status": 200,
+      "mimeType": "image/png",
+      "seconds": 3.9263700000000004
+    },
+    {
+      "path": "/static/assets/img/avatar/icon.jpg",
+      "status": 200,
+      "mimeType": "image/jpeg",
+      "seconds": 3.9269404
+    },
+    {
+      "path": "/static/assets/img/avatar/cuerpo.jpg",
+      "status": 200,
+      "mimeType": "image/jpeg",
+      "seconds": 3.9273633
+    },
+    {
+      "path": "/static/js/scripts.js",
+      "status": 200,
+      "mimeType": "text/javascript",
+      "seconds": 3.9285266
+    },
+    {
+      "path": "/static/js/litmate_safe.js",
+      "status": 200,
+      "mimeType": "text/javascript",
+      "seconds": 3.9290705000000004
+    },
+    {
+      "path": "/static/js/reader-transport.js",
+      "status": 200,
+      "mimeType": "text/javascript",
+      "seconds": 3.9295888
+    },
+    {
+      "path": "/static/js/floating_chat.js",
+      "status": 200,
+      "mimeType": "text/javascript",
+      "seconds": 3.9300601
+    },
+    {
+      "path": "/static/assets/img/libreria.jpg",
+      "status": 200,
+      "mimeType": "image/jpeg",
+      "seconds": 3.9625503
+    },
+    {
+      "path": "/api/cuota-ia/",
+      "status": 403,
+      "mimeType": "application/json",
+      "seconds": 3.9681627
+    },
+    {
+      "path": "/chat/",
+      "status": 200,
+      "mimeType": "text/html",
+      "seconds": 4.227284000000001
+    },
+    {
+      "path": "/static/css/styles.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 4.249192
+    },
+    {
+      "path": "/static/css/litmate-minimal.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 4.2498017
+    },
+    {
+      "path": "/static/css/books.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 4.250335
+    },
+    {
+      "path": "/static/css/auth.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 4.2507582
+    },
+    {
+      "path": "/static/css/subscriptions.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 4.251283900000001
+    },
+    {
+      "path": "/static/css/pages.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 4.2517846
+    },
+    {
+      "path": "/static/css/dark-mode.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 4.2524906
+    },
+    {
+      "path": "/static/css/chat-books.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 4.2528869
+    },
+    {
+      "path": "/static/assets/img/litmate_navbar-logo.png",
+      "status": 200,
+      "mimeType": "image/png",
+      "seconds": 4.2533764000000005
+    },
+    {
+      "path": "/static/assets/img/litmate_navbar-logo-light.png",
+      "status": 200,
+      "mimeType": "image/png",
+      "seconds": 4.2539729
+    },
+    {
+      "path": "/static/assets/img/avatar/cuerpo.jpg",
+      "status": 200,
+      "mimeType": "image/jpeg",
+      "seconds": 4.254446
+    },
+    {
+      "path": "/static/css/reader-mobile.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "seconds": 4.2549026
+    },
+    {
+      "path": "/static/js/scripts.js",
+      "status": 200,
+      "mimeType": "text/javascript",
+      "seconds": 4.2558141
+    },
+    {
+      "path": "/static/js/litmate_safe.js",
+      "status": 200,
+      "mimeType": "text/javascript",
+      "seconds": 4.256226000000001
+    },
+    {
+      "path": "/static/js/reader-transport.js",
+      "status": 200,
+      "mimeType": "text/javascript",
+      "seconds": 4.2566925
+    },
+    {
+      "path": "/static/js/chatbot.js",
+      "status": 200,
+      "mimeType": "text/javascript",
+      "seconds": 4.2573751
+    },
+    {
+      "path": "/static/assets/img/chatbot.jpg",
+      "status": 200,
+      "mimeType": "image/jpeg",
+      "seconds": 4.2842131
+    },
+    {
+      "path": "/api/cuota-ia/",
+      "status": 200,
+      "mimeType": "application/json",
+      "seconds": 4.4224767
+    },
+    {
+      "path": "/static/assets/img/avatar/pensativa.png",
+      "status": 200,
+      "mimeType": "image/png",
+      "seconds": 4.9987056
+    },
+    {
+      "path": "/chatbot_query/",
+      "status": 200,
+      "mimeType": "text/event-stream",
+      "seconds": 5.1376828
+    },
+    {
+      "path": "/api/cuota-ia/",
+      "status": 200,
+      "mimeType": "application/json",
+      "seconds": 5.1582482
+    },
+    {
+      "path": "/chatbot_finalize/",
+      "status": 200,
+      "mimeType": "application/json",
+      "seconds": 5.3484738
+    },
+    {
+      "path": "/static/assets/img/avatar/feliz.png",
+      "status": 200,
+      "mimeType": "image/png",
+      "seconds": 5.3611667
+    },
+    {
+      "path": "/api/cuota-ia/",
+      "status": 200,
+      "mimeType": "application/json",
+      "seconds": 5.3627843
+    },
+    {
+      "path": "/api/miku-tts/",
+      "status": 503,
+      "mimeType": "application/json",
+      "seconds": 5.3666025
+    },
+    {
+      "path": "/static/assets/img/avatar/sorprendida.png",
+      "status": 200,
+      "mimeType": "image/png",
+      "seconds": 5.3793368
+    },
+    {
+      "path": "/static/assets/img/avatar/cuerpo.jpg",
+      "status": 200,
+      "mimeType": "image/jpeg",
+      "seconds": 10.386643399999999
+    },
+    {
+      "path": "/static/assets/img/avatar/pensativa.png",
+      "status": 200,
+      "mimeType": "image/png",
+      "seconds": 12.43917
+    },
+    {
+      "path": "/chatbot_query/",
+      "status": 200,
+      "mimeType": "text/event-stream",
+      "seconds": 12.4850719
+    },
+    {
+      "path": "/api/cuota-ia/",
+      "status": 200,
+      "mimeType": "application/json",
+      "seconds": 12.5166636
+    },
+    {
+      "path": "/chatbot_finalize/",
+      "status": 200,
+      "mimeType": "application/json",
+      "seconds": 12.5912417
+    },
+    {
+      "path": "/static/assets/img/avatar/enojo.png",
+      "status": 200,
+      "mimeType": "image/png",
+      "seconds": 12.6023301
+    },
+    {
+      "path": "/api/cuota-ia/",
+      "status": 200,
+      "mimeType": "application/json",
+      "seconds": 12.618788799999999
+    },
+    {
+      "path": "/api/miku-tts/",
+      "status": 503,
+      "mimeType": "application/json",
+      "seconds": 12.635995799999998
+    }
+  ]
+}

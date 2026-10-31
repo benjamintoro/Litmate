@@ -1,0 +1,13 @@
+{
+  "tests_run": 23,
+  "failures": 0,
+  "errors": 1,
+  "seconds": 3.0399863999919035,
+  "real_databases_used": false,
+  "failed_tests": [
+    {
+      "test": "test_conversation_messages_remain_private_and_persistent (reader_accounts.tests.ReaderFlowTests.test_conversation_messages_remain_private_and_persistent)",
+      "error": "Traceback (most recent call last):\n  File \"G:\\Proyecto\\Litmate\\reader_accounts\\tests.py\", line 247, in test_conversation_messages_remain_private_and_persistent\n    conv = ConversacionIA.objects.get(usuario=self.user)\n  File \"G:\\Proyecto\\Litmate\\venv\\Lib\\site-packages\\django\\db\\models\\manager.py\", line 87, in manager_method\n    return getattr(self.get_queryset(), name)(*args, **kwargs)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"G:\\Proyecto\\Litmate\\venv\\Lib\\site-packages\\django\\db\\models\\query.py\", line 635, in get\n    raise self.model.DoesNotExist(\n        \"%s matching query does not exist.\" % self.model._meta.object_name\n    )\ncore.models.ConversacionIA.DoesNotExist: ConversacionIA matching query does not exist.\n"
+    }
+  ]
+}

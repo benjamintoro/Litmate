@@ -35,7 +35,7 @@ def allowed_methods(path):
 
 
 class DemoGateway:
-    def __init__(self, application, *, password, hosts, username='demo'):
+    def __init__(self, application, *, password, hosts, username='demo', route_policy=allowed_methods):
         if len(password) < 16 or not hosts:
             raise ValueError('La demo requiere una contraseña de al menos 16 caracteres y hosts explícitos.')
         self.application = application
@@ -43,6 +43,7 @@ class DemoGateway:
         self.hosts = set(hosts)
         self.lock = threading.Lock()
         self.failures = []
+        self.route_policy = route_policy
 
     def __call__(self, environ, start_response):
         def respond(status, text, headers=()):
@@ -56,7 +57,7 @@ class DemoGateway:
         if host not in self.hosts:
             return respond('400 Bad Request', 'Host no permitido.')
         path = environ.get('PATH_INFO', '/')
-        methods = allowed_methods(path)
+        methods = self.route_policy(path)
         if not methods or any(part.startswith('.') for part in path.split('/') if part):
             return respond('404 Not Found', 'Recurso no disponible en la demostración.')
         header = environ.get('HTTP_AUTHORIZATION', '')
@@ -104,4 +105,8 @@ def build_demo_application(password):
     connection_created.connect(read_only_mysql, weak=False, dispatch_uid='litmate-demo-read-only')
     app = WhiteNoise(get_wsgi_application(), root=str(settings.BASE_DIR / 'static'),
                      prefix='/static/', max_age=300)
-    return DemoGateway(app, password=password, hosts=settings.ALLOWED_HOSTS)
+    policy = allowed_methods
+    if getattr(settings, 'LITMATE_ACCOUNTS_ENABLED', False):
+        from reader_accounts.gateway import reader_methods
+        policy = reader_methods
+    return DemoGateway(app, password=password, hosts=settings.ALLOWED_HOSTS, route_policy=policy)

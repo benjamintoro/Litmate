@@ -1,0 +1,12 @@
+{% extends 'suscripciones/planes.html' %}
+{% block content %}
+{{ block.super }}
+<div class="container mb-5">
+  {% if user.is_authenticated %}
+    {% if suscripcion_actual.es_valida %}<p>Tu plan actual: <strong>{{ suscripcion_actual.plan.nombre }}</strong>.</p>
+    {% if paid_verification_pending %}<p role="status">Su pago necesita verificación. No lo contrates nuevamente; contacta con el responsable.</p>
+    {% else %}<a class="btn btn-primary" href="{% url 'chatbot_page' %}">Continuar al chat</a>{% endif %}{% endif %}
+  {% endif %}
+  <p class="mt-3">La contratación de planes pagados no está disponible. No se realizarán cobros.</p>
+</div>
+{% endblock %}

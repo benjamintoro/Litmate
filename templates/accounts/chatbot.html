@@ -1,0 +1,11 @@
+{% extends 'chatbot.html' %}
+{% load static %}
+{% block content %}
+{{ block.super }}
+<div class="container mb-3" id="reader-quota" role="status" aria-live="polite"></div>
+<div class="container mb-3" id="reader-actions" hidden>
+<a class="btn btn-primary" href="{% url 'login' %}">Iniciar sesión</a>
+<a class="btn btn-outline-primary" href="{% url 'register' %}">Crear cuenta</a>
+<a class="btn btn-outline-primary" href="{% url 'suscripciones:planes' %}">Ver planes</a></div>
+<link href="{% static 'css/reader-mobile.css' %}" rel="stylesheet">
+{% endblock %}

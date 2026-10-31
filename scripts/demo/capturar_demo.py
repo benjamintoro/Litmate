@@ -13,6 +13,7 @@ def main():
     parser.add_argument('--carpeta', type=Path, required=True)
     parser.add_argument('--puerto', type=int, default=8002)
     parser.add_argument('--navegacion', action='store_true', help='Recorre el frontend y prueba dos turnos con navegación intermedia.')
+    parser.add_argument('--movil-cuentas', action='store_true', help='Matriz móvil del perfil de cuentas aislado, con datos sintéticos.')
     args = parser.parse_args()
     if not 1024 <= args.puerto <= 65535:
         parser.error('Puerto local inválido.')
@@ -22,13 +23,18 @@ def main():
     password = getpass.getpass('Contraseña de acceso demo local (oculta): ')
     result = subprocess.run(['node', str(Path(__file__).with_suffix('.mjs'))],
         input=json.dumps({'folder': str(folder), 'password': password, 'port': args.puerto,
-                          'navigation': args.navegacion}), text=True,
+                          'navigation': args.navegacion, 'readerMobile': args.movil_cuentas}), text=True,
         encoding='utf-8', cwd=ROOT, check=False)
     password = None
     if result.returncode:
         return result.returncode
+    capture = json.loads((folder / 'captura.json').read_text(encoding='utf-8'))
+    if args.movil_cuentas and (not capture.get('mobileChecks') or capture.get('errors') or
+                              not all(check.get('passed') for check in capture['mobileChecks'])):
+        print('La verificación móvil detectó fallos; conserva captura.json para revisarlos.')
+        return 1
     from PIL import Image
-    frames = json.loads((folder / 'captura.json').read_text(encoding='utf-8'))['frames']
+    frames = capture['frames']
     images = []
     for frame in frames:
         with Image.open(folder / frame['file']) as image:

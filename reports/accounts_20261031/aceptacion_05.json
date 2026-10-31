@@ -1,0 +1,13 @@
+{
+  "tests_run": 28,
+  "failures": 0,
+  "errors": 1,
+  "seconds": 4.205638399987947,
+  "real_databases_used": false,
+  "failed_tests": [
+    {
+      "test": "test_dpapi_key_reopens_after_process_restart (reader_accounts.tests.ReaderFlowTests.test_dpapi_key_reopens_after_process_restart)",
+      "error": "Traceback (most recent call last):\n  File \"C:\\Users\\Xato\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\shutil.py\", line 701, in _rmtree_unsafe\n    os.unlink(fullname)\n    ~~~~~~~~~^^^^^^^^^^\nPermissionError: [WinError 32] El proceso no tiene acceso al archivo porque est\u00e1 siendo utilizado por otro proceso: 'C:\\\\Users\\\\Xato\\\\AppData\\\\Local\\\\Temp\\\\tmpnj3zw60m\\\\private.sqlite3'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"G:\\Proyecto\\Litmate\\reader_accounts\\tests.py\", line 291, in test_dpapi_key_reopens_after_process_restart\n    with TemporaryDirectory() as folder:\n         ~~~~~~~~~~~~~~~~~~^^\n  File \"C:\\Users\\Xato\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\tempfile.py\", line 972, in __exit__\n    self.cleanup()\n    ~~~~~~~~~~~~^^\n  File \"C:\\Users\\Xato\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\tempfile.py\", line 976, in cleanup\n    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Xato\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\tempfile.py\", line 956, in _rmtree\n    _shutil.rmtree(name, onexc=onexc)\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Xato\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\shutil.py\", line 852, in rmtree\n    _rmtree_impl(path, dir_fd, onexc)\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Xato\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\shutil.py\", line 705, in _rmtree_unsafe\n    onexc(os.unlink, fullname, err)\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Xato\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\tempfile.py\", line 931, in onexc\n    _os.unlink(path)\n    ~~~~~~~~~~^^^^^^\nPermissionError: [WinError 32] El proceso no tiene acceso al archivo porque est\u00e1 siendo utilizado por otro proceso: 'C:\\\\Users\\\\Xato\\\\AppData\\\\Local\\\\Temp\\\\tmpnj3zw60m\\\\private.sqlite3'\n"
+    }
+  ]
+}

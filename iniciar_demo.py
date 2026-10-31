@@ -17,7 +17,10 @@ def prepare_workspace(folder, config):
     """Snapshots incrementales de arranque; nunca reemplaza copias existentes."""
     from scripts.knowledge.knowledge_campaign import STORES, sqlite_snapshot
     folder = Path(folder).resolve()
-    if folder == ROOT or not folder.is_relative_to(ROOT / '.testtmp'):
+    private_runtime = ROOT / 'data' / 'accounts' / 'runtime'
+    allowed = folder.is_relative_to(ROOT / '.testtmp') or (
+        getattr(config, 'LITMATE_ACCOUNTS_ENABLED', False) and folder.is_relative_to(private_runtime))
+    if folder == ROOT or not allowed:
         raise ValueError('La carpeta de demo debe estar dentro de .testtmp, separada de los datos originales.')
     marker = folder / 'demo-owner.json'
     if folder.exists() and not marker.is_file():
@@ -56,12 +59,16 @@ def main(argv=None):
     parser.add_argument('--modo', choices=('local', 'https'), default='local')
     parser.add_argument('--host', default='', help='DNS exacto de Tailscale, sólo para modo https.')
     parser.add_argument('--puerto', type=int, default=8002)
-    parser.add_argument('--carpeta', type=Path, default=ROOT / '.testtmp' / 'demo-20261103')
+    parser.add_argument('--carpeta', type=Path)
     parser.add_argument('--comprobar', action='store_true', help='Verifica perfil y MySQL, no inicia servidor.')
     parser.add_argument('--comprobar-despliegue', action='store_true',
                         help='Ejecuta check --deploy con este perfil; combinar con --comprobar para salir.')
     parser.add_argument('--google-books-sin-facturacion', action='store_true')
+    parser.add_argument('--cuentas-db', type=Path, help='Perfil optativo con base privada ya preparada; no migra ni importa.')
     args = parser.parse_args(argv)
+    if args.carpeta is None:
+        args.carpeta = (ROOT / 'data' / 'accounts' / 'runtime' if args.cuentas_db
+                        else ROOT / '.testtmp' / 'demo-20261103')
     if not 1024 <= args.puerto <= 65535:
         parser.error('Puerto local inválido.')
     from iniciar_mysql_local import local_database_environment
@@ -70,8 +77,18 @@ def main(argv=None):
         password = None
         # Establish overrides before base settings read dotenv. They live only
         # in this dedicated process; development and TiDB settings are untouched.
-        os.environ.update(DEBUG='False', SECRET_KEY=secrets.token_urlsafe(64),
-            DJANGO_SETTINGS_MODULE='litmate_project.demo_settings', LITMATE_DEMO_MODE=args.modo,
+        signing_key = secrets.token_urlsafe(64)
+        module = 'litmate_project.demo_settings'
+        if args.cuentas_db:
+            from reader_accounts.signing_key import load_key
+            account_path = args.cuentas_db.resolve()
+            if not (account_path.is_relative_to(ROOT / 'data' / 'accounts') or account_path.is_relative_to(ROOT / '.testtmp')):
+                raise ValueError('La base privada debe estar en data/accounts o en un ensayo .testtmp aislado.')
+            signing_key = load_key(account_path)
+            module = 'litmate_project.reader_settings'
+            os.environ['LITMATE_ACCOUNTS_DB'] = str(account_path)
+        os.environ.update(DEBUG='False', SECRET_KEY=signing_key,
+            DJANGO_SETTINGS_MODULE=module, LITMATE_DEMO_MODE=args.modo,
             LITMATE_DEMO_HOST=args.host, LITMATE_DEMO_WORKSPACE=str(args.carpeta.resolve()))
         import django
         django.setup()

@@ -749,6 +749,7 @@
 
     <!-- CARGA CONDICIONAL DEL SCRIPT DEL WIDGET FLOTANTE -->
     <script src="{% static 'js/litmate_safe.js' %}?v=chat-v9"></script>
+    {% if reader_accounts_enabled %}<script src="{% static 'js/reader-transport.js' %}"></script>{% endif %}
     {% if request.path != '/chat/' and request.path != '/chatbot/' %}
     <script src="{% static 'js/floating_chat.js' %}?v=chat-v6"></script>
     {% endif %}

@@ -1361,7 +1361,7 @@ def buscar_libros(request):
 
     # Obtener listas creadas por el usuario autenticado
     listas_usuario = []
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and not getattr(settings, 'LITMATE_ACCOUNTS_ENABLED', False):
         listas_usuario = ListaLectura.objects.filter(usuario=request.user).order_by('-fecha_creacion')
 
     # Obtener géneros consolidados de la base de datos

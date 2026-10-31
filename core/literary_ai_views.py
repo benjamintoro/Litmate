@@ -140,8 +140,14 @@ def stream_result(result):
 
 
 def rate_allowed(request):
+    if getattr(settings, 'LITMATE_ACCOUNTS_ENABLED', False) and getattr(request, 'reader_rate_approved', False) is True:
+        return True
     principal = ('user:' + str(request.user.pk) if request.user.is_authenticated
                  else 'ip:' + request.META.get('REMOTE_ADDR', ''))
+    if getattr(settings, 'LITMATE_ACCOUNTS_ENABLED', False):
+        principal = getattr(request, 'reader_actor', None)
+        if not isinstance(principal, str) or not principal.startswith(('u:', 'g:')):
+            return False
     key = ('literary_chat_rate_local:' + hashlib.sha256(principal.encode()).hexdigest()
            + ':' + str(int(time.time()) // 60))
     try:
@@ -223,25 +229,7 @@ def remember(request, state, message, result, elapsed_ms, client, *, topic_conte
     state['turns'] = (state.get('turns', []) + [turn])[-MAX_HISTORY:]
     if request.user.is_authenticated:
         try:
-            from .models import ConversacionIA, MensajeIA
-            with transaction.atomic():
-                conv = ConversacionIA.objects.filter(pk=state.get('conversation_id'), usuario=request.user).first()
-                if conv is None:
-                    conv = ConversacionIA.objects.create(usuario=request.user,
-                        session_key=request.session.session_key, titulo=message[:120])
-                    state['conversation_id'] = conv.pk
-                MensajeIA.objects.create(conversacion=conv, rol='user', contenido=message)
-                MensajeIA.objects.create(conversacion=conv, rol='assistant', contenido=result.text,
-                    tokens_prompt=client.usage.get('prompt_tokens', 0),
-                    tokens_completion=client.usage.get('completion_tokens', 0),
-                    tokens_utilizados=client.usage.get('total_tokens', 0),
-                    latencia_ms=elapsed_ms, intencion_detectada=result.intent,
-                        metadata_json={'policy_version': 'literary-companion-local-v4', 'status': result.status,
-                        'sources': result.sources, 'books': result.books, 'basis': result.basis,
-                        'provider': client.provider, 'provider_calls': client.calls,
-                        'diagnostics': result.diagnostics, 'usage_includes_guards': True})
-                ConversacionIA.objects.filter(pk=conv.pk, usuario=request.user).update(
-                    total_mensajes=F('total_mensajes')+2, ultima_actividad=timezone.now())
+            persist_turn_records(request, state, message, result, elapsed_ms, client)
         except Exception as exc:
             logger.warning('IA: historial persistente no disponible (%s)', type(exc).__name__)
     # El middleware guarda los cambios antes de empezar el streaming.
@@ -251,6 +239,33 @@ def remember(request, state, message, result, elapsed_ms, client, *, topic_conte
             and type(getattr(client, 'calls', None)) is int and client.calls == 0):
         from .ai_answer_cache import cache_published_authorship
         cache_published_authorship(message, state, stable_session_owner(request), result)
+
+
+def persist_turn_records(request, state, message, result, elapsed_ms, client):
+    """Persistencia existente reutilizable; marcador idempotente sólo del portal."""
+    from .models import ConversacionIA, MensajeIA
+    from django.db import router
+    with transaction.atomic(using=router.db_for_write(ConversacionIA)):
+        operation = getattr(request, 'reader_operation_id', None)
+        marker = {'reader_operation': operation} if operation is not None else {}
+        if marker and MensajeIA.objects.filter(conversacion__usuario=request.user,
+                                               metadata_json__reader_operation=operation).exists():
+            return
+        conv = ConversacionIA.objects.filter(pk=state.get('conversation_id'), usuario=request.user).first()
+        if conv is None:
+            conv = ConversacionIA.objects.create(usuario=request.user, session_key=request.session.session_key,
+                                                  titulo=message[:120])
+            state['conversation_id'] = conv.pk
+        MensajeIA.objects.create(conversacion=conv, rol='user', contenido=message, metadata_json=marker)
+        MensajeIA.objects.create(conversacion=conv, rol='assistant', contenido=result.text,
+            tokens_prompt=client.usage.get('prompt_tokens', 0), tokens_completion=client.usage.get('completion_tokens', 0),
+            tokens_utilizados=client.usage.get('total_tokens', 0), latencia_ms=elapsed_ms,
+            intencion_detectada=result.intent, metadata_json={**marker,
+            'policy_version':'literary-companion-local-v4','status':result.status,'sources':result.sources,
+            'books':result.books,'basis':result.basis,'provider':client.provider,'provider_calls':client.calls,
+            'diagnostics':result.diagnostics,'usage_includes_guards':True})
+        ConversacionIA.objects.filter(pk=conv.pk, usuario=request.user).update(
+            total_mensajes=F('total_mensajes')+2, ultima_actividad=timezone.now())
 
 
 def _model_answer(message, history, topic_context, retrieval_message):
@@ -1040,7 +1055,7 @@ def chatbot_query(request):
         # Se conserva aparte del historial de respuestas aceptadas.
         request.session[HISTORY_KEY] = state
         request.session.modified = True
-    if data.get('progress') is True:
+    if data.get('progress') is True or getattr(request, 'reader_force_progress', False):
         return _progressive_response(request, state, message, topic_context, start, deadline,
                                      request_metrics=request_metrics)
     try:

@@ -2,6 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {spawn} from 'node:child_process';
+import {randomBytes} from 'node:crypto';
 let input = '';
 for await (const chunk of process.stdin) input += chunk;
 const config = JSON.parse(input);
@@ -19,7 +20,7 @@ fs.mkdirSync(folder, {recursive: true});
 const profile = path.join(root, '.testtmp', 'edge-demo-' + Date.now());
 fs.mkdirSync(profile, {recursive: true});
 const browser = spawn('C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
-  ['--headless=new', '--no-first-run', '--no-default-browser-check', '--remote-debugging-port=0',
+  ['--headless=new', '--no-first-run', '--no-default-browser-check', '--disable-background-timer-throttling', '--disable-renderer-backgrounding', '--remote-debugging-port=0',
    '--remote-debugging-address=127.0.0.1', '--user-data-dir=' + profile, '--window-size=1280,800', 'about:blank'],
   {stdio: 'ignore', windowsHide: true});
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -28,6 +29,8 @@ let counter = 0;
 const pending = new Map();
 const frames = [], conversation = [], errors = [], http = [];
 const navigation = [];
+const mobileChecks = [];
+let scrollAudit = [];
 let sessionPreservedAcrossNavigation = null;
 const started = performance.now();
 const elapsed = () => (performance.now() - started) / 1000;
@@ -79,6 +82,61 @@ async function navigate(route) {
   navigation.push(status);
   if (!ready) throw new Error('La navegación no terminó: ' + route);
 }
+async function sendReaderMessage(question, readEarlier = false) {
+  const before = await evaluate("document.querySelectorAll('#chat-body-page .chat-message.bot').length");
+  await evaluate(`document.getElementById('chat-input').value=${JSON.stringify(question)};document.getElementById('chat-form').requestSubmit();true`);
+  if (readEarlier) await evaluate("(()=>{const b=document.getElementById('chat-body-page');b.dispatchEvent(new WheelEvent('wheel',{deltaY:-300}));b.scrollTop=0;return true})()");
+  for (let i=0;i<100;i++) {
+    if (await evaluate(`!document.getElementById('send-btn').disabled && document.querySelectorAll('#chat-body-page .chat-message.bot').length>${before}`)) break;
+    await sleep(500);
+  }
+  const answer = await evaluate("Array.from(document.querySelectorAll('#chat-body-page .chat-message.bot')).at(-1).innerText");
+  conversation.push({question,answer});
+}
+async function readerMobile() {
+  await command('Emulation.setDeviceMetricsOverride', {width:390,height:844,deviceScaleFactor:1,mobile:true});
+  await navigate('/chat/');
+  await evaluate("document.getElementById('btnRejectCookies')?.click();true");
+  await sleep(500);
+  await sendReaderMessage('Hola');
+  await sendReaderMessage('Recomiéndame un libro');
+  mobileChecks.push({case:'guest_actions',passed:await evaluate("!document.getElementById('reader-actions').hidden && document.getElementById('reader-actions').querySelectorAll('a').length===3")});
+  const user = 'movil_' + randomBytes(5).toString('hex');
+  const password = randomBytes(24).toString('base64url');
+  await navigate('/registro/');
+  const registered = await evaluate(`(async()=>{const csrf=document.cookie.split('; ').find(v=>v.startsWith('csrftoken=')).split('=')[1];const r=await fetch('/registro/',{method:'POST',headers:{'X-CSRFToken':csrf},body:new URLSearchParams(${JSON.stringify({username:user,email:user+'@example.invalid',password,password_confirm:password})})});return r.ok && new URL(r.url).pathname==='/suscripciones/planes/'})()`);
+  mobileChecks.push({case:'registration',passed:registered});
+  await navigate('/suscripciones/planes/');
+  await evaluate("document.querySelector('form[action=\"/cuenta/activar-gratis/\"]').requestSubmit();true");
+  for(let i=0;i<100;i++){if(await evaluate("location.pathname==='/chat/' && Boolean(window.LitMateSafe) && Boolean(document.getElementById('chat-input'))"))break;await sleep(200);}
+  await sleep(500);
+  await sendReaderMessage('Recomiéndame dos novelas de fantasía en español');
+  await evaluate("Promise.race([Promise.allSettled(Array.from(document.querySelectorAll('.lm-chat-book-cover img')).map(img=>img.decode())),new Promise(r=>setTimeout(r,5000))])");
+  mobileChecks.push(await evaluate("(()=>{const imgs=Array.from(document.querySelectorAll('.lm-chat-book-cover img'));return {case:'cover_elements',total:imgs.length,loaded:imgs.filter(i=>i.naturalWidth>0).length,pending:imgs.filter(i=>!i.complete).length,failed:imgs.filter(i=>i.complete&&!i.naturalWidth).length,passed:imgs.length===2}})()"));
+  for (const [width,height] of [[320,568],[360,640],[375,667],[390,844],[414,896],[430,932],[768,1024],[844,390],[1280,800]]) {
+    await command('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:width<768});
+    await sleep(350);
+    const data = await evaluate(`(()=>{const r=document.getElementById('chat-input').getBoundingClientRect();const f=document.getElementById('chat-form').getBoundingClientRect();return {width:${width},height:${height},horizontalOverflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1,inputWidth:r.width,formLeft:f.left,formRight:f.right,viewportWidth:document.documentElement.clientWidth,cards:document.querySelectorAll('.lm-chat-book-card').length}})()`);
+    data.passed = !data.horizontalOverflow && data.inputWidth>=50 && data.formLeft>=-1 && data.formRight<=data.viewportWidth+1 && data.cards===2;
+    if(data.horizontalOverflow) data.overflowElements=await evaluate("Array.from(document.querySelectorAll('body *')).map(e=>({e,r:e.getBoundingClientRect()})).filter(({e,r})=>r.width>0 && (r.right>document.documentElement.clientWidth+1 || r.left< -1) && getComputedStyle(e).visibility!=='hidden').slice(0,12).map(({e,r})=>({tag:e.tagName,id:e.id,css:e.className,left:r.left,right:r.right}))");
+    mobileChecks.push(data);
+    if([320,390,768,1280].includes(width))await capture();
+  }
+  await command('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
+  await sleep(500);
+  await sendReaderMessage('Cuéntame más del segundo',true);
+  await sleep(200);
+  await capture();
+  mobileChecks.push(await evaluate("(()=>{const b=document.getElementById('chat-body-page');return {case:'reading_earlier_not_interrupted',top:b.scrollTop,scrollHeight:b.scrollHeight,clientHeight:b.clientHeight,passed:b.scrollTop<5}})()"));
+  scrollAudit = await evaluate('window.__readerScrollAudit || []');
+  await evaluate("document.getElementById('chat-input').focus();true");
+  await command('Emulation.setDeviceMetricsOverride',{width:390,height:360,deviceScaleFactor:1,mobile:true});
+  await sleep(500);
+  await capture();
+  const keyboard = await evaluate("(()=>{const r=document.getElementById('chat-input').getBoundingClientRect();return {case:'reduced_viewport_keyboard_simulation',top:r.top,bottom:r.bottom,viewport:visualViewport.height,passed:r.top>=0 && r.bottom<=visualViewport.height+1}})()");
+  mobileChecks.push(keyboard);
+  await capture();
+}
 let timer;
 try {
   const active = path.join(profile, 'DevToolsActivePort');
@@ -114,6 +172,11 @@ try {
   await command('Runtime.enable');
   await command('Network.enable');
   await command('Fetch.enable', {handleAuthRequests: true, patterns: [{urlPattern: origin + '/*'}]});
+  if(config.readerMobile) {
+    await command('Page.addScriptToEvaluateOnNewDocument',{source:'window.__readerScrollAudit=[];'});
+    await readerMobile();
+    console.log(JSON.stringify({mobileChecks,errors}));
+  } else {
   if (config.navigation) {
     for (const route of ['/', '/about/', '/post/', '/libros/', '/suscripciones/planes/', '/contact/',
                          '/login/', '/registro/', '/password-reset/', '/terminos-y-condiciones/',
@@ -180,11 +243,12 @@ try {
   await sleep(500);
   await capture();
   console.log(JSON.stringify({capturedFrames: frames.length, completedTurns: conversation.filter(turn => turn.completed).length}));
+  }
 } finally {
   clearInterval(timer);
   fs.writeFileSync(path.join(folder, 'captura.json'), JSON.stringify({
     authenticBrowserCapture: true, externalNetworkTested: false, origin,
-    frames, conversation, navigation, sessionPreservedAcrossNavigation, errors, http
+    frames, conversation, navigation, mobileChecks, scrollAudit, sessionPreservedAcrossNavigation, errors, http
   }, null, 2), 'utf8');
   try {if (socket?.readyState === 1) await command('Browser.close');} catch {}
   socket?.close();
