@@ -176,7 +176,11 @@ def project_references(work_ids, *, database=None):
         urls.update(source['url'] for source in [*books,*sources]
                     if source.get('kind') == 'book' and source.get('memory_verified')
                     and source.get('url') and same_work(source,work))
-        records = list(KBRecord.objects.filter(source_url__in=urls, status='source_metadata',kind='work')[:2])
+        # Gutenberg's imported catalogue records represent editions. An exact
+        # admitted URL can link evidence to that edition without promoting it
+        # to a work or merging either identity. Ambiguous anchors still stop.
+        records = list(KBRecord.objects.filter(source_url__in=urls, status='source_metadata',
+                                               kind__in=('work','edition'))[:2])
         if len(records) != 1:
             continue
         for source in sources:

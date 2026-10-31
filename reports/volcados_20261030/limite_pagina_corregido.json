@@ -1,0 +1,24 @@
+[
+  {
+    "id": "litmate:cd01a12f9f01f2eb764bc33a",
+    "sources": [
+      {
+        "title": "The Time Machine",
+        "description": "The Time Machine is an 1895 dystopian science fiction novella by H. G. Wells about a Victorian scientist known as the Time Traveller who tra",
+        "scope": "summary",
+        "facts": 0
+      }
+    ]
+  },
+  {
+    "id": "litmate:62f6b717c0fc6a444106f1fd",
+    "sources": [
+      {
+        "title": "Little Women",
+        "description": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869.",
+        "scope": "summary",
+        "facts": 0
+      }
+    ]
+  }
+]

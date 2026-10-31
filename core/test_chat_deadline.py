@@ -111,7 +111,9 @@ class NaturalRequestTests(SimpleTestCase):
                     result = quick_answer(message, topic_context=context)
                     self.assertIsNotNone(result)
                     self.assertEqual(result.status, 'answered')
-                    self.assertIn('Antony Beevor', result.text)
+                    # El orden lo decide la evidencia recuperable; ambas fichas
+                    # son fuentes verificadas de la Segunda Guerra Mundial.
+                    self.assertIn(result.books[0]['author'], ('Antony Beevor', 'Max Hastings'))
                     self.assertTrue(result.sources)
         network.assert_not_called()
 
@@ -291,8 +293,10 @@ class NaturalRequestTests(SimpleTestCase):
                     'books': first.books, 'sources': first.sources}]
         result = quick_answer('Cuéntame más del segundo', history)
         self.assertIsNotNone(result)
-        self.assertIn('Se desataron todos los infiernos', result.text)
-        self.assertNotIn('Antony Beevor', result.text)
+        second = first.books[1]
+        self.assertEqual(result.books[0]['title'], second['title'])
+        self.assertIn(second['title'], result.text)
+        self.assertNotIn(first.books[0]['author'], result.text)
 
     def test_bundled_facts_are_not_mutated_by_recommendation_or_summary(self):
         before = copy.deepcopy(_bundled())

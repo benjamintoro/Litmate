@@ -278,10 +278,21 @@
                 if (expired) throw new Error('Se alcanzó el límite de espera. Vuelve a intentarlo.');
                 // El servidor finaliza en una petición normal: guarda sesión y
                 // cuota antes de publicar datos factuales o activar la voz.
-                const finalized = await env.fetch('/chatbot_finalize/', {
+                const finalizeOptions = {
                     method: 'POST', headers, body: JSON.stringify({ ready: result.ready }),
                     signal: controller.signal
-                });
+                };
+                let finalized = await env.fetch('/chatbot_finalize/', finalizeOptions);
+                for (let attempt = 0; attempt < 2; attempt++) {
+                    const retry = Number(finalized.headers.get('Retry-After'));
+                    if (finalized.status !== 409 || !(retry > 0 && retry <= 2)) break;
+                    // Sólo el bloqueo transitorio anuncia Retry-After. No
+                    // reintentar una revisión caducada ni volver a generar.
+                    if (finalized.body) { try { await finalized.body.cancel(); } catch (error) {} }
+                    await new Promise(resolve => env.setTimeout(resolve, retry * 1000));
+                    if (expired || controller.signal.aborted) throw new Error('Se alcanzó el límite de espera. Vuelve a intentarlo.');
+                    finalized = await env.fetch('/chatbot_finalize/', finalizeOptions);
+                }
                 return readChatResponse(finalized, paint, describe);
             }
             return result;

@@ -1,0 +1,2061 @@
+[
+  {
+    "passed": true,
+    "question": "Dime la trama de The Time Machine",
+    "answer": "Contrario a Julio Verne, padre del detalle y la explicaci\u00f3n minuciosa, Wells describe a prop\u00f3sito la m\u00e1quina de modo superficial y a la ligera, con algunas pinceladas de color, dejando la apariencia y el mecanismo del artilugio a interpretaci\u00f3n del lector. El escritor desarroll\u00f3 el resto de la novela, que trata de las aventuras del Viajero a trav\u00e9s del Tiempo en el futuro dos a\u00f1os despu\u00e9s, tarea que le llev\u00f3 escasos quince d\u00edas. Ante el escepticismo de sus amigos, un cient\u00edfico de finales del siglo XIX logra descubrir las claves de la denominada \"cuarta dimensi\u00f3n\" (el Tiempo) y construye un veh\u00edculo que le permite viajar f\u00edsicamente a trav\u00e9s del mismo. Luego de esperar un rato, sus amigos lo ven entrar en un estado calamitoso. El Viajero supone que as\u00ed debi\u00f3 de terminar la humanidad tras resolver todos sus conflictos existenciales y tras lograr el comunismo.\n\nFuente: https://es.wikipedia.org/wiki/La_m%C3%A1quina_del_tiempo\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+    "status": "answered",
+    "not_in_legacy_catalog": null,
+    "sse_done": true,
+    "seconds": 0.6868,
+    "cards": [
+      {
+        "id": "sqlkb:f40104531b8553a523e53008ba81628684d20ca352297b49a29a64b6cebe8a20",
+        "title": "The Time Machine",
+        "author": "H. G. (Herbert George) Wells",
+        "synopsis": "",
+        "image_url": "",
+        "links": [
+          {
+            "label": "Google Books",
+            "url": "https://books.google.com/books?q=The+Time+Machine+H.+G.+%28Herbert+George%29+Wells"
+          },
+          {
+            "label": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/35"
+          },
+          {
+            "label": "Amazon",
+            "url": "https://www.amazon.com/s?k=The+Time+Machine+H.+G.+%28Herbert+George%29+Wells&i=stripbooks"
+          },
+          {
+            "label": "Buscalibre",
+            "url": "https://www.buscalibre.cl/libros/search?q=The+Time+Machine+H.+G.+%28Herbert+George%29+Wells"
+          }
+        ]
+      }
+    ],
+    "diagnostics": {
+      "elapsed_ms": 637,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 0,
+      "verified_narrative_answer": true,
+      "partial_evidence": false,
+      "work_type": "fiction",
+      "progress_metrics": {
+        "elapsed_ms": 662.583,
+        "first_phase_emitted_ms": 44.042,
+        "model_calls_started": 0,
+        "stage_totals_ms": {
+          "conversation": 18.123,
+          "cache_lookup": 0.578,
+          "knowledge_lookup": 628.485,
+          "audit": 10.023,
+          "finalization": 25.547
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 9.51,
+            "elapsed_ms": 18.123,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 43.452,
+            "elapsed_ms": 0.578,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 91.68,
+            "elapsed_ms": 302.345,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 142.081,
+            "elapsed_ms": 53.001,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 265.292,
+            "elapsed_ms": 127.477,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 280.933,
+            "elapsed_ms": 76.54,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 407.711,
+            "elapsed_ms": 69.122,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 548.085,
+            "elapsed_ms": 5.441,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 593.716,
+            "elapsed_ms": 4.582,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 637.029,
+            "elapsed_ms": 25.547,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 44.042
+          },
+          {
+            "stage": "review",
+            "elapsed_ms": 548.062
+          }
+        ]
+      },
+      "stage_timings": [],
+      "provider": "verified-narrative-engine"
+    },
+    "reader_data_written": false,
+    "sources": [],
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": null
+      },
+      {
+        "stage": "retrieval",
+        "sources": [
+          {
+            "id": 1,
+            "title": "The Time Machine",
+            "author": "H. G. (Herbert George) Wells",
+            "description": "",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "sqlkb:f40104531b8553a523e53008ba81628684d20ca352297b49a29a64b6cebe8a20",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/35",
+            "locator": "",
+            "read_mode": "metadatos de fuente; sin trama ni texto completo",
+            "retrieved_at": "",
+            "license": "CC0-1.0",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "synopsis": "",
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Science fiction",
+              "Time travel -- Fiction",
+              "Dystopias -- Fiction"
+            ]
+          },
+          {
+            "id": 2,
+            "title": "The Time Machine",
+            "author": "Fuente web",
+            "description": "The Time Machine is an 1895 dystopian science fiction novella by H. G. Wells about a Victorian scientist known as the Time Traveller who travels to the year 802,701. The work is generally credited with the popularization of the concept of time travel by using a vehicle or device to travel intentionally and selectively forward or backward through time. The term \"time machine\", coined by Wells, is now almost universally used to refer to such a vehicle or device. Utilizing a frame story set in then-present Victorian England, Wells's text focuses on a recount of the otherwise anonymous Time Traveller's journey into the far future. A work of future history and speculative evolution, The Time Machine is interpreted in modern times as a commentary on the increasing inequality and class divisions of Wells's era, which he projects as giving rise to two separate human species: the fair, childlike Eloi; and the savage, simian Morlocks, distant descendants of the contemporary upper and lower classes respectively. It is believed that Wells's depiction of the Eloi as a race living in plenitude and abandon was inspired by the utopic romance novel News from Nowhere (1890), though Wells's universe in...",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://en.wikipedia.org/wiki/The_Time_Machine",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793338870.8525963",
+            "evidence_scope": "summary",
+            "work_id": "litmate:cd01a12f9f01f2eb764bc33a",
+            "work_title": "The Time Machine",
+            "work_author": "H. G. (Herbert George) Wells",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793943670.8525963",
+            "evidence_hash": "4e4178ae7d66bf3afbeb6394ffbe579ae71978e6b30a49e1c374eb85946e1964",
+            "memory_source_id": "0ae8443b37242affd7b73c1cd36c0ef6aa3dd396c404c490b13e26dad40c757f",
+            "last_verified_at": "1793338870.8525963",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "The Time Machine",
+              "url": "https://en.wikipedia.org/wiki/The_Time_Machine",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "1382396968"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "The Time Machine is an 1895 dystopian science fiction novella by H. G. Wells about a Victorian scientist known as the Time Traveller who travels to the year 802,701. The work is generally credited with the popularization of the concept of time travel by using a vehicle or device to travel intentionally and selectively forward or backward through time. The term \"time machine\", coined by Wells, is now almost universally used to refer to such a vehicle or device. Utilizing a frame story set in then-present Victorian England, Wells's text focuses on a recount of the otherwise anonymous Time Traveller's journey into the far future. A work of future history and speculative evolution, The Time Machine is interpreted in modern times as a commentary on the increasing inequality and class divisions of Wells's era, which he projects as giving rise to two separate human species: the fair, childlike Eloi; and the savage, simian Morlocks, distant descendants of the contemporary upper and lower classes respectively. It is believed that Wells's depiction of the Eloi as a race living in plenitude and abandon was inspired by the utopic romance novel News from Nowhere (1890), though Wells's universe",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 3,
+            "title": "The Time Machine",
+            "author": "Fuente web",
+            "description": "The Time Machine is an 1895 dystopian science fiction novella by H. G. Wells about a Victorian scientist known as the Time Traveller who travels to the year 802,701. The work is generally credited with the popularization of the concept of time travel by using a vehicle or device to travel intentionally and selectively forward or backward through time. The term \"time machine\", coined by Wells, is now almost universally used to refer to such a vehicle or device. Utilizing a frame story set in then-present Victorian England, Wells's text focuses on a recount of the otherwise anonymous Time Traveller's journey into the far future. A work of future history and speculative evolution, The Time Machine is interpreted in modern times as a commentary on the increasing inequality and class divisions of Wells's era, which he projects as giving rise to two separate human species: the fair, childlike Eloi; and the savage, simian Morlocks, distant descendants of the contemporary upper and lower classes respectively. It is believed that Wells's depiction of the Eloi as a race living in plenitude and abandon was inspired by the utopic romance novel News from Nowhere (1890), though Wells's universe in...",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://en.wikipedia.org/wiki/The_Time_Machine",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793338875.4706595",
+            "evidence_scope": "characters",
+            "work_id": "litmate:cd01a12f9f01f2eb764bc33a",
+            "work_title": "The Time Machine",
+            "work_author": "H. G. (Herbert George) Wells",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793943675.4706595",
+            "evidence_hash": "dfe743e8915747a935bff2af3f6087369003f047ae4e4659ee601b23e1c1bee2",
+            "memory_source_id": "628d1c82166d3a5d0748ae6e8e7268ce4c852e6d96faa5bb319008c5423e7efb",
+            "last_verified_at": "1793338875.4706595",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "The Time Machine",
+              "url": "https://en.wikipedia.org/wiki/The_Time_Machine",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "1382396968"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "The Time Machine is an 1895 dystopian science fiction novella by H. G. Wells about a Victorian scientist known as the Time Traveller who travels to the year 802,701. The work is generally credited with the popularization of the concept of time travel by using a vehicle or device to travel intentionally and selectively forward or backward through time. The term \"time machine\", coined by Wells, is now almost universally used to refer to such a vehicle or device. Utilizing a frame story set in then-present Victorian England, Wells's text focuses on a recount of the otherwise anonymous Time Traveller's journey into the far future. A work of future history and speculative evolution, The Time Machine is interpreted in modern times as a commentary on the increasing inequality and class divisions of Wells's era, which he projects as giving rise to two separate human species: the fair, childlike Eloi; and the savage, simian Morlocks, distant descendants of the contemporary upper and lower classes respectively. It is believed that Wells's depiction of the Eloi as a race living in plenitude and abandon was inspired by the utopic romance novel News from Nowhere (1890), though Wells's universe",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 4,
+            "title": "La m\u00e1quina del tiempo",
+            "author": "Fuente web",
+            "description": "== Argumento == Ante el escepticismo de sus amigos, un cient\u00edfico de finales del siglo XIX logra descubrir las claves de la denominada \"cuarta dimensi\u00f3n\" (el Tiempo) y construye un veh\u00edculo que le permite viajar f\u00edsicamente a trav\u00e9s del mismo. Luego de esperar un rato, sus amigos lo ven entrar en un estado calamitoso. El Viajero supone que as\u00ed debi\u00f3 de terminar la humanidad tras resolver todos sus conflictos existenciales y tras lograr el comunismo. Tras hacer algunas exploraciones por los alrededores a su llegada al futuro, vuelve al lugar donde dej\u00f3 la m\u00e1quina del tiempo, pero ya no est\u00e1; m\u00e1s tarde se percatar\u00e1 de que los Morlocks la han encerrado en el pedestal de una estatua que representa a una Esfinge situada en el lugar donde apareci\u00f3 el Viajero del tiempo.",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/La_m%C3%A1quina_del_tiempo",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793339210.7604527",
+            "evidence_scope": "summary",
+            "narrative_context": "La m\u00e1quina del tiempo (en ingl\u00e9s, The Time Machine) es una novela de ciencia ficci\u00f3n del escritor brit\u00e1nico Herbert George Wells, publicada por primera vez en Londres en el a\u00f1o 1895 por William Heineman. Consta de diecis\u00e9is cap\u00edtulos y un ep\u00edlogo. Contrario a Julio Verne, padre del detalle y la explicaci\u00f3n minuciosa, Wells describe a prop\u00f3sito la m\u00e1quina de modo superficial y a la ligera, con algunas pinceladas de color, dejando la apariencia y el mecanismo del artilugio a interpretaci\u00f3n del lector. Fue la primera novela de uno de los padres de la ciencia ficci\u00f3n. Con su mezcla de aventuras y doctrina social y pol\u00edtica alcanz\u00f3 un notable \u00e9xito, contribuyendo as\u00ed a la estabilidad de Wells, que a partir de ese momento pudo dedicarse plenamente a la escritura. Una parte del libro, la que versa sobre la explicaci\u00f3n del invento y en la que se discute sobre la cuarta dimensi\u00f3n, fue publicada en el a\u00f1o 1893 en el Henley's National Observer. El escritor desarroll\u00f3 el resto de la novela, que trata de las aventuras del Viajero a trav\u00e9s del Tiempo en el futuro dos a\u00f1os despu\u00e9s, tarea que le llev\u00f3 escasos quince d\u00edas.\u200b Con esta obra, Herbert George Wells inauguraba para el gran p\u00fablico\u200b la tem",
+            "work_id": "litmate:cd01a12f9f01f2eb764bc33a",
+            "work_title": "The Time Machine",
+            "work_author": "H. G. (Herbert George) Wells",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793944010.7604527",
+            "evidence_hash": "742c098f920a412ebb40b65b05fcad7d8683382195c0cf1b486851ae5de38d9a",
+            "memory_source_id": "d2f7ae186d36e31b0ec3c2018b95d06ec0900a82df7f07899b19fa900b4130a2",
+            "last_verified_at": "1793339210.7604527",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "La m\u00e1quina del tiempo",
+              "url": "https://es.wikipedia.org/wiki/La_m%C3%A1quina_del_tiempo",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "174214392"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "Ante el escepticismo de sus amigos, un cient\u00edfico de finales del siglo XIX logra descubrir las claves de la denominada \"cuarta dimensi\u00f3n\" (el Tiempo) y construye un veh\u00edculo que le permite viajar f\u00edsicamente a trav\u00e9s del mismo.",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "development_excerpt"
+              },
+              {
+                "subject": "La m\u00e1quina del tiempo",
+                "relation": "",
+                "value": "",
+                "evidence": "== Argumento == Ante el escepticismo de sus amigos, un cient\u00edfico de finales del siglo XIX logra descubrir las claves de la denominada \"cuarta dimensi\u00f3n\" (el Tiempo) y construye un veh\u00edculo que le permite viajar f\u00edsicamente a trav\u00e9s del mismo. Luego de esperar un rato, sus amigos lo ven entrar en un estado calamitoso. El Viajero supone que as\u00ed debi\u00f3 de terminar la humanidad tras resolver todos sus conflictos existenciales y tras lograr el comunismo. Tras hacer algunas exploraciones por los alrededores a su llegada al futuro, vuelve al lugar donde dej\u00f3 la m\u00e1quina del tiempo, pero ya no est\u00e1; m\u00e1s tarde se percatar\u00e1 de que los Morlocks la han encerrado en el pedestal de una estatua que represen",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "events",
+                "type": "",
+                "scope": "partial"
+              },
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "Ante el escepticismo de sus amigos, un cient\u00edfico de finales del siglo XIX logra descubrir las claves de la denominada \"cuarta dimensi\u00f3n\" (el Tiempo) y construye un veh\u00edculo que le permite viajar f\u00edsicamente a trav\u00e9s del mismo. Luego de esperar un rato, sus amigos lo ven entrar en un estado calamitoso. El Viajero supone que as\u00ed debi\u00f3 de terminar la humanidad tras resolver todos sus conflictos existenciales y tras lograr el comunismo. Tras hacer algunas exploraciones por los alrededores a su llegada al futuro, vuelve al lugar donde dej\u00f3 la m\u00e1quina del tiempo, pero ya no est\u00e1; m\u00e1s tarde se percatar\u00e1 de que los Morlocks la han encerrado en el pedestal de una estatua que representa a una Esfinge",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "partial"
+              }
+            ],
+            "identity_text": "La m\u00e1quina del tiempo (en ingl\u00e9s, The Time Machine) es una novela de ciencia ficci\u00f3n del escritor brit\u00e1nico Herbert George Wells, publicada por primera vez en Londres en el a\u00f1o 1895 por William Heineman. Consta de diecis\u00e9is cap\u00edtulos y un ep\u00edlogo. Contrario a Julio Verne, padre del detalle y la explicaci\u00f3n minuciosa, Wells describe a prop\u00f3sito la m\u00e1quina de modo superficial y a la ligera, con algunas pinceladas de color, dejando la apariencia y el mecanismo del artilugio a interpretaci\u00f3n del lector. Fue la primera novela de uno de los padres de la ciencia ficci\u00f3n. Con su mezcla de aventuras y doctrina social y pol\u00edtica alcanz\u00f3 un notable \u00e9xito, contribuyendo as\u00ed a la estabilidad de Wells, que a partir de ese momento pudo dedicarse plenamente a la escritura. Una parte del libro, la que versa sobre la explicaci\u00f3n del invento y en la que se discute sobre la cuarta dimensi\u00f3n, fue publicada en el a\u00f1o 1893 en el Henley's National Observer. El escritor desarroll\u00f3 el resto de la novela, que trata de las aventuras del Viajero a trav\u00e9s del Tiempo en el futuro dos a\u00f1os despu\u00e9s, tarea que le llev\u00f3 escasos quince d\u00edas.\u200b Con esta obra, Herbert George Wells inauguraba para el gran p\u00fablico\u200b la tem",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          }
+        ]
+      },
+      {
+        "request": {
+          "task": "summary",
+          "title": "The Time Machine",
+          "targets": [],
+          "author_hint": "",
+          "format": "",
+          "ambiguous": false
+        },
+        "diagnostics": {
+          "verified_narrative_answer": true,
+          "audit": {
+            "decision": "approve",
+            "only_books": true,
+            "claims": [
+              {
+                "statement": "Contrario a Julio Verne, padre del detalle y la explicaci\u00f3n minuciosa, Wells describe a prop\u00f3sito la m\u00e1quina de modo superficial y a la ligera, con algunas pinceladas de color, dejando la apariencia y el mecanismo del artilugio a interpretaci\u00f3n del lector.",
+                "verdict": "supported",
+                "source_id": 4,
+                "evidence": "Contrario a Julio Verne, padre del detalle y la explicaci\u00f3n minuciosa, Wells describe a prop\u00f3sito la m\u00e1quina de modo superficial y a la ligera, con algunas pinceladas de color, dejando la apariencia y el mecanismo del artilugio a interpretaci\u00f3n del lector."
+              },
+              {
+                "statement": "El escritor desarroll\u00f3 el resto de la novela, que trata de las aventuras del Viajero a trav\u00e9s del Tiempo en el futuro dos a\u00f1os despu\u00e9s, tarea que le llev\u00f3 escasos quince d\u00edas.",
+                "verdict": "supported",
+                "source_id": 4,
+                "evidence": "El escritor desarroll\u00f3 el resto de la novela, que trata de las aventuras del Viajero a trav\u00e9s del Tiempo en el futuro dos a\u00f1os despu\u00e9s, tarea que le llev\u00f3 escasos quince d\u00edas."
+              },
+              {
+                "statement": "Ante el escepticismo de sus amigos, un cient\u00edfico de finales del siglo XIX logra descubrir las claves de la denominada \"cuarta dimensi\u00f3n\" (el Tiempo) y construye un veh\u00edculo que le permite viajar f\u00edsicamente a trav\u00e9s del mismo.",
+                "verdict": "supported",
+                "source_id": 4,
+                "evidence": "Ante el escepticismo de sus amigos, un cient\u00edfico de finales del siglo XIX logra descubrir las claves de la denominada \"cuarta dimensi\u00f3n\" (el Tiempo) y construye un veh\u00edculo que le permite viajar f\u00edsicamente a trav\u00e9s del mismo."
+              },
+              {
+                "statement": "Luego de esperar un rato, sus amigos lo ven entrar en un estado calamitoso.",
+                "verdict": "supported",
+                "source_id": 4,
+                "evidence": "Luego de esperar un rato, sus amigos lo ven entrar en un estado calamitoso."
+              },
+              {
+                "statement": "El Viajero supone que as\u00ed debi\u00f3 de terminar la humanidad tras resolver todos sus conflictos existenciales y tras lograr el comunismo.",
+                "verdict": "supported",
+                "source_id": 4,
+                "evidence": "El Viajero supone que as\u00ed debi\u00f3 de terminar la humanidad tras resolver todos sus conflictos existenciales y tras lograr el comunismo."
+              }
+            ],
+            "coverage": [
+              {
+                "question_id": 1,
+                "status": "answered"
+              }
+            ],
+            "issues": [],
+            "search_queries": []
+          },
+          "work_type": "fiction",
+          "model_calls": 0,
+          "narrative_coverage": "development_excerpt",
+          "partial_evidence": false,
+          "progress_metrics": {
+            "stage_timings": [
+              {
+                "stage": "conversation",
+                "started_ms": 9.51,
+                "elapsed_ms": 18.123,
+                "status": "ok"
+              },
+              {
+                "stage": "cache_lookup",
+                "started_ms": 43.452,
+                "elapsed_ms": 0.578,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 91.68,
+                "elapsed_ms": 302.345,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 142.081,
+                "elapsed_ms": 53.001,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 265.292,
+                "elapsed_ms": 127.477,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 280.933,
+                "elapsed_ms": 76.54,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 407.711,
+                "elapsed_ms": 69.122,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 548.085,
+                "elapsed_ms": 5.441,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 593.716,
+                "elapsed_ms": 4.582,
+                "status": "ok"
+              }
+            ],
+            "stage_totals_ms": {
+              "conversation": 18.123,
+              "cache_lookup": 0.578,
+              "knowledge_lookup": 628.485,
+              "audit": 10.023
+            },
+            "model_calls_started": 0,
+            "progress_events": [
+              {
+                "stage": "search",
+                "elapsed_ms": 44.042
+              },
+              {
+                "stage": "review",
+                "elapsed_ms": 548.062
+              }
+            ],
+            "elapsed_ms": 619.428,
+            "first_phase_emitted_ms": 44.042
+          },
+          "language_presentation": {
+            "target": "es",
+            "original_text": "Contrario a Julio Verne, padre del detalle y la explicaci\u00f3n minuciosa, Wells describe a prop\u00f3sito la m\u00e1quina de modo superficial y a la ligera, con algunas pinceladas de color, dejando la apariencia y el mecanismo del artilugio a interpretaci\u00f3n del lector. El escritor desarroll\u00f3 el resto de la novela, que trata de las aventuras del Viajero a trav\u00e9s del Tiempo en el futuro dos a\u00f1os despu\u00e9s, tarea que le llev\u00f3 escasos quince d\u00edas. Ante el escepticismo de sus amigos, un cient\u00edfico de finales del siglo XIX logra descubrir las claves de la denominada \"cuarta dimensi\u00f3n\" (el Tiempo) y construye un veh\u00edculo que le permite viajar f\u00edsicamente a trav\u00e9s del mismo. Luego de esperar un rato, sus amigos lo ven entrar en un estado calamitoso. El Viajero supone que as\u00ed debi\u00f3 de terminar la humanidad tras resolver todos sus conflictos existenciales y tras lograr el comunismo.\n\nFuente: https://es.wikipedia.org/wiki/La_m%C3%A1quina_del_tiempo\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+            "translated_fields": 0,
+            "cache_hits": 0,
+            "untranslated_fields": [],
+            "audit_applies_to_original": true,
+            "cards": [
+              {
+                "id": "sqlkb:f40104531b8553a523e53008ba81628684d20ca352297b49a29a64b6cebe8a20",
+                "title": "The Time Machine",
+                "author": "H. G. (Herbert George) Wells",
+                "synopsis": "",
+                "image_url": "",
+                "links": [
+                  {
+                    "label": "Google Books",
+                    "url": "https://books.google.com/books?q=The+Time+Machine+H.+G.+%28Herbert+George%29+Wells"
+                  },
+                  {
+                    "label": "Project Gutenberg",
+                    "url": "https://www.gutenberg.org/ebooks/35"
+                  },
+                  {
+                    "label": "Amazon",
+                    "url": "https://www.amazon.com/s?k=The+Time+Machine+H.+G.+%28Herbert+George%29+Wells&i=stripbooks"
+                  },
+                  {
+                    "label": "Buscalibre",
+                    "url": "https://www.buscalibre.cl/libros/search?q=The+Time+Machine+H.+G.+%28Herbert+George%29+Wells"
+                  }
+                ]
+              }
+            ]
+          },
+          "stage_timings": [],
+          "elapsed_ms": 620,
+          "chat_budget_seconds": 36.0
+        },
+        "sources": [
+          {
+            "id": 1,
+            "title": "The Time Machine",
+            "author": "H. G. (Herbert George) Wells",
+            "description": "",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "sqlkb:f40104531b8553a523e53008ba81628684d20ca352297b49a29a64b6cebe8a20",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/35",
+            "locator": "",
+            "read_mode": "metadatos de fuente; sin trama ni texto completo",
+            "retrieved_at": "",
+            "license": "CC0-1.0",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "synopsis": "",
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Science fiction",
+              "Time travel -- Fiction",
+              "Dystopias -- Fiction"
+            ]
+          },
+          {
+            "id": 2,
+            "title": "The Time Machine",
+            "author": "Fuente web",
+            "description": "The Time Machine is an 1895 dystopian science fiction novella by H. G. Wells about a Victorian scientist known as the Time Traveller who travels to the year 802,701. The work is generally credited with the popularization of the concept of time travel by using a vehicle or device to travel intentionally and selectively forward or backward through time. The term \"time machine\", coined by Wells, is now almost universally used to refer to such a vehicle or device. Utilizing a frame story set in then-present Victorian England, Wells's text focuses on a recount of the otherwise anonymous Time Traveller's journey into the far future. A work of future history and speculative evolution, The Time Machine is interpreted in modern times as a commentary on the increasing inequality and class divisions of Wells's era, which he projects as giving rise to two separate human species: the fair, childlike Eloi; and the savage, simian Morlocks, distant descendants of the contemporary upper and lower classes respectively. It is believed that Wells's depiction of the Eloi as a race living in plenitude and abandon was inspired by the utopic romance novel News from Nowhere (1890), though Wells's universe in...",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://en.wikipedia.org/wiki/The_Time_Machine",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793338870.8525963",
+            "evidence_scope": "summary",
+            "work_id": "litmate:cd01a12f9f01f2eb764bc33a",
+            "work_title": "The Time Machine",
+            "work_author": "H. G. (Herbert George) Wells",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793943670.8525963",
+            "evidence_hash": "4e4178ae7d66bf3afbeb6394ffbe579ae71978e6b30a49e1c374eb85946e1964",
+            "memory_source_id": "0ae8443b37242affd7b73c1cd36c0ef6aa3dd396c404c490b13e26dad40c757f",
+            "last_verified_at": "1793338870.8525963",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "The Time Machine",
+              "url": "https://en.wikipedia.org/wiki/The_Time_Machine",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "1382396968"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "The Time Machine is an 1895 dystopian science fiction novella by H. G. Wells about a Victorian scientist known as the Time Traveller who travels to the year 802,701. The work is generally credited with the popularization of the concept of time travel by using a vehicle or device to travel intentionally and selectively forward or backward through time. The term \"time machine\", coined by Wells, is now almost universally used to refer to such a vehicle or device. Utilizing a frame story set in then-present Victorian England, Wells's text focuses on a recount of the otherwise anonymous Time Traveller's journey into the far future. A work of future history and speculative evolution, The Time Machine is interpreted in modern times as a commentary on the increasing inequality and class divisions of Wells's era, which he projects as giving rise to two separate human species: the fair, childlike Eloi; and the savage, simian Morlocks, distant descendants of the contemporary upper and lower classes respectively. It is believed that Wells's depiction of the Eloi as a race living in plenitude and abandon was inspired by the utopic romance novel News from Nowhere (1890), though Wells's universe",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 3,
+            "title": "The Time Machine",
+            "author": "Fuente web",
+            "description": "The Time Machine is an 1895 dystopian science fiction novella by H. G. Wells about a Victorian scientist known as the Time Traveller who travels to the year 802,701. The work is generally credited with the popularization of the concept of time travel by using a vehicle or device to travel intentionally and selectively forward or backward through time. The term \"time machine\", coined by Wells, is now almost universally used to refer to such a vehicle or device. Utilizing a frame story set in then-present Victorian England, Wells's text focuses on a recount of the otherwise anonymous Time Traveller's journey into the far future. A work of future history and speculative evolution, The Time Machine is interpreted in modern times as a commentary on the increasing inequality and class divisions of Wells's era, which he projects as giving rise to two separate human species: the fair, childlike Eloi; and the savage, simian Morlocks, distant descendants of the contemporary upper and lower classes respectively. It is believed that Wells's depiction of the Eloi as a race living in plenitude and abandon was inspired by the utopic romance novel News from Nowhere (1890), though Wells's universe in...",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://en.wikipedia.org/wiki/The_Time_Machine",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793338875.4706595",
+            "evidence_scope": "characters",
+            "work_id": "litmate:cd01a12f9f01f2eb764bc33a",
+            "work_title": "The Time Machine",
+            "work_author": "H. G. (Herbert George) Wells",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793943675.4706595",
+            "evidence_hash": "dfe743e8915747a935bff2af3f6087369003f047ae4e4659ee601b23e1c1bee2",
+            "memory_source_id": "628d1c82166d3a5d0748ae6e8e7268ce4c852e6d96faa5bb319008c5423e7efb",
+            "last_verified_at": "1793338875.4706595",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "The Time Machine",
+              "url": "https://en.wikipedia.org/wiki/The_Time_Machine",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "1382396968"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "The Time Machine is an 1895 dystopian science fiction novella by H. G. Wells about a Victorian scientist known as the Time Traveller who travels to the year 802,701. The work is generally credited with the popularization of the concept of time travel by using a vehicle or device to travel intentionally and selectively forward or backward through time. The term \"time machine\", coined by Wells, is now almost universally used to refer to such a vehicle or device. Utilizing a frame story set in then-present Victorian England, Wells's text focuses on a recount of the otherwise anonymous Time Traveller's journey into the far future. A work of future history and speculative evolution, The Time Machine is interpreted in modern times as a commentary on the increasing inequality and class divisions of Wells's era, which he projects as giving rise to two separate human species: the fair, childlike Eloi; and the savage, simian Morlocks, distant descendants of the contemporary upper and lower classes respectively. It is believed that Wells's depiction of the Eloi as a race living in plenitude and abandon was inspired by the utopic romance novel News from Nowhere (1890), though Wells's universe",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 4,
+            "title": "La m\u00e1quina del tiempo",
+            "author": "Fuente web",
+            "description": "== Argumento == Ante el escepticismo de sus amigos, un cient\u00edfico de finales del siglo XIX logra descubrir las claves de la denominada \"cuarta dimensi\u00f3n\" (el Tiempo) y construye un veh\u00edculo que le permite viajar f\u00edsicamente a trav\u00e9s del mismo. Luego de esperar un rato, sus amigos lo ven entrar en un estado calamitoso. El Viajero supone que as\u00ed debi\u00f3 de terminar la humanidad tras resolver todos sus conflictos existenciales y tras lograr el comunismo. Tras hacer algunas exploraciones por los alrededores a su llegada al futuro, vuelve al lugar donde dej\u00f3 la m\u00e1quina del tiempo, pero ya no est\u00e1; m\u00e1s tarde se percatar\u00e1 de que los Morlocks la han encerrado en el pedestal de una estatua que representa a una Esfinge situada en el lugar donde apareci\u00f3 el Viajero del tiempo.",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/La_m%C3%A1quina_del_tiempo",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793339210.7604527",
+            "evidence_scope": "summary",
+            "narrative_context": "La m\u00e1quina del tiempo (en ingl\u00e9s, The Time Machine) es una novela de ciencia ficci\u00f3n del escritor brit\u00e1nico Herbert George Wells, publicada por primera vez en Londres en el a\u00f1o 1895 por William Heineman. Consta de diecis\u00e9is cap\u00edtulos y un ep\u00edlogo. Contrario a Julio Verne, padre del detalle y la explicaci\u00f3n minuciosa, Wells describe a prop\u00f3sito la m\u00e1quina de modo superficial y a la ligera, con algunas pinceladas de color, dejando la apariencia y el mecanismo del artilugio a interpretaci\u00f3n del lector. Fue la primera novela de uno de los padres de la ciencia ficci\u00f3n. Con su mezcla de aventuras y doctrina social y pol\u00edtica alcanz\u00f3 un notable \u00e9xito, contribuyendo as\u00ed a la estabilidad de Wells, que a partir de ese momento pudo dedicarse plenamente a la escritura. Una parte del libro, la que versa sobre la explicaci\u00f3n del invento y en la que se discute sobre la cuarta dimensi\u00f3n, fue publicada en el a\u00f1o 1893 en el Henley's National Observer. El escritor desarroll\u00f3 el resto de la novela, que trata de las aventuras del Viajero a trav\u00e9s del Tiempo en el futuro dos a\u00f1os despu\u00e9s, tarea que le llev\u00f3 escasos quince d\u00edas.\u200b Con esta obra, Herbert George Wells inauguraba para el gran p\u00fablico\u200b la tem",
+            "work_id": "litmate:cd01a12f9f01f2eb764bc33a",
+            "work_title": "The Time Machine",
+            "work_author": "H. G. (Herbert George) Wells",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793944010.7604527",
+            "evidence_hash": "742c098f920a412ebb40b65b05fcad7d8683382195c0cf1b486851ae5de38d9a",
+            "memory_source_id": "d2f7ae186d36e31b0ec3c2018b95d06ec0900a82df7f07899b19fa900b4130a2",
+            "last_verified_at": "1793339210.7604527",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "La m\u00e1quina del tiempo",
+              "url": "https://es.wikipedia.org/wiki/La_m%C3%A1quina_del_tiempo",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "174214392"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "Ante el escepticismo de sus amigos, un cient\u00edfico de finales del siglo XIX logra descubrir las claves de la denominada \"cuarta dimensi\u00f3n\" (el Tiempo) y construye un veh\u00edculo que le permite viajar f\u00edsicamente a trav\u00e9s del mismo.",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "development_excerpt"
+              },
+              {
+                "subject": "La m\u00e1quina del tiempo",
+                "relation": "",
+                "value": "",
+                "evidence": "== Argumento == Ante el escepticismo de sus amigos, un cient\u00edfico de finales del siglo XIX logra descubrir las claves de la denominada \"cuarta dimensi\u00f3n\" (el Tiempo) y construye un veh\u00edculo que le permite viajar f\u00edsicamente a trav\u00e9s del mismo. Luego de esperar un rato, sus amigos lo ven entrar en un estado calamitoso. El Viajero supone que as\u00ed debi\u00f3 de terminar la humanidad tras resolver todos sus conflictos existenciales y tras lograr el comunismo. Tras hacer algunas exploraciones por los alrededores a su llegada al futuro, vuelve al lugar donde dej\u00f3 la m\u00e1quina del tiempo, pero ya no est\u00e1; m\u00e1s tarde se percatar\u00e1 de que los Morlocks la han encerrado en el pedestal de una estatua que represen",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "events",
+                "type": "",
+                "scope": "partial"
+              },
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "Ante el escepticismo de sus amigos, un cient\u00edfico de finales del siglo XIX logra descubrir las claves de la denominada \"cuarta dimensi\u00f3n\" (el Tiempo) y construye un veh\u00edculo que le permite viajar f\u00edsicamente a trav\u00e9s del mismo. Luego de esperar un rato, sus amigos lo ven entrar en un estado calamitoso. El Viajero supone que as\u00ed debi\u00f3 de terminar la humanidad tras resolver todos sus conflictos existenciales y tras lograr el comunismo. Tras hacer algunas exploraciones por los alrededores a su llegada al futuro, vuelve al lugar donde dej\u00f3 la m\u00e1quina del tiempo, pero ya no est\u00e1; m\u00e1s tarde se percatar\u00e1 de que los Morlocks la han encerrado en el pedestal de una estatua que representa a una Esfinge",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "partial"
+              }
+            ],
+            "identity_text": "La m\u00e1quina del tiempo (en ingl\u00e9s, The Time Machine) es una novela de ciencia ficci\u00f3n del escritor brit\u00e1nico Herbert George Wells, publicada por primera vez en Londres en el a\u00f1o 1895 por William Heineman. Consta de diecis\u00e9is cap\u00edtulos y un ep\u00edlogo. Contrario a Julio Verne, padre del detalle y la explicaci\u00f3n minuciosa, Wells describe a prop\u00f3sito la m\u00e1quina de modo superficial y a la ligera, con algunas pinceladas de color, dejando la apariencia y el mecanismo del artilugio a interpretaci\u00f3n del lector. Fue la primera novela de uno de los padres de la ciencia ficci\u00f3n. Con su mezcla de aventuras y doctrina social y pol\u00edtica alcanz\u00f3 un notable \u00e9xito, contribuyendo as\u00ed a la estabilidad de Wells, que a partir de ese momento pudo dedicarse plenamente a la escritura. Una parte del libro, la que versa sobre la explicaci\u00f3n del invento y en la que se discute sobre la cuarta dimensi\u00f3n, fue publicada en el a\u00f1o 1893 en el Henley's National Observer. El escritor desarroll\u00f3 el resto de la novela, que trata de las aventuras del Viajero a trav\u00e9s del Tiempo en el futuro dos a\u00f1os despu\u00e9s, tarea que le llev\u00f3 escasos quince d\u00edas.\u200b Con esta obra, Herbert George Wells inauguraba para el gran p\u00fablico\u200b la tem",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          }
+        ]
+      }
+    ],
+    "content_manually_reviewed": false,
+    "mysql_row_counts": {
+      "auth_group": 0,
+      "auth_group_permissions": 0,
+      "auth_permission": 152,
+      "auth_user": 179,
+      "auth_user_groups": 0,
+      "auth_user_user_permissions": 0,
+      "core_asistenteia": 1,
+      "core_autor": 31,
+      "core_clickconversion": 185,
+      "core_conversacionia": 50,
+      "core_editorial": 34,
+      "core_elementolistalectura": 2,
+      "core_estadolectura": 451,
+      "core_eventoanalitica": 384,
+      "core_genero": 12,
+      "core_historialchatbot": 5,
+      "core_historialpreciolibro": 223,
+      "core_kbname": 11104,
+      "core_kbprojection": 7,
+      "core_kbrecord": 11104,
+      "core_kbrelation": 1108,
+      "core_kbversion": 11104,
+      "core_libro": 55,
+      "core_libro_generos": 54,
+      "core_librofavorito": 231,
+      "core_listalectura": 2,
+      "core_mensajecontacto": 3,
+      "core_mensajeia": 190,
+      "core_perfilusuario": 158,
+      "core_preciolibrotienda": 117,
+      "core_preguntafrecuente": 0,
+      "core_recomendacion": 0,
+      "core_recomendacionialog": 0,
+      "core_resena": 116,
+      "django_admin_log": 0,
+      "django_content_type": 38,
+      "django_migrations": 27,
+      "django_session": 88,
+      "suscripciones_historialpago": 42,
+      "suscripciones_plansuscripcion": 3,
+      "suscripciones_suscripcionusuario": 157
+    },
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  },
+  {
+    "passed": true,
+    "question": "Dime la trama de Little Women",
+    "answer": "En la novela, las chicas traban amistad con un vecino, el joven adolescente Laurie, que se vuelve el mejor amigo de Jo. La entretenida obra muestra el contexto hist\u00f3rico de la \u00e9poca.\n\nFuente: https://es.wikipedia.org/wiki/Mujercitas\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+    "status": "answered",
+    "not_in_legacy_catalog": null,
+    "sse_done": true,
+    "seconds": 0.5709,
+    "cards": [
+      {
+        "id": "1",
+        "title": "Little Women",
+        "author": "Louisa May Alcott",
+        "synopsis": "",
+        "image_url": "",
+        "links": [
+          {
+            "label": "Google Books",
+            "url": "https://books.google.com/books?q=Little+Women+Louisa+May+Alcott"
+          },
+          {
+            "label": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/514"
+          },
+          {
+            "label": "Amazon",
+            "url": "https://www.amazon.com/s?k=Little+Women+Louisa+May+Alcott&i=stripbooks"
+          },
+          {
+            "label": "Buscalibre",
+            "url": "https://www.buscalibre.cl/libros/search?q=Little+Women+Louisa+May+Alcott"
+          }
+        ]
+      }
+    ],
+    "diagnostics": {
+      "elapsed_ms": 544,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 0,
+      "verified_narrative_answer": true,
+      "partial_evidence": false,
+      "work_type": "fiction",
+      "progress_metrics": {
+        "elapsed_ms": 561.506,
+        "first_phase_emitted_ms": 12.163,
+        "model_calls_started": 0,
+        "stage_totals_ms": {
+          "conversation": 0.644,
+          "cache_lookup": 0.871,
+          "knowledge_lookup": 599.813,
+          "audit": 1.332,
+          "finalization": 17.543
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 3.811,
+            "elapsed_ms": 0.644,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 11.276,
+            "elapsed_ms": 0.871,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 13.39,
+            "elapsed_ms": 298.621,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 77.17,
+            "elapsed_ms": 39.164,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 162.393,
+            "elapsed_ms": 149.23,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 222.135,
+            "elapsed_ms": 55.329,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 374.211,
+            "elapsed_ms": 57.469,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 494.068,
+            "elapsed_ms": 0.716,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 524.334,
+            "elapsed_ms": 0.616,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 543.957,
+            "elapsed_ms": 17.543,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 12.163
+          },
+          {
+            "stage": "review",
+            "elapsed_ms": 494.051
+          }
+        ]
+      },
+      "stage_timings": [],
+      "provider": "verified-narrative-engine"
+    },
+    "reader_data_written": false,
+    "sources": [],
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": null
+      },
+      {
+        "stage": "retrieval",
+        "sources": [
+          {
+            "id": 1,
+            "title": "Little Women",
+            "author": "Louisa May Alcott",
+            "description": "Little Women, de Louisa May Alcott. Temas del cat\u00e1logo: Autobiographical fiction, Young women -- Fiction, Sisters -- Fiction, Domestic fiction, Family life -- New England -- Fiction, New England -- Fiction, Bildungsromans, Mothers and daughters -- Fiction, March family (Fictitious characters) -- Fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/514",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793072078.9502962",
+            "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795664078.9502962",
+            "evidence_hash": "75d89bd87e53c2b676b1b69ef79a69bbc9cb76c466c6f2977d09f3e68009bb4a",
+            "memory_source_id": "b2081c651276eb68066865a8e94d0ba22049d412c7d34c8579381831299426cc",
+            "last_verified_at": "1793072078.9502962",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Autobiographical fiction",
+              "Young women -- Fiction",
+              "Sisters -- Fiction",
+              "Domestic fiction",
+              "Family life -- New England -- Fiction"
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Mujercitas",
+            "author": "Fuente web",
+            "description": "== Argumento == En la novela, las chicas traban amistad con un vecino, el joven adolescente Laurie, que se vuelve el mejor amigo de Jo. La entretenida obra muestra el contexto hist\u00f3rico de la \u00e9poca.",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Mujercitas",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793339214.0221522",
+            "evidence_scope": "summary",
+            "narrative_context": "Mujercitas (en ingl\u00e9s, Little Women o Little Women or Meg, Jo, Beth and Amy) es una novela de la escritora estadounidense Louisa May Alcott publicada el 30 de septiembre de 1868, que trata la vida de cuatro ni\u00f1as que, tras pasar la adolescencia con la Guerra Civil en los Estados Unidos como fondo, entre 1861 y 1865, se convierten en mujeres. Est\u00e1 basada en las vivencias de la autora durante su ni\u00f1ez en la ciudad de Concord, Massachusetts.\u200b La novela se public\u00f3 sin que existan indicios de una secuela previamente planeada, si bien en el \u00faltimo p\u00e1rrafo de la novela la autora escribe: Y fue el caso que por el \u00e9xito generado y las peticiones de diversos lectores, en 1869 Alcott volvi\u00f3 a alzar el tel\u00f3n con la publicaci\u00f3n de Aquellas mujercitas (en ingl\u00e9s, Good Wives), que transcurre cuatro a\u00f1os despu\u00e9s de Mujercitas y muestra las dificultades que las protagonistas enfrentan durante su vida adulta. Ambos libros constituyen lo que en Europa se edit\u00f3 como un solo volumen. Los siguientes trabajos de Alcott: Little Men (Hombrecitos) y Jo's Boys (Los muchachos de Jo), son continuaciones de esas dos novelas, muestran a los hijos, sobrinos y alumnos de las Mujercitas construyendo sus vidas.",
+            "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+            "work_title": "Little Women",
+            "work_author": "Louisa May Alcott",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793944014.0221522",
+            "evidence_hash": "a318d6aa4a1374df2805d55527961b32a9892f10769cc131169cd280eeca562a",
+            "memory_source_id": "3d173a4eccb837493a7c9fbb8090d637824a84a678557fc2948f67e7cd286043",
+            "last_verified_at": "1793339214.0221522",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Mujercitas",
+              "url": "https://es.wikipedia.org/wiki/Mujercitas",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "173325880"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "En la novela, las chicas traban amistad con un vecino, el joven adolescente Laurie, que se vuelve el mejor amigo de Jo.",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "development_excerpt"
+              },
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "En la novela, las chicas traban amistad con un vecino, el joven adolescente Laurie, que se vuelve el mejor amigo de Jo. La entretenida obra muestra el contexto hist\u00f3rico de la \u00e9poca.",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "partial"
+              }
+            ],
+            "identity_text": "Mujercitas (en ingl\u00e9s, Little Women o Little Women or Meg, Jo, Beth and Amy) es una novela de la escritora estadounidense Louisa May Alcott publicada el 30 de septiembre de 1868, que trata la vida de cuatro ni\u00f1as que, tras pasar la adolescencia con la Guerra Civil en los Estados Unidos como fondo, entre 1861 y 1865, se convierten en mujeres. Est\u00e1 basada en las vivencias de la autora durante su ni\u00f1ez en la ciudad de Concord, Massachusetts.\u200b La novela se public\u00f3 sin que existan indicios de una secuela previamente planeada, si bien en el \u00faltimo p\u00e1rrafo de la novela la autora escribe: Y fue el caso que por el \u00e9xito generado y las peticiones de diversos lectores, en 1869 Alcott volvi\u00f3 a alzar el tel\u00f3n con la publicaci\u00f3n de Aquellas mujercitas (en ingl\u00e9s, Good Wives), que transcurre cuatro a\u00f1os despu\u00e9s de Mujercitas y muestra las dificultades que las protagonistas enfrentan durante su vida adulta. Ambos libros constituyen lo que en Europa se edit\u00f3 como un solo volumen. Los siguientes trabajos de Alcott: Little Men (Hombrecitos) y Jo's Boys (Los muchachos de Jo), son continuaciones de esas dos novelas, muestran a los hijos, sobrinos y alumnos de las Mujercitas construyendo sus vidas.",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 3,
+            "title": "Little Women",
+            "author": "Fuente web",
+            "description": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a second volume (titled Good Wives or Little Women Married in the United Kingdom, though the name originated with the publisher and not Alcott). It was also met with success. The two volumes were issued in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdependent and each necessary to the achievement of its heroine's individual identity.\" According to Sarah Elbert, Alcott created a new form of literature, one...",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://en.wikipedia.org/wiki/Little_Women",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793338887.0307164",
+            "evidence_scope": "summary",
+            "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+            "work_title": "Little Women",
+            "work_author": "Louisa May Alcott",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793943687.0307164",
+            "evidence_hash": "31effb167f8938cff8ad03577a6457b4979f7b265278fc717d3c65d2a9c046e6",
+            "memory_source_id": "d7794a1402399d1e11646a9a3daad71e7007ff0d3f83fc64e109297b4e52ef87",
+            "last_verified_at": "1793338887.0307164",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Little Women",
+              "url": "https://en.wikipedia.org/wiki/Little_Women",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "1374015307"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a second volume (titled Good Wives or Little Women Married in the United Kingdom, though the name originated with the publisher and not Alcott). It was also met with success. The two volumes were issued in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdependent and each necessary to the achievement of its heroine's individual identity.\" According to Sarah Elbert, Alcott created a new form of literature, on",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 4,
+            "title": "Little Women",
+            "author": "Fuente web",
+            "description": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a second volume (titled Good Wives or Little Women Married in the United Kingdom, though the name originated with the publisher and not Alcott). It was also met with success. The two volumes were issued in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdependent and each necessary to the achievement of its heroine's individual identity.\" According to Sarah Elbert, Alcott created a new form of literature, one...",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://en.wikipedia.org/wiki/Little_Women",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793338891.7305207",
+            "evidence_scope": "characters",
+            "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+            "work_title": "Little Women",
+            "work_author": "Louisa May Alcott",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793943691.7305207",
+            "evidence_hash": "931ad0c7aa81b0419745ac668658d59a9d0533f709a511d2e40139980c674a34",
+            "memory_source_id": "d1733bc28dd0de7b4b36f3784cf6b9ba4b6d2123adc9c84966b4bbfbdbab7fa4",
+            "last_verified_at": "1793338891.7305207",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Little Women",
+              "url": "https://en.wikipedia.org/wiki/Little_Women",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "1374015307"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a second volume (titled Good Wives or Little Women Married in the United Kingdom, though the name originated with the publisher and not Alcott). It was also met with success. The two volumes were issued in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdependent and each necessary to the achievement of its heroine's individual identity.\" According to Sarah Elbert, Alcott created a new form of literature, on",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          }
+        ]
+      },
+      {
+        "request": {
+          "task": "summary",
+          "title": "Little Women",
+          "targets": [],
+          "author_hint": "",
+          "format": "",
+          "ambiguous": false
+        },
+        "diagnostics": {
+          "verified_narrative_answer": true,
+          "audit": {
+            "decision": "approve",
+            "only_books": true,
+            "claims": [
+              {
+                "statement": "En la novela, las chicas traban amistad con un vecino, el joven adolescente Laurie, que se vuelve el mejor amigo de Jo.",
+                "verdict": "supported",
+                "source_id": 2,
+                "evidence": "En la novela, las chicas traban amistad con un vecino, el joven adolescente Laurie, que se vuelve el mejor amigo de Jo."
+              },
+              {
+                "statement": "La entretenida obra muestra el contexto hist\u00f3rico de la \u00e9poca.",
+                "verdict": "supported",
+                "source_id": 2,
+                "evidence": "La entretenida obra muestra el contexto hist\u00f3rico de la \u00e9poca."
+              }
+            ],
+            "coverage": [
+              {
+                "question_id": 1,
+                "status": "answered"
+              }
+            ],
+            "issues": [],
+            "search_queries": []
+          },
+          "work_type": "fiction",
+          "model_calls": 0,
+          "narrative_coverage": "development_excerpt",
+          "partial_evidence": false,
+          "progress_metrics": {
+            "stage_timings": [
+              {
+                "stage": "conversation",
+                "started_ms": 3.811,
+                "elapsed_ms": 0.644,
+                "status": "ok"
+              },
+              {
+                "stage": "cache_lookup",
+                "started_ms": 11.276,
+                "elapsed_ms": 0.871,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 13.39,
+                "elapsed_ms": 298.621,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 77.17,
+                "elapsed_ms": 39.164,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 162.393,
+                "elapsed_ms": 149.23,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 222.135,
+                "elapsed_ms": 55.329,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 374.211,
+                "elapsed_ms": 57.469,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 494.068,
+                "elapsed_ms": 0.716,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 524.334,
+                "elapsed_ms": 0.616,
+                "status": "ok"
+              }
+            ],
+            "stage_totals_ms": {
+              "conversation": 0.644,
+              "cache_lookup": 0.871,
+              "knowledge_lookup": 599.813,
+              "audit": 1.332
+            },
+            "model_calls_started": 0,
+            "progress_events": [
+              {
+                "stage": "search",
+                "elapsed_ms": 12.163
+              },
+              {
+                "stage": "review",
+                "elapsed_ms": 494.051
+              }
+            ],
+            "elapsed_ms": 527.617,
+            "first_phase_emitted_ms": 12.163
+          },
+          "language_presentation": {
+            "target": "es",
+            "original_text": "En la novela, las chicas traban amistad con un vecino, el joven adolescente Laurie, que se vuelve el mejor amigo de Jo. La entretenida obra muestra el contexto hist\u00f3rico de la \u00e9poca.\n\nFuente: https://es.wikipedia.org/wiki/Mujercitas\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+            "translated_fields": 0,
+            "cache_hits": 0,
+            "untranslated_fields": [],
+            "audit_applies_to_original": true,
+            "cards": [
+              {
+                "id": "1",
+                "title": "Little Women",
+                "author": "Louisa May Alcott",
+                "synopsis": "",
+                "image_url": "",
+                "links": [
+                  {
+                    "label": "Google Books",
+                    "url": "https://books.google.com/books?q=Little+Women+Louisa+May+Alcott"
+                  },
+                  {
+                    "label": "Project Gutenberg",
+                    "url": "https://www.gutenberg.org/ebooks/514"
+                  },
+                  {
+                    "label": "Amazon",
+                    "url": "https://www.amazon.com/s?k=Little+Women+Louisa+May+Alcott&i=stripbooks"
+                  },
+                  {
+                    "label": "Buscalibre",
+                    "url": "https://www.buscalibre.cl/libros/search?q=Little+Women+Louisa+May+Alcott"
+                  }
+                ]
+              }
+            ]
+          },
+          "stage_timings": [],
+          "elapsed_ms": 528,
+          "chat_budget_seconds": 36.0
+        },
+        "sources": [
+          {
+            "id": 1,
+            "title": "Little Women",
+            "author": "Louisa May Alcott",
+            "description": "Little Women, de Louisa May Alcott. Temas del cat\u00e1logo: Autobiographical fiction, Young women -- Fiction, Sisters -- Fiction, Domestic fiction, Family life -- New England -- Fiction, New England -- Fiction, Bildungsromans, Mothers and daughters -- Fiction, March family (Fictitious characters) -- Fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/514",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793072078.9502962",
+            "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795664078.9502962",
+            "evidence_hash": "75d89bd87e53c2b676b1b69ef79a69bbc9cb76c466c6f2977d09f3e68009bb4a",
+            "memory_source_id": "b2081c651276eb68066865a8e94d0ba22049d412c7d34c8579381831299426cc",
+            "last_verified_at": "1793072078.9502962",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Autobiographical fiction",
+              "Young women -- Fiction",
+              "Sisters -- Fiction",
+              "Domestic fiction",
+              "Family life -- New England -- Fiction"
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Mujercitas",
+            "author": "Fuente web",
+            "description": "== Argumento == En la novela, las chicas traban amistad con un vecino, el joven adolescente Laurie, que se vuelve el mejor amigo de Jo. La entretenida obra muestra el contexto hist\u00f3rico de la \u00e9poca.",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Mujercitas",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793339214.0221522",
+            "evidence_scope": "summary",
+            "narrative_context": "Mujercitas (en ingl\u00e9s, Little Women o Little Women or Meg, Jo, Beth and Amy) es una novela de la escritora estadounidense Louisa May Alcott publicada el 30 de septiembre de 1868, que trata la vida de cuatro ni\u00f1as que, tras pasar la adolescencia con la Guerra Civil en los Estados Unidos como fondo, entre 1861 y 1865, se convierten en mujeres. Est\u00e1 basada en las vivencias de la autora durante su ni\u00f1ez en la ciudad de Concord, Massachusetts.\u200b La novela se public\u00f3 sin que existan indicios de una secuela previamente planeada, si bien en el \u00faltimo p\u00e1rrafo de la novela la autora escribe: Y fue el caso que por el \u00e9xito generado y las peticiones de diversos lectores, en 1869 Alcott volvi\u00f3 a alzar el tel\u00f3n con la publicaci\u00f3n de Aquellas mujercitas (en ingl\u00e9s, Good Wives), que transcurre cuatro a\u00f1os despu\u00e9s de Mujercitas y muestra las dificultades que las protagonistas enfrentan durante su vida adulta. Ambos libros constituyen lo que en Europa se edit\u00f3 como un solo volumen. Los siguientes trabajos de Alcott: Little Men (Hombrecitos) y Jo's Boys (Los muchachos de Jo), son continuaciones de esas dos novelas, muestran a los hijos, sobrinos y alumnos de las Mujercitas construyendo sus vidas.",
+            "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+            "work_title": "Little Women",
+            "work_author": "Louisa May Alcott",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793944014.0221522",
+            "evidence_hash": "a318d6aa4a1374df2805d55527961b32a9892f10769cc131169cd280eeca562a",
+            "memory_source_id": "3d173a4eccb837493a7c9fbb8090d637824a84a678557fc2948f67e7cd286043",
+            "last_verified_at": "1793339214.0221522",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Mujercitas",
+              "url": "https://es.wikipedia.org/wiki/Mujercitas",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "173325880"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "En la novela, las chicas traban amistad con un vecino, el joven adolescente Laurie, que se vuelve el mejor amigo de Jo.",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "development_excerpt"
+              },
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "En la novela, las chicas traban amistad con un vecino, el joven adolescente Laurie, que se vuelve el mejor amigo de Jo. La entretenida obra muestra el contexto hist\u00f3rico de la \u00e9poca.",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "partial"
+              }
+            ],
+            "identity_text": "Mujercitas (en ingl\u00e9s, Little Women o Little Women or Meg, Jo, Beth and Amy) es una novela de la escritora estadounidense Louisa May Alcott publicada el 30 de septiembre de 1868, que trata la vida de cuatro ni\u00f1as que, tras pasar la adolescencia con la Guerra Civil en los Estados Unidos como fondo, entre 1861 y 1865, se convierten en mujeres. Est\u00e1 basada en las vivencias de la autora durante su ni\u00f1ez en la ciudad de Concord, Massachusetts.\u200b La novela se public\u00f3 sin que existan indicios de una secuela previamente planeada, si bien en el \u00faltimo p\u00e1rrafo de la novela la autora escribe: Y fue el caso que por el \u00e9xito generado y las peticiones de diversos lectores, en 1869 Alcott volvi\u00f3 a alzar el tel\u00f3n con la publicaci\u00f3n de Aquellas mujercitas (en ingl\u00e9s, Good Wives), que transcurre cuatro a\u00f1os despu\u00e9s de Mujercitas y muestra las dificultades que las protagonistas enfrentan durante su vida adulta. Ambos libros constituyen lo que en Europa se edit\u00f3 como un solo volumen. Los siguientes trabajos de Alcott: Little Men (Hombrecitos) y Jo's Boys (Los muchachos de Jo), son continuaciones de esas dos novelas, muestran a los hijos, sobrinos y alumnos de las Mujercitas construyendo sus vidas.",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 3,
+            "title": "Little Women",
+            "author": "Fuente web",
+            "description": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a second volume (titled Good Wives or Little Women Married in the United Kingdom, though the name originated with the publisher and not Alcott). It was also met with success. The two volumes were issued in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdependent and each necessary to the achievement of its heroine's individual identity.\" According to Sarah Elbert, Alcott created a new form of literature, one...",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://en.wikipedia.org/wiki/Little_Women",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793338887.0307164",
+            "evidence_scope": "summary",
+            "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+            "work_title": "Little Women",
+            "work_author": "Louisa May Alcott",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793943687.0307164",
+            "evidence_hash": "31effb167f8938cff8ad03577a6457b4979f7b265278fc717d3c65d2a9c046e6",
+            "memory_source_id": "d7794a1402399d1e11646a9a3daad71e7007ff0d3f83fc64e109297b4e52ef87",
+            "last_verified_at": "1793338887.0307164",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Little Women",
+              "url": "https://en.wikipedia.org/wiki/Little_Women",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "1374015307"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a second volume (titled Good Wives or Little Women Married in the United Kingdom, though the name originated with the publisher and not Alcott). It was also met with success. The two volumes were issued in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdependent and each necessary to the achievement of its heroine's individual identity.\" According to Sarah Elbert, Alcott created a new form of literature, on",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 4,
+            "title": "Little Women",
+            "author": "Fuente web",
+            "description": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a second volume (titled Good Wives or Little Women Married in the United Kingdom, though the name originated with the publisher and not Alcott). It was also met with success. The two volumes were issued in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdependent and each necessary to the achievement of its heroine's individual identity.\" According to Sarah Elbert, Alcott created a new form of literature, one...",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://en.wikipedia.org/wiki/Little_Women",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793338891.7305207",
+            "evidence_scope": "characters",
+            "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+            "work_title": "Little Women",
+            "work_author": "Louisa May Alcott",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793943691.7305207",
+            "evidence_hash": "931ad0c7aa81b0419745ac668658d59a9d0533f709a511d2e40139980c674a34",
+            "memory_source_id": "d1733bc28dd0de7b4b36f3784cf6b9ba4b6d2123adc9c84966b4bbfbdbab7fa4",
+            "last_verified_at": "1793338891.7305207",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Little Women",
+              "url": "https://en.wikipedia.org/wiki/Little_Women",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "1374015307"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a second volume (titled Good Wives or Little Women Married in the United Kingdom, though the name originated with the publisher and not Alcott). It was also met with success. The two volumes were issued in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdependent and each necessary to the achievement of its heroine's individual identity.\" According to Sarah Elbert, Alcott created a new form of literature, on",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          }
+        ]
+      }
+    ],
+    "content_manually_reviewed": false,
+    "mysql_row_counts": {
+      "auth_group": 0,
+      "auth_group_permissions": 0,
+      "auth_permission": 152,
+      "auth_user": 179,
+      "auth_user_groups": 0,
+      "auth_user_user_permissions": 0,
+      "core_asistenteia": 1,
+      "core_autor": 31,
+      "core_clickconversion": 185,
+      "core_conversacionia": 50,
+      "core_editorial": 34,
+      "core_elementolistalectura": 2,
+      "core_estadolectura": 451,
+      "core_eventoanalitica": 384,
+      "core_genero": 12,
+      "core_historialchatbot": 5,
+      "core_historialpreciolibro": 223,
+      "core_kbname": 11104,
+      "core_kbprojection": 7,
+      "core_kbrecord": 11104,
+      "core_kbrelation": 1108,
+      "core_kbversion": 11104,
+      "core_libro": 55,
+      "core_libro_generos": 54,
+      "core_librofavorito": 231,
+      "core_listalectura": 2,
+      "core_mensajecontacto": 3,
+      "core_mensajeia": 190,
+      "core_perfilusuario": 158,
+      "core_preciolibrotienda": 117,
+      "core_preguntafrecuente": 0,
+      "core_recomendacion": 0,
+      "core_recomendacionialog": 0,
+      "core_resena": 116,
+      "django_admin_log": 0,
+      "django_content_type": 38,
+      "django_migrations": 27,
+      "django_session": 88,
+      "suscripciones_historialpago": 42,
+      "suscripciones_plansuscripcion": 3,
+      "suscripciones_suscripcionusuario": 157
+    },
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": false
+  },
+  {
+    "passed": true,
+    "question": "Dime la trama de Nana del autor \u00c9mile Zola",
+    "answer": "El autor trata de trasmitir la situaci\u00f3n de la \u00e9poca a trav\u00e9s de la obra y la importancia para la protagonista del dinero en vez de un amor verdadero a trav\u00e9s del personaje principal. La obra trata de la vida de Nan\u00e1 (Anne Copeau), de la rama familiar de los Macquart afectada por las taras gen\u00e9ticas. La acci\u00f3n se desarrolla en la casa de la familia Muffat. Cerca de all\u00ed, los Hugon y los Muffat pasan los d\u00edas en una casa de campo. Nan\u00e1 termina refugi\u00e1ndose en su amiga Satin, quien llega a ser pr\u00e1cticamente una amante para ella y con el tiempo termina por huir de Fountan y acaba volviendo con su t\u00eda, la cual le informa de que su hijo est\u00e1 enfermo.\n\nFuente: https://es.wikipedia.org/wiki/Nana_(Zola)\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+    "status": "answered",
+    "not_in_legacy_catalog": null,
+    "sse_done": true,
+    "seconds": 0.4334,
+    "cards": [
+      {
+        "id": "sqlkb:d41a31e3cba216ff06cd2b85c8886ceda41083c8084bda9cb9d97801a20e6cd2",
+        "title": "Nana",
+        "author": "\u00c9mile Zola",
+        "synopsis": "",
+        "image_url": "",
+        "links": [
+          {
+            "label": "Google Books",
+            "url": "https://books.google.com/books?q=Nana+%C3%89mile+Zola"
+          },
+          {
+            "label": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/5250"
+          },
+          {
+            "label": "Amazon",
+            "url": "https://www.amazon.com/s?k=Nana+%C3%89mile+Zola&i=stripbooks"
+          },
+          {
+            "label": "Buscalibre",
+            "url": "https://www.buscalibre.cl/libros/search?q=Nana+%C3%89mile+Zola"
+          }
+        ]
+      }
+    ],
+    "diagnostics": {
+      "elapsed_ms": 410,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 0,
+      "verified_narrative_answer": true,
+      "partial_evidence": false,
+      "work_type": "fiction",
+      "progress_metrics": {
+        "elapsed_ms": 424.692,
+        "first_phase_emitted_ms": 13.471,
+        "model_calls_started": 0,
+        "stage_totals_ms": {
+          "conversation": 0.645,
+          "cache_lookup": 0.887,
+          "knowledge_lookup": 588.87,
+          "audit": 6.505,
+          "finalization": 14.497
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 4.776,
+            "elapsed_ms": 0.645,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 12.574,
+            "elapsed_ms": 0.887,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 14.775,
+            "elapsed_ms": 313.258,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 80.757,
+            "elapsed_ms": 52.731,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 175.421,
+            "elapsed_ms": 152.319,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 238.266,
+            "elapsed_ms": 62.397,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 339.93,
+            "elapsed_ms": 8.165,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 366.059,
+            "elapsed_ms": 3.369,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 388.702,
+            "elapsed_ms": 3.136,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 410.189,
+            "elapsed_ms": 14.497,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 13.471
+          },
+          {
+            "stage": "review",
+            "elapsed_ms": 366.042
+          }
+        ]
+      },
+      "stage_timings": [],
+      "provider": "verified-narrative-engine"
+    },
+    "reader_data_written": false,
+    "sources": [],
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": null
+      },
+      {
+        "stage": "retrieval",
+        "sources": [
+          {
+            "id": 1,
+            "title": "Nana",
+            "author": "\u00c9mile Zola",
+            "description": "",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "sqlkb:d41a31e3cba216ff06cd2b85c8886ceda41083c8084bda9cb9d97801a20e6cd2",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/5250",
+            "locator": "",
+            "read_mode": "metadatos de fuente; sin trama ni texto completo",
+            "retrieved_at": "",
+            "license": "CC0-1.0",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "synopsis": "",
+            "language": "fr",
+            "isbns": [],
+            "categories": [
+              "Man-woman relationships -- Fiction",
+              "Prostitutes -- France -- Fiction",
+              "French fiction -- 19th century",
+              "France -- History -- Second Empire, 1852-1870 -- Fiction",
+              "Young women -- France -- Fiction"
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Nana (Zola)",
+            "author": "Fuente web",
+            "description": "== Argumento == La obra trata de la vida de Nan\u00e1 (Anne Copeau), de la rama familiar de los Macquart afectada por las taras gen\u00e9ticas. La acci\u00f3n se desarrolla en la casa de la familia Muffat. Cerca de all\u00ed, los Hugon y los Muffat pasan los d\u00edas en una casa de campo. Nan\u00e1 termina refugi\u00e1ndose en su amiga Satin, quien llega a ser pr\u00e1cticamente una amante para ella y con el tiempo termina por huir de Fountan y acaba volviendo con su t\u00eda, la cual le informa de que su hijo est\u00e1 enfermo.",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Nana_(Zola)",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793338878.730822",
+            "evidence_scope": "summary",
+            "narrative_context": "Nana es una de las obras m\u00e1s representativas del escritor \u00c9mile Zola, autor franc\u00e9s del siglo XIX, padre del movimiento naturalista y mayor exponente de este. Nan\u00e1 fue publicada en 1880. El t\u00edtulo de la obra hace referencia al apelativo que se le da a la protagonista, Anne Copeau, descendiente de la l\u00ednea familiar de los Macquart, perteneciente a la rama bastarda de la familia, que se ve influida por las taras y defectos de la herencia gen\u00e9tica, tal como indica el pensamiento determinista. Esta novela pertenece a la serie Los Rougon-Macquart, conjunto que agrupa 20 obras de este autor, de las cuales las m\u00e1s destacadas son, junto a esta, La bestia Humana y Germinal. La obra pertenece a una serie de tres libros que comparten personajes y tambi\u00e9n miseria de las clases pobres de la \u00e9poca: Nan\u00e1 La taberna Germinal El tema fundamental de la obra son las aventuras de la protagonista en la cual predomina una gran personalidad que vive ejerciendo la prostituci\u00f3n. El autor trata de trasmitir la situaci\u00f3n de la \u00e9poca a trav\u00e9s de la obra y la importancia para la protagonista del dinero en vez de un amor verdadero a trav\u00e9s del personaje principal.",
+            "work_id": "litmate:d8fec8c040722f1627acb945",
+            "work_title": "Nana",
+            "work_author": "\u00c9mile Zola",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793943678.730822",
+            "evidence_hash": "77b4df29a6aba9fd78fab65ec6ac54ca7a0654c2e931bc1d3bb3be144a84f7ff",
+            "memory_source_id": "c0644ae35bd1c88d8df4387d1f17503e93366603dac236e82177aa275462ca5f",
+            "last_verified_at": "1793338878.730822",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Nana (Zola)",
+              "url": "https://es.wikipedia.org/wiki/Nana_(Zola)",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "172986173"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "La obra trata de la vida de Nan\u00e1 (Anne Copeau), de la rama familiar de los Macquart afectada por las taras gen\u00e9ticas.",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "development_excerpt"
+              },
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "La obra trata de la vida de Nan\u00e1 (Anne Copeau), de la rama familiar de los Macquart afectada por las taras gen\u00e9ticas. La acci\u00f3n se desarrolla en la casa de la familia Muffat. Cerca de all\u00ed, los Hugon y los Muffat pasan los d\u00edas en una casa de campo. Nan\u00e1 termina refugi\u00e1ndose en su amiga Satin, quien llega a ser pr\u00e1cticamente una amante para ella y con el tiempo termina por huir de Fountan y acaba volviendo con su t\u00eda, la cual le informa de que su hijo est\u00e1 enfermo.",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "partial"
+              }
+            ],
+            "identity_text": "Nana es una de las obras m\u00e1s representativas del escritor \u00c9mile Zola, autor franc\u00e9s del siglo XIX, padre del movimiento naturalista y mayor exponente de este. Nan\u00e1 fue publicada en 1880. El t\u00edtulo de la obra hace referencia al apelativo que se le da a la protagonista, Anne Copeau, descendiente de la l\u00ednea familiar de los Macquart, perteneciente a la rama bastarda de la familia, que se ve influida por las taras y defectos de la herencia gen\u00e9tica, tal como indica el pensamiento determinista. Esta novela pertenece a la serie Los Rougon-Macquart, conjunto que agrupa 20 obras de este autor, de las cuales las m\u00e1s destacadas son, junto a esta, La bestia Humana y Germinal. La obra pertenece a una serie de tres libros que comparten personajes y tambi\u00e9n miseria de las clases pobres de la \u00e9poca: Nan\u00e1 La taberna Germinal El tema fundamental de la obra son las aventuras de la protagonista en la cual predomina una gran personalidad que vive ejerciendo la prostituci\u00f3n. El autor trata de trasmitir la situaci\u00f3n de la \u00e9poca a trav\u00e9s de la obra y la importancia para la protagonista del dinero en vez de un amor verdadero a trav\u00e9s del personaje principal.",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 3,
+            "title": "Nana (Zola)",
+            "author": "Fuente web",
+            "description": "Nana es una de las obras m\u00e1s representativas del escritor \u00c9mile Zola, autor franc\u00e9s del siglo XIX, padre del movimiento naturalista y mayor exponente de este. Nan\u00e1 fue publicada en 1880. El t\u00edtulo de la obra hace referencia al apelativo que se le da a la protagonista, Anne Copeau, descendiente de la l\u00ednea familiar de los Macquart, perteneciente a la rama bastarda de la familia, que se ve influida por las taras y defectos de la herencia gen\u00e9tica, tal como indica el pensamiento determinista. Esta novela pertenece a la serie Los Rougon-Macquart, conjunto que agrupa 20 obras de este autor, de las cuales las m\u00e1s destacadas son, junto a esta, La bestia Humana y Germinal. La obra pertenece a una serie de tres libros que comparten personajes y tambi\u00e9n miseria de las clases pobres de la \u00e9poca: Nan\u00e1 La taberna Germinal El tema fundamental de la obra son las aventuras de la protagonista en la cual predomina una gran personalidad que vive ejerciendo la prostituci\u00f3n. El autor trata de trasmitir la situaci\u00f3n de la \u00e9poca a trav\u00e9s de la obra y la importancia para la protagonista del dinero en vez de un amor verdadero a trav\u00e9s del personaje principal.",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Nana_(Zola)",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793338882.163015",
+            "evidence_scope": "characters",
+            "work_id": "litmate:d8fec8c040722f1627acb945",
+            "work_title": "Nana",
+            "work_author": "\u00c9mile Zola",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793943682.163015",
+            "evidence_hash": "d02554f1b652481739571fa388e1fc3452a295b83464e0dbcc15f69aee5d9265",
+            "memory_source_id": "6a8a8c7a365644eed45405acec9ae340af88032a622a153eebcf5cff17b2f96f",
+            "last_verified_at": "1793338882.163015",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Nana (Zola)",
+              "url": "https://es.wikipedia.org/wiki/Nana_(Zola)",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "172986173"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "Nana es una de las obras m\u00e1s representativas del escritor \u00c9mile Zola, autor franc\u00e9s del siglo XIX, padre del movimiento naturalista y mayor exponente de este. Nan\u00e1 fue publicada en 1880. El t\u00edtulo de la obra hace referencia al apelativo que se le da a la protagonista, Anne Copeau, descendiente de la l\u00ednea familiar de los Macquart, perteneciente a la rama bastarda de la familia, que se ve influida por las taras y defectos de la herencia gen\u00e9tica, tal como indica el pensamiento determinista. Esta novela pertenece a la serie Los Rougon-Macquart, conjunto que agrupa 20 obras de este autor, de las cuales las m\u00e1s destacadas son, junto a esta, La bestia Humana y Germinal. La obra pertenece a una serie de tres libros que comparten personajes y tambi\u00e9n miseria de las clases pobres de la \u00e9poca: Nan\u00e1 La taberna Germinal El tema fundamental de la obra son las aventuras de la protagonista en la cual predomina una gran personalidad que vive ejerciendo la prostituci\u00f3n. El autor trata de trasmitir la situaci\u00f3n de la \u00e9poca a trav\u00e9s de la obra y la importancia para la protagonista del dinero en vez de un amor verdadero a trav\u00e9s del personaje principal.",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          }
+        ]
+      },
+      {
+        "request": {
+          "task": "summary",
+          "title": "Nana",
+          "targets": [],
+          "author_hint": "\u00c9mile Zola",
+          "format": "",
+          "ambiguous": false
+        },
+        "diagnostics": {
+          "verified_narrative_answer": true,
+          "audit": {
+            "decision": "approve",
+            "only_books": true,
+            "claims": [
+              {
+                "statement": "El autor trata de trasmitir la situaci\u00f3n de la \u00e9poca a trav\u00e9s de la obra y la importancia para la protagonista del dinero en vez de un amor verdadero a trav\u00e9s del personaje principal.",
+                "verdict": "supported",
+                "source_id": 2,
+                "evidence": "El autor trata de trasmitir la situaci\u00f3n de la \u00e9poca a trav\u00e9s de la obra y la importancia para la protagonista del dinero en vez de un amor verdadero a trav\u00e9s del personaje principal."
+              },
+              {
+                "statement": "La obra trata de la vida de Nan\u00e1 (Anne Copeau), de la rama familiar de los Macquart afectada por las taras gen\u00e9ticas.",
+                "verdict": "supported",
+                "source_id": 2,
+                "evidence": "La obra trata de la vida de Nan\u00e1 (Anne Copeau), de la rama familiar de los Macquart afectada por las taras gen\u00e9ticas."
+              },
+              {
+                "statement": "La acci\u00f3n se desarrolla en la casa de la familia Muffat.",
+                "verdict": "supported",
+                "source_id": 2,
+                "evidence": "La acci\u00f3n se desarrolla en la casa de la familia Muffat."
+              },
+              {
+                "statement": "Cerca de all\u00ed, los Hugon y los Muffat pasan los d\u00edas en una casa de campo.",
+                "verdict": "supported",
+                "source_id": 2,
+                "evidence": "Cerca de all\u00ed, los Hugon y los Muffat pasan los d\u00edas en una casa de campo."
+              },
+              {
+                "statement": "Nan\u00e1 termina refugi\u00e1ndose en su amiga Satin, quien llega a ser pr\u00e1cticamente una amante para ella y con el tiempo termina por huir de Fountan y acaba volviendo con su t\u00eda, la cual le informa de que su hijo est\u00e1 enfermo.",
+                "verdict": "supported",
+                "source_id": 2,
+                "evidence": "Nan\u00e1 termina refugi\u00e1ndose en su amiga Satin, quien llega a ser pr\u00e1cticamente una amante para ella y con el tiempo termina por huir de Fountan y acaba volviendo con su t\u00eda, la cual le informa de que su hijo est\u00e1 enfermo."
+              }
+            ],
+            "coverage": [
+              {
+                "question_id": 1,
+                "status": "answered"
+              }
+            ],
+            "issues": [],
+            "search_queries": []
+          },
+          "work_type": "fiction",
+          "model_calls": 0,
+          "narrative_coverage": "development_excerpt",
+          "partial_evidence": false,
+          "progress_metrics": {
+            "stage_timings": [
+              {
+                "stage": "conversation",
+                "started_ms": 4.776,
+                "elapsed_ms": 0.645,
+                "status": "ok"
+              },
+              {
+                "stage": "cache_lookup",
+                "started_ms": 12.574,
+                "elapsed_ms": 0.887,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 14.775,
+                "elapsed_ms": 313.258,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 80.757,
+                "elapsed_ms": 52.731,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 175.421,
+                "elapsed_ms": 152.319,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 238.266,
+                "elapsed_ms": 62.397,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 339.93,
+                "elapsed_ms": 8.165,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 366.059,
+                "elapsed_ms": 3.369,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 388.702,
+                "elapsed_ms": 3.136,
+                "status": "ok"
+              }
+            ],
+            "stage_totals_ms": {
+              "conversation": 0.645,
+              "cache_lookup": 0.887,
+              "knowledge_lookup": 588.87,
+              "audit": 6.505
+            },
+            "model_calls_started": 0,
+            "progress_events": [
+              {
+                "stage": "search",
+                "elapsed_ms": 13.471
+              },
+              {
+                "stage": "review",
+                "elapsed_ms": 366.042
+              }
+            ],
+            "elapsed_ms": 393.924,
+            "first_phase_emitted_ms": 13.471
+          },
+          "language_presentation": {
+            "target": "es",
+            "original_text": "El autor trata de trasmitir la situaci\u00f3n de la \u00e9poca a trav\u00e9s de la obra y la importancia para la protagonista del dinero en vez de un amor verdadero a trav\u00e9s del personaje principal. La obra trata de la vida de Nan\u00e1 (Anne Copeau), de la rama familiar de los Macquart afectada por las taras gen\u00e9ticas. La acci\u00f3n se desarrolla en la casa de la familia Muffat. Cerca de all\u00ed, los Hugon y los Muffat pasan los d\u00edas en una casa de campo. Nan\u00e1 termina refugi\u00e1ndose en su amiga Satin, quien llega a ser pr\u00e1cticamente una amante para ella y con el tiempo termina por huir de Fountan y acaba volviendo con su t\u00eda, la cual le informa de que su hijo est\u00e1 enfermo.\n\nFuente: https://es.wikipedia.org/wiki/Nana_(Zola)\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+            "translated_fields": 0,
+            "cache_hits": 0,
+            "untranslated_fields": [],
+            "audit_applies_to_original": true,
+            "cards": [
+              {
+                "id": "sqlkb:d41a31e3cba216ff06cd2b85c8886ceda41083c8084bda9cb9d97801a20e6cd2",
+                "title": "Nana",
+                "author": "\u00c9mile Zola",
+                "synopsis": "",
+                "image_url": "",
+                "links": [
+                  {
+                    "label": "Google Books",
+                    "url": "https://books.google.com/books?q=Nana+%C3%89mile+Zola"
+                  },
+                  {
+                    "label": "Project Gutenberg",
+                    "url": "https://www.gutenberg.org/ebooks/5250"
+                  },
+                  {
+                    "label": "Amazon",
+                    "url": "https://www.amazon.com/s?k=Nana+%C3%89mile+Zola&i=stripbooks"
+                  },
+                  {
+                    "label": "Buscalibre",
+                    "url": "https://www.buscalibre.cl/libros/search?q=Nana+%C3%89mile+Zola"
+                  }
+                ]
+              }
+            ]
+          },
+          "stage_timings": [],
+          "elapsed_ms": 394,
+          "chat_budget_seconds": 36.0
+        },
+        "sources": [
+          {
+            "id": 1,
+            "title": "Nana",
+            "author": "\u00c9mile Zola",
+            "description": "",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "sqlkb:d41a31e3cba216ff06cd2b85c8886ceda41083c8084bda9cb9d97801a20e6cd2",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/5250",
+            "locator": "",
+            "read_mode": "metadatos de fuente; sin trama ni texto completo",
+            "retrieved_at": "",
+            "license": "CC0-1.0",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "synopsis": "",
+            "language": "fr",
+            "isbns": [],
+            "categories": [
+              "Man-woman relationships -- Fiction",
+              "Prostitutes -- France -- Fiction",
+              "French fiction -- 19th century",
+              "France -- History -- Second Empire, 1852-1870 -- Fiction",
+              "Young women -- France -- Fiction"
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Nana (Zola)",
+            "author": "Fuente web",
+            "description": "== Argumento == La obra trata de la vida de Nan\u00e1 (Anne Copeau), de la rama familiar de los Macquart afectada por las taras gen\u00e9ticas. La acci\u00f3n se desarrolla en la casa de la familia Muffat. Cerca de all\u00ed, los Hugon y los Muffat pasan los d\u00edas en una casa de campo. Nan\u00e1 termina refugi\u00e1ndose en su amiga Satin, quien llega a ser pr\u00e1cticamente una amante para ella y con el tiempo termina por huir de Fountan y acaba volviendo con su t\u00eda, la cual le informa de que su hijo est\u00e1 enfermo.",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Nana_(Zola)",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793338878.730822",
+            "evidence_scope": "summary",
+            "narrative_context": "Nana es una de las obras m\u00e1s representativas del escritor \u00c9mile Zola, autor franc\u00e9s del siglo XIX, padre del movimiento naturalista y mayor exponente de este. Nan\u00e1 fue publicada en 1880. El t\u00edtulo de la obra hace referencia al apelativo que se le da a la protagonista, Anne Copeau, descendiente de la l\u00ednea familiar de los Macquart, perteneciente a la rama bastarda de la familia, que se ve influida por las taras y defectos de la herencia gen\u00e9tica, tal como indica el pensamiento determinista. Esta novela pertenece a la serie Los Rougon-Macquart, conjunto que agrupa 20 obras de este autor, de las cuales las m\u00e1s destacadas son, junto a esta, La bestia Humana y Germinal. La obra pertenece a una serie de tres libros que comparten personajes y tambi\u00e9n miseria de las clases pobres de la \u00e9poca: Nan\u00e1 La taberna Germinal El tema fundamental de la obra son las aventuras de la protagonista en la cual predomina una gran personalidad que vive ejerciendo la prostituci\u00f3n. El autor trata de trasmitir la situaci\u00f3n de la \u00e9poca a trav\u00e9s de la obra y la importancia para la protagonista del dinero en vez de un amor verdadero a trav\u00e9s del personaje principal.",
+            "work_id": "litmate:d8fec8c040722f1627acb945",
+            "work_title": "Nana",
+            "work_author": "\u00c9mile Zola",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793943678.730822",
+            "evidence_hash": "77b4df29a6aba9fd78fab65ec6ac54ca7a0654c2e931bc1d3bb3be144a84f7ff",
+            "memory_source_id": "c0644ae35bd1c88d8df4387d1f17503e93366603dac236e82177aa275462ca5f",
+            "last_verified_at": "1793338878.730822",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Nana (Zola)",
+              "url": "https://es.wikipedia.org/wiki/Nana_(Zola)",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "172986173"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "La obra trata de la vida de Nan\u00e1 (Anne Copeau), de la rama familiar de los Macquart afectada por las taras gen\u00e9ticas.",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "development_excerpt"
+              },
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "La obra trata de la vida de Nan\u00e1 (Anne Copeau), de la rama familiar de los Macquart afectada por las taras gen\u00e9ticas. La acci\u00f3n se desarrolla en la casa de la familia Muffat. Cerca de all\u00ed, los Hugon y los Muffat pasan los d\u00edas en una casa de campo. Nan\u00e1 termina refugi\u00e1ndose en su amiga Satin, quien llega a ser pr\u00e1cticamente una amante para ella y con el tiempo termina por huir de Fountan y acaba volviendo con su t\u00eda, la cual le informa de que su hijo est\u00e1 enfermo.",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "partial"
+              }
+            ],
+            "identity_text": "Nana es una de las obras m\u00e1s representativas del escritor \u00c9mile Zola, autor franc\u00e9s del siglo XIX, padre del movimiento naturalista y mayor exponente de este. Nan\u00e1 fue publicada en 1880. El t\u00edtulo de la obra hace referencia al apelativo que se le da a la protagonista, Anne Copeau, descendiente de la l\u00ednea familiar de los Macquart, perteneciente a la rama bastarda de la familia, que se ve influida por las taras y defectos de la herencia gen\u00e9tica, tal como indica el pensamiento determinista. Esta novela pertenece a la serie Los Rougon-Macquart, conjunto que agrupa 20 obras de este autor, de las cuales las m\u00e1s destacadas son, junto a esta, La bestia Humana y Germinal. La obra pertenece a una serie de tres libros que comparten personajes y tambi\u00e9n miseria de las clases pobres de la \u00e9poca: Nan\u00e1 La taberna Germinal El tema fundamental de la obra son las aventuras de la protagonista en la cual predomina una gran personalidad que vive ejerciendo la prostituci\u00f3n. El autor trata de trasmitir la situaci\u00f3n de la \u00e9poca a trav\u00e9s de la obra y la importancia para la protagonista del dinero en vez de un amor verdadero a trav\u00e9s del personaje principal.",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 3,
+            "title": "Nana (Zola)",
+            "author": "Fuente web",
+            "description": "Nana es una de las obras m\u00e1s representativas del escritor \u00c9mile Zola, autor franc\u00e9s del siglo XIX, padre del movimiento naturalista y mayor exponente de este. Nan\u00e1 fue publicada en 1880. El t\u00edtulo de la obra hace referencia al apelativo que se le da a la protagonista, Anne Copeau, descendiente de la l\u00ednea familiar de los Macquart, perteneciente a la rama bastarda de la familia, que se ve influida por las taras y defectos de la herencia gen\u00e9tica, tal como indica el pensamiento determinista. Esta novela pertenece a la serie Los Rougon-Macquart, conjunto que agrupa 20 obras de este autor, de las cuales las m\u00e1s destacadas son, junto a esta, La bestia Humana y Germinal. La obra pertenece a una serie de tres libros que comparten personajes y tambi\u00e9n miseria de las clases pobres de la \u00e9poca: Nan\u00e1 La taberna Germinal El tema fundamental de la obra son las aventuras de la protagonista en la cual predomina una gran personalidad que vive ejerciendo la prostituci\u00f3n. El autor trata de trasmitir la situaci\u00f3n de la \u00e9poca a trav\u00e9s de la obra y la importancia para la protagonista del dinero en vez de un amor verdadero a trav\u00e9s del personaje principal.",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Nana_(Zola)",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793338882.163015",
+            "evidence_scope": "characters",
+            "work_id": "litmate:d8fec8c040722f1627acb945",
+            "work_title": "Nana",
+            "work_author": "\u00c9mile Zola",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793943682.163015",
+            "evidence_hash": "d02554f1b652481739571fa388e1fc3452a295b83464e0dbcc15f69aee5d9265",
+            "memory_source_id": "6a8a8c7a365644eed45405acec9ae340af88032a622a153eebcf5cff17b2f96f",
+            "last_verified_at": "1793338882.163015",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Nana (Zola)",
+              "url": "https://es.wikipedia.org/wiki/Nana_(Zola)",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "172986173"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "Nana es una de las obras m\u00e1s representativas del escritor \u00c9mile Zola, autor franc\u00e9s del siglo XIX, padre del movimiento naturalista y mayor exponente de este. Nan\u00e1 fue publicada en 1880. El t\u00edtulo de la obra hace referencia al apelativo que se le da a la protagonista, Anne Copeau, descendiente de la l\u00ednea familiar de los Macquart, perteneciente a la rama bastarda de la familia, que se ve influida por las taras y defectos de la herencia gen\u00e9tica, tal como indica el pensamiento determinista. Esta novela pertenece a la serie Los Rougon-Macquart, conjunto que agrupa 20 obras de este autor, de las cuales las m\u00e1s destacadas son, junto a esta, La bestia Humana y Germinal. La obra pertenece a una serie de tres libros que comparten personajes y tambi\u00e9n miseria de las clases pobres de la \u00e9poca: Nan\u00e1 La taberna Germinal El tema fundamental de la obra son las aventuras de la protagonista en la cual predomina una gran personalidad que vive ejerciendo la prostituci\u00f3n. El autor trata de trasmitir la situaci\u00f3n de la \u00e9poca a trav\u00e9s de la obra y la importancia para la protagonista del dinero en vez de un amor verdadero a trav\u00e9s del personaje principal.",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          }
+        ]
+      }
+    ],
+    "content_manually_reviewed": false,
+    "mysql_row_counts": {
+      "auth_group": 0,
+      "auth_group_permissions": 0,
+      "auth_permission": 152,
+      "auth_user": 179,
+      "auth_user_groups": 0,
+      "auth_user_user_permissions": 0,
+      "core_asistenteia": 1,
+      "core_autor": 31,
+      "core_clickconversion": 185,
+      "core_conversacionia": 50,
+      "core_editorial": 34,
+      "core_elementolistalectura": 2,
+      "core_estadolectura": 451,
+      "core_eventoanalitica": 384,
+      "core_genero": 12,
+      "core_historialchatbot": 5,
+      "core_historialpreciolibro": 223,
+      "core_kbname": 11104,
+      "core_kbprojection": 7,
+      "core_kbrecord": 11104,
+      "core_kbrelation": 1108,
+      "core_kbversion": 11104,
+      "core_libro": 55,
+      "core_libro_generos": 54,
+      "core_librofavorito": 231,
+      "core_listalectura": 2,
+      "core_mensajecontacto": 3,
+      "core_mensajeia": 190,
+      "core_perfilusuario": 158,
+      "core_preciolibrotienda": 117,
+      "core_preguntafrecuente": 0,
+      "core_recomendacion": 0,
+      "core_recomendacionialog": 0,
+      "core_resena": 116,
+      "django_admin_log": 0,
+      "django_content_type": 38,
+      "django_migrations": 27,
+      "django_session": 88,
+      "suscripciones_historialpago": 42,
+      "suscripciones_plansuscripcion": 3,
+      "suscripciones_suscripcionusuario": 157
+    },
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": false
+  }
+]

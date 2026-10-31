@@ -1,0 +1,288 @@
+{
+  "case": {
+    "case": 16,
+    "title": "Sapiens",
+    "author": "Yuval Noah Harari",
+    "kind": "no_ficcion",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": [
+          7
+        ]
+      }
+    },
+    "absent_at_start": false
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Explica el contenido de Sapiens de Yuval Noah Harari",
+      "answer": "El servicio de IA no pudo completar la consulta. Vuelve a intentar en unos instantes.",
+      "status": "unavailable",
+      "books": [],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 35047,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 3,
+        "progress_metrics": {
+          "elapsed_ms": 35049.931,
+          "first_phase_emitted_ms": 25.132,
+          "model_calls_started": 3,
+          "stage_totals_ms": {
+            "conversation": 9.235,
+            "cache_lookup": 5.875,
+            "knowledge_lookup": 357.922,
+            "intent": 0.494,
+            "model_inspection": 18.774,
+            "routing": 6617.77,
+            "local_search": 103.012,
+            "retrieval": 2318.461,
+            "extraction": 7540.826,
+            "web_search": 7356.082,
+            "generation": 18276.36,
+            "finalization": 2.516
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 4.092,
+              "elapsed_ms": 9.235,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 19.246,
+              "elapsed_ms": 5.875,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 40.469,
+              "elapsed_ms": 220.189,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 113.034,
+              "elapsed_ms": 14.874,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 161.466,
+              "elapsed_ms": 98.321,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 228.584,
+              "elapsed_ms": 12.43,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 328.993,
+              "elapsed_ms": 12.108,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 381.06,
+              "elapsed_ms": 0.099,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 381.164,
+              "elapsed_ms": 0.013,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 381.182,
+              "elapsed_ms": 2473.064,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 381.186,
+              "elapsed_ms": 18.758,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 2861.684,
+              "elapsed_ms": 0.382,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 2862.09,
+              "elapsed_ms": 4144.706,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 2862.096,
+              "elapsed_ms": 0.007,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 7050.155,
+              "elapsed_ms": 2318.461,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 7059.678,
+              "elapsed_ms": 103.012,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 9373.947,
+              "elapsed_ms": 7356.082,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 11717.998,
+              "elapsed_ms": 674.5,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 11728.965,
+              "elapsed_ms": 5000.863,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 11729.507,
+              "elapsed_ms": 1865.463,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 16741.568,
+              "elapsed_ms": 18276.36,
+              "status": "failed"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 16741.583,
+              "elapsed_ms": 0.009,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 35047.409,
+              "elapsed_ms": 2.516,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 25.132
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 16741.554
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "prompt_eval_ms": 353.927,
+            "total_ms": 2435.923,
+            "eval_ms": 1780.648,
+            "elapsed_ms": 2473,
+            "eval_count": 52,
+            "status": "ok",
+            "prompt_eval_count": 1300,
+            "stage": "route",
+            "load_ms": 5.529,
+            "model": "qwen3.5:9b-q4_K_M"
+          },
+          {
+            "prompt_eval_ms": 294.14,
+            "total_ms": 4132.589,
+            "eval_ms": 3745.736,
+            "elapsed_ms": 4145,
+            "eval_count": 107,
+            "status": "ok",
+            "prompt_eval_count": 393,
+            "stage": "plan",
+            "load_ms": 6.292,
+            "model": "qwen3.5:9b-q4_K_M"
+          },
+          {
+            "elapsed_ms": 18276,
+            "status": "failed",
+            "stage": "answer",
+            "model": "qwen3.5:9b-q4_K_M"
+          }
+        ],
+        "external_research": {
+          "logical_searches": 1,
+          "page_slots_reserved": 3,
+          "http_requests_started": 4,
+          "pages_extracted": 2,
+          "external_seconds": 9.554
+        },
+        "provider": "ollama-local"
+      },
+      "seconds": 35.0581,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 35.0379,
+        "first_verified_text_seconds": 35.058
+      }
+    }
+  ],
+  "seconds": 37.236,
+  "coverage_before": {
+    "works": 14475,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14648,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14475,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14648,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "factual_review_pending": true
+}

@@ -1,0 +1,124 @@
+{
+  "position": 7,
+  "work": {
+    "author": "Charles Dickens",
+    "categories": [
+      "Historical fiction",
+      "France -- History -- Revolution, 1789-1799 -- Fiction",
+      "London (England) -- History -- 18th century -- Fiction",
+      "War stories",
+      "Executions and executioners -- Fiction",
+      "French -- England -- London -- Fiction",
+      "Lookalikes -- Fiction",
+      "British -- France -- Paris -- Fiction",
+      "Paris (France) -- History -- 1789-1799 -- Fiction"
+    ],
+    "confirmed_aliases": [],
+    "edition_id": "gutenberg:98",
+    "isbns": [],
+    "kind": "book",
+    "language": "en",
+    "source": "Project Gutenberg",
+    "title": "A Tale of Two Cities",
+    "url": "https://www.gutenberg.org/ebooks/98",
+    "work_id": "litmate:b8cd68fdf23e898737956ae8",
+    "memory_verified": true
+  },
+  "kind": "fiction",
+  "requirement": "summary",
+  "before": {
+    "works": 1,
+    "works_with_explicit_plot": 0,
+    "works_with_development_excerpt": 0,
+    "works_with_admitted_description": 0,
+    "characters_with_literal_roles": 0,
+    "works_with_literal_roles": 0,
+    "characters_with_membership_only": 0,
+    "works_with_explicit_protagonist": 0,
+    "explicit_protagonist_mentions": 0,
+    "relationships": 0,
+    "narrative_facts": 0,
+    "linked_sources": 1,
+    "per_work": {
+      "litmate:b8cd68fdf23e898737956ae8": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "batch": {
+    "mode": "continuous_once",
+    "scheduled": 1,
+    "llm_calls": 0,
+    "new_global_corrections": 0,
+    "mysql_references_added": 0,
+    "work_ids": [
+      "litmate:b8cd68fdf23e898737956ae8"
+    ],
+    "batch": {
+      "claimed": 1,
+      "completed": 0,
+      "deferred": 1,
+      "stored": 1,
+      "seconds": 2.345,
+      "jobs": [
+        {
+          "work_id": "litmate:b8cd68fdf23e898737956ae8",
+          "provider": "wikipedia",
+          "requirement": "summary",
+          "status": "no_evidence",
+          "lease_current": true,
+          "seconds": 2.33,
+          "stored": 1,
+          "reused": false
+        }
+      ],
+      "llm_calls": 0,
+      "reused": 0,
+      "verification_scope": "source_policy_identity_and_requirement_coverage",
+      "independent_factual_corroboration": false
+    },
+    "stopped": null,
+    "seconds": 2.371,
+    "cpu_seconds": 0.188,
+    "process": {
+      "rss_mb": 99.066,
+      "peak_rss_mb": 123.203
+    },
+    "storage_delta_bytes": 8192,
+    "revision_before": "14829",
+    "revision_after": "14830"
+  },
+  "after": {
+    "works": 1,
+    "works_with_explicit_plot": 1,
+    "works_with_development_excerpt": 0,
+    "works_with_admitted_description": 1,
+    "characters_with_literal_roles": 0,
+    "works_with_literal_roles": 0,
+    "characters_with_membership_only": 0,
+    "works_with_explicit_protagonist": 0,
+    "explicit_protagonist_mentions": 0,
+    "relationships": 0,
+    "narrative_facts": 1,
+    "linked_sources": 2,
+    "per_work": {
+      "litmate:b8cd68fdf23e898737956ae8": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 1
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_changed": true,
+  "sql_projection": "existing evidence pointers; not copied prose"
+}

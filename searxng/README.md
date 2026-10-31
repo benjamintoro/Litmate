@@ -36,9 +36,10 @@ recomienda pedir campos específicos y advierte del costo de `fields=*`. El
 motor directo de Django sigue disponible, con sus límites y caché, aunque
 SearXNG no responda.
 
-Los tiempos de los motores son Wikipedia 3 s, Mwmbl 3 s y Open Library 4 s.
+Los tiempos configurados de los motores son Wikipedia 3 s, Mwmbl 3 s y Open Library 3 s.
 Se elimina la herencia de 10 s de Open Library; Django espera 6 s por la
-metabúsqueda. Se conservan cero reintentos y la suspensión upstream por errores.
+metabúsqueda. Se conservan cero reintentos. La suspensión upstream no cubre
+el CAPTCHA que el motor DuckDuckGo de esta imagen lanza con plazo explícito 0.
 
 Al cambiar el archivo del motor, reiniciar sólo este contenedor para recargarlo:
 
@@ -81,3 +82,28 @@ un arranque; se respetó su suspensión, sin evasión ni reintentos agresivos.
 El adaptador conserva resultados útiles cuando falla otro motor, distingue
 fallo de búsqueda vacía y aplica caché/cooldown. La API JSON no sustituye las
 comprobaciones bibliográficas, SSRF, robots o auditoría de LitMate.
+
+## Revisión del 30/10/2026
+
+Informe y pruebas actuales: `reports/searx_20261030/README.md`. No se cambió
+la imagen, el motor personalizado ni la configuración montada para corregir
+errores que ya no se reproducían. En la matriz real, Open Library respondió
+en 0,372–2,308 s, sin timeout; DuckDuckGo también recuperó resultados.
+
+El cliente Django ahora conserva pausas por proveedor en los leases del runtime
+SQLite existente. Un CAPTCHA observado pausa DuckDuckGo durante una hora entre
+procesos y también impide volver a intentarlo por la ruta directa. Los demás
+motores continúan. No se resuelve ni se evade el CAPTCHA. Esta protección se
+aplica a las consultas de **LitMate**; la interfaz directa de SearXNG conserva
+el comportamiento upstream `suspended_time=0`. Cambiar sólo `suspended_times`
+en YAML no sustituiría ese valor explícito del motor.
+
+Los resultados web de SearXNG conservan sus motores de procedencia y pasan por
+el lector público ya usado por DuckDuckGo. Se mantienen validación DNS/IP,
+protección SSRF, bloqueo de redirecciones, robots, tamaño, tiempo e inyección.
+El descubrimiento bibliográfico conserva su lista de dominios; las páginas web
+siguen siendo datos no confiables y no adquieren permiso de persistencia.
+
+Si Django ya estaba ejecutándose sin recarga automática, reiniciarlo con el
+lanzador habitual para cargar el código nuevo. Este lote no requiere reiniciar
+el contenedor ni regenerar el secreto de Compose.

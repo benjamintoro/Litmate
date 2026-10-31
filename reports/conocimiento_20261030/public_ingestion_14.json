@@ -1,0 +1,50 @@
+{
+  "case": 14,
+  "source_count": 1,
+  "matching": 1,
+  "result": {
+    "works": 1,
+    "sources": 1,
+    "assertions": 2,
+    "skipped": 0,
+    "changed": 1
+  },
+  "sources": [
+    {
+      "title": "Dandadan",
+      "author": "Fuente web",
+      "description": "== Argumento == Momo Ayase es una estudiante de secundaria que cree en los fantasmas, pero no en los extraterrestres, mientras que su compa\u00f1ero de clase, Ken Takakura, a quien ella apoda \u00abOkarun\u00bb, cree en los extraterrestres, pero no en los fantasmas. En una apuesta para determinar qui\u00e9n tiene raz\u00f3n, los dos deciden visitar por separado lugares relacionados con lo extraterrestre y lo oculto: Momo visita los primeros y Okarun los segundos. Momo es secuestrada por un grupo de extraterrestres que accidentalmente desbloquean sus chakras, lo que le permite desarrollar habilidades ps\u00edquicas. Mientras tanto, Okarun es pose\u00eddo por un esp\u00edritu y, junto con las habilidades de Momo, utilizan su forma pose\u00edda para derrotar a los extraterrestres. El resto de la historia sigue a Momo y Okarun mientras se al\u00edan con compa\u00f1eros de clase, amigos, familiares y nuevos conocidos para combatir entidades sobrenaturales, incluidos esp\u00edritus y seres extraterrestres, al tiempo que navegan por la creciente tensi\u00f3n rom\u00e1ntica entre Momo y Okarun. Inicialmente, la trama se centra en la b\u00fasqueda de Okarun para recuperar sus test\u00edculos perdidos (kintama). Tras lograrlo, la historia pasa a centrarse en Momo, que se ve afectada por una misteriosa maldici\u00f3n que reduce gradualmente su tama\u00f1o f\u00edsico y borra su presencia ante quienes la rodean. Este acontecimiento impulsa la segunda mitad de la trama, en la que los dem\u00e1s personajes trabajan para deshacer la maldici\u00f3n y devolver a Momo a su estado original. Aunque la maldici\u00f3n de Momo finalmente se levanta, ella pierde la mayor parte de sus recuerdos en el proceso, incluidos los de su tiempo con Okarun y los dem\u00e1s.",
+      "identity_text": "Dandadan o Dan Da Dan (\u30c0\u30f3\u30c0\u30c0\u30f3, ''Dandadan o Dan Da Dan''?) es una serie de manga japon\u00e9s escrita e ilustrada por Yukinobu Tatsu. Se publica en la aplicaci\u00f3n y web Sh\u014dnen Jump+ de Sh\u016beisha desde el 6 de abril de 2021. Sh\u016beisha tambi\u00e9n publica sus entregas en la web y app Manga Plus en espa\u00f1ol e ingl\u00e9s. Una adaptaci\u00f3n a serie de anime de televisi\u00f3n producida por Science Saru se emiti\u00f3 desde octubre hasta diciembre de 2024. Una segunda temporada sali\u00f3 al aire de julio a septiembre de 2025 y una tercera temporada se estrenar\u00e1 en 2027. La serie ha consagrado su popularidad, al conseguir m\u00e1s de 10 millones de copias en circulaci\u00f3n hasta marzo de 2025, los 14 millones de circulaci\u00f3n el 1 de julio del 2026 con la salida de cap\u00edtulo 235\u200b y superar las mil millones de vistas en la revista digital donde se p\u00fablica, as\u00ed como ha sido nominada a galardones como el Manga Taish\u014d y ha ganado el Premio de Manga Sh\u014dgakukan. Su adaptaci\u00f3n al anime tambi\u00e9n ha ganado viralidad, posicion\u00e1ndose como uno de los animes m\u00e1s vistos mediante diversas plataformas de streaming en 2024 y 2025.",
+      "character_facts": [],
+      "kind": "web",
+      "url": "https://es.wikipedia.org/wiki/Dandadan",
+      "license": "CC-BY-SA-4.0",
+      "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+      "permanent_index_allowed": true,
+      "attribution": {
+        "authors": "Wikipedia contributors",
+        "title": "Dandadan",
+        "url": "https://es.wikipedia.org/wiki/Dandadan",
+        "revision_id": "175232767",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+      },
+      "source": "Wikipedia",
+      "read_mode": "pasaje de secci\u00f3n de art\u00edculo p\u00fablico",
+      "literary_facts": [
+        {
+          "topic": "plot",
+          "scope": "premise",
+          "evidence": "Momo Ayase es una estudiante de secundaria que cree en los fantasmas, pero no en los extraterrestres, mientras que su compa\u00f1ero de clase, Ken Takakura, a quien ella apoda \u00abOkarun\u00bb, cree en los extraterrestres, pero no en los fantasmas."
+        },
+        {
+          "topic": "events",
+          "subject": "Dandadan",
+          "evidence": "== Argumento == Momo Ayase es una estudiante de secundaria que cree en los fantasmas, pero no en los extraterrestres, mientras que su compa\u00f1ero de clase, Ken Takakura, a quien ella apoda \u00abOkarun\u00bb, cree en los extraterrestres, pero no en los fantasmas. En una apuesta para determinar qui\u00e9n tiene raz\u00f3n, los dos deciden visitar por separado lugares relacionados con lo extraterrestre y lo oculto: Momo visita los primeros y Okarun los segundos. Momo es secuestrada por un grupo de extraterrestres que accidentalmente desbloquean sus chakras, lo que le permite desarrollar habilidades ps\u00edquicas. Mientras tanto, Okarun es pose\u00eddo por un esp\u00edritu y, junto con las habilidades de Momo, utilizan su forma pose\u00edda para derrotar a los extraterrestres. El resto de la historia sigue a Momo y Okarun mientras se al\u00edan con compa\u00f1eros de clase, amigos, familiares y nuevos conocidos para combatir entidades sobrenaturales, incluidos esp\u00edritus y seres extraterrestres, al tiempo que navegan por la creciente tensi\u00f3n rom\u00e1ntica entre Momo y Okarun. Inicialmente, la trama se centra en la b\u00fasqueda de Okarun para recuperar sus test\u00edculos perdidos (kintama). Tras lograrlo, la historia pasa a centrarse en Momo, que se ve afectada por una misteriosa maldici\u00f3n que reduce gradualmente su tama\u00f1o f\u00edsico y borra su presencia ante quienes la rodean. Este acontecimiento impulsa la segunda mitad de la trama, en la que los dem\u00e1s personajes trabajan para deshacer la maldici\u00f3n y devolver a Momo a su estado original. Aunque la maldici\u00f3n de Momo finalmente se levanta, ella pierde la mayor parte de sus recuerdos en el proceso, incluidos los de su tiempo con Okarun y los dem\u00e1s.",
+          "scope": "partial"
+        }
+      ]
+    }
+  ],
+  "generated_assertions_admitted": 0,
+  "verification": "publisher identity cross-check plus existing license/identity/literal policy; not exhaustive corroboration"
+}

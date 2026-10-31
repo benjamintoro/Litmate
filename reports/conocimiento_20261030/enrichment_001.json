@@ -1,0 +1,133 @@
+{
+  "position": 1,
+  "work": {
+    "author": "Bram Stoker",
+    "categories": [
+      "Horror tales",
+      "Epistolary fiction",
+      "Gothic fiction",
+      "Vampires -- Fiction",
+      "Dracula, Count (Fictitious character) -- Fiction",
+      "Transylvania (Romania) -- Fiction",
+      "Whitby (England) -- Fiction",
+      "English literature",
+      "Fiction",
+      "Horror",
+      "Horror stories",
+      "Monsters",
+      "Thriller",
+      "Vampires",
+      "Vampires in literature",
+      "Horror fiction",
+      "Irish authors",
+      "Epistolary novels"
+    ],
+    "confirmed_aliases": [],
+    "edition_id": "gutenberg:345",
+    "isbns": [],
+    "kind": "book",
+    "language": "en",
+    "source": "Open Library",
+    "title": "Dracula",
+    "url": "https://openlibrary.org/works/OL85892W",
+    "work_id": "litmate:46dfb046114b9bb495766e91",
+    "year": "1897"
+  },
+  "kind": "fiction",
+  "requirement": "relationships",
+  "before": {
+    "works": 1,
+    "works_with_explicit_plot": 1,
+    "works_with_development_excerpt": 1,
+    "works_with_admitted_description": 1,
+    "characters_with_literal_roles": 9,
+    "works_with_literal_roles": 1,
+    "characters_with_membership_only": 0,
+    "works_with_explicit_protagonist": 1,
+    "explicit_protagonist_mentions": 2,
+    "relationships": 0,
+    "narrative_facts": 3,
+    "linked_sources": 8,
+    "per_work": {
+      "litmate:46dfb046114b9bb495766e91": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 9,
+        "relationships": 0,
+        "facts": 3
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "batch": {
+    "mode": "continuous_once",
+    "scheduled": 0,
+    "llm_calls": 0,
+    "new_global_corrections": 0,
+    "mysql_references_added": 0,
+    "work_ids": [
+      "litmate:46dfb046114b9bb495766e91"
+    ],
+    "batch": {
+      "claimed": 1,
+      "completed": 1,
+      "deferred": 0,
+      "stored": 0,
+      "seconds": 0.132,
+      "jobs": [
+        {
+          "work_id": "litmate:46dfb046114b9bb495766e91",
+          "provider": "wikipedia",
+          "requirement": "relationships",
+          "status": "ok",
+          "lease_current": true,
+          "seconds": 0.119,
+          "stored": 0,
+          "reused": true
+        }
+      ],
+      "llm_calls": 0,
+      "reused": 1,
+      "verification_scope": "source_policy_identity_and_requirement_coverage",
+      "independent_factual_corroboration": false
+    },
+    "stopped": null,
+    "seconds": 0.226,
+    "cpu_seconds": 0.219,
+    "process": {
+      "rss_mb": 96.309,
+      "peak_rss_mb": 123.586
+    },
+    "storage_delta_bytes": 0,
+    "revision_before": "14814",
+    "revision_after": "14814"
+  },
+  "after": {
+    "works": 1,
+    "works_with_explicit_plot": 1,
+    "works_with_development_excerpt": 1,
+    "works_with_admitted_description": 1,
+    "characters_with_literal_roles": 9,
+    "works_with_literal_roles": 1,
+    "characters_with_membership_only": 0,
+    "works_with_explicit_protagonist": 1,
+    "explicit_protagonist_mentions": 2,
+    "relationships": 0,
+    "narrative_facts": 3,
+    "linked_sources": 8,
+    "per_work": {
+      "litmate:46dfb046114b9bb495766e91": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 9,
+        "relationships": 0,
+        "facts": 3
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_changed": false,
+  "sql_projection": "existing evidence pointers; not copied prose"
+}

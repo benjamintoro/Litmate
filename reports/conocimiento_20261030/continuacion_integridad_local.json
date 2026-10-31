@@ -1,0 +1,24 @@
+{
+  "sqlite": {
+    "G:\\Proyecto\\Litmate\\data\\literary_memory.sqlite3": {
+      "quick_check": "ok",
+      "fk_errors": 0,
+      "bytes": 67436544,
+      "sha256": "70c340b8568683342bdc86514b9ddc0eb5b70c4b06c28224762ffb5bc724c87e"
+    },
+    "G:\\Proyecto\\Litmate\\data\\literary_memory_rag.sqlite3": {
+      "quick_check": "ok",
+      "fk_errors": 0,
+      "bytes": 1658880,
+      "sha256": "1d69ede229a1d0fa6ba9e95d197fb78bfa273c9eeae0e4b59e913a243f79e876"
+    }
+  },
+  "env_sha256": "1d8e35effc765d26ecb73f3e2ee26c886a1e3d98b1bc45590c356b8604008e74",
+  "env_unchanged": true,
+  "all_real_turns_mysql_counts_unchanged": true,
+  "all_real_turns_original_memory_unchanged": true,
+  "free_disk_bytes": 86976970752,
+  "no_global_ingestion_in_continuation": true,
+  "verified_backup_retained": "backups\\conocimiento_20261030_01",
+  "new_backup_not_required": "Only code, tests, reports and temporary copies changed after the verified ingestion checkpoint."
+}

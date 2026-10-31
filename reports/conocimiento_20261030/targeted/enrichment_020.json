@@ -1,0 +1,126 @@
+{
+  "position": 20,
+  "work": {
+    "author": "Jane Austen",
+    "categories": [
+      "England -- Social life and customs -- 19th century -- Fiction",
+      "Inheritance and succession -- Fiction",
+      "England -- Fiction",
+      "Young women -- Fiction",
+      "Love stories",
+      "Sisters -- Fiction",
+      "Domestic fiction",
+      "Mate selection -- Fiction",
+      "Social classes -- Fiction",
+      "Gentry -- England -- Fiction",
+      "Regency fiction"
+    ],
+    "confirmed_aliases": [],
+    "edition_id": "gutenberg:161",
+    "isbns": [],
+    "kind": "book",
+    "language": "en",
+    "source": "Project Gutenberg",
+    "title": "Sense and Sensibility",
+    "url": "https://www.gutenberg.org/ebooks/161",
+    "work_id": "litmate:968a8e5a29ac3a0ef835be40",
+    "memory_verified": true
+  },
+  "kind": "fiction",
+  "requirement": "summary",
+  "before": {
+    "works": 1,
+    "works_with_explicit_plot": 0,
+    "works_with_development_excerpt": 0,
+    "works_with_admitted_description": 0,
+    "characters_with_literal_roles": 0,
+    "works_with_literal_roles": 0,
+    "characters_with_membership_only": 0,
+    "works_with_explicit_protagonist": 0,
+    "explicit_protagonist_mentions": 0,
+    "relationships": 0,
+    "narrative_facts": 0,
+    "linked_sources": 1,
+    "per_work": {
+      "litmate:968a8e5a29ac3a0ef835be40": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "batch": {
+    "mode": "continuous_once",
+    "scheduled": 1,
+    "llm_calls": 0,
+    "new_global_corrections": 0,
+    "mysql_references_added": 0,
+    "work_ids": [
+      "litmate:968a8e5a29ac3a0ef835be40"
+    ],
+    "batch": {
+      "claimed": 1,
+      "completed": 1,
+      "deferred": 0,
+      "stored": 1,
+      "seconds": 1.422,
+      "jobs": [
+        {
+          "work_id": "litmate:968a8e5a29ac3a0ef835be40",
+          "provider": "wikipedia",
+          "requirement": "summary",
+          "status": "ok",
+          "lease_current": true,
+          "seconds": 1.407,
+          "stored": 1,
+          "reused": false
+        }
+      ],
+      "llm_calls": 0,
+      "reused": 0,
+      "verification_scope": "source_policy_identity_and_requirement_coverage",
+      "independent_factual_corroboration": false
+    },
+    "stopped": null,
+    "seconds": 1.449,
+    "cpu_seconds": 0.141,
+    "process": {
+      "rss_mb": 100.012,
+      "peak_rss_mb": 123.203
+    },
+    "storage_delta_bytes": 4096,
+    "revision_before": "14838",
+    "revision_after": "14839"
+  },
+  "after": {
+    "works": 1,
+    "works_with_explicit_plot": 1,
+    "works_with_development_excerpt": 1,
+    "works_with_admitted_description": 1,
+    "characters_with_literal_roles": 0,
+    "works_with_literal_roles": 0,
+    "characters_with_membership_only": 0,
+    "works_with_explicit_protagonist": 0,
+    "explicit_protagonist_mentions": 0,
+    "relationships": 0,
+    "narrative_facts": 2,
+    "linked_sources": 2,
+    "per_work": {
+      "litmate:968a8e5a29ac3a0ef835be40": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 2
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_changed": true,
+  "sql_projection": "existing evidence pointers; not copied prose"
+}

@@ -1,0 +1,193 @@
+{
+  "case": {
+    "case": 6,
+    "title": "El tercer para\u00edso",
+    "author": "Cristian Alarc\u00f3n",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": true
+  },
+  "offline": true,
+  "turns": [
+    {
+      "question": "Dime la trama de El tercer para\u00edso de Cristian Alarc\u00f3n",
+      "answer": "**El tercer para\u00edso**\n\nActualmente no tengo la informaci\u00f3n de este libro :( Si me indicas el autor o la edici\u00f3n, puedo intentar identificarlo mejor.",
+      "status": "unavailable",
+      "books": [],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 532,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "work_type": "unknown",
+        "narrative_failure": "insufficient_content",
+        "progress_metrics": {
+          "elapsed_ms": 555.818,
+          "first_phase_emitted_ms": 20.423,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 8.892,
+            "cache_lookup": 0.641,
+            "knowledge_lookup": 643.324,
+            "retrieval": 0.012,
+            "finalization": 23.561
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 4.427,
+              "elapsed_ms": 8.892,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 19.77,
+              "elapsed_ms": 0.641,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 33.606,
+              "elapsed_ms": 362.552,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 110.205,
+              "elapsed_ms": 42.857,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 220.959,
+              "elapsed_ms": 173.798,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 292.378,
+              "elapsed_ms": 57.341,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 463.758,
+              "elapsed_ms": 6.776,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 504.896,
+              "elapsed_ms": 0.012,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 532.251,
+              "elapsed_ms": 23.561,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 20.423
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 0.5639,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.0361,
+        "verified_ready_seconds": 0.5254,
+        "first_verified_text_seconds": 0.5639
+      }
+    }
+  ],
+  "seconds": 3.167,
+  "research_profile": "research",
+  "offline_guard_version": 2,
+  "public_research_trace": [
+    {
+      "stage": "retrieved_public_evidence",
+      "sources": [
+        {
+          "id": 1,
+          "title": "El tercer para\u00edso",
+          "author": "Cristian Alarc\u00f3n",
+          "description": "El tercer para\u00edso, de Cristian Alarc\u00f3n.",
+          "source": "Open Library",
+          "year": "2022",
+          "book_id": "",
+          "kind": "book",
+          "url": "https://openlibrary.org/works/OL27700960W",
+          "locator": "",
+          "read_mode": "metadatos bibliogr\u00e1ficos; no sinopsis ni texto de la obra",
+          "retrieved_at": "1793361954.95977",
+          "work_id": "litmate:d4cd0c166fa5b17cdd899f5a",
+          "license": "Open Library bibliographic facts; rights vary",
+          "trust": "untrusted_data",
+          "expires_at": "1795953954.95977",
+          "evidence_hash": "57eb5ca1e1007ab959c342c8bc44bea62b0bc5fee51b9855edb60be8ca5d8aae",
+          "memory_source_id": "bd7883c1f8df54fd82d93fe5e17045ea674f6a37190388ac510cac85fb499b49",
+          "last_verified_at": "1793361954.95977",
+          "policy": "openlibrary-minimal-metadata-v1",
+          "memory_verified": true,
+          "confirmed_aliases": [],
+          "literary_facts": [],
+          "isbns": [],
+          "categories": []
+        }
+      ]
+    }
+  ],
+  "coverage_before": {
+    "works": 14481,
+    "works_with_explicit_plot": 16,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 21,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 33,
+    "linked_sources": 14656,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14481,
+    "works_with_explicit_plot": 16,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 21,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 33,
+    "linked_sources": 14656,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "new_empty_store",
+  "google_books_enabled": false,
+  "factual_review_pending": true
+}

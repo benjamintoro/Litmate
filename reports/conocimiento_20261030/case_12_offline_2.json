@@ -1,0 +1,193 @@
+{
+  "case": {
+    "case": 12,
+    "title": "La mucama de Omicunl\u00e9",
+    "author": "Rita Indiana",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": true
+  },
+  "offline": true,
+  "turns": [
+    {
+      "question": "Dime la trama de La mucama de Omicunl\u00e9 de Rita Indiana",
+      "answer": "**La mucama de Omicunl\u00e9**\n\nActualmente no tengo la informaci\u00f3n de este libro :( Si me indicas el autor o la edici\u00f3n, puedo intentar identificarlo mejor.",
+      "status": "unavailable",
+      "books": [],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 559,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "work_type": "unknown",
+        "narrative_failure": "insufficient_content",
+        "progress_metrics": {
+          "elapsed_ms": 583.947,
+          "first_phase_emitted_ms": 20.289,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 8.581,
+            "cache_lookup": 0.633,
+            "knowledge_lookup": 683.675,
+            "retrieval": 0.014,
+            "finalization": 25.064
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 5.144,
+              "elapsed_ms": 8.581,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 19.646,
+              "elapsed_ms": 0.633,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 33.676,
+              "elapsed_ms": 378.169,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 109.465,
+              "elapsed_ms": 42.702,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 218.353,
+              "elapsed_ms": 192.269,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 300.773,
+              "elapsed_ms": 64.043,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 483.498,
+              "elapsed_ms": 6.492,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 528.463,
+              "elapsed_ms": 0.014,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 558.877,
+              "elapsed_ms": 25.064,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 20.289
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 0.5918,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.0362,
+        "verified_ready_seconds": 0.5522,
+        "first_verified_text_seconds": 0.5918
+      }
+    }
+  ],
+  "seconds": 3.631,
+  "research_profile": "research",
+  "offline_guard_version": 2,
+  "public_research_trace": [
+    {
+      "stage": "retrieved_public_evidence",
+      "sources": [
+        {
+          "id": 1,
+          "title": "La mucama de Omicunl\u00e9",
+          "author": "Rita Indiana",
+          "description": "La mucama de Omicunl\u00e9, de Rita Indiana.",
+          "source": "Open Library",
+          "year": "2020",
+          "book_id": "",
+          "kind": "book",
+          "url": "https://openlibrary.org/works/OL22300637W",
+          "locator": "",
+          "read_mode": "metadatos bibliogr\u00e1ficos; no sinopsis ni texto de la obra",
+          "retrieved_at": "1793362064.7762377",
+          "work_id": "litmate:cdabd7fc14993372cb9ea51d",
+          "license": "Open Library bibliographic facts; rights vary",
+          "trust": "untrusted_data",
+          "expires_at": "1795954064.7762377",
+          "evidence_hash": "1f81392fbb0f03b58f2775e97dd9919d711ee36b180aff9f133b48feaeef7228",
+          "memory_source_id": "0969afa91669ce2d8086ea6afed8a6be707410682c0550384f9a78ba54822d50",
+          "last_verified_at": "1793362064.7762377",
+          "policy": "openlibrary-minimal-metadata-v1",
+          "memory_verified": true,
+          "confirmed_aliases": [],
+          "literary_facts": [],
+          "isbns": [],
+          "categories": []
+        }
+      ]
+    }
+  ],
+  "coverage_before": {
+    "works": 14481,
+    "works_with_explicit_plot": 16,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 21,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 33,
+    "linked_sources": 14656,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14481,
+    "works_with_explicit_plot": 16,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 21,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 33,
+    "linked_sources": 14656,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "new_empty_store",
+  "google_books_enabled": false,
+  "factual_review_pending": true
+}

@@ -1,0 +1,2213 @@
+[
+  {
+    "passed": true,
+    "question": "Recuerdo un libro donde un ni\u00f1o chileno conoce a un extraterrestre.",
+    "answer": "Parece que buscas 'Diario secreto de Papelucho y el marciano', escrito por Marcela Paz. En esta historia, el protagonista es Papelucho, un ni\u00f1o chileno que convive con Det, un amigo extraterrestre, enfrentando dificultades cotidianas mientras explora la posibilidad de viajar a otros mundos.",
+    "status": "answered",
+    "not_in_legacy_catalog": null,
+    "sse_done": true,
+    "seconds": 23.4302,
+    "cards": [
+      {
+        "id": "1",
+        "title": "Diario secreto de Papelucho y el marciano",
+        "author": "Marcela Paz",
+        "synopsis": "",
+        "image_url": "",
+        "links": [
+          {
+            "label": "Amazon",
+            "url": "https://www.amazon.com/s?k=Diario+secreto+de+Papelucho+y+el+marciano+Marcela+Paz&i=stripbooks"
+          },
+          {
+            "label": "Buscalibre",
+            "url": "https://www.buscalibre.cl/libros/search?q=Diario+secreto+de+Papelucho+y+el+marciano+Marcela+Paz"
+          }
+        ]
+      }
+    ],
+    "diagnostics": {
+      "elapsed_ms": 23413,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 3,
+      "progress_metrics": {
+        "elapsed_ms": 23419.916,
+        "first_phase_emitted_ms": 41.04,
+        "model_calls_started": 3,
+        "stage_totals_ms": {
+          "conversation": 16.715,
+          "cache_lookup": 0.542,
+          "knowledge_lookup": 704.25,
+          "intent": 1.97,
+          "model_inspection": 40.084,
+          "web_search": 2074.913,
+          "routing": 4825.076,
+          "local_search": 207.493,
+          "retrieval": 6569.919,
+          "generation": 5542.605,
+          "audit": 4906.796,
+          "finalization": 6.486
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 8.127,
+            "elapsed_ms": 16.715,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 40.485,
+            "elapsed_ms": 0.542,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 91.846,
+            "elapsed_ms": 367.395,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 201.5,
+            "elapsed_ms": 43.563,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 295.459,
+            "elapsed_ms": 162.874,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 361.996,
+            "elapsed_ms": 61.967,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 527.05,
+            "elapsed_ms": 42.212,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 689.166,
+            "elapsed_ms": 26.239,
+            "status": "ok"
+          },
+          {
+            "stage": "web_search",
+            "started_ms": 755.828,
+            "elapsed_ms": 1392.805,
+            "status": "ok"
+          },
+          {
+            "stage": "intent",
+            "started_ms": 774.373,
+            "elapsed_ms": 0.113,
+            "status": "ok"
+          },
+          {
+            "stage": "intent",
+            "started_ms": 774.492,
+            "elapsed_ms": 1.734,
+            "status": "ok"
+          },
+          {
+            "stage": "routing",
+            "started_ms": 776.234,
+            "elapsed_ms": 4825.076,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 776.239,
+            "elapsed_ms": 40.069,
+            "status": "ok"
+          },
+          {
+            "stage": "intent",
+            "started_ms": 5601.638,
+            "elapsed_ms": 0.123,
+            "status": "ok"
+          },
+          {
+            "stage": "retrieval",
+            "started_ms": 5625.578,
+            "elapsed_ms": 2327.553,
+            "status": "ok"
+          },
+          {
+            "stage": "local_search",
+            "started_ms": 5634.317,
+            "elapsed_ms": 75.664,
+            "status": "ok"
+          },
+          {
+            "stage": "retrieval",
+            "started_ms": 7953.199,
+            "elapsed_ms": 4167.366,
+            "status": "ok"
+          },
+          {
+            "stage": "local_search",
+            "started_ms": 7958.423,
+            "elapsed_ms": 64.309,
+            "status": "ok"
+          },
+          {
+            "stage": "retrieval",
+            "started_ms": 12120.642,
+            "elapsed_ms": 75.0,
+            "status": "ok"
+          },
+          {
+            "stage": "local_search",
+            "started_ms": 12126.371,
+            "elapsed_ms": 67.52,
+            "status": "ok"
+          },
+          {
+            "stage": "web_search",
+            "started_ms": 12214.45,
+            "elapsed_ms": 682.108,
+            "status": "ok"
+          },
+          {
+            "stage": "generation",
+            "started_ms": 12918.13,
+            "elapsed_ms": 5542.605,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 12918.149,
+            "elapsed_ms": 0.007,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 18463.113,
+            "elapsed_ms": 4903.355,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 18463.136,
+            "elapsed_ms": 0.008,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 23366.49,
+            "elapsed_ms": 3.441,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 23413.424,
+            "elapsed_ms": 6.486,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 41.04
+          },
+          {
+            "stage": "writing",
+            "elapsed_ms": 12918.109
+          },
+          {
+            "stage": "review",
+            "elapsed_ms": 18463.092
+          }
+        ]
+      },
+      "stage_timings": [
+        {
+          "total_ms": 4764.385,
+          "load_ms": 7.15,
+          "stage": "route",
+          "prompt_eval_ms": 1202.801,
+          "model": "qwen3.5:9b-q4_K_M",
+          "prompt_eval_count": 1668,
+          "eval_count": 102,
+          "eval_ms": 3381.153,
+          "elapsed_ms": 4825,
+          "status": "ok"
+        },
+        {
+          "total_ms": 5521.083,
+          "load_ms": 6.22,
+          "stage": "answer",
+          "prompt_eval_ms": 2164.885,
+          "model": "qwen3.5:9b-q4_K_M",
+          "prompt_eval_count": 3680,
+          "eval_count": 96,
+          "eval_ms": 3207.783,
+          "elapsed_ms": 5543,
+          "status": "ok"
+        },
+        {
+          "total_ms": 4889.384,
+          "load_ms": 6.671,
+          "stage": "audit",
+          "prompt_eval_ms": 2626.672,
+          "model": "qwen3.5:9b-q4_K_M",
+          "prompt_eval_count": 4859,
+          "eval_count": 61,
+          "eval_ms": 2097.599,
+          "elapsed_ms": 4903,
+          "status": "ok"
+        }
+      ],
+      "external_research": {
+        "page_slots_reserved": 2,
+        "http_requests_started": 8,
+        "external_seconds": 8.393,
+        "pages_extracted": 0,
+        "logical_searches": 2
+      },
+      "provider": "ollama-local"
+    },
+    "reader_data_written": false,
+    "sources": [],
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": null
+      },
+      {
+        "request": null,
+        "diagnostics": {},
+        "sources": []
+      },
+      {
+        "stage": "wikipedia_adapter",
+        "status": "ok",
+        "sources": [
+          {
+            "title": "Cachureos",
+            "author": "Fuente web",
+            "description": "Cachureos es el nombre de un proyecto infantil que en un principio fue un programa de televisi\u00f3n chileno dirigido al p\u00fablico infantil y familiar, que actualmente sigue activo haciendo espect\u00e1culos a lo largo de todo Chile. Su animador es Marcelo Hern\u00e1ndez, m\u00e1s conocido como Marcelo, quien es acompa\u00f1ado por diferentes personajes como el Gato Juanito, Epidemia, el Conejo Wenceslao, el Le\u00f3n Chester, el Se\u00f1or L\u00e1piz, Chanchoman, la Mosca y el Zancudo Dracul\u00f3n.\nEl programa comenz\u00f3 el 13 de noviembre de 1983, en TVN,\u200b y estuvo al aire durante 25 a\u00f1os, pasando por canales como Canal 13, ETC y La Red.",
+            "identity_text": "Cachureos es el nombre de un proyecto infantil que en un principio fue un programa de televisi\u00f3n chileno dirigido al p\u00fablico infantil y familiar, que actualmente sigue activo haciendo espect\u00e1culos a lo largo de todo Chile. Su animador es Marcelo Hern\u00e1ndez, m\u00e1s conocido como Marcelo, quien es acompa\u00f1ado por diferentes personajes como el Gato Juanito, Epidemia, el Conejo Wenceslao, el Le\u00f3n Chester, el Se\u00f1or L\u00e1piz, Chanchoman, la Mosca y el Zancudo Dracul\u00f3n. El programa comenz\u00f3 el 13 de noviembre de 1983, en TVN,\u200b y estuvo al aire durante 25 a\u00f1os, pasando por canales como Canal 13, ETC y La Red.",
+            "character_facts": [],
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Cachureos",
+            "license": "CC-BY-SA-4.0",
+            "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+            "permanent_index_allowed": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Cachureos",
+              "url": "https://es.wikipedia.org/wiki/Cachureos",
+              "revision_id": "175938369",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
+            "source": "Wikipedia",
+            "read_mode": "extracto de introducci\u00f3n",
+            "literary_facts": []
+          },
+          {
+            "title": "Carlos Guillermo Dom\u00ednguez",
+            "author": "Fuente web",
+            "description": "Carlos Guillermo Dom\u00ednguez (Teror, Gran Canaria, 1 de enero de 1925 - Las Palmas de Gran Canaria, 11 de julio de 2016) fue un periodista, humanista, historiador, t\u00e9cnico en radiodifusi\u00f3n canario. Considerado por algunos expertos el primer autor en seguir la tradici\u00f3n fundada por Cairasco de Figueroa de homenajear al aborigen canario en la literatura. Referido como \u201cantecedente imprescindible al que hay que referirse en cualquier estudio que se formule sobre la literatura juvenil en Canarias\u201d.\u200b\nAut\u00e9ntico pol\u00edmata, Carlos-Guillermo desarroll\u00f3 su acci\u00f3n cultural en los campos de la literatura, el teatro, la m\u00fasica, la televisi\u00f3n, la radio y el servicio p\u00fablico. A lo largo de su dilatada trayectoria art\u00edstica, que se extendi\u00f3 durante m\u00e1s de sesenta a\u00f1os, ha recibido numerosos premios, galardones y reconocimientos de alcance internacional.",
+            "identity_text": "Carlos Guillermo Dom\u00ednguez (Teror, Gran Canaria, 1 de enero de 1925 - Las Palmas de Gran Canaria, 11 de julio de 2016) fue un periodista, humanista, historiador, t\u00e9cnico en radiodifusi\u00f3n canario. Considerado por algunos expertos el primer autor en seguir la tradici\u00f3n fundada por Cairasco de Figueroa de homenajear al aborigen canario en la literatura. Referido como \u201cantecedente imprescindible al que hay que referirse en cualquier estudio que se formule sobre la literatura juvenil en Canarias\u201d.\u200b Aut\u00e9ntico pol\u00edmata, Carlos-Guillermo desarroll\u00f3 su acci\u00f3n cultural en los campos de la literatura, el teatro, la m\u00fasica, la televisi\u00f3n, la radio y el servicio p\u00fablico. A lo largo de su dilatada trayectoria art\u00edstica, que se extendi\u00f3 durante m\u00e1s de sesenta a\u00f1os, ha recibido numerosos premios, galardones y reconocimientos de alcance internacional.",
+            "character_facts": [],
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Carlos_Guillermo_Dom%C3%ADnguez",
+            "license": "CC-BY-SA-4.0",
+            "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+            "permanent_index_allowed": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Carlos Guillermo Dom\u00ednguez",
+              "url": "https://es.wikipedia.org/wiki/Carlos_Guillermo_Dom%C3%ADnguez",
+              "revision_id": "175134567",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
+            "source": "Wikipedia",
+            "read_mode": "extracto de introducci\u00f3n",
+            "literary_facts": []
+          }
+        ],
+        "research": {
+          "logical_searches": 1,
+          "page_slots_reserved": 0,
+          "page_slots_limit": 3,
+          "external_seconds": 0.0,
+          "events": [
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "DuckDuckGo",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "DuckDuckGo",
+              "status": "access_denied",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            }
+          ],
+          "http_requests_started": 3,
+          "pages_extracted": 0
+        }
+      },
+      {
+        "stage": "wikipedia_adapter",
+        "status": "ok",
+        "sources": [
+          {
+            "title": "Marcela Paz",
+            "author": "Fuente web",
+            "description": "Esther Huneeus Salas, m\u00e1s conocida por su seud\u00f3nimo Marcela Paz\u200b (Santiago, 28 de febrero de 1902-Santiago, 12 de junio de 1985),\u200b fue una escritora chilena, famosa por su serie de novelas infantiles Papelucho.\u200b\u200b Fue la tercera mujer en ganar el Premio Nacional de Literatura de Chile, en 1982.\u200b",
+            "identity_text": "Esther Huneeus Salas, m\u00e1s conocida por su seud\u00f3nimo Marcela Paz\u200b (Santiago, 28 de febrero de 1902-Santiago, 12 de junio de 1985),\u200b fue una escritora chilena, famosa por su serie de novelas infantiles Papelucho.\u200b\u200b Fue la tercera mujer en ganar el Premio Nacional de Literatura de Chile, en 1982.\u200b",
+            "character_facts": [],
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Marcela_Paz",
+            "license": "CC-BY-SA-4.0",
+            "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+            "permanent_index_allowed": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Marcela Paz",
+              "url": "https://es.wikipedia.org/wiki/Marcela_Paz",
+              "revision_id": "174473936",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
+            "source": "Wikipedia",
+            "read_mode": "extracto de introducci\u00f3n",
+            "literary_facts": []
+          }
+        ],
+        "research": {
+          "logical_searches": 2,
+          "page_slots_reserved": 2,
+          "page_slots_limit": 3,
+          "external_seconds": 7.711,
+          "events": [
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "DuckDuckGo",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "DuckDuckGo",
+              "status": "access_denied",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Open Library",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Open Library",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Open Library",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Open Library",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Open Library",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Open Library",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Open Library",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Open Library",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            }
+          ],
+          "http_requests_started": 8,
+          "pages_extracted": 0
+        }
+      }
+    ],
+    "duckduckgo_paused_control": false,
+    "content_manually_reviewed": false,
+    "mysql_row_counts": {
+      "auth_group": 0,
+      "auth_group_permissions": 0,
+      "auth_permission": 152,
+      "auth_user": 179,
+      "auth_user_groups": 0,
+      "auth_user_user_permissions": 0,
+      "core_asistenteia": 1,
+      "core_autor": 31,
+      "core_clickconversion": 185,
+      "core_conversacionia": 50,
+      "core_editorial": 34,
+      "core_elementolistalectura": 2,
+      "core_estadolectura": 451,
+      "core_eventoanalitica": 384,
+      "core_genero": 12,
+      "core_historialchatbot": 5,
+      "core_historialpreciolibro": 223,
+      "core_kbname": 14166,
+      "core_kbprojection": 8,
+      "core_kbrecord": 13518,
+      "core_kbrelation": 2621,
+      "core_kbversion": 13518,
+      "core_libro": 55,
+      "core_libro_generos": 54,
+      "core_librofavorito": 231,
+      "core_listalectura": 2,
+      "core_mensajecontacto": 3,
+      "core_mensajeia": 190,
+      "core_perfilusuario": 158,
+      "core_preciolibrotienda": 117,
+      "core_preguntafrecuente": 0,
+      "core_recomendacion": 0,
+      "core_recomendacionialog": 0,
+      "core_resena": 116,
+      "django_admin_log": 0,
+      "django_content_type": 38,
+      "django_migrations": 27,
+      "django_session": 88,
+      "suscripciones_historialpago": 42,
+      "suscripciones_plansuscripcion": 3,
+      "suscripciones_suscripcionusuario": 157
+    },
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  },
+  {
+    "passed": false,
+    "question": "Busco una obra en la que una escritora mexicana investiga el asesinato de su hermana.",
+    "answer": "Me cost\u00f3 preparar una respuesta fiable esta vez. Podemos intentarlo con una pregunta m\u00e1s concreta.",
+    "status": "unavailable",
+    "not_in_legacy_catalog": null,
+    "sse_done": true,
+    "seconds": 23.3859,
+    "cards": [],
+    "diagnostics": {
+      "elapsed_ms": 23376,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 5,
+      "progress_metrics": {
+        "elapsed_ms": 23376.568,
+        "first_phase_emitted_ms": 16.737,
+        "model_calls_started": 5,
+        "stage_totals_ms": {
+          "conversation": 4.775,
+          "cache_lookup": 0.697,
+          "knowledge_lookup": 662.614,
+          "intent": 0.277,
+          "model_inspection": 25.156,
+          "routing": 4656.07,
+          "web_search": 2599.069,
+          "local_search": 76.513,
+          "retrieval": 1453.853,
+          "generation": 4558.71,
+          "audit": 8499.099,
+          "repair": 3494.021,
+          "finalization": 0.762
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 4.382,
+            "elapsed_ms": 4.775,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 16.029,
+            "elapsed_ms": 0.697,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 30.121,
+            "elapsed_ms": 364.021,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 121.491,
+            "elapsed_ms": 42.868,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 228.713,
+            "elapsed_ms": 164.335,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 297.476,
+            "elapsed_ms": 53.549,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 464.592,
+            "elapsed_ms": 37.841,
+            "status": "ok"
+          },
+          {
+            "stage": "web_search",
+            "started_ms": 568.969,
+            "elapsed_ms": 2599.069,
+            "status": "ok"
+          },
+          {
+            "stage": "intent",
+            "started_ms": 578.292,
+            "elapsed_ms": 0.142,
+            "status": "ok"
+          },
+          {
+            "stage": "intent",
+            "started_ms": 578.44,
+            "elapsed_ms": 0.016,
+            "status": "ok"
+          },
+          {
+            "stage": "routing",
+            "started_ms": 578.462,
+            "elapsed_ms": 2063.858,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 578.465,
+            "elapsed_ms": 25.134,
+            "status": "ok"
+          },
+          {
+            "stage": "intent",
+            "started_ms": 2642.516,
+            "elapsed_ms": 0.119,
+            "status": "ok"
+          },
+          {
+            "stage": "routing",
+            "started_ms": 2642.651,
+            "elapsed_ms": 2592.212,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 2642.655,
+            "elapsed_ms": 0.005,
+            "status": "ok"
+          },
+          {
+            "stage": "retrieval",
+            "started_ms": 5305.269,
+            "elapsed_ms": 1453.853,
+            "status": "ok"
+          },
+          {
+            "stage": "local_search",
+            "started_ms": 5314.333,
+            "elapsed_ms": 76.513,
+            "status": "ok"
+          },
+          {
+            "stage": "generation",
+            "started_ms": 6796.408,
+            "elapsed_ms": 4558.71,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 6796.423,
+            "elapsed_ms": 0.005,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 11357.036,
+            "elapsed_ms": 8496.922,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 11357.054,
+            "elapsed_ms": 0.006,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 19853.982,
+            "elapsed_ms": 2.177,
+            "status": "ok"
+          },
+          {
+            "stage": "repair",
+            "started_ms": 19856.196,
+            "elapsed_ms": 3494.021,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 19856.211,
+            "elapsed_ms": 0.006,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 23375.799,
+            "elapsed_ms": 0.762,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 16.737
+          },
+          {
+            "stage": "writing",
+            "elapsed_ms": 6796.392
+          },
+          {
+            "stage": "review",
+            "elapsed_ms": 11357.018
+          },
+          {
+            "stage": "writing",
+            "elapsed_ms": 19856.18
+          }
+        ]
+      },
+      "stage_timings": [
+        {
+          "total_ms": 2018.12,
+          "load_ms": 6.848,
+          "stage": "route",
+          "prompt_eval_ms": 204.266,
+          "model": "qwen3.5:9b-q4_K_M",
+          "prompt_eval_count": 1303,
+          "eval_count": 50,
+          "eval_ms": 1695.483,
+          "elapsed_ms": 2064,
+          "status": "ok"
+        },
+        {
+          "total_ms": 2565.925,
+          "load_ms": 5.989,
+          "stage": "plan",
+          "prompt_eval_ms": 295.248,
+          "model": "qwen3.5:9b-q4_K_M",
+          "prompt_eval_count": 396,
+          "eval_count": 67,
+          "eval_ms": 2219.675,
+          "elapsed_ms": 2592,
+          "status": "ok"
+        },
+        {
+          "total_ms": 4537.891,
+          "load_ms": 6.449,
+          "stage": "answer",
+          "prompt_eval_ms": 2071.378,
+          "model": "qwen3.5:9b-q4_K_M",
+          "prompt_eval_count": 3812,
+          "eval_count": 72,
+          "eval_ms": 2404.666,
+          "elapsed_ms": 4559,
+          "status": "ok"
+        },
+        {
+          "total_ms": 8484.278,
+          "load_ms": 7.674,
+          "stage": "audit",
+          "prompt_eval_ms": 2672.992,
+          "model": "qwen3.5:9b-q4_K_M",
+          "prompt_eval_count": 4927,
+          "eval_count": 162,
+          "eval_ms": 5623.742,
+          "elapsed_ms": 8497,
+          "status": "ok"
+        },
+        {
+          "total_ms": 3483.755,
+          "load_ms": 5.705,
+          "stage": "repair",
+          "prompt_eval_ms": 468.058,
+          "model": "qwen3.5:9b-q4_K_M",
+          "prompt_eval_count": 3969,
+          "eval_count": 82,
+          "eval_ms": 2884.563,
+          "elapsed_ms": 3494,
+          "status": "ok"
+        }
+      ],
+      "external_research": {
+        "page_slots_reserved": 0,
+        "http_requests_started": 3,
+        "external_seconds": 3.96,
+        "pages_extracted": 0,
+        "logical_searches": 1
+      },
+      "provider": "ollama-local"
+    },
+    "reader_data_written": false,
+    "sources": [],
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": null
+      },
+      {
+        "request": null,
+        "diagnostics": {},
+        "sources": []
+      },
+      {
+        "stage": "wikipedia_adapter",
+        "status": "ok",
+        "sources": [
+          {
+            "title": "Joaqu\u00edn Murrieta",
+            "author": "Fuente web",
+            "description": "Joaqu\u00edn Murrieta Orosco\u200b\u200b\u200b (Sonora, 1829-Condado de Mariposa, California, 25 de julio de 1853), tambi\u00e9n llamado El Robin Hood de El Dorado, fue un bandolero mexicano cuya leyenda naci\u00f3 durante la Fiebre del Oro en California, en la d\u00e9cada de los a\u00f1os 1850.\nPara unos se trataba de un simple delincuente, para otros de un h\u00e9roe que luch\u00f3 por su naci\u00f3n: as\u00ed, para algunos activistas chicanos su nombre ha simbolizado la resistencia ibero-americana ante la dominaci\u00f3n econ\u00f3mica y cultural de los angloparlantes en las tierras de California.\u200b\n\n",
+            "identity_text": "Joaqu\u00edn Murrieta Orosco\u200b\u200b\u200b (Sonora, 1829-Condado de Mariposa, California, 25 de julio de 1853), tambi\u00e9n llamado El Robin Hood de El Dorado, fue un bandolero mexicano cuya leyenda naci\u00f3 durante la Fiebre del Oro en California, en la d\u00e9cada de los a\u00f1os 1850. Para unos se trataba de un simple delincuente, para otros de un h\u00e9roe que luch\u00f3 por su naci\u00f3n: as\u00ed, para algunos activistas chicanos su nombre ha simbolizado la resistencia ibero-americana ante la dominaci\u00f3n econ\u00f3mica y cultural de los angloparlantes en las tierras de California.\u200b",
+            "character_facts": [],
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Joaqu%C3%ADn_Murrieta",
+            "license": "CC-BY-SA-4.0",
+            "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+            "permanent_index_allowed": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Joaqu\u00edn Murrieta",
+              "url": "https://es.wikipedia.org/wiki/Joaqu%C3%ADn_Murrieta",
+              "revision_id": "172278791",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
+            "source": "Wikipedia",
+            "read_mode": "extracto de introducci\u00f3n",
+            "literary_facts": []
+          },
+          {
+            "title": "V\u00edctor Jara",
+            "author": "Fuente web",
+            "description": "V\u00edctor Lidio Jara Mart\u00ednez\u200b\u200b (San Ignacio, 28 de septiembre de 1932-Santiago de Chile, 16 de septiembre de 1973)\u200b fue un m\u00fasico, cantautor, profesor, escritor y director de teatro chileno.\u200b\u200b\u200b \nLa figura de V\u00edctor Jara es un referente internacional de la canci\u00f3n de protesta, aunque \u00e9l nunca se sinti\u00f3 del todo identificado con esa definici\u00f3n.\u200b Fue uno de los m\u00e1s emblem\u00e1ticos del movimiento m\u00fasico-social llamado \u00abNueva canci\u00f3n chilena\u00bb, y uno de los pilares en la m\u00fasica latinoamericana.\nTras el golpe de Estado que derroc\u00f3 al gobierno de Salvador Allende el 11 de septiembre de 1973, Jara fue detenido al d\u00eda siguiente por las Fuerzas Armadas de la dictadura militar reci\u00e9n establecida, debido a su militancia en el Partido Comunista de Chile. Fue torturado y brutalmente golpeado, le quebraron las costillas a patadas y fracturaron sus manos a culatazos. Seg\u00fan relatan testigos, mientras le propinaban insultos y en medio de la brutal golpiza, sus verdugos se burlaban de \u00e9l pidi\u00e9ndole que tocase ahora su guitarra.\u200b\u200b Tras cuatro d\u00edas, fue asesinado con m\u00e1s de cuarenta disparos en el antiguo Estadio Chile que, con el retorno de la democracia, fue renombrado \u00abEstadio V\u00edctor Jara\u00bb.\u200b",
+            "identity_text": "V\u00edctor Lidio Jara Mart\u00ednez\u200b\u200b (San Ignacio, 28 de septiembre de 1932-Santiago de Chile, 16 de septiembre de 1973)\u200b fue un m\u00fasico, cantautor, profesor, escritor y director de teatro chileno.\u200b\u200b\u200b La figura de V\u00edctor Jara es un referente internacional de la canci\u00f3n de protesta, aunque \u00e9l nunca se sinti\u00f3 del todo identificado con esa definici\u00f3n.\u200b Fue uno de los m\u00e1s emblem\u00e1ticos del movimiento m\u00fasico-social llamado \u00abNueva canci\u00f3n chilena\u00bb, y uno de los pilares en la m\u00fasica latinoamericana. Tras el golpe de Estado que derroc\u00f3 al gobierno de Salvador Allende el 11 de septiembre de 1973, Jara fue detenido al d\u00eda siguiente por las Fuerzas Armadas de la dictadura militar reci\u00e9n establecida, debido a su militancia en el Partido Comunista de Chile. Fue torturado y brutalmente golpeado, le quebraron las costillas a patadas y fracturaron sus manos a culatazos. Seg\u00fan relatan testigos, mientras le propinaban insultos y en medio de la brutal golpiza, sus verdugos se burlaban de \u00e9l pidi\u00e9ndole que tocase ahora su guitarra.\u200b\u200b Tras cuatro d\u00edas, fue asesinado con m\u00e1s de cuarenta disparos en el antiguo Estadio Chile que, con el retorno de la democracia, fue renombrado \u00abEstadio V\u00edctor Jara\u00bb.\u200b",
+            "character_facts": [],
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/V%C3%ADctor_Jara",
+            "license": "CC-BY-SA-4.0",
+            "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+            "permanent_index_allowed": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "V\u00edctor Jara",
+              "url": "https://es.wikipedia.org/wiki/V%C3%ADctor_Jara",
+              "revision_id": "176018640",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
+            "source": "Wikipedia",
+            "read_mode": "extracto de introducci\u00f3n",
+            "literary_facts": []
+          }
+        ],
+        "research": {
+          "logical_searches": 1,
+          "page_slots_reserved": 0,
+          "page_slots_limit": 3,
+          "external_seconds": 0.0,
+          "events": [
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            }
+          ],
+          "http_requests_started": 2,
+          "pages_extracted": 0
+        }
+      }
+    ],
+    "duckduckgo_paused_control": false,
+    "content_manually_reviewed": false,
+    "mysql_row_counts": {
+      "auth_group": 0,
+      "auth_group_permissions": 0,
+      "auth_permission": 152,
+      "auth_user": 179,
+      "auth_user_groups": 0,
+      "auth_user_user_permissions": 0,
+      "core_asistenteia": 1,
+      "core_autor": 31,
+      "core_clickconversion": 185,
+      "core_conversacionia": 50,
+      "core_editorial": 34,
+      "core_elementolistalectura": 2,
+      "core_estadolectura": 451,
+      "core_eventoanalitica": 384,
+      "core_genero": 12,
+      "core_historialchatbot": 5,
+      "core_historialpreciolibro": 223,
+      "core_kbname": 14166,
+      "core_kbprojection": 8,
+      "core_kbrecord": 13518,
+      "core_kbrelation": 2621,
+      "core_kbversion": 13518,
+      "core_libro": 55,
+      "core_libro_generos": 54,
+      "core_librofavorito": 231,
+      "core_listalectura": 2,
+      "core_mensajecontacto": 3,
+      "core_mensajeia": 190,
+      "core_perfilusuario": 158,
+      "core_preciolibrotienda": 117,
+      "core_preguntafrecuente": 0,
+      "core_recomendacion": 0,
+      "core_recomendacionialog": 0,
+      "core_resena": 116,
+      "django_admin_log": 0,
+      "django_content_type": 38,
+      "django_migrations": 27,
+      "django_session": 88,
+      "suscripciones_historialpago": 42,
+      "suscripciones_plansuscripcion": 3,
+      "suscripciones_suscripcionusuario": 157
+    },
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  },
+  {
+    "passed": false,
+    "question": "\u00bfDe qu\u00e9 trata Mugre roza de Fernanda Tr\u00edas?",
+    "answer": "**Mugre roza**\n\nActualmente no tengo la informaci\u00f3n de este libro :( Si me indicas el autor o la edici\u00f3n, puedo intentar identificarlo mejor.",
+    "status": "unavailable",
+    "not_in_legacy_catalog": null,
+    "sse_done": true,
+    "seconds": 6.3235,
+    "cards": [],
+    "diagnostics": {
+      "elapsed_ms": 6312,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 0,
+      "work_type": "unknown",
+      "narrative_failure": "insufficient_content",
+      "progress_metrics": {
+        "elapsed_ms": 6315.336,
+        "first_phase_emitted_ms": 16.33,
+        "model_calls_started": 0,
+        "stage_totals_ms": {
+          "conversation": 4.308,
+          "cache_lookup": 0.676,
+          "knowledge_lookup": 646.042,
+          "retrieval": 1800.202,
+          "web_search": 4014.217,
+          "finalization": 3.701
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 4.434,
+            "elapsed_ms": 4.308,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 15.643,
+            "elapsed_ms": 0.676,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 28.546,
+            "elapsed_ms": 359.237,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 101.062,
+            "elapsed_ms": 44.971,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 208.656,
+            "elapsed_ms": 173.63,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 275.549,
+            "elapsed_ms": 65.068,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 452.471,
+            "elapsed_ms": 3.136,
+            "status": "ok"
+          },
+          {
+            "stage": "retrieval",
+            "started_ms": 462.234,
+            "elapsed_ms": 1800.202,
+            "status": "ok"
+          },
+          {
+            "stage": "web_search",
+            "started_ms": 2262.7,
+            "elapsed_ms": 1053.127,
+            "status": "ok"
+          },
+          {
+            "stage": "web_search",
+            "started_ms": 3315.836,
+            "elapsed_ms": 995.469,
+            "status": "ok"
+          },
+          {
+            "stage": "web_search",
+            "started_ms": 4311.552,
+            "elapsed_ms": 1965.621,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 6311.629,
+            "elapsed_ms": 3.701,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 16.33
+          }
+        ]
+      },
+      "stage_timings": [],
+      "provider": "verified-narrative-engine"
+    },
+    "reader_data_written": false,
+    "sources": [],
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": null
+      },
+      {
+        "stage": "wikipedia_adapter",
+        "status": "empty",
+        "sources": [],
+        "research": {
+          "logical_searches": 0,
+          "page_slots_reserved": 0,
+          "page_slots_limit": 3,
+          "external_seconds": 1.107,
+          "events": [
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Open Library",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Open Library",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            }
+          ],
+          "http_requests_started": 5,
+          "pages_extracted": 0
+        }
+      },
+      {
+        "stage": "wikipedia_adapter",
+        "status": "empty",
+        "sources": [],
+        "research": {
+          "logical_searches": 1,
+          "page_slots_reserved": 0,
+          "page_slots_limit": 3,
+          "external_seconds": 1.107,
+          "events": [
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Open Library",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Open Library",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "SearXNG",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "SearXNG",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "SearXNG",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "SearXNG",
+              "status": "ok",
+              "count": 1
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            }
+          ],
+          "http_requests_started": 9,
+          "pages_extracted": 0
+        }
+      },
+      {
+        "stage": "retrieval",
+        "sources": []
+      },
+      {
+        "request": {
+          "task": "summary",
+          "title": "Mugre roza",
+          "targets": [],
+          "author_hint": "Fernanda Tr\u00edas",
+          "format": "",
+          "ambiguous": false
+        },
+        "diagnostics": {
+          "narrative_failure": "insufficient_content",
+          "model_calls": 0,
+          "work_type": "unknown",
+          "narrative_trace": [
+            {
+              "stage": "bibliographic",
+              "sources": 0,
+              "bound": 0,
+              "content": 0,
+              "providers": []
+            },
+            {
+              "stage": "content_discovery",
+              "sources": 0,
+              "bound": 0,
+              "content": 0,
+              "providers": []
+            },
+            {
+              "stage": "web",
+              "sources": 0,
+              "bound": 0,
+              "content": 0,
+              "providers": []
+            }
+          ],
+          "progress_metrics": {
+            "stage_timings": [
+              {
+                "stage": "conversation",
+                "started_ms": 4.434,
+                "elapsed_ms": 4.308,
+                "status": "ok"
+              },
+              {
+                "stage": "cache_lookup",
+                "started_ms": 15.643,
+                "elapsed_ms": 0.676,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 28.546,
+                "elapsed_ms": 359.237,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 101.062,
+                "elapsed_ms": 44.971,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 208.656,
+                "elapsed_ms": 173.63,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 275.549,
+                "elapsed_ms": 65.068,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 452.471,
+                "elapsed_ms": 3.136,
+                "status": "ok"
+              },
+              {
+                "stage": "retrieval",
+                "started_ms": 462.234,
+                "elapsed_ms": 1800.202,
+                "status": "ok"
+              },
+              {
+                "stage": "web_search",
+                "started_ms": 2262.7,
+                "elapsed_ms": 1053.127,
+                "status": "ok"
+              },
+              {
+                "stage": "web_search",
+                "started_ms": 3315.836,
+                "elapsed_ms": 995.469,
+                "status": "ok"
+              },
+              {
+                "stage": "web_search",
+                "started_ms": 4311.552,
+                "elapsed_ms": 1965.621,
+                "status": "ok"
+              }
+            ],
+            "stage_totals_ms": {
+              "conversation": 4.308,
+              "cache_lookup": 0.676,
+              "knowledge_lookup": 646.042,
+              "retrieval": 1800.202,
+              "web_search": 4014.217
+            },
+            "model_calls_started": 0,
+            "progress_events": [
+              {
+                "stage": "search",
+                "elapsed_ms": 16.33
+              }
+            ],
+            "elapsed_ms": 6281.41,
+            "first_phase_emitted_ms": 16.33
+          },
+          "language_presentation": {
+            "target": "es",
+            "original_text": "**Mugre roza**\n\nActualmente no tengo la informaci\u00f3n de este libro :( Si me indicas el autor o la edici\u00f3n, puedo intentar identificarlo mejor.",
+            "translated_fields": 0,
+            "cache_hits": 0,
+            "untranslated_fields": [],
+            "card_excerpt_from_audited_response": false,
+            "audit_applies_to_original": true,
+            "cards": []
+          },
+          "stage_timings": [],
+          "elapsed_ms": 6282,
+          "chat_budget_seconds": 36.0
+        },
+        "sources": []
+      }
+    ],
+    "duckduckgo_paused_control": false,
+    "content_manually_reviewed": false,
+    "mysql_row_counts": {
+      "auth_group": 0,
+      "auth_group_permissions": 0,
+      "auth_permission": 152,
+      "auth_user": 179,
+      "auth_user_groups": 0,
+      "auth_user_user_permissions": 0,
+      "core_asistenteia": 1,
+      "core_autor": 31,
+      "core_clickconversion": 185,
+      "core_conversacionia": 50,
+      "core_editorial": 34,
+      "core_elementolistalectura": 2,
+      "core_estadolectura": 451,
+      "core_eventoanalitica": 384,
+      "core_genero": 12,
+      "core_historialchatbot": 5,
+      "core_historialpreciolibro": 223,
+      "core_kbname": 14166,
+      "core_kbprojection": 8,
+      "core_kbrecord": 13518,
+      "core_kbrelation": 2621,
+      "core_kbversion": 13518,
+      "core_libro": 55,
+      "core_libro_generos": 54,
+      "core_librofavorito": 231,
+      "core_listalectura": 2,
+      "core_mensajecontacto": 3,
+      "core_mensajeia": 190,
+      "core_perfilusuario": 158,
+      "core_preciolibrotienda": 117,
+      "core_preguntafrecuente": 0,
+      "core_recomendacion": 0,
+      "core_recomendacionialog": 0,
+      "core_resena": 116,
+      "django_admin_log": 0,
+      "django_content_type": 38,
+      "django_migrations": 27,
+      "django_session": 88,
+      "suscripciones_historialpago": 42,
+      "suscripciones_plansuscripcion": 3,
+      "suscripciones_suscripcionusuario": 157
+    },
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  },
+  {
+    "passed": true,
+    "question": "Recuerdo un libro donde los animales aseguran que todos son iguales.",
+    "answer": "Por tus pistas, podr\u00edas estar buscando **Rebeli\u00f3n en la granja**, de **George Orwell**. \u00bfTe suena?",
+    "status": "answered",
+    "not_in_legacy_catalog": null,
+    "sse_done": true,
+    "seconds": 0.78,
+    "cards": [
+      {
+        "id": "1",
+        "title": "Rebeli\u00f3n en la granja",
+        "author": "George Orwell",
+        "synopsis": "",
+        "image_url": "",
+        "links": [
+          {
+            "label": "Amazon",
+            "url": "https://www.amazon.com/s?k=Rebeli%C3%B3n+en+la+granja+George+Orwell&i=stripbooks"
+          },
+          {
+            "label": "Buscalibre",
+            "url": "https://www.buscalibre.cl/libros/search?q=Rebeli%C3%B3n+en+la+granja+George+Orwell"
+          }
+        ]
+      }
+    ],
+    "diagnostics": {
+      "elapsed_ms": 770,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 0,
+      "progress_metrics": {
+        "elapsed_ms": 771.259,
+        "first_phase_emitted_ms": 11.256,
+        "model_calls_started": 0,
+        "stage_totals_ms": {
+          "conversation": 0.609,
+          "cache_lookup": 0.676,
+          "knowledge_lookup": 788.978,
+          "audit": 2.587,
+          "finalization": 0.823
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 3.355,
+            "elapsed_ms": 0.609,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 10.569,
+            "elapsed_ms": 0.676,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 12.547,
+            "elapsed_ms": 380.141,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 82.22,
+            "elapsed_ms": 52.954,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 199.622,
+            "elapsed_ms": 192.816,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 265.218,
+            "elapsed_ms": 79.513,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 460.049,
+            "elapsed_ms": 52.357,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 641.826,
+            "elapsed_ms": 31.197,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 709.868,
+            "elapsed_ms": 2.587,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 770.43,
+            "elapsed_ms": 0.823,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 11.256
+          },
+          {
+            "stage": "review",
+            "elapsed_ms": 709.853
+          }
+        ]
+      },
+      "stage_timings": [],
+      "provider": "local-identification"
+    },
+    "reader_data_written": false,
+    "sources": [],
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": null
+      },
+      {
+        "request": null,
+        "diagnostics": {},
+        "sources": []
+      }
+    ],
+    "duckduckgo_paused_control": false,
+    "content_manually_reviewed": false,
+    "mysql_row_counts": {
+      "auth_group": 0,
+      "auth_group_permissions": 0,
+      "auth_permission": 152,
+      "auth_user": 179,
+      "auth_user_groups": 0,
+      "auth_user_user_permissions": 0,
+      "core_asistenteia": 1,
+      "core_autor": 31,
+      "core_clickconversion": 185,
+      "core_conversacionia": 50,
+      "core_editorial": 34,
+      "core_elementolistalectura": 2,
+      "core_estadolectura": 451,
+      "core_eventoanalitica": 384,
+      "core_genero": 12,
+      "core_historialchatbot": 5,
+      "core_historialpreciolibro": 223,
+      "core_kbname": 14166,
+      "core_kbprojection": 8,
+      "core_kbrecord": 13518,
+      "core_kbrelation": 2621,
+      "core_kbversion": 13518,
+      "core_libro": 55,
+      "core_libro_generos": 54,
+      "core_librofavorito": 231,
+      "core_listalectura": 2,
+      "core_mensajecontacto": 3,
+      "core_mensajeia": 190,
+      "core_perfilusuario": 158,
+      "core_preciolibrotienda": 117,
+      "core_preguntafrecuente": 0,
+      "core_recomendacion": 0,
+      "core_recomendacionialog": 0,
+      "core_resena": 116,
+      "django_admin_log": 0,
+      "django_content_type": 38,
+      "django_migrations": 27,
+      "django_session": 88,
+      "suscripciones_historialpago": 42,
+      "suscripciones_plansuscripcion": 3,
+      "suscripciones_suscripcionusuario": 157
+    },
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  },
+  {
+    "passed": true,
+    "question": "Dime la trama de Moby-Dick; or, The Whale del autor Herman Melville.",
+    "answer": "La novela *Moby-Dick; or, The Whale*, escrita por Herman Melville y publicada en 1851, narra la obsesiva persecuci\u00f3n de un gran cachalote blanco por el capit\u00e1n Ahab. La historia comienza con Ismael, un joven estadounidense que decide enrolarse como marinero en el ballenero *Pequod*. En Nantucket, Massachusetts, conoce a Queequeg, un arponero polinesio de gran experiencia y fuerza, con quien entabla una profunda amistad antes de zarpar.\n\nEl barco, comandado por el capit\u00e1n Ahab, parte hacia los mares del sur con una tripulaci\u00f3n diversa. Sin embargo, la obsesi\u00f3n de Ahab no es solo cazar ballenas para obtener aceite, sino vengarse de Moby Dick, un cachalote blanco que le arranc\u00f3 una pierna en un encuentro anterior. Durante el viaje, Ismael y Queequeg se convierten en compa\u00f1eros inseparables, mientras la tripulaci\u00f3n vive bajo la tiran\u00eda del capit\u00e1n.\n\nLa trama avanza con descripciones detalladas de la vida marinera, la caza de ballenas y las creencias sobre estos animales. A medida que el *Pequod* se acerca a su destino, la tensi\u00f3n aumenta debido a la persecuci\u00f3n constante de la ballena blanca. Finalmente, tras una batalla \u00e9pica y tr\u00e1gica en la que Ahab muere luchando contra el monstruo, Moby Dick destruye el barco y la mayor\u00eda de la tripulaci\u00f3n perece.\n\nIsmael es el \u00fanico superviviente, quien cuenta su historia desde la perspectiva del narrador en primera persona. La novela explora temas profundos como la obsesi\u00f3n humana, la naturaleza, la religi\u00f3n y la condici\u00f3n del ser humano frente a lo desconocido.\n\n[5] Moby Dick\nhttps://es.wikipedia.org/wiki/Moby_Dick",
+    "status": "answered",
+    "not_in_legacy_catalog": null,
+    "sse_done": true,
+    "seconds": 33.829,
+    "cards": [],
+    "diagnostics": {
+      "elapsed_ms": 33817,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 4,
+      "progress_metrics": {
+        "elapsed_ms": 33820.004,
+        "first_phase_emitted_ms": 13.986,
+        "model_calls_started": 4,
+        "stage_totals_ms": {
+          "conversation": 1.62,
+          "cache_lookup": 0.695,
+          "knowledge_lookup": 439.357,
+          "intent": 0.11,
+          "model_inspection": 26.444,
+          "web_search": 2886.078,
+          "routing": 4764.464,
+          "local_search": 146.098,
+          "retrieval": 1624.9,
+          "generation": 17229.975,
+          "audit": 8313.73,
+          "finalization": 3.055
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 4.761,
+            "elapsed_ms": 1.62,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 13.281,
+            "elapsed_ms": 0.695,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 15.31,
+            "elapsed_ms": 183.054,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 15.511,
+            "elapsed_ms": 182.692,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 85.485,
+            "elapsed_ms": 73.611,
+            "status": "ok"
+          },
+          {
+            "stage": "web_search",
+            "started_ms": 204.198,
+            "elapsed_ms": 1318.255,
+            "status": "ok"
+          },
+          {
+            "stage": "intent",
+            "started_ms": 209.23,
+            "elapsed_ms": 0.032,
+            "status": "ok"
+          },
+          {
+            "stage": "intent",
+            "started_ms": 209.267,
+            "elapsed_ms": 0.015,
+            "status": "ok"
+          },
+          {
+            "stage": "routing",
+            "started_ms": 209.288,
+            "elapsed_ms": 2478.62,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 209.291,
+            "elapsed_ms": 26.425,
+            "status": "ok"
+          },
+          {
+            "stage": "intent",
+            "started_ms": 2699.53,
+            "elapsed_ms": 0.063,
+            "status": "ok"
+          },
+          {
+            "stage": "routing",
+            "started_ms": 2699.621,
+            "elapsed_ms": 2285.844,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 2699.626,
+            "elapsed_ms": 0.007,
+            "status": "ok"
+          },
+          {
+            "stage": "retrieval",
+            "started_ms": 5006.38,
+            "elapsed_ms": 1551.615,
+            "status": "ok"
+          },
+          {
+            "stage": "local_search",
+            "started_ms": 5009.22,
+            "elapsed_ms": 81.777,
+            "status": "ok"
+          },
+          {
+            "stage": "retrieval",
+            "started_ms": 6558.053,
+            "elapsed_ms": 73.285,
+            "status": "ok"
+          },
+          {
+            "stage": "local_search",
+            "started_ms": 6563.162,
+            "elapsed_ms": 64.321,
+            "status": "ok"
+          },
+          {
+            "stage": "web_search",
+            "started_ms": 6633.419,
+            "elapsed_ms": 1567.823,
+            "status": "ok"
+          },
+          {
+            "stage": "generation",
+            "started_ms": 8212.185,
+            "elapsed_ms": 17229.975,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 8212.2,
+            "elapsed_ms": 0.005,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 25444.571,
+            "elapsed_ms": 8310.689,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 25444.591,
+            "elapsed_ms": 0.007,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 33755.281,
+            "elapsed_ms": 3.041,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 33816.943,
+            "elapsed_ms": 3.055,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 13.986
+          },
+          {
+            "stage": "writing",
+            "elapsed_ms": 8212.171
+          },
+          {
+            "stage": "review",
+            "elapsed_ms": 25444.551
+          }
+        ]
+      },
+      "stage_timings": [
+        {
+          "total_ms": 2432.965,
+          "load_ms": 6.036,
+          "stage": "route",
+          "prompt_eval_ms": 270.244,
+          "model": "qwen3.5:9b-q4_K_M",
+          "prompt_eval_count": 1305,
+          "eval_count": 57,
+          "eval_ms": 1890.969,
+          "elapsed_ms": 2479,
+          "status": "ok"
+        },
+        {
+          "total_ms": 2276.332,
+          "load_ms": 6.142,
+          "stage": "plan",
+          "prompt_eval_ms": 291.163,
+          "model": "qwen3.5:9b-q4_K_M",
+          "prompt_eval_count": 398,
+          "eval_count": 58,
+          "eval_ms": 1916.813,
+          "elapsed_ms": 2286,
+          "status": "ok"
+        },
+        {
+          "total_ms": 17204.229,
+          "load_ms": 6.893,
+          "stage": "answer",
+          "prompt_eval_ms": 3125.262,
+          "model": "qwen3.5:9b-q4_K_M",
+          "prompt_eval_count": 5281,
+          "eval_count": 410,
+          "eval_ms": 13990.836,
+          "elapsed_ms": 17230,
+          "status": "ok"
+        },
+        {
+          "total_ms": 8298.27,
+          "load_ms": 6.793,
+          "stage": "audit",
+          "prompt_eval_ms": 2254.107,
+          "model": "qwen3.5:9b-q4_K_M",
+          "prompt_eval_count": 4099,
+          "eval_count": 167,
+          "eval_ms": 5858.715,
+          "elapsed_ms": 8311,
+          "status": "ok"
+        }
+      ],
+      "external_research": {
+        "page_slots_reserved": 2,
+        "http_requests_started": 5,
+        "external_seconds": 4.352,
+        "pages_extracted": 0,
+        "logical_searches": 2
+      },
+      "provider": "ollama-local"
+    },
+    "reader_data_written": false,
+    "sources": [],
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": null
+      },
+      {
+        "request": null,
+        "diagnostics": {},
+        "sources": []
+      },
+      {
+        "stage": "wikipedia_adapter",
+        "status": "ok",
+        "sources": [
+          {
+            "title": "Moby Dick",
+            "author": "Fuente web",
+            "description": "== Argumento == El narrador, Ismael, es un joven estadounidense con experiencia en la marina mercante, que decide que su siguiente viaje ser\u00e1 en un ballenero. De igual forma se convence de que su traves\u00eda debe comenzar en Nantucket, Massachusetts, isla prestigiosa durante el siglo XIX por su industria ballenera. Antes de alcanzar su destino, o el origen de su aventura, Ismael entabla una estrecha amistad con el experimentado arponero polinesio Queequeg, con quien acuerda compartir la empresa. Ambos se enrolan en el ballenero Pequod, con una tripulaci\u00f3n conformada por marineros de las m\u00e1s diversas nacionalidades y razas; precisamente sus arponeros son Queequeg, el piel roja Tashtego y el \u00abnegro salvaje\u00bb Daggoo.",
+            "identity_text": "Moby Dick\u200b es una novela del escritor Herman Melville publicada por primera vez el 14 de noviembre de 1851.\u200b Narra la traves\u00eda del barco ballenero Pequod, comandado por el capit\u00e1n Ahab, junto a Ismael y el arponero Queequeg en la obsesiva y autodestructiva persecuci\u00f3n de un gran cachalote blanco. Al margen de la persecuci\u00f3n y evoluci\u00f3n de sus personajes, el tema de la novela es eminentemente enciclop\u00e9dico al incluir detalladas y extensas descripciones de la caza de las ballenas en el siglo XIX y multitud de otros detalles sobre la vida marinera de la \u00e9poca. Quiz\u00e1s por ello la novela no tuvo ning\u00fan \u00e9xito comercial en su primera publicaci\u00f3n, aunque con posterioridad haya servido para cimentar la reputaci\u00f3n del autor y situarlo entre los mejores escritores estadounidenses. El libro inicia con 80 ep\u00edgrafes, empezando con uno del G\u00e9nesis y terminando con una canci\u00f3n ballenera. Todos los ep\u00edgrafes est\u00e1n relacionados con el mar y las ballenas o el leviat\u00e1n. Melville tambi\u00e9n presenta al inicio definiciones directas de diccionarios para la ballena y luego una tabla donde se muestra la palabra ballena en diferentes idiomas. La frase inicial del narrador \u2014\u00abCall me Ishmael\u00bb en ingl\u00e9s, traducid",
+            "character_facts": [],
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Moby_Dick",
+            "license": "CC-BY-SA-4.0",
+            "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+            "permanent_index_allowed": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Moby Dick",
+              "url": "https://es.wikipedia.org/wiki/Moby_Dick",
+              "revision_id": "175561875",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
+            "source": "Wikipedia",
+            "read_mode": "pasaje de secci\u00f3n de art\u00edculo p\u00fablico",
+            "literary_facts": [
+              {
+                "topic": "plot",
+                "scope": "development_excerpt",
+                "evidence": "El narrador, Ismael, es un joven estadounidense con experiencia en la marina mercante, que decide que su siguiente viaje ser\u00e1 en un ballenero."
+              },
+              {
+                "topic": "events",
+                "subject": "Moby Dick",
+                "evidence": "== Argumento == El narrador, Ismael, es un joven estadounidense con experiencia en la marina mercante, que decide que su siguiente viaje ser\u00e1 en un ballenero. De igual forma se convence de que su traves\u00eda debe comenzar en Nantucket, Massachusetts, isla prestigiosa durante el siglo XIX por su industria ballenera. Antes de alcanzar su destino, o el origen de su aventura, Ismael entabla una estrecha amistad con el experimentado arponero polinesio Queequeg, con quien acuerda compartir la empresa. Ambos se enrolan en el ballenero Pequod, con una tripulaci\u00f3n conformada por marineros de las m\u00e1s diversas nacionalidades y razas; precisamente sus arponeros son Queequeg, el piel roja Tashtego y el \u00abnegro salvaje\u00bb Daggoo.",
+                "scope": "partial"
+              }
+            ]
+          },
+          {
+            "title": "Ismael (Moby Dick)",
+            "author": "Fuente web",
+            "description": "Ismael es un personaje de la novela Moby Dick (1851) de Herman Melville, que comienza con la frase \"Llamadme Ismael\". Se trata del narrador en primera persona en gran parte del libro. Debido a que  juega un papel menor en la trama, los primeros cr\u00edticos del libro asumieron que el Capit\u00e1n Ahab era el protagonista. Muchos confundieron a Ismael con Melville o pasaron por alto el papel que desempe\u00f1a. Los cr\u00edticos posteriores distinguieron a Ismael de Melville, y algunos vieron su conciencia m\u00edstica y especulativa como la fuerza central de la novela, m\u00e1s que la fuerza de voluntad monoman\u00edaca del capit\u00e1n Ahab. John Bryant lo llama la \"conciencia central y la voz narrativa de la novela.\" \u200b\nIsmael entiende a Moby Dick \u201cen el contexto del mundo de las ballenas y la tradici\u00f3n cultural m\u00edtica\u201d, se basa en la imagen de la invencible ballena blanca como s\u00edmbolo concreto y abstracto de la naturaleza; Moby Dick resulta as\u00ed \u201cel drama de una comprensi\u00f3n simb\u00f3lica del mundo\u201d. \u200b\nEl nombre b\u00edblico Ismael ha llegado a simbolizar a los hu\u00e9rfanos, los exiliados y los marginados sociales. A diferencia de su hom\u00f3nimo del G\u00e9nesis, que es desterrado al desierto, el Ismael de Melville vaga sobre el mar. Cada Ismael\u2026",
+            "identity_text": "Ismael es un personaje de la novela Moby Dick (1851) de Herman Melville, que comienza con la frase \"Llamadme Ismael\". Se trata del narrador en primera persona en gran parte del libro. Debido a que juega un papel menor en la trama, los primeros cr\u00edticos del libro asumieron que el Capit\u00e1n Ahab era el protagonista. Muchos confundieron a Ismael con Melville o pasaron por alto el papel que desempe\u00f1a. Los cr\u00edticos posteriores distinguieron a Ismael de Melville, y algunos vieron su conciencia m\u00edstica y especulativa como la fuerza central de la novela, m\u00e1s que la fuerza de voluntad monoman\u00edaca del capit\u00e1n Ahab. John Bryant lo llama la \"conciencia central y la voz narrativa de la novela.\" \u200b Ismael entiende a Moby Dick \u201cen el contexto del mundo de las ballenas y la tradici\u00f3n cultural m\u00edtica\u201d, se basa en la imagen de la invencible ballena blanca como s\u00edmbolo concreto y abstracto de la naturaleza; Moby Dick resulta as\u00ed \u201cel drama de una comprensi\u00f3n simb\u00f3lica del mundo\u201d. \u200b El nombre b\u00edblico Ismael ha llegado a simbolizar a los hu\u00e9rfanos, los exiliados y los marginados sociales. A diferencia de su hom\u00f3nimo del G\u00e9nesis, que es desterrado al desierto, el Ismael de Melville vaga sobre el mar. Cada I",
+            "character_facts": [],
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Ismael_(Moby_Dick)",
+            "license": "CC-BY-SA-4.0",
+            "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+            "permanent_index_allowed": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Ismael (Moby Dick)",
+              "url": "https://es.wikipedia.org/wiki/Ismael_(Moby_Dick)",
+              "revision_id": "172593145",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
+            "source": "Wikipedia",
+            "read_mode": "extracto de introducci\u00f3n",
+            "literary_facts": []
+          }
+        ],
+        "research": {
+          "logical_searches": 1,
+          "page_slots_reserved": 1,
+          "page_slots_limit": 3,
+          "external_seconds": 0.0,
+          "events": [
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            }
+          ],
+          "http_requests_started": 2,
+          "pages_extracted": 0
+        }
+      },
+      {
+        "stage": "wikipedia_adapter",
+        "status": "ok",
+        "sources": [
+          {
+            "title": "Moby Dick",
+            "author": "Fuente web",
+            "description": "== Argumento == El narrador, Ismael, es un joven estadounidense con experiencia en la marina mercante, que decide que su siguiente viaje ser\u00e1 en un ballenero. De igual forma se convence de que su traves\u00eda debe comenzar en Nantucket, Massachusetts, isla prestigiosa durante el siglo XIX por su industria ballenera. Antes de alcanzar su destino, o el origen de su aventura, Ismael entabla una estrecha amistad con el experimentado arponero polinesio Queequeg, con quien acuerda compartir la empresa. Ambos se enrolan en el ballenero Pequod, con una tripulaci\u00f3n conformada por marineros de las m\u00e1s diversas nacionalidades y razas; precisamente sus arponeros son Queequeg, el piel roja Tashtego y el \u00abnegro salvaje\u00bb Daggoo.",
+            "identity_text": "Moby Dick\u200b es una novela del escritor Herman Melville publicada por primera vez el 14 de noviembre de 1851.\u200b Narra la traves\u00eda del barco ballenero Pequod, comandado por el capit\u00e1n Ahab, junto a Ismael y el arponero Queequeg en la obsesiva y autodestructiva persecuci\u00f3n de un gran cachalote blanco. Al margen de la persecuci\u00f3n y evoluci\u00f3n de sus personajes, el tema de la novela es eminentemente enciclop\u00e9dico al incluir detalladas y extensas descripciones de la caza de las ballenas en el siglo XIX y multitud de otros detalles sobre la vida marinera de la \u00e9poca. Quiz\u00e1s por ello la novela no tuvo ning\u00fan \u00e9xito comercial en su primera publicaci\u00f3n, aunque con posterioridad haya servido para cimentar la reputaci\u00f3n del autor y situarlo entre los mejores escritores estadounidenses. El libro inicia con 80 ep\u00edgrafes, empezando con uno del G\u00e9nesis y terminando con una canci\u00f3n ballenera. Todos los ep\u00edgrafes est\u00e1n relacionados con el mar y las ballenas o el leviat\u00e1n. Melville tambi\u00e9n presenta al inicio definiciones directas de diccionarios para la ballena y luego una tabla donde se muestra la palabra ballena en diferentes idiomas. La frase inicial del narrador \u2014\u00abCall me Ishmael\u00bb en ingl\u00e9s, traducid",
+            "character_facts": [],
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Moby_Dick",
+            "license": "CC-BY-SA-4.0",
+            "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+            "permanent_index_allowed": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Moby Dick",
+              "url": "https://es.wikipedia.org/wiki/Moby_Dick",
+              "revision_id": "175561875",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
+            "source": "Wikipedia",
+            "read_mode": "pasaje de secci\u00f3n de art\u00edculo p\u00fablico",
+            "literary_facts": [
+              {
+                "topic": "plot",
+                "scope": "development_excerpt",
+                "evidence": "El narrador, Ismael, es un joven estadounidense con experiencia en la marina mercante, que decide que su siguiente viaje ser\u00e1 en un ballenero."
+              },
+              {
+                "topic": "events",
+                "subject": "Moby Dick",
+                "evidence": "== Argumento == El narrador, Ismael, es un joven estadounidense con experiencia en la marina mercante, que decide que su siguiente viaje ser\u00e1 en un ballenero. De igual forma se convence de que su traves\u00eda debe comenzar en Nantucket, Massachusetts, isla prestigiosa durante el siglo XIX por su industria ballenera. Antes de alcanzar su destino, o el origen de su aventura, Ismael entabla una estrecha amistad con el experimentado arponero polinesio Queequeg, con quien acuerda compartir la empresa. Ambos se enrolan en el ballenero Pequod, con una tripulaci\u00f3n conformada por marineros de las m\u00e1s diversas nacionalidades y razas; precisamente sus arponeros son Queequeg, el piel roja Tashtego y el \u00abnegro salvaje\u00bb Daggoo.",
+                "scope": "partial"
+              }
+            ]
+          },
+          {
+            "title": "Ismael (Moby Dick)",
+            "author": "Fuente web",
+            "description": "Ismael es un personaje de la novela Moby Dick (1851) de Herman Melville, que comienza con la frase \"Llamadme Ismael\". Se trata del narrador en primera persona en gran parte del libro. Debido a que  juega un papel menor en la trama, los primeros cr\u00edticos del libro asumieron que el Capit\u00e1n Ahab era el protagonista. Muchos confundieron a Ismael con Melville o pasaron por alto el papel que desempe\u00f1a. Los cr\u00edticos posteriores distinguieron a Ismael de Melville, y algunos vieron su conciencia m\u00edstica y especulativa como la fuerza central de la novela, m\u00e1s que la fuerza de voluntad monoman\u00edaca del capit\u00e1n Ahab. John Bryant lo llama la \"conciencia central y la voz narrativa de la novela.\" \u200b\nIsmael entiende a Moby Dick \u201cen el contexto del mundo de las ballenas y la tradici\u00f3n cultural m\u00edtica\u201d, se basa en la imagen de la invencible ballena blanca como s\u00edmbolo concreto y abstracto de la naturaleza; Moby Dick resulta as\u00ed \u201cel drama de una comprensi\u00f3n simb\u00f3lica del mundo\u201d. \u200b\nEl nombre b\u00edblico Ismael ha llegado a simbolizar a los hu\u00e9rfanos, los exiliados y los marginados sociales. A diferencia de su hom\u00f3nimo del G\u00e9nesis, que es desterrado al desierto, el Ismael de Melville vaga sobre el mar. Cada Ismael\u2026",
+            "identity_text": "Ismael es un personaje de la novela Moby Dick (1851) de Herman Melville, que comienza con la frase \"Llamadme Ismael\". Se trata del narrador en primera persona en gran parte del libro. Debido a que juega un papel menor en la trama, los primeros cr\u00edticos del libro asumieron que el Capit\u00e1n Ahab era el protagonista. Muchos confundieron a Ismael con Melville o pasaron por alto el papel que desempe\u00f1a. Los cr\u00edticos posteriores distinguieron a Ismael de Melville, y algunos vieron su conciencia m\u00edstica y especulativa como la fuerza central de la novela, m\u00e1s que la fuerza de voluntad monoman\u00edaca del capit\u00e1n Ahab. John Bryant lo llama la \"conciencia central y la voz narrativa de la novela.\" \u200b Ismael entiende a Moby Dick \u201cen el contexto del mundo de las ballenas y la tradici\u00f3n cultural m\u00edtica\u201d, se basa en la imagen de la invencible ballena blanca como s\u00edmbolo concreto y abstracto de la naturaleza; Moby Dick resulta as\u00ed \u201cel drama de una comprensi\u00f3n simb\u00f3lica del mundo\u201d. \u200b El nombre b\u00edblico Ismael ha llegado a simbolizar a los hu\u00e9rfanos, los exiliados y los marginados sociales. A diferencia de su hom\u00f3nimo del G\u00e9nesis, que es desterrado al desierto, el Ismael de Melville vaga sobre el mar. Cada I",
+            "character_facts": [],
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Ismael_(Moby_Dick)",
+            "license": "CC-BY-SA-4.0",
+            "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+            "permanent_index_allowed": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Ismael (Moby Dick)",
+              "url": "https://es.wikipedia.org/wiki/Ismael_(Moby_Dick)",
+              "revision_id": "172593145",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
+            "source": "Wikipedia",
+            "read_mode": "extracto de introducci\u00f3n",
+            "literary_facts": []
+          }
+        ],
+        "research": {
+          "logical_searches": 2,
+          "page_slots_reserved": 2,
+          "page_slots_limit": 3,
+          "external_seconds": 2.784,
+          "events": [
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Open Library",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Open Library",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            }
+          ],
+          "http_requests_started": 5,
+          "pages_extracted": 0
+        }
+      }
+    ],
+    "duckduckgo_paused_control": false,
+    "content_manually_reviewed": false,
+    "mysql_row_counts": {
+      "auth_group": 0,
+      "auth_group_permissions": 0,
+      "auth_permission": 152,
+      "auth_user": 179,
+      "auth_user_groups": 0,
+      "auth_user_user_permissions": 0,
+      "core_asistenteia": 1,
+      "core_autor": 31,
+      "core_clickconversion": 185,
+      "core_conversacionia": 50,
+      "core_editorial": 34,
+      "core_elementolistalectura": 2,
+      "core_estadolectura": 451,
+      "core_eventoanalitica": 384,
+      "core_genero": 12,
+      "core_historialchatbot": 5,
+      "core_historialpreciolibro": 223,
+      "core_kbname": 14166,
+      "core_kbprojection": 8,
+      "core_kbrecord": 13518,
+      "core_kbrelation": 2621,
+      "core_kbversion": 13518,
+      "core_libro": 55,
+      "core_libro_generos": 54,
+      "core_librofavorito": 231,
+      "core_listalectura": 2,
+      "core_mensajecontacto": 3,
+      "core_mensajeia": 190,
+      "core_perfilusuario": 158,
+      "core_preciolibrotienda": 117,
+      "core_preguntafrecuente": 0,
+      "core_recomendacion": 0,
+      "core_recomendacionialog": 0,
+      "core_resena": 116,
+      "django_admin_log": 0,
+      "django_content_type": 38,
+      "django_migrations": 27,
+      "django_session": 88,
+      "suscripciones_historialpago": 42,
+      "suscripciones_plansuscripcion": 3,
+      "suscripciones_suscripcionusuario": 157
+    },
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  }
+]

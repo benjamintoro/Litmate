@@ -239,6 +239,7 @@ class RecommendedContentTests(SimpleTestCase):
         self.assertTrue(bound_sources(request_for('Háblame de Luz de invierno del autor Ana Robles'),found))
 
     @override_settings(LITMATE_AI_USE_SEARXNG=True,
+                       LITMATE_AI_LOCK_BACKEND='cache',
                        LITMATE_SEARXNG_ENGINES=('wikipedia','openlibrary','mwmbl'),
                        LITMATE_SEARXNG_WEB_ENGINES=('mwmbl','duckduckgo','qwant'),
                        CACHES={'default':{'BACKEND':'django.core.cache.backends.locmem.LocMemCache',
@@ -258,7 +259,8 @@ class RecommendedContentTests(SimpleTestCase):
         self.assertIn('duckduckgo',result.providers)
         with patch('core.literary_search.read_json_url',return_value={'results':[]}) as retry:
             search_searx('otra historia de las islas',web=True)
-        self.assertEqual(parse_qs(urlsplit(retry.call_args.args[0]).query)['engines'],['mwmbl'])
+        self.assertEqual(set(parse_qs(urlsplit(retry.call_args.args[0]).query)['engines'][0].split(',')),
+                         {'mwmbl','wikipedia','openlibrary'})
 
     def test_published_subtitle_selects_only_the_requested_volume(self):
         first=volume_source({'id':'vol1','volumeInfo':{'title':'Historia de las letras insulares',

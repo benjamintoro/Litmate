@@ -1,0 +1,42 @@
+{
+  "operator_confirmed_private_password_start": true,
+  "loopback_port": 8003,
+  "access_checks": {
+    "/chat/ @ xato.taila70665.ts.net": {
+      "status": 401,
+      "expected": 401,
+      "ok": true
+    },
+    "/static/js/chatbot.js @ xato.taila70665.ts.net": {
+      "status": 401,
+      "expected": 401,
+      "ok": true
+    },
+    "/admin/ @ xato.taila70665.ts.net": {
+      "status": 404,
+      "expected": 404,
+      "ok": true
+    },
+    "/backups/ @ xato.taila70665.ts.net": {
+      "status": 404,
+      "expected": 404,
+      "ok": true
+    },
+    "/.env @ xato.taila70665.ts.net": {
+      "status": 404,
+      "expected": 404,
+      "ok": true
+    },
+    "/chat/ @ invalid.example": {
+      "status": 400,
+      "expected": 400,
+      "ok": true
+    }
+  },
+  "serve_before_approval": {},
+  "funnel_before_approval": {},
+  "publication_authorized": false,
+  "firewall_modified": false,
+  "uac_requested": false,
+  "credentials_read_or_recorded": false
+}

@@ -182,6 +182,9 @@ def is_topic_recommendation(message):
             r'(?:(?:un|una|unos|unas|algun|alguna|algunos|algunas|otro|otra|otros|otras|'
             r'dos|tres|cuatro|cinco|[1-5])\s+)?' + book + r'\b', value)
     if not request:
+        request = re.search(r'\b(?:dame|quiero|quisiera|busco)\s+otr[oa]\s+que\s+'
+                            r'(?:trate|hable|aborde)\s+(?:sobre|de|acerca de)\s+\S', value)
+    if not request:
         # Peticiones elípticas habituales: «libros de historia», «novelas
         # sobre viajes». No basta con que una charla mencione un libro.
         request = re.search(r'^' + book + r'\s+(?:sobre|acerca de|de|para)\s+\S', value)
@@ -437,6 +440,59 @@ def _contradictions(sources):
     return any(len(values) > 1 for values in claims.values())
 
 
+def publication_lookup_target(message):
+    """Pedido simple de publicaciones de una identidad, aún no verificada.
+
+    «de X» puede nombrar un autor o una franquicia. No decide cuál es ni
+    inventa un libro: conserva X para recuperarlo y contrastar las fichas.
+    """
+    if not isinstance(message, str) or excerpt_marker(message):
+        return ''
+    if normalize_identity(public_query(message)) != normalize_identity(message):
+        return ''  # Reject redacted personal data before normalizing the target.
+    value = normalize_identity(message).strip()
+    match = re.fullmatch(
+        r'(?:(?:hola|holan|buenas)\s+)?(?:quiero|quisiera|busco)\s+'
+        r'(?:leer\s+)?(?:(?:un|el|los|unos)\s+)?(?:libros?|obras?)\s+de\s+'
+        r'(.{3,150}?)(?:\s+me (?:lo|los) recomiendas?)?', value)
+    if not match:
+        return ''
+    target = match.group(1)
+    if (len(target.split()) > 14 or re.search(
+            r'\b(?:ese|este|mismo|anterior|correo|email|password|contrasena|'
+            r'ignora|instrucciones|mi|pero|ademas|explica|resume|compara)\b', target)
+            or not public_query(message) or public_query(target) != target):
+        return ''
+    from .books_google import book_topic_profile
+    if book_topic_profile('libros sobre ' + target)['structured']:
+        return ''
+    return target
+
+
+def publication_matches(source, target):
+    """Todos los términos distintivos en una identidad bibliográfica recibida.
+
+    Una mención en el argumento no demuestra que sea un libro de esa serie
+    o autor. Se admiten únicamente títulos alternativos ya verificados.
+    """
+    if not target:
+        return True
+    from .literary_identity import confirmed_aliases
+    stop = {'el', 'la', 'los', 'las', 'de', 'del', 'un', 'una', 'y', 'e'}
+    terms = set(normalize_identity(target).split()) - stop
+    labels = [source.get('title', ''), source.get('author', '')]
+    labels.extend(alias['title'] for alias in confirmed_aliases(source))
+    return bool(terms and any(terms <= set(normalize_identity(label).split()) for label in labels))
+
+
+def publication_search_queries(target):
+    """Dos hipótesis acotadas de catálogo, nunca una autoría afirmada."""
+    words = target.split()
+    if 2 <= len(words) <= 4 and not set(words) & {'el', 'la', 'los', 'las', 'de', 'del', 'y'}:
+        return ['inauthor:"' + target + '"', target]
+    return [target]
+
+
 def bibliographic_web_query(query):
     """Retira sólo prefijos conversacionales inequívocos, no palabras del título."""
     query = public_query(query).strip(' ¿?¡!.,')
@@ -467,6 +523,9 @@ def public_research_queries(message, selected_books=None, requirements=None):
     """Construye consultas bibliográficas, nunca envía pasajes privados o historial."""
     if excerpt_marker(message):
         return []
+    target = publication_lookup_target(message)
+    if target:
+        return [target + ' libros', target + ' editorial libro']
     requirements = requirements or evidence_requirements(message)
     labels = {'characters': 'personajes', 'character_detail': 'personaje', 'relationships': 'relación personajes',
               'events': 'argumento acontecimientos', 'ending': 'desenlace final', 'scenes': 'escena argumento', 'synopsis': 'sinopsis',

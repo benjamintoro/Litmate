@@ -1,0 +1,695 @@
+{
+  "scope": "loopback backend after TLS termination",
+  "external_network_tested": false,
+  "checks": {
+    "chat_auth_required": true,
+    "chat_auth_required_http_status": 401,
+    "static_auth_required": true,
+    "static_auth_required_http_status": 401,
+    "admin_blocked": true,
+    "unknown_host_blocked": true,
+    "chat_html": true,
+    "frame_denied": true,
+    "csrf_cookie_present": true,
+    "csrf_secure_flag": true,
+    "hsts_present": true,
+    "javascript": true,
+    "avatar": true,
+    "csrf_enforced": true
+  },
+  "conversation": [
+    {
+      "question": "Recuerdo un libro donde un ni\u00f1o vive en un planeta peque\u00f1o y cuida una rosa",
+      "status": "answered",
+      "answer": "Por tus pistas, podr\u00edas estar buscando **El principito**, de **Antoine de Saint-Exup\u00e9ry**. \u00bfTe suena?",
+      "books": [
+        {
+          "id": "1",
+          "title": "El principito",
+          "author": "Antoine de Saint-Exup\u00e9ry",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+principito+Antoine+de+Saint-Exup%C3%A9ry&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+principito+Antoine+de+Saint-Exup%C3%A9ry"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 1021,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 1026.274,
+          "first_phase_emitted_ms": 100.121,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 81.001,
+            "cache_lookup": 0.493,
+            "knowledge_lookup": 788.023,
+            "audit": 3.063,
+            "finalization": 5.663
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 3.79,
+              "elapsed_ms": 81.001,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 99.616,
+              "elapsed_ms": 0.493,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 193.381,
+              "elapsed_ms": 434.41,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 356.476,
+              "elapsed_ms": 45.774,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 455.286,
+              "elapsed_ms": 171.289,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 523.41,
+              "elapsed_ms": 65.87,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 705.106,
+              "elapsed_ms": 44.712,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 871.374,
+              "elapsed_ms": 25.968,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 934.415,
+              "elapsed_ms": 3.063,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 1020.605,
+              "elapsed_ms": 5.663,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 100.121
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 934.389
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "local-identification"
+      },
+      "sse_done": true,
+      "seconds": 1.0559,
+      "http_timing": {
+        "first_progress_seconds": 0.1226,
+        "verified_ready_seconds": 1.0055,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "\u00bfDe qu\u00e9 trata?",
+      "status": "answered",
+      "answer": "El principito es un cuento po\u00e9tico que viene acompa\u00f1ado de ilustraciones hechas con acuarelas por el mismo Saint-Exup\u00e9ry. En \u00e9l, un piloto se encuentra perdido en el desierto del Sahara despu\u00e9s de que su avi\u00f3n sufriera una aver\u00eda, pero para su sorpresa, es all\u00ed donde conoce a un peque\u00f1o pr\u00edncipe proveniente de otro planeta. La historia tiene una tem\u00e1tica filos\u00f3fica, donde se incluyen cr\u00edticas sociales dirigidas a la \u00abextra\u00f1eza\u00bb con la que los adultos ven las cosas. Estas cr\u00edticas a las cosas \u00abimportantes\u00bb y al mundo de los adultos van apareciendo en el libro a lo largo de la narraci\u00f3n. A pesar de que es considerado un libro infantil por la forma en la que se encuentra escrito, tambi\u00e9n posee observaciones profundas sobre la vida y la naturaleza humana.\n\nFuente: https://es.wikipedia.org/wiki/El_principito\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+      "books": [
+        {
+          "id": "1",
+          "title": "El principito",
+          "author": "Antoine de Saint-Exup\u00e9ry",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+principito+Antoine+de+Saint-Exup%C3%A9ry&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+principito+Antoine+de+Saint-Exup%C3%A9ry"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 2287,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "partial_evidence": true,
+        "work_type": "nonfiction",
+        "progress_metrics": {
+          "elapsed_ms": 2322.214,
+          "first_phase_emitted_ms": 26.054,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 9.116,
+            "cache_lookup": 0.716,
+            "knowledge_lookup": 647.743,
+            "audit": 15.191,
+            "retrieval": 1517.548,
+            "finalization": 34.797
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 9.525,
+              "elapsed_ms": 9.116,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 25.324,
+              "elapsed_ms": 0.716,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 28.408,
+              "elapsed_ms": 360.538,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 109.65,
+              "elapsed_ms": 51.689,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 220.134,
+              "elapsed_ms": 167.082,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 289.574,
+              "elapsed_ms": 62.36,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 463.212,
+              "elapsed_ms": 6.074,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 598.651,
+              "elapsed_ms": 9.382,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 635.944,
+              "elapsed_ms": 1517.548,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 2223.367,
+              "elapsed_ms": 5.809,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 2287.409,
+              "elapsed_ms": 34.797,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 26.054
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 598.628
+            },
+            {
+              "stage": "search",
+              "elapsed_ms": 635.929
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 2223.348
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "sse_done": true,
+      "seconds": 2.3329,
+      "http_timing": {
+        "first_progress_seconds": 0.0336,
+        "verified_ready_seconds": 2.2567,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "\u00bfQui\u00e9nes son sus protagonistas?",
+      "status": "answered",
+      "answer": "**El principito**: personaje principal del libro, toda la historia est\u00e1 basada en \u00e9l.\n\nLista parcial.\n\nOtros personajes documentados:\n\n**El zorro**: Amigo que el principito conoce en la Tierra.\n\n**El aviador**: Encuentra al principito en el Sahara.\n\n**El cordero**: Es un amigo que lo ayudar\u00e1 a librarse de los problemas que pueda tener o surgirle, pero como todos los amigos sin querer, alg\u00fan d\u00eda, pueden volverse en tu contra y hacernos da\u00f1o.\n\n**El farolero**: son los trabajadores que incansablemente se dedican a servir.\n\n**El rey**: habitante del primer planeta, quien representa a los jefes y reyes que quieren ser obedecidos.\n\nFuente: https://www.lepetitprince.com/loeuvre/\nhttps://es.wikipedia.org/wiki/El_principito\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+      "books": [
+        {
+          "id": "1",
+          "title": "El principito",
+          "author": "Antoine de Saint-Exup\u00e9ry",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+principito+Antoine+de+Saint-Exup%C3%A9ry&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+principito+Antoine+de+Saint-Exup%C3%A9ry"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 491,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "partial_evidence": true,
+        "verified_character_answer": true,
+        "character_count": 6,
+        "work_type": "nonfiction",
+        "progress_metrics": {
+          "elapsed_ms": 542.96,
+          "first_phase_emitted_ms": 61.051,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 44.484,
+            "cache_lookup": 0.825,
+            "knowledge_lookup": 353.688,
+            "audit": 8.382,
+            "finalization": 52.337
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 9.031,
+              "elapsed_ms": 44.484,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 60.214,
+              "elapsed_ms": 0.825,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 103.102,
+              "elapsed_ms": 347.103,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 174.081,
+              "elapsed_ms": 6.585,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 440.291,
+              "elapsed_ms": 8.382,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 490.616,
+              "elapsed_ms": 52.337,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 61.051
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 440.269
+            }
+          ]
+        },
+        "stage_timings": [],
+        "external_research": {
+          "page_slots_reserved": 0,
+          "logical_searches": 0,
+          "external_seconds": 0.0,
+          "http_requests_started": 0,
+          "pages_extracted": 0
+        },
+        "provider": "verified-character-evidence"
+      },
+      "sse_done": true,
+      "seconds": 0.5536,
+      "http_timing": {
+        "first_progress_seconds": 0.1076,
+        "verified_ready_seconds": 0.4771,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "Recomi\u00e9ndame dos novelas de fantas\u00eda en espa\u00f1ol",
+      "status": "answered",
+      "answer": "\u00a1Claro!\n\n1. **Harry Potter y el misterio del pr\u00edncipe** \u2014 J.K. Rowling.\n\n2. **Choque de Reyes (Canci\u00f3n de Hielo y Fuego 2)** \u2014 George R.R. Martin.\n\n\u00bfCu\u00e1l te interesa m\u00e1s?",
+      "books": [
+        {
+          "id": "db_30013",
+          "title": "Harry Potter y el misterio del pr\u00edncipe",
+          "author": "J.K. Rowling",
+          "synopsis": "Harry descubre un viejo libro de pociones perteneciente al misterioso 'Pr\u00edncipe Mestizo' y junto a Dumbledore desentra\u00f1a los secretos del pasado de Voldemort.",
+          "image_url": "https://covers.openlibrary.org/b/id/9393000-L.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=Harry+Potter+y+el+misterio+del+pr%C3%ADncipe+J.K.+Rowling"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Harry+Potter+y+el+misterio+del+pr%C3%ADncipe+J.K.+Rowling&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Harry+Potter+y+el+misterio+del+pr%C3%ADncipe+J.K.+Rowling"
+            }
+          ]
+        },
+        {
+          "id": "db_30019",
+          "title": "Choque de Reyes (Canci\u00f3n de Hielo y Fuego 2)",
+          "author": "George R.R. Martin",
+          "synopsis": "La Guerra de los Cinco Reyes desgarra los Siete Reinos, mientras un cometa rojo cruza los cielos anunciando sangre y fuego.",
+          "image_url": "https://covers.openlibrary.org/b/id/8231751-L.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 147,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 171.995,
+          "first_phase_emitted_ms": 49.641,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 31.923,
+            "cache_lookup": 0.789,
+            "audit": 1.623,
+            "finalization": 25.148
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 9.91,
+              "elapsed_ms": 31.923,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 48.842,
+              "elapsed_ms": 0.789,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 120.366,
+              "elapsed_ms": 1.623,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 146.84,
+              "elapsed_ms": 25.148,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 49.641
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 120.346
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-genre-catalogue"
+      },
+      "sse_done": true,
+      "seconds": 0.2051,
+      "http_timing": {
+        "first_progress_seconds": 0.0868,
+        "verified_ready_seconds": 0.1569,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "Cu\u00e9ntame m\u00e1s del segundo",
+      "status": "answered",
+      "answer": "**Choque de Reyes (Canci\u00f3n de Hielo y Fuego 2) \u2014 George R.R. Martin**: La Guerra de los Cinco Reyes desgarra los Siete Reinos, mientras un cometa rojo cruza los cielos anunciando sangre y fuego.",
+      "books": [
+        {
+          "id": "db_30019",
+          "title": "Choque de Reyes (Canci\u00f3n de Hielo y Fuego 2)",
+          "author": "George R.R. Martin",
+          "synopsis": "La Guerra de los Cinco Reyes desgarra los Siete Reinos, mientras un cometa rojo cruza los cielos anunciando sangre y fuego.",
+          "image_url": "https://covers.openlibrary.org/b/id/8231751-L.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 166,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 227.226,
+          "first_phase_emitted_ms": 70.808,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 52.788,
+            "cache_lookup": 0.869,
+            "audit": 1.633,
+            "knowledge_lookup": 28.152,
+            "finalization": 60.831
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 9.214,
+              "elapsed_ms": 52.788,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 69.928,
+              "elapsed_ms": 0.869,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 98.389,
+              "elapsed_ms": 28.152,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 125.653,
+              "elapsed_ms": 0.862,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 127.188,
+              "elapsed_ms": 0.771,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 166.388,
+              "elapsed_ms": 60.831,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 70.808
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 125.641
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-indexed-evidence"
+      },
+      "sse_done": true,
+      "seconds": 0.238,
+      "http_timing": {
+        "first_progress_seconds": 0.1308,
+        "verified_ready_seconds": 0.1519,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "\u00bfD\u00f3nde puedo encontrarlo?",
+      "status": "answered",
+      "answer": "**Choque de Reyes (Canci\u00f3n de Hielo y Fuego 2)** \u2014 George R.R. Martin.\n\nPuedes usar los enlaces de la tarjeta para buscarlo; no puedo confirmar disponibilidad ni precio.",
+      "books": [
+        {
+          "id": "db_30019",
+          "title": "Choque de Reyes (Canci\u00f3n de Hielo y Fuego 2)",
+          "author": "George R.R. Martin",
+          "synopsis": "La Guerra de los Cinco Reyes desgarra los Siete Reinos, mientras un cometa rojo cruza los cielos anunciando sangre y fuego.",
+          "image_url": "https://covers.openlibrary.org/b/id/8231751-L.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 133,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 188.021,
+          "first_phase_emitted_ms": 74.645,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 51.443,
+            "cache_lookup": 6.0,
+            "audit": 0.598,
+            "finalization": 54.946
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 10.052,
+              "elapsed_ms": 51.443,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 68.634,
+              "elapsed_ms": 6.0,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 101.31,
+              "elapsed_ms": 0.598,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 133.068,
+              "elapsed_ms": 54.946,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 74.645
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 101.302
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-conversation-evidence"
+      },
+      "sse_done": true,
+      "seconds": 0.1995,
+      "http_timing": {
+        "first_progress_seconds": 0.1033,
+        "verified_ready_seconds": 0.1108,
+        "first_verified_text_seconds": null
+      }
+    }
+  ]
+}

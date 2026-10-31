@@ -1,0 +1,479 @@
+{
+  "mode": "fallback",
+  "started_at": "2026-10-30T11:27:15.986919+00:00",
+  "cases": [
+    {
+      "category": "novela",
+      "query": "El nombre de la rosa",
+      "author_target": "Umberto Eco",
+      "status": "ok",
+      "failures": {},
+      "result_count": 5,
+      "search_seconds": 0.575,
+      "results": [
+        {
+          "title": "El nombre de la rosa",
+          "author": "Fuente web",
+          "description": "novela hist\u00f3rica de Umberto Eco",
+          "url": "https://es.wikipedia.org/wiki/El_nombre_de_la_rosa",
+          "kind": "web",
+          "source": "SearXNG (es.wikipedia.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "wikipedia"
+          ]
+        },
+        {
+          "title": "El Salvador",
+          "author": "Fuente web",
+          "description": "Pineda; \u00d3scar Mel\u00e9ndez (9 June 2015). El nombre oficial de la Rep\u00fablica de El Salvador (1st\u00a0ed.). San Salvador: Direcci\u00f3n de Publicaciones e Impresos. Archived",
+          "url": "https://en.wikipedia.org/wiki/El_Salvador",
+          "kind": "web",
+          "source": "SearXNG (en.wikipedia.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "Il nome della rosa",
+          "author": "Fuente web",
+          "description": "ON AUGUST 16, 1968, I WAS HANDED A BOOK WRITTEN BY A CERTAIN Abbe Vallet, Le Manuscrit de Dom Adson de Melk, traduit en francais d'apres l'edition de Dom J. Mabillon (Aux Presses de l'Abbaye de la Source, Paris, 1842). / Am 16. August 1968 fiel mir ein Buch as der Feder eines gewissen Abb\u00e9 Vallet in die H\u00e4nde: Le manuscript de Dom Adson de Melk, traduit en fran\u00e7ais d'apr\u00e8s P'\u00e9dition de Dom J. Mabillon (Aux Presses de l'Abbaye de la Source Paris 1842). / In principio era il Verbo e il Verbo era presso Dio, e il Verbo era Dio.",
+          "url": "https://openlibrary.org/works/OL8996439W",
+          "kind": "web",
+          "source": "SearXNG (openlibrary.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "EL NOMBRE DE LA ROSA",
+          "author": "Fuente web",
+          "description": "",
+          "url": "https://openlibrary.org/works/OL35986141W",
+          "kind": "web",
+          "source": "SearXNG (openlibrary.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "Para leer \"El nombre de la rosa\" de Umberto Eco",
+          "author": "Fuente web",
+          "description": "",
+          "url": "https://openlibrary.org/works/OL18948328W",
+          "kind": "web",
+          "source": "SearXNG (openlibrary.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "openlibrary"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "url": "https://es.wikipedia.org/wiki/El_nombre_de_la_rosa",
+          "status": "ok",
+          "seconds": 2.001,
+          "chars": 1800,
+          "identity_bound": true,
+          "content_candidate": false,
+          "description": "El nombre de la rosa (t\u00edtulo original Il nome della rosa en italiano) es una novela hist\u00f3rica de misterio escrita por Umberto Eco y publicada en 1980.[2]\nEn un clima mental de gran excitaci\u00f3n le\u00ed, fascinado, la terrible historia de Adso de Melk, y tanto me atrap\u00f3 que casi de un tir\u00f3n la traduje en varios cuadernos de gran formato procedentes de la Papeterie Joseph Gibert, aquellos en los que tan agradable es escribir con una pluma blanda. Mientras tanto llegamos a las cercan\u00edas de Melk, donde, a pico sobre un recodo del r\u00edo, a\u00fan se yergue el bell\u00edsimo Stift, varias veces restaurado a lo largo de los siglos. Como el lector habr\u00e1 imaginado, en la biblioteca del monasterio no encontr\u00e9 huella alguna del manuscrito de Adso.Umberto Eco. El nombre de la rosa. Prefacio: Naturalmente, un manuscrito.\nEn una entrevista incluida en la versi\u00f3n DVD de la pel\u00edcula El nombre de la rosa, su director, Jean-Jacques Annaud, asegura que Umberto Eco le manifestaba que Adso es un \u00abimb\u00e9cil\u00bb, el cual \u00abno entiende a su maestro\u00bb, y que \u00abal final no ha comprendido nada. No ha entendido la lecci\u00f3n de su maestro\u00bb.[9]\nEl que acababa de hablar era un monje encorvado por el peso de los a\u00f1os, blanco como la nieve; no me refiero solo al pelo sino tambi\u00e9n al rostro, y a las pupilas. Comprend\u00ed que era ciego. Aunque el cuerpo se encog\u00eda ya por el peso de la edad, la voz segu\u00eda siendo majestuosa, y los brazos y manos poderosos. Clavaba los ojos en nosotros como si nos estuviese viendo, y siempre, tambi\u00e9n en los d\u00edas que siguieron, lo vi moverse y hablar como si a\u00fan poseyese el don de la vista. Pero el tono de la voz, en cambio, era el de alguien que solo estuviese dotado del don de la profec\u00eda.Umberto Eco. El nombre de la rosa.\nEl 9 de julio de 1981, ocho meses despu\u00e9s de la publicaci\u00f3n del libro, El nombre ",
+          "identity_text": "El nombre de la rosa - Wikipedia, la enciclopedia libre El nombre de la rosa (t\u00edtulo original Il nome della rosa en italiano ) es una novela hist\u00f3rica de misterio escrita por Umberto Eco y publicada en 1980. [ 2 ] Ambientada en el turbulento ambiente religioso del siglo XIV , la novela narra la investigaci\u00f3n que realizan fray Guillermo de Baskerville y su pupilo Adso de Melk alrededor de una misteriosa serie de cr\u00edmenes que suceden en una abad\u00eda del norte de Italia . La gran repercusi\u00f3n de la novela provoc\u00f3 que se editaran miles de p\u00e1ginas de cr\u00edtica de El nombre de la rosa , y se han se\u00f1alado referentes que incluyen a Jorge Luis Borges , Arthur Conan Doyle y el escol\u00e1stico Guillermo de Ockham ."
+        },
+        {
+          "url": "https://openlibrary.org/works/OL35986141W",
+          "status": "not_read",
+          "seconds": 0.0,
+          "chars": 0,
+          "identity_bound": false,
+          "content_candidate": false,
+          "description": "",
+          "identity_text": ""
+        }
+      ],
+      "research": {
+        "logical_searches": 0,
+        "page_slots_reserved": 0,
+        "page_slots_limit": 2,
+        "external_seconds": 0.0,
+        "events": [
+          {
+            "stage": "http_request",
+            "provider": "SearXNG",
+            "status": "started",
+            "count": 0
+          },
+          {
+            "stage": "http_request",
+            "provider": "SearXNG",
+            "status": "ok",
+            "count": 20
+          }
+        ],
+        "http_requests_started": 1,
+        "pages_extracted": 0
+      },
+      "seconds": 2.577,
+      "usable_content_sources": 0
+    },
+    {
+      "category": "manga",
+      "query": "Naruto",
+      "author_target": "Masashi Kishimoto",
+      "status": "ok",
+      "failures": {},
+      "result_count": 5,
+      "search_seconds": 0.572,
+      "results": [
+        {
+          "title": "Naruto - Wikipedia",
+          "author": "Fuente web",
+          "description": "Naruto [ a ] is a Japanese manga series written and illustrated by Masashi Kishimoto . It tells the story of Naruto Uzumaki , a young ninja who seeks reco\u2026",
+          "url": "https://en.wikipedia.org/wiki/Naruto",
+          "kind": "web",
+          "source": "SearXNG (en.wikipedia.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "Naruto",
+          "author": "Fuente web",
+          "description": "serie de manga y anime de tem\u00e1tica ninja",
+          "url": "https://es.wikipedia.org/wiki/Naruto",
+          "kind": "web",
+          "source": "SearXNG (es.wikipedia.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "wikipedia"
+          ]
+        },
+        {
+          "title": "Naruto 33",
+          "author": "Fuente web",
+          "description": "",
+          "url": "https://openlibrary.org/works/OL13268171W",
+          "kind": "web",
+          "source": "SearXNG (openlibrary.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "Naruto 25",
+          "author": "Fuente web",
+          "description": "",
+          "url": "https://openlibrary.org/works/OL8756045W",
+          "kind": "web",
+          "source": "SearXNG (openlibrary.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "Naruto 09",
+          "author": "Fuente web",
+          "description": "",
+          "url": "https://openlibrary.org/works/OL8756013W",
+          "kind": "web",
+          "source": "SearXNG (openlibrary.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "openlibrary"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Naruto",
+          "status": "ok",
+          "seconds": 2.168,
+          "chars": 1800,
+          "identity_bound": true,
+          "content_candidate": true,
+          "description": "Naruto[a] is a Japanese manga series written and illustrated by Masashi Kishimoto. It tells the story of Naruto Uzumaki, a young, socially isolated ninja who seeks recognition from his peers and dreams of becoming the Hokage, the leader of his village. The story is told in two parts: the first is set in Naruto's pre-teen years (volumes 1\u201327), and the second in his teens (volumes 28\u201372). The series is based on two one-shot manga by Kishimoto: Karakuri (1995), which earned Kishimoto an honorable mention in Shueisha's monthly Hop Step Award the following year, and Naruto (1997).\nIn 1995, Shueisha published Karakuri, a one-shot manga by Masashi Kishimoto, which received an honorable mention in the 1996 Hop Step Award. Dissatisfied with subsequent draft proposals, Kishimoto began developing a new project.[2] An early concept featured Naruto as a chef, but this version was never published. Kishimoto then developed a one-shot for the summer 1997 issue of Akamaru Jump, based on an idea of a boy who could transform into a fox.[3][4] Despite positive reader feedback, Kishimoto revised the concept into a ninja-themed story due to dissatisfaction with the art and narrative.[5]\nWritten and illustrated by Masashi Kishimoto, Naruto was serialized for a 15-year run in Shueisha's magazine, Weekly Sh\u014dnen Jump from September 21, 1999,[38][39] to November 10, 2014.[40][41] Shueisha collected its chapters in 72 tank\u014dbon volumes\u201427 for Part I, and the rest for Part II; they were released between March 3, 2000,[42] and February 4, 2015.[43] The first 238 chapters are Part I and constitute the first part of the Naruto storyline. Chapters 239 to 244 include a gaiden (side-story) focusing on Kakashi Hatake's background. The remaining chapters (245 to 700) belong to Part II, which continues the s",
+          "identity_text": "Naruto - Wikipedia  Naruto [ a ] is a Japanese manga series written and illustrated by Masashi Kishimoto . It tells the story of Naruto Uzumaki , a young, socially isolated ninja who seeks recognition from his peers and dreams of becoming the Hokage, the leader of his village. The story is told in two parts: the first is set in Naruto's pre-teen years (volumes 1\u201327), and the second in his teens (volumes 28\u201372). The series is based on two one-shot manga by Kishimoto: Karakuri (1995), which earned Kishimoto an honorable mention in Shueisha 's monthly Hop Step Award the following year, and Naruto (1997). Naruto was serialized in Shueisha's sh\u014dnen manga magazine Weekly Sh\u014dnen Jump from September 1999 to November 2014, with its 700 chapters collected in 72 tank\u014dbon volumes. Viz Media licensed the manga for North American production and serialized Naruto in their digital Weekly Shonen Jump magazine. The manga was adapted into two anime television series by Pierrot and Aniplex , which ran from October 2002 to M"
+        },
+        {
+          "url": "https://es.wikipedia.org/wiki/Naruto",
+          "status": "ok",
+          "seconds": 1.671,
+          "chars": 1800,
+          "identity_bound": false,
+          "content_candidate": false,
+          "description": "Naruto (\u30ca\u30eb\u30c8? romanizada como NARUTO) es una serie de manga escrita e ilustrada por Masashi Kishimoto, posteriormente adaptada a una serie de anime. Narra la historia de un ninja adolescente llamado Naruto Uzumaki, cuyos padres murieron en el ataque del Zorro de las Nueve Colas y quien aspira a convertirse en Hokage (l\u00edder de su aldea), con el prop\u00f3sito de ser reconocido y respetado como alguien importante dentro de la aldea y entre sus compa\u00f1eros.\nEn agosto de 1997, el dibujante de manga Masashi Kishimoto se encontraba trabajando en un one-shot (historieta de un solo cap\u00edtulo), titulado Naruto, para la revista Akamaru Jump.[81] Aun cuando atrajo a un n\u00famero considerable de lectores tras el lanzamiento, Kishimoto revel\u00f3 que trabajar\u00eda en una nueva historieta, Karakuri, que participar\u00eda por el Hop Step Award. No obstante, insatisfecho por los malos resultados del proyecto, decidi\u00f3 enfocarse en Naruto. Cuando un entrevistador le pregunt\u00f3 si ten\u00eda un mensaje para la audiencia angl\u00f3fona, Kishimoto respondi\u00f3:\nEscrito por Uky\u014d Kodachi e ilustrado por Mikio Ikemoto, Boruto: Naruto Next Generations fue publicado por primera vez el 9 de mayo de 2016 por la editorial Sh\u016beisha en la vig\u00e9simo tercera edici\u00f3n de la revista de manga Sh\u014dnen Jump continuando con la publicaci\u00f3n de un nuevo cap\u00edtulo cada mes. La obra se encuentra bajo la supervisi\u00f3n del creador original de la serie, Masashi Kishimoto.[224]\nEl 17 de diciembre de 2016, en el estand de Naruto y Boruto durante el festival de Jump Festa, fue anunciado que la serie de manga iniciar\u00eda un proyecto de \u00e1nime,[225] confirm\u00e1ndose posteriormente como una adaptaci\u00f3n del manga que presentar\u00eda una historia original.[226][227] Es supervisada por el creador de la serie Masashi Kishimoto, as\u00ed como tambi\u00e9n por Uky\u014d Kodachi, su escritor; codi",
+          "identity_text": "Naruto - Wikipedia, la enciclopedia libre Larp Editores (expirado) [ 2 ] Madman Entertainment Panini Comics Daiwon C.I. Carlsen Comics VIZ Media Gl\u00e9nat/EDT (expirado) , Planeta DeAgostini Sangatsu Manga Editorial Kana Compupress ( Anubis Manga ) Rightman Mangafan Elex Media Komputindo Panini Comics (Planet Manga) Comics House , Komik Remaja Grupo Editorial Vid (expirado) , Panini C\u00f3mics Schibsted Forlagene Japonica Polonica Fantastica CREW Comix-art Chuang Yi (chino) Grupo Editorial Sedrick Bonnier Carlsen Tong Li Publishing Netflix , Disney+ , Crunchyroll , Warner Channel , Cartoon Network , Pluto TV , Adult Swim BitMe Cartoon Network / Adult Swim ( Toonami ) YTV , Teletoon GameOne RTL II Jetix Animax , Cuatro , Jetix (Espa\u00f1a) , Telecinco , Telecinco 2 , Canal Panda , FDF Network Ten , ABC3 DR1 ZTV MTV3 Channel 44 Paravisi\u00f3n RPC TV , TVMax , TVN Am\u00e9rica Televisi\u00f3n , Willax Televisi\u00f3n Animax Asia Spacetoon Tooniverse Chilevisi\u00f3n , La Red , Telecanal , ETC TV Canal 10 Telesistema 11 RTS Citytv , Canal 1 XHGC-T , Canal 3 , Canal"
+        }
+      ],
+      "research": {
+        "logical_searches": 0,
+        "page_slots_reserved": 0,
+        "page_slots_limit": 2,
+        "external_seconds": 0.0,
+        "events": [
+          {
+            "stage": "http_request",
+            "provider": "SearXNG",
+            "status": "started",
+            "count": 0
+          },
+          {
+            "stage": "http_request",
+            "provider": "SearXNG",
+            "status": "ok",
+            "count": 20
+          }
+        ],
+        "http_requests_started": 1,
+        "pages_extracted": 0
+      },
+      "seconds": 4.411,
+      "usable_content_sources": 1
+    },
+    {
+      "category": "historia",
+      "query": "Historia de la rep\u00fablica del Per\u00fa",
+      "author_target": "Jorge Basadre",
+      "status": "ok",
+      "failures": {},
+      "result_count": 5,
+      "search_seconds": 0.909,
+      "results": [
+        {
+          "title": "Historia de la Repu\u0301blica del Peru\u0301",
+          "author": "Fuente web",
+          "description": "",
+          "url": "https://openlibrary.org/works/OL3167688W",
+          "kind": "web",
+          "source": "SearXNG (openlibrary.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "Historia de la Rep\u00fablica del Per\u00fa, 1822-1933",
+          "author": "Fuente web",
+          "description": "",
+          "url": "https://openlibrary.org/works/OL32010364W",
+          "kind": "web",
+          "source": "SearXNG (openlibrary.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "Historia de la rep\u00fablica del Per\u00fa",
+          "author": "Fuente web",
+          "description": "",
+          "url": "https://openlibrary.org/works/OL37468545W",
+          "kind": "web",
+          "source": "SearXNG (openlibrary.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "Historia de la Repu\u0301blica del Peru\u0301, 1822-1933",
+          "author": "Fuente web",
+          "description": "",
+          "url": "https://openlibrary.org/works/OL3167664W",
+          "kind": "web",
+          "source": "SearXNG (openlibrary.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "Introduccio\u0301n a las bases documentales para la historia de la Repu\u0301blica del Peru\u0301 con algunas reflexiones",
+          "author": "Fuente web",
+          "description": "",
+          "url": "https://openlibrary.org/works/OL3167668W",
+          "kind": "web",
+          "source": "SearXNG (openlibrary.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "openlibrary"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "url": "https://openlibrary.org/works/OL3167688W",
+          "status": "not_read",
+          "seconds": 0.0,
+          "chars": 0,
+          "identity_bound": false,
+          "content_candidate": false,
+          "description": "",
+          "identity_text": ""
+        },
+        {
+          "url": "https://openlibrary.org/works/OL32010364W",
+          "status": "not_read",
+          "seconds": 0.0,
+          "chars": 0,
+          "identity_bound": false,
+          "content_candidate": false,
+          "description": "",
+          "identity_text": ""
+        }
+      ],
+      "research": {
+        "logical_searches": 0,
+        "page_slots_reserved": 0,
+        "page_slots_limit": 2,
+        "external_seconds": 0.0,
+        "events": [
+          {
+            "stage": "http_request",
+            "provider": "SearXNG",
+            "status": "started",
+            "count": 0
+          },
+          {
+            "stage": "http_request",
+            "provider": "SearXNG",
+            "status": "ok",
+            "count": 16
+          }
+        ],
+        "http_requests_started": 1,
+        "pages_extracted": 0
+      },
+      "seconds": 0.909,
+      "usable_content_sources": 0
+    },
+    {
+      "category": "ensayo",
+      "query": "El infinito en un junco",
+      "author_target": "Irene Vallejo",
+      "status": "ok",
+      "failures": {},
+      "result_count": 5,
+      "search_seconds": 0.743,
+      "results": [
+        {
+          "title": "El infinito en un junco",
+          "author": "Fuente web",
+          "description": "Misteriosos grupos de hombres a caballo recorren los caminos de Gracia.",
+          "url": "https://openlibrary.org/works/OL20770492W",
+          "kind": "web",
+          "source": "SearXNG (openlibrary.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "El infinito en un junco. Adaptaci\u00f3n gr\u00e1fica",
+          "author": "Fuente web",
+          "description": "",
+          "url": "https://openlibrary.org/works/OL36753580W",
+          "kind": "web",
+          "source": "SearXNG (openlibrary.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "El infinito en un junco; adaptaci\u00f3n gr\u00e1fica",
+          "author": "Fuente web",
+          "description": "",
+          "url": "https://openlibrary.org/works/OL38057902W",
+          "kind": "web",
+          "source": "SearXNG (openlibrary.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "Puritanos",
+          "author": "Fuente web",
+          "description": "",
+          "url": "https://openlibrary.org/works/OL17360422W",
+          "kind": "web",
+          "source": "SearXNG (openlibrary.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "G\u00eanesis",
+          "author": "Fuente web",
+          "description": "",
+          "url": "https://openlibrary.org/works/OL17360235W",
+          "kind": "web",
+          "source": "SearXNG (openlibrary.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "openlibrary"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "url": "https://openlibrary.org/works/OL20770492W",
+          "status": "not_read",
+          "seconds": 0.0,
+          "chars": 0,
+          "identity_bound": false,
+          "content_candidate": false,
+          "description": "",
+          "identity_text": ""
+        },
+        {
+          "url": "https://openlibrary.org/works/OL36753580W",
+          "status": "not_read",
+          "seconds": 0.0,
+          "chars": 0,
+          "identity_bound": false,
+          "content_candidate": false,
+          "description": "",
+          "identity_text": ""
+        }
+      ],
+      "research": {
+        "logical_searches": 0,
+        "page_slots_reserved": 0,
+        "page_slots_limit": 2,
+        "external_seconds": 0.0,
+        "events": [
+          {
+            "stage": "http_request",
+            "provider": "SearXNG",
+            "status": "started",
+            "count": 0
+          },
+          {
+            "stage": "http_request",
+            "provider": "SearXNG",
+            "status": "ok",
+            "count": 20
+          }
+        ],
+        "http_requests_started": 1,
+        "pages_extracted": 0
+      },
+      "seconds": 0.743,
+      "usable_content_sources": 0
+    }
+  ],
+  "real_services": true,
+  "public_queries_only": true,
+  "knowledge_writes": false,
+  "duckduckgo_pause_simulated": true,
+  "note": "Contenido recuperado no equivale a corroboraci\u00f3n factual independiente."
+}

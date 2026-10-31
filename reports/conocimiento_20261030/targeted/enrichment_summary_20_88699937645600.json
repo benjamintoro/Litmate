@@ -1,0 +1,357 @@
+{
+  "coverage": {
+    "works": 20,
+    "works_with_explicit_plot": 11,
+    "works_with_development_excerpt": 4,
+    "works_with_admitted_description": 15,
+    "characters_with_literal_roles": 0,
+    "works_with_literal_roles": 0,
+    "characters_with_membership_only": 0,
+    "works_with_explicit_protagonist": 0,
+    "explicit_protagonist_mentions": 0,
+    "relationships": 0,
+    "narrative_facts": 21,
+    "linked_sources": 36,
+    "per_work": {
+      "litmate:5ba1898020c76aa0f71c087a": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:c0fe6b35ef1561ffa0eebd70": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 2
+      },
+      "litmate:69a900af75a1a3e6cafbc055": {
+        "synopsis": false,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:cf67efebae22b928eedc86f3": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 1
+      },
+      "litmate:b8cd68fdf23e898737956ae8": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 1
+      },
+      "litmate:afd76cd0969b6910f4b5aa7f": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 1
+      },
+      "litmate:58dc10951bc9d49b9f406625": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 2
+      },
+      "litmate:968a8e5a29ac3a0ef835be40": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 2
+      },
+      "litmate:69ec12cc20f39b3cf7fd6b58": {
+        "synopsis": false,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:a5a67748585592f9aa7fa31a": {
+        "synopsis": false,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:c647c7fd2cb1e76c99bdc907": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 2
+      },
+      "litmate:164c23db85ac5562b21356b0": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 3
+      },
+      "litmate:80f341d0d5d96b850f2276b8": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:fc93b74a8314ddaaaa3e305c": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 3
+      },
+      "litmate:286caac2a688996bc543f3ea": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 3
+      },
+      "litmate:1b0767d60ff2304b069012bc": {
+        "synopsis": false,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:37fe2c3a901e650cb80c85c8": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:94bc8655c8a191a273c1c565": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:04603e7fe6eca462be739fbf": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:f78c4abf0f5374c5f3443a41": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 1
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "sql_integrity": {
+    "auth_group": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "auth_group_permissions": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "auth_permission": {
+      "original_rows_preserved": 152,
+      "added": 0
+    },
+    "auth_user": {
+      "original_rows_preserved": 179,
+      "added": 0
+    },
+    "auth_user_groups": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "auth_user_user_permissions": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_asistenteia": {
+      "original_rows_preserved": 1,
+      "added": 0
+    },
+    "core_autor": {
+      "original_rows_preserved": 31,
+      "added": 0
+    },
+    "core_clickconversion": {
+      "original_rows_preserved": 185,
+      "added": 0
+    },
+    "core_conversacionia": {
+      "original_rows_preserved": 50,
+      "added": 0
+    },
+    "core_editorial": {
+      "original_rows_preserved": 34,
+      "added": 0
+    },
+    "core_elementolistalectura": {
+      "original_rows_preserved": 2,
+      "added": 0
+    },
+    "core_estadolectura": {
+      "original_rows_preserved": 451,
+      "added": 0
+    },
+    "core_eventoanalitica": {
+      "original_rows_preserved": 384,
+      "added": 0
+    },
+    "core_genero": {
+      "original_rows_preserved": 12,
+      "added": 0
+    },
+    "core_historialchatbot": {
+      "original_rows_preserved": 5,
+      "added": 0
+    },
+    "core_historialpreciolibro": {
+      "original_rows_preserved": 223,
+      "added": 0
+    },
+    "core_kbname": {
+      "original_rows_preserved": 14166,
+      "added": 0
+    },
+    "core_kbprojection": {
+      "original_rows_preserved": 8,
+      "added": 0,
+      "derived_worker_checkpoint_updated": true
+    },
+    "core_kbrecord": {
+      "original_rows_preserved": 13518,
+      "added": 0
+    },
+    "core_kbrelation": {
+      "original_rows_preserved": 2598,
+      "added": 0
+    },
+    "core_kbversion": {
+      "original_rows_preserved": 13518,
+      "added": 0
+    },
+    "core_libro": {
+      "original_rows_preserved": 55,
+      "added": 0
+    },
+    "core_libro_generos": {
+      "original_rows_preserved": 54,
+      "added": 0
+    },
+    "core_librofavorito": {
+      "original_rows_preserved": 231,
+      "added": 0
+    },
+    "core_listalectura": {
+      "original_rows_preserved": 2,
+      "added": 0
+    },
+    "core_mensajecontacto": {
+      "original_rows_preserved": 3,
+      "added": 0
+    },
+    "core_mensajeia": {
+      "original_rows_preserved": 190,
+      "added": 0
+    },
+    "core_perfilusuario": {
+      "original_rows_preserved": 158,
+      "added": 0
+    },
+    "core_preciolibrotienda": {
+      "original_rows_preserved": 117,
+      "added": 0
+    },
+    "core_preguntafrecuente": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_recomendacion": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_recomendacionialog": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_resena": {
+      "original_rows_preserved": 116,
+      "added": 0
+    },
+    "django_admin_log": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "django_content_type": {
+      "original_rows_preserved": 38,
+      "added": 0
+    },
+    "django_migrations": {
+      "original_rows_preserved": 27,
+      "added": 0
+    },
+    "django_session": {
+      "original_rows_preserved": 88,
+      "added": 0
+    },
+    "suscripciones_historialpago": {
+      "original_rows_preserved": 42,
+      "added": 0
+    },
+    "suscripciones_plansuscripcion": {
+      "original_rows_preserved": 3,
+      "added": 0
+    },
+    "suscripciones_suscripcionusuario": {
+      "original_rows_preserved": 157,
+      "added": 0
+    }
+  },
+  "index": {
+    "sources": 499,
+    "documents": 498,
+    "chunks": 524,
+    "semantic": false,
+    "index_updated": true,
+    "index": "G:\\Proyecto\\Litmate\\data\\literary_memory_rag.sqlite3",
+    "short_sources_skipped": 0
+  },
+  "free_disk_bytes": 92507574272,
+  "maximum_requested": 20
+}

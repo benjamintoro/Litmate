@@ -1,0 +1,383 @@
+{
+  "case": {
+    "case": 17,
+    "title": "Emma",
+    "author": "Jane Austen",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": true
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [
+        {
+          "table": "rag_metadata",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "LITMATE_LIBRARY_DB": [
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": true
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "LITMATE_LIBRARY_RAG_DB": [
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "mysql": {
+        "name_record_ids": [
+          "45e84e23847519776405653f46f39476df0d9bb95c040d56d8461bd4f2fc88bb",
+          "e8d37eb4bed1097596190f71028eba619143c26b0abc30f257d7209eaf13a815",
+          "ad0774a09f1ebfc9373096bd97d659979cd1e08d81547881923d6ba80e1faf1d",
+          "95f3a2e370e8c15261c2d142ed13e68c15d74800bb8eeba401434b28e3071502",
+          "6803cb2e1bb95b195434a7dd0debfa85c94ce35ccc2256d51f837f19855328fc",
+          "cf5beb52c11fde40a8a01901001bc4d31607b23898068b202b4f22ef76478c4e",
+          "a488b7f2e60e556c99ec16dff76a8331c07e8b2cec9962c89da768d7d5190fe1",
+          "7fe89a5c977c700f90b3753af65b4c71e922b1617c7760930dad6b47591d9c5a",
+          "b83414b821c46252f0a85f21193eb1ac2973bd099f84e270dbb09ddca0b1e4c0",
+          "72725783f9ffa782930268eb85c47f591541bf6a17ecbe8b81d01f89e118d9b1"
+        ],
+        "direct_records": [
+          {
+            "id": "45e84e23847519776405653f46f39476df0d9bb95c040d56d8461bd4f2fc88bb",
+            "label": "Memorie di Emma Lyonna, vol. 3/8",
+            "kind": "edition"
+          },
+          {
+            "id": "6803cb2e1bb95b195434a7dd0debfa85c94ce35ccc2256d51f837f19855328fc",
+            "label": "Emmalan Elli",
+            "kind": "edition"
+          },
+          {
+            "id": "6f90fb1ef2ea0c7987cb2581e11f4ccdaebae94197734e6df7865397879edc97",
+            "label": "Memorie di Emma Lyonna, vol. 5/8",
+            "kind": "edition"
+          },
+          {
+            "id": "72725783f9ffa782930268eb85c47f591541bf6a17ecbe8b81d01f89e118d9b1",
+            "label": "Memorie di Emma Lyonna, vol. 7/8",
+            "kind": "edition"
+          },
+          {
+            "id": "7fe89a5c977c700f90b3753af65b4c71e922b1617c7760930dad6b47591d9c5a",
+            "label": "Memorie di Emma Lyonna, vol. 6/8",
+            "kind": "edition"
+          },
+          {
+            "id": "95f3a2e370e8c15261c2d142ed13e68c15d74800bb8eeba401434b28e3071502",
+            "label": "Memorie di Emma Lyonna, vol. 4/8",
+            "kind": "edition"
+          },
+          {
+            "id": "a488b7f2e60e556c99ec16dff76a8331c07e8b2cec9962c89da768d7d5190fe1",
+            "label": "Memorie di Emma Lyonna, vol. 8/8",
+            "kind": "edition"
+          },
+          {
+            "id": "ad0774a09f1ebfc9373096bd97d659979cd1e08d81547881923d6ba80e1faf1d",
+            "label": "La San-Felice, Tome 08, Emma Lyonna, tome 4",
+            "kind": "edition"
+          },
+          {
+            "id": "b83414b821c46252f0a85f21193eb1ac2973bd099f84e270dbb09ddca0b1e4c0",
+            "label": "Memorie di Emma Lyonna, vol. 2/8",
+            "kind": "edition"
+          },
+          {
+            "id": "cf5beb52c11fde40a8a01901001bc4d31607b23898068b202b4f22ef76478c4e",
+            "label": "Memorie di Emma Lyonna, vol. 1/8",
+            "kind": "edition"
+          }
+        ],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": false
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de Emma de Jane Austen",
+      "answer": "Emma Woodhouse es una joven en la Inglaterra de la Regencia. En contra del consejo de Knightley, busca posibles novios para su nueva amiga, Harriet Smith, una joven sencilla y modesta, alejada del estilo de vida de la alta sociedad.\n\nFuente: https://es.wikipedia.org/wiki/Emma\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+      "status": "answered",
+      "books": [
+        {
+          "id": "1",
+          "title": "Emma",
+          "author": "Jane Austen",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=Emma+Jane+Austen"
+            },
+            {
+              "label": "Project Gutenberg",
+              "url": "https://www.gutenberg.org/ebooks/158"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Emma+Jane+Austen&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Emma+Jane+Austen"
+            }
+          ]
+        }
+      ],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 618,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "partial_evidence": false,
+        "work_type": "fiction",
+        "progress_metrics": {
+          "elapsed_ms": 623.775,
+          "first_phase_emitted_ms": 23.159,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 6.525,
+            "cache_lookup": 6.146,
+            "knowledge_lookup": 582.353,
+            "audit": 4.371,
+            "finalization": 5.947
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 4.051,
+              "elapsed_ms": 6.525,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 17.002,
+              "elapsed_ms": 6.146,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 35.566,
+              "elapsed_ms": 297.679,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 106.846,
+              "elapsed_ms": 33.533,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 187.606,
+              "elapsed_ms": 144.671,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 255.149,
+              "elapsed_ms": 46.472,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 408.136,
+              "elapsed_ms": 59.998,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 558.337,
+              "elapsed_ms": 3.208,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 594.444,
+              "elapsed_ms": 1.163,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 617.822,
+              "elapsed_ms": 5.947,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 23.159
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 558.32
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 0.6323,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 0.6101,
+        "first_verified_text_seconds": 0.6323
+      }
+    }
+  ],
+  "seconds": 2.814,
+  "coverage_before": {
+    "works": 14475,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14648,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14475,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14648,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "factual_review_pending": true
+}

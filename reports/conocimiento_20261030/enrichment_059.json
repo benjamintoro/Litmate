@@ -1,0 +1,117 @@
+{
+  "position": 59,
+  "work": {
+    "author": "Jianren Wu",
+    "categories": [
+      "Chinese fiction -- Qing dynasty, 1644-1912",
+      "Arranged marriage -- Fiction",
+      "China -- History -- Boxer Rebellion, 1899-1901 -- Fiction"
+    ],
+    "confirmed_aliases": [],
+    "edition_id": "gutenberg:23865",
+    "isbns": [],
+    "kind": "book",
+    "language": "zh",
+    "source": "Project Gutenberg",
+    "title": "\u6068\u6d77",
+    "url": "https://www.gutenberg.org/ebooks/23865",
+    "work_id": "litmate:e7544b0c67ef066738937cf3"
+  },
+  "kind": "fiction",
+  "requirement": "summary",
+  "before": {
+    "works": 1,
+    "works_with_explicit_plot": 0,
+    "works_with_development_excerpt": 0,
+    "works_with_admitted_description": 0,
+    "characters_with_literal_roles": 0,
+    "works_with_literal_roles": 0,
+    "characters_with_membership_only": 0,
+    "works_with_explicit_protagonist": 0,
+    "explicit_protagonist_mentions": 0,
+    "relationships": 0,
+    "narrative_facts": 0,
+    "linked_sources": 1,
+    "per_work": {
+      "litmate:e7544b0c67ef066738937cf3": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "batch": {
+    "mode": "continuous_once",
+    "scheduled": 1,
+    "llm_calls": 0,
+    "new_global_corrections": 0,
+    "mysql_references_added": 0,
+    "work_ids": [
+      "litmate:e7544b0c67ef066738937cf3"
+    ],
+    "batch": {
+      "claimed": 1,
+      "completed": 0,
+      "deferred": 1,
+      "stored": 0,
+      "seconds": 1.854,
+      "jobs": [
+        {
+          "work_id": "litmate:e7544b0c67ef066738937cf3",
+          "provider": "wikipedia",
+          "requirement": "summary",
+          "status": "empty",
+          "lease_current": true,
+          "seconds": 1.839,
+          "stored": 0,
+          "reused": false
+        }
+      ],
+      "llm_calls": 0,
+      "reused": 0,
+      "verification_scope": "source_policy_identity_and_requirement_coverage",
+      "independent_factual_corroboration": false
+    },
+    "stopped": null,
+    "seconds": 1.88,
+    "cpu_seconds": 0.078,
+    "process": {
+      "rss_mb": 84.766,
+      "peak_rss_mb": 123.539
+    },
+    "storage_delta_bytes": 0,
+    "revision_before": "14824",
+    "revision_after": "14824"
+  },
+  "after": {
+    "works": 1,
+    "works_with_explicit_plot": 0,
+    "works_with_development_excerpt": 0,
+    "works_with_admitted_description": 0,
+    "characters_with_literal_roles": 0,
+    "works_with_literal_roles": 0,
+    "characters_with_membership_only": 0,
+    "works_with_explicit_protagonist": 0,
+    "explicit_protagonist_mentions": 0,
+    "relationships": 0,
+    "narrative_facts": 0,
+    "linked_sources": 1,
+    "per_work": {
+      "litmate:e7544b0c67ef066738937cf3": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_changed": false,
+  "sql_projection": "existing evidence pointers; not copied prose"
+}

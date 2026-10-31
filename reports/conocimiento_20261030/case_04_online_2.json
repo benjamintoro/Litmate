@@ -1,0 +1,183 @@
+{
+  "case": {
+    "case": 4,
+    "title": "Las indignas",
+    "author": "Agustina Bazterrica",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": true
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de Las indignas de Agustina Bazterrica",
+      "answer": "Hay un problema temporal al consultar las fuentes de este libro. Puedes volver a intentarlo en unos instantes.",
+      "status": "unavailable",
+      "books": [],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 7216,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "work_type": "unknown",
+        "narrative_failure": "retrieval_unavailable",
+        "progress_metrics": {
+          "elapsed_ms": 7242.072,
+          "first_phase_emitted_ms": 23.387,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 8.492,
+            "cache_lookup": 5.694,
+            "knowledge_lookup": 629.549,
+            "retrieval": 1872.289,
+            "web_search": 2363.28,
+            "extraction": 330.67,
+            "finalization": 25.902
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 3.09,
+              "elapsed_ms": 8.492,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 17.682,
+              "elapsed_ms": 5.694,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 36.105,
+              "elapsed_ms": 333.273,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 109.365,
+              "elapsed_ms": 37.722,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 209.834,
+              "elapsed_ms": 158.331,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 279.08,
+              "elapsed_ms": 49.792,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 434.239,
+              "elapsed_ms": 50.431,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 2608.687,
+              "elapsed_ms": 1872.289,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 4486.547,
+              "elapsed_ms": 711.381,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 5198.366,
+              "elapsed_ms": 330.67,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 5529.068,
+              "elapsed_ms": 734.255,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 6267.362,
+              "elapsed_ms": 917.644,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 7216.164,
+              "elapsed_ms": 25.902,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 23.387
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 7.2495,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.0387,
+        "verified_ready_seconds": 7.2095,
+        "first_verified_text_seconds": 7.2495
+      }
+    }
+  ],
+  "seconds": 9.442,
+  "coverage_before": {
+    "works": 14477,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14650,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14477,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14650,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "persistent_exact_cache",
+  "google_books_enabled": false,
+  "factual_review_pending": true
+}

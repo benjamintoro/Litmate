@@ -1,0 +1,1698 @@
+{
+  "sql_integrity": {
+    "auth_group": {
+      "original_rows": 0,
+      "preserved": true,
+      "added": 0
+    },
+    "auth_group_permissions": {
+      "original_rows": 0,
+      "preserved": true,
+      "added": 0
+    },
+    "auth_permission": {
+      "original_rows": 152,
+      "preserved": true,
+      "added": 0
+    },
+    "auth_user": {
+      "original_rows": 179,
+      "preserved": true,
+      "added": 0
+    },
+    "auth_user_groups": {
+      "original_rows": 0,
+      "preserved": true,
+      "added": 0
+    },
+    "auth_user_user_permissions": {
+      "original_rows": 0,
+      "preserved": true,
+      "added": 0
+    },
+    "core_asistenteia": {
+      "original_rows": 1,
+      "preserved": true,
+      "added": 0
+    },
+    "core_autor": {
+      "original_rows": 31,
+      "preserved": true,
+      "added": 0
+    },
+    "core_clickconversion": {
+      "original_rows": 185,
+      "preserved": true,
+      "added": 0
+    },
+    "core_conversacionia": {
+      "original_rows": 50,
+      "preserved": true,
+      "added": 0
+    },
+    "core_editorial": {
+      "original_rows": 34,
+      "preserved": true,
+      "added": 0
+    },
+    "core_elementolistalectura": {
+      "original_rows": 2,
+      "preserved": true,
+      "added": 0
+    },
+    "core_estadolectura": {
+      "original_rows": 451,
+      "preserved": true,
+      "added": 0
+    },
+    "core_eventoanalitica": {
+      "original_rows": 384,
+      "preserved": true,
+      "added": 0
+    },
+    "core_genero": {
+      "original_rows": 12,
+      "preserved": true,
+      "added": 0
+    },
+    "core_historialchatbot": {
+      "original_rows": 5,
+      "preserved": true,
+      "added": 0
+    },
+    "core_historialpreciolibro": {
+      "original_rows": 223,
+      "preserved": true,
+      "added": 0
+    },
+    "core_kbname": {
+      "original_rows": 11104,
+      "preserved": true,
+      "added": 3062
+    },
+    "core_kbprojection": {
+      "original_rows": 7,
+      "preserved": true,
+      "added": 1
+    },
+    "core_kbrecord": {
+      "original_rows": 11104,
+      "preserved": true,
+      "added": 2414
+    },
+    "core_kbrelation": {
+      "original_rows": 1108,
+      "preserved": true,
+      "added": 1490
+    },
+    "core_kbversion": {
+      "original_rows": 11104,
+      "preserved": true,
+      "added": 2414
+    },
+    "core_libro": {
+      "original_rows": 55,
+      "preserved": true,
+      "added": 0
+    },
+    "core_libro_generos": {
+      "original_rows": 54,
+      "preserved": true,
+      "added": 0
+    },
+    "core_librofavorito": {
+      "original_rows": 231,
+      "preserved": true,
+      "added": 0
+    },
+    "core_listalectura": {
+      "original_rows": 2,
+      "preserved": true,
+      "added": 0
+    },
+    "core_mensajecontacto": {
+      "original_rows": 3,
+      "preserved": true,
+      "added": 0
+    },
+    "core_mensajeia": {
+      "original_rows": 190,
+      "preserved": true,
+      "added": 0
+    },
+    "core_perfilusuario": {
+      "original_rows": 158,
+      "preserved": true,
+      "added": 0
+    },
+    "core_preciolibrotienda": {
+      "original_rows": 117,
+      "preserved": true,
+      "added": 0
+    },
+    "core_preguntafrecuente": {
+      "original_rows": 0,
+      "preserved": true,
+      "added": 0
+    },
+    "core_recomendacion": {
+      "original_rows": 0,
+      "preserved": true,
+      "added": 0
+    },
+    "core_recomendacionialog": {
+      "original_rows": 0,
+      "preserved": true,
+      "added": 0
+    },
+    "core_resena": {
+      "original_rows": 116,
+      "preserved": true,
+      "added": 0
+    },
+    "django_admin_log": {
+      "original_rows": 0,
+      "preserved": true,
+      "added": 0
+    },
+    "django_content_type": {
+      "original_rows": 38,
+      "preserved": true,
+      "added": 0
+    },
+    "django_migrations": {
+      "original_rows": 27,
+      "preserved": true,
+      "added": 0
+    },
+    "django_session": {
+      "original_rows": 88,
+      "preserved": true,
+      "added": 0
+    },
+    "suscripciones_historialpago": {
+      "original_rows": 42,
+      "preserved": true,
+      "added": 0
+    },
+    "suscripciones_plansuscripcion": {
+      "original_rows": 3,
+      "preserved": true,
+      "added": 0
+    },
+    "suscripciones_suscripcionusuario": {
+      "original_rows": 157,
+      "preserved": true,
+      "added": 0
+    }
+  },
+  "resources": {
+    "free_disk_bytes": 98057609216,
+    "process": {
+      "rss_mb": 79.289,
+      "peak_rss_mb": 116.512
+    },
+    "mysql_estimates": [
+      {
+        "table": "core_kbname",
+        "data": 4734976,
+        "index": 5308416
+      },
+      {
+        "table": "core_kbprojection",
+        "data": 16384,
+        "index": 16384
+      },
+      {
+        "table": "core_kbrecord",
+        "data": 23740416,
+        "index": 2637824
+      },
+      {
+        "table": "core_kbrelation",
+        "data": 458752,
+        "index": 458752
+      },
+      {
+        "table": "core_kbversion",
+        "data": 20594688,
+        "index": 2670592
+      }
+    ],
+    "memory_db_bytes": 67047424
+  },
+  "ledger": {
+    "exists": true,
+    "records": 2414,
+    "datasets": 3,
+    "pending": 0,
+    "staged": 0,
+    "by_provider": {
+      "openlibrary": 2414
+    }
+  },
+  "memory_coverage": {
+    "works_catalogued": 14466,
+    "normalized_title_author_pairs": 14466,
+    "authors": 6959,
+    "current_sources": 14638,
+    "works_with_current_sources": 14466,
+    "works_with_admitted_descriptions": 18,
+    "works_with_narrative_facts": 14,
+    "works_with_characters": 10,
+    "character_entities": 104,
+    "structured_relations": 2,
+    "open_conflicts": 0,
+    "full_text_coverage": "measured_separately_in_literary_library"
+  },
+  "descriptions_in_dump": 92,
+  "resolved_works": 1200,
+  "retrieval": {
+    "samples": 120,
+    "retrieved": 120,
+    "correct": 120,
+    "wrong": 0,
+    "p50_ms": 8.252200001152232,
+    "p95_ms": 9.28600000042934,
+    "memory_top5": 119,
+    "memory_p95_ms": 8.435800002189353,
+    "examples": [
+      {
+        "id": "/works/OL1102986W",
+        "title": "Charlotte Bronte And Her Circle",
+        "author": "Clement King Shorter",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Charlotte Bronte And Her Circle** es una obra de **Clement King Shorter**.\n\nFuente: https://openlibrary.org/works/OL1102986W",
+        "milliseconds": 35.952
+      },
+      {
+        "id": "/works/OL10324766W",
+        "title": "Southern slavery and its relations to northern industry",
+        "author": "Henry Reed",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Southern slavery and its relations to northern industry** es una obra de **Henry Reed**.\n\nFuente: https://openlibrary.org/works/OL10324766W",
+        "milliseconds": 8.813
+      },
+      {
+        "id": "/works/OL1166033W",
+        "title": "Scots unbound and other poems",
+        "author": "Hugh MacDiarmid",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Scots unbound and other poems** es una obra de **Hugh MacDiarmid**.\n\nFuente: https://openlibrary.org/works/OL1166033W",
+        "milliseconds": 7.978
+      },
+      {
+        "id": "/works/OL1234609W",
+        "title": "Les conteurs francais du XVIe siecle",
+        "author": "Jules Hasselmann",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Les conteurs francais du XVIe siecle** es una obra de **Jules Hasselmann**.\n\nFuente: https://openlibrary.org/works/OL1234609W",
+        "milliseconds": 8.28
+      },
+      {
+        "id": "/works/OL10218424W",
+        "title": "Every house needs a balcony",
+        "author": "Rina Frank-Mitrani",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Every house needs a balcony** es una obra de **Rina Frank-Mitrani**.\n\nFuente: https://openlibrary.org/works/OL10218424W",
+        "milliseconds": 8.264
+      },
+      {
+        "id": "/works/OL11729804W",
+        "title": "Mi vida contra ETA",
+        "author": "Enrique Rodri\u0301guez Galindo",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Mi vida contra ETA** es una obra de **Enrique Rodri\u0301guez Galindo**.\n\nFuente: https://openlibrary.org/works/OL11729804W",
+        "milliseconds": 8.119
+      },
+      {
+        "id": "/works/OL10931942W",
+        "title": "Tvory",
+        "author": "M. I\ufe20U\ufe21 Bra\u012dchevs\u02b9ky\u012d",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Tvory** es una obra de **M. I\ufe20U\ufe21 Bra\u012dchevs\u02b9ky\u012d**.\n\nFuente: https://openlibrary.org/works/OL10931942W",
+        "milliseconds": 7.769
+      },
+      {
+        "id": "/works/OL11243187W",
+        "title": "Atlas of the Bible",
+        "author": "Lucas Grollenberg",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Atlas of the Bible** es una obra de **Lucas Grollenberg**.\n\nFuente: https://openlibrary.org/works/OL11243187W",
+        "milliseconds": 7.8
+      },
+      {
+        "id": "/works/OL12030963W",
+        "title": "Wil\u0101yat Bayr\u016bt",
+        "author": "Mu\u1e25ammad Raf\u012bq",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Wil\u0101yat Bayr\u016bt** es una obra de **Mu\u1e25ammad Raf\u012bq**.\n\nFuente: https://openlibrary.org/works/OL12030963W",
+        "milliseconds": 8.143
+      },
+      {
+        "id": "/works/OL10253468W",
+        "title": "Juan B. Justo - El Patriarca Socialista (Coleccion Fundadores de La Izquierda Argentina)",
+        "author": "Cristina Noble",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Juan B. Justo - El Patriarca Socialista (Coleccion Fundadores de La Izquierda Argentina)** es una obra de **Cristina Noble**.\n\nFuente: https://openlibrary.org/works/OL10253468W",
+        "milliseconds": 8.344
+      },
+      {
+        "id": "/works/OL11551427W",
+        "title": "Thessalische Studien",
+        "author": "Gerhard Kip",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Thessalische Studien** es una obra de **Gerhard Kip**.\n\nFuente: https://openlibrary.org/works/OL11551427W",
+        "milliseconds": 7.856
+      },
+      {
+        "id": "/works/OL10183382W",
+        "title": "Liu chou bi ji (Wen ren wen cong)",
+        "author": "Zhian",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Liu chou bi ji (Wen ren wen cong)** es una obra de **Zhian**.\n\nFuente: https://openlibrary.org/works/OL10183382W",
+        "milliseconds": 8.214
+      },
+      {
+        "id": "/works/OL11995665W",
+        "title": "Myles Dunphy selected writings",
+        "author": "Myles Dunphy",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Myles Dunphy selected writings** es una obra de **Myles Dunphy**.\n\nFuente: https://openlibrary.org/works/OL11995665W",
+        "milliseconds": 10.103
+      },
+      {
+        "id": "/works/OL11251644W",
+        "title": "The German fury in Belgium",
+        "author": "L Mokveld",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**The German fury in Belgium** es una obra de **L Mokveld**.\n\nFuente: https://openlibrary.org/works/OL11251644W",
+        "milliseconds": 8.087
+      },
+      {
+        "id": "/works/OL12171667W",
+        "title": "Meiji kyoiku riron shi kenkyu",
+        "author": "Tadahiko Inagaki",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Meiji kyoiku riron shi kenkyu** es una obra de **Tadahiko Inagaki**.\n\nFuente: https://openlibrary.org/works/OL12171667W",
+        "milliseconds": 8.22
+      },
+      {
+        "id": "/works/OL11979759W",
+        "title": "Lek\u0323sik\u0323on mak\u0323if le-toldot ha-Tsiyonut",
+        "author": "Shapira, Joseph Dr.",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Lek\u0323sik\u0323on mak\u0323if le-toldot ha-Tsiyonut** es una obra de **Shapira, Joseph Dr.**.\n\nFuente: https://openlibrary.org/works/OL11979759W",
+        "milliseconds": 8.076
+      },
+      {
+        "id": "/works/OL10714402W",
+        "title": "Diplomata chartae, epistolae, leges aliaque instrumenta ad res Gallo-Francicas spectantia",
+        "author": "Br\u00e9quigny M. de",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Diplomata chartae, epistolae, leges aliaque instrumenta ad res Gallo-Francicas spectantia** es una obra de **Br\u00e9quigny M. de**.\n\nFuente: https://openlibrary.org/works/OL10714402W",
+        "milliseconds": 8.273
+      },
+      {
+        "id": "/works/OL12481779W",
+        "title": "Foreign intervention in Spain",
+        "author": "\"Hispanicus\" pseud.",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Foreign intervention in Spain** es una obra de **\"Hispanicus\" pseud.**.\n\nFuente: https://openlibrary.org/works/OL12481779W",
+        "milliseconds": 8.344
+      },
+      {
+        "id": "/works/OL1177746W",
+        "title": "Histoire de la philosophie",
+        "author": "Truc, Gonzague",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Histoire de la philosophie** es una obra de **Truc, Gonzague**.\n\nFuente: https://openlibrary.org/works/OL1177746W",
+        "milliseconds": 7.865
+      },
+      {
+        "id": "/works/OL111874W",
+        "title": "Charlie's Raven",
+        "author": "Jean Craighead George",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Charlie's Raven** es una obra de **Jean Craighead George**.\n\nFuente: https://openlibrary.org/works/OL111874W",
+        "milliseconds": 8.411
+      },
+      {
+        "id": "/works/OL10194978W",
+        "title": "Quan chen hui yi lu",
+        "author": "Bo Tang",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Quan chen hui yi lu** es una obra de **Bo Tang**.\n\nFuente: https://openlibrary.org/works/OL10194978W",
+        "milliseconds": 10.388
+      },
+      {
+        "id": "/works/OL11453868W",
+        "title": "Martin Molony",
+        "author": "Guy St. John Williams",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Martin Molony** es una obra de **Guy St. John Williams**.\n\nFuente: https://openlibrary.org/works/OL11453868W",
+        "milliseconds": 8.09
+      },
+      {
+        "id": "/works/OL12002717W",
+        "title": "Politicheska geografii\ufe20a\ufe21, geopolitika, geostrategii\ufe20a\ufe21",
+        "author": "Stefan Karastoi\ufe20a\ufe21nov",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Politicheska geografii\ufe20a\ufe21, geopolitika, geostrategii\ufe20a\ufe21** es una obra de **Stefan Karastoi\ufe20a\ufe21nov**.\n\nFuente: https://openlibrary.org/works/OL12002717W",
+        "milliseconds": 8.197
+      },
+      {
+        "id": "/works/OL11224180W",
+        "title": "Two nations and Kashmir",
+        "author": "Birdwood, Christopher Bromhead Birdwood 2nd baron",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Two nations and Kashmir** es una obra de **Birdwood, Christopher Bromhead Birdwood 2nd baron**.\n\nFuente: https://openlibrary.org/works/OL11224180W",
+        "milliseconds": 8.25
+      },
+      {
+        "id": "/works/OL12131816W",
+        "title": "The political economy of Latin America",
+        "author": "Wendell C. Gordon",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**The political economy of Latin America** es una obra de **Wendell C. Gordon**.\n\nFuente: https://openlibrary.org/works/OL12131816W",
+        "milliseconds": 8.611
+      },
+      {
+        "id": "/works/OL11972237W",
+        "title": "Chekhov i Lika Mizinova",
+        "author": "E\u0307lla Matonina",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Chekhov i Lika Mizinova** es una obra de **E\u0307lla Matonina**.\n\nFuente: https://openlibrary.org/works/OL11972237W",
+        "milliseconds": 8.133
+      },
+      {
+        "id": "/works/OL10503668W",
+        "title": "Journal de la Confederation",
+        "author": "Gracchus Babeuf",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Journal de la Confederation** es una obra de **Gracchus Babeuf**.\n\nFuente: https://openlibrary.org/works/OL10503668W",
+        "milliseconds": 7.957
+      },
+      {
+        "id": "/works/OL1230235W",
+        "title": "... Vrijheid",
+        "author": "Jan Engelman",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**... Vrijheid** es una obra de **Jan Engelman**.\n\nFuente: https://openlibrary.org/works/OL1230235W",
+        "milliseconds": 8.946
+      },
+      {
+        "id": "/works/OL11003707W",
+        "title": "Ummah al-'Arabiyah 'ala al-tariq",
+        "author": "Muhammad Faraj",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Ummah al-'Arabiyah 'ala al-tariq** es una obra de **Muhammad Faraj**.\n\nFuente: https://openlibrary.org/works/OL11003707W",
+        "milliseconds": 8.238
+      },
+      {
+        "id": "/works/OL11354887W",
+        "title": "The history of the life & martyrdom of St. George, the titular patron of England",
+        "author": "Thomas Lowick",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**The history of the life & martyrdom of St. George, the titular patron of England** es una obra de **Thomas Lowick**.\n\nFuente: https://openlibrary.org/works/OL11354887W",
+        "milliseconds": 8.491
+      },
+      {
+        "id": "/works/OL12437279W",
+        "title": "The mysteries of Beethoven's hair",
+        "author": "Russell Martin",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**The mysteries of Beethoven's hair** es una obra de **Russell Martin**.\n\nFuente: https://openlibrary.org/works/OL12437279W",
+        "milliseconds": 9.989
+      },
+      {
+        "id": "/works/OL12098196W",
+        "title": "Dervish is digital",
+        "author": "Pat Cadigan",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Dervish is digital** es una obra de **Pat Cadigan**.\n\nFuente: https://openlibrary.org/works/OL12098196W",
+        "milliseconds": 9.279
+      },
+      {
+        "id": "/works/OL11907195W",
+        "title": "Reliefstele Adadniraris III. aus Saba'a undSemiramis",
+        "author": "Eckhard Unger",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Reliefstele Adadniraris III. aus Saba'a undSemiramis** es una obra de **Eckhard Unger**.\n\nFuente: https://openlibrary.org/works/OL11907195W",
+        "milliseconds": 8.028
+      },
+      {
+        "id": "/works/OL1205166W",
+        "title": "La marina c\u00e1ntabra y Juan de la Cosa",
+        "author": "Antonio Ballesteros y Beretta",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**La marina c\u00e1ntabra y Juan de la Cosa** es una obra de **Antonio Ballesteros y Beretta**.\n\nFuente: https://openlibrary.org/works/OL1205166W",
+        "milliseconds": 7.942
+      },
+      {
+        "id": "/works/OL10208119W",
+        "title": "Hong er fang mian jun cong Xiang E bian dao Shan bei chang zheng ji shi",
+        "author": "Biao He",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Hong er fang mian jun cong Xiang E bian dao Shan bei chang zheng ji shi** es una obra de **Biao He**.\n\nFuente: https://openlibrary.org/works/OL10208119W",
+        "milliseconds": 8.7
+      },
+      {
+        "id": "/works/OL112827W",
+        "title": "Go Maisy, Go!",
+        "author": "Lucy Cousins",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Go Maisy, Go!** es una obra de **Lucy Cousins**.\n\nFuente: https://openlibrary.org/works/OL112827W",
+        "milliseconds": 8.24
+      },
+      {
+        "id": "/works/OL117693W",
+        "title": "Christmas cats",
+        "author": "Pauline Flick",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Christmas cats** es una obra de **Pauline Flick**.\n\nFuente: https://openlibrary.org/works/OL117693W",
+        "milliseconds": 7.828
+      },
+      {
+        "id": "/works/OL11167086W",
+        "title": "Arkhiv dekabrista S.G. Volkonskago",
+        "author": "Volkonski\u012d, S. G. kni\ufe20a\ufe21z\u02b9",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Arkhiv dekabrista S.G. Volkonskago** es una obra de **Volkonski\u012d, S. G. kni\ufe20a\ufe21z\u02b9**.\n\nFuente: https://openlibrary.org/works/OL11167086W",
+        "milliseconds": 8.063
+      },
+      {
+        "id": "/works/OL12312649W",
+        "title": "A history of Sedgley Park and Cotton College",
+        "author": "Frank Roberts",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**A history of Sedgley Park and Cotton College** es una obra de **Frank Roberts**.\n\nFuente: https://openlibrary.org/works/OL12312649W",
+        "milliseconds": 8.26
+      },
+      {
+        "id": "/works/OL10637844W",
+        "title": "I\u0300sara\u0300",
+        "author": "Wole Soyinka",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**I\u0300sara\u0300** es una obra de **Wole Soyinka**.\n\nFuente: https://openlibrary.org/works/OL10637844W",
+        "milliseconds": 8.28
+      },
+      {
+        "id": "/works/OL11798980W",
+        "title": "Zoku Katsuroku fudoki",
+        "author": "Kishiro\u0304 Sasa",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Zoku Katsuroku fudoki** es una obra de **Kishiro\u0304 Sasa**.\n\nFuente: https://openlibrary.org/works/OL11798980W",
+        "milliseconds": 9.286
+      },
+      {
+        "id": "/works/OL11153176W",
+        "title": "An appreciation of art & antiques",
+        "author": "Peter Kaellgren",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**An appreciation of art & antiques** es una obra de **Peter Kaellgren**.\n\nFuente: https://openlibrary.org/works/OL11153176W",
+        "milliseconds": 9.726
+      },
+      {
+        "id": "/works/OL10435437W",
+        "title": "Wicklow parish",
+        "author": "Michael Clarke",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Wicklow parish** es una obra de **Michael Clarke**.\n\nFuente: https://openlibrary.org/works/OL10435437W",
+        "milliseconds": 8.163
+      },
+      {
+        "id": "/works/OL11925904W",
+        "title": "Nihon bunka shi kenky\u016b",
+        "author": "Kanshi Imanaka",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Nihon bunka shi kenky\u016b** es una obra de **Kanshi Imanaka**.\n\nFuente: https://openlibrary.org/works/OL11925904W",
+        "milliseconds": 8.128
+      },
+      {
+        "id": "/works/OL10186458W",
+        "title": "She ying lou shi hua",
+        "author": "Changyi Lin",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**She ying lou shi hua** es una obra de **Changyi Lin**.\n\nFuente: https://openlibrary.org/works/OL10186458W",
+        "milliseconds": 8.483
+      },
+      {
+        "id": "/works/OL1187632W",
+        "title": "The Amaranthers",
+        "author": "Jack Butler Yeats",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**The Amaranthers** es una obra de **Jack Butler Yeats**.\n\nFuente: https://openlibrary.org/works/OL1187632W",
+        "milliseconds": 8.358
+      },
+      {
+        "id": "/works/OL11419881W",
+        "title": "The secret of the forest",
+        "author": "Cherry Calvert Jones",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**The secret of the forest** es una obra de **Cherry Calvert Jones**.\n\nFuente: https://openlibrary.org/works/OL11419881W",
+        "milliseconds": 8.028
+      },
+      {
+        "id": "/works/OL1229979W",
+        "title": "Quellen zur Geschichte des deutschen Bauernstandes im Mittelalter",
+        "author": "G\u00fcnther Franz",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Quellen zur Geschichte des deutschen Bauernstandes im Mittelalter** es una obra de **G\u00fcnther Franz**.\n\nFuente: https://openlibrary.org/works/OL1229979W",
+        "milliseconds": 8.446
+      },
+      {
+        "id": "/works/OL124474W",
+        "title": "Gendai no sh\u016bka",
+        "author": "Shimaoka, Akira",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Gendai no sh\u016bka** es una obra de **Shimaoka, Akira**.\n\nFuente: https://openlibrary.org/works/OL124474W",
+        "milliseconds": 8.215
+      },
+      {
+        "id": "/works/OL11296541W",
+        "title": "Cancioneiro d'el Rei Dom Denis",
+        "author": "Diniz King of Portugal",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Cancioneiro d'el Rei Dom Denis** es una obra de **Diniz King of Portugal**.\n\nFuente: https://openlibrary.org/works/OL11296541W",
+        "milliseconds": 8.334
+      },
+      {
+        "id": "/works/OL111215W",
+        "title": "Spirit Of The Mountain Man",
+        "author": "William W. Johnstone",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Spirit Of The Mountain Man** es una obra de **William W. Johnstone**.\n\nFuente: https://openlibrary.org/works/OL111215W",
+        "milliseconds": 8.973
+      },
+      {
+        "id": "/works/OL11866757W",
+        "title": "Nama\u0304d-i khvurshi\u0304d dar farhang va adabi\u0304ya\u0304t",
+        "author": "Ra\u0304hilah Ghura\u0304b",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Nama\u0304d-i khvurshi\u0304d dar farhang va adabi\u0304ya\u0304t** es una obra de **Ra\u0304hilah Ghura\u0304b**.\n\nFuente: https://openlibrary.org/works/OL11866757W",
+        "milliseconds": 7.951
+      },
+      {
+        "id": "/works/OL10161599W",
+        "title": "Chui lian xing feng yun",
+        "author": "Daocheng Wang",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Chui lian xing feng yun** es una obra de **Daocheng Wang**.\n\nFuente: https://openlibrary.org/works/OL10161599W",
+        "milliseconds": 7.959
+      },
+      {
+        "id": "/works/OL10057261W",
+        "title": "Aus paganer und christlicher Antike",
+        "author": "Christoph Sch\u00e4ublin",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Aus paganer und christlicher Antike** es una obra de **Christoph Sch\u00e4ublin**.\n\nFuente: https://openlibrary.org/works/OL10057261W",
+        "milliseconds": 8.023
+      },
+      {
+        "id": "/works/OL12337444W",
+        "title": "Great Britain and the Taipings",
+        "author": "John Stradbroke Gregory",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Great Britain and the Taipings** es una obra de **John Stradbroke Gregory**.\n\nFuente: https://openlibrary.org/works/OL12337444W",
+        "milliseconds": 8.112
+      },
+      {
+        "id": "/works/OL12400683W",
+        "title": "P\u02bbyoam kang Se-hwang sis\u014f y\u014fn\u02begu",
+        "author": "Y\u014fng-o Mun",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**P\u02bbyoam kang Se-hwang sis\u014f y\u014fn\u02begu** es una obra de **Y\u014fng-o Mun**.\n\nFuente: https://openlibrary.org/works/OL12400683W",
+        "milliseconds": 8.606
+      },
+      {
+        "id": "/works/OL12216106W",
+        "title": "Experimentelle Musik",
+        "author": "Internationale Woche f\u00fcr Experimentelle Musik, Berlin 1968",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Experimentelle Musik** es una obra de **Internationale Woche f\u00fcr Experimentelle Musik, Berlin 1968**.\n\nFuente: https://openlibrary.org/works/OL12216106W",
+        "milliseconds": 8.327
+      },
+      {
+        "id": "/works/OL11944515W",
+        "title": "Les oliviers de l'exil",
+        "author": "Raymond San Geroteo",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Les oliviers de l'exil** es una obra de **Raymond San Geroteo**.\n\nFuente: https://openlibrary.org/works/OL11944515W",
+        "milliseconds": 9.246
+      },
+      {
+        "id": "/works/OL11408279W",
+        "title": "The branded man",
+        "author": "Hal George Evarts",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**The branded man** es una obra de **Hal George Evarts**.\n\nFuente: https://openlibrary.org/works/OL11408279W",
+        "milliseconds": 8.255
+      },
+      {
+        "id": "/works/OL10323009W",
+        "title": "History of Brookline",
+        "author": "Edward Everett Parker",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**History of Brookline** es una obra de **Edward Everett Parker**.\n\nFuente: https://openlibrary.org/works/OL10323009W",
+        "milliseconds": 8.159
+      },
+      {
+        "id": "/works/OL11242832W",
+        "title": "Guan cang Guangdong di fang zhi mu lu",
+        "author": "Guangdong sheng Zhongshan tu shu guan.",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Guan cang Guangdong di fang zhi mu lu** es una obra de **Guangdong sheng Zhongshan tu shu guan.**.\n\nFuente: https://openlibrary.org/works/OL11242832W",
+        "milliseconds": 8.386
+      },
+      {
+        "id": "/works/OL12425814W",
+        "title": "Vokale Tongebung in avantgardistischer Musik",
+        "author": "Annette Brunsing",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Vokale Tongebung in avantgardistischer Musik** es una obra de **Annette Brunsing**.\n\nFuente: https://openlibrary.org/works/OL12425814W",
+        "milliseconds": 8.24
+      },
+      {
+        "id": "/works/OL11524434W",
+        "title": "The Lucas plan",
+        "author": "Hilary Wainwright",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**The Lucas plan** es una obra de **Hilary Wainwright**.\n\nFuente: https://openlibrary.org/works/OL11524434W",
+        "milliseconds": 8.202
+      },
+      {
+        "id": "/works/OL11242176W",
+        "title": "Kabushiki Kaisha Edo Bakufu sarar\u012bman kokoroe",
+        "author": "Fuyuji D\u014dmon",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Kabushiki Kaisha Edo Bakufu sarar\u012bman kokoroe** es una obra de **Fuyuji D\u014dmon**.\n\nFuente: https://openlibrary.org/works/OL11242176W",
+        "milliseconds": 8.017
+      },
+      {
+        "id": "/works/OL11246082W",
+        "title": "Siming chuan qi =",
+        "author": "Tianfa Qi",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Siming chuan qi =** es una obra de **Tianfa Qi**.\n\nFuente: https://openlibrary.org/works/OL11246082W",
+        "milliseconds": 8.271
+      },
+      {
+        "id": "/works/OL11277506W",
+        "title": "Still among the living",
+        "author": "Zachary Klein",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Still among the living** es una obra de **Zachary Klein**.\n\nFuente: https://openlibrary.org/works/OL11277506W",
+        "milliseconds": 8.312
+      },
+      {
+        "id": "/works/OL12414904W",
+        "title": "1998 \"Moorexkursion\" to Southern Ontario, Canada",
+        "author": "John H. McAndrews",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**1998 \"Moorexkursion\" to Southern Ontario, Canada** es una obra de **John H. McAndrews**.\n\nFuente: https://openlibrary.org/works/OL12414904W",
+        "milliseconds": 8.182
+      },
+      {
+        "id": "/works/OL1129465W",
+        "title": "Les Acadiens apr\u00e8s leur dispersion",
+        "author": "H. R. Casgrain",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Les Acadiens apr\u00e8s leur dispersion** es una obra de **H. R. Casgrain**.\n\nFuente: https://openlibrary.org/works/OL1129465W",
+        "milliseconds": 8.454
+      },
+      {
+        "id": "/works/OL12269924W",
+        "title": "Narys istori\u00ef ukra\u00efns'ko\u00ef Pravoslavno\u00ef tserkvy",
+        "author": "Vlasovs'ky\u00ef Ivan",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Narys istori\u00ef ukra\u00efns'ko\u00ef Pravoslavno\u00ef tserkvy** es una obra de **Vlasovs'ky\u00ef Ivan**.\n\nFuente: https://openlibrary.org/works/OL12269924W",
+        "milliseconds": 7.985
+      },
+      {
+        "id": "/works/OL11563055W",
+        "title": "An act of the Common Councell, concerning the preseruation and clensing of the riuer of Thames",
+        "author": "Corporation of London (England). Court of Common Council.",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**An act of the Common Councell, concerning the preseruation and clensing of the riuer of Thames** es una obra de **Corporation of London (England). Court of Common Council.**.\n\nFuente: https://openlibrary.org/works/OL11563055W",
+        "milliseconds": 8.721
+      },
+      {
+        "id": "/works/OL11839011W",
+        "title": "La Soci\u00e9t\u00e9 de Statistique",
+        "author": "Soci\u00e9t\u00e9 de Statistique de Paris.",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**La Soci\u00e9t\u00e9 de Statistique** es una obra de **Soci\u00e9t\u00e9 de Statistique de Paris.**.\n\nFuente: https://openlibrary.org/works/OL11839011W",
+        "milliseconds": 8.615
+      },
+      {
+        "id": "/works/OL11349537W",
+        "title": "Friday, March the 16th, 1659, resolved &c. that Friday, the sixth day of April, One thousand, six hundred and sixty, be set apart for a day of publick fasting and humiliation to be solemnized throughout the nation",
+        "author": "England and Wales. Parliament.",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Friday, March the 16th, 1659, resolved &c. that Friday, the sixth day of April, One thousand, six hundred and sixty, be set apart for a day of publick fasting and humiliation to be solemnized throughout the nation** es una obra de **England and Wales. Parliament.**.\n\nFuente: https://openlibrary.org/works/OL11349537W",
+        "milliseconds": 9.027
+      },
+      {
+        "id": "/works/OL10409922W",
+        "title": "Le n\u00e9ant bleu",
+        "author": "Rachid El Hamri",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Le n\u00e9ant bleu** es una obra de **Rachid El Hamri**.\n\nFuente: https://openlibrary.org/works/OL10409922W",
+        "milliseconds": 8.192
+      },
+      {
+        "id": "/works/OL11414816W",
+        "title": "That man in her life",
+        "author": "John Marsh",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**That man in her life** es una obra de **John Marsh**.\n\nFuente: https://openlibrary.org/works/OL11414816W",
+        "milliseconds": 7.967
+      },
+      {
+        "id": "/works/OL1176044W",
+        "title": "The English common reader",
+        "author": "Richard Daniel Altick",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**The English common reader** es una obra de **Richard Daniel Altick**.\n\nFuente: https://openlibrary.org/works/OL1176044W",
+        "milliseconds": 8.369
+      },
+      {
+        "id": "/works/OL10537362W",
+        "title": "What makes Sammy run?",
+        "author": "Budd Schulberg",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**What makes Sammy run?** es una obra de **Budd Schulberg**.\n\nFuente: https://openlibrary.org/works/OL10537362W",
+        "milliseconds": 8.838
+      },
+      {
+        "id": "/works/OL12450502W",
+        "title": "Raduga",
+        "author": "Sasa Chernyi",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Raduga** es una obra de **Sasa Chernyi**.\n\nFuente: https://openlibrary.org/works/OL12450502W",
+        "milliseconds": 8.03
+      },
+      {
+        "id": "/works/OL1113740W",
+        "title": "The early history of instrumental precision in medicine",
+        "author": "S. Weir Mitchell",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**The early history of instrumental precision in medicine** es una obra de **S. Weir Mitchell**.\n\nFuente: https://openlibrary.org/works/OL1113740W",
+        "milliseconds": 8.81
+      },
+      {
+        "id": "/works/OL12358349W",
+        "title": "Ryoko hyakunen",
+        "author": "Hisaji Sawa",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Ryoko hyakunen** es una obra de **Hisaji Sawa**.\n\nFuente: https://openlibrary.org/works/OL12358349W",
+        "milliseconds": 7.925
+      },
+      {
+        "id": "/works/OL11045806W",
+        "title": "Imperator Aleksandr Pervy\u01d0",
+        "author": "Nikolai\u0306 Mikhai\u0306lovich Grand Duke of Russia",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Imperator Aleksandr Pervy\u01d0** es una obra de **Nikolai\u0306 Mikhai\u0306lovich Grand Duke of Russia**.\n\nFuente: https://openlibrary.org/works/OL11045806W",
+        "milliseconds": 8.347
+      },
+      {
+        "id": "/works/OL11763426W",
+        "title": "Zaman al-qa\u1e63\u012bdah",
+        "author": "Wijd\u0101n \u02bbAbd al-Il\u0101h \u1e62\u0101yigh",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Zaman al-qa\u1e63\u012bdah** es una obra de **Wijd\u0101n \u02bbAbd al-Il\u0101h \u1e62\u0101yigh**.\n\nFuente: https://openlibrary.org/works/OL11763426W",
+        "milliseconds": 7.872
+      },
+      {
+        "id": "/works/OL12180852W",
+        "title": "Anda\u0308chtigen Hertzens Schmuck und Asche, oder, Neue Sammlung zwey hundert Freud- und Trauer-Lieder",
+        "author": "Benjamin Schmolck",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Anda\u0308chtigen Hertzens Schmuck und Asche, oder, Neue Sammlung zwey hundert Freud- und Trauer-Lieder** es una obra de **Benjamin Schmolck**.\n\nFuente: https://openlibrary.org/works/OL12180852W",
+        "milliseconds": 9.078
+      },
+      {
+        "id": "/works/OL11061958W",
+        "title": "What is your child reading in school?",
+        "author": "United States. Congress. Senate. Committee on Health, Education, Labor, and Pensions.",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**What is your child reading in school?** es una obra de **United States. Congress. Senate. Committee on Health, Education, Labor, and Pensions.**.\n\nFuente: https://openlibrary.org/works/OL11061958W",
+        "milliseconds": 8.699
+      },
+      {
+        "id": "/works/OL12421456W",
+        "title": "Kar\u012bm Sh\u012brah\u02b9\u012b dalqak-i mashh\u016br-i darb\u0101r-i N\u0101\u1e63ir al-D\u012bn Sh\u0101h Q\u0101j\u0101r",
+        "author": "\u1e24usayn N\u016brbakhsh",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Kar\u012bm Sh\u012brah\u02b9\u012b dalqak-i mashh\u016br-i darb\u0101r-i N\u0101\u1e63ir al-D\u012bn Sh\u0101h Q\u0101j\u0101r** es una obra de **\u1e24usayn N\u016brbakhsh**.\n\nFuente: https://openlibrary.org/works/OL12421456W",
+        "milliseconds": 8.442
+      },
+      {
+        "id": "/works/OL11101334W",
+        "title": "Report of the Committee of Claims, to whom was recommitted, on the 24th ultimo, the petition of Comfort Sands, and others, together with several reports thereon",
+        "author": "United States. Congress. House. Committee on Claims",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Report of the Committee of Claims, to whom was recommitted, on the 24th ultimo, the petition of Comfort Sands, and others, together with several reports thereon** es una obra de **United States. Congress. House. Committee on Claims**.\n\nFuente: https://openlibrary.org/works/OL11101334W",
+        "milliseconds": 8.954
+      },
+      {
+        "id": "/works/OL11438068W",
+        "title": "Memorial of E.H. Angamar, relative to the navigation of Old River, to the Legislature of the state of Louisiana",
+        "author": "E. H Angamar",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Memorial of E.H. Angamar, relative to the navigation of Old River, to the Legislature of the state of Louisiana** es una obra de **E. H Angamar**.\n\nFuente: https://openlibrary.org/works/OL11438068W",
+        "milliseconds": 8.178
+      },
+      {
+        "id": "/works/OL10707859W",
+        "title": "A alma encantadora das ruas",
+        "author": "Jo\u00e3o do Rio",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**A alma encantadora das ruas** es una obra de **Jo\u00e3o do Rio**.\n\nFuente: https://openlibrary.org/works/OL10707859W",
+        "milliseconds": 7.875
+      },
+      {
+        "id": "/works/OL11867753W",
+        "title": "Fax chronologica ad omnigenam historiam et dilucidum eiusdem compendium ab orbe condito ad annum Christi 1712",
+        "author": "Giovanni Dominico Musanti",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Fax chronologica ad omnigenam historiam et dilucidum eiusdem compendium ab orbe condito ad annum Christi 1712** es una obra de **Giovanni Dominico Musanti**.\n\nFuente: https://openlibrary.org/works/OL11867753W",
+        "milliseconds": 8.488
+      },
+      {
+        "id": "/works/OL12213827W",
+        "title": "New voices",
+        "author": "Lan Hsi Chang Yin",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**New voices** es una obra de **Lan Hsi Chang Yin**.\n\nFuente: https://openlibrary.org/works/OL12213827W",
+        "milliseconds": 8.046
+      },
+      {
+        "id": "/works/OL11558190W",
+        "title": "Guan yu chuang zuo",
+        "author": "Yanbing Shen",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Guan yu chuang zuo** es una obra de **Yanbing Shen**.\n\nFuente: https://openlibrary.org/works/OL11558190W",
+        "milliseconds": 8.215
+      },
+      {
+        "id": "/works/OL10530698W",
+        "title": "The secret memoirs of Lord Byron",
+        "author": "Christopher Nicole",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**The secret memoirs of Lord Byron** es una obra de **Christopher Nicole**.\n\nFuente: https://openlibrary.org/works/OL10530698W",
+        "milliseconds": 8.389
+      },
+      {
+        "id": "/works/OL101898W",
+        "title": "Afganistan",
+        "author": "Viktor Grigor\u02b9evich Korgun",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Afganistan** es una obra de **Viktor Grigor\u02b9evich Korgun**.\n\nFuente: https://openlibrary.org/works/OL101898W",
+        "milliseconds": 7.809
+      },
+      {
+        "id": "/works/OL1050768W",
+        "title": "A\u0304n\u0310khi\u0304jhyalaba\u0304t\u0323a Kan\u0303canajan\u0307gha\u0304ko pura\u0304no a\u0304ka\u0304s\u0301a",
+        "author": "San\u0303jaya Vis\u0301va\u0304sa",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**A\u0304n\u0310khi\u0304jhyalaba\u0304t\u0323a Kan\u0303canajan\u0307gha\u0304ko pura\u0304no a\u0304ka\u0304s\u0301a** es una obra de **San\u0303jaya Vis\u0301va\u0304sa**.\n\nFuente: https://openlibrary.org/works/OL1050768W",
+        "milliseconds": 8.725
+      },
+      {
+        "id": "/works/OL11413741W",
+        "title": "Voices of Doom",
+        "author": "Basil Copper",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Voices of Doom** es una obra de **Basil Copper**.\n\nFuente: https://openlibrary.org/works/OL11413741W",
+        "milliseconds": 7.878
+      },
+      {
+        "id": "/works/OL10077622W",
+        "title": "The Colonial 'Civilizing Process' in Dutch Formosa, 1624-1662 (Tanap Monographs on the History of Asian-European Interaction)",
+        "author": "Hsin-hui Chiu",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**The Colonial 'Civilizing Process' in Dutch Formosa, 1624-1662 (Tanap Monographs on the History of Asian-European Interaction)** es una obra de **Hsin-hui Chiu**.\n\nFuente: https://openlibrary.org/works/OL10077622W",
+        "milliseconds": 8.398
+      },
+      {
+        "id": "/works/OL12266906W",
+        "title": "A history of the army experience of William A. Canfield",
+        "author": "William A. Canfield",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**A history of the army experience of William A. Canfield** es una obra de **William A. Canfield**.\n\nFuente: https://openlibrary.org/works/OL12266906W",
+        "milliseconds": 9.561
+      },
+      {
+        "id": "/works/OL12390529W",
+        "title": "Juan Pablo II",
+        "author": "Alvaro Rodr\u00edguez Torres",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Juan Pablo II** es una obra de **Alvaro Rodr\u00edguez Torres**.\n\nFuente: https://openlibrary.org/works/OL12390529W",
+        "milliseconds": 7.918
+      },
+      {
+        "id": "/works/OL12376417W",
+        "title": "Marusi\ufe20a\ufe21 Tysi\ufe20a\ufe21ns\u02b9ka",
+        "author": "Ivan Stet\ufe20s\ufe21i\ufe20u\ufe21ra",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": false,
+        "answered": true,
+        "answer": "**Marusi\ufe20a\ufe21 Tysi\ufe20a\ufe21ns\u02b9ka** es una obra de **Ivan Stet\ufe20s\ufe21i\ufe20u\ufe21ra**.\n\nFuente: https://openlibrary.org/works/OL12376417W",
+        "milliseconds": 8.228
+      },
+      {
+        "id": "/works/OL10703082W",
+        "title": "La perte du Canada",
+        "author": "A. H\u00e9ron",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**La perte du Canada** es una obra de **A. H\u00e9ron**.\n\nFuente: https://openlibrary.org/works/OL10703082W",
+        "milliseconds": 8.147
+      },
+      {
+        "id": "/works/OL1230292W",
+        "title": "Manuel historique de la question d'Orient (1792-1925)",
+        "author": "Jacques Ancel",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Manuel historique de la question d'Orient (1792-1925)** es una obra de **Jacques Ancel**.\n\nFuente: https://openlibrary.org/works/OL1230292W",
+        "milliseconds": 8.196
+      },
+      {
+        "id": "/works/OL11922357W",
+        "title": "Niu Sengru nian pu",
+        "author": "Ding Ding",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Niu Sengru nian pu** es una obra de **Ding Ding**.\n\nFuente: https://openlibrary.org/works/OL11922357W",
+        "milliseconds": 7.95
+      },
+      {
+        "id": "/works/OL10210999W",
+        "title": "Gu qian xue bian",
+        "author": "Shuwei Wang",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Gu qian xue bian** es una obra de **Shuwei Wang**.\n\nFuente: https://openlibrary.org/works/OL10210999W",
+        "milliseconds": 7.838
+      },
+      {
+        "id": "/works/OL12105535W",
+        "title": "You can see the past from here",
+        "author": "Steve Sneyd",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**You can see the past from here** es una obra de **Steve Sneyd**.\n\nFuente: https://openlibrary.org/works/OL12105535W",
+        "milliseconds": 8.564
+      },
+      {
+        "id": "/works/OL11418510W",
+        "title": "The dedication of the Temple of Solomon",
+        "author": "William Hodson",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**The dedication of the Temple of Solomon** es una obra de **William Hodson**.\n\nFuente: https://openlibrary.org/works/OL11418510W",
+        "milliseconds": 7.86
+      },
+      {
+        "id": "/works/OL12113415W",
+        "title": "Bayt al-Maqdis wa-m\u0101 \u1e25awlah",
+        "author": "Mu\u1e25ammad \u02bbUthm\u0101n Shubayr",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Bayt al-Maqdis wa-m\u0101 \u1e25awlah** es una obra de **Mu\u1e25ammad \u02bbUthm\u0101n Shubayr**.\n\nFuente: https://openlibrary.org/works/OL12113415W",
+        "milliseconds": 7.988
+      },
+      {
+        "id": "/works/OL11702542W",
+        "title": "Episkop Nikolaj i pravoslavni bogomolja\u010dki pokret",
+        "author": "Dragan Suboti\u0107",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Episkop Nikolaj i pravoslavni bogomolja\u010dki pokret** es una obra de **Dragan Suboti\u0107**.\n\nFuente: https://openlibrary.org/works/OL11702542W",
+        "milliseconds": 8.825
+      },
+      {
+        "id": "/works/OL10749877W",
+        "title": "La litt\u00e9rature et la vie",
+        "author": "J\u00e1nos Hankiss",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**La litt\u00e9rature et la vie** es una obra de **J\u00e1nos Hankiss**.\n\nFuente: https://openlibrary.org/works/OL10749877W",
+        "milliseconds": 8.472
+      },
+      {
+        "id": "/works/OL12480196W",
+        "title": "Shi shuo xin yu zhong suo fan ying di si xiang",
+        "author": "Meiling Piao",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Shi shuo xin yu zhong suo fan ying di si xiang** es una obra de **Meiling Piao**.\n\nFuente: https://openlibrary.org/works/OL12480196W",
+        "milliseconds": 8.909
+      },
+      {
+        "id": "/works/OL12289772W",
+        "title": "Tan guan wu li zhuan",
+        "author": "Laoli",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Tan guan wu li zhuan** es una obra de **Laoli**.\n\nFuente: https://openlibrary.org/works/OL12289772W",
+        "milliseconds": 8.379
+      },
+      {
+        "id": "/works/OL10776160W",
+        "title": "Picture stories of ancient Liverpool",
+        "author": "Joseph Pearce Pearce",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Picture stories of ancient Liverpool** es una obra de **Joseph Pearce Pearce**.\n\nFuente: https://openlibrary.org/works/OL10776160W",
+        "milliseconds": 8.071
+      },
+      {
+        "id": "/works/OL12073604W",
+        "title": "Monumentele neat\u00eern\u0103rii",
+        "author": "Florian Tuc\u0103",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Monumentele neat\u00eern\u0103rii** es una obra de **Florian Tuc\u0103**.\n\nFuente: https://openlibrary.org/works/OL12073604W",
+        "milliseconds": 7.997
+      },
+      {
+        "id": "/works/OL12059952W",
+        "title": "Sotsialisticheskoe stroitel'stvo v Kazakhstane",
+        "author": "Andre\u01d0 Sergeevich Elagin",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Sotsialisticheskoe stroitel'stvo v Kazakhstane** es una obra de **Andre\u01d0 Sergeevich Elagin**.\n\nFuente: https://openlibrary.org/works/OL12059952W",
+        "milliseconds": 9.147
+      },
+      {
+        "id": "/works/OL10549917W",
+        "title": "Ail lyfr hanes",
+        "author": "Lloyd, John Edward Sir",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Ail lyfr hanes** es una obra de **Lloyd, John Edward Sir**.\n\nFuente: https://openlibrary.org/works/OL10549917W",
+        "milliseconds": 8.039
+      },
+      {
+        "id": "/works/OL11561506W",
+        "title": "Literature, the sciences and other subjects",
+        "author": "Oliver Nigel Valentine Glendinning",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Literature, the sciences and other subjects** es una obra de **Oliver Nigel Valentine Glendinning**.\n\nFuente: https://openlibrary.org/works/OL11561506W",
+        "milliseconds": 8.383
+      },
+      {
+        "id": "/works/OL10367407W",
+        "title": "Greece before Homer, ancient chronology and mythology",
+        "author": "Forsdyke, Edgar John Sir",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Greece before Homer, ancient chronology and mythology** es una obra de **Forsdyke, Edgar John Sir**.\n\nFuente: https://openlibrary.org/works/OL10367407W",
+        "milliseconds": 8.269
+      },
+      {
+        "id": "/works/OL1222243W",
+        "title": "La filosofi\u0301a de la filosofi\u0301a",
+        "author": "Jose\u0301 Gaos",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**La filosofi\u0301a de la filosofi\u0301a** es una obra de **Jose\u0301 Gaos**.\n\nFuente: https://openlibrary.org/works/OL1222243W",
+        "milliseconds": 8.576
+      },
+      {
+        "id": "/works/OL12212401W",
+        "title": "Rams\u00e8s le Grand",
+        "author": "Ferdinand de Lanoye",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Rams\u00e8s le Grand** es una obra de **Ferdinand de Lanoye**.\n\nFuente: https://openlibrary.org/works/OL12212401W",
+        "milliseconds": 8.111
+      },
+      {
+        "id": "/works/OL12293403W",
+        "title": "Tenkanki no bungaku",
+        "author": "Shizuo Sat\u014d",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Tenkanki no bungaku** es una obra de **Shizuo Sat\u014d**.\n\nFuente: https://openlibrary.org/works/OL12293403W",
+        "milliseconds": 8.238
+      },
+      {
+        "id": "/works/OL11779753W",
+        "title": "Essays on modern authors",
+        "author": "Muriel Augusta Crooks",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Essays on modern authors** es una obra de **Muriel Augusta Crooks**.\n\nFuente: https://openlibrary.org/works/OL11779753W",
+        "milliseconds": 9.242
+      },
+      {
+        "id": "/works/OL11158707W",
+        "title": "Archa\u00efsch-Griekse wetenschap",
+        "author": "Willem Jacob Verdenius",
+        "retrieved_expected_author": true,
+        "correct_authorship": true,
+        "memory_top5": true,
+        "answered": true,
+        "answer": "**Archa\u00efsch-Griekse wetenschap** es una obra de **Willem Jacob Verdenius**.\n\nFuente: https://openlibrary.org/works/OL11158707W",
+        "milliseconds": 8.484
+      }
+    ],
+    "llm_calls": 0,
+    "test_type": "real_local_mysql_no_network"
+  },
+  "description_pointer_sample": [
+    {
+      "id": "/works/OL104666W",
+      "available": true
+    },
+    {
+      "id": "/works/OL1049334W",
+      "available": true
+    },
+    {
+      "id": "/works/OL1050768W",
+      "available": true
+    },
+    {
+      "id": "/works/OL1054261W",
+      "available": true
+    },
+    {
+      "id": "/works/OL1054307W",
+      "available": true
+    },
+    {
+      "id": "/works/OL10570244W",
+      "available": true
+    },
+    {
+      "id": "/works/OL10636554W",
+      "available": true
+    },
+    {
+      "id": "/works/OL10684172W",
+      "available": true
+    },
+    {
+      "id": "/works/OL1076175W",
+      "available": true
+    },
+    {
+      "id": "/works/OL1077130W",
+      "available": true
+    },
+    {
+      "id": "/works/OL1078979W",
+      "available": true
+    },
+    {
+      "id": "/works/OL1081221W",
+      "available": true
+    }
+  ],
+  "original_memory_sources": {
+    "preserved": 13431,
+    "archived_exactly": 7,
+    "missing": 0
+  },
+  "original_assertions": {
+    "superseded_and_archived_exactly": 9,
+    "changed_or_missing_without_archive": 0
+  },
+  "sqlite_integrity": {
+    "data\\biblioteca\\biblioteca.sqlite3": [
+      "ok"
+    ],
+    "data\\biblioteca\\rag.sqlite3": [
+      "ok"
+    ],
+    "data\\literary_memory.sqlite3": [
+      "ok"
+    ],
+    "data\\litmate_answers.sqlite3": [
+      "ok"
+    ],
+    "data\\litmate_ia_runtime.sqlite3": [
+      "ok"
+    ],
+    "data\\litmate_ia_stream.sqlite3": [
+      "ok"
+    ],
+    "data\\litmate_knowledge.sqlite3": [
+      "ok"
+    ],
+    "data\\litmate_knowledge_rag.sqlite3": [
+      "ok"
+    ]
+  },
+  "env_unchanged": true,
+  "seconds": 16.685,
+  "final_backup": {
+    "path": "backups\\volcados_20261030_03",
+    "verified": true,
+    "tables": 41,
+    "rows": 46798,
+    "files": 98
+  }
+}

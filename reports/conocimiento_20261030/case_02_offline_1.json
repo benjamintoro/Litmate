@@ -1,0 +1,222 @@
+{
+  "case": {
+    "case": 2,
+    "title": "Mugre rosa",
+    "author": "Fernanda Tr\u00edas",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": true
+  },
+  "offline": true,
+  "turns": [
+    {
+      "question": "Dime la trama de Mugre rosa de Fernanda Tr\u00edas",
+      "answer": "Hay un problema temporal al consultar las fuentes de este libro. Puedes volver a intentarlo en unos instantes.",
+      "status": "unavailable",
+      "books": [],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 3925,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "work_type": "unknown",
+        "narrative_failure": "retrieval_unavailable",
+        "progress_metrics": {
+          "elapsed_ms": 3951.193,
+          "first_phase_emitted_ms": 20.537,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 8.927,
+            "cache_lookup": 0.946,
+            "knowledge_lookup": 606.658,
+            "retrieval": 2.211,
+            "web_search": 3324.673,
+            "extraction": 0.289,
+            "finalization": 26.057
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 4.401,
+              "elapsed_ms": 8.927,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 19.579,
+              "elapsed_ms": 0.946,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 33.098,
+              "elapsed_ms": 323.55,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 105.366,
+              "elapsed_ms": 39.081,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 202.199,
+              "elapsed_ms": 153.453,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 269.336,
+              "elapsed_ms": 53.026,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 420.477,
+              "elapsed_ms": 37.548,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 537.972,
+              "elapsed_ms": 2.211,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 551.1,
+              "elapsed_ms": 881.965,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 1433.095,
+              "elapsed_ms": 909.409,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 2342.683,
+              "elapsed_ms": 0.222,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 2342.97,
+              "elapsed_ms": 0.067,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 2350.139,
+              "elapsed_ms": 1533.299,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 3925.129,
+              "elapsed_ms": 26.057,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 20.537
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 3.9591,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.0355,
+        "verified_ready_seconds": 3.9168,
+        "first_verified_text_seconds": 3.959
+      }
+    }
+  ],
+  "seconds": 6.139,
+  "public_research_trace": [
+    {
+      "stage": "retrieved_public_evidence",
+      "sources": [
+        {
+          "id": 1,
+          "title": "Mugre Rosa",
+          "author": "Fernanda Tri\u0301as",
+          "description": "Mugre Rosa, de Fernanda Tri\u0301as.",
+          "source": "Open Library",
+          "year": "2020",
+          "book_id": "",
+          "kind": "book",
+          "url": "https://openlibrary.org/works/OL25484067W",
+          "locator": "",
+          "read_mode": "metadatos bibliogr\u00e1ficos; no sinopsis ni texto de la obra",
+          "retrieved_at": "1793361846.696644",
+          "work_id": "litmate:e8be91b92e674da05929cead",
+          "license": "Open Library bibliographic facts; rights vary",
+          "trust": "untrusted_data",
+          "expires_at": "1795953846.696644",
+          "evidence_hash": "300f0f7b757ee65ac938912d63a13b4ddcff4f85eeaa0c8072fbb5a7d11fdc5a",
+          "memory_source_id": "764b29297d0bf69aa0eaa0f0fc7c41c344b5fc2564502e45a656f8deef40d4fe",
+          "last_verified_at": "1793361846.696644",
+          "policy": "openlibrary-minimal-metadata-v1",
+          "memory_verified": true,
+          "confirmed_aliases": [],
+          "isbns": [],
+          "categories": []
+        }
+      ]
+    }
+  ],
+  "coverage_before": {
+    "works": 14477,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14650,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14477,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14650,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "new_empty_store",
+  "google_books_enabled": false,
+  "factual_review_pending": true
+}

@@ -1,0 +1,36 @@
+{
+  "scope": "loopback backend after TLS termination",
+  "external_network_tested": false,
+  "checks": {
+    "chat_auth_required": true,
+    "static_auth_required": true,
+    "admin_blocked": true,
+    "unknown_host_blocked": true,
+    "chat_html": true,
+    "frame_denied": true,
+    "csrf_cookie_present": true,
+    "csrf_secure_flag": true,
+    "hsts_present": true,
+    "javascript": true,
+    "avatar": true,
+    "csrf_enforced": true
+  },
+  "conversation": [
+    {
+      "question": "Hola",
+      "status": "social",
+      "answer": "\u00a1Hola! Qu\u00e9 gusto leerte. Soy LitMate, tu compa\u00f1era de lecturas. Podemos charlar, descubrir tu pr\u00f3ximo libro o comentar esa historia que te dej\u00f3 pensando. \u00bfC\u00f3mo va tu d\u00eda?",
+      "books": [],
+      "diagnostics": {
+        "direct_stream": true
+      },
+      "sse_done": true,
+      "seconds": 0.0057,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": null,
+        "first_verified_text_seconds": null
+      }
+    }
+  ]
+}

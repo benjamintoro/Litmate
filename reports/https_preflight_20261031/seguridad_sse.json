@@ -1,0 +1,354 @@
+{
+  "scope": "loopback backend after TLS termination",
+  "external_network_tested": false,
+  "checks": {
+    "chat_auth_required": true,
+    "chat_auth_required_http_status": 401,
+    "static_auth_required": true,
+    "static_auth_required_http_status": 401,
+    "admin_blocked": true,
+    "unknown_host_blocked": true,
+    "chat_html": true,
+    "frame_denied": true,
+    "csrf_cookie_present": true,
+    "csrf_secure_flag": true,
+    "hsts_present": true,
+    "javascript": true,
+    "avatar": true,
+    "csrf_enforced": true,
+    "homepage_routes_to_chat": true,
+    "blocked:/.env": true,
+    "blocked:/backups/": true,
+    "blocked:/admin/login/": true,
+    "blocked:/login/": true,
+    "blocked:/registro/": true,
+    "blocked:/suscripciones/": true,
+    "blocked:/media/private.pdf": true,
+    "blocked:/static/.env": true,
+    "blocked:/static/../.env": true,
+    "invalid_password_rejected": true,
+    "forwarded_headers_do_not_override_host": true,
+    "foreign_origin_rejected": true,
+    "invalid_message:null": true,
+    "invalid_message:too_long": true,
+    "query_requires_post": true,
+    "asset:/static/css/chat-books.css": true,
+    "asset:/static/js/litmate_safe.js?v=chat-v9": true,
+    "current_finalize_client": true
+  },
+  "conversation": [
+    {
+      "question": "Dime de qu\u00e9 trata El mundo de Sof\u00eda",
+      "status": "answered",
+      "answer": "El mundo de Sof\u00eda es una novela que utiliza una trama novelesca para ofrecer una gu\u00eda b\u00e1sica sobre la historia de la filosof\u00eda occidental. La historia sigue a Sof\u00eda Amundsen, una joven noruega que recibe misteriosas cartas en su buz\u00f3n invit\u00e1ndola a un curso de filosof\u00eda por correspondencia impartido por el profesor Alberto Knox. A trav\u00e9s de este intercambio epistolar y de las respuestas del profesor, Sof\u00eda explora conceptos filos\u00f3ficos fundamentales mientras descubre aspectos de su propia identidad y se adentra en un mundo intelectual que cambia su vida.\n\nFuente: https://play.google.com/store/books/details?id=FFsj4Lp9c_AC\nhttps://es.wikipedia.org/wiki/El_mundo_de_Sof%C3%ADa\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+      "books": [
+        {
+          "id": "FFsj4Lp9c_AC",
+          "title": "El mundo de Sof\u00eda",
+          "author": "Jostein Gaarder",
+          "synopsis": "EL LIBRO QUE HA ENSE\u00d1ADO A PENSAR A TODA UNA GENERACI\u00d3N Esta extraordinaria obra de divulgaci\u00f3n que se ha convertido ya en una obra de culto aporta una coherente visi\u00f3n de conjunto sobre aquellos aspectos imprescindibles para comprender la historia de la filosof\u00eda occidental. El mundo de Sof\u00eda tiene el m\u00e9rito de haber conjugado, acertadamente, rigor y amenidad en una narraci\u00f3n donde una joven ir\u00e1 conociendo su propia",
+          "image_url": "https://books.google.com/books/content?id=FFsj4Lp9c_AC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://play.google.com/store/books/details?id=FFsj4Lp9c_AC"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+mundo+de+Sof%C3%ADa+Jostein+Gaarder&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+mundo+de+Sof%C3%ADa+Jostein+Gaarder"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 20840,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 2,
+        "verified_narrative_answer": true,
+        "narrative_synthesized": true,
+        "partial_evidence": false,
+        "work_type": "fiction",
+        "progress_metrics": {
+          "elapsed_ms": 20855.93,
+          "first_phase_emitted_ms": 24.24,
+          "model_calls_started": 2,
+          "stage_totals_ms": {
+            "conversation": 0.817,
+            "cache_lookup": 6.813,
+            "knowledge_lookup": 661.576,
+            "retrieval": 1409.974,
+            "model_inspection": 34.945,
+            "generation": 13050.23,
+            "audit": 5696.611,
+            "finalization": 15.48
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 7.051,
+              "elapsed_ms": 0.817,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 17.416,
+              "elapsed_ms": 6.813,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 25.353,
+              "elapsed_ms": 332.214,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 93.345,
+              "elapsed_ms": 43.542,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 193.606,
+              "elapsed_ms": 162.926,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 259.773,
+              "elapsed_ms": 61.858,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 423.124,
+              "elapsed_ms": 61.036,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 531.378,
+              "elapsed_ms": 1409.974,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 2021.273,
+              "elapsed_ms": 13050.23,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 2021.288,
+              "elapsed_ms": 34.936,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 15074.352,
+              "elapsed_ms": 5690.695,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 15074.374,
+              "elapsed_ms": 0.009,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 20768.441,
+              "elapsed_ms": 5.916,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 20840.443,
+              "elapsed_ms": 15.48,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 24.24
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 2021.259
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 15074.332
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "status": "ok",
+            "total_ms": 12993.363,
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 144,
+            "eval_ms": 5555.472,
+            "prompt_eval_count": 3392,
+            "elapsed_ms": 13050,
+            "prompt_eval_ms": 1997.325,
+            "stage": "answer",
+            "load_ms": 5423.783
+          },
+          {
+            "status": "ok",
+            "total_ms": 5661.834,
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 75,
+            "eval_ms": 2763.516,
+            "prompt_eval_count": 5008,
+            "elapsed_ms": 5691,
+            "prompt_eval_ms": 2799.637,
+            "stage": "audit",
+            "load_ms": 8.494
+          }
+        ],
+        "provider": "verified-narrative-engine"
+      },
+      "sse_done": true,
+      "seconds": 20.8886,
+      "http_timing": {
+        "first_progress_seconds": 0.0499,
+        "verified_ready_seconds": 20.8309,
+        "first_verified_text_seconds": null
+      },
+      "progress_before_ready": true,
+      "progress_events": [
+        {
+          "stage": "search",
+          "elapsed_ms": 7.057
+        },
+        {
+          "stage": "writing",
+          "elapsed_ms": 2004.076
+        },
+        {
+          "stage": "review",
+          "elapsed_ms": 15057.149
+        }
+      ]
+    },
+    {
+      "question": "\u00bfD\u00f3nde puedo encontrarlo?",
+      "status": "answered",
+      "answer": "**El mundo de Sof\u00eda** \u2014 Jostein Gaarder.\n\nPuedes usar los enlaces de la tarjeta para buscarlo; no puedo confirmar disponibilidad ni precio.",
+      "books": [
+        {
+          "id": "FFsj4Lp9c_AC",
+          "title": "El mundo de Sof\u00eda",
+          "author": "Jostein Gaarder",
+          "synopsis": "EL LIBRO QUE HA ENSE\u00d1ADO A PENSAR A TODA UNA GENERACI\u00d3N Esta extraordinaria obra de divulgaci\u00f3n que se ha convertido ya en una obra de culto aporta una coherente visi\u00f3n de conjunto sobre aquellos aspectos imprescindibles para comprender la historia de la filosof\u00eda occidental. El mundo de Sof\u00eda tiene el m\u00e9rito de haber conjugado, acertadamente, rigor y amenidad en una narraci\u00f3n donde una joven ir\u00e1 conociendo su propia",
+          "image_url": "https://books.google.com/books/content?id=FFsj4Lp9c_AC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://play.google.com/store/books/details?id=FFsj4Lp9c_AC"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+mundo+de+Sof%C3%ADa+Jostein+Gaarder&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+mundo+de+Sof%C3%ADa+Jostein+Gaarder"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 83,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 91.377,
+          "first_phase_emitted_ms": 34.945,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 12.308,
+            "cache_lookup": 6.768,
+            "audit": 0.857,
+            "finalization": 8.288
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 9.496,
+              "elapsed_ms": 12.308,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 28.167,
+              "elapsed_ms": 6.768,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 40.4,
+              "elapsed_ms": 0.857,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 83.082,
+              "elapsed_ms": 8.288,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 34.945
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 40.392
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-conversation-evidence"
+      },
+      "sse_done": true,
+      "seconds": 0.1011,
+      "http_timing": {
+        "first_progress_seconds": 0.0424,
+        "verified_ready_seconds": 0.0529,
+        "first_verified_text_seconds": null
+      },
+      "progress_before_ready": true,
+      "progress_events": [
+        {
+          "stage": "search",
+          "elapsed_ms": 7.128
+        },
+        {
+          "stage": "review",
+          "elapsed_ms": 12.575
+        }
+      ]
+    }
+  ],
+  "cookie_flags": {
+    "csrftoken": {
+      "secure": true,
+      "httponly": false,
+      "samesite": "Lax"
+    },
+    "litmate_demo_sessionid": {
+      "secure": true,
+      "httponly": true,
+      "samesite": "Lax"
+    }
+  }
+}

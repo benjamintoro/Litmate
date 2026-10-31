@@ -1,0 +1,886 @@
+{
+  "scope": "loopback backend after TLS termination",
+  "public_https_tested": false,
+  "external_network_tested": false,
+  "checks": {
+    "chat_auth_required": true,
+    "chat_auth_required_http_status": 401,
+    "static_auth_required": true,
+    "static_auth_required_http_status": 401,
+    "admin_blocked": true,
+    "unknown_host_blocked": true,
+    "chat_html": true,
+    "frame_denied": true,
+    "csrf_cookie_present": true,
+    "csrf_secure_flag": true,
+    "hsts_present": true,
+    "javascript": true,
+    "avatar": true,
+    "csrf_enforced": true,
+    "homepage_real_frontend": true,
+    "blocked:/.env": true,
+    "blocked:/backups/": true,
+    "blocked:/admin/login/": true,
+    "blocked:/perfil/": true,
+    "blocked:/test-error/500/": true,
+    "blocked:/suscripciones/iniciar-pago/": true,
+    "blocked:/media/private.pdf": true,
+    "blocked:/static/.env": true,
+    "blocked:/static/../.env": true,
+    "invalid_password_rejected": true,
+    "forwarded_headers_do_not_override_host": true,
+    "foreign_origin_rejected": true,
+    "invalid_message:null": true,
+    "invalid_message:too_long": true,
+    "query_requires_post": true,
+    "asset:/static/css/chat-books.css": true,
+    "asset:/static/js/litmate_safe.js?v=chat-v9": true,
+    "current_finalize_client": true,
+    "page:/": true,
+    "real_homepage": true,
+    "page:/about/": true,
+    "page:/post/": true,
+    "page:/libros/": true,
+    "page:/suscripciones/planes/": true,
+    "page:/contact/": true,
+    "preview_notice:/contact/": true,
+    "page:/login/": true,
+    "preview_notice:/login/": true,
+    "page:/registro/": true,
+    "preview_notice:/registro/": true,
+    "page:/password-reset/": true,
+    "preview_notice:/password-reset/": true,
+    "page:/terminos-y-condiciones/": true,
+    "page:/politica-de-privacidad/": true,
+    "page:/politica-de-cookies/": true,
+    "page:/chat/": true,
+    "page:/chatbot/": true,
+    "navigation:/auth/social/github/": true,
+    "navigation:/auth/social/google/": true,
+    "navigation:/suscripciones/checkout/lector-pro/": true,
+    "navigation:/suscripciones/checkout/lector-vip/": true,
+    "asset:/static/assets/apple-touch-icon.png?v=4.0": true,
+    "asset:/static/assets/favicon.ico?v=4.0": true,
+    "asset:/static/assets/favicon.png?v=4.0": true,
+    "asset:/static/assets/img/avatar/cuerpo.jpg": true,
+    "asset:/static/assets/img/avatar/icon.jpg": true,
+    "asset:/static/assets/img/evolucion-inteligencia-artificial.jpg": true,
+    "asset:/static/assets/img/litmate_navbar-logo-light.png": true,
+    "asset:/static/assets/img/litmate_navbar-logo.png": true,
+    "asset:/static/assets/img/team/3.jpg": true,
+    "asset:/static/assets/img/team/jp.jpg": true,
+    "asset:/static/assets/img/team/sebastian.jpg": true,
+    "asset:/static/css/auth.css?v=4.0": true,
+    "asset:/static/css/books.css?v=4.0": true,
+    "asset:/static/css/chat-books.css?v=chat-v6": true,
+    "asset:/static/css/dark-mode.css?v=4.0": true,
+    "asset:/static/css/litmate-minimal.css?v=4.0": true,
+    "asset:/static/css/pages.css?v=4.0": true,
+    "asset:/static/css/styles.css?v=4.0": true,
+    "asset:/static/css/subscriptions.css?v=4.0": true,
+    "asset:/static/js/chatbot.js?v=chat-v6": true,
+    "asset:/static/js/floating_chat.js?v=chat-v6": true,
+    "asset:/static/js/scripts.js": true,
+    "function:/libros/?q=Dune": true,
+    "function:/api/quick-search/?q=Dune": true,
+    "catalogue_results": true,
+    "function:/api/libro/precios/?titulo=Dune&force=true": true
+  },
+  "frontend": {
+    "checks": {
+      "page:/": true,
+      "real_homepage": true,
+      "page:/about/": true,
+      "page:/post/": true,
+      "page:/libros/": true,
+      "page:/suscripciones/planes/": true,
+      "page:/contact/": true,
+      "preview_notice:/contact/": true,
+      "page:/login/": true,
+      "preview_notice:/login/": true,
+      "page:/registro/": true,
+      "preview_notice:/registro/": true,
+      "page:/password-reset/": true,
+      "preview_notice:/password-reset/": true,
+      "page:/terminos-y-condiciones/": true,
+      "page:/politica-de-privacidad/": true,
+      "page:/politica-de-cookies/": true,
+      "page:/chat/": true,
+      "page:/chatbot/": true,
+      "navigation:/auth/social/github/": true,
+      "navigation:/auth/social/google/": true,
+      "navigation:/suscripciones/checkout/lector-pro/": true,
+      "navigation:/suscripciones/checkout/lector-vip/": true,
+      "asset:/static/assets/apple-touch-icon.png?v=4.0": true,
+      "asset:/static/assets/favicon.ico?v=4.0": true,
+      "asset:/static/assets/favicon.png?v=4.0": true,
+      "asset:/static/assets/img/avatar/cuerpo.jpg": true,
+      "asset:/static/assets/img/avatar/icon.jpg": true,
+      "asset:/static/assets/img/evolucion-inteligencia-artificial.jpg": true,
+      "asset:/static/assets/img/litmate_navbar-logo-light.png": true,
+      "asset:/static/assets/img/litmate_navbar-logo.png": true,
+      "asset:/static/assets/img/team/3.jpg": true,
+      "asset:/static/assets/img/team/jp.jpg": true,
+      "asset:/static/assets/img/team/sebastian.jpg": true,
+      "asset:/static/css/auth.css?v=4.0": true,
+      "asset:/static/css/books.css?v=4.0": true,
+      "asset:/static/css/chat-books.css?v=chat-v6": true,
+      "asset:/static/css/dark-mode.css?v=4.0": true,
+      "asset:/static/css/litmate-minimal.css?v=4.0": true,
+      "asset:/static/css/pages.css?v=4.0": true,
+      "asset:/static/css/styles.css?v=4.0": true,
+      "asset:/static/css/subscriptions.css?v=4.0": true,
+      "asset:/static/js/chatbot.js?v=chat-v6": true,
+      "asset:/static/js/floating_chat.js?v=chat-v6": true,
+      "asset:/static/js/litmate_safe.js?v=chat-v9": true,
+      "asset:/static/js/scripts.js": true,
+      "function:/libros/?q=Dune": true,
+      "function:/api/quick-search/?q=Dune": true,
+      "catalogue_results": true,
+      "function:/api/libro/precios/?titulo=Dune&force=true": true
+    },
+    "pages": [
+      {
+        "path": "/",
+        "status": 200,
+        "seconds": 0.0372,
+        "internal_links": [
+          "/",
+          "/about/",
+          "/chat/",
+          "/contact/",
+          "/libros/",
+          "/login/",
+          "/politica-de-cookies/",
+          "/politica-de-privacidad/",
+          "/post/",
+          "/registro/",
+          "/suscripciones/checkout/lector-pro/",
+          "/suscripciones/checkout/lector-vip/",
+          "/suscripciones/planes/",
+          "/terminos-y-condiciones/"
+        ]
+      },
+      {
+        "path": "/about/",
+        "status": 200,
+        "seconds": 0.0329,
+        "internal_links": [
+          "/",
+          "/about/",
+          "/chat/",
+          "/contact/",
+          "/libros/",
+          "/login/",
+          "/politica-de-cookies/",
+          "/politica-de-privacidad/",
+          "/post/",
+          "/registro/",
+          "/suscripciones/checkout/lector-pro/",
+          "/suscripciones/checkout/lector-vip/",
+          "/suscripciones/planes/",
+          "/terminos-y-condiciones/"
+        ]
+      },
+      {
+        "path": "/post/",
+        "status": 200,
+        "seconds": 0.0279,
+        "internal_links": [
+          "/",
+          "/about/",
+          "/chat/",
+          "/contact/",
+          "/libros/",
+          "/login/",
+          "/politica-de-cookies/",
+          "/politica-de-privacidad/",
+          "/post/",
+          "/registro/",
+          "/suscripciones/checkout/lector-pro/",
+          "/suscripciones/checkout/lector-vip/",
+          "/suscripciones/planes/",
+          "/terminos-y-condiciones/"
+        ]
+      },
+      {
+        "path": "/libros/",
+        "status": 200,
+        "seconds": 0.0862,
+        "internal_links": [
+          "/",
+          "/about/",
+          "/chat/",
+          "/contact/",
+          "/libros/",
+          "/libros/?genre=Ciencia%20Ficci%C3%B3n",
+          "/libros/?genre=Desarrollo%20Personal",
+          "/libros/?genre=Fantas%C3%ADa",
+          "/libros/?genre=Filosof%C3%ADa",
+          "/libros/?genre=Juvenil%20/%20Aventura",
+          "/libros/?genre=Literatura%20Cl%C3%A1sica",
+          "/libros/?genre=Misterio",
+          "/libros/?genre=Terror",
+          "/login/",
+          "/politica-de-cookies/",
+          "/politica-de-privacidad/",
+          "/post/",
+          "/registro/",
+          "/suscripciones/checkout/lector-pro/",
+          "/suscripciones/checkout/lector-vip/",
+          "/suscripciones/planes/",
+          "/terminos-y-condiciones/"
+        ]
+      },
+      {
+        "path": "/suscripciones/planes/",
+        "status": 200,
+        "seconds": 0.0332,
+        "internal_links": [
+          "/",
+          "/about/",
+          "/chat/",
+          "/contact/",
+          "/libros/",
+          "/login/",
+          "/login/?next=/suscripciones/checkout/gratis/",
+          "/login/?next=/suscripciones/checkout/lector-pro/",
+          "/login/?next=/suscripciones/checkout/lector-vip/",
+          "/politica-de-cookies/",
+          "/politica-de-privacidad/",
+          "/post/",
+          "/registro/",
+          "/suscripciones/checkout/lector-pro/",
+          "/suscripciones/checkout/lector-vip/",
+          "/suscripciones/planes/",
+          "/terminos-y-condiciones/"
+        ]
+      },
+      {
+        "path": "/contact/",
+        "status": 200,
+        "seconds": 0.0262,
+        "internal_links": [
+          "/",
+          "/about/",
+          "/chat/",
+          "/contact/",
+          "/libros/",
+          "/login/",
+          "/politica-de-cookies/",
+          "/politica-de-privacidad/",
+          "/post/",
+          "/registro/",
+          "/suscripciones/checkout/lector-pro/",
+          "/suscripciones/checkout/lector-vip/",
+          "/suscripciones/planes/",
+          "/terminos-y-condiciones/"
+        ]
+      },
+      {
+        "path": "/login/",
+        "status": 200,
+        "seconds": 0.0067,
+        "internal_links": [
+          "/",
+          "/about/",
+          "/auth/social/github/",
+          "/auth/social/google/",
+          "/chat/",
+          "/contact/",
+          "/libros/",
+          "/login/",
+          "/password-reset/",
+          "/politica-de-cookies/",
+          "/politica-de-privacidad/",
+          "/post/",
+          "/registro/",
+          "/suscripciones/checkout/lector-pro/",
+          "/suscripciones/checkout/lector-vip/",
+          "/suscripciones/planes/",
+          "/terminos-y-condiciones/"
+        ]
+      },
+      {
+        "path": "/registro/",
+        "status": 200,
+        "seconds": 0.0206,
+        "internal_links": [
+          "/",
+          "/about/",
+          "/auth/social/github/",
+          "/auth/social/google/",
+          "/chat/",
+          "/contact/",
+          "/libros/",
+          "/login/",
+          "/politica-de-cookies/",
+          "/politica-de-privacidad/",
+          "/post/",
+          "/registro/",
+          "/suscripciones/checkout/lector-pro/",
+          "/suscripciones/checkout/lector-vip/",
+          "/suscripciones/planes/",
+          "/terminos-y-condiciones/"
+        ]
+      },
+      {
+        "path": "/password-reset/",
+        "status": 200,
+        "seconds": 0.0137,
+        "internal_links": [
+          "/",
+          "/about/",
+          "/chat/",
+          "/contact/",
+          "/libros/",
+          "/login/",
+          "/politica-de-cookies/",
+          "/politica-de-privacidad/",
+          "/post/",
+          "/registro/",
+          "/suscripciones/checkout/lector-pro/",
+          "/suscripciones/checkout/lector-vip/",
+          "/suscripciones/planes/",
+          "/terminos-y-condiciones/"
+        ]
+      },
+      {
+        "path": "/terminos-y-condiciones/",
+        "status": 200,
+        "seconds": 0.0135,
+        "internal_links": [
+          "/",
+          "/about/",
+          "/chat/",
+          "/contact/",
+          "/libros/",
+          "/login/",
+          "/politica-de-cookies/",
+          "/politica-de-privacidad/",
+          "/post/",
+          "/registro/",
+          "/suscripciones/checkout/lector-pro/",
+          "/suscripciones/checkout/lector-vip/",
+          "/suscripciones/planes/",
+          "/terminos-y-condiciones/"
+        ]
+      },
+      {
+        "path": "/politica-de-privacidad/",
+        "status": 200,
+        "seconds": 0.0118,
+        "internal_links": [
+          "/",
+          "/about/",
+          "/chat/",
+          "/contact/",
+          "/libros/",
+          "/login/",
+          "/politica-de-cookies/",
+          "/politica-de-privacidad/",
+          "/post/",
+          "/registro/",
+          "/suscripciones/checkout/lector-pro/",
+          "/suscripciones/checkout/lector-vip/",
+          "/suscripciones/planes/",
+          "/terminos-y-condiciones/"
+        ]
+      },
+      {
+        "path": "/politica-de-cookies/",
+        "status": 200,
+        "seconds": 0.0121,
+        "internal_links": [
+          "/",
+          "/about/",
+          "/chat/",
+          "/contact/",
+          "/libros/",
+          "/login/",
+          "/politica-de-cookies/",
+          "/politica-de-privacidad/",
+          "/post/",
+          "/registro/",
+          "/suscripciones/checkout/lector-pro/",
+          "/suscripciones/checkout/lector-vip/",
+          "/suscripciones/planes/",
+          "/terminos-y-condiciones/"
+        ]
+      },
+      {
+        "path": "/chat/",
+        "status": 200,
+        "seconds": 0.0224,
+        "internal_links": [
+          "/",
+          "/about/",
+          "/chat/",
+          "/contact/",
+          "/libros/",
+          "/login/",
+          "/politica-de-cookies/",
+          "/politica-de-privacidad/",
+          "/post/",
+          "/registro/",
+          "/suscripciones/checkout/lector-pro/",
+          "/suscripciones/checkout/lector-vip/",
+          "/suscripciones/planes/",
+          "/terminos-y-condiciones/"
+        ]
+      },
+      {
+        "path": "/chatbot/",
+        "status": 200,
+        "seconds": 0.0046,
+        "internal_links": [
+          "/",
+          "/about/",
+          "/chat/",
+          "/contact/",
+          "/libros/",
+          "/login/",
+          "/politica-de-cookies/",
+          "/politica-de-privacidad/",
+          "/post/",
+          "/registro/",
+          "/suscripciones/checkout/lector-pro/",
+          "/suscripciones/checkout/lector-vip/",
+          "/suscripciones/planes/",
+          "/terminos-y-condiciones/"
+        ]
+      }
+    ],
+    "endpoints": [
+      {
+        "path": "/libros/?q=Dune",
+        "status": 200
+      },
+      {
+        "path": "/api/quick-search/?q=Dune",
+        "status": 200,
+        "book_count": 6
+      },
+      {
+        "path": "/api/libro/precios/?titulo=Dune&force=true",
+        "status": 200,
+        "cached_prices": 0
+      }
+    ],
+    "asset_count": 23,
+    "external_cover_urls": [
+      "https://covers.openlibrary.org/b/id/10107644-L.jpg",
+      "https://covers.openlibrary.org/b/id/10472492-L.jpg",
+      "https://covers.openlibrary.org/b/id/1048813-L.jpg",
+      "https://covers.openlibrary.org/b/id/10515159-L.jpg",
+      "https://covers.openlibrary.org/b/id/10570776-L.jpg",
+      "https://covers.openlibrary.org/b/id/1072931-L.jpg",
+      "https://covers.openlibrary.org/b/id/11481354-L.jpg",
+      "https://covers.openlibrary.org/b/id/12539702-L.jpg",
+      "https://covers.openlibrary.org/b/id/12627383-L.jpg",
+      "https://covers.openlibrary.org/b/id/12646537-L.jpg",
+      "https://covers.openlibrary.org/b/id/12993656-L.jpg",
+      "https://covers.openlibrary.org/b/id/13478610-L.jpg",
+      "https://covers.openlibrary.org/b/id/13499066-L.jpg",
+      "https://covers.openlibrary.org/b/id/13966851-L.jpg",
+      "https://covers.openlibrary.org/b/id/13966854-L.jpg",
+      "https://covers.openlibrary.org/b/id/14171609-L.jpg",
+      "https://covers.openlibrary.org/b/id/14627042-L.jpg",
+      "https://covers.openlibrary.org/b/id/14627062-L.jpg",
+      "https://covers.openlibrary.org/b/id/14627564-L.jpg",
+      "https://covers.openlibrary.org/b/id/14631819-L.jpg",
+      "https://covers.openlibrary.org/b/id/14658160-L.jpg",
+      "https://covers.openlibrary.org/b/id/14658316-L.jpg",
+      "https://covers.openlibrary.org/b/id/15124196-L.jpg",
+      "https://covers.openlibrary.org/b/id/15158666-L.jpg",
+      "https://covers.openlibrary.org/b/id/2237620-L.jpg",
+      "https://covers.openlibrary.org/b/id/3205226-L.jpg",
+      "https://covers.openlibrary.org/b/id/3950093-L.jpg",
+      "https://covers.openlibrary.org/b/id/7239831-L.jpg",
+      "https://covers.openlibrary.org/b/id/7274185-L.jpg",
+      "https://covers.openlibrary.org/b/id/8231751-L.jpg",
+      "https://covers.openlibrary.org/b/id/8231823-L.jpg",
+      "https://covers.openlibrary.org/b/id/8259296-L.jpg",
+      "https://covers.openlibrary.org/b/id/8441376-L.jpg",
+      "https://covers.openlibrary.org/b/id/8516506-L.jpg",
+      "https://covers.openlibrary.org/b/id/8569284-L.jpg",
+      "https://covers.openlibrary.org/b/id/8571056-L.jpg",
+      "https://covers.openlibrary.org/b/id/8598263-L.jpg",
+      "https://covers.openlibrary.org/b/id/8634250-L.jpg",
+      "https://covers.openlibrary.org/b/id/8745958-L.jpg",
+      "https://covers.openlibrary.org/b/id/9184719-L.jpg",
+      "https://covers.openlibrary.org/b/id/9393000-L.jpg"
+    ],
+    "external_images_downloaded_by_this_check": false
+  },
+  "conversation": [
+    {
+      "question": "Recuerdo un libro donde un ni\u00f1o vive en un planeta peque\u00f1o y cuida una rosa",
+      "status": "answered",
+      "answer": "Por tus pistas, podr\u00edas estar buscando **El principito**, de **Antoine de Saint-Exup\u00e9ry**. \u00bfTe suena?",
+      "books": [
+        {
+          "id": "1",
+          "title": "El principito",
+          "author": "Antoine de Saint-Exup\u00e9ry",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+principito+Antoine+de+Saint-Exup%C3%A9ry&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+principito+Antoine+de+Saint-Exup%C3%A9ry"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 1032,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 1037.759,
+          "first_phase_emitted_ms": 107.623,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 87.032,
+            "cache_lookup": 0.616,
+            "knowledge_lookup": 831.773,
+            "audit": 3.319,
+            "finalization": 5.431
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 4.813,
+              "elapsed_ms": 87.032,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 106.994,
+              "elapsed_ms": 0.616,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 205.303,
+              "elapsed_ms": 448.966,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 346.943,
+              "elapsed_ms": 51.469,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 458.616,
+              "elapsed_ms": 194.508,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 532.081,
+              "elapsed_ms": 66.398,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 738.324,
+              "elapsed_ms": 44.24,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 911.007,
+              "elapsed_ms": 26.192,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 975.664,
+              "elapsed_ms": 3.319,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 1032.321,
+              "elapsed_ms": 5.431,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 107.623
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 975.639
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "local-identification"
+      },
+      "sse_done": true,
+      "seconds": 1.0474,
+      "http_timing": {
+        "first_progress_seconds": 0.1092,
+        "verified_ready_seconds": 1.0204,
+        "first_verified_text_seconds": null
+      },
+      "progress_before_ready": true,
+      "progress_events": [
+        {
+          "stage": "search",
+          "elapsed_ms": 4.212
+        },
+        {
+          "stage": "review",
+          "elapsed_ms": 872.228
+        }
+      ]
+    },
+    {
+      "question": "\u00bfQui\u00e9n lo escribi\u00f3?",
+      "status": "clarification",
+      "answer": "\u00bfRecuerdas un personaje, una frase o qu\u00e9 ocurr\u00eda en esa escena?",
+      "books": [],
+      "diagnostics": {
+        "elapsed_ms": 15774,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 2,
+        "progress_metrics": {
+          "elapsed_ms": 15787.965,
+          "first_phase_emitted_ms": 23.207,
+          "model_calls_started": 2,
+          "stage_totals_ms": {
+            "conversation": 6.49,
+            "cache_lookup": 0.652,
+            "knowledge_lookup": 555.362,
+            "intent": 1.91,
+            "model_inspection": 45.559,
+            "extraction": 5160.428,
+            "web_search": 3350.081,
+            "routing": 10674.366,
+            "local_search": 165.057,
+            "retrieval": 4511.828,
+            "finalization": 13.976
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 9.657,
+              "elapsed_ms": 6.49,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 22.544,
+              "elapsed_ms": 0.652,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 25.804,
+              "elapsed_ms": 302.653,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 104.34,
+              "elapsed_ms": 30.478,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 180.748,
+              "elapsed_ms": 145.876,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 253.485,
+              "elapsed_ms": 44.799,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 403.869,
+              "elapsed_ms": 31.556,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 498.354,
+              "elapsed_ms": 3350.081,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 508.887,
+              "elapsed_ms": 0.161,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 509.056,
+              "elapsed_ms": 1.69,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 510.756,
+              "elapsed_ms": 8360.219,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 510.761,
+              "elapsed_ms": 45.549,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 1730.801,
+              "elapsed_ms": 1761.305,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 1731.286,
+              "elapsed_ms": 2116.835,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 1731.669,
+              "elapsed_ms": 1282.288,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 8871.332,
+              "elapsed_ms": 0.059,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 8871.41,
+              "elapsed_ms": 2314.147,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 8871.417,
+              "elapsed_ms": 0.01,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 11207.151,
+              "elapsed_ms": 4424.101,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 11210.946,
+              "elapsed_ms": 82.826,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 15631.303,
+              "elapsed_ms": 87.727,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 15636.016,
+              "elapsed_ms": 82.231,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 15773.983,
+              "elapsed_ms": 13.976,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 23.207
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "prompt_eval_count": 1526,
+            "total_ms": 8303.363,
+            "load_ms": 4810.71,
+            "stage": "route",
+            "prompt_eval_ms": 1067.799,
+            "model": "qwen3.5:9b-q4_K_M",
+            "elapsed_ms": 8360,
+            "eval_count": 58,
+            "status": "ok",
+            "eval_ms": 2414.251
+          },
+          {
+            "prompt_eval_count": 619,
+            "total_ms": 2304.213,
+            "load_ms": 7.251,
+            "stage": "plan",
+            "prompt_eval_ms": 457.927,
+            "model": "qwen3.5:9b-q4_K_M",
+            "elapsed_ms": 2314,
+            "eval_count": 45,
+            "status": "ok",
+            "eval_ms": 1786.237
+          }
+        ],
+        "external_research": {
+          "logical_searches": 1,
+          "http_requests_started": 3,
+          "external_seconds": 7.664,
+          "page_slots_reserved": 3,
+          "pages_extracted": 3
+        },
+        "provider": "ollama-local"
+      },
+      "sse_done": true,
+      "seconds": 15.8063,
+      "http_timing": {
+        "first_progress_seconds": 0.0408,
+        "verified_ready_seconds": 15.7582,
+        "first_verified_text_seconds": null
+      },
+      "progress_before_ready": true,
+      "progress_events": [
+        {
+          "stage": "search",
+          "elapsed_ms": 0.993
+        }
+      ]
+    }
+  ],
+  "cookie_flags": {
+    "csrftoken": {
+      "secure": true,
+      "httponly": false,
+      "samesite": "Lax"
+    },
+    "litmate_demo_sessionid": {
+      "secure": true,
+      "httponly": true,
+      "samesite": "Lax"
+    }
+  }
+}

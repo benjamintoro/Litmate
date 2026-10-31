@@ -1157,7 +1157,7 @@ def get_featured_books():
 
     for cb in curated_books:
         precios_bd = list(PrecioLibroTienda.objects.filter(titulo_referencia__iexact=cb['titulo'], es_enlace_directo=True))
-        if not precios_bd:
+        if not precios_bd and not getattr(settings, 'LITMATE_DEMO_READ_ONLY', False):
             try:
                 res_scraper = obtener_datos_comparador_libro(
                     titulo=cb['titulo'],
@@ -1325,7 +1325,7 @@ def buscar_libros(request):
     )
 
     # Registrar evento de analítica si hubo búsqueda activa
-    if busqueda_activa:
+    if busqueda_activa and not getattr(settings, 'LITMATE_DEMO_READ_ONLY', False):
         try:
             EventoAnalitica.objects.create(
                 usuario=request.user if hasattr(request, 'user') and request.user.is_authenticated else None,
@@ -1461,7 +1461,9 @@ def api_precios_libro(request):
         return JsonResponse(datos)
     except Exception as e:
         logger.error(f"Error en api_precios_libro: {e}")
-        return JsonResponse({'status': 'error', 'msg': str(e)}, status=500)
+        error_message = ('No fue posible consultar los precios almacenados.'
+                         if getattr(settings, 'LITMATE_DEMO_READ_ONLY', False) else str(e))
+        return JsonResponse({'status': 'error', 'msg': error_message}, status=500)
 
 
 @login_required

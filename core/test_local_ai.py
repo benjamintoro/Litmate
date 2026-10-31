@@ -280,6 +280,7 @@ class WebEngineTests(unittest.TestCase):
         self.assertNotIn('arroz', result.text)
 
 
+@override_settings(LITMATE_AI_LOCK_BACKEND='cache')
 class FreeRetrievalTests(SimpleTestCase):
     def setUp(self):
         cache.clear()

@@ -1,0 +1,134 @@
+{
+  "authenticBrowserCapture": true,
+  "externalNetworkTested": false,
+  "origin": "http://127.0.0.1:8002",
+  "frames": [
+    {
+      "file": "frame-000.png",
+      "seconds": 2.8227439
+    },
+    {
+      "file": "frame-001.png",
+      "seconds": 3.4746219999999997
+    },
+    {
+      "file": "frame-002.png",
+      "seconds": 4.9522095
+    },
+    {
+      "file": "frame-003.png",
+      "seconds": 6.9618741
+    },
+    {
+      "file": "frame-004.png",
+      "seconds": 8.964730800000002
+    },
+    {
+      "file": "frame-005.png",
+      "seconds": 10.973462500000002
+    },
+    {
+      "file": "frame-006.png",
+      "seconds": 13.7320436
+    },
+    {
+      "file": "frame-007.png",
+      "seconds": 19.062659099999998
+    },
+    {
+      "file": "frame-008.png",
+      "seconds": 23.2087096
+    },
+    {
+      "file": "frame-009.png",
+      "seconds": 28.2661858
+    },
+    {
+      "file": "frame-010.png",
+      "seconds": 32.2912684
+    },
+    {
+      "file": "frame-011.png",
+      "seconds": 36.415707000000005
+    },
+    {
+      "file": "frame-012.png",
+      "seconds": 40.3967426
+    },
+    {
+      "file": "frame-013.png",
+      "seconds": 44.4207271
+    },
+    {
+      "file": "frame-014.png",
+      "seconds": 48.4663133
+    },
+    {
+      "file": "frame-015.png",
+      "seconds": 52.527061700000004
+    },
+    {
+      "file": "frame-016.png",
+      "seconds": 56.5790634
+    },
+    {
+      "file": "frame-017.png",
+      "seconds": 60.6294473
+    },
+    {
+      "file": "frame-018.png",
+      "seconds": 64.6899475
+    },
+    {
+      "file": "frame-019.png",
+      "seconds": 68.7120708
+    },
+    {
+      "file": "frame-020.png",
+      "seconds": 72.7879091
+    },
+    {
+      "file": "frame-021.png",
+      "seconds": 76.8222682
+    }
+  ],
+  "conversation": [
+    {
+      "question": "Recuerdo un libro donde un niño vive en un planeta pequeño y cuida una rosa",
+      "answer": "Has enviado demasiadas solicitudes. Espera y vuelve a intentar.",
+      "completed": true,
+      "seconds": 0.5135557000000004
+    },
+    {
+      "question": "¿Qué pistas te hicieron pensar en ese libro?",
+      "answer": "Has enviado demasiadas solicitudes. Espera y vuelve a intentar.",
+      "completed": true,
+      "seconds": 0.5144014000000006
+    },
+    {
+      "question": "¿Qué relación hay entre el principito y el zorro?",
+      "answer": "Has enviado demasiadas solicitudes. Espera y vuelve a intentar.",
+      "completed": true,
+      "seconds": 0.5056953000000028
+    },
+    {
+      "question": "Recomiéndame dos novelas de fantasía en español",
+      "answer": "Has enviado demasiadas solicitudes. Espera y vuelve a intentar.",
+      "completed": true,
+      "seconds": 0.5193271999999993
+    },
+    {
+      "question": "Cuéntame más del segundo",
+      "answer": "Has enviado demasiadas solicitudes. Espera y vuelve a intentar.",
+      "completed": true,
+      "seconds": 0.5114742000000021
+    },
+    {
+      "question": "¿Dónde puedo encontrarlo?",
+      "answer": "¿Recuerdas algún personaje, parte de la trama, el autor o la portada del libro?",
+      "completed": true,
+      "seconds": 5.595038199999983
+    }
+  ],
+  "errors": []
+}

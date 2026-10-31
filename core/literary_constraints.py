@@ -1,6 +1,7 @@
 """Restricciones explícitas del lector; nunca se deducen del título de una obra."""
 import re
 import unicodedata
+from .literary_identity import normalize_identity
 
 
 LANGUAGES = {
@@ -89,13 +90,32 @@ def publication_range(message):
 
 
 def recommendation_constraints(message):
-    return {'language': requested_language(message), 'author': explicit_author(message),
-            'publication_range': publication_range(message)}
+    result = {'language': requested_language(message), 'author': explicit_author(message),
+              'publication_range': publication_range(message)}
+    value = normalize_identity(message)
+    if re.search(r'\bpara (?:lectores )?adultos\b', value):
+        result['audience'] = 'adult'
+    if re.search(r'\bsin (?:sagas|series)\b|\bautoconclusiv[oa]s?\b', value):
+        result['standalone'] = True
+    return result
 
 
 def constraints_match(source, constraints):
     if source.get('kind', 'book') not in {'book', 'excerpt'}:
         return True
+    metadata = normalize_identity(' '.join(str(category) for category in source.get('categories', [])))
+    prose = normalize_identity(str(source.get('synopsis', '')) + ' ' + str(source.get('description', '')))
+    if constraints.get('audience') == 'adult':
+        if re.search(r'\b(?:juvenile|juvenil|children|childrens|infantil|young adult)\b', metadata):
+            return False
+        if not re.search(r'\b(?:adultos|adult|profesionales|universitarios)\b', prose + ' ' + metadata):
+            return False
+    if constraints.get('standalone'):
+        if source.get('series') or re.search(r'\bno (?:es|se considera) (?:una novela )?autoconclusiva\b', prose):
+            return False
+        if not re.search(r'\b(?:autoconclusiv[oa]|stand alone|standalone|novela independiente|'
+                         r'no forma parte de (?:una |ninguna )?(?:saga|serie))\b', prose):
+            return False
     if not language_matches(source, constraints['language']):
         return False
     if constraints['author']:

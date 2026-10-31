@@ -315,7 +315,11 @@ class NarrativeCoverageTests(SimpleTestCase):
         result = answer_from_sources(question,request_for(question,history()),[BOOK,page])
         self.assertIsNotNone(result)
         self.assertIn('Elena',result.text)
-        self.assertNotIn('**Bruno**',result.text)
+        self.assertIn('**Bruno**',result.text)
+        self.assertLess(result.text.index('Elena'),result.text.index('Otros personajes documentados:'))
+        self.assertGreater(result.text.index('**Bruno**'),result.text.index('Otros personajes documentados:'))
+        self.assertEqual(result.diagnostics['principal_character_count'],1)
+        self.assertTrue(result.diagnostics['partial_evidence'])
         self.assertIn('Lista parcial.',result.text)
         self.assertTrue(all(c['verdict']=='supported' for c in result.diagnostics['audit']['claims']))
 

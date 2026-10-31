@@ -1,0 +1,27 @@
+{
+  "failures": 0,
+  "modules": [
+    "core.test_knowledge_campaign",
+    "core.test_continuous_knowledge",
+    "core.test_literary_learning",
+    "core.test_literary_identity",
+    "core.test_persistent_router",
+    "core.test_persistent_depth_bridge",
+    "core.test_character_memory",
+    "core.test_literary_memory",
+    "core.test_narrative_enrichment",
+    "core.test_narrative_coverage",
+    "core.test_source_snapshot_merge",
+    "core.test_presentation_language",
+    "core.test_search_narrative_repair",
+    "core.test_progressive_free_sources",
+    "core.test_searx_resilience",
+    "core.test_web_search",
+    "core.test_narrative_answers",
+    "core.test_completion_batch",
+    "core.test_identity_stabilization",
+    "core.test_topic_return_memory"
+  ],
+  "seconds": 12.759,
+  "isolated_sqlite_and_auxiliary_stores": true
+}

@@ -17,7 +17,7 @@ from urllib.parse import urlsplit
 from .literary_identity import normalize_identity, same_work, stable_work_id, work_identity
 
 OWNER = 'litmate-literary-memory-v1'
-READ_POLICY = 'v2-no-disambiguation'
+READ_POLICY = 'v3-scoped-narrative-premises'
 PROVIDERS = {'openlibrary', 'wikidata', 'wikipedia'}
 EVIDENCE_SCOPES = frozenset({'summary', 'characters', 'relationships', 'themes', 'events', 'historical_context', 'adaptations'})
 REQUIREMENTS = {'', 'author', 'characters', 'character_roster', 'main_characters', 'character_detail', 'summary', 'plot', 'plot_development',
@@ -333,6 +333,19 @@ def _literal_facts(items, body, kind):
                 'classification', 'classification_evidence') if kind == 'character_facts' else (
             'topic', 'subject', 'relation', 'predicate', 'value', 'object', 'evidence', 'scope')
         fact = {key: str(item[key])[:1000] for key in keys if isinstance(item.get(key), str)}
+        if kind=='literary_facts' and fact.get('topic')=='plot' and fact.get('scope')=='premise':
+            # Legacy adapters marked arbitrary search windows as plot premises.
+            # Retain the source snapshot, but do not reuse a cut word or mere
+            # publication metadata as a narrative fact. Future adapters only
+            # annotate explicitly selected sections.
+            proof=fact.get('evidence','').lstrip(' «»“”\"\'')
+            value=normalize_identity(proof)
+            metadata=(re.search(r'\b(?:publicad[oa]|published|first edition|primera edicion)\b',value)
+                and re.search(r'\b(?:novela|novel|book|libro)\b',value))
+            narrative=re.search(r'\b(?:narra|relata|trata|sigue|viaja|busca|descubre|investiga|'
+                r'aborda|explora|se centra|tells|follows|recounts|story of|journey|explores)\b',value)
+            if re.match(r'^[a-záéíóúñ]',proof) or (metadata and not narrative):
+                continue
         required = ('name', 'role') if kind == 'character_facts' else ('evidence',)
         if all(fact.get(key) and (_character_name_present(fact[key], body)
                 if key == 'name' and kind == 'character_facts'
@@ -708,6 +721,9 @@ def _current_source(db, source_id, now, expected_hash=''):
     from .literary_identity import ambiguous_work_page
     if source.get('kind') == 'web' and ambiguous_work_page(source):
         return None  # Quarantine legacy snapshots at read time; never erase history.
+    # A read projection, not a mutation of the original record/hash/history.
+    source['literary_facts']=_literal_facts(source.get('literary_facts',[]),
+        source.get('description',''),'literary_facts')
     source.update(memory_source_id=row['source_id'], content_hash=row['content_hash'],
                   evidence_hash=row['content_hash'], retrieved_at=row['retrieved_at'],
                   last_verified_at=row['verified_at'], expires_at=row['expires_at'],

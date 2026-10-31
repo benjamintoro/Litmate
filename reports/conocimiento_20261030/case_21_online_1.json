@@ -1,0 +1,347 @@
+{
+  "case": {
+    "case": 21,
+    "title": "Nana",
+    "author": "\u00c9mile Zola",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": true
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_aliases",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_aliases",
+          "title_match": true,
+          "full_author_match": true
+        },
+        {
+          "table": "memory_aliases",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "LITMATE_LIBRARY_RAG_DB": [
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "mysql": {
+        "name_record_ids": [
+          "810575c8a973a00452f8ab38bd4666f63cbe6dfe8682665890656ffd5575539b",
+          "4b878eaa504c0aaea3d3df9cbdaf6a0e043181c252510e2118b59f4beddcca44",
+          "9a0ab390dd930a7746a433af79d3e90fe41140a371a2ab15c0e891cde174ee84",
+          "d0b3f645bf5bd34e118203fb2accdd23cf94e78327831af24587c3c106033587",
+          "d41a31e3cba216ff06cd2b85c8886ceda41083c8084bda9cb9d97801a20e6cd2"
+        ],
+        "direct_records": [
+          {
+            "id": "4b878eaa504c0aaea3d3df9cbdaf6a0e043181c252510e2118b59f4beddcca44",
+            "label": "Tananarive en 1900",
+            "kind": "work"
+          },
+          {
+            "id": "810575c8a973a00452f8ab38bd4666f63cbe6dfe8682665890656ffd5575539b",
+            "label": "Ang Mananayaw",
+            "kind": "edition"
+          },
+          {
+            "id": "9a0ab390dd930a7746a433af79d3e90fe41140a371a2ab15c0e891cde174ee84",
+            "label": "Gur\u016b N\u0101naka d\u012b s\u0101hittaka pratibh\u0101 te hora lekha",
+            "kind": "work"
+          },
+          {
+            "id": "d0b3f645bf5bd34e118203fb2accdd23cf94e78327831af24587c3c106033587",
+            "label": "Nan\u00e0 a Milano",
+            "kind": "edition"
+          },
+          {
+            "id": "d41a31e3cba216ff06cd2b85c8886ceda41083c8084bda9cb9d97801a20e6cd2",
+            "label": "Nana",
+            "kind": "edition"
+          }
+        ],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": false
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de Nana de \u00c9mile Zola",
+      "answer": "La obra trata de la vida de Nan\u00e1 (Anne Copeau), de la rama familiar de los Macquart afectada por las taras gen\u00e9ticas. La acci\u00f3n se desarrolla en la casa de la familia Muffat. Cerca de all\u00ed, los Hugon y los Muffat pasan los d\u00edas en una casa de campo. Nan\u00e1 termina refugi\u00e1ndose en su amiga Satin, quien llega a ser pr\u00e1cticamente una amante para ella y con el tiempo termina por huir de Fountan y acaba volviendo con su t\u00eda, la cual le informa de que su hijo est\u00e1 enfermo.\n\nFuente: https://es.wikipedia.org/wiki/Nana_(Zola)\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+      "status": "answered",
+      "books": [
+        {
+          "id": "sqlkb:d41a31e3cba216ff06cd2b85c8886ceda41083c8084bda9cb9d97801a20e6cd2",
+          "title": "Nana",
+          "author": "\u00c9mile Zola",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=Nana+%C3%89mile+Zola"
+            },
+            {
+              "label": "Project Gutenberg",
+              "url": "https://www.gutenberg.org/ebooks/5250"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Nana+%C3%89mile+Zola&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Nana+%C3%89mile+Zola"
+            }
+          ]
+        }
+      ],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 476,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "partial_evidence": false,
+        "work_type": "fiction",
+        "progress_metrics": {
+          "elapsed_ms": 488.165,
+          "first_phase_emitted_ms": 23.541,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 7.496,
+            "cache_lookup": 6.041,
+            "knowledge_lookup": 536.091,
+            "audit": 7.667,
+            "finalization": 11.806
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 3.68,
+              "elapsed_ms": 7.496,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 17.489,
+              "elapsed_ms": 6.041,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 35.922,
+              "elapsed_ms": 299.924,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 106.745,
+              "elapsed_ms": 37.13,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 192.533,
+              "elapsed_ms": 142.317,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 258.807,
+              "elapsed_ms": 49.288,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 347.634,
+              "elapsed_ms": 7.432,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 424.27,
+              "elapsed_ms": 5.291,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 452.47,
+              "elapsed_ms": 2.376,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 476.353,
+              "elapsed_ms": 11.806,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 23.541
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 424.255
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 0.497,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 0.4691,
+        "first_verified_text_seconds": 0.497
+      }
+    }
+  ],
+  "seconds": 2.692,
+  "coverage_before": {
+    "works": 14475,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14648,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14475,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14648,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "factual_review_pending": true
+}

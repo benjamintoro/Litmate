@@ -1,0 +1,260 @@
+{
+  "case": {
+    "case": 3,
+    "title": "La dimensi\u00f3n desconocida",
+    "author": "Nona Fern\u00e1ndez",
+    "kind": "no_ficcion",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": true
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Explica el contenido de La dimensi\u00f3n desconocida de Nona Fern\u00e1ndez",
+      "answer": "\u00ab\"En plena dictadura chilena, un angustiado hombre llega a las oficinas de una revista de oposici\u00f3n.\u00bb\n\nFuente: https://openlibrary.org/works/OL17722817W",
+      "status": "answered",
+      "books": [
+        {
+          "id": "/works/OL17722817W",
+          "title": "La dimensi\u00f3n desconocida",
+          "author": "Nona Fern\u00e1ndez",
+          "synopsis": "\"En plena dictadura chilena, un angustiado hombre llega a las oficinas de una revista de oposici\u00f3n. Es un agente de la polic\u00eda secreta. Quiero hablar, dice, y una periodista prende su grabadora para escuchar un testimonio que abrir\u00e1 las puertas de una dimensi\u00f3n hasta entonces desconocida. Siguiendo la hebra de esta escena real, Nona Fern\u00e1ndez activa los mecanismos de la imaginaci\u00f3n para acceder a aquellos rincones do",
+          "image_url": "https://covers.openlibrary.org/b/id/7999389-M.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=La+dimensi%C3%B3n+desconocida+Nona+Fern%C3%A1ndez"
+            },
+            {
+              "label": "Open Library",
+              "url": "https://openlibrary.org/works/OL17722817W"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=La+dimensi%C3%B3n+desconocida+Nona+Fern%C3%A1ndez&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=La+dimensi%C3%B3n+desconocida+Nona+Fern%C3%A1ndez"
+            }
+          ]
+        }
+      ],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 6815,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "partial_evidence": true,
+        "work_type": "fiction",
+        "progress_metrics": {
+          "elapsed_ms": 6842.269,
+          "first_phase_emitted_ms": 16.758,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 6.509,
+            "cache_lookup": 0.633,
+            "knowledge_lookup": 642.427,
+            "retrieval": 1897.077,
+            "web_search": 1932.063,
+            "extraction": 1562.028,
+            "audit": 2.707,
+            "finalization": 27.535
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 3.431,
+              "elapsed_ms": 6.509,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 16.116,
+              "elapsed_ms": 0.633,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 29.24,
+              "elapsed_ms": 357.441,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 104.792,
+              "elapsed_ms": 41.08,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 210.818,
+              "elapsed_ms": 174.782,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 279.872,
+              "elapsed_ms": 61.221,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 454.037,
+              "elapsed_ms": 7.903,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 494.261,
+              "elapsed_ms": 1897.077,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 2396.75,
+              "elapsed_ms": 296.13,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 2692.913,
+              "elapsed_ms": 553.944,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 3247.11,
+              "elapsed_ms": 1562.028,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 4815.52,
+              "elapsed_ms": 1081.989,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 6781.14,
+              "elapsed_ms": 2.707,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 6814.729,
+              "elapsed_ms": 27.535,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 16.758
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 6781.123
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 6.8504,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.0318,
+        "verified_ready_seconds": 6.808,
+        "first_verified_text_seconds": 6.8504
+      }
+    }
+  ],
+  "seconds": 8.989,
+  "research_profile": "cold_after",
+  "public_research_trace": [
+    {
+      "stage": "retrieved_public_evidence",
+      "sources": [
+        {
+          "id": 1,
+          "title": "La dimensi\u00f3n desconocida",
+          "author": "Nona Fern\u00e1ndez",
+          "description": "Temas del cat\u00e1logo: History, Fiction, State-sponsored terrorism, Victims of state-sponsored terrorism, Torturers\n\"En plena dictadura chilena, un angustiado hombre llega a las oficinas de una revista de oposici\u00f3n. Es un agente de la polic\u00eda secreta. Quiero hablar, dice, y una periodista prende su grabadora para escuchar un testimonio que abrir\u00e1 las puertas de una dimensi\u00f3n hasta entonces desconocida. Siguiendo la hebra de esta escena real, Nona Fern\u00e1ndez activa los mecanismos de la imaginaci\u00f3n para acceder a aquellos rincones donde la memoria y los archivos no han podido llegar. ... Las historias de La dimensi\u00f3n desconocida, dice la narradora, 'siempre han estado pis\u00e1ndome los talones. Nac\u00ed con ellas incorporadas en un \u00e1lbum familiar que no eleg\u00ed ni organic\u00e9.' Como en un episodio de aquella vieja serie televisiva, Nona Fern\u00e1ndez construye un relato a partir de la mala conciencia de un personaje insondable, exponiendo e iluminando esa zona de locura y extrav\u00edo que est\u00e1 mucho m\u00e1s cerca de lo que pensamos y que puede hacer de un ser humano una bestia.\"--Back cover. \"In the midst of the Chilean dictatorship, an anguished man arrives at the office of an opposition journal. He is an agent of the secret police. He wants to talk, he says, and a reporter takes her recorder to listen to a testimony that will open the doors to a previously unknown dimension. Following the thread of this real scene, Nona Fern\u00e1ndez activates the workings of the imagination to access those corners that memory and archives haven't been able to reach. ... The stories in La dimensi\u00f3n desconocida (The Unknown Dimension), says the narrator, 'have always been right on my heels. I was born with them integrated into a famil",
+          "source": "Open Library",
+          "year": "2016",
+          "book_id": "/works/OL17722817W",
+          "kind": "book",
+          "url": "https://openlibrary.org/works/OL17722817W",
+          "locator": "",
+          "read_mode": "descripci\u00f3n del registro bibliogr\u00e1fico; no texto de la obra",
+          "retrieved_at": "",
+          "image_url": "https://covers.openlibrary.org/b/id/7999389-M.jpg",
+          "categories": [
+            "History",
+            "Fiction",
+            "State-sponsored terrorism",
+            "Victims of state-sponsored terrorism",
+            "Torturers"
+          ],
+          "subjects": [
+            "History",
+            "Fiction",
+            "State-sponsored terrorism",
+            "Victims of state-sponsored terrorism",
+            "Torturers"
+          ],
+          "synopsis": "\"En plena dictadura chilena, un angustiado hombre llega a las oficinas de una revista de oposici\u00f3n. Es un agente de la polic\u00eda secreta. Quiero hablar, dice, y una periodista prende su grabadora para escuchar un testimonio que abrir\u00e1 las puertas de una dimensi\u00f3n hasta entonces desconocida. Siguiendo la hebra de esta escena real, Nona Fern\u00e1ndez activa los mecanismos de la imaginaci\u00f3n para acceder a aquellos rincones donde la memoria y los archivos no han podido llegar. ... Las historias de La dimensi\u00f3n desconocida, dice la narradora, 'siempre han estado pis\u00e1ndome los talones. Nac\u00ed con ellas incorporadas en un \u00e1lbum familiar que no eleg\u00ed ni organic\u00e9.' Como en un episodio de aquella vieja serie televisiva, Nona Fern\u00e1ndez construye un relato a partir de la mala conciencia de un personaje insondable, exponiendo e iluminando esa zona de locura y extrav\u00edo que est\u00e1 mucho m\u00e1s cerca de lo que pensamos y que puede hacer de un ser humano una bestia.\"--Back cover. \"In the midst of the Chilean dictatorship, an anguished man arrives at the office of an opposition journal. He is an agent of the secret police. He wants to talk, he says, and a reporter takes her recorder to listen to a testimony that will open the doors to a previously unknown dimension. Following the thread of this real scene, Nona Fern\u00e1ndez activates the workings of the imagination to access those corners that memory and archives haven't been able to reach. ... The stories in La dimensi\u00f3n desconocida (The Unknown Dimension), says the narrator, 'have always been right on my heels. I was born with them integrated into a famil",
+          "description_source": "Open Library, registro de obra"
+        }
+      ]
+    }
+  ],
+  "coverage_before": {
+    "works": 14468,
+    "works_with_explicit_plot": 14,
+    "works_with_development_excerpt": 10,
+    "works_with_admitted_description": 17,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 31,
+    "linked_sources": 14640,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14469,
+    "works_with_explicit_plot": 14,
+    "works_with_development_excerpt": 10,
+    "works_with_admitted_description": 17,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 31,
+    "linked_sources": 14641,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "persistent_exact_cache",
+  "google_books_enabled": false,
+  "factual_review_pending": true
+}

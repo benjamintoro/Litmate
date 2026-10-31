@@ -103,6 +103,9 @@ solamente el título; el máximo estricto es 24 y no se recorta la lista.
 statement debe COPIAR una frase del borrador, no una paráfrasis ni una frase
 nueva. Marca unverified lo que añada de memoria y pide retirarlo o declarar su
 incertidumbre.
+La ausencia de respaldo es unverified, NUNCA contradicted. Reserva contradicted
+para una fuente que afirme explícitamente lo contrario; no lo uses como etiqueta
+genérica de rechazo ni porque conozcas el dato por memoria.
 Una paráfrasis puede ser supported si el pasaje recibido respalda su sentido;
 el texto de statement debe seguir siendo la frase literal del borrador.
 No selecciones un saludo o una expresión breve de entusiasmo sin datos externos
@@ -296,7 +299,7 @@ def factual_statements(text, *, strip_markers=True):
                 abbreviation = bool(word and len(word.group(1)) == 1
                                     and word.group(1).isupper() and following[0].isupper())
                 abbreviation = abbreviation or bool(re.search(
-                    r'(?<!\w)(?:dr|dra|sr|sra|srta|prof|profa|lic|ing|ud|uds|'
+                    r'(?<!\w)(?:dr|dra|sr|sra|srta|mr|mrs|ms|prof|profa|lic|ing|ud|uds|'
                     r'p\.\s*ej|v\.\s*gr|a\.\s*c|d\.\s*c)$', prefix, re.I))
                 abbreviation = abbreviation or bool(re.search(r'\bp$', prefix, re.I)
                                                       and re.match(r'ej\.', following, re.I))
@@ -323,7 +326,11 @@ def required_fact_statements(text):
     """
     statements = []
     for statement in factual_statements(text):
-        if (len(statement) < 8 or len(statement.split()) < 4
+        from .literary_web import _short_narrative_role
+        short_role=re.fullmatch(r'\*\*[A-ZÁÉÍÓÚÑ][^*\n]{0,69}\*\*:\s*'
+                                r'(?:(?:es|era|fue)\s+)?(.+?)\.?',statement)
+        explicit_short_fact=bool(short_role and _short_narrative_role(short_role[1]))
+        if ((len(statement) < 8 or len(statement.split()) < 4) and not explicit_short_fact
                 or statement.rstrip('»”"\'').endswith('?')):
             # Un encabezado de recomendación con solo título y autor no es
             # una afirmación factual; se admite como presentación.
@@ -730,6 +737,64 @@ def _unsupported_correspondence_attribution(statement, evidence):
                for frame in requested)
 
 
+def unsupported_kinship_claim(statement, evidence):
+    """An explicit aunt/uncle claim needs the corresponding role in its proof.
+
+    This is deliberately conservative: a parent's death or the word relative
+    does not establish a particular relative's role or actions. The factual
+    auditor must still check which people participate in that relationship.
+    """
+    from .literary_identity import normalize_identity
+    terms={'uncle':r'\b(?:uncle|uncles|tio|tios)\b|\b(?:mother|father) s brother\b',
+           'aunt':r'\b(?:aunt|aunts|tia|tias)\b|\b(?:mother|father) s sister\b'}
+    def roles(text):
+        value=normalize_identity(text)
+        return {role for role,pattern in terms.items() if re.search(pattern,value)}
+    return not roles(statement).issubset(roles(evidence))
+
+
+def unsupported_orphanhood_claim(statement, evidence):
+    """Narrow causal attribution check, not a universal death/kinship model.
+
+    A child described as orphaned by their own death cannot be supported by a
+    passage explicitly saying their parents died. A stated mother/father in
+    the claim makes that possessive ambiguous; leave those to the full audit.
+    """
+    from .literary_identity import normalize_identity
+    text,proof=normalize_identity(statement),normalize_identity(evidence)
+    if re.search(r'\b(?:otros|otras|ninos|ninas|amigos|amigas|children|friends)\s+huerfan[oa]s\b',text):
+        if not re.search(r'\b(?:huerfan[oa]s|orphans|orphaned children|orphaned friends|children orphaned)\b',proof):
+            return True  # One child's parents do not establish the peers' role.
+    own=re.search(r'\bsu (?:propia )?muerte\b.*?\b(?:la|lo|le) deja(?:ba|ra|ron|n)? huerfan[oa]\b',text)
+    if (not own or not re.search(r'\b(?:nina|nino|joven|muchacha|muchacho)\b',text[:own.start()])
+            or re.search(r'\b(?:madre|padre|padres|tio|tia|hermano|hermana)\b',text[:own.start()])):
+        return False
+    return bool(re.search(r'\b(?:kills? (?:her|his|their|the) parents|'
+        r'(?:her|his|their) parents (?:die|died)|muerte de (?:sus|los) padres|'
+        r'mueren (?:sus|los) padres)\b',proof))
+
+
+def unsupported_event_target(statement, evidence):
+    """Detecta inversión explícita del objeto en acciones de captura.
+
+    Control limitado, no verificador semántico universal: sólo interviene si
+    ambos textos nombran inequívocamente el objetivo del mismo tipo de acción.
+    No inventa alias ni infiere víctimas desde una lista de personajes.
+    """
+    from .literary_identity import normalize_identity
+    action=(r'(?i:captur(?:ed|ar|aron|ó|a|an)|apres(?:aron|ó|ar)|capture of)\s+'
+            r'(?:(?i:and imprisoned)\s+)?(?:(?i:a|al|the|el|la)\s+)?'
+            r'(?:(?i:emperor|emperador|king|rey|prince|príncipe)\s+)?'
+            r'([A-ZÁÉÍÓÚÑ][\wáéíóúñ-]+(?:\s+[A-ZÁÉÍÓÚÑ][\wáéíóúñ-]+){0,3})')
+    claimed={normalize_identity(m[1]) for m in re.finditer(action,str(statement or ''))}
+    documented={normalize_identity(m[1]) for m in re.finditer(action,str(evidence or ''))}
+    # Un nombre de pila puede abreviar el nombre completo documentado. Dos
+    # apellidos distintos no son equivalentes por compartir ese nombre.
+    return bool(claimed and documented and any(not any(
+        set(person.split())<=set(target.split()) or set(target.split())<=set(person.split())
+        for target in documented) for person in claimed))
+
+
 @timed_stage('audit')
 def validate_audit(audit, plan, draft, sources, message, *, strict_facts=False):
     if (not isinstance(audit, dict) or set(audit) != set(AUDIT_SCHEMA['properties'])
@@ -798,6 +863,12 @@ def validate_audit(audit, plan, draft, sources, message, *, strict_facts=False):
                     'destinatario o papel en la correspondencia; corrige el sujeto o cita un pasaje que lo identifique.')
             if unsupported_character_list_claim(claim['statement'], claim['evidence']):
                 raise RetryableAuditError('La lista de personajes necesita una prueba que incluya los nombres afirmados.')
+            if unsupported_event_target(claim['statement'], claim['evidence']):
+                raise RetryableAuditError('La prueba identifica a otra persona como objeto de la captura; corrige la atribución del acontecimiento.')
+            if unsupported_orphanhood_claim(claim['statement'],claim['evidence']):
+                raise RetryableAuditError('La muerte de los padres no respalda que un menor quede huérfano por su propia muerte.')
+            if unsupported_kinship_claim(claim['statement'],claim['evidence']):
+                raise RetryableAuditError('La prueba no documenta el parentesco concreto que se afirma.')
             if re.search(r'\b(?:personajes?|protagonistas?)\b', message, re.I):
                 names = character_names(claim['statement'])
                 if names and not names <= evidence_words(claim['evidence']):

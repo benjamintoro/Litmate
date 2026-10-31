@@ -25,7 +25,8 @@ DDG_HTML = '''<!doctype html><html><body><table>
 
 
 @override_settings(CACHES={'default': {'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-                                     'LOCATION': 'web-search-tests'}}, LITMATE_AI_USE_WEB=True)
+                                     'LOCATION': 'web-search-tests'}}, LITMATE_AI_USE_WEB=True,
+                   LITMATE_AI_LOCK_BACKEND='cache')
 class DuckDuckGoSearchTests(SimpleTestCase):
     def setUp(self):
         cache.clear()

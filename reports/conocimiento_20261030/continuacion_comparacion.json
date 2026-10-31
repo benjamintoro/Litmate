@@ -1,0 +1,119 @@
+{
+  "before": [
+    {
+      "question": "Dime la trama de Frankenstein de Mary Shelley.",
+      "status": "answered",
+      "seconds": 0.8285,
+      "model_calls": 0
+    },
+    {
+      "question": "\u00bfQui\u00e9nes son los personajes principales?",
+      "status": "answered",
+      "seconds": 3.9477,
+      "model_calls": 0
+    },
+    {
+      "question": "\u00bfQu\u00e9 relaci\u00f3n tiene V\u00edctor Frankenstein con la criatura?",
+      "status": "unavailable",
+      "seconds": 4.1858,
+      "model_calls": 0
+    },
+    {
+      "question": "Dime la trama de La Odisea.",
+      "status": "unavailable",
+      "seconds": 7.7001,
+      "model_calls": 0
+    },
+    {
+      "question": "\u00bfQui\u00e9nes son sus personajes principales?",
+      "status": "answered",
+      "seconds": 4.4927,
+      "model_calls": 0
+    },
+    {
+      "question": "Dime la trama del manga Naruto.",
+      "status": "answered",
+      "seconds": 1.0189,
+      "model_calls": 0
+    }
+  ],
+  "after": [
+    {
+      "question": "Dime la trama de Frankenstein de Mary Shelley.",
+      "status": "answered",
+      "seconds": 0.8241,
+      "model_calls": 0
+    },
+    {
+      "question": "\u00bfQui\u00e9nes son los personajes principales?",
+      "status": "answered",
+      "seconds": 3.5304,
+      "model_calls": 0
+    },
+    {
+      "question": "\u00bfQu\u00e9 relaci\u00f3n tiene V\u00edctor Frankenstein con la criatura?",
+      "status": "answered",
+      "seconds": 0.497,
+      "model_calls": 0
+    },
+    {
+      "question": "Dime la trama de La Odisea.",
+      "status": "answered",
+      "seconds": 3.3017,
+      "model_calls": 0
+    },
+    {
+      "question": "\u00bfQui\u00e9nes son sus personajes principales?",
+      "status": "answered",
+      "seconds": 4.5055,
+      "model_calls": 0
+    },
+    {
+      "question": "Dime la trama del manga Naruto.",
+      "status": "answered",
+      "seconds": 1.1257,
+      "model_calls": 0
+    }
+  ],
+  "warning": "answered is a transport/result status, not a completeness or independent factual verdict.",
+  "before_metrics": {
+    "turns": 6,
+    "answered": 4,
+    "mean_seconds": 3.6956,
+    "p50_seconds": 4.066750000000001,
+    "p95_nearest_rank_seconds": 7.7001,
+    "under_5_seconds": 5,
+    "under_30_seconds": 6,
+    "llm_calls": 0
+  },
+  "after_metrics": {
+    "turns": 6,
+    "answered": 6,
+    "mean_seconds": 2.2974,
+    "p50_seconds": 2.2137,
+    "p95_nearest_rank_seconds": 4.5055,
+    "under_5_seconds": 6,
+    "under_30_seconds": 6,
+    "llm_calls": 0
+  },
+  "manual_review": {
+    "frankenstein_plot": "source-backed opening; incomplete overall plot",
+    "frankenstein_characters": "one verified profile; partial list",
+    "creator_relationship": "verified creator/life predicate and rejection passage; no persisted alias",
+    "odyssey_plot": "verified return premise and isolated episodes; limited cohesion",
+    "odyssey_characters": "one verified profile; partial list",
+    "naruto_plot": "source-backed premise and selected arcs; not full-series coverage"
+  },
+  "isolated_repetition": {
+    "file": "continuacion_actual_06_aislada.json",
+    "turns": 6,
+    "answered": 6,
+    "mean_seconds": 2.6306,
+    "p50_seconds": 2.0577,
+    "p95_nearest_rank_seconds": 5.6826,
+    "under_5_seconds": 5,
+    "under_30_seconds": 6,
+    "model_calls": 0,
+    "note": "Only six turns. Character lists partial. No system-wide SLA inferred."
+  }
+}

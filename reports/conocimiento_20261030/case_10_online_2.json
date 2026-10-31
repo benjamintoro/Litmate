@@ -1,0 +1,316 @@
+{
+  "case": {
+    "case": 10,
+    "title": "La bastarda",
+    "author": "Trifonia Melibea Obono",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks_content",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "LITMATE_LIBRARY_RAG_DB": [
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks_content",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks_content",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": false
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de La bastarda de Trifonia Melibea Obono",
+      "answer": "Okomo, una hu\u00e9rfana que naci\u00f3 bastarda y cuya madre muri\u00f3 durante el parto, vive en un pueblo tradicional en Guinea Ecuatorial que est\u00e1 a un d\u00eda a pie de Gab\u00f3n. Como joven de diecis\u00e9is a\u00f1os que tuvo su per\u00edodo, es velada por la primera esposa de su abuelo, su abuelo y una comunidad que ya la rechaz\u00f3 por su nacimiento. Dado su lugar en esta familia pol\u00edgama y sin saber qui\u00e9n es, Okomo busca saber m\u00e1s sobre su padre. Okomo tiene una relaci\u00f3n especial con un t\u00edo, el hermano de su madre y otro hijo de la primera esposa de su abuelo, llamado Marcelo.\n\nFuente: https://es.wikipedia.org/wiki/La_bastarda_(novela)\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+      "status": "answered",
+      "books": [
+        {
+          "id": "/works/OL19740672W",
+          "title": "La bastarda",
+          "author": "Trifonia Melibea Obono",
+          "synopsis": "",
+          "image_url": "https://covers.openlibrary.org/b/id/10235255-M.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=La+bastarda+Trifonia+Melibea+Obono"
+            },
+            {
+              "label": "Open Library",
+              "url": "https://openlibrary.org/works/OL19740672W"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=La+bastarda+Trifonia+Melibea+Obono&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=La+bastarda+Trifonia+Melibea+Obono"
+            }
+          ]
+        }
+      ],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 1493,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "partial_evidence": false,
+        "work_type": "fiction",
+        "progress_metrics": {
+          "elapsed_ms": 1508.921,
+          "first_phase_emitted_ms": 19.438,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 7.653,
+            "cache_lookup": 0.742,
+            "knowledge_lookup": 553.424,
+            "retrieval": 956.682,
+            "audit": 3.904,
+            "finalization": 15.66
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 4.062,
+              "elapsed_ms": 7.653,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 18.687,
+              "elapsed_ms": 0.742,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 31.492,
+              "elapsed_ms": 323.676,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 105.463,
+              "elapsed_ms": 40.837,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 209.379,
+              "elapsed_ms": 144.787,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 277.437,
+              "elapsed_ms": 40.839,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 419.077,
+              "elapsed_ms": 3.285,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 442.11,
+              "elapsed_ms": 956.682,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 1456.956,
+              "elapsed_ms": 3.904,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 1493.254,
+              "elapsed_ms": 15.66,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 19.438
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 1456.941
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 1.518,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.0341,
+        "verified_ready_seconds": 1.4868,
+        "first_verified_text_seconds": 1.518
+      }
+    }
+  ],
+  "seconds": 3.715,
+  "research_profile": "cold_after",
+  "public_research_trace": [
+    {
+      "stage": "retrieved_public_evidence",
+      "sources": [
+        {
+          "id": 1,
+          "title": "La bastarda",
+          "author": "Trifonia Melibea Obono",
+          "description": "Temas del cat\u00e1logo: Fiction, Orphans, Fang (West African people), Women, Fiction, general, FICTION / Coming of Age, FICTION / LGBT / Lesbian, FICTION / Literary, Fang (African people)",
+          "source": "Open Library",
+          "year": "2016",
+          "book_id": "/works/OL19740672W",
+          "kind": "book",
+          "url": "https://openlibrary.org/works/OL19740672W",
+          "locator": "",
+          "read_mode": "ficha bibliogr\u00e1fica; materias de cat\u00e1logo, no texto de la ob",
+          "retrieved_at": "",
+          "image_url": "https://covers.openlibrary.org/b/id/10235255-M.jpg",
+          "categories": [
+            "Fiction",
+            "Orphans",
+            "Fang (West African people)",
+            "Women",
+            "Fiction, general"
+          ]
+        },
+        {
+          "id": 2,
+          "title": "La bastarda (novela)",
+          "author": "Fuente web",
+          "description": "== Argumento == Okomo, una hu\u00e9rfana que naci\u00f3 bastarda y cuya madre muri\u00f3 durante el parto, vive en un pueblo tradicional en Guinea Ecuatorial que est\u00e1 a un d\u00eda a pie de Gab\u00f3n. Como joven de diecis\u00e9is a\u00f1os que tuvo su per\u00edodo, es velada por la primera esposa de su abuelo, su abuelo y una comunidad que ya la rechaz\u00f3 por su nacimiento. Dado su lugar en esta familia pol\u00edgama y sin saber qui\u00e9n es, Okomo busca saber m\u00e1s sobre su padre. Okomo tiene una relaci\u00f3n especial con un t\u00edo, el hermano de su madre y otro hijo de la primera esposa de su abuelo, llamado Marcelo.",
+          "source": "Wikipedia",
+          "year": "",
+          "book_id": "",
+          "kind": "web",
+          "url": "https://es.wikipedia.org/wiki/La_bastarda_(novela)",
+          "locator": "",
+          "read_mode": "pasaje de secci\u00f3n de art\u00edculo p\u00fablico",
+          "retrieved_at": "",
+          "work_id": "litmate:f9494b364e9be97a70489c6d",
+          "work_title": "La bastarda",
+          "work_author": "Trifonia Melibea Obono",
+          "license": "CC-BY-SA-4.0",
+          "work_binding_verified": true,
+          "permanent_index_allowed": true,
+          "attribution": {
+            "authors": "Wikipedia contributors",
+            "title": "La bastarda (novela)",
+            "url": "https://es.wikipedia.org/wiki/La_bastarda_(novela)",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+            "revision_id": "167834910"
+          },
+          "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+          "literary_facts": [
+            {
+              "subject": "",
+              "relation": "",
+              "value": "",
+              "evidence": "Okomo, una hu\u00e9rfana que naci\u00f3 bastarda y cuya madre muri\u00f3 durante el parto, vive en un pueblo tradicional en Guinea Ecuatorial que est\u00e1 a un d\u00eda a pie de Gab\u00f3n.",
+              "source_url": "",
+              "fact_kind": "",
+              "topic": "plot",
+              "type": "",
+              "scope": "development_excerpt"
+            },
+            {
+              "subject": "La bastarda (novela)",
+              "relation": "",
+              "value": "",
+              "evidence": "== Argumento == Okomo, una hu\u00e9rfana que naci\u00f3 bastarda y cuya madre muri\u00f3 durante el parto, vive en un pueblo tradicional en Guinea Ecuatorial que est\u00e1 a un d\u00eda a pie de Gab\u00f3n. Como joven de diecis\u00e9is a\u00f1os que tuvo su per\u00edodo, es velada por la primera esposa de su abuelo, su abuelo y una comunidad que ya la rechaz\u00f3 por su nacimiento. Dado su lugar en esta familia pol\u00edgama y sin saber qui\u00e9n es, Okomo busca saber m\u00e1s sobre su padre. Okomo tiene una relaci\u00f3n especial con un t\u00edo, el hermano de su madre y otro hijo de la primera esposa de su abuelo, llamado Marcelo.",
+              "source_url": "",
+              "fact_kind": "",
+              "topic": "events",
+              "type": "",
+              "scope": "partial"
+            }
+          ],
+          "identity_text": "La Bastarda es una novela en espa\u00f1ol de 2016 de Trifonia Melibea Obono. El libro est\u00e1 prohibido en Guinea Ecuatorial. El libro cuenta la historia de Okomo, una hu\u00e9rfana que naci\u00f3 bastarda cuya madre muri\u00f3 durante el parto. Vive en un pueblo tradicional de Guinea Ecuatorial que est\u00e1 a un d\u00eda a pie de Gab\u00f3n. Se ve obligada a confrontar las actitudes de su cultura sobre los roles de g\u00e9nero, los requisitos para que las mujeres tengan relaciones sexuales con el objetivo de la reproducci\u00f3n y la sexualidad. Despu\u00e9s de ser descubierta, se retira al santuario de libertad del bosque. El libro fue la segunda novela publicada en espa\u00f1ol por la autora.",
+          "character_facts": []
+        }
+      ]
+    }
+  ],
+  "coverage_before": {
+    "works": 14474,
+    "works_with_explicit_plot": 16,
+    "works_with_development_excerpt": 10,
+    "works_with_admitted_description": 19,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 33,
+    "linked_sources": 14648,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14475,
+    "works_with_explicit_plot": 17,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 20,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 34,
+    "linked_sources": 14650,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "persistent_exact_cache",
+  "google_books_enabled": false,
+  "factual_review_pending": true
+}

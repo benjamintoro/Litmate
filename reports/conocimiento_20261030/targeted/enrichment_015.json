@@ -1,0 +1,119 @@
+{
+  "position": 15,
+  "work": {
+    "author": "Frederick Douglass",
+    "categories": [
+      "Douglass, Frederick, 1818-1895",
+      "African American abolitionists -- Biography",
+      "Abolitionists -- United States -- Biography",
+      "Enslaved persons -- United States -- Biography"
+    ],
+    "confirmed_aliases": [],
+    "edition_id": "gutenberg:23",
+    "isbns": [],
+    "kind": "book",
+    "language": "en",
+    "source": "Project Gutenberg",
+    "title": "Narrative of the Life of Frederick Douglass, an American Slave",
+    "url": "https://www.gutenberg.org/ebooks/23",
+    "work_id": "litmate:5ba1898020c76aa0f71c087a",
+    "memory_verified": true
+  },
+  "kind": "nonfiction",
+  "requirement": "themes",
+  "before": {
+    "works": 1,
+    "works_with_explicit_plot": 0,
+    "works_with_development_excerpt": 0,
+    "works_with_admitted_description": 0,
+    "characters_with_literal_roles": 0,
+    "works_with_literal_roles": 0,
+    "characters_with_membership_only": 0,
+    "works_with_explicit_protagonist": 0,
+    "explicit_protagonist_mentions": 0,
+    "relationships": 0,
+    "narrative_facts": 0,
+    "linked_sources": 1,
+    "per_work": {
+      "litmate:5ba1898020c76aa0f71c087a": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "batch": {
+    "mode": "continuous_once",
+    "scheduled": 1,
+    "llm_calls": 0,
+    "new_global_corrections": 0,
+    "mysql_references_added": 0,
+    "work_ids": [
+      "litmate:5ba1898020c76aa0f71c087a"
+    ],
+    "batch": {
+      "claimed": 1,
+      "completed": 0,
+      "deferred": 1,
+      "stored": 0,
+      "seconds": 2.458,
+      "jobs": [
+        {
+          "work_id": "litmate:5ba1898020c76aa0f71c087a",
+          "provider": "wikipedia",
+          "requirement": "themes",
+          "status": "no_verified_match",
+          "lease_current": true,
+          "seconds": 2.443,
+          "stored": 0,
+          "reused": false
+        }
+      ],
+      "llm_calls": 0,
+      "reused": 0,
+      "verification_scope": "source_policy_identity_and_requirement_coverage",
+      "independent_factual_corroboration": false
+    },
+    "stopped": null,
+    "seconds": 2.478,
+    "cpu_seconds": 0.109,
+    "process": {
+      "rss_mb": 97.992,
+      "peak_rss_mb": 123.203
+    },
+    "storage_delta_bytes": 0,
+    "revision_before": "14834",
+    "revision_after": "14834"
+  },
+  "after": {
+    "works": 1,
+    "works_with_explicit_plot": 0,
+    "works_with_development_excerpt": 0,
+    "works_with_admitted_description": 0,
+    "characters_with_literal_roles": 0,
+    "works_with_literal_roles": 0,
+    "characters_with_membership_only": 0,
+    "works_with_explicit_protagonist": 0,
+    "explicit_protagonist_mentions": 0,
+    "relationships": 0,
+    "narrative_facts": 0,
+    "linked_sources": 1,
+    "per_work": {
+      "litmate:5ba1898020c76aa0f71c087a": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_changed": false,
+  "sql_projection": "existing evidence pointers; not copied prose"
+}

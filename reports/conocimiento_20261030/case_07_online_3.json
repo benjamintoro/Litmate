@@ -1,0 +1,279 @@
+{
+  "case": {
+    "case": 7,
+    "title": "Nuestra parte de noche",
+    "author": "Mariana Enr\u00edquez",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": true
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de Nuestra parte de noche de Mariana Enr\u00edquez",
+      "answer": "En el Buenos Aires de 1981, durante la dictadura militar que acosaba a Argentina, Juan y su hijo Gaspar emprenden un abrupto viaje en coche hacia las Cataratas del Iguaz\u00fa, tras la inesperada y poco clara muerte de la madre, Rosario. La congregaci\u00f3n secreta que recibe el nombre de la Orden, a la cual est\u00e1n atados por poderosos lazos familiares, tiene un objetivo fijo: conseguir la vida eterna a trav\u00e9s de la preservaci\u00f3n de la consciencia. Para ello, la Orden realiza peri\u00f3dicamente ceremonias que invocan a la Oscuridad a trav\u00e9s del propio Juan, que ejerce como m\u00e9dium. En esta realidad tan hambrienta como desgarradora, se libra una contienda contrarreloj por acallar las evidentes habilidades paranormales que Gaspar ha heredado. La narraci\u00f3n de la historia, adem\u00e1s, est\u00e1 divida en seis secciones de distinto registro narrativo (cr\u00f3nicas, narraciones en primera o tercera persona, etc.) y desde la perspectiva de distintos personajes.\n\nFuente: https://es.wikipedia.org/wiki/Nuestra_parte_de_noche\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+      "status": "answered",
+      "books": [
+        {
+          "id": "/works/OL20901051W",
+          "title": "Nuestra parte de noche",
+          "author": "Mariana Enr\u00edquez",
+          "synopsis": "",
+          "image_url": "https://covers.openlibrary.org/b/id/10239068-M.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=Nuestra+parte+de+noche+Mariana+Enr%C3%ADquez"
+            },
+            {
+              "label": "Open Library",
+              "url": "https://openlibrary.org/works/OL20901051W"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Nuestra+parte+de+noche+Mariana+Enr%C3%ADquez&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Nuestra+parte+de+noche+Mariana+Enr%C3%ADquez"
+            }
+          ]
+        }
+      ],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 1807,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "partial_evidence": true,
+        "work_type": "fiction",
+        "progress_metrics": {
+          "elapsed_ms": 1836.705,
+          "first_phase_emitted_ms": 15.192,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 5.139,
+            "cache_lookup": 0.649,
+            "knowledge_lookup": 683.404,
+            "retrieval": 1119.22,
+            "audit": 4.836,
+            "finalization": 29.747
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 2.946,
+              "elapsed_ms": 5.139,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 14.533,
+              "elapsed_ms": 0.649,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 27.432,
+              "elapsed_ms": 355.388,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 106.893,
+              "elapsed_ms": 42.502,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 214.77,
+              "elapsed_ms": 167.0,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 285.489,
+              "elapsed_ms": 55.751,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 458.196,
+              "elapsed_ms": 62.763,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 573.379,
+              "elapsed_ms": 1119.22,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 1768.398,
+              "elapsed_ms": 4.836,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 1806.953,
+              "elapsed_ms": 29.747,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 15.192
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 1768.378
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 1.8451,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.03,
+        "verified_ready_seconds": 1.8003,
+        "first_verified_text_seconds": 1.8451
+      }
+    }
+  ],
+  "seconds": 3.998,
+  "research_profile": "cold_after",
+  "public_research_trace": [
+    {
+      "stage": "retrieved_public_evidence",
+      "sources": [
+        {
+          "id": 1,
+          "title": "Nuestra parte de noche",
+          "author": "Mariana Enr\u00edquez",
+          "description": "Temas del cat\u00e1logo: Horror, Fiction, Fantasy, Historical Fiction, Queer, LGBT, Thriller, Adult, Romance literature",
+          "source": "Open Library",
+          "year": "2019",
+          "book_id": "/works/OL20901051W",
+          "kind": "book",
+          "url": "https://openlibrary.org/works/OL20901051W",
+          "locator": "",
+          "read_mode": "ficha bibliogr\u00e1fica; materias de cat\u00e1logo, no texto de la ob",
+          "retrieved_at": "",
+          "image_url": "https://covers.openlibrary.org/b/id/10239068-M.jpg",
+          "categories": [
+            "Horror",
+            "Fiction",
+            "Fantasy",
+            "Historical Fiction",
+            "Queer"
+          ]
+        },
+        {
+          "id": 2,
+          "title": "Nuestra parte de noche",
+          "author": "Fuente web",
+          "description": "== Argumento == En el Buenos Aires de 1981, durante la dictadura militar que acosaba a Argentina, Juan y su hijo Gaspar emprenden un abrupto viaje en coche hacia las Cataratas del Iguaz\u00fa, tras la inesperada y poco clara muerte de la madre, Rosario, con el fin de escapar del crudo destino que eclipsa el futuro del peque\u00f1o. La congregaci\u00f3n secreta que recibe el nombre de la Orden, a la cual est\u00e1n atados por poderosos lazos familiares, tiene un objetivo fijo: conseguir la vida eterna a trav\u00e9s de la preservaci\u00f3n de la consciencia. Para ello, la Orden realiza peri\u00f3dicamente ceremonias que invocan a la Oscuridad a trav\u00e9s del propio Juan, que ejerce como m\u00e9dium. A lo largo de la historia conocemos los brutales rituales y sangrientos sacrificios humanos que son la manera de mantener dicho v\u00ednculo y los conflictos que ello genera entre los personajes, as\u00ed como la historia de la Orden y las principales familias asociadas, la Bradford y la Reyes, que se entretejen con los contextos pol\u00edticos de Argentina e Inglaterra entre fines del siglo XIX y principios del XX, como el colonialismo brit\u00e1nico, la Conquista del Desierto y los gobiernos militares argentinos. En esta realidad tan hambrienta como desgarradora, se libra una contienda contrarreloj por acallar las evidentes habilidades paranormales que Gaspar ha heredado.\u200b\u200b La narraci\u00f3n de la historia, adem\u00e1s, est\u00e1 divida en seis secciones de distinto registro narrativo (cr\u00f3nicas, narraciones en primera o tercera persona, etc.) y desde la perspectiva de distintos personajes. Cada una de estas secciones transcurre en un lapso distinto del per\u00edodo que va de 1960 a 1997 pero su ordenamiento no sigue la cronolog\u00eda.\u200b",
+          "source": "Wikipedia",
+          "year": "",
+          "book_id": "",
+          "kind": "web",
+          "url": "https://es.wikipedia.org/wiki/Nuestra_parte_de_noche",
+          "locator": "",
+          "read_mode": "pasaje de secci\u00f3n de art\u00edculo p\u00fablico",
+          "retrieved_at": "",
+          "work_id": "litmate:c140fbbdbfc7dc5bbd0593e3",
+          "work_title": "Nuestra parte de noche",
+          "work_author": "Mariana Enr\u00edquez",
+          "license": "CC-BY-SA-4.0",
+          "work_binding_verified": true,
+          "permanent_index_allowed": true,
+          "attribution": {
+            "authors": "Wikipedia contributors",
+            "title": "Nuestra parte de noche",
+            "url": "https://es.wikipedia.org/wiki/Nuestra_parte_de_noche",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+            "revision_id": "175697457"
+          },
+          "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+          "literary_facts": [
+            {
+              "subject": "",
+              "relation": "",
+              "value": "",
+              "evidence": "En el Buenos Aires de 1981, durante la dictadura militar que acosaba a Argentina, Juan y su hijo Gaspar emprenden un abrupto viaje en coche hacia las Cataratas del Iguaz\u00fa, tras la inesperada y poco clara muerte de la madre, Rosario, con el fin de escapar del crudo destino que eclipsa el futuro del peque\u00f1o.",
+              "source_url": "",
+              "fact_kind": "",
+              "topic": "plot",
+              "type": "",
+              "scope": "premise"
+            },
+            {
+              "subject": "Nuestra parte de noche",
+              "relation": "",
+              "value": "",
+              "evidence": "== Argumento == En el Buenos Aires de 1981, durante la dictadura militar que acosaba a Argentina, Juan y su hijo Gaspar emprenden un abrupto viaje en coche hacia las Cataratas del Iguaz\u00fa, tras la inesperada y poco clara muerte de la madre, Rosario, con el fin de escapar del crudo destino que eclipsa el futuro del peque\u00f1o. La congregaci\u00f3n secreta que recibe el nombre de la Orden, a la cual est\u00e1n atados por poderosos lazos familiares, tiene un objetivo fijo: conseguir la vida eterna a trav\u00e9s de la preservaci\u00f3n de la consciencia. Para ello, la Orden realiza peri\u00f3dicamente ceremonias que invocan a la Oscuridad a trav\u00e9s del propio Juan, que ejerce como m\u00e9dium. A lo largo de la historia conocemos",
+              "source_url": "",
+              "fact_kind": "",
+              "topic": "events",
+              "type": "",
+              "scope": "partial"
+            }
+          ],
+          "identity_text": "Nuestra parte de noche es la cuarta novela de la escritora argentina Mariana Enr\u00edquez, publicada en 2019 por la editorial Anagrama.\u200b La obra fue galardonada con el 37.\u00ba Premio Herralde de Novela,\u200b y entre las tem\u00e1ticas que aborda, se encuentran la relaci\u00f3n entre padre e hijo,\u200b la herencia y los lazos de sangre,\u200b la muerte,\u200b y el deseo,\u200b la espiritualidad, el poder y la impunidad.\u200b",
+          "character_facts": []
+        }
+      ]
+    }
+  ],
+  "coverage_before": {
+    "works": 14472,
+    "works_with_explicit_plot": 14,
+    "works_with_development_excerpt": 10,
+    "works_with_admitted_description": 17,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 31,
+    "linked_sources": 14644,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14473,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 10,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14646,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "persistent_exact_cache",
+  "google_books_enabled": false,
+  "factual_review_pending": true
+}

@@ -1,0 +1,1479 @@
+{
+  "started_at": "2026-10-30T11:16:04.579448+00:00",
+  "cases": [
+    {
+      "category": "novela",
+      "query": "El nombre de la rosa Umberto Eco argumento",
+      "engines": "wikipedia,openlibrary,mwmbl",
+      "http_status": 200,
+      "results": [
+        {
+          "url": "https://www.oregonlive.com/today/2016/02/umberto_eco_italian_author_and.html",
+          "title": "Umberto Eco, Italian author and scholar, dead at 84 - oregonlive\u2026",
+          "content": "Umberto Eco, Italian author and scholar, dead at 84 Italian writer, medievalist, semiotician, philosopher, literary critic and novelists Umberto Eco wave\u2026",
+          "engine": "mwmbl",
+          "template": "default.html",
+          "parsed_url": [
+            "https",
+            "www.oregonlive.com",
+            "/today/2016/02/umberto_eco_italian_author_and.html",
+            "",
+            "",
+            ""
+          ],
+          "img_src": "",
+          "thumbnail": "",
+          "priority": "",
+          "engines": [
+            "mwmbl"
+          ],
+          "positions": [
+            1
+          ],
+          "score": 1.0,
+          "category": "general",
+          "publishedDate": null,
+          "iframe_src": null
+        }
+      ],
+      "failures": [],
+      "seconds": 1.407
+    },
+    {
+      "category": "manga",
+      "query": "Naruto Masashi Kishimoto trama",
+      "engines": "wikipedia,openlibrary,mwmbl",
+      "http_status": 200,
+      "results": [
+        {
+          "url": "https://www.kanpai.fr/naruto",
+          "title": "Naruto - Le manga et l'anim\u00e9 de Masashi Kishimoto",
+          "content": "",
+          "engine": "mwmbl",
+          "template": "default.html",
+          "parsed_url": [
+            "https",
+            "www.kanpai.fr",
+            "/naruto",
+            "",
+            "",
+            ""
+          ],
+          "img_src": "",
+          "thumbnail": "",
+          "priority": "",
+          "engines": [
+            "mwmbl"
+          ],
+          "positions": [
+            1
+          ],
+          "score": 1.0,
+          "category": "general",
+          "publishedDate": null,
+          "iframe_src": null
+        },
+        {
+          "url": "http://tvtropes.org/pmwiki/pmwiki.php/Creator/MasashiKishimoto",
+          "title": "Masashi Kishimoto (Creator) - TV Tropes",
+          "content": "Masashi Kishimoto (\u5cb8\u672c \u6589\u53f2, Kishimoto Masashi, born November 8, 1974) is a Japanese manga artist, well known for creating the manga series Naruto which was \u2026",
+          "engine": "mwmbl",
+          "template": "default.html",
+          "parsed_url": [
+            "http",
+            "tvtropes.org",
+            "/pmwiki/pmwiki.php/Creator/MasashiKishimoto",
+            "",
+            "",
+            ""
+          ],
+          "img_src": "",
+          "thumbnail": "",
+          "priority": "",
+          "engines": [
+            "mwmbl"
+          ],
+          "positions": [
+            2
+          ],
+          "score": 0.5,
+          "category": "general",
+          "publishedDate": null,
+          "iframe_src": null
+        },
+        {
+          "url": "https://bookshop.org/a/3387/9781421534985",
+          "title": "Naruto, Vol. 51 a book by Masashi Kishimoto",
+          "content": "Author/artist Masashi Kishimoto was born in 1974 in rural Okayama Prefecture, Japan. Like many kids, he was first inspired to become a manga artist in ele\u2026",
+          "engine": "mwmbl",
+          "template": "default.html",
+          "parsed_url": [
+            "https",
+            "bookshop.org",
+            "/a/3387/9781421534985",
+            "",
+            "",
+            ""
+          ],
+          "img_src": "",
+          "thumbnail": "",
+          "priority": "",
+          "engines": [
+            "mwmbl"
+          ],
+          "positions": [
+            3
+          ],
+          "score": 0.3333333333333333,
+          "category": "general",
+          "publishedDate": null,
+          "iframe_src": null
+        },
+        {
+          "url": "http://unsplash.com/@animeenergy12/likes",
+          "title": "anime energy's Likes (@animeenergy12) | Unsplash Photo Community",
+          "content": "what does the rinnegan do Masashi Kishimoto created the fictional Obito Uchiha for the Naruto series. After forming an alliance with Madara Uchiha and Ze\u2026",
+          "engine": "mwmbl",
+          "template": "default.html",
+          "parsed_url": [
+            "http",
+            "unsplash.com",
+            "/@animeenergy12/likes",
+            "",
+            "",
+            ""
+          ],
+          "img_src": "",
+          "thumbnail": "",
+          "priority": "",
+          "engines": [
+            "mwmbl"
+          ],
+          "positions": [
+            4
+          ],
+          "score": 0.25,
+          "category": "general",
+          "publishedDate": null,
+          "iframe_src": null
+        },
+        {
+          "url": "https://www.qbd.com.au/product/9781421534756/",
+          "title": "Naruto 49 by Masashi Kishimoto - 9781421534756",
+          "content": "Naruto 49 Naruto is a young shinobi with an incorrigible knack for mischief. He's got a wild sense of humor, but Naruto is completely serious about his m\u2026",
+          "engine": "mwmbl",
+          "template": "default.html",
+          "parsed_url": [
+            "https",
+            "www.qbd.com.au",
+            "/product/9781421534756/",
+            "",
+            "",
+            ""
+          ],
+          "img_src": "",
+          "thumbnail": "",
+          "priority": "",
+          "engines": [
+            "mwmbl"
+          ],
+          "positions": [
+            5
+          ],
+          "score": 0.2,
+          "category": "general",
+          "publishedDate": null,
+          "iframe_src": null
+        },
+        {
+          "url": "http://en.wikipedia.org/wiki/Naruto",
+          "title": "Naruto - Wikipedia",
+          "content": "Naruto [ a ] is a Japanese manga series written and illustrated by Masashi Kishimoto . It tells the story of Naruto Uzumaki , a young ninja who seeks reco\u2026",
+          "engine": "mwmbl",
+          "template": "default.html",
+          "parsed_url": [
+            "http",
+            "en.wikipedia.org",
+            "/wiki/Naruto",
+            "",
+            "",
+            ""
+          ],
+          "img_src": "",
+          "thumbnail": "",
+          "priority": "",
+          "engines": [
+            "mwmbl"
+          ],
+          "positions": [
+            6
+          ],
+          "score": 0.16666666666666666,
+          "category": "general",
+          "publishedDate": null,
+          "iframe_src": null
+        },
+        {
+          "url": "https://www.booktopia.com.au/masashi-kishimoto/author1541.html",
+          "title": "Masashi Kishimoto (Author of the Naruto Series) - Booktopia",
+          "content": "Booktopia has been placed into Voluntary Administration. Orders have been temporarily suspended, whilst the process for the recapitalisation of Booktopia\u2026",
+          "engine": "mwmbl",
+          "template": "default.html",
+          "parsed_url": [
+            "https",
+            "www.booktopia.com.au",
+            "/masashi-kishimoto/author1541.html",
+            "",
+            "",
+            ""
+          ],
+          "img_src": "",
+          "thumbnail": "",
+          "priority": "",
+          "engines": [
+            "mwmbl"
+          ],
+          "positions": [
+            7
+          ],
+          "score": 0.14285714285714285,
+          "category": "general",
+          "publishedDate": null,
+          "iframe_src": null
+        },
+        {
+          "url": "http://gamerant.com/tag/naruto/",
+          "title": "Naruto | GameRant",
+          "content": "A popular shonen anime based on Masashi Kishimoto's manga, Naruto follows its eponymous shinobi's journey as he goes from the Hidden Leaf Village's outsid\u2026",
+          "engine": "mwmbl",
+          "template": "default.html",
+          "parsed_url": [
+            "http",
+            "gamerant.com",
+            "/tag/naruto/",
+            "",
+            "",
+            ""
+          ],
+          "img_src": "",
+          "thumbnail": "",
+          "priority": "",
+          "engines": [
+            "mwmbl"
+          ],
+          "positions": [
+            8
+          ],
+          "score": 0.125,
+          "category": "general",
+          "publishedDate": null,
+          "iframe_src": null
+        },
+        {
+          "url": "https://archive.org/details/naruto00kish_2/page/8",
+          "title": "Naruto. : Masashi Kishimoto : Free Download, Borrow, and Streami\u2026",
+          "content": "",
+          "engine": "mwmbl",
+          "template": "default.html",
+          "parsed_url": [
+            "https",
+            "archive.org",
+            "/details/naruto00kish_2/page/8",
+            "",
+            "",
+            ""
+          ],
+          "img_src": "",
+          "thumbnail": "",
+          "priority": "",
+          "engines": [
+            "mwmbl"
+          ],
+          "positions": [
+            9
+          ],
+          "score": 0.1111111111111111,
+          "category": "general",
+          "publishedDate": null,
+          "iframe_src": null
+        },
+        {
+          "url": "https://hackaday.com/tag/masashi-kishimoto/",
+          "title": "Masashi Kishimoto | Hackaday",
+          "content": "Masashi Kishimoto 1 Articles This latest PCB artwork comes to you courtesy of [Arnov]. His Naruto nightlight is definitely going to get your anime-loving\u2026",
+          "engine": "mwmbl",
+          "template": "default.html",
+          "parsed_url": [
+            "https",
+            "hackaday.com",
+            "/tag/masashi-kishimoto/",
+            "",
+            "",
+            ""
+          ],
+          "img_src": "",
+          "thumbnail": "",
+          "priority": "",
+          "engines": [
+            "mwmbl"
+          ],
+          "positions": [
+            10
+          ],
+          "score": 0.1,
+          "category": "general",
+          "publishedDate": null,
+          "iframe_src": null
+        },
+        {
+          "url": "https://bookshop.org/a/3387/9781421502410",
+          "title": "Naruto, Vol. 11 a book by Masashi Kishimoto - Bookshop.org US",
+          "content": "Author/artist Masashi Kishimoto was born in 1974 in rural Okayama Prefecture, Japan. Like many kids, he was first inspired to become a manga artist in ele\u2026",
+          "engine": "mwmbl",
+          "template": "default.html",
+          "parsed_url": [
+            "https",
+            "bookshop.org",
+            "/a/3387/9781421502410",
+            "",
+            "",
+            ""
+          ],
+          "img_src": "",
+          "thumbnail": "",
+          "priority": "",
+          "engines": [
+            "mwmbl"
+          ],
+          "positions": [
+            11
+          ],
+          "score": 0.09090909090909091,
+          "category": "general",
+          "publishedDate": null,
+          "iframe_src": null
+        },
+        {
+          "url": "https://anilist.co/staff/96879",
+          "title": "Masashi Kishimoto \u00b7 AniList",
+          "content": "Masashi Kishimoto Masashi Kishimoto is a Japanese manga artist well known for creating the manga series Naruto. His younger twin brother Seishi Kishimoto\u2026",
+          "engine": "mwmbl",
+          "template": "default.html",
+          "parsed_url": [
+            "https",
+            "anilist.co",
+            "/staff/96879",
+            "",
+            "",
+            ""
+          ],
+          "img_src": "",
+          "thumbnail": "",
+          "priority": "",
+          "engines": [
+            "mwmbl"
+          ],
+          "positions": [
+            12
+          ],
+          "score": 0.08333333333333333,
+          "category": "general",
+          "publishedDate": null,
+          "iframe_src": null
+        }
+      ],
+      "failures": [],
+      "seconds": 0.755
+    },
+    {
+      "category": "historia",
+      "query": "Historia del Per\u00fa libros",
+      "engines": "wikipedia,openlibrary,mwmbl",
+      "http_status": 200,
+      "results": [
+        {
+          "url": "https://historiaperuana.pe/",
+          "title": "Historia del Per\u00fa",
+          "content": "",
+          "engine": "mwmbl",
+          "template": "default.html",
+          "parsed_url": [
+            "https",
+            "historiaperuana.pe",
+            "/",
+            "",
+            "",
+            ""
+          ],
+          "img_src": "",
+          "thumbnail": "",
+          "priority": "",
+          "engines": [
+            "mwmbl"
+          ],
+          "positions": [
+            1
+          ],
+          "score": 1.0,
+          "category": "general",
+          "publishedDate": null,
+          "iframe_src": null
+        },
+        {
+          "url": "https://books.google.com/books?id=gyF6AAAAMAAJ",
+          "title": "Historia de la rep\u00fablica del Per\u00fa - Jorge Basadre - Google Books",
+          "content": "",
+          "engine": "mwmbl",
+          "template": "default.html",
+          "parsed_url": [
+            "https",
+            "books.google.com",
+            "/books",
+            "",
+            "id=gyF6AAAAMAAJ",
+            ""
+          ],
+          "img_src": "",
+          "thumbnail": "",
+          "priority": "",
+          "engines": [
+            "mwmbl"
+          ],
+          "positions": [
+            2
+          ],
+          "score": 0.5,
+          "category": "general",
+          "publishedDate": null,
+          "iframe_src": null
+        },
+        {
+          "title": "Historia del Peru\u0301 ..",
+          "img_src": "",
+          "iframe_src": "",
+          "audio_src": "",
+          "thumbnail": "",
+          "publishedDate": "1885-10-30T00:00:00",
+          "pubdate": "1885-10-30 00:00:00",
+          "length": null,
+          "views": "",
+          "author": "",
+          "metadata": "",
+          "priority": "",
+          "engines": [
+            "openlibrary"
+          ],
+          "open_group": false,
+          "close_group": false,
+          "positions": [
+            1
+          ],
+          "score": 1.0,
+          "category": "general",
+          "template": "paper.html",
+          "content": "",
+          "url": "https://openlibrary.org/works/OL7839474W",
+          "engine": "openlibrary",
+          "parsed_url": [
+            "https",
+            "openlibrary.org",
+            "/works/OL7839474W",
+            "",
+            "",
+            ""
+          ],
+          "date_of_publication": {
+            "datetime": "1885-10-30T00:00:00"
+          },
+          "comments": "",
+          "tags": [],
+          "type": "",
+          "authors": [
+            "Ricardo Cappa"
+          ],
+          "editor": "",
+          "publisher": "",
+          "journal": "",
+          "volume": "",
+          "pages": "",
+          "number": "",
+          "doi": "",
+          "issn": [],
+          "isbn": [],
+          "pdf_url": "",
+          "html_url": ""
+        },
+        {
+          "title": "Tradiciones peruanas",
+          "img_src": "",
+          "iframe_src": "",
+          "audio_src": "",
+          "thumbnail": "",
+          "publishedDate": "1893-10-30T00:00:00",
+          "pubdate": "1893-10-30 00:00:00",
+          "length": null,
+          "views": "",
+          "author": "",
+          "metadata": "",
+          "priority": "",
+          "engines": [
+            "openlibrary"
+          ],
+          "open_group": false,
+          "close_group": false,
+          "positions": [
+            2
+          ],
+          "score": 0.5,
+          "category": "general",
+          "template": "paper.html",
+          "content": "",
+          "url": "https://openlibrary.org/works/OL1279477W",
+          "engine": "openlibrary",
+          "parsed_url": [
+            "https",
+            "openlibrary.org",
+            "/works/OL1279477W",
+            "",
+            "",
+            ""
+          ],
+          "date_of_publication": {
+            "datetime": "1893-10-30T00:00:00"
+          },
+          "comments": "",
+          "tags": [],
+          "type": "",
+          "authors": [
+            "Ricardo Palma"
+          ],
+          "editor": "",
+          "publisher": "",
+          "journal": "",
+          "volume": "",
+          "pages": "",
+          "number": "",
+          "doi": "",
+          "issn": [],
+          "isbn": [],
+          "pdf_url": "",
+          "html_url": ""
+        },
+        {
+          "title": "Primer Simposio sobre Libros de Historia del Peru\u0301",
+          "img_src": "",
+          "iframe_src": "",
+          "audio_src": "",
+          "thumbnail": "",
+          "publishedDate": "1957-10-30T00:00:00",
+          "pubdate": "1957-10-30 00:00:00",
+          "length": null,
+          "views": "",
+          "author": "",
+          "metadata": "",
+          "priority": "",
+          "engines": [
+            "openlibrary"
+          ],
+          "open_group": false,
+          "close_group": false,
+          "positions": [
+            3
+          ],
+          "score": 0.3333333333333333,
+          "category": "general",
+          "template": "paper.html",
+          "content": "",
+          "url": "https://openlibrary.org/works/OL6613197W",
+          "engine": "openlibrary",
+          "parsed_url": [
+            "https",
+            "openlibrary.org",
+            "/works/OL6613197W",
+            "",
+            "",
+            ""
+          ],
+          "date_of_publication": {
+            "datetime": "1957-10-30T00:00:00"
+          },
+          "comments": "",
+          "tags": [],
+          "type": "",
+          "authors": [
+            "Simposio sobre Libros de Historia del Peru\u0301 (1st 1956 Lima)"
+          ],
+          "editor": "",
+          "publisher": "",
+          "journal": "",
+          "volume": "",
+          "pages": "",
+          "number": "",
+          "doi": "",
+          "issn": [],
+          "isbn": [],
+          "pdf_url": "",
+          "html_url": ""
+        },
+        {
+          "title": "Wahrhaftige Kommentare zum Reich der Inka",
+          "img_src": "",
+          "iframe_src": "",
+          "audio_src": "",
+          "thumbnail": "",
+          "publishedDate": "1609-10-30T00:00:00",
+          "pubdate": "1609-10-30 00:00:00",
+          "length": null,
+          "views": "",
+          "author": "",
+          "metadata": "",
+          "priority": "",
+          "engines": [
+            "openlibrary"
+          ],
+          "open_group": false,
+          "close_group": false,
+          "positions": [
+            4
+          ],
+          "score": 0.25,
+          "category": "general",
+          "template": "paper.html",
+          "content": "",
+          "url": "https://openlibrary.org/works/OL15697340W",
+          "engine": "openlibrary",
+          "parsed_url": [
+            "https",
+            "openlibrary.org",
+            "/works/OL15697340W",
+            "",
+            "",
+            ""
+          ],
+          "date_of_publication": {
+            "datetime": "1609-10-30T00:00:00"
+          },
+          "comments": "",
+          "tags": [],
+          "type": "",
+          "authors": [
+            "Garcilaso de la Vega"
+          ],
+          "editor": "",
+          "publisher": "",
+          "journal": "",
+          "volume": "",
+          "pages": "",
+          "number": "",
+          "doi": "",
+          "issn": [],
+          "isbn": [],
+          "pdf_url": "",
+          "html_url": ""
+        },
+        {
+          "title": "Historia general del Per\u00fa",
+          "img_src": "",
+          "iframe_src": "",
+          "audio_src": "",
+          "thumbnail": "",
+          "publishedDate": "1722-10-30T00:00:00",
+          "pubdate": "1722-10-30 00:00:00",
+          "length": null,
+          "views": "",
+          "author": "",
+          "metadata": "",
+          "priority": "",
+          "engines": [
+            "openlibrary"
+          ],
+          "open_group": false,
+          "close_group": false,
+          "positions": [
+            5
+          ],
+          "score": 0.2,
+          "category": "general",
+          "template": "paper.html",
+          "content": "",
+          "url": "https://openlibrary.org/works/OL15697314W",
+          "engine": "openlibrary",
+          "parsed_url": [
+            "https",
+            "openlibrary.org",
+            "/works/OL15697314W",
+            "",
+            "",
+            ""
+          ],
+          "date_of_publication": {
+            "datetime": "1722-10-30T00:00:00"
+          },
+          "comments": "",
+          "tags": [],
+          "type": "",
+          "authors": [
+            "Garcilaso de la Vega"
+          ],
+          "editor": "",
+          "publisher": "",
+          "journal": "",
+          "volume": "",
+          "pages": "",
+          "number": "",
+          "doi": "",
+          "issn": [],
+          "isbn": [],
+          "pdf_url": "",
+          "html_url": ""
+        }
+      ],
+      "failures": [],
+      "seconds": 0.915
+    },
+    {
+      "category": "ensayo",
+      "query": "El infinito en un junco Irene Vallejo",
+      "engines": "wikipedia,openlibrary,mwmbl",
+      "http_status": 200,
+      "results": [
+        {
+          "title": "El infinito en un junco",
+          "img_src": "",
+          "iframe_src": "",
+          "audio_src": "",
+          "thumbnail": "",
+          "publishedDate": "2020-10-30T00:00:00",
+          "pubdate": "2020-10-30 00:00:00",
+          "length": null,
+          "views": "",
+          "author": "",
+          "metadata": "",
+          "priority": "",
+          "engines": [
+            "openlibrary"
+          ],
+          "open_group": false,
+          "close_group": false,
+          "positions": [
+            1
+          ],
+          "score": 1.0,
+          "category": "general",
+          "template": "paper.html",
+          "content": "Misteriosos grupos de hombres a caballo recorren los caminos de Gracia.",
+          "url": "https://openlibrary.org/works/OL20770492W",
+          "engine": "openlibrary",
+          "parsed_url": [
+            "https",
+            "openlibrary.org",
+            "/works/OL20770492W",
+            "",
+            "",
+            ""
+          ],
+          "date_of_publication": {
+            "datetime": "2020-10-30T00:00:00"
+          },
+          "comments": "",
+          "tags": [],
+          "type": "",
+          "authors": [
+            "Irene Vallejo"
+          ],
+          "editor": "",
+          "publisher": "",
+          "journal": "",
+          "volume": "",
+          "pages": "",
+          "number": "",
+          "doi": "",
+          "issn": [],
+          "isbn": [],
+          "pdf_url": "",
+          "html_url": ""
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Irene_Vallejo",
+          "title": "Irene Vallejo",
+          "content": "ensayo por el bestseller 'El infinito en un junco'\". Retrieved 24 December 2022. Hughes, Kathryn. \"Papyrus by Irene Vallejo review \u2013 how books built the",
+          "engine": "mwmbl",
+          "template": "default.html",
+          "parsed_url": [
+            "https",
+            "en.wikipedia.org",
+            "/wiki/Irene_Vallejo",
+            "",
+            "",
+            ""
+          ],
+          "img_src": "",
+          "thumbnail": "",
+          "priority": "",
+          "engines": [
+            "mwmbl"
+          ],
+          "positions": [
+            1
+          ],
+          "score": 1.0,
+          "category": "general",
+          "publishedDate": null,
+          "iframe_src": null
+        },
+        {
+          "url": "https://culturacientifica.com/series/el-infinito-en-un-segmento/",
+          "title": "Archivo de serie: El infinito en un segmento \u2014 Cuaderno de Cultu\u2026",
+          "content": "",
+          "engine": "mwmbl",
+          "template": "default.html",
+          "parsed_url": [
+            "https",
+            "culturacientifica.com",
+            "/series/el-infinito-en-un-segmento/",
+            "",
+            "",
+            ""
+          ],
+          "img_src": "",
+          "thumbnail": "",
+          "priority": "",
+          "engines": [
+            "mwmbl"
+          ],
+          "positions": [
+            2
+          ],
+          "score": 0.5,
+          "category": "general",
+          "publishedDate": null,
+          "iframe_src": null
+        },
+        {
+          "url": "https://www.audible.com.au/pd/El-infinito-en-un-junco-Infinity-in-a-Reed-Audiobook/8412202228",
+          "title": "El infinito en un junco [Infinity in a Reed] by Irene Vallejo - \u2026",
+          "content": "In the spirit of reconciliation, Audible acknowledges the Traditional Custodians of country throughout Australia and their connections to land, sea and c\u2026",
+          "engine": "mwmbl",
+          "template": "default.html",
+          "parsed_url": [
+            "https",
+            "www.audible.com.au",
+            "/pd/El-infinito-en-un-junco-Infinity-in-a-Reed-Audiobook/8412202228",
+            "",
+            "",
+            ""
+          ],
+          "img_src": "",
+          "thumbnail": "",
+          "priority": "",
+          "engines": [
+            "mwmbl"
+          ],
+          "positions": [
+            3
+          ],
+          "score": 0.3333333333333333,
+          "category": "general",
+          "publishedDate": null,
+          "iframe_src": null
+        },
+        {
+          "url": "https://www.buecher.de/artikel/buch/el-infinito-en-un-junco/63960646/",
+          "title": "El infinito en un junco von Irene Vallejo bei b\u00fccher.de bestellen",
+          "content": "",
+          "engine": "mwmbl",
+          "template": "default.html",
+          "parsed_url": [
+            "https",
+            "www.buecher.de",
+            "/artikel/buch/el-infinito-en-un-junco/63960646/",
+            "",
+            "",
+            ""
+          ],
+          "img_src": "",
+          "thumbnail": "",
+          "priority": "",
+          "engines": [
+            "mwmbl"
+          ],
+          "positions": [
+            4
+          ],
+          "score": 0.25,
+          "category": "general",
+          "publishedDate": null,
+          "iframe_src": null
+        },
+        {
+          "url": "https://es.paperblog.com/el-infinito-en-un-junco-irene-vallejo-7526312/",
+          "title": "El infinito en un junco, Irene Vallejo - Paperblog",
+          "content": "",
+          "engine": "mwmbl",
+          "template": "default.html",
+          "parsed_url": [
+            "https",
+            "es.paperblog.com",
+            "/el-infinito-en-un-junco-irene-vallejo-7526312/",
+            "",
+            "",
+            ""
+          ],
+          "img_src": "",
+          "thumbnail": "",
+          "priority": "",
+          "engines": [
+            "mwmbl"
+          ],
+          "positions": [
+            5
+          ],
+          "score": 0.2,
+          "category": "general",
+          "publishedDate": null,
+          "iframe_src": null
+        },
+        {
+          "url": "https://www.goodreads.com/book/show/51554723-el-infinito-en-un-junco-la-invenci-n-de-los-libros-en-el-mundo-antiguo",
+          "title": "El infinito en un junco: La invenci\u00f3n de los libros en el mundo \u2026",
+          "content": "Review There isn't much about papyrus here, nor the invention of books. There is a lot about ancient Egypt, the Library In Alexandria, ancient Greece and\u2026",
+          "engine": "mwmbl",
+          "template": "default.html",
+          "parsed_url": [
+            "https",
+            "www.goodreads.com",
+            "/book/show/51554723-el-infinito-en-un-junco-la-invenci-n-de-los-libros-en-el-mundo-antiguo",
+            "",
+            "",
+            ""
+          ],
+          "img_src": "",
+          "thumbnail": "",
+          "priority": "",
+          "engines": [
+            "mwmbl"
+          ],
+          "positions": [
+            6
+          ],
+          "score": 0.16666666666666666,
+          "category": "general",
+          "publishedDate": null,
+          "iframe_src": null
+        },
+        {
+          "url": "https://www.esquire.com/es/actualidad/musica/a41226744/autotune-quien-usa-favor-contra-musica/",
+          "title": "La historia del autotune: un juicio infinito en la m\u00fasica",
+          "content": "",
+          "engine": "mwmbl",
+          "template": "default.html",
+          "parsed_url": [
+            "https",
+            "www.esquire.com",
+            "/es/actualidad/musica/a41226744/autotune-quien-usa-favor-contra-musica/",
+            "",
+            "",
+            ""
+          ],
+          "img_src": "",
+          "thumbnail": "",
+          "priority": "",
+          "engines": [
+            "mwmbl"
+          ],
+          "positions": [
+            7
+          ],
+          "score": 0.14285714285714285,
+          "category": "general",
+          "publishedDate": null,
+          "iframe_src": null
+        },
+        {
+          "url": "https://www.las2orillas.co/tag/el-infinito-en-un-junco/",
+          "title": "El infinito en un junco Tags - Las2orillas",
+          "content": "",
+          "engine": "mwmbl",
+          "template": "default.html",
+          "parsed_url": [
+            "https",
+            "www.las2orillas.co",
+            "/tag/el-infinito-en-un-junco/",
+            "",
+            "",
+            ""
+          ],
+          "img_src": "",
+          "thumbnail": "",
+          "priority": "",
+          "engines": [
+            "mwmbl"
+          ],
+          "positions": [
+            8
+          ],
+          "score": 0.125,
+          "category": "general",
+          "publishedDate": null,
+          "iframe_src": null
+        },
+        {
+          "url": "http://ci.nii.ac.jp/ncid/BD04414601",
+          "title": "CiNii \u56f3\u66f8 - El infinito en un junco : la invenci\u00f3n de los libros \u2026",
+          "content": "",
+          "engine": "mwmbl",
+          "template": "default.html",
+          "parsed_url": [
+            "http",
+            "ci.nii.ac.jp",
+            "/ncid/BD04414601",
+            "",
+            "",
+            ""
+          ],
+          "img_src": "",
+          "thumbnail": "",
+          "priority": "",
+          "engines": [
+            "mwmbl"
+          ],
+          "positions": [
+            9
+          ],
+          "score": 0.1111111111111111,
+          "category": "general",
+          "publishedDate": null,
+          "iframe_src": null
+        },
+        {
+          "url": "http://en.wikipedia.org/wiki/Irene_Keng",
+          "title": "Irene Keng - Wikipedia",
+          "content": "Irene Keng (born March 9) is an American actress known for playing the role as Chunhua Lao[1] in the legal comedy-drama television series Harry's Law and\u2026",
+          "engine": "mwmbl",
+          "template": "default.html",
+          "parsed_url": [
+            "http",
+            "en.wikipedia.org",
+            "/wiki/Irene_Keng",
+            "",
+            "",
+            ""
+          ],
+          "img_src": "",
+          "thumbnail": "",
+          "priority": "",
+          "engines": [
+            "mwmbl"
+          ],
+          "positions": [
+            10
+          ],
+          "score": 0.1,
+          "category": "general",
+          "publishedDate": null,
+          "iframe_src": null
+        },
+        {
+          "url": "http://www.saber.ula.ve/handle/123456789/48315",
+          "title": "El infinito en un junco. La invenci\u00f3n de los libros en el mundo \u2026",
+          "content": "",
+          "engine": "mwmbl",
+          "template": "default.html",
+          "parsed_url": [
+            "http",
+            "www.saber.ula.ve",
+            "/handle/123456789/48315",
+            "",
+            "",
+            ""
+          ],
+          "img_src": "",
+          "thumbnail": "",
+          "priority": "",
+          "engines": [
+            "mwmbl"
+          ],
+          "positions": [
+            11
+          ],
+          "score": 0.09090909090909091,
+          "category": "general",
+          "publishedDate": null,
+          "iframe_src": null
+        }
+      ],
+      "failures": [],
+      "seconds": 0.644
+    },
+    {
+      "category": "ddg_una_prueba",
+      "query": "El nombre de la rosa Umberto Eco",
+      "engines": "duckduckgo",
+      "http_status": 200,
+      "results": [
+        {
+          "template": "default.html",
+          "title": "El nombre de la rosa - Wikipedia, la enciclopedia libre",
+          "content": "Una novela hist\u00f3rica de misterio de Umberto Eco ambientada en el siglo XIV, que narra la investigaci\u00f3n de un franciscano y su disc\u00edpulo en una abad\u00eda. La obra est\u00e1 llena de citas, referencias y juegos literarios, y fue adaptada al cine y la televisi\u00f3n.",
+          "img_src": "",
+          "iframe_src": "",
+          "audio_src": "",
+          "thumbnail": "",
+          "publishedDate": null,
+          "pubdate": "",
+          "length": null,
+          "views": "",
+          "author": "",
+          "metadata": "",
+          "priority": "",
+          "engines": [
+            "duckduckgo"
+          ],
+          "open_group": false,
+          "close_group": false,
+          "positions": [
+            1
+          ],
+          "score": 1.0,
+          "category": "general",
+          "url": "https://es.wikipedia.org/wiki/El_nombre_de_la_rosa",
+          "engine": "duckduckgo",
+          "parsed_url": [
+            "https",
+            "es.wikipedia.org",
+            "/wiki/El_nombre_de_la_rosa",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "template": "default.html",
+          "title": "El Nombre De La Rosa : Umberto Eco : Free Download, Borrow, and ...",
+          "content": "Una historia medieval donde el genero polic\u00edaco y el misterio se unen en una novela.",
+          "img_src": "",
+          "iframe_src": "",
+          "audio_src": "",
+          "thumbnail": "",
+          "publishedDate": null,
+          "pubdate": "",
+          "length": null,
+          "views": "",
+          "author": "",
+          "metadata": "",
+          "priority": "",
+          "engines": [
+            "duckduckgo"
+          ],
+          "open_group": false,
+          "close_group": false,
+          "positions": [
+            2
+          ],
+          "score": 0.5,
+          "category": "general",
+          "url": "https://archive.org/details/ElNombreDeLaRosa",
+          "engine": "duckduckgo",
+          "parsed_url": [
+            "https",
+            "archive.org",
+            "/details/ElNombreDeLaRosa",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "template": "default.html",
+          "title": "El nombre de la rosa - Umberto Eco - Lecturalia",
+          "content": "Una novela hist\u00f3rica y policiaca de Umberto Eco ambientada en el siglo XIV. Guillermo de Baskerville y Adso investigan los cr\u00edmenes de una abad\u00eda benedictina y reflexionan sobre la cultura y la religi\u00f3n de su \u00e9poca.",
+          "img_src": "",
+          "iframe_src": "",
+          "audio_src": "",
+          "thumbnail": "",
+          "publishedDate": null,
+          "pubdate": "",
+          "length": null,
+          "views": "",
+          "author": "",
+          "metadata": "",
+          "priority": "",
+          "engines": [
+            "duckduckgo"
+          ],
+          "open_group": false,
+          "close_group": false,
+          "positions": [
+            3
+          ],
+          "score": 0.3333333333333333,
+          "category": "general",
+          "url": "https://www.lecturalia.com/libro/7/el-nombre-de-la-rosa",
+          "engine": "duckduckgo",
+          "parsed_url": [
+            "https",
+            "www.lecturalia.com",
+            "/libro/7/el-nombre-de-la-rosa",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "template": "default.html",
+          "title": "El nombre de la rosa | Umberto Eco - Casa del Libro",
+          "content": "En esta primera y brillante incursi\u00f3n de Umberto Eco en el mundo de la narrativa, que dio lugar a una manera de concebir la novela hist\u00f3rica, el lector disfrutar\u00e1 de una trama apasionante y una admirable reconstrucci\u00f3n de una \u00e9poca especialmente conflictiva de la historia de Occidente.",
+          "img_src": "",
+          "iframe_src": "",
+          "audio_src": "",
+          "thumbnail": "",
+          "publishedDate": null,
+          "pubdate": "",
+          "length": null,
+          "views": "",
+          "author": "",
+          "metadata": "",
+          "priority": "",
+          "engines": [
+            "duckduckgo"
+          ],
+          "open_group": false,
+          "close_group": false,
+          "positions": [
+            4
+          ],
+          "score": 0.25,
+          "category": "general",
+          "url": "https://www.casadellibro.com/libro-el-nombre-de-la-rosa/9788497592581/873981",
+          "engine": "duckduckgo",
+          "parsed_url": [
+            "https",
+            "www.casadellibro.com",
+            "/libro-el-nombre-de-la-rosa/9788497592581/873981",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "template": "default.html",
+          "title": "El Nombre De La Rosa : Umberto Eco : Free Download, Borrow, and ...",
+          "content": "El libro de Umberto Eco sobre un monasterio en el norte de Italia, en dicho lugar reside una biblioteca con libros antiguos. Los mojes se dedican a estudiar, transcribir y traducir libros y textos de todo el mundo.",
+          "img_src": "",
+          "iframe_src": "",
+          "audio_src": "",
+          "thumbnail": "",
+          "publishedDate": null,
+          "pubdate": "",
+          "length": null,
+          "views": "",
+          "author": "",
+          "metadata": "",
+          "priority": "",
+          "engines": [
+            "duckduckgo"
+          ],
+          "open_group": false,
+          "close_group": false,
+          "positions": [
+            5
+          ],
+          "score": 0.2,
+          "category": "general",
+          "url": "https://archive.org/details/ElNombreDeLaRosa_201809",
+          "engine": "duckduckgo",
+          "parsed_url": [
+            "https",
+            "archive.org",
+            "/details/ElNombreDeLaRosa_201809",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "template": "default.html",
+          "title": "PDF El Nombre de la Rosa - SUNEO",
+          "content": "En un clima mental de gran excitaci\u00f3n le\u00ed, fascinado, la terrible historia de Adso de Melk, y tanto me atrap\u00f3 que casi de un tir\u00f3n la traduje en varios cuadernos de gran formato procedentes de la Papeterie Joseph Gibert, aquellos en los que tan agradable es escribir con una pluma blanda.",
+          "img_src": "",
+          "iframe_src": "",
+          "audio_src": "",
+          "thumbnail": "",
+          "publishedDate": null,
+          "pubdate": "",
+          "length": null,
+          "views": "",
+          "author": "",
+          "metadata": "",
+          "priority": "",
+          "engines": [
+            "duckduckgo"
+          ],
+          "open_group": false,
+          "close_group": false,
+          "positions": [
+            6
+          ],
+          "score": 0.16666666666666666,
+          "category": "general",
+          "url": "https://www.suneo.mx/literatura/subidas/Umberto%20Eco%20El%20Nombre%20de%20la%20Rosa.pdf",
+          "engine": "duckduckgo",
+          "parsed_url": [
+            "https",
+            "www.suneo.mx",
+            "/literatura/subidas/Umberto%20Eco%20El%20Nombre%20de%20la%20Rosa.pdf",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "template": "default.html",
+          "title": "PDF Umberto Eco - El Nombre de la Rosa - WordPress.com",
+          "content": "El se\u00f1or me concede la gracia de dar fiel testimonio de los acontecimientos que se produjeron en la abad\u00eda cuyo nombre incluso conviene ahora cubrir con un piadoso manto de silencio, hacia finales del a\u00f1o 1327, cuando el emperador Ludovico entr\u00f3 en Italia para restaurar la dignidad del sacro imperio romano, seg\u00fan los designios del Alt\u00edsimo y para confusi\u00f3n del infame usurpador simon\u00edaco y heresiarca que en Avi\u00f1\u00f3n deshonr\u00f3 el santo nombre del ap\u00f3stol (me refiero al alma pecadora de Jacques de Cahors, al que los imp\u00edos veneran como Juan XXII).",
+          "img_src": "",
+          "iframe_src": "",
+          "audio_src": "",
+          "thumbnail": "",
+          "publishedDate": null,
+          "pubdate": "",
+          "length": null,
+          "views": "",
+          "author": "",
+          "metadata": "",
+          "priority": "",
+          "engines": [
+            "duckduckgo"
+          ],
+          "open_group": false,
+          "close_group": false,
+          "positions": [
+            7
+          ],
+          "score": 0.14285714285714285,
+          "category": "general",
+          "url": "https://mefistocastellano.files.wordpress.com/2013/03/elnombredelarosa-umberto-eco.pdf",
+          "engine": "duckduckgo",
+          "parsed_url": [
+            "https",
+            "mefistocastellano.files.wordpress.com",
+            "/2013/03/elnombredelarosa-umberto-eco.pdf",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "template": "default.html",
+          "title": "El nombre de la rosa | Umberto Eco | LUMEN | Casa del Libro",
+          "content": "En esta primera y brillante incursi\u00f3n de Umberto Eco en el mundo de la narrativa, que dio lugar a una manera de concebir la novela hist\u00f3rica, el lector disfrutar\u00e1 de una trama apasionante y una admirable reconstrucci\u00f3n de una \u00e9poca especialmente conflictiva de la historia de Occidente.",
+          "img_src": "",
+          "iframe_src": "",
+          "audio_src": "",
+          "thumbnail": "",
+          "publishedDate": null,
+          "pubdate": "",
+          "length": null,
+          "views": "",
+          "author": "",
+          "metadata": "",
+          "priority": "",
+          "engines": [
+            "duckduckgo"
+          ],
+          "open_group": false,
+          "close_group": false,
+          "positions": [
+            8
+          ],
+          "score": 0.125,
+          "category": "general",
+          "url": "https://www.casadellibro.com/libro-el-nombre-de-la-rosa/9788426403568/2990916",
+          "engine": "duckduckgo",
+          "parsed_url": [
+            "https",
+            "www.casadellibro.com",
+            "/libro-el-nombre-de-la-rosa/9788426403568/2990916",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "template": "default.html",
+          "title": "Umberto Eco - El Nombre de la Rosa.pdf - Google Drive",
+          "content": "Loading\u2026",
+          "img_src": "",
+          "iframe_src": "",
+          "audio_src": "",
+          "thumbnail": "",
+          "publishedDate": null,
+          "pubdate": "",
+          "length": null,
+          "views": "",
+          "author": "",
+          "metadata": "",
+          "priority": "",
+          "engines": [
+            "duckduckgo"
+          ],
+          "open_group": false,
+          "close_group": false,
+          "positions": [
+            9
+          ],
+          "score": 0.1111111111111111,
+          "category": "general",
+          "url": "https://drive.google.com/file/d/19tGyB9j5fuUM_4iaqzMXnUM66coTU-xF/",
+          "engine": "duckduckgo",
+          "parsed_url": [
+            "https",
+            "drive.google.com",
+            "/file/d/19tGyB9j5fuUM_4iaqzMXnUM66coTU-xF/",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "template": "default.html",
+          "title": "El nombre de la rosa: Resumen, An\u00e1lisis y Personajes",
+          "content": "Una novela hist\u00f3rica de Umberto Eco que narra la investigaci\u00f3n de un fraile y su aprendiz sobre unos cr\u00edmenes en una abad\u00eda del siglo XIV. Conoce la trama, los personajes y la opini\u00f3n de esta obra maestra de la literatura misteriosa y medieval.",
+          "img_src": "",
+          "iframe_src": "",
+          "audio_src": "",
+          "thumbnail": "",
+          "publishedDate": null,
+          "pubdate": "",
+          "length": null,
+          "views": "",
+          "author": "",
+          "metadata": "",
+          "priority": "",
+          "engines": [
+            "duckduckgo"
+          ],
+          "open_group": false,
+          "close_group": false,
+          "positions": [
+            10
+          ],
+          "score": 0.1,
+          "category": "general",
+          "url": "https://resumenlibro.com/el-nombre-de-la-rosa",
+          "engine": "duckduckgo",
+          "parsed_url": [
+            "https",
+            "resumenlibro.com",
+            "/el-nombre-de-la-rosa",
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "failures": [],
+      "seconds": 1.045
+    }
+  ]
+}

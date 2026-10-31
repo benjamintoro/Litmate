@@ -175,6 +175,12 @@ def request_for(message, history=(), pending_clarification=None):
             task, title = 'characters', appearing.group(2)
             focus = {'secundarios': 'supporting', 'femeninos': 'female'}.get(appearing.group(1), 'all')
         elif individual and not re.search(r'\b(?:trama|autor|libro|novela|obra|ensayo)\b', individual.group(1)):
+            if value.startswith('hablame') and re.search(
+                    r':|^(?:historia|antologia|coleccion|cronicas) (?:de|del|sobre)\b',individual.group(1)):
+                # Un encabezado bibliográfico no nombra por sí mismo a un
+                # personaje de la obra anterior. La ruta narrativa resolverá
+                # su identidad sin heredar el personaje pendiente.
+                return None
             task, names = 'character', [individual.group(1)]
         else:
             return None
@@ -237,7 +243,7 @@ def request_for(message, history=(), pending_clarification=None):
                 targets = matches
                 break
     author_hint = ''
-    if title and re.search(r'\b(?:del autor|de la autora)\b', title, re.I):
+    if title and re.search(r'\b(?:de|del autor|de la autora)\s+', title, re.I):
         from .ai_narrative_answers import request_for as narrative_request
         identity = narrative_request('Dime la trama de ' + title, history)
         if identity and identity.get('author_hint'):
@@ -476,17 +482,13 @@ def _proof(source, fact):
     return ''
 
 
-def _classification(fact, source):
-    from .literary_entity_facts import profile_topic_fact
-    if (source.get('work_binding_verified') and profile_topic_fact(fact, source.get('description',''))
-            and normalize_identity(source.get('work_title','')) in normalize_identity(fact.get('role',''))):
-        return 'main'
+def _role_for_other_work(fact, source):
     raw_role = fact['role']
     role = normalize_identity(raw_role)
     name = normalize_identity(fact['name'])
     role = re.sub(r'^' + re.escape(name) + r'\W*', '', role)
     # Ser protagonista de otra novela no da protagonismo en la obra activa.
-    referenced = re.search(r'\bprotagonista (?:de|del)\s+(?:(?:la novela|el libro)\s+)?(.+)',
+    referenced = re.search(r'\b(?:protagonista|personajes? principal(?:es)?) (?:de|del)\s+(?:(?:la novela|el libro)\s+)?(.+)',
                            raw_role, re.I)
     if referenced:
         other_raw = re.split(r'\s+(?:y|pero|que)\s+|[,.]', referenced.group(1), maxsplit=1)[0].strip()
@@ -510,14 +512,28 @@ def _classification(fact, source):
                           'esta obra', 'su obra', 'la historia', 'esta historia'}
         if (other not in self_reference and bare(other) != bare(current)
                 and re.search(r'\b[A-ZÁÉÍÓÚÑ]', other_raw)):
-            return 'supporting' if 'secundari' in role else ''
+            return True
+    return False
+
+
+def _classification(fact, source):
+    from .literary_entity_facts import profile_topic_fact
+    if (source.get('work_binding_verified') and profile_topic_fact(fact, source.get('description',''))
+            and normalize_identity(source.get('work_title','')) in normalize_identity(fact.get('role',''))):
+        return 'main'
+    raw_role=fact['role']
+    role=normalize_identity(raw_role)
+    name=normalize_identity(fact['name'])
+    role=re.sub(r'^'+re.escape(name)+r'\W*','',role)
+    if _role_for_other_work(fact,source):
+        return 'supporting' if 'secundari' in role else ''
     # La palabra antagonista en «se enfrenta al antagonista» no describe al
     # sujeto como antagonista. Exigir una predicación o encabezado explícitos.
     if re.match(r'^(?:(?:es|era|fue) )?(?:(?:el|la|un|una) )?(?:principal )?'
                 r'(?:antagonista|villano|villana)\b', role):
         return 'antagonist'
-    if re.match(r'^(?:(?:es|era|fue) )?(?:(?:el|la|un|una) )?(?:nino |nina )?'
-                r'(?:protagonista|personaje principal)\b', role):
+    if re.match(r'^(?:(?:es|era|fue) )?(?:(?:el|la|un|una|uno de los|una de las) )?(?:nino |nina )?'
+                r'(?:protagonistas?|personajes? principal(?:es)?)\b', role):
         return 'main'
     if re.search(r'\bpersonaje secundario\b', role):
         return 'supporting'
@@ -582,6 +598,14 @@ def _facts(request, sources):
             proof = _proof(source, fact)
             if not proof:
                 continue
+            if _role_for_other_work(fact,source):
+                continue  # Keep the stored fact, but not as this work's role.
+            role_value = normalize_identity(fact['role'])
+            if (re.match(r'^(?:(?:es|son|representa|representan|simboliza|simbolizan|se trata de|se trata del) )?'
+                    r'(?:el |la |los |las |del |de la )?(?:ego|emociones|proteccion|celos|mimos|'
+                    r'problemas|disciplina|vanidad|simbolo|simbolos|alegoria|(?:malos|buenos) habitos|pensamientos)\b', role_value)
+                    or re.search(r'\b(?:autor|autora) dibuja\b', role_value)):
+                continue  # A symbolic interpretation alone does not establish a character role.
             from .literary_memory import _character_aliases
             aliases = _character_aliases(fact['name'], proof, fact.get('aliases', []))
             classification = _classification(fact,source)
@@ -616,7 +640,7 @@ def _relationship_fact(fact, names):
                    r'(?=vecin[oa]\b)', '', value)
     # Sólo el predicado del sujeto. Una cláusula sobre Aragorn no describe
     # por extensión la relación entre los dos oyentes del relato.
-    if not re.match(r'^(?:(?:es|era|fue) )?(?:(?:el|la|un|una|fiel|leal) )?'
+    if not re.match(r'^(?:(?:es|era|fue) )?(?:(?:el|la|un|una|fiel|leal) )?(?:joven |anciano |anciana )?'
                     r'(?:amig\w*|companer\w*|herman\w*|padre|madre|hij\w*|'
                     r'espos\w*|pareja|aliad\w*|enemig\w*|mentor\w*|escudero|'
                     r'sirviente|protector|jardinero|vecino|vecina|acompana|ayuda|protege|se casa|se caso|'
@@ -628,6 +652,8 @@ def _relationship_fact(fact, names):
         r'espos\w*|pareja|aliad\w*|enemig\w*|mentor\w*|escudero|sirviente|protector|vecin[oa])'
         r'(?:\s+y\s+\w+)?\s+(?:de|del|con)\s+(?:su amo\s+)?' + other + r'(?!\w)', value)
         or re.search(r'\b(?:acompana|ayuda|protege)\s+(?:a\s+)?' + other + r'(?!\w)', value)
+        or re.match(r'^(?:amig[oa]|companer[oa]) que (?:el |la )?' + other +
+                    r'\s+(?:conoce|conocio|encuentra|encontro)\b', value)
         or re.search(r'\b(?:se casa|se caso|se enamora|se enamoro)\s+(?:con|de)\s+' + other + r'(?!\w)', value))
 
 
@@ -668,7 +694,7 @@ def _task_facts(request, facts):
         return [fact for fact in facts if re.match(r'^(?:(?:es|era|fue) )?(?:(?:una|la) )?'
                 r'(?:mujer|personaje femenino|princesa|elfa|hechicera|matriarca|hija|esposa|'
                 r'sobrina|hermana)\b', normalize_identity(fact['role']))]
-    return facts
+    return sorted(facts,key=lambda fact:not fact.get('main_character',False))
 
 
 def _relationship_names(names, facts):
@@ -695,6 +721,18 @@ def _relationship_names(names, facts):
             return []
         labels = list(dict.fromkeys(label for fact in facts if normalize_identity(fact['name']) in canonicals
                                    for label in [fact['name'], *fact['aliases']]))
+        canonical=next(iter(canonicals))
+        first=canonical.split()[0]
+        if (len(canonical.split())>=2 and len(first)>=3 and first not in {
+                'senor','senora','doctor','doctora','tia','tio','rey','reina','monstruo','capitan','padre','madre'}):
+            owners={normalize_identity(fact['name']) for fact in facts
+                    if normalize_identity(fact['name']).split()[0]==first
+                    or any(normalize_identity(alias)==first for alias in fact['aliases'])}
+            if owners==canonicals:
+                # A local reference to the unique documented given name, not
+                # an alias persisted across works or a guessed full identity.
+                labels.append(next(fact['name'].split()[0] for fact in facts
+                                   if normalize_identity(fact['name'])==canonical))
         labels = [label for label in labels if not any(
             normalize_identity(fact['name']) not in canonicals and (
                 _name_in(label, fact['name']) or any(normalize_identity(label) == normalize_identity(alias)
@@ -750,8 +788,18 @@ def answer_from_sources(message, request, sources):
         explicit = profile_relationship_answer(message, request, bound)
         if explicit is not None:
             return explicit
-    facts = _task_facts(request, _facts(request, bound))
+    all_facts=_facts(request,bound)
+    facts = _task_facts(request, [fact for fact in all_facts if _licensed(fact['source'])])
     task, focus = request['task'], request['focus']
+    primary_names={normalize_identity(fact['name']) for fact in facts}
+    supplement=False
+    if (task=='characters' and focus=='main' and len(primary_names)==1
+            and not re.search(r'\b(?:solo|sólo|únicamente|unicamente|exclusivamente)\b',message,re.I)):
+        additional=[fact for fact in all_facts if normalize_identity(fact['name']) not in primary_names
+                    and _licensed(fact['source'])]
+        if additional:
+            facts=[*facts,*additional]
+            supplement=True
     # La extracción de fuentes con derechos reservados se parafrasea mediante
     # la síntesis/auditoría; la vía literal se reserva a conocimiento abierto.
     facts = [fact for fact in facts if _licensed(fact['source'])]
@@ -773,8 +821,15 @@ def answer_from_sources(message, request, sources):
             break
     if not selected:
         return None
-    lines = ['**' + fact['name'] + '**: ' + fact['role'].rstrip('.') + '.' for fact in selected]
+    from .literary_web import _short_narrative_role
+    lines = ['**' + fact['name'] + '**: ' + ('es ' if _short_narrative_role(fact['role']) else '')
+             + fact['role'].rstrip('.') + '.' for fact in selected]
     text = '\n\n'.join(lines)
+    if supplement:
+        first_other=next((index for index,fact in enumerate(selected)
+                          if normalize_identity(fact['name']) not in primary_names),len(lines))
+        text='\n\n'.join([*lines[:first_other],'Lista parcial.',
+                           'Otros personajes documentados:',*lines[first_other:]])
     claims = []
     for statement in required_fact_statements(text):
         fact = next((fact for fact, line in zip(selected, lines) if statement in line), None)
@@ -798,6 +853,9 @@ def answer_from_sources(message, request, sources):
     except (ValueError, TypeError):
         return None
     result = _publish(message, request, bound, text, audit)
+    if supplement:
+        result.diagnostics.update(principal_character_count=len(primary_names),
+            supplementary_character_count=len(selected)-len(primary_names),partial_evidence=True)
     result.diagnostics.update(verified_character_answer=True, character_count=len(selected),
                               character_task=task, character_focus=focus)
     if task == 'characters' and len(selected) < 2:
@@ -844,7 +902,14 @@ def profile_relationship_answer(message, request, sources):
                 described = any(reference in {bare(alias) for alias in item['aliases']}
                     and entity.startswith(bare(item['subject'])+' de ')
                     for item in designations)
-                if direct or described:
+                # Resolve a role reference only within this bound work and
+                # one named creator's unique living creation. This is not a
+                # persisted alias and cannot identify an unrelated name.
+                created={bare(item['value']) for unused,item in relations
+                         if bare(item['subject'])==actor}
+                role_reference=(reference in {'criatura','su criatura','ser creado','creacion','su creacion'}
+                                and created=={entity})
+                if direct or described or role_reference:
                     found.append((source, relation))
     if len({(s['url'], r['subject'], r['value']) for s,r in found}) != 1:
         return None
@@ -1060,6 +1125,9 @@ def _character_answer(message, history=(), config=None, *, pending_clarification
     if request is None:
         return None
     if request['ambiguous'] or (not request['title'] and not request['names']):
+        if request.get('title'):
+            return ChatResult('Seguimos con **' + request['title']
+                + '**. ¿Qué personaje o relación quieres que revisemos?', 'clarification')
         return ChatResult('¿De qué libro hablamos? Así puedo distinguir los personajes y sus papeles.', 'clarification')
     from .ai_quick_answers import quick_knowledge_sources
     from .ai_budget import budget_timeout, request_budget
@@ -1084,7 +1152,7 @@ def _character_answer(message, history=(), config=None, *, pending_clarification
             known.extend(item['source'] for entity in entities for item in entity['evidence'])
         result = answer_from_sources(message, request, known)
     best_partial = result if result is not None and result.diagnostics.get('partial_evidence') else None
-    if result is not None and best_partial is None:
+    if result is not None and (best_partial is None or result.diagnostics.get('supplementary_character_count')):
         result.diagnostics['character_trace'] = [{'stage': 'stored_content', 'facts': result.diagnostics['character_count']}]
         return result
     from .ai_library_router import character_answer_from_library

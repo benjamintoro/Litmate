@@ -1,0 +1,454 @@
+{
+  "mode": "continuous_once",
+  "scheduled": 5,
+  "llm_calls": 0,
+  "new_global_corrections": 0,
+  "mysql_references_added": 0,
+  "work_ids": [
+    "litmate:cd01a12f9f01f2eb764bc33a",
+    "litmate:62f6b717c0fc6a444106f1fd",
+    "litmate:d8fec8c040722f1627acb945"
+  ],
+  "batch": {
+    "claimed": 6,
+    "completed": 1,
+    "deferred": 5,
+    "stored": 6,
+    "seconds": 23.339,
+    "jobs": [
+      {
+        "work_id": "litmate:cd01a12f9f01f2eb764bc33a",
+        "provider": "wikipedia",
+        "requirement": "summary",
+        "status": "no_evidence",
+        "lease_current": true,
+        "seconds": 2.494,
+        "stored": 1,
+        "reused": false
+      },
+      {
+        "work_id": "litmate:cd01a12f9f01f2eb764bc33a",
+        "provider": "wikipedia",
+        "requirement": "characters",
+        "status": "no_evidence",
+        "lease_current": true,
+        "seconds": 2.569,
+        "stored": 1,
+        "reused": false
+      },
+      {
+        "work_id": "litmate:d8fec8c040722f1627acb945",
+        "provider": "wikipedia",
+        "requirement": "summary",
+        "status": "ok",
+        "lease_current": true,
+        "seconds": 1.291,
+        "stored": 1,
+        "reused": false
+      },
+      {
+        "work_id": "litmate:d8fec8c040722f1627acb945",
+        "provider": "wikipedia",
+        "requirement": "characters",
+        "status": "no_evidence",
+        "lease_current": true,
+        "seconds": 1.388,
+        "stored": 1,
+        "reused": false
+      },
+      {
+        "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+        "provider": "wikipedia",
+        "requirement": "summary",
+        "status": "no_evidence",
+        "lease_current": true,
+        "seconds": 2.857,
+        "stored": 1,
+        "reused": false
+      },
+      {
+        "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+        "provider": "wikipedia",
+        "requirement": "characters",
+        "status": "no_evidence",
+        "lease_current": true,
+        "seconds": 2.631,
+        "stored": 1,
+        "reused": false
+      }
+    ],
+    "llm_calls": 0,
+    "reused": 0,
+    "verification_scope": "source_policy_identity_and_requirement_coverage",
+    "independent_factual_corroboration": false
+  },
+  "index": {
+    "sources": 494,
+    "documents": 490,
+    "chunks": 510,
+    "semantic": false,
+    "index_updated": true,
+    "index": "G:\\Proyecto\\Litmate\\data\\literary_memory_rag.sqlite3",
+    "short_sources_skipped": 1
+  },
+  "projected_work_ids": [
+    "litmate:cd01a12f9f01f2eb764bc33a",
+    "litmate:d8fec8c040722f1627acb945",
+    "litmate:62f6b717c0fc6a444106f1fd"
+  ],
+  "stopped": null,
+  "seconds": 26.457,
+  "cpu_seconds": 2.516,
+  "process": {
+    "rss_mb": 80.598,
+    "peak_rss_mb": 108.375
+  },
+  "storage_delta_bytes": 53248,
+  "revision_before": "13598",
+  "revision_after": "13604",
+  "coverage_before": {
+    "works": 3,
+    "works_with_explicit_plot": 0,
+    "works_with_development_excerpt": 0,
+    "works_with_admitted_description": 1,
+    "characters_with_literal_roles": 0,
+    "works_with_literal_roles": 0,
+    "characters_with_membership_only": 0,
+    "works_with_explicit_protagonist": 0,
+    "explicit_protagonist_mentions": 0,
+    "relationships": 0,
+    "narrative_facts": 0,
+    "linked_sources": 5,
+    "per_work": {
+      "litmate:cd01a12f9f01f2eb764bc33a": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:62f6b717c0fc6a444106f1fd": {
+        "synopsis": false,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:d8fec8c040722f1627acb945": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 3,
+    "works_with_explicit_plot": 1,
+    "works_with_development_excerpt": 1,
+    "works_with_admitted_description": 3,
+    "characters_with_literal_roles": 0,
+    "works_with_literal_roles": 0,
+    "characters_with_membership_only": 0,
+    "works_with_explicit_protagonist": 0,
+    "explicit_protagonist_mentions": 0,
+    "relationships": 0,
+    "narrative_facts": 2,
+    "linked_sources": 9,
+    "per_work": {
+      "litmate:cd01a12f9f01f2eb764bc33a": {
+        "synopsis": false,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:62f6b717c0fc6a444106f1fd": {
+        "synopsis": false,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:d8fec8c040722f1627acb945": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 2
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "database": {
+    "vendor": "mysql",
+    "name": "litmate_db"
+  },
+  "jobs": [
+    {
+      "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+      "requirement": "characters",
+      "provider": "wikidata",
+      "status": "pending",
+      "attempts": 2,
+      "last_error": "no_verified_match",
+      "not_before": 1793269117.0068378,
+      "payload": "{\"author\":\"Louisa May Alcott\",\"last_attempt_at\":1793268214.108114,\"title\":\"Little Women\"}"
+    },
+    {
+      "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+      "requirement": "characters",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 4,
+      "last_error": "no_evidence",
+      "not_before": 1793339851.7629008,
+      "payload": "{\"author\":\"Louisa May Alcott\",\"gap_count\":4,\"last_attempt_at\":1793338889.114181,\"last_gap_reason\":\"insufficient_evidence\",\"title\":\"Little Women\"}"
+    },
+    {
+      "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+      "requirement": "summary",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 4,
+      "last_error": "no_evidence",
+      "not_before": 1793339847.1031165,
+      "payload": "{\"author\":\"Louisa May Alcott\",\"last_attempt_at\":1793338884.2414532,\"title\":\"Little Women\"}"
+    },
+    {
+      "work_id": "litmate:cd01a12f9f01f2eb764bc33a",
+      "requirement": "characters",
+      "provider": "wikidata",
+      "status": "pending",
+      "attempts": 2,
+      "last_error": "no_verified_match",
+      "not_before": 1793332317.7286816,
+      "payload": "{\"author\":\"H. G. (Herbert George) Wells\",\"last_attempt_at\":1793331415.5351226,\"title\":\"The Time Machine\"}"
+    },
+    {
+      "work_id": "litmate:cd01a12f9f01f2eb764bc33a",
+      "requirement": "characters",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 3,
+      "last_error": "no_evidence",
+      "not_before": 1793339775.5179167,
+      "payload": "{\"author\":\"H. G. (Herbert George) Wells\",\"gap_count\":2,\"last_attempt_at\":1793338872.9442744,\"last_gap_reason\":\"insufficient_evidence\",\"title\":\"The Time Machine\"}"
+    },
+    {
+      "work_id": "litmate:cd01a12f9f01f2eb764bc33a",
+      "requirement": "summary",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 3,
+      "last_error": "no_evidence",
+      "not_before": 1793339770.932585,
+      "payload": "{\"author\":\"H. G. (Herbert George) Wells\",\"gap_count\":2,\"last_attempt_at\":1793338868.433944,\"last_gap_reason\":\"insufficient_evidence\",\"title\":\"The Time Machine\"}"
+    },
+    {
+      "work_id": "litmate:d8fec8c040722f1627acb945",
+      "requirement": "characters",
+      "provider": "wikidata",
+      "status": "pending",
+      "attempts": 2,
+      "last_error": "empty",
+      "not_before": 1793269106.4274838,
+      "payload": "{\"author\":\"Émile Zola\",\"last_attempt_at\":1793268204.973345,\"title\":\"Nana\"}"
+    },
+    {
+      "work_id": "litmate:d8fec8c040722f1627acb945",
+      "requirement": "characters",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 4,
+      "last_error": "no_evidence",
+      "not_before": 1793339842.2302682,
+      "payload": "{\"author\":\"Émile Zola\",\"gap_count\":4,\"last_attempt_at\":1793338880.8368647,\"last_gap_reason\":\"insufficient_evidence\",\"title\":\"Nana\"}"
+    },
+    {
+      "work_id": "litmate:d8fec8c040722f1627acb945",
+      "requirement": "summary",
+      "provider": "wikipedia",
+      "status": "done",
+      "attempts": 4,
+      "last_error": "",
+      "not_before": 1793332296.0322127,
+      "payload": "{\"author\":\"Émile Zola\",\"gap_count\":4,\"last_attempt_at\":1793338877.528995,\"last_completed_at\":1793338878.8247004,\"last_gap_reason\":\"insufficient_evidence\",\"last_verification\":\"source_identity_license_and_coverage\",\"title\":\"Nana\"}"
+    }
+  ],
+  "original_sql_rows": {
+    "auth_group": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "auth_group_permissions": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "auth_permission": {
+      "original_rows_preserved": 152,
+      "added": 0
+    },
+    "auth_user": {
+      "original_rows_preserved": 179,
+      "added": 0
+    },
+    "auth_user_groups": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "auth_user_user_permissions": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_asistenteia": {
+      "original_rows_preserved": 1,
+      "added": 0
+    },
+    "core_autor": {
+      "original_rows_preserved": 31,
+      "added": 0
+    },
+    "core_clickconversion": {
+      "original_rows_preserved": 185,
+      "added": 0
+    },
+    "core_conversacionia": {
+      "original_rows_preserved": 50,
+      "added": 0
+    },
+    "core_editorial": {
+      "original_rows_preserved": 34,
+      "added": 0
+    },
+    "core_elementolistalectura": {
+      "original_rows_preserved": 2,
+      "added": 0
+    },
+    "core_estadolectura": {
+      "original_rows_preserved": 451,
+      "added": 0
+    },
+    "core_eventoanalitica": {
+      "original_rows_preserved": 384,
+      "added": 0
+    },
+    "core_genero": {
+      "original_rows_preserved": 12,
+      "added": 0
+    },
+    "core_historialchatbot": {
+      "original_rows_preserved": 5,
+      "added": 0
+    },
+    "core_historialpreciolibro": {
+      "original_rows_preserved": 223,
+      "added": 0
+    },
+    "core_kbname": {
+      "original_rows_preserved": 11104,
+      "added": 0
+    },
+    "core_kbprojection": {
+      "original_rows_preserved": 7,
+      "added": 0,
+      "derived_worker_checkpoint_updated": true
+    },
+    "core_kbrecord": {
+      "original_rows_preserved": 11104,
+      "added": 0
+    },
+    "core_kbrelation": {
+      "original_rows_preserved": 1108,
+      "added": 0
+    },
+    "core_kbversion": {
+      "original_rows_preserved": 11104,
+      "added": 0
+    },
+    "core_libro": {
+      "original_rows_preserved": 55,
+      "added": 0
+    },
+    "core_libro_generos": {
+      "original_rows_preserved": 54,
+      "added": 0
+    },
+    "core_librofavorito": {
+      "original_rows_preserved": 231,
+      "added": 0
+    },
+    "core_listalectura": {
+      "original_rows_preserved": 2,
+      "added": 0
+    },
+    "core_mensajecontacto": {
+      "original_rows_preserved": 3,
+      "added": 0
+    },
+    "core_mensajeia": {
+      "original_rows_preserved": 190,
+      "added": 0
+    },
+    "core_perfilusuario": {
+      "original_rows_preserved": 158,
+      "added": 0
+    },
+    "core_preciolibrotienda": {
+      "original_rows_preserved": 117,
+      "added": 0
+    },
+    "core_preguntafrecuente": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_recomendacion": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_recomendacionialog": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_resena": {
+      "original_rows_preserved": 116,
+      "added": 0
+    },
+    "django_admin_log": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "django_content_type": {
+      "original_rows_preserved": 38,
+      "added": 0
+    },
+    "django_migrations": {
+      "original_rows_preserved": 27,
+      "added": 0
+    },
+    "django_session": {
+      "original_rows_preserved": 88,
+      "added": 0
+    },
+    "suscripciones_historialpago": {
+      "original_rows_preserved": 42,
+      "added": 0
+    },
+    "suscripciones_plansuscripcion": {
+      "original_rows_preserved": 3,
+      "added": 0
+    },
+    "suscripciones_suscripcionusuario": {
+      "original_rows_preserved": 157,
+      "added": 0
+    }
+  }
+}

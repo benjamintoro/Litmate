@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "modules": [
+    "core.test_searx_resilience",
+    "core.test_searx_diagnostics",
+    "core.test_search_narrative_repair",
+    "core.test_progressive_free_sources",
+    "core.test_web_search",
+    "core.test_literary_web",
+    "core.test_ai_runtime",
+    "core.test_research_runtime",
+    "core.test_discovery_card_synopsis",
+    "core.test_recommendation_web_evidence"
+  ],
+  "wall_seconds": 2.72,
+  "sqlite_and_auxiliary_stores_isolated": true
+}

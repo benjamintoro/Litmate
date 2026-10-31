@@ -1,0 +1,352 @@
+{
+  "case": {
+    "case": 4,
+    "title": "Las indignas",
+    "author": "Agustina Bazterrica",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": true
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de Las indignas de Agustina Bazterrica",
+      "answer": "No pude confirmar una sinopsis fiable de **Las indignas** con las fuentes disponibles. No quiero mezclarlo con otra obra.",
+      "status": "unavailable",
+      "books": [],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 15866,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 2,
+        "work_type": "fiction",
+        "narrative_failure": "audit_not_approved",
+        "progress_metrics": {
+          "elapsed_ms": 15872.611,
+          "first_phase_emitted_ms": 18.449,
+          "model_calls_started": 2,
+          "stage_totals_ms": {
+            "conversation": 7.665,
+            "cache_lookup": 0.639,
+            "knowledge_lookup": 621.839,
+            "retrieval": 1974.511,
+            "model_inspection": 30.929,
+            "generation": 7921.182,
+            "audit": 5380.673,
+            "finalization": 6.875
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 4.084,
+              "elapsed_ms": 7.665,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 17.801,
+              "elapsed_ms": 0.639,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 31.3,
+              "elapsed_ms": 327.196,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 104.886,
+              "elapsed_ms": 36.135,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 201.207,
+              "elapsed_ms": 156.089,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 267.815,
+              "elapsed_ms": 51.491,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 423.885,
+              "elapsed_ms": 50.928,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 525.807,
+              "elapsed_ms": 1974.511,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 2541.204,
+              "elapsed_ms": 7921.182,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 2541.216,
+              "elapsed_ms": 30.923,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 10462.865,
+              "elapsed_ms": 5378.598,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 10462.882,
+              "elapsed_ms": 0.006,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 15842.905,
+              "elapsed_ms": 2.075,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 15865.73,
+              "elapsed_ms": 6.875,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 18.449
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 2541.187
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 10462.85
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "prompt_eval_ms": 1841.3,
+            "load_ms": 5.969,
+            "status": "ok",
+            "eval_ms": 5820.472,
+            "stage": "answer",
+            "prompt_eval_count": 3154,
+            "model": "qwen3.5:9b-q4_K_M",
+            "total_ms": 7868.8,
+            "eval_count": 167,
+            "elapsed_ms": 7921
+          },
+          {
+            "prompt_eval_ms": 2709.191,
+            "load_ms": 6.319,
+            "status": "ok",
+            "eval_ms": 2514.438,
+            "stage": "audit",
+            "prompt_eval_count": 5014,
+            "model": "qwen3.5:9b-q4_K_M",
+            "total_ms": 5361.378,
+            "eval_count": 74,
+            "elapsed_ms": 5379
+          }
+        ],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 15.881,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.0339,
+        "verified_ready_seconds": 15.8582,
+        "first_verified_text_seconds": 15.881
+      }
+    }
+  ],
+  "seconds": 18.064,
+  "research_profile": "free_google",
+  "public_research_trace": [
+    {
+      "stage": "retrieved_public_evidence",
+      "sources": [
+        {
+          "id": 1,
+          "title": "Las indignas",
+          "author": "Agustina Bazterrica",
+          "description": "Editorial: ALFAGUARA Publicaci\u00f3n: 2023-09-01 P\u00e1ginas: 166 Idioma: es ISBN: 9788420477176, 8420477176 Sinopsis editorial: La nueva novela de la aclamada autora de Cad\u00e1ver exquisito, premio Clar\u00edn de Novela y un fen\u00f3meno mundial con un mill\u00f3n de lectores en una treintena de pa\u00edses. \u00abPerturbadora desde sus primeras p\u00e1ginas. (...) Lleva al lector al l\u00edmite para provocar en \u00e9l tanto v\u00e9rtigo como dudas sobre s\u00ed mismo. (...) Muy recomendable\u00bb. Ana Bret\u00f3n, El Mundo \u00abNadie le dice que no a la Hermana Superior. Nadie que quiera seguir viva\u00bb. El mundo como lo conocemos ha desaparecido despu\u00e9s del gran apag\u00f3n,guerras por el agua y cat\u00e1strofes ambientales. Los d\u00edas pasan de g\u00e9lidos a sofocantes en cuesti\u00f3n de horas, apenas hay animales ni naturaleza y pocas personas han sobrevivido. En este presente desolador, varias mujeres viven confinadas en la Casa de la Hermandad Sagrada, sometidas a los designios de un culto religioso. Una de ellas cuenta esta historia, escrita a escondidas noche tras noche para que un d\u00eda alguien sepa todo lo que pasa entre esas paredes: torturas, sacrificios y ceremonias terror\u00edficas en nombre de la iluminaci\u00f3n. Se encuentran bajo el mando estricto de la Hermana Superior, por encima de quien solo se erige \u00ab\u00c9l\u00bb. \u00bfQui\u00e9n es \u00c9l? Poco se sabe; nadie puede verlo, pero domina desde las sombras. Agustina Bazterrica, la autora de la inolvidable Cad\u00e1ver exquisito, nos ofrece en esta nueva y esperada novela una distop\u00eda perturbadora en la que resplandece la naturaleza oscura de una falsa divinidad, un dios abusivo, pero tambi\u00e9n la forma subrepticia, aunque poderosa, de la amistad. \u00abPerturbadora desde sus primeras p\u00e1ginas. (...) Lleva al lector al l\u00edmite para provocar en \u00e9l tanto v\u00e9rtigo como",
+          "source": "Google Books API",
+          "year": "2023",
+          "book_id": "NP7UEAAAQBAJ",
+          "kind": "book",
+          "url": "https://play.google.com/store/books/details?id=NP7UEAAAQBAJ",
+          "locator": "",
+          "read_mode": "ficha y sinopsis; vista previa externa",
+          "retrieved_at": "",
+          "synopsis": "La nueva novela de la aclamada autora de Cad\u00e1ver exquisito, premio Clar\u00edn de Novela y un fen\u00f3meno mundial con un mill\u00f3n de lectores en una treintena de pa\u00edses. \u00abPerturbadora desde sus primeras p\u00e1ginas. (...) Lleva al lector al l\u00edmite para provocar en \u00e9l tanto v\u00e9rtigo como dudas sobre s\u00ed mismo. (...) Muy recomendable\u00bb. Ana Bret\u00f3n, El Mundo \u00abNadie le dice que no a la Hermana Superior. Nadie que quiera seguir viva\u00bb. El mundo como lo conocemos ha desaparecido despu\u00e9s del gran apag\u00f3n,guerras por el agua y cat\u00e1strofes ambientales. Los d\u00edas pasan de g\u00e9lidos a sofocantes en cuesti\u00f3n de horas, apenas hay animales ni naturaleza y pocas personas han sobrevivido. En este presente desolador, varias mujeres viven confinadas en la Casa de la Hermandad Sagrada, sometidas a los designios de un culto religioso. Una de ellas cuenta esta historia, escrita a escondidas noche tras noche para que un d\u00eda alguien sepa todo lo que pasa entre esas paredes: torturas, sacrificios y ceremonias terror\u00edficas en nombre de la iluminaci\u00f3n. Se encuentran bajo el mando estricto de la Hermana Superior, por encima de quien solo se erige \u00ab\u00c9l\u00bb. \u00bfQui\u00e9n es \u00c9l? Poco se sabe; nadie puede verlo, pero domina desde las sombras. Agustina Bazterrica, la autora de la inolvidable Cad\u00e1ver exquisito, nos ofrece en esta nueva y esperada novela una distop\u00eda perturbadora en la que resplandece la naturaleza oscura de una falsa divinidad, un dios abusivo, pero tambi\u00e9n la forma subrepticia, aunque poderosa, de la amistad. \u00abPerturbadora desde sus primeras p\u00e1ginas. (...) Lleva al lector al l\u00edmite para provocar en \u00e9l tanto v\u00e9rtigo como",
+          "synopsis_source_url": "https://play.google.com/store/books/details?id=NP7UEAAAQBAJ",
+          "description_source": "Google Books API, descripci\u00f3n editorial",
+          "image_url": "https://books.google.com/books/content?id=NP7UEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+          "subtitle": "",
+          "publisher": "ALFAGUARA",
+          "published_date": "2023-09-01",
+          "language": "es",
+          "page_count": 166,
+          "isbns": [
+            "9788420477176",
+            "8420477176"
+          ],
+          "categories": [
+            "Fiction"
+          ],
+          "preview_url": "https://books.google.cl/books?id=NP7UEAAAQBAJ&printsec=frontcover&dq=intitle:%22Las+indignas%22+inauthor:%22Agustina+Bazterrica%22&hl=&as_pt=BOOKS&cd=2&source=gbs_api",
+          "read_url": "https://play.google.com/books/reader?id=NP7UEAAAQBAJ&hl=&as_pt=BOOKS&source=gbs_api",
+          "viewability": "PARTIAL",
+          "public_domain": false
+        }
+      ]
+    },
+    {
+      "stage": "generation_sources",
+      "sources": [
+        {
+          "id": 1,
+          "title": "Las indignas",
+          "author": "Agustina Bazterrica",
+          "description": "Editorial: ALFAGUARA Publicaci\u00f3n: 2023-09-01 P\u00e1ginas: 166 Idioma: es ISBN: 9788420477176, 8420477176 Sinopsis editorial: La nueva novela de la aclamada autora de Cad\u00e1ver exquisito, premio Clar\u00edn de Novela y un fen\u00f3meno mundial con un mill\u00f3n de lectores en una treintena de pa\u00edses. \u00abPerturbadora desde sus primeras p\u00e1ginas. (...) Lleva al lector al l\u00edmite para provocar en \u00e9l tanto v\u00e9rtigo como dudas sobre s\u00ed mismo. (...) Muy recomendable\u00bb. Ana Bret\u00f3n, El Mundo \u00abNadie le dice que no a la Hermana Superior. Nadie que quiera seguir viva\u00bb. El mundo como lo conocemos ha desaparecido despu\u00e9s del gran apag\u00f3n,guerras por el agua y cat\u00e1strofes ambientales. Los d\u00edas pasan de g\u00e9lidos a sofocantes en cuesti\u00f3n de horas, apenas hay animales ni naturaleza y pocas personas han sobrevivido. En este presente desolador, varias mujeres viven confinadas en la Casa de la Hermandad Sagrada, sometidas a los designios de un culto religioso. Una de ellas cuenta esta historia, escrita a escondidas noche tras noche para que un d\u00eda alguien sepa todo lo que pasa entre esas paredes: torturas, sacrificios y ceremonias terror\u00edficas en nombre de la iluminaci\u00f3n. Se encuentran bajo el mando estricto de la Hermana Superior, por encima de quien solo se erige \u00ab\u00c9l\u00bb. \u00bfQui\u00e9n es \u00c9l? Poco se sabe; nadie puede verlo, pero domina desde las sombras. Agustina Bazterrica, la autora de la inolvidable Cad\u00e1ver exquisito, nos ofrece en esta nueva y esperada novela una distop\u00eda perturbadora en la que resplandece la naturaleza oscura de una falsa divinidad, un dios abusivo, pero tambi\u00e9n la forma subrepticia, aunque poderosa, de la amistad. \u00abPerturbadora desde sus primeras p\u00e1ginas. (...) Lleva al lector al l\u00edmite para provocar en \u00e9l tanto v\u00e9rtigo como",
+          "source": "Google Books API",
+          "year": "2023",
+          "book_id": "NP7UEAAAQBAJ",
+          "kind": "book",
+          "url": "https://play.google.com/store/books/details?id=NP7UEAAAQBAJ",
+          "locator": "",
+          "read_mode": "ficha y sinopsis; vista previa externa",
+          "retrieved_at": "",
+          "synopsis": "La nueva novela de la aclamada autora de Cad\u00e1ver exquisito, premio Clar\u00edn de Novela y un fen\u00f3meno mundial con un mill\u00f3n de lectores en una treintena de pa\u00edses. \u00abPerturbadora desde sus primeras p\u00e1ginas. (...) Lleva al lector al l\u00edmite para provocar en \u00e9l tanto v\u00e9rtigo como dudas sobre s\u00ed mismo. (...) Muy recomendable\u00bb. Ana Bret\u00f3n, El Mundo \u00abNadie le dice que no a la Hermana Superior. Nadie que quiera seguir viva\u00bb. El mundo como lo conocemos ha desaparecido despu\u00e9s del gran apag\u00f3n,guerras por el agua y cat\u00e1strofes ambientales. Los d\u00edas pasan de g\u00e9lidos a sofocantes en cuesti\u00f3n de horas, apenas hay animales ni naturaleza y pocas personas han sobrevivido. En este presente desolador, varias mujeres viven confinadas en la Casa de la Hermandad Sagrada, sometidas a los designios de un culto religioso. Una de ellas cuenta esta historia, escrita a escondidas noche tras noche para que un d\u00eda alguien sepa todo lo que pasa entre esas paredes: torturas, sacrificios y ceremonias terror\u00edficas en nombre de la iluminaci\u00f3n. Se encuentran bajo el mando estricto de la Hermana Superior, por encima de quien solo se erige \u00ab\u00c9l\u00bb. \u00bfQui\u00e9n es \u00c9l? Poco se sabe; nadie puede verlo, pero domina desde las sombras. Agustina Bazterrica, la autora de la inolvidable Cad\u00e1ver exquisito, nos ofrece en esta nueva y esperada novela una distop\u00eda perturbadora en la que resplandece la naturaleza oscura de una falsa divinidad, un dios abusivo, pero tambi\u00e9n la forma subrepticia, aunque poderosa, de la amistad. \u00abPerturbadora desde sus primeras p\u00e1ginas. (...) Lleva al lector al l\u00edmite para provocar en \u00e9l tanto v\u00e9rtigo como",
+          "synopsis_source_url": "https://play.google.com/store/books/details?id=NP7UEAAAQBAJ",
+          "description_source": "Google Books API, descripci\u00f3n editorial",
+          "image_url": "https://books.google.com/books/content?id=NP7UEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+          "subtitle": "",
+          "publisher": "ALFAGUARA",
+          "published_date": "2023-09-01",
+          "language": "es",
+          "page_count": 166,
+          "isbns": [
+            "9788420477176",
+            "8420477176"
+          ],
+          "categories": [
+            "Fiction"
+          ],
+          "preview_url": "https://books.google.cl/books?id=NP7UEAAAQBAJ&printsec=frontcover&dq=intitle:%22Las+indignas%22+inauthor:%22Agustina+Bazterrica%22&hl=&as_pt=BOOKS&cd=2&source=gbs_api",
+          "read_url": "https://play.google.com/books/reader?id=NP7UEAAAQBAJ&hl=&as_pt=BOOKS&source=gbs_api",
+          "viewability": "PARTIAL",
+          "public_domain": false
+        }
+      ]
+    },
+    {
+      "stage": "draft",
+      "output": {
+        "status": "answer",
+        "text": "En un mundo devastado por cat\u00e1strofes ambientales y guerras por el agua, varias mujeres sobreviven confinadas en la Casa de la Hermandad Sagrada bajo el dominio estricto de una Hermana Superior y una figura misteriosa llamada \u00ab\u00c9l\u00bb. Una de las prisioneras escribe a escondidas su historia noche tras noche para documentar las torturas, sacrificios y ceremonias terror\u00edficas que se llevan a cabo en nombre de una falsa divinidad. A trav\u00e9s de este relato clandestino, la narradora revela la naturaleza abusiva del culto religioso y explora los l\u00edmites de la amistad y la supervivencia entre las mujeres atrapadas en ese entorno opresivo.",
+        "basis": "sources",
+        "citations": [
+          1
+        ],
+        "needs_web": false,
+        "books": []
+      }
+    },
+    {
+      "stage": "audit",
+      "output": {
+        "decision": "approve",
+        "only_books": true,
+        "coverage": [
+          {
+            "question_id": 1,
+            "status": "answered"
+          }
+        ],
+        "claims": [
+          {
+            "statement": "En un mundo devastado por cat\u00e1strofes ambientales y guerras por el agua, varias mujeres sobreviven confinadas en la Casa de la Hermandad Sagrada bajo el dominio estricto de una Hermana Superior y una figura misteriosa llamada \u00ab\u00c9l\u00bb.",
+            "verdict": "supported",
+            "source_id": 1,
+            "evidence": "ocas personas han sobrevivido. En este presente desolador, varias mujeres viven confinadas en la Casa de la Hermandad Sagrada, sometidas a los designios de un culto religioso. Una de ellas cuenta esta historia, escrita a escondidas noche tras noche para que un d\u00eda alguien sepa todo lo que pasa entre"
+          },
+          {
+            "statement": "Una de las prisioneras escribe a escondidas su historia noche tras noche para documentar las torturas, sacrificios y ceremonias terror\u00edficas que se llevan a cabo en nombre de una falsa divinidad.",
+            "verdict": "supported",
+            "source_id": 1,
+            "evidence": "ocas personas han sobrevivido. En este presente desolador, varias mujeres viven confinadas en la Casa de la Hermandad Sagrada, sometidas a los designios de un culto religioso. Una de ellas cuenta esta historia, escrita a escondidas noche tras noche para que un d\u00eda alguien sepa todo lo que pasa entre"
+          },
+          {
+            "statement": "A trav\u00e9s de este relato clandestino, la narradora revela la naturaleza abusiva del culto religioso y explora los l\u00edmites de la amistad y la supervivencia entre las mujeres atrapadas en ese entorno opresivo.",
+            "verdict": "inference",
+            "source_id": 0,
+            "evidence": ""
+          }
+        ],
+        "search_queries": [],
+        "issues": []
+      }
+    }
+  ],
+  "coverage_before": {
+    "works": 14467,
+    "works_with_explicit_plot": 14,
+    "works_with_development_excerpt": 10,
+    "works_with_admitted_description": 17,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 31,
+    "linked_sources": 14639,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14467,
+    "works_with_explicit_plot": 14,
+    "works_with_development_excerpt": 10,
+    "works_with_admitted_description": 17,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 31,
+    "linked_sources": 14639,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "persistent_exact_cache",
+  "google_books_enabled": true,
+  "factual_review_pending": true
+}

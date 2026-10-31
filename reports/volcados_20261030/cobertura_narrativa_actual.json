@@ -1,0 +1,57 @@
+{
+  "works": 5,
+  "works_with_explicit_plot": 3,
+  "works_with_development_excerpt": 3,
+  "works_with_admitted_description": 3,
+  "characters_with_literal_roles": 0,
+  "works_with_literal_roles": 0,
+  "characters_with_membership_only": 0,
+  "works_with_explicit_protagonist": 0,
+  "explicit_protagonist_mentions": 0,
+  "relationships": 0,
+  "narrative_facts": 7,
+  "linked_sources": 13,
+  "per_work": {
+    "litmate:612813c24f5478b4b3abd50f": {
+      "synopsis": false,
+      "description": false,
+      "development_excerpt": false,
+      "roles": 0,
+      "relationships": 0,
+      "facts": 0
+    },
+    "litmate:cd01a12f9f01f2eb764bc33a": {
+      "synopsis": true,
+      "description": true,
+      "development_excerpt": true,
+      "roles": 0,
+      "relationships": 0,
+      "facts": 3
+    },
+    "litmate:cf67efebae22b928eedc86f3": {
+      "synopsis": false,
+      "description": false,
+      "development_excerpt": false,
+      "roles": 0,
+      "relationships": 0,
+      "facts": 0
+    },
+    "litmate:62f6b717c0fc6a444106f1fd": {
+      "synopsis": true,
+      "description": true,
+      "development_excerpt": true,
+      "roles": 0,
+      "relationships": 0,
+      "facts": 2
+    },
+    "litmate:d8fec8c040722f1627acb945": {
+      "synopsis": true,
+      "description": true,
+      "development_excerpt": true,
+      "roles": 0,
+      "relationships": 0,
+      "facts": 2
+    }
+  },
+  "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+}

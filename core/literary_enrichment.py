@@ -6,7 +6,7 @@ from .literary_identity import same_work, normalize_identity
 def has_development(source):
     """A literal distributed excerpt; not a guarantee of a complete plot."""
     from .literary_memory import _literal_facts
-    return any(fact.get('topic') == 'plot' and fact.get('scope') == 'development_excerpt'
+    return any(fact.get('topic') == 'plot' and fact.get('scope') in {'development_excerpt','sequential_excerpt'}
                for fact in _literal_facts(source.get('literary_facts',[]),source.get('description',''),'literary_facts'))
 
 
@@ -32,7 +32,7 @@ def enrich_source(source, work, requirement):
     from .literary_entity_facts import profile_creation_relations
     facts.extend(profile_creation_relations(source))
     # Sólo un encabezado publicado identifica inequívocamente la sección.
-    labels = r'argumento|trama|sinopsis|plot|resumen|la obra|temas|themes|ambientación|contexto histórico|adaptaciones|adaptations'
+    labels = r'argumento|trama|sinopsis|plot|resumen|la obra|temas|themes|contenido|contents|ambientación|contexto histórico|adaptaciones|adaptations'
     heading = (re.search(r'(?i)={2,}\s*('+labels+r')\s*={2,}', body)
                or re.search(r'(?im)^\s*('+labels+r')\s*$', body))
     if heading:
@@ -41,7 +41,7 @@ def enrich_source(source, work, requirement):
         if stop >= 60:
             text = text[:stop+1]
         if len(text) >= 60:
-            topic = ('themes' if normalize_identity(heading[1]) in {'temas','themes'} else
+            topic = ('themes' if normalize_identity(heading[1]) in {'temas','themes','contenido','contents'} else
                 'adaptations' if normalize_identity(heading[1]) in {'adaptaciones','adaptations'} else
                 'setting' if normalize_identity(heading[1]) == 'ambientacion' else
                 'historical_context' if normalize_identity(heading[1]) == 'contexto historico' else 'plot')

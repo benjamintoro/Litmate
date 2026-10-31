@@ -240,7 +240,8 @@ def _validated_result(message, chosen, *, recommendation=False):
         validate_audit(audit, plan, draft, sources, message, strict_facts=True)
     except (ValueError, TypeError):
         return None
-    text = draft['text'] + '\n\nFuentes de las fichas:\n' + '\n'.join(source['url'] for source in sources)
+    urls = [source['url'] for source in sources if source.get('url')]
+    text = draft['text'] + ('\n\nFuentes de las fichas:\n' + '\n'.join(urls) if urls else '')
     return ChatResult(text, 'answered', True, sources, books, 'sources',
                       'recommend' if recommendation else 'summary',
                       {'verified_quick_answer': True, 'claim_checks': len(claims), 'audit': audit})
@@ -281,7 +282,8 @@ def _simple_topic_request(message, query):
                   'opciones opcion ensayos ensayo algo algun alguna algunos algunas necesito '
                   'busco buscando estoy dame dime aprender entender sobre acerca de del el la los '
                   'las en y para a un una uno dos tres cuatro cinco mas otros otras otro otra '
-                  'distintos diferentes autores son sean seanme tambien también ademas además'.split())
+                  'distintos diferentes autores son sean seanme tambien también ademas además '
+                  'que trate traten hable aborde'.split())
     return all(word in allowed or word in {'1', '2', '3', '4', '5'}
                for word in re.findall(r'\w+', residue))
 
@@ -313,7 +315,7 @@ def quick_answer(message, history=None, *, topic_context=None, search=None):
         limit = requested or 3
         different_authors = bool(re.search(r'\b(?:distintos?|diferentes?) autores?\b', value))
         previous = ([book for turn in history for book in turn['books']]
-                    if re.search(r'\b(?:otros?|otras?|mas)\b', value) else [])
+                    if re.search(r'\b(?:otros?|otras?|mas|ya lei)\b', value) else [])
         sources = rank_book_sources(bundled, query, distinct_works=True)
         sources = [source for source in sources if constraints_match(source, constraints)]
         sources = recommendation_sources(canonical_sources(sources), limit,
@@ -362,6 +364,25 @@ def quick_answer(message, history=None, *, topic_context=None, search=None):
         return None
     from .literary_identity import resolve_followup_context, same_work
     from .literary_research import resolve_verified_request
+    reference = resolve_followup_context(message, history)
+    if (len(reference['books']) == 1 and not reference['ambiguous']
+            and re.fullmatch(r'(?:cuentame|hablame) mas (?:del|de la|sobre el|sobre la) '
+                r'(?:primero|primer|primera|segundo|segunda|tercero|tercer|tercera|cuarto|cuarta|'
+                r'quinto|quinta)(?: libro| novela| obra)?', value)):
+        from .books_google import source_synopsis
+        received = [source for turn in reversed(history) for source in turn['sources']
+                    if source.get('kind') == 'book' and same_work(source, reference['books'][0])
+                    and not source.get('conflicts_with') and not source.get('injection_detected')
+                    and source.get('source') != 'Wikidata'
+                    and source.get('policy') != 'openlibrary-minimal-metadata-v1']
+        for source in received:
+            synopsis = source_synopsis(source)
+            if (synopsis and len(synopsis) <= 300 and synopsis in source.get('description', '')
+                    and not re.search(r'\bTemas del catálogo\s*:', synopsis, re.I)):
+                result = _validated_result(message, [{**source, 'description': synopsis}])
+                if result is not None:
+                    result.diagnostics['received_ordinal_synopsis'] = True
+                    return result
     context_query = message + ' ' + ' '.join(book['title'] for book in
         resolve_followup_context(message, history)['books'])
     local = quick_knowledge_sources(context_query, maximum=12)
@@ -404,6 +425,88 @@ def quick_answer(message, history=None, *, topic_context=None, search=None):
     return _validated_result(message, narrative[:1]) if narrative else None
 
 
+def book_links_answer(message, history):
+    """Destinos reales de las tarjetas existentes; no asegura stock ni precios."""
+    from .literary_identity import resolve_followup_context, same_work
+    from .literary_quality import required_fact_statements, factual_statements, validate_audit
+    from .literary_evidence import validate_evidence
+    value = request_text(message).strip(' ¿?¡!.,')
+    if not re.fullmatch(r'(?:y )?donde (?:puedo )?(?:encontrarlo|conseguirlo|comprarlo|'
+                        r'buscarlo|encontrar ese libro|comprar ese libro)', value):
+        return None
+    turns = sanitized_history(list(history or []))
+    reference = resolve_followup_context('ese libro', turns)
+    if reference.get('ambiguous') or len(reference['books']) != 1:
+        return None
+    records = [source for turn in reversed(turns) for source in turn['sources']
+               if source['kind'] == 'book' and same_work(source, reference['books'][0])]
+    if not records:
+        return None
+    source = canonical_sources(records[:1])[0]
+    identity = '**' + source['title'] + '** — ' + source['author'] + '.'
+    note = 'Puedes usar los enlaces de la tarjeta para buscarlo; no puedo confirmar disponibilidad ni precio.'
+    text = identity + '\n\n' + note
+    proof = next((source[key] for key in ('title', 'author', 'description')
+                  if 8 <= len(source.get(key, '')) <= 300), '')
+    if not proof:
+        return None
+    draft = {'status': 'answer', 'basis': 'sources', 'text': text, 'citations': [1],
+             'books': [{'title': source['title'], 'author': source['author'], 'source_id': 1}], 'needs_web': False}
+    claims = [{'statement': sentence, 'verdict': 'supported', 'source_id': 1, 'evidence': proof}
+              for sentence in required_fact_statements(identity)]
+    claims.extend({'statement': sentence, 'verdict': 'unverified', 'source_id': 0, 'evidence': ''}
+                  for sentence in factual_statements(note))
+    audit = {'decision': 'approve', 'only_books': True, 'claims': claims, 'issues': [], 'search_queries': [],
+             'coverage': [{'question_id': 1, 'status': 'uncertain'}]}
+    plan = {'questions': [message], 'search_queries': [], 'needs_contents': False,
+            'needs_fresh_sources': False, 'spoilers_requested': False}
+    try:
+        validate_draft(draft, [source]); validate_evidence(draft, [source], message)
+        validate_audit(audit, plan, draft, [source], message, strict_facts=True)
+    except (ValueError, TypeError):
+        return None
+    return ChatResult(text, 'answered', True, [source], draft['books'], 'sources', 'author',
+                      {'verified_book_links': True, 'model_calls': 0, 'audit': audit})
+
+
+def publication_synopsis_answer(message, sources):
+    """Fichas de una identidad literal con descripciones extractivas auditadas.
+
+    No vuelve a pedir al modelo que invente razones o cambie quién realiza
+    una acción cuando el proveedor ya aporta una explicación breve suficiente.
+    """
+    from .literary_research import publication_lookup_target, publication_matches
+    from .ai_catalog_fallback import _topic_catalogue_origin
+    from .books_google import source_synopsis
+    from .literary_quality import factual_statements
+    from .literary_web import public_text_has_injection
+    target = publication_lookup_target(message)
+    if not target:
+        return None
+    selected = []
+    for source in sources:
+        if (not _topic_catalogue_origin(source) or not publication_matches(source, target)
+                or source.get('conflicts_with') or source.get('injection_detected')
+                or public_text_has_injection(source.get('description', ''))):
+            continue
+        synopsis = source_synopsis(source)
+        if synopsis.startswith('Temas del catálogo:'):
+            continue
+        passage = next((sentence for sentence in factual_statements(synopsis, strip_markers=False)
+                        if 8 <= len(sentence) <= 300 and sentence in source.get('description', '')
+                        and not sentence.lstrip().startswith('¿') and not sentence.rstrip().endswith('?')), '')
+        if passage:
+            selected.append({**source, 'description': passage})
+        if len(selected) >= (requested_book_count(message) or 3):
+            break
+    if not selected:
+        return None
+    result = _validated_result(message, canonical_sources(selected, 5), recommendation=True)
+    if result is not None:
+        result.diagnostics.update(publication_synopsis_extractive=True, model_calls=0)
+    return result
+
+
 def catalogue_lookup_answer(message, history, search):
     """Autoría/sinopsis desde una identidad exacta, también sin Google Books.
 
@@ -422,21 +525,24 @@ def catalogue_lookup_answer(message, history, search):
     author = re.fullmatch(r'(?:quien (?:escribio|es (?:el autor|la autora)))(?: de)?\s+(.+)', value)
     summary = re.fullmatch(r'(?:de que trata|hablame de|cuentame (?:sobre|de)|'
                            r'resume|resumen de|sinopsis de)\s+(.+)', value)
-    from .literary_identity import resolve_followup_context, title_matches
+    genre = re.fullmatch(r'(?:de que genero es|que genero tiene|cual es el genero de)\s+(.+)', value)
+    from .literary_identity import resolve_followup_context, title_matches, same_work
     reference = resolve_followup_context(message, sanitized_history(history))
     if reference['ambiguous']:
         return None
     if reference['books']:
         book = reference['books'][0]
         title, query = book['title'], book['title'] + ' ' + book['author']
-    elif author or summary:
-        title = re.sub(r'^(?:el libro|la novela|la obra)\s+', '', (author or summary).group(1)).strip('«»“”" ')
+    elif author or summary or genre:
+        title = re.sub(r'^(?:el libro|la novela|la obra)\s+', '', (author or summary or genre).group(1)).strip('«»“”" ')
         query = title
     else:
         return None
-    if not (author or summary) or len(query) > 220:
+    if not (author or summary or genre) or len(query) > 220:
         return None
-    found = canonical_sources(search(query))
+    previous = [source for turn in sanitized_history(history) for source in turn['sources']
+                if reference['books'] and same_work(source, reference['books'][0])]
+    found = canonical_sources(previous if genre and previous else search(query))
     from .ai_catalog_fallback import _topic_catalogue_origin
     candidates = [source for source in found if _topic_catalogue_origin(source) and title_matches(title, source)
                   and (not reference['books'] or normalized(source['author']) == normalized(book['author']))]
@@ -452,6 +558,48 @@ def catalogue_lookup_answer(message, history, search):
     if len({normalized(source['author']) for source in candidates}) != 1:
         return None
     source = canonical_sources(candidates[:1])[0]
+    if genre:
+        # A synopsis is not a formal literary-genre classification. Describe
+        # its explicit subjects instead of upgrading a broad label into one.
+        from . import topic_reference
+        from .books_google import source_synopsis
+        from .literary_quality import factual_statements, required_fact_statements, validate_audit
+        from .literary_evidence import validate_evidence
+        synopsis = source_synopsis(source)
+        subjects = topic_reference.resolve(synopsis)['subjects']
+        proof, labels = '', []
+        for sentence in factual_statements(synopsis, strip_markers=False):
+            if not 8 <= len(sentence) <= 300 or sentence not in source['description']:
+                continue
+            matched = [key for key, pattern, _ in subjects if re.search(pattern, sentence)]
+            if min(2, len(matched)) > len(labels):
+                proof, labels = sentence, matched[:2]
+        if not proof or not labels:
+            return None
+        names = [topic_reference.label(key) for key in labels]
+        statement = ('**' + source['title'] + '**, de ' + source['author'] +
+                     ', trata sobre ' + ' y '.join(names) + '.')
+        text = statement + '\n\nSu descripción permite ubicar su temática; no confirma por sí sola un subgénero más preciso.'
+        draft = {'status': 'answer', 'basis': 'sources', 'text': text,
+                 'citations': [source['id']], 'needs_web': False,
+                 'books': [{'title': source['title'], 'author': source['author'], 'source_id': source['id']}]}
+        claims = [{'statement': item, 'verdict': 'supported', 'source_id': source['id'],
+                   'evidence': proof} for item in required_fact_statements(statement)]
+        note = text.split('\n\n', 1)[1]
+        claims.extend({'statement': item, 'verdict': 'unverified', 'source_id': 0, 'evidence': ''}
+                      for item in factual_statements(note))
+        audit = {'decision': 'approve', 'only_books': True, 'claims': claims,
+                 'coverage': [{'question_id': 1, 'status': 'uncertain'}], 'search_queries': [], 'issues': []}
+        plan = {'questions': [message], 'search_queries': [], 'needs_contents': False,
+                'needs_fresh_sources': False, 'spoilers_requested': False}
+        try:
+            validate_draft(draft, [source])
+            validate_evidence(draft, [source], message)
+            validate_audit(audit, plan, draft, [source], message, strict_facts=True)
+        except (ValueError, TypeError):
+            return None
+        return ChatResult(text, 'answered', True, [source], draft['books'], 'sources', 'author',
+                          {'catalogue_genre_lookup': True, 'partial_evidence': True, 'audit': audit})
     if author:
         draft = {'status': 'answer', 'basis': 'sources',
                  'text': f'**{source["title"]}** es una obra de **{source["author"]}**.',
@@ -519,7 +667,9 @@ def verified_book_list_answer(message, sources, *, history=None, topic_context=N
             or obvious_rejection(message) or requires_exact_text(message)):
         return None
     query = (topic_context or {}).get('query') or message
-    if not _simple_topic_request(message, query):
+    from .literary_research import publication_lookup_target, publication_matches
+    publication = publication_lookup_target(message)
+    if not _simple_topic_request(message, query) and not publication:
         return None
     from .ai_catalog_fallback import _topic_catalogue_origin
     from .books_google import topic_matches
@@ -529,10 +679,11 @@ def verified_book_list_answer(message, sources, *, history=None, topic_context=N
     constraints.update({key: value for key, value in recommendation_constraints(message).items() if value})
     books = [source for source in canonical_sources(sources, 32)
              if _topic_catalogue_origin(source) and topic_matches(source, query)
+             and publication_matches(source, publication)
              and constraints_match(source, constraints)]
     requested = requested_book_count(message)
     previous = ([book for turn in sanitized_history(history or []) for book in turn['books']]
-                if re.search(r'\b(?:otros?|otras?|mas)\b', request_text(message)) else [])
+                if re.search(r'\b(?:otros?|otras?|mas|ya lei)\b', request_text(message)) else [])
     chosen = recommendation_sources(books, min(5, requested or limit),
         different_authors=bool(re.search(r'\b(?:distintos?|diferentes?) autores?\b', request_text(message))),
         excluded=previous)

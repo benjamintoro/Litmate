@@ -132,7 +132,7 @@ class ProgressiveWikipediaTests(SimpleTestCase):
 
 
 @override_settings(CACHES={'default': {'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-                                     'LOCATION': 'progressive-events'}},
+                                     'LOCATION': 'progressive-events'}}, LITMATE_AI_LOCK_BACKEND='cache',
                    LITMATE_AI_USE_SEARXNG=True, LITMATE_SEARXNG_URL='http://127.0.0.1:8080')
 class ResearchOperationTraceTests(SimpleTestCase):
     def setUp(self):

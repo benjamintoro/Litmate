@@ -1,0 +1,881 @@
+[
+  {
+    "passed": true,
+    "question": "Dime la trama de El Se\u00f1or de los Anillos",
+    "answer": "Su historia se desarrolla en la Tercera Edad del Sol de la Tierra Media, un lugar ficticio poblado por hombres y otras razas antropomorfas, como los hobbits, los elfos o los enanos, as\u00ed como por muchas otras criaturas reales y fant\u00e1sticas. La novela narra el viaje del protagonista principal, Frodo Bols\u00f3n, hobbit de la Comarca, para destruir el Anillo \u00danico y la consiguiente guerra que provocar\u00e1 el enemigo para recuperarlo, ya que es la principal fuente de poder de su creador, el se\u00f1or oscuro Sauron.\n\nFuente: https://es.wikipedia.org/wiki/El_Se%C3%B1or_de_los_Anillos\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+    "status": "answered",
+    "not_in_legacy_catalog": null,
+    "sse_done": true,
+    "seconds": 0.8402,
+    "cards": [
+      {
+        "id": "1",
+        "title": "El Se\u00f1or de los Anillos",
+        "author": "J. R. R. Tolkien",
+        "synopsis": "",
+        "image_url": "",
+        "links": [
+          {
+            "label": "Amazon",
+            "url": "https://www.amazon.com/s?k=El+Se%C3%B1or+de+los+Anillos+J.+R.+R.+Tolkien&i=stripbooks"
+          },
+          {
+            "label": "Buscalibre",
+            "url": "https://www.buscalibre.cl/libros/search?q=El+Se%C3%B1or+de+los+Anillos+J.+R.+R.+Tolkien"
+          }
+        ]
+      }
+    ],
+    "diagnostics": {
+      "elapsed_ms": 817,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 0,
+      "verified_narrative_answer": true,
+      "partial_evidence": true,
+      "work_type": "fiction",
+      "progress_metrics": {
+        "elapsed_ms": 830.524,
+        "first_phase_emitted_ms": 45.618,
+        "model_calls_started": 0,
+        "stage_totals_ms": {
+          "conversation": 19.948,
+          "cache_lookup": 0.574,
+          "knowledge_lookup": 720.721,
+          "audit": 5.387,
+          "finalization": 13.739
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 9.179,
+            "elapsed_ms": 19.948,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 45.031,
+            "elapsed_ms": 0.574,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 91.291,
+            "elapsed_ms": 377.277,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 200.21,
+            "elapsed_ms": 43.398,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 295.276,
+            "elapsed_ms": 172.357,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 362.226,
+            "elapsed_ms": 69.012,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 537.729,
+            "elapsed_ms": 58.677,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 735.821,
+            "elapsed_ms": 3.888,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 779.641,
+            "elapsed_ms": 1.499,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 816.779,
+            "elapsed_ms": 13.739,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 45.618
+          },
+          {
+            "stage": "review",
+            "elapsed_ms": 735.799
+          }
+        ]
+      },
+      "stage_timings": [],
+      "provider": "verified-narrative-engine"
+    },
+    "reader_data_written": false,
+    "sources": [],
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": null
+      },
+      {
+        "stage": "retrieval",
+        "sources": [
+          {
+            "id": 1,
+            "title": "El Se\u00f1or de los Anillos",
+            "author": "J. R. R. Tolkien",
+            "description": "",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://es.wikipedia.org/wiki/El_Se%C3%B1or_de_los_Anillos",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "",
+            "work_id": "litmate:82570f33a9af6d7fd1ad92ef",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 2,
+            "title": "Elanor Gamyi",
+            "author": "Fuente web",
+            "description": "Elanor Gamyi es un personaje de la mitolog\u00eda literaria del escritor brit\u00e1nico J. R. R. Tolkien, que aparece en su novela El Se\u00f1or de los Anillos, as\u00ed como en alg\u00fan otro de sus escritos. Se trata de una hobbit de la Comarca, la mayor de los hijos de Samsagaz Gamyi y de su esposa Rosita Coto. Fue llamada \u00abLa Bella\u00bb por su hermosura y su cabello dorado.\u200b",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Elanor_Gamyi",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793140931.3181174",
+            "evidence_scope": "characters",
+            "work_id": "litmate:82570f33a9af6d7fd1ad92ef",
+            "work_title": "El Se\u00f1or de los Anillos",
+            "work_author": "J. R. R. Tolkien",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793745731.3181174",
+            "evidence_hash": "6d034fd87697fa23010165c2a85f74368ab616140d0fd7e5959b0d2c44f3f206",
+            "memory_source_id": "ab63254e8715a2887e67c24b43245b7406879e524042e3374d691f0ac75cc4bf",
+            "last_verified_at": "1793140931.3181174",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Elanor Gamyi",
+              "url": "https://es.wikipedia.org/wiki/Elanor_Gamyi",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "162134220"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "",
+            "character_facts": [
+              {
+                "name": "Elanor Gamyi",
+                "role": "es un personaje de la mitolog\u00eda literaria del escritor brit\u00e1nico J. R. R. Tolkien, que aparece en su novela El Se\u00f1or de los Anillos, as\u00ed como en alg\u00fan otro de sus escritos.",
+                "evidence": "Elanor Gamyi es un personaje de la mitolog\u00eda literaria del escritor brit\u00e1nico J. R. R. Tolkien, que aparece en su novela El Se\u00f1or de los Anillos, as\u00ed como en alg\u00fan otro de sus escritos.",
+                "aliases": []
+              }
+            ],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 3,
+            "title": "Samsagaz Gamyi",
+            "author": "Fuente web",
+            "description": "Samsagaz \"Sam\" Gamyi (llamado originalmente en ingl\u00e9s, Samwise Gamgee) es uno de los personajes principales de la novela El Se\u00f1or de los Anillos, del escritor brit\u00e1nico J. R. R. Tolkien. Es un hobbit de la Comarca, nacido en el a\u00f1o 1380 seg\u00fan el C\u00f3mputo de la Comarca, 2983 de la Tercera Edad, hijo de Hamfast Gamyi y Campanilla Buenchico. Jardinero de Frodo Bols\u00f3n, Sam acompa\u00f1a a Frodo hasta el Orodruin a destruir el Anillo \u00danico. Su nombre en oestron (la Lengua Com\u00fan, representada por el ingl\u00e9s en la novela) era Banaz\u00eer Galpsi, abreviado en Ban. Tolkien consider\u00f3 a Sam como al t\u00edpico hobbit, al igual que Bilbo. Muchos lo consideran como el \"alter ego\" del autor, dado que ambos eran bastante contrarios al progreso, amaban las comodidades, la pipa y la jardiner\u00eda. Sin embargo, el origen m\u00e1s probable de Sam es el de los tradicionales asistentes de los oficiales brit\u00e1nicos, personas generalmente extra\u00eddas de las capas sociales m\u00e1s humildes, que profesaban admiraci\u00f3n y devoci\u00f3n por sus superiores.",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Samsagaz_Gamyi",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793140931.3181174",
+            "evidence_scope": "characters",
+            "work_id": "litmate:82570f33a9af6d7fd1ad92ef",
+            "work_title": "El Se\u00f1or de los Anillos",
+            "work_author": "J. R. R. Tolkien",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793745731.3181174",
+            "evidence_hash": "b8a8bd02400e68528dcdfbe5ab59ed46e00032b779733192719a0de7eae0bf20",
+            "memory_source_id": "6d0c3ff9b8ad7ed8bb005ab656739c978084a099e6dba6b5e9e5304f427078f1",
+            "last_verified_at": "1793140931.3181174",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Samsagaz Gamyi",
+              "url": "https://es.wikipedia.org/wiki/Samsagaz_Gamyi",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "171654075"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "",
+            "character_facts": [
+              {
+                "name": "Samsagaz Gamyi",
+                "role": "es uno de los personajes principales de la novela El Se\u00f1or de los Anillos, del escritor brit\u00e1nico J. R. R. Tolkien.",
+                "evidence": "Samsagaz \"Sam\" Gamyi (llamado originalmente en ingl\u00e9s, Samwise Gamgee) es uno de los personajes principales de la novela El Se\u00f1or de los Anillos, del escritor brit\u00e1nico J. R. R. Tolkien.",
+                "aliases": [
+                  "Sam"
+                ]
+              }
+            ],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 4,
+            "title": "El Se\u00f1or de los Anillos",
+            "author": "Fuente web",
+            "description": "El Se\u00f1or de los Anillos (t\u00edtulo original en ingl\u00e9s: The Lord of the Rings) es una novela de fantas\u00eda \u00e9pica escrita por el fil\u00f3logo y escritor brit\u00e1nico J. R. R. Tolkien. Su historia se desarrolla en la Tercera Edad del Sol de la Tierra Media, un lugar ficticio poblado por hombres y otras razas antropomorfas, como los hobbits, los elfos o los enanos, as\u00ed como por muchas otras criaturas reales y fant\u00e1sticas. La novela narra el viaje del protagonista principal, Frodo Bols\u00f3n, hobbit de la Comarca, para destruir el Anillo \u00danico y la consiguiente guerra que provocar\u00e1 el enemigo para recuperarlo, ya que es la principal fuente de poder de su creador, el se\u00f1or oscuro Sauron. J. R. R. Tolkien plane\u00f3 El Se\u00f1or de los Anillos como una secuela de su anterior novela El hobbit, pero termin\u00f3 por convertirse en una historia de mucho m\u00e1s alcance y extensi\u00f3n que, escrita por etapas entre 1937 y 1949, se public\u00f3 por primera vez en el Reino Unido entre 1954 y 1955 en tres vol\u00famenes. Desde entonces ha sido reimpresa en numerosas ocasiones y traducida a muchos idiomas,\u200b convirti\u00e9ndose en una de las obras m\u00e1s populares de la literatura del siglo XX.\u200b Adem\u00e1s, ha sido adaptada en varias ocasiones a la radio\u2026",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/El_Se%C3%B1or_de_los_Anillos",
+            "locator": "",
+            "read_mode": "extracto de introducci\u00f3n",
+            "retrieved_at": "1793342666.2559876",
+            "evidence_scope": "summary",
+            "work_id": "litmate:82570f33a9af6d7fd1ad92ef",
+            "work_title": "El Se\u00f1or de los Anillos",
+            "work_author": "J. R. R. Tolkien",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793947466.2559876",
+            "evidence_hash": "1dc477e71ea01342596377cfce06cf93b93f757e4c76f6471e8b4b8d28d55fb0",
+            "memory_source_id": "a1fe6f6ece0756e5d01ddb0319d6d9c457c9503c695dbf713bc6c1fec1426e92",
+            "last_verified_at": "1793342666.2559876",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "permanent_index_allowed": false,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "El Se\u00f1or de los Anillos",
+              "url": "https://es.wikipedia.org/wiki/El_Se%C3%B1or_de_los_Anillos",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "176013982"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "El Se\u00f1or de los Anillos (t\u00edtulo original en ingl\u00e9s: The Lord of the Rings) es una novela de fantas\u00eda \u00e9pica escrita por el fil\u00f3logo y escritor brit\u00e1nico J. R. R. Tolkien. Su historia se desarrolla en la Tercera Edad del Sol de la Tierra Media, un lugar ficticio poblado por hombres y otras razas antropomorfas, como los hobbits, los elfos o los enanos, as\u00ed como por muchas otras criaturas reales y fant\u00e1sticas. La novela narra el viaje del protagonista principal, Frodo Bols\u00f3n, hobbit de la Comarca, para destruir el Anillo \u00danico y la consiguiente guerra que provocar\u00e1 el enemigo para recuperarlo, ya que es la principal fuente de poder de su creador, el se\u00f1or oscuro Sauron. J. R. R. Tolkien plane\u00f3 El Se\u00f1or de los Anillos como una secuela de su anterior novela El hobbit, pero termin\u00f3 por convertirse en una historia de mucho m\u00e1s alcance y extensi\u00f3n que, escrita por etapas entre 1937 y 1949, se public\u00f3 por primera vez en el Reino Unido entre 1954 y 1955 en tres vol\u00famenes. Desde entonces ha sido reimpresa en numerosas ocasiones y traducida a muchos idiomas,\u200b convirti\u00e9ndose en una de las obras m\u00e1s populares de la literatura del siglo XX.\u200b Adem\u00e1s, ha sido adaptada en varias ocasiones a la radio\u2026",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 5,
+            "title": "El Se\u00f1or de los Anillos",
+            "author": "Fuente web",
+            "description": "Personajes (descripciones del art\u00edculo): Frodo Bols\u00f3n (Frodo): Protagonista de la novela, hijo de Drogo Bols\u00f3n y Pr\u00edmula Brandigamo. Sauron: Sauron es un ainu, uno de los maiar , contado entre el s\u00e9quito de Aul\u00eb , el herrero. Gimli: Viv\u00eda en Erebor y acompa\u00f1\u00f3 a su padre hasta Rivendel para acabar as\u00ed formando parte de la Compa\u00f1\u00eda del Anillo. Bilbo Bols\u00f3n (Bilbo): Hijo de Bungo Bols\u00f3n y Belladonna Tuk , es el protagonista de la novela El hobbit . Aragorn: En uno de los numerosos viajes que realiz\u00f3 como montaraz , conoci\u00f3 a Gandalf y se hizo amigo suyo, ayud\u00e1ndole en varias ocasiones. Meriadoc Brandigamo: Primo y amigo de Frodo. Peregrin Tuk: Primo y amigo de Frodo. Samsagaz Gamyi: Jardinero de Bols\u00f3n Cerrado , fiel amigo y protector de su amo Frodo. Boromir: Tuvo un sue\u00f1o prof\u00e9tico sobre el Anillo \u00danico que le llev\u00f3 hasta Rivendel y a participar as\u00ed en el Concilio de Elrond . Gandalf: Llamado Ol\u00f3rin en Aman , fue enviado a la Tierra Media en la Tercera Edad del Sol junto con otros cuatro maiar, formando as\u00ed la Orden de los Istari , cuyo objetivo era combatir a Sauron y proteger de \u00e9l a los habitantes de la Tierra Media. L\u00e9golas: Acab\u00f3 participando as\u00ed en el Concilio de Elrond y formando parte de la Compa\u00f1\u00eda del Anillo. Saruman: Sin embargo, se desvi\u00f3 de su misi\u00f3n y trat\u00f3 de encontrar el Anillo \u00danico para \u00e9l, ali\u00e1ndose con Sauron al usar la palant\u00edr de Orthanc .",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/El_Se%C3%B1or_de_los_Anillos",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793140930.6899533",
+            "evidence_scope": "characters",
+            "work_id": "litmate:82570f33a9af6d7fd1ad92ef",
+            "work_title": "El Se\u00f1or de los Anillos",
+            "work_author": "J. R. R. Tolkien",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793745730.6899533",
+            "evidence_hash": "2b3088ed34ee0c0587106c7725095f7f852142a0e6331d5ffc7789d7051c3f20",
+            "memory_source_id": "6f8640a981adcf54c2ec31639c58080b696543593ff23c49b3d2a61b17f01940",
+            "last_verified_at": "1793140930.6899533",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "El Se\u00f1or de los Anillos",
+              "url": "https://es.wikipedia.org/wiki/El_Se%C3%B1or_de_los_Anillos",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "176013982"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "",
+            "character_facts": [
+              {
+                "name": "Frodo Bols\u00f3n",
+                "role": "Protagonista de la novela, hijo de Drogo Bols\u00f3n y Pr\u00edmula Brandigamo.",
+                "evidence": "Frodo Bols\u00f3n (Frodo): Protagonista de la novela, hijo de Drogo Bols\u00f3n y Pr\u00edmula Brandigamo.",
+                "aliases": [
+                  "Frodo"
+                ]
+              },
+              {
+                "name": "Sauron",
+                "role": "Sauron es un ainu, uno de los maiar , contado entre el s\u00e9quito de Aul\u00eb , el herrero.",
+                "evidence": "Sauron: Sauron es un ainu, uno de los maiar , contado entre el s\u00e9quito de Aul\u00eb , el herrero.",
+                "aliases": []
+              },
+              {
+                "name": "Gimli",
+                "role": "Viv\u00eda en Erebor y acompa\u00f1\u00f3 a su padre hasta Rivendel para acabar as\u00ed formando parte de la Compa\u00f1\u00eda del Anillo.",
+                "evidence": "Gimli: Viv\u00eda en Erebor y acompa\u00f1\u00f3 a su padre hasta Rivendel para acabar as\u00ed formando parte de la Compa\u00f1\u00eda del Anillo.",
+                "aliases": []
+              },
+              {
+                "name": "Bilbo Bols\u00f3n",
+                "role": "Hijo de Bungo Bols\u00f3n y Belladonna Tuk , es el protagonista de la novela El hobbit .",
+                "evidence": "Bilbo Bols\u00f3n (Bilbo): Hijo de Bungo Bols\u00f3n y Belladonna Tuk , es el protagonista de la novela El hobbit .",
+                "aliases": [
+                  "Bilbo"
+                ]
+              },
+              {
+                "name": "Aragorn",
+                "role": "En uno de los numerosos viajes que realiz\u00f3 como montaraz , conoci\u00f3 a Gandalf y se hizo amigo suyo, ayud\u00e1ndole en varias ocasiones.",
+                "evidence": "Aragorn: En uno de los numerosos viajes que realiz\u00f3 como montaraz , conoci\u00f3 a Gandalf y se hizo amigo suyo, ayud\u00e1ndole en varias ocasiones.",
+                "aliases": []
+              },
+              {
+                "name": "Meriadoc Brandigamo",
+                "role": "Primo y amigo de Frodo.",
+                "evidence": "Meriadoc Brandigamo: Primo y amigo de Frodo.",
+                "aliases": []
+              },
+              {
+                "name": "Peregrin Tuk",
+                "role": "Primo y amigo de Frodo.",
+                "evidence": "Peregrin Tuk: Primo y amigo de Frodo.",
+                "aliases": []
+              },
+              {
+                "name": "Samsagaz Gamyi",
+                "role": "Jardinero de Bols\u00f3n Cerrado , fiel amigo y protector de su amo Frodo.",
+                "evidence": "Samsagaz Gamyi: Jardinero de Bols\u00f3n Cerrado , fiel amigo y protector de su amo Frodo.",
+                "aliases": []
+              },
+              {
+                "name": "Boromir",
+                "role": "Tuvo un sue\u00f1o prof\u00e9tico sobre el Anillo \u00danico que le llev\u00f3 hasta Rivendel y a participar as\u00ed en el Concilio de Elrond .",
+                "evidence": "Boromir: Tuvo un sue\u00f1o prof\u00e9tico sobre el Anillo \u00danico que le llev\u00f3 hasta Rivendel y a participar as\u00ed en el Concilio de Elrond .",
+                "aliases": []
+              },
+              {
+                "name": "Gandalf",
+                "role": "Llamado Ol\u00f3rin en Aman , fue enviado a la Tierra Media en la Tercera Edad del Sol junto con otros cuatro maiar, formando as\u00ed la Orden de los Istari , cuyo objetivo era combatir a Sauron y proteger de \u00e9l a los habitantes de la Tierra Media.",
+                "evidence": "Gandalf: Llamado Ol\u00f3rin en Aman , fue enviado a la Tierra Media en la Tercera Edad del Sol junto con otros cuatro maiar, formando as\u00ed la Orden de los Istari , cuyo objetivo era combatir a Sauron y proteger de \u00e9l a los habitantes de la Tierra Media.",
+                "aliases": []
+              },
+              {
+                "name": "L\u00e9golas",
+                "role": "Acab\u00f3 participando as\u00ed en el Concilio de Elrond y formando parte de la Compa\u00f1\u00eda del Anillo.",
+                "evidence": "L\u00e9golas: Acab\u00f3 participando as\u00ed en el Concilio de Elrond y formando parte de la Compa\u00f1\u00eda del Anillo.",
+                "aliases": []
+              },
+              {
+                "name": "Saruman",
+                "role": "Sin embargo, se desvi\u00f3 de su misi\u00f3n y trat\u00f3 de encontrar el Anillo \u00danico para \u00e9l, ali\u00e1ndose con Sauron al usar la palant\u00edr de Orthanc .",
+                "evidence": "Saruman: Sin embargo, se desvi\u00f3 de su misi\u00f3n y trat\u00f3 de encontrar el Anillo \u00danico para \u00e9l, ali\u00e1ndose con Sauron al usar la palant\u00edr de Orthanc .",
+                "aliases": []
+              }
+            ],
+            "isbns": [],
+            "categories": []
+          }
+        ]
+      },
+      {
+        "request": {
+          "task": "summary",
+          "title": "El Se\u00f1or de los Anillos",
+          "targets": [],
+          "author_hint": "",
+          "format": "",
+          "ambiguous": false
+        },
+        "diagnostics": {
+          "verified_narrative_answer": true,
+          "audit": {
+            "decision": "approve",
+            "only_books": true,
+            "claims": [
+              {
+                "statement": "Su historia se desarrolla en la Tercera Edad del Sol de la Tierra Media, un lugar ficticio poblado por hombres y otras razas antropomorfas, como los hobbits, los elfos o los enanos, as\u00ed como por muchas otras criaturas reales y fant\u00e1sticas.",
+                "verdict": "supported",
+                "source_id": 4,
+                "evidence": "Su historia se desarrolla en la Tercera Edad del Sol de la Tierra Media, un lugar ficticio poblado por hombres y otras razas antropomorfas, como los hobbits, los elfos o los enanos, as\u00ed como por muchas otras criaturas reales y fant\u00e1sticas."
+              },
+              {
+                "statement": "La novela narra el viaje del protagonista principal, Frodo Bols\u00f3n, hobbit de la Comarca, para destruir el Anillo \u00danico y la consiguiente guerra que provocar\u00e1 el enemigo para recuperarlo, ya que es la principal fuente de poder de su creador, el se\u00f1or oscuro Sauron.",
+                "verdict": "supported",
+                "source_id": 4,
+                "evidence": "La novela narra el viaje del protagonista principal, Frodo Bols\u00f3n, hobbit de la Comarca, para destruir el Anillo \u00danico y la consiguiente guerra que provocar\u00e1 el enemigo para recuperarlo, ya que es la principal fuente de poder de su creador, el se\u00f1or oscuro Sauron."
+              }
+            ],
+            "coverage": [
+              {
+                "question_id": 1,
+                "status": "answered"
+              }
+            ],
+            "issues": [],
+            "search_queries": []
+          },
+          "work_type": "fiction",
+          "model_calls": 0,
+          "narrative_coverage": "premise",
+          "partial_evidence": true,
+          "progress_metrics": {
+            "stage_timings": [
+              {
+                "stage": "conversation",
+                "started_ms": 9.179,
+                "elapsed_ms": 19.948,
+                "status": "ok"
+              },
+              {
+                "stage": "cache_lookup",
+                "started_ms": 45.031,
+                "elapsed_ms": 0.574,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 91.291,
+                "elapsed_ms": 377.277,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 200.21,
+                "elapsed_ms": 43.398,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 295.276,
+                "elapsed_ms": 172.357,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 362.226,
+                "elapsed_ms": 69.012,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 537.729,
+                "elapsed_ms": 58.677,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 735.821,
+                "elapsed_ms": 3.888,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 779.641,
+                "elapsed_ms": 1.499,
+                "status": "ok"
+              }
+            ],
+            "stage_totals_ms": {
+              "conversation": 19.948,
+              "cache_lookup": 0.574,
+              "knowledge_lookup": 720.721,
+              "audit": 5.387
+            },
+            "model_calls_started": 0,
+            "progress_events": [
+              {
+                "stage": "search",
+                "elapsed_ms": 45.618
+              },
+              {
+                "stage": "review",
+                "elapsed_ms": 735.799
+              }
+            ],
+            "elapsed_ms": 800.549,
+            "first_phase_emitted_ms": 45.618
+          },
+          "language_presentation": {
+            "target": "es",
+            "original_text": "Su historia se desarrolla en la Tercera Edad del Sol de la Tierra Media, un lugar ficticio poblado por hombres y otras razas antropomorfas, como los hobbits, los elfos o los enanos, as\u00ed como por muchas otras criaturas reales y fant\u00e1sticas. La novela narra el viaje del protagonista principal, Frodo Bols\u00f3n, hobbit de la Comarca, para destruir el Anillo \u00danico y la consiguiente guerra que provocar\u00e1 el enemigo para recuperarlo, ya que es la principal fuente de poder de su creador, el se\u00f1or oscuro Sauron.\n\nFuente: https://es.wikipedia.org/wiki/El_Se%C3%B1or_de_los_Anillos\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+            "translated_fields": 0,
+            "cache_hits": 0,
+            "untranslated_fields": [],
+            "audit_applies_to_original": true,
+            "cards": [
+              {
+                "id": "1",
+                "title": "El Se\u00f1or de los Anillos",
+                "author": "J. R. R. Tolkien",
+                "synopsis": "",
+                "image_url": "",
+                "links": [
+                  {
+                    "label": "Amazon",
+                    "url": "https://www.amazon.com/s?k=El+Se%C3%B1or+de+los+Anillos+J.+R.+R.+Tolkien&i=stripbooks"
+                  },
+                  {
+                    "label": "Buscalibre",
+                    "url": "https://www.buscalibre.cl/libros/search?q=El+Se%C3%B1or+de+los+Anillos+J.+R.+R.+Tolkien"
+                  }
+                ]
+              }
+            ]
+          },
+          "stage_timings": [],
+          "elapsed_ms": 801,
+          "chat_budget_seconds": 36.0
+        },
+        "sources": [
+          {
+            "id": 1,
+            "title": "El Se\u00f1or de los Anillos",
+            "author": "J. R. R. Tolkien",
+            "description": "",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://es.wikipedia.org/wiki/El_Se%C3%B1or_de_los_Anillos",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "",
+            "work_id": "litmate:82570f33a9af6d7fd1ad92ef",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 2,
+            "title": "Elanor Gamyi",
+            "author": "Fuente web",
+            "description": "Elanor Gamyi es un personaje de la mitolog\u00eda literaria del escritor brit\u00e1nico J. R. R. Tolkien, que aparece en su novela El Se\u00f1or de los Anillos, as\u00ed como en alg\u00fan otro de sus escritos. Se trata de una hobbit de la Comarca, la mayor de los hijos de Samsagaz Gamyi y de su esposa Rosita Coto. Fue llamada \u00abLa Bella\u00bb por su hermosura y su cabello dorado.\u200b",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Elanor_Gamyi",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793140931.3181174",
+            "evidence_scope": "characters",
+            "work_id": "litmate:82570f33a9af6d7fd1ad92ef",
+            "work_title": "El Se\u00f1or de los Anillos",
+            "work_author": "J. R. R. Tolkien",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793745731.3181174",
+            "evidence_hash": "6d034fd87697fa23010165c2a85f74368ab616140d0fd7e5959b0d2c44f3f206",
+            "memory_source_id": "ab63254e8715a2887e67c24b43245b7406879e524042e3374d691f0ac75cc4bf",
+            "last_verified_at": "1793140931.3181174",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Elanor Gamyi",
+              "url": "https://es.wikipedia.org/wiki/Elanor_Gamyi",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "162134220"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "",
+            "character_facts": [
+              {
+                "name": "Elanor Gamyi",
+                "role": "es un personaje de la mitolog\u00eda literaria del escritor brit\u00e1nico J. R. R. Tolkien, que aparece en su novela El Se\u00f1or de los Anillos, as\u00ed como en alg\u00fan otro de sus escritos.",
+                "evidence": "Elanor Gamyi es un personaje de la mitolog\u00eda literaria del escritor brit\u00e1nico J. R. R. Tolkien, que aparece en su novela El Se\u00f1or de los Anillos, as\u00ed como en alg\u00fan otro de sus escritos.",
+                "aliases": []
+              }
+            ],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 3,
+            "title": "Samsagaz Gamyi",
+            "author": "Fuente web",
+            "description": "Samsagaz \"Sam\" Gamyi (llamado originalmente en ingl\u00e9s, Samwise Gamgee) es uno de los personajes principales de la novela El Se\u00f1or de los Anillos, del escritor brit\u00e1nico J. R. R. Tolkien. Es un hobbit de la Comarca, nacido en el a\u00f1o 1380 seg\u00fan el C\u00f3mputo de la Comarca, 2983 de la Tercera Edad, hijo de Hamfast Gamyi y Campanilla Buenchico. Jardinero de Frodo Bols\u00f3n, Sam acompa\u00f1a a Frodo hasta el Orodruin a destruir el Anillo \u00danico. Su nombre en oestron (la Lengua Com\u00fan, representada por el ingl\u00e9s en la novela) era Banaz\u00eer Galpsi, abreviado en Ban. Tolkien consider\u00f3 a Sam como al t\u00edpico hobbit, al igual que Bilbo. Muchos lo consideran como el \"alter ego\" del autor, dado que ambos eran bastante contrarios al progreso, amaban las comodidades, la pipa y la jardiner\u00eda. Sin embargo, el origen m\u00e1s probable de Sam es el de los tradicionales asistentes de los oficiales brit\u00e1nicos, personas generalmente extra\u00eddas de las capas sociales m\u00e1s humildes, que profesaban admiraci\u00f3n y devoci\u00f3n por sus superiores.",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Samsagaz_Gamyi",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793140931.3181174",
+            "evidence_scope": "characters",
+            "work_id": "litmate:82570f33a9af6d7fd1ad92ef",
+            "work_title": "El Se\u00f1or de los Anillos",
+            "work_author": "J. R. R. Tolkien",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793745731.3181174",
+            "evidence_hash": "b8a8bd02400e68528dcdfbe5ab59ed46e00032b779733192719a0de7eae0bf20",
+            "memory_source_id": "6d0c3ff9b8ad7ed8bb005ab656739c978084a099e6dba6b5e9e5304f427078f1",
+            "last_verified_at": "1793140931.3181174",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Samsagaz Gamyi",
+              "url": "https://es.wikipedia.org/wiki/Samsagaz_Gamyi",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "171654075"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "",
+            "character_facts": [
+              {
+                "name": "Samsagaz Gamyi",
+                "role": "es uno de los personajes principales de la novela El Se\u00f1or de los Anillos, del escritor brit\u00e1nico J. R. R. Tolkien.",
+                "evidence": "Samsagaz \"Sam\" Gamyi (llamado originalmente en ingl\u00e9s, Samwise Gamgee) es uno de los personajes principales de la novela El Se\u00f1or de los Anillos, del escritor brit\u00e1nico J. R. R. Tolkien.",
+                "aliases": [
+                  "Sam"
+                ]
+              }
+            ],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 4,
+            "title": "El Se\u00f1or de los Anillos",
+            "author": "Fuente web",
+            "description": "El Se\u00f1or de los Anillos (t\u00edtulo original en ingl\u00e9s: The Lord of the Rings) es una novela de fantas\u00eda \u00e9pica escrita por el fil\u00f3logo y escritor brit\u00e1nico J. R. R. Tolkien. Su historia se desarrolla en la Tercera Edad del Sol de la Tierra Media, un lugar ficticio poblado por hombres y otras razas antropomorfas, como los hobbits, los elfos o los enanos, as\u00ed como por muchas otras criaturas reales y fant\u00e1sticas. La novela narra el viaje del protagonista principal, Frodo Bols\u00f3n, hobbit de la Comarca, para destruir el Anillo \u00danico y la consiguiente guerra que provocar\u00e1 el enemigo para recuperarlo, ya que es la principal fuente de poder de su creador, el se\u00f1or oscuro Sauron. J. R. R. Tolkien plane\u00f3 El Se\u00f1or de los Anillos como una secuela de su anterior novela El hobbit, pero termin\u00f3 por convertirse en una historia de mucho m\u00e1s alcance y extensi\u00f3n que, escrita por etapas entre 1937 y 1949, se public\u00f3 por primera vez en el Reino Unido entre 1954 y 1955 en tres vol\u00famenes. Desde entonces ha sido reimpresa en numerosas ocasiones y traducida a muchos idiomas,\u200b convirti\u00e9ndose en una de las obras m\u00e1s populares de la literatura del siglo XX.\u200b Adem\u00e1s, ha sido adaptada en varias ocasiones a la radio\u2026",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/El_Se%C3%B1or_de_los_Anillos",
+            "locator": "",
+            "read_mode": "extracto de introducci\u00f3n",
+            "retrieved_at": "1793342666.2559876",
+            "evidence_scope": "summary",
+            "work_id": "litmate:82570f33a9af6d7fd1ad92ef",
+            "work_title": "El Se\u00f1or de los Anillos",
+            "work_author": "J. R. R. Tolkien",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793947466.2559876",
+            "evidence_hash": "1dc477e71ea01342596377cfce06cf93b93f757e4c76f6471e8b4b8d28d55fb0",
+            "memory_source_id": "a1fe6f6ece0756e5d01ddb0319d6d9c457c9503c695dbf713bc6c1fec1426e92",
+            "last_verified_at": "1793342666.2559876",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "permanent_index_allowed": false,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "El Se\u00f1or de los Anillos",
+              "url": "https://es.wikipedia.org/wiki/El_Se%C3%B1or_de_los_Anillos",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "176013982"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "El Se\u00f1or de los Anillos (t\u00edtulo original en ingl\u00e9s: The Lord of the Rings) es una novela de fantas\u00eda \u00e9pica escrita por el fil\u00f3logo y escritor brit\u00e1nico J. R. R. Tolkien. Su historia se desarrolla en la Tercera Edad del Sol de la Tierra Media, un lugar ficticio poblado por hombres y otras razas antropomorfas, como los hobbits, los elfos o los enanos, as\u00ed como por muchas otras criaturas reales y fant\u00e1sticas. La novela narra el viaje del protagonista principal, Frodo Bols\u00f3n, hobbit de la Comarca, para destruir el Anillo \u00danico y la consiguiente guerra que provocar\u00e1 el enemigo para recuperarlo, ya que es la principal fuente de poder de su creador, el se\u00f1or oscuro Sauron. J. R. R. Tolkien plane\u00f3 El Se\u00f1or de los Anillos como una secuela de su anterior novela El hobbit, pero termin\u00f3 por convertirse en una historia de mucho m\u00e1s alcance y extensi\u00f3n que, escrita por etapas entre 1937 y 1949, se public\u00f3 por primera vez en el Reino Unido entre 1954 y 1955 en tres vol\u00famenes. Desde entonces ha sido reimpresa en numerosas ocasiones y traducida a muchos idiomas,\u200b convirti\u00e9ndose en una de las obras m\u00e1s populares de la literatura del siglo XX.\u200b Adem\u00e1s, ha sido adaptada en varias ocasiones a la radio\u2026",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 5,
+            "title": "El Se\u00f1or de los Anillos",
+            "author": "Fuente web",
+            "description": "Personajes (descripciones del art\u00edculo): Frodo Bols\u00f3n (Frodo): Protagonista de la novela, hijo de Drogo Bols\u00f3n y Pr\u00edmula Brandigamo. Sauron: Sauron es un ainu, uno de los maiar , contado entre el s\u00e9quito de Aul\u00eb , el herrero. Gimli: Viv\u00eda en Erebor y acompa\u00f1\u00f3 a su padre hasta Rivendel para acabar as\u00ed formando parte de la Compa\u00f1\u00eda del Anillo. Bilbo Bols\u00f3n (Bilbo): Hijo de Bungo Bols\u00f3n y Belladonna Tuk , es el protagonista de la novela El hobbit . Aragorn: En uno de los numerosos viajes que realiz\u00f3 como montaraz , conoci\u00f3 a Gandalf y se hizo amigo suyo, ayud\u00e1ndole en varias ocasiones. Meriadoc Brandigamo: Primo y amigo de Frodo. Peregrin Tuk: Primo y amigo de Frodo. Samsagaz Gamyi: Jardinero de Bols\u00f3n Cerrado , fiel amigo y protector de su amo Frodo. Boromir: Tuvo un sue\u00f1o prof\u00e9tico sobre el Anillo \u00danico que le llev\u00f3 hasta Rivendel y a participar as\u00ed en el Concilio de Elrond . Gandalf: Llamado Ol\u00f3rin en Aman , fue enviado a la Tierra Media en la Tercera Edad del Sol junto con otros cuatro maiar, formando as\u00ed la Orden de los Istari , cuyo objetivo era combatir a Sauron y proteger de \u00e9l a los habitantes de la Tierra Media. L\u00e9golas: Acab\u00f3 participando as\u00ed en el Concilio de Elrond y formando parte de la Compa\u00f1\u00eda del Anillo. Saruman: Sin embargo, se desvi\u00f3 de su misi\u00f3n y trat\u00f3 de encontrar el Anillo \u00danico para \u00e9l, ali\u00e1ndose con Sauron al usar la palant\u00edr de Orthanc .",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/El_Se%C3%B1or_de_los_Anillos",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793140930.6899533",
+            "evidence_scope": "characters",
+            "work_id": "litmate:82570f33a9af6d7fd1ad92ef",
+            "work_title": "El Se\u00f1or de los Anillos",
+            "work_author": "J. R. R. Tolkien",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793745730.6899533",
+            "evidence_hash": "2b3088ed34ee0c0587106c7725095f7f852142a0e6331d5ffc7789d7051c3f20",
+            "memory_source_id": "6f8640a981adcf54c2ec31639c58080b696543593ff23c49b3d2a61b17f01940",
+            "last_verified_at": "1793140930.6899533",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "El Se\u00f1or de los Anillos",
+              "url": "https://es.wikipedia.org/wiki/El_Se%C3%B1or_de_los_Anillos",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "176013982"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "",
+            "character_facts": [
+              {
+                "name": "Frodo Bols\u00f3n",
+                "role": "Protagonista de la novela, hijo de Drogo Bols\u00f3n y Pr\u00edmula Brandigamo.",
+                "evidence": "Frodo Bols\u00f3n (Frodo): Protagonista de la novela, hijo de Drogo Bols\u00f3n y Pr\u00edmula Brandigamo.",
+                "aliases": [
+                  "Frodo"
+                ]
+              },
+              {
+                "name": "Sauron",
+                "role": "Sauron es un ainu, uno de los maiar , contado entre el s\u00e9quito de Aul\u00eb , el herrero.",
+                "evidence": "Sauron: Sauron es un ainu, uno de los maiar , contado entre el s\u00e9quito de Aul\u00eb , el herrero.",
+                "aliases": []
+              },
+              {
+                "name": "Gimli",
+                "role": "Viv\u00eda en Erebor y acompa\u00f1\u00f3 a su padre hasta Rivendel para acabar as\u00ed formando parte de la Compa\u00f1\u00eda del Anillo.",
+                "evidence": "Gimli: Viv\u00eda en Erebor y acompa\u00f1\u00f3 a su padre hasta Rivendel para acabar as\u00ed formando parte de la Compa\u00f1\u00eda del Anillo.",
+                "aliases": []
+              },
+              {
+                "name": "Bilbo Bols\u00f3n",
+                "role": "Hijo de Bungo Bols\u00f3n y Belladonna Tuk , es el protagonista de la novela El hobbit .",
+                "evidence": "Bilbo Bols\u00f3n (Bilbo): Hijo de Bungo Bols\u00f3n y Belladonna Tuk , es el protagonista de la novela El hobbit .",
+                "aliases": [
+                  "Bilbo"
+                ]
+              },
+              {
+                "name": "Aragorn",
+                "role": "En uno de los numerosos viajes que realiz\u00f3 como montaraz , conoci\u00f3 a Gandalf y se hizo amigo suyo, ayud\u00e1ndole en varias ocasiones.",
+                "evidence": "Aragorn: En uno de los numerosos viajes que realiz\u00f3 como montaraz , conoci\u00f3 a Gandalf y se hizo amigo suyo, ayud\u00e1ndole en varias ocasiones.",
+                "aliases": []
+              },
+              {
+                "name": "Meriadoc Brandigamo",
+                "role": "Primo y amigo de Frodo.",
+                "evidence": "Meriadoc Brandigamo: Primo y amigo de Frodo.",
+                "aliases": []
+              },
+              {
+                "name": "Peregrin Tuk",
+                "role": "Primo y amigo de Frodo.",
+                "evidence": "Peregrin Tuk: Primo y amigo de Frodo.",
+                "aliases": []
+              },
+              {
+                "name": "Samsagaz Gamyi",
+                "role": "Jardinero de Bols\u00f3n Cerrado , fiel amigo y protector de su amo Frodo.",
+                "evidence": "Samsagaz Gamyi: Jardinero de Bols\u00f3n Cerrado , fiel amigo y protector de su amo Frodo.",
+                "aliases": []
+              },
+              {
+                "name": "Boromir",
+                "role": "Tuvo un sue\u00f1o prof\u00e9tico sobre el Anillo \u00danico que le llev\u00f3 hasta Rivendel y a participar as\u00ed en el Concilio de Elrond .",
+                "evidence": "Boromir: Tuvo un sue\u00f1o prof\u00e9tico sobre el Anillo \u00danico que le llev\u00f3 hasta Rivendel y a participar as\u00ed en el Concilio de Elrond .",
+                "aliases": []
+              },
+              {
+                "name": "Gandalf",
+                "role": "Llamado Ol\u00f3rin en Aman , fue enviado a la Tierra Media en la Tercera Edad del Sol junto con otros cuatro maiar, formando as\u00ed la Orden de los Istari , cuyo objetivo era combatir a Sauron y proteger de \u00e9l a los habitantes de la Tierra Media.",
+                "evidence": "Gandalf: Llamado Ol\u00f3rin en Aman , fue enviado a la Tierra Media en la Tercera Edad del Sol junto con otros cuatro maiar, formando as\u00ed la Orden de los Istari , cuyo objetivo era combatir a Sauron y proteger de \u00e9l a los habitantes de la Tierra Media.",
+                "aliases": []
+              },
+              {
+                "name": "L\u00e9golas",
+                "role": "Acab\u00f3 participando as\u00ed en el Concilio de Elrond y formando parte de la Compa\u00f1\u00eda del Anillo.",
+                "evidence": "L\u00e9golas: Acab\u00f3 participando as\u00ed en el Concilio de Elrond y formando parte de la Compa\u00f1\u00eda del Anillo.",
+                "aliases": []
+              },
+              {
+                "name": "Saruman",
+                "role": "Sin embargo, se desvi\u00f3 de su misi\u00f3n y trat\u00f3 de encontrar el Anillo \u00danico para \u00e9l, ali\u00e1ndose con Sauron al usar la palant\u00edr de Orthanc .",
+                "evidence": "Saruman: Sin embargo, se desvi\u00f3 de su misi\u00f3n y trat\u00f3 de encontrar el Anillo \u00danico para \u00e9l, ali\u00e1ndose con Sauron al usar la palant\u00edr de Orthanc .",
+                "aliases": []
+              }
+            ],
+            "isbns": [],
+            "categories": []
+          }
+        ]
+      }
+    ],
+    "content_manually_reviewed": false,
+    "mysql_row_counts": {
+      "auth_group": 0,
+      "auth_group_permissions": 0,
+      "auth_permission": 152,
+      "auth_user": 179,
+      "auth_user_groups": 0,
+      "auth_user_user_permissions": 0,
+      "core_asistenteia": 1,
+      "core_autor": 31,
+      "core_clickconversion": 185,
+      "core_conversacionia": 50,
+      "core_editorial": 34,
+      "core_elementolistalectura": 2,
+      "core_estadolectura": 451,
+      "core_eventoanalitica": 384,
+      "core_genero": 12,
+      "core_historialchatbot": 5,
+      "core_historialpreciolibro": 223,
+      "core_kbname": 14166,
+      "core_kbprojection": 8,
+      "core_kbrecord": 13518,
+      "core_kbrelation": 2598,
+      "core_kbversion": 13518,
+      "core_libro": 55,
+      "core_libro_generos": 54,
+      "core_librofavorito": 231,
+      "core_listalectura": 2,
+      "core_mensajecontacto": 3,
+      "core_mensajeia": 190,
+      "core_perfilusuario": 158,
+      "core_preciolibrotienda": 117,
+      "core_preguntafrecuente": 0,
+      "core_recomendacion": 0,
+      "core_recomendacionialog": 0,
+      "core_resena": 116,
+      "django_admin_log": 0,
+      "django_content_type": 38,
+      "django_migrations": 27,
+      "django_session": 88,
+      "suscripciones_historialpago": 42,
+      "suscripciones_plansuscripcion": 3,
+      "suscripciones_suscripcionusuario": 157
+    },
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  }
+]

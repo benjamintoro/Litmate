@@ -9,7 +9,8 @@ from .ai_narrative_answers import request_for, bound_sources, retrieve_sources
 
 
 @override_settings(CACHES={'default': {'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'}},
-                   LITMATE_AI_USE_SEARXNG=True, LITMATE_SEARXNG_URL='http://127.0.0.1:8080')
+                   LITMATE_AI_USE_SEARXNG=True, LITMATE_SEARXNG_URL='http://127.0.0.1:8080',
+                   LITMATE_AI_LOCK_BACKEND='cache')
 class SearchRecoveryTests(SimpleTestCase):
     def setUp(self):
         cache.clear()

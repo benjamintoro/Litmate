@@ -1,0 +1,482 @@
+{
+  "stage": "authors",
+  "before": {
+    "free_disk_bytes": 103238336512,
+    "process": {
+      "rss_mb": 70.883,
+      "peak_rss_mb": 109.035
+    },
+    "mysql_estimates": [
+      {
+        "table": "core_kbname",
+        "data": 4734976,
+        "index": 5308416
+      },
+      {
+        "table": "core_kbprojection",
+        "data": 16384,
+        "index": 16384
+      },
+      {
+        "table": "core_kbrecord",
+        "data": 23740416,
+        "index": 2637824
+      },
+      {
+        "table": "core_kbrelation",
+        "data": 458752,
+        "index": 458752
+      },
+      {
+        "table": "core_kbversion",
+        "data": 20594688,
+        "index": 2670592
+      }
+    ],
+    "memory_db_bytes": 61444096
+  },
+  "memory_before": {
+    "works_catalogued": 13266,
+    "normalized_title_author_pairs": 13266,
+    "authors": 5786,
+    "current_sources": 13437,
+    "works_with_current_sources": 13266,
+    "works_with_admitted_descriptions": 18,
+    "works_with_narrative_facts": 13,
+    "works_with_characters": 10,
+    "character_entities": 104,
+    "structured_relations": 2,
+    "open_conflicts": 0,
+    "full_text_coverage": "measured_separately_in_literary_library"
+  },
+  "ledger_before": {
+    "exists": true,
+    "records": 200,
+    "datasets": 1,
+    "pending": 200,
+    "staged": 0,
+    "by_provider": {
+      "openlibrary": 200
+    }
+  },
+  "full_texts_imported": 0,
+  "llm_calls": 0,
+  "import": {
+    "provider": "openlibrary",
+    "dry_run": false,
+    "sha256": "d374d84a48ddbec3d717c78e5f0b39705fdad728fbc66371a454fc87f23f7044",
+    "dataset_id": "457143c3dbb7a6c79135a9e1d9cdc2fd0b8f41e76bd0ff5b68296e336f8f03cc",
+    "scanned": 15446415,
+    "accepted": 207,
+    "inserted": 207,
+    "duplicates": 0,
+    "rejected": 0,
+    "filtered": 15446208,
+    "offset_before": 0,
+    "offset_after": 5958402890,
+    "complete": true,
+    "status": "complete",
+    "seconds": 191.0267,
+    "network_requests": 0,
+    "llm_calls": 0,
+    "verification_scope": "metadata_policy_shape_checksum_not_independent_fact_verification",
+    "admission": {
+      "released": 207,
+      "authors": 207,
+      "sha256": "d374d84a48ddbec3d717c78e5f0b39705fdad728fbc66371a454fc87f23f7044"
+    },
+    "projection": {
+      "projected": 200,
+      "deferred": 0,
+      "sources": 200
+    }
+  },
+  "seconds": 192.446,
+  "after": {
+    "free_disk_bytes": 103237120000,
+    "process": {
+      "rss_mb": 80.055,
+      "peak_rss_mb": 109.035
+    },
+    "mysql_estimates": [
+      {
+        "table": "core_kbname",
+        "data": 4734976,
+        "index": 5308416
+      },
+      {
+        "table": "core_kbprojection",
+        "data": 16384,
+        "index": 16384
+      },
+      {
+        "table": "core_kbrecord",
+        "data": 23740416,
+        "index": 2637824
+      },
+      {
+        "table": "core_kbrelation",
+        "data": 458752,
+        "index": 458752
+      },
+      {
+        "table": "core_kbversion",
+        "data": 20594688,
+        "index": 2670592
+      }
+    ],
+    "memory_db_bytes": 62373888
+  },
+  "memory_after": {
+    "works_catalogued": 13466,
+    "normalized_title_author_pairs": 13466,
+    "authors": 5983,
+    "current_sources": 13637,
+    "works_with_current_sources": 13466,
+    "works_with_admitted_descriptions": 18,
+    "works_with_narrative_facts": 13,
+    "works_with_characters": 10,
+    "character_entities": 104,
+    "structured_relations": 2,
+    "open_conflicts": 0,
+    "full_text_coverage": "measured_separately_in_literary_library"
+  },
+  "ledger_after": {
+    "exists": true,
+    "records": 407,
+    "datasets": 2,
+    "pending": 0,
+    "staged": 0,
+    "by_provider": {
+      "openlibrary": 407
+    }
+  },
+  "integrity": {
+    "auth_group": {
+      "original_rows": 0,
+      "preserved": true,
+      "added": 0
+    },
+    "auth_group_permissions": {
+      "original_rows": 0,
+      "preserved": true,
+      "added": 0
+    },
+    "auth_permission": {
+      "original_rows": 152,
+      "preserved": true,
+      "added": 0
+    },
+    "auth_user": {
+      "original_rows": 179,
+      "preserved": true,
+      "added": 0
+    },
+    "auth_user_groups": {
+      "original_rows": 0,
+      "preserved": true,
+      "added": 0
+    },
+    "auth_user_user_permissions": {
+      "original_rows": 0,
+      "preserved": true,
+      "added": 0
+    },
+    "core_asistenteia": {
+      "original_rows": 1,
+      "preserved": true,
+      "added": 0
+    },
+    "core_autor": {
+      "original_rows": 31,
+      "preserved": true,
+      "added": 0
+    },
+    "core_clickconversion": {
+      "original_rows": 185,
+      "preserved": true,
+      "added": 0
+    },
+    "core_conversacionia": {
+      "original_rows": 50,
+      "preserved": true,
+      "added": 0
+    },
+    "core_editorial": {
+      "original_rows": 34,
+      "preserved": true,
+      "added": 0
+    },
+    "core_elementolistalectura": {
+      "original_rows": 2,
+      "preserved": true,
+      "added": 0
+    },
+    "core_estadolectura": {
+      "original_rows": 451,
+      "preserved": true,
+      "added": 0
+    },
+    "core_eventoanalitica": {
+      "original_rows": 384,
+      "preserved": true,
+      "added": 0
+    },
+    "core_genero": {
+      "original_rows": 12,
+      "preserved": true,
+      "added": 0
+    },
+    "core_historialchatbot": {
+      "original_rows": 5,
+      "preserved": true,
+      "added": 0
+    },
+    "core_historialpreciolibro": {
+      "original_rows": 223,
+      "preserved": true,
+      "added": 0
+    },
+    "core_kbname": {
+      "original_rows": 11104,
+      "preserved": true,
+      "added": 0
+    },
+    "core_kbprojection": {
+      "original_rows": 7,
+      "preserved": true,
+      "added": 0
+    },
+    "core_kbrecord": {
+      "original_rows": 11104,
+      "preserved": true,
+      "added": 0
+    },
+    "core_kbrelation": {
+      "original_rows": 1108,
+      "preserved": true,
+      "added": 0
+    },
+    "core_kbversion": {
+      "original_rows": 11104,
+      "preserved": true,
+      "added": 0
+    },
+    "core_libro": {
+      "original_rows": 55,
+      "preserved": true,
+      "added": 0
+    },
+    "core_libro_generos": {
+      "original_rows": 54,
+      "preserved": true,
+      "added": 0
+    },
+    "core_librofavorito": {
+      "original_rows": 231,
+      "preserved": true,
+      "added": 0
+    },
+    "core_listalectura": {
+      "original_rows": 2,
+      "preserved": true,
+      "added": 0
+    },
+    "core_mensajecontacto": {
+      "original_rows": 3,
+      "preserved": true,
+      "added": 0
+    },
+    "core_mensajeia": {
+      "original_rows": 190,
+      "preserved": true,
+      "added": 0
+    },
+    "core_perfilusuario": {
+      "original_rows": 158,
+      "preserved": true,
+      "added": 0
+    },
+    "core_preciolibrotienda": {
+      "original_rows": 117,
+      "preserved": true,
+      "added": 0
+    },
+    "core_preguntafrecuente": {
+      "original_rows": 0,
+      "preserved": true,
+      "added": 0
+    },
+    "core_recomendacion": {
+      "original_rows": 0,
+      "preserved": true,
+      "added": 0
+    },
+    "core_recomendacionialog": {
+      "original_rows": 0,
+      "preserved": true,
+      "added": 0
+    },
+    "core_resena": {
+      "original_rows": 116,
+      "preserved": true,
+      "added": 0
+    },
+    "django_admin_log": {
+      "original_rows": 0,
+      "preserved": true,
+      "added": 0
+    },
+    "django_content_type": {
+      "original_rows": 38,
+      "preserved": true,
+      "added": 0
+    },
+    "django_migrations": {
+      "original_rows": 27,
+      "preserved": true,
+      "added": 0
+    },
+    "django_session": {
+      "original_rows": 88,
+      "preserved": true,
+      "added": 0
+    },
+    "suscripciones_historialpago": {
+      "original_rows": 42,
+      "preserved": true,
+      "added": 0
+    },
+    "suscripciones_plansuscripcion": {
+      "original_rows": 3,
+      "preserved": true,
+      "added": 0
+    },
+    "suscripciones_suscripcionusuario": {
+      "original_rows": 157,
+      "preserved": true,
+      "added": 0
+    }
+  },
+  "works_with_description_in_dump": 18,
+  "descriptions_persisted": 0,
+  "sample_retrieval": [
+    {
+      "title": "The emancipist",
+      "sources": []
+    },
+    {
+      "title": "A Perfect Performance",
+      "sources": []
+    },
+    {
+      "title": "Le Dictionnaire du P\u00e8re Lachaise",
+      "sources": []
+    },
+    {
+      "title": "Ravenous",
+      "sources": []
+    },
+    {
+      "title": "Elle",
+      "sources": [
+        {
+          "title": "Elle et lui",
+          "author": "George Sand",
+          "kind": "book",
+          "book_id": "sqlkb:b1a2b142c72af6cefe44a893fe821e3dd05a971cc6de91c5de7f23ac2b83bcdd",
+          "source": "Project Gutenberg",
+          "url": "https://www.gutenberg.org/ebooks/13653",
+          "description": "",
+          "synopsis": "",
+          "categories": [
+            "French fiction -- 19th century"
+          ],
+          "isbns": [],
+          "language": "fr",
+          "edition_id": "13653",
+          "policy": "gutenberg-catalog-public-domain-v1",
+          "storage_policy": "gutenberg-catalog-public-domain-v1",
+          "license": "CC0-1.0",
+          "read_mode": "metadatos de fuente; sin trama ni texto completo",
+          "memory_verified": true
+        },
+        {
+          "title": "Ell\u00e9nore, Volume I",
+          "author": "Sophie Gay",
+          "kind": "book",
+          "book_id": "sqlkb:cce687712bdba06dad71fb2d7fb775643f81e424bb7ead8cd4d5e6a6934a0c76",
+          "source": "Project Gutenberg",
+          "url": "https://www.gutenberg.org/ebooks/17757",
+          "description": "",
+          "synopsis": "",
+          "categories": [
+            "Fiction"
+          ],
+          "isbns": [],
+          "language": "fr",
+          "edition_id": "17757",
+          "policy": "gutenberg-catalog-public-domain-v1",
+          "storage_policy": "gutenberg-catalog-public-domain-v1",
+          "license": "CC0-1.0",
+          "read_mode": "metadatos de fuente; sin trama ni texto completo",
+          "memory_verified": true
+        },
+        {
+          "title": "Ellen Walton",
+          "author": "Alvin Addison",
+          "kind": "book",
+          "book_id": "sqlkb:ea621b99555d6b4f329372824a9cd6ccf0c2a8998810204510b3e29cf70c58f2",
+          "source": "Project Gutenberg",
+          "url": "https://www.gutenberg.org/ebooks/16345",
+          "description": "",
+          "synopsis": "",
+          "categories": [
+            "Fiction"
+          ],
+          "isbns": [],
+          "language": "en",
+          "edition_id": "16345",
+          "policy": "gutenberg-catalog-public-domain-v1",
+          "storage_policy": "gutenberg-catalog-public-domain-v1",
+          "license": "CC0-1.0",
+          "read_mode": "metadatos de fuente; sin trama ni texto completo",
+          "memory_verified": true
+        },
+        {
+          "title": "Ell\u00e9nore, Volume II",
+          "author": "Sophie Gay",
+          "kind": "book",
+          "book_id": "sqlkb:f04ba1d38e100b9a1b36b27a5f3cbed19cf76408a9d55977c0dcd7887048c0d5",
+          "source": "Project Gutenberg",
+          "url": "https://www.gutenberg.org/ebooks/18142",
+          "description": "",
+          "synopsis": "",
+          "categories": [
+            "Fiction"
+          ],
+          "isbns": [],
+          "language": "fr",
+          "edition_id": "18142",
+          "policy": "gutenberg-catalog-public-domain-v1",
+          "storage_policy": "gutenberg-catalog-public-domain-v1",
+          "license": "CC0-1.0",
+          "read_mode": "metadatos de fuente; sin trama ni texto completo",
+          "memory_verified": true
+        }
+      ]
+    },
+    {
+      "title": "L'id\u00e9ologie plantagenet",
+      "sources": []
+    },
+    {
+      "title": "Spooksville - The Thing in the Closet",
+      "sources": []
+    },
+    {
+      "title": "Gary Payton",
+      "sources": []
+    }
+  ]
+}

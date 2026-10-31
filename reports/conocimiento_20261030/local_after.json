@@ -1,0 +1,1657 @@
+[
+  {
+    "passed": true,
+    "question": "Dime los personajes de Little Women de Louisa May Alcott",
+    "answer": "**Amy**: La menor de las hermanas, con doce a\u00f1os.\n\n**Josephine ( Jo )**: No acepta casarse con su mejor amigo, Theodore Laurence ( Laurie ) y a\u00f1os despu\u00e9s, cuando ya es una mujer que trabaja por cuenta propia, se casa con el profesor Bhaer, de origen alem\u00e1n, quien la estimula a seguir escribiendo y desarrollar su intelecto.\n\n**Margaret ( Meg )**: La mayor de las hermanas March.\n\n**Elizabeth ( Beth )**: La tercera de las hijas del Dr. March.\n\n**Theodore ( Laurie o Teddy )**: Un joven encantador, travieso y rico, que vive al lado de la familia March en compa\u00f1\u00eda de su abuelo sobreprotector.\n\n**Margaret March ( Marmee o Se\u00f1ora March )**: La madre de las chicas.\n\n**Robert March**: Padre de las chicas y esposo de Margaret March.\n\n**James Laurence**: Vecino rico de la familia March.\n\n**Hannah Mullet**: La criada de la familia March, una mujer mayor, amable y leal.\n\n**T\u00eda March**: Una viuda rica.\n\nFuente: https://es.wikipedia.org/wiki/Mujercitas\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+    "status": "answered",
+    "not_in_legacy_catalog": null,
+    "sse_done": true,
+    "seconds": 0.5627,
+    "cards": [
+      {
+        "id": "1",
+        "title": "Little Women",
+        "author": "Louisa May Alcott",
+        "synopsis": "",
+        "image_url": "",
+        "links": [
+          {
+            "label": "Google Books",
+            "url": "https://books.google.com/books?q=Little+Women+Louisa+May+Alcott"
+          },
+          {
+            "label": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/514"
+          },
+          {
+            "label": "Amazon",
+            "url": "https://www.amazon.com/s?k=Little+Women+Louisa+May+Alcott&i=stripbooks"
+          },
+          {
+            "label": "Buscalibre",
+            "url": "https://www.buscalibre.cl/libros/search?q=Little+Women+Louisa+May+Alcott"
+          }
+        ]
+      }
+    ],
+    "diagnostics": {
+      "elapsed_ms": 531,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 0,
+      "verified_narrative_answer": true,
+      "verified_character_answer": true,
+      "character_count": 10,
+      "work_type": "fiction",
+      "progress_metrics": {
+        "elapsed_ms": 552.674,
+        "first_phase_emitted_ms": 42.839,
+        "model_calls_started": 0,
+        "stage_totals_ms": {
+          "conversation": 19.607,
+          "cache_lookup": 0.558,
+          "knowledge_lookup": 510.973,
+          "audit": 6.702,
+          "finalization": 21.398
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 7.98,
+            "elapsed_ms": 19.607,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 42.269,
+            "elapsed_ms": 0.558,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 62.272,
+            "elapsed_ms": 430.119,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 184.174,
+            "elapsed_ms": 80.854,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 481.966,
+            "elapsed_ms": 6.702,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 531.269,
+            "elapsed_ms": 21.398,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 42.839
+          },
+          {
+            "stage": "review",
+            "elapsed_ms": 481.944
+          }
+        ]
+      },
+      "stage_timings": [],
+      "external_research": {
+        "logical_searches": 0,
+        "page_slots_reserved": 0,
+        "external_seconds": 0.0,
+        "http_requests_started": 0,
+        "pages_extracted": 0
+      },
+      "provider": "verified-character-evidence"
+    },
+    "reader_data_written": false,
+    "sources": [],
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": {
+          "task": "characters",
+          "focus": "all",
+          "title": "Little Women",
+          "targets": [],
+          "names": [],
+          "ambiguous": false,
+          "object_name": "",
+          "author_hint": "Louisa May Alcott"
+        }
+      },
+      {
+        "stage": "character_binding",
+        "sources": [
+          {
+            "id": 1,
+            "title": "Little Women",
+            "author": "Louisa May Alcott",
+            "description": "Little Women, de Louisa May Alcott. Temas del cat\u00e1logo: Autobiographical fiction, Young women -- Fiction, Sisters -- Fiction, Domestic fiction, Family life -- New England -- Fiction, New England -- Fiction, Bildungsromans, Mothers and daughters -- Fiction, March family (Fictitious characters) -- Fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/514",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793072078.9502962",
+            "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795664078.9502962",
+            "evidence_hash": "75d89bd87e53c2b676b1b69ef79a69bbc9cb76c466c6f2977d09f3e68009bb4a",
+            "memory_source_id": "b2081c651276eb68066865a8e94d0ba22049d412c7d34c8579381831299426cc",
+            "last_verified_at": "1793072078.9502962",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Autobiographical fiction",
+              "Young women -- Fiction",
+              "Sisters -- Fiction",
+              "Domestic fiction",
+              "Family life -- New England -- Fiction"
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Mujercitas",
+            "author": "Fuente web",
+            "description": "== Argumento == En la novela, las chicas traban amistad con un vecino, el joven adolescente Laurie, que se vuelve el mejor amigo de Jo. La entretenida obra muestra el contexto hist\u00f3rico de la \u00e9poca.",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Mujercitas",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793339214.0221522",
+            "evidence_scope": "summary",
+            "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+            "work_title": "Little Women",
+            "work_author": "Louisa May Alcott",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793944014.0221522",
+            "evidence_hash": "a318d6aa4a1374df2805d55527961b32a9892f10769cc131169cd280eeca562a",
+            "memory_source_id": "3d173a4eccb837493a7c9fbb8090d637824a84a678557fc2948f67e7cd286043",
+            "last_verified_at": "1793339214.0221522",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Mujercitas",
+              "url": "https://es.wikipedia.org/wiki/Mujercitas",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "173325880"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "En la novela, las chicas traban amistad con un vecino, el joven adolescente Laurie, que se vuelve el mejor amigo de Jo.",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "development_excerpt"
+              },
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "En la novela, las chicas traban amistad con un vecino, el joven adolescente Laurie, que se vuelve el mejor amigo de Jo. La entretenida obra muestra el contexto hist\u00f3rico de la \u00e9poca.",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "partial"
+              }
+            ],
+            "identity_text": "Mujercitas (en ingl\u00e9s, Little Women o Little Women or Meg, Jo, Beth and Amy) es una novela de la escritora estadounidense Louisa May Alcott publicada el 30 de septiembre de 1868, que trata la vida de cuatro ni\u00f1as que, tras pasar la adolescencia con la Guerra Civil en los Estados Unidos como fondo, entre 1861 y 1865, se convierten en mujeres. Est\u00e1 basada en las vivencias de la autora durante su ni\u00f1ez en la ciudad de Concord, Massachusetts.\u200b La novela se public\u00f3 sin que existan indicios de una secuela previamente planeada, si bien en el \u00faltimo p\u00e1rrafo de la novela la autora escribe: Y fue el caso que por el \u00e9xito generado y las peticiones de diversos lectores, en 1869 Alcott volvi\u00f3 a alzar el tel\u00f3n con la publicaci\u00f3n de Aquellas mujercitas (en ingl\u00e9s, Good Wives), que transcurre cuatro a\u00f1os despu\u00e9s de Mujercitas y muestra las dificultades que las protagonistas enfrentan durante su vida adulta. Ambos libros constituyen lo que en Europa se edit\u00f3 como un solo volumen. Los siguientes trabajos de Alcott: Little Men (Hombrecitos) y Jo's Boys (Los muchachos de Jo), son continuaciones de esas dos novelas, muestran a los hijos, sobrinos y alumnos de las Mujercitas construyendo sus vidas.",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 3,
+            "title": "Little Women",
+            "author": "Fuente web",
+            "description": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a second volume (titled Good Wives or Little Women Married in the United Kingdom, though the name originated with the publisher and not Alcott). It was also met with success. The two volumes were issued in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdependent and each necessary to the achievement of its heroine's individual identity.\" According to Sarah Elbert, Alcott created a new form of literature, one...",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://en.wikipedia.org/wiki/Little_Women",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793338887.0307164",
+            "evidence_scope": "summary",
+            "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+            "work_title": "Little Women",
+            "work_author": "Louisa May Alcott",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793943687.0307164",
+            "evidence_hash": "31effb167f8938cff8ad03577a6457b4979f7b265278fc717d3c65d2a9c046e6",
+            "memory_source_id": "d7794a1402399d1e11646a9a3daad71e7007ff0d3f83fc64e109297b4e52ef87",
+            "last_verified_at": "1793338887.0307164",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Little Women",
+              "url": "https://en.wikipedia.org/wiki/Little_Women",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "1374015307"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a second volume (titled Good Wives or Little Women Married in the United Kingdom, though the name originated with the publisher and not Alcott). It was also met with success. The two volumes were issued in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdependent and each necessary to the achievement of its heroine's individual identity.\" According to Sarah Elbert, Alcott created a new form of literature, on",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 4,
+            "title": "Little Women",
+            "author": "Fuente web",
+            "description": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a second volume (titled Good Wives or Little Women Married in the United Kingdom, though the name originated with the publisher and not Alcott). It was also met with success. The two volumes were issued in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdependent and each necessary to the achievement of its heroine's individual identity.\" According to Sarah Elbert, Alcott created a new form of literature, one...",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://en.wikipedia.org/wiki/Little_Women",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793338891.7305207",
+            "evidence_scope": "characters",
+            "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+            "work_title": "Little Women",
+            "work_author": "Louisa May Alcott",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793943691.7305207",
+            "evidence_hash": "931ad0c7aa81b0419745ac668658d59a9d0533f709a511d2e40139980c674a34",
+            "memory_source_id": "d1733bc28dd0de7b4b36f3784cf6b9ba4b6d2123adc9c84966b4bbfbdbab7fa4",
+            "last_verified_at": "1793338891.7305207",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Little Women",
+              "url": "https://en.wikipedia.org/wiki/Little_Women",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "1374015307"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a second volume (titled Good Wives or Little Women Married in the United Kingdom, though the name originated with the publisher and not Alcott). It was also met with success. The two volumes were issued in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdependent and each necessary to the achievement of its heroine's individual identity.\" According to Sarah Elbert, Alcott created a new form of literature, on",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 5,
+            "title": "Mujercitas",
+            "author": "Fuente web",
+            "description": "== Personajes == Amy: La menor de las hermanas, con doce a\u00f1os. Josephine ( Jo ): No acepta casarse con su mejor amigo, Theodore Laurence ( Laurie ) y a\u00f1os despu\u00e9s, cuando ya es una mujer que trabaja por cuenta propia, se casa con el profesor Bhaer, de origen alem\u00e1n, quien la estimula a seguir escribiendo y desarrollar su intelecto. Margaret ( Meg ): La mayor de las hermanas March. Elizabeth ( Beth ): La tercera de las hijas del Dr. March. Theodore ( Laurie o Teddy ): Un joven encantador, travieso y rico, que vive al lado de la familia March en compa\u00f1\u00eda de su abuelo sobreprotector. Margaret March ( Marmee o Se\u00f1ora March ): La madre de las chicas. Robert March: Padre de las chicas y esposo de Margaret March. James Laurence: Vecino rico de la familia March. Hannah Mullet: La criada de la familia March, una mujer mayor, amable y leal. T\u00eda March: Una viuda rica. Profesor Friedrich \"Fritz\" Bhaer: Un inmigrante alem\u00e1n, pobre e intelectual que era un reconocido profesor en Berl\u00edn , pero ante la enfermedad terminal de su \u00fanica hermana, le promete a esta criar a sus dos sobrinos en Estados Unidos, ya que es la patria del padre de los ni\u00f1os, ya fallecido. John Brooke: Tutor de Laurie que se enamora de Meg, quien duda antes de aceptarlo, hasta que la t\u00eda March le proh\u00edbe a la joven hacerlo, bajo amenaza de desheredarla, y descubre que est\u00e1 tambi\u00e9n enamorada de Brooke.",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Mujercitas",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793362080.3269987",
+            "evidence_scope": "characters",
+            "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+            "work_title": "Little Women",
+            "work_author": "Louisa May Alcott",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793966880.3269987",
+            "evidence_hash": "5a320c666fa4d4ea867cd4d64e2a4033af11334efab07cb3d7512a2cb7c6135a",
+            "memory_source_id": "89ea640a36c62849d2de7a704ab08bba85b872a9fea6622efb66bcaa9c434dfb",
+            "last_verified_at": "1793362080.3269987",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Mujercitas",
+              "url": "https://es.wikipedia.org/wiki/Mujercitas",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "173325880"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "Mujercitas (en ingl\u00e9s, Little Women o Little Women or Meg, Jo, Beth and Amy) es una novela de la escritora estadounidense Louisa May Alcott publicada el 30 de septiembre de 1868, que trata la vida de cuatro ni\u00f1as que, tras pasar la adolescencia con la Guerra Civil en los Estados Unidos como fondo, entre 1861 y 1865, se convierten en mujeres. Est\u00e1 basada en las vivencias de la autora durante su ni\u00f1ez en la ciudad de Concord, Massachusetts.\u200b La novela se public\u00f3 sin que existan indicios de una secuela previamente planeada, si bien en el \u00faltimo p\u00e1rrafo de la novela la autora escribe: Y fue el caso que por el \u00e9xito generado y las peticiones de diversos lectores, en 1869 Alcott volvi\u00f3 a alzar el tel\u00f3n con la publicaci\u00f3n de Aquellas mujercitas (en ingl\u00e9s, Good Wives), que transcurre cuatro a\u00f1os despu\u00e9s de Mujercitas y muestra las dificultades que las protagonistas enfrentan durante su vida adulta. Ambos libros constituyen lo que en Europa se edit\u00f3 como un solo volumen. Los siguientes trabajos de Alcott: Little Men (Hombrecitos) y Jo's Boys (Los muchachos de Jo), son continuaciones de esas dos novelas, muestran a los hijos, sobrinos y alumnos de las Mujercitas construyendo sus vidas.",
+            "character_facts": [
+              {
+                "name": "Amy",
+                "role": "La menor de las hermanas, con doce a\u00f1os.",
+                "evidence": "Amy: La menor de las hermanas, con doce a\u00f1os.",
+                "aliases": []
+              },
+              {
+                "name": "Josephine ( Jo )",
+                "role": "No acepta casarse con su mejor amigo, Theodore Laurence ( Laurie ) y a\u00f1os despu\u00e9s, cuando ya es una mujer que trabaja por cuenta propia, se casa con el profesor Bhaer, de origen alem\u00e1n, quien la estimula a seguir escribiendo y desarrollar su intelecto.",
+                "evidence": "Josephine ( Jo ): No acepta casarse con su mejor amigo, Theodore Laurence ( Laurie ) y a\u00f1os despu\u00e9s, cuando ya es una mujer que trabaja por cuenta propia, se casa con el profesor Bhaer, de origen alem\u00e1n, quien la estimula a seguir escribiendo y desarrollar su intelecto.",
+                "aliases": []
+              },
+              {
+                "name": "Margaret ( Meg )",
+                "role": "La mayor de las hermanas March.",
+                "evidence": "Margaret ( Meg ): La mayor de las hermanas March.",
+                "aliases": []
+              },
+              {
+                "name": "Elizabeth ( Beth )",
+                "role": "La tercera de las hijas del Dr. March.",
+                "evidence": "Elizabeth ( Beth ): La tercera de las hijas del Dr. March.",
+                "aliases": []
+              },
+              {
+                "name": "Theodore ( Laurie o Teddy )",
+                "role": "Un joven encantador, travieso y rico, que vive al lado de la familia March en compa\u00f1\u00eda de su abuelo sobreprotector.",
+                "evidence": "Theodore ( Laurie o Teddy ): Un joven encantador, travieso y rico, que vive al lado de la familia March en compa\u00f1\u00eda de su abuelo sobreprotector.",
+                "aliases": []
+              },
+              {
+                "name": "Margaret March ( Marmee o Se\u00f1ora March )",
+                "role": "La madre de las chicas.",
+                "evidence": "Margaret March ( Marmee o Se\u00f1ora March ): La madre de las chicas.",
+                "aliases": []
+              },
+              {
+                "name": "Robert March",
+                "role": "Padre de las chicas y esposo de Margaret March.",
+                "evidence": "Robert March: Padre de las chicas y esposo de Margaret March.",
+                "aliases": []
+              },
+              {
+                "name": "James Laurence",
+                "role": "Vecino rico de la familia March.",
+                "evidence": "James Laurence: Vecino rico de la familia March.",
+                "aliases": []
+              },
+              {
+                "name": "Hannah Mullet",
+                "role": "La criada de la familia March, una mujer mayor, amable y leal.",
+                "evidence": "Hannah Mullet: La criada de la familia March, una mujer mayor, amable y leal.",
+                "aliases": []
+              },
+              {
+                "name": "T\u00eda March",
+                "role": "Una viuda rica.",
+                "evidence": "T\u00eda March: Una viuda rica.",
+                "aliases": []
+              },
+              {
+                "name": "Profesor Friedrich \"Fritz\" Bhaer",
+                "role": "Un inmigrante alem\u00e1n, pobre e intelectual que era un reconocido profesor en Berl\u00edn , pero ante la enfermedad terminal de su \u00fanica hermana, le promete a esta criar a sus dos sobrinos en Estados Unidos, ya que es la patria del padre de los ni\u00f1os, ya fallecido.",
+                "evidence": "Profesor Friedrich \"Fritz\" Bhaer: Un inmigrante alem\u00e1n, pobre e intelectual que era un reconocido profesor en Berl\u00edn , pero ante la enfermedad terminal de su \u00fanica hermana, le promete a esta criar a sus dos sobrinos en Estados Unidos, ya que es la patria del padre de los ni\u00f1os, ya fallecido.",
+                "aliases": []
+              },
+              {
+                "name": "John Brooke",
+                "role": "Tutor de Laurie que se enamora de Meg, quien duda antes de aceptarlo, hasta que la t\u00eda March le proh\u00edbe a la joven hacerlo, bajo amenaza de desheredarla, y descubre que est\u00e1 tambi\u00e9n enamorada de Brooke.",
+                "evidence": "John Brooke: Tutor de Laurie que se enamora de Meg, quien duda antes de aceptarlo, hasta que la t\u00eda March le proh\u00edbe a la joven hacerlo, bajo amenaza de desheredarla, y descubre que est\u00e1 tambi\u00e9n enamorada de Brooke.",
+                "aliases": []
+              }
+            ],
+            "isbns": [],
+            "categories": []
+          }
+        ]
+      },
+      {
+        "stage": "characters",
+        "diagnostics": {
+          "verified_narrative_answer": true,
+          "audit": {
+            "decision": "approve",
+            "only_books": true,
+            "claims": [
+              {
+                "statement": "**Amy**: La menor de las hermanas, con doce a\u00f1os.",
+                "source_id": 5,
+                "verdict": "supported",
+                "evidence": "Amy: La menor de las hermanas, con doce a\u00f1os."
+              },
+              {
+                "statement": "**Josephine ( Jo )**: No acepta casarse con su mejor amigo, Theodore Laurence ( Laurie ) y a\u00f1os despu\u00e9s, cuando ya es una mujer que trabaja por cuenta propia, se casa con el profesor Bhaer, de origen alem\u00e1n, quien la estimula a seguir escribiendo y desarrollar su intelecto.",
+                "source_id": 5,
+                "verdict": "supported",
+                "evidence": "Josephine ( Jo ): No acepta casarse con su mejor amigo, Theodore Laurence ( Laurie ) y a\u00f1os despu\u00e9s, cuando ya es una mujer que trabaja por cuenta propia, se casa con el profesor Bhaer, de origen alem\u00e1n, quien la estimula a seguir escribiendo y desarrollar su intelecto."
+              },
+              {
+                "statement": "**Margaret ( Meg )**: La mayor de las hermanas March.",
+                "source_id": 5,
+                "verdict": "supported",
+                "evidence": "Margaret ( Meg ): La mayor de las hermanas March."
+              },
+              {
+                "statement": "**Elizabeth ( Beth )**: La tercera de las hijas del Dr. March.",
+                "source_id": 5,
+                "verdict": "supported",
+                "evidence": "Elizabeth ( Beth ): La tercera de las hijas del Dr. March."
+              },
+              {
+                "statement": "**Theodore ( Laurie o Teddy )**: Un joven encantador, travieso y rico, que vive al lado de la familia March en compa\u00f1\u00eda de su abuelo sobreprotector.",
+                "source_id": 5,
+                "verdict": "supported",
+                "evidence": "Theodore ( Laurie o Teddy ): Un joven encantador, travieso y rico, que vive al lado de la familia March en compa\u00f1\u00eda de su abuelo sobreprotector."
+              },
+              {
+                "statement": "**Margaret March ( Marmee o Se\u00f1ora March )**: La madre de las chicas.",
+                "source_id": 5,
+                "verdict": "supported",
+                "evidence": "Margaret March ( Marmee o Se\u00f1ora March ): La madre de las chicas."
+              },
+              {
+                "statement": "**Robert March**: Padre de las chicas y esposo de Margaret March.",
+                "source_id": 5,
+                "verdict": "supported",
+                "evidence": "Robert March: Padre de las chicas y esposo de Margaret March."
+              },
+              {
+                "statement": "**James Laurence**: Vecino rico de la familia March.",
+                "source_id": 5,
+                "verdict": "supported",
+                "evidence": "James Laurence: Vecino rico de la familia March."
+              },
+              {
+                "statement": "**Hannah Mullet**: La criada de la familia March, una mujer mayor, amable y leal.",
+                "source_id": 5,
+                "verdict": "supported",
+                "evidence": "Hannah Mullet: La criada de la familia March, una mujer mayor, amable y leal."
+              },
+              {
+                "statement": "**T\u00eda March**: Una viuda rica.",
+                "source_id": 5,
+                "verdict": "supported",
+                "evidence": "T\u00eda March: Una viuda rica."
+              }
+            ],
+            "coverage": [
+              {
+                "question_id": 1,
+                "status": "answered"
+              }
+            ],
+            "issues": [],
+            "search_queries": []
+          },
+          "work_type": "fiction",
+          "model_calls": 0,
+          "verified_character_answer": true,
+          "character_count": 10,
+          "character_task": "characters",
+          "character_focus": "all",
+          "character_trace": [
+            {
+              "stage": "stored_content",
+              "facts": 10
+            }
+          ],
+          "external_research": {
+            "logical_searches": 0,
+            "page_slots_reserved": 0,
+            "page_slots_limit": 3,
+            "external_seconds": 0.0,
+            "events": [],
+            "http_requests_started": 0,
+            "pages_extracted": 0
+          },
+          "progress_metrics": {
+            "stage_timings": [
+              {
+                "stage": "conversation",
+                "started_ms": 7.98,
+                "elapsed_ms": 19.607,
+                "status": "ok"
+              },
+              {
+                "stage": "cache_lookup",
+                "started_ms": 42.269,
+                "elapsed_ms": 0.558,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 62.272,
+                "elapsed_ms": 430.119,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 184.174,
+                "elapsed_ms": 80.854,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 481.966,
+                "elapsed_ms": 6.702,
+                "status": "ok"
+              }
+            ],
+            "stage_totals_ms": {
+              "conversation": 19.607,
+              "cache_lookup": 0.558,
+              "knowledge_lookup": 510.973,
+              "audit": 6.702
+            },
+            "model_calls_started": 0,
+            "progress_events": [
+              {
+                "stage": "search",
+                "elapsed_ms": 42.839
+              },
+              {
+                "stage": "review",
+                "elapsed_ms": 481.944
+              }
+            ],
+            "elapsed_ms": 514.405,
+            "first_phase_emitted_ms": 42.839
+          },
+          "language_presentation": {
+            "target": "es",
+            "original_text": "**Amy**: La menor de las hermanas, con doce a\u00f1os.\n\n**Josephine ( Jo )**: No acepta casarse con su mejor amigo, Theodore Laurence ( Laurie ) y a\u00f1os despu\u00e9s, cuando ya es una mujer que trabaja por cuenta propia, se casa con el profesor Bhaer, de origen alem\u00e1n, quien la estimula a seguir escribiendo y desarrollar su intelecto.\n\n**Margaret ( Meg )**: La mayor de las hermanas March.\n\n**Elizabeth ( Beth )**: La tercera de las hijas del Dr. March.\n\n**Theodore ( Laurie o Teddy )**: Un joven encantador, travieso y rico, que vive al lado de la familia March en compa\u00f1\u00eda de su abuelo sobreprotector.\n\n**Margaret March ( Marmee o Se\u00f1ora March )**: La madre de las chicas.\n\n**Robert March**: Padre de las chicas y esposo de Margaret March.\n\n**James Laurence**: Vecino rico de la familia March.\n\n**Hannah Mullet**: La criada de la familia March, una mujer mayor, amable y leal.\n\n**T\u00eda March**: Una viuda rica.\n\nFuente: https://es.wikipedia.org/wiki/Mujercitas\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+            "translated_fields": 0,
+            "cache_hits": 0,
+            "untranslated_fields": [],
+            "card_excerpt_from_audited_response": false,
+            "audit_applies_to_original": true,
+            "cards": [
+              {
+                "id": "1",
+                "title": "Little Women",
+                "author": "Louisa May Alcott",
+                "synopsis": "",
+                "image_url": "",
+                "links": [
+                  {
+                    "label": "Google Books",
+                    "url": "https://books.google.com/books?q=Little+Women+Louisa+May+Alcott"
+                  },
+                  {
+                    "label": "Project Gutenberg",
+                    "url": "https://www.gutenberg.org/ebooks/514"
+                  },
+                  {
+                    "label": "Amazon",
+                    "url": "https://www.amazon.com/s?k=Little+Women+Louisa+May+Alcott&i=stripbooks"
+                  },
+                  {
+                    "label": "Buscalibre",
+                    "url": "https://www.buscalibre.cl/libros/search?q=Little+Women+Louisa+May+Alcott"
+                  }
+                ]
+              }
+            ]
+          },
+          "stage_timings": [],
+          "elapsed_ms": 515,
+          "chat_budget_seconds": 36.0
+        },
+        "sources": [
+          {
+            "id": 1,
+            "title": "Little Women",
+            "author": "Louisa May Alcott",
+            "description": "Little Women, de Louisa May Alcott. Temas del cat\u00e1logo: Autobiographical fiction, Young women -- Fiction, Sisters -- Fiction, Domestic fiction, Family life -- New England -- Fiction, New England -- Fiction, Bildungsromans, Mothers and daughters -- Fiction, March family (Fictitious characters) -- Fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/514",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793072078.9502962",
+            "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795664078.9502962",
+            "evidence_hash": "75d89bd87e53c2b676b1b69ef79a69bbc9cb76c466c6f2977d09f3e68009bb4a",
+            "memory_source_id": "b2081c651276eb68066865a8e94d0ba22049d412c7d34c8579381831299426cc",
+            "last_verified_at": "1793072078.9502962",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Autobiographical fiction",
+              "Young women -- Fiction",
+              "Sisters -- Fiction",
+              "Domestic fiction",
+              "Family life -- New England -- Fiction"
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Mujercitas",
+            "author": "Fuente web",
+            "description": "== Argumento == En la novela, las chicas traban amistad con un vecino, el joven adolescente Laurie, que se vuelve el mejor amigo de Jo. La entretenida obra muestra el contexto hist\u00f3rico de la \u00e9poca.",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Mujercitas",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793339214.0221522",
+            "evidence_scope": "summary",
+            "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+            "work_title": "Little Women",
+            "work_author": "Louisa May Alcott",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793944014.0221522",
+            "evidence_hash": "a318d6aa4a1374df2805d55527961b32a9892f10769cc131169cd280eeca562a",
+            "memory_source_id": "3d173a4eccb837493a7c9fbb8090d637824a84a678557fc2948f67e7cd286043",
+            "last_verified_at": "1793339214.0221522",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Mujercitas",
+              "url": "https://es.wikipedia.org/wiki/Mujercitas",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "173325880"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "En la novela, las chicas traban amistad con un vecino, el joven adolescente Laurie, que se vuelve el mejor amigo de Jo.",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "development_excerpt"
+              },
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "En la novela, las chicas traban amistad con un vecino, el joven adolescente Laurie, que se vuelve el mejor amigo de Jo. La entretenida obra muestra el contexto hist\u00f3rico de la \u00e9poca.",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "partial"
+              }
+            ],
+            "identity_text": "Mujercitas (en ingl\u00e9s, Little Women o Little Women or Meg, Jo, Beth and Amy) es una novela de la escritora estadounidense Louisa May Alcott publicada el 30 de septiembre de 1868, que trata la vida de cuatro ni\u00f1as que, tras pasar la adolescencia con la Guerra Civil en los Estados Unidos como fondo, entre 1861 y 1865, se convierten en mujeres. Est\u00e1 basada en las vivencias de la autora durante su ni\u00f1ez en la ciudad de Concord, Massachusetts.\u200b La novela se public\u00f3 sin que existan indicios de una secuela previamente planeada, si bien en el \u00faltimo p\u00e1rrafo de la novela la autora escribe: Y fue el caso que por el \u00e9xito generado y las peticiones de diversos lectores, en 1869 Alcott volvi\u00f3 a alzar el tel\u00f3n con la publicaci\u00f3n de Aquellas mujercitas (en ingl\u00e9s, Good Wives), que transcurre cuatro a\u00f1os despu\u00e9s de Mujercitas y muestra las dificultades que las protagonistas enfrentan durante su vida adulta. Ambos libros constituyen lo que en Europa se edit\u00f3 como un solo volumen. Los siguientes trabajos de Alcott: Little Men (Hombrecitos) y Jo's Boys (Los muchachos de Jo), son continuaciones de esas dos novelas, muestran a los hijos, sobrinos y alumnos de las Mujercitas construyendo sus vidas.",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 3,
+            "title": "Little Women",
+            "author": "Fuente web",
+            "description": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a second volume (titled Good Wives or Little Women Married in the United Kingdom, though the name originated with the publisher and not Alcott). It was also met with success. The two volumes were issued in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdependent and each necessary to the achievement of its heroine's individual identity.\" According to Sarah Elbert, Alcott created a new form of literature, one...",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://en.wikipedia.org/wiki/Little_Women",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793338887.0307164",
+            "evidence_scope": "summary",
+            "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+            "work_title": "Little Women",
+            "work_author": "Louisa May Alcott",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793943687.0307164",
+            "evidence_hash": "31effb167f8938cff8ad03577a6457b4979f7b265278fc717d3c65d2a9c046e6",
+            "memory_source_id": "d7794a1402399d1e11646a9a3daad71e7007ff0d3f83fc64e109297b4e52ef87",
+            "last_verified_at": "1793338887.0307164",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Little Women",
+              "url": "https://en.wikipedia.org/wiki/Little_Women",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "1374015307"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a second volume (titled Good Wives or Little Women Married in the United Kingdom, though the name originated with the publisher and not Alcott). It was also met with success. The two volumes were issued in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdependent and each necessary to the achievement of its heroine's individual identity.\" According to Sarah Elbert, Alcott created a new form of literature, on",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 4,
+            "title": "Little Women",
+            "author": "Fuente web",
+            "description": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a second volume (titled Good Wives or Little Women Married in the United Kingdom, though the name originated with the publisher and not Alcott). It was also met with success. The two volumes were issued in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdependent and each necessary to the achievement of its heroine's individual identity.\" According to Sarah Elbert, Alcott created a new form of literature, one...",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://en.wikipedia.org/wiki/Little_Women",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793338891.7305207",
+            "evidence_scope": "characters",
+            "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+            "work_title": "Little Women",
+            "work_author": "Louisa May Alcott",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793943691.7305207",
+            "evidence_hash": "931ad0c7aa81b0419745ac668658d59a9d0533f709a511d2e40139980c674a34",
+            "memory_source_id": "d1733bc28dd0de7b4b36f3784cf6b9ba4b6d2123adc9c84966b4bbfbdbab7fa4",
+            "last_verified_at": "1793338891.7305207",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Little Women",
+              "url": "https://en.wikipedia.org/wiki/Little_Women",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "1374015307"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a second volume (titled Good Wives or Little Women Married in the United Kingdom, though the name originated with the publisher and not Alcott). It was also met with success. The two volumes were issued in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdependent and each necessary to the achievement of its heroine's individual identity.\" According to Sarah Elbert, Alcott created a new form of literature, on",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 5,
+            "title": "Mujercitas",
+            "author": "Fuente web",
+            "description": "== Personajes == Amy: La menor de las hermanas, con doce a\u00f1os. Josephine ( Jo ): No acepta casarse con su mejor amigo, Theodore Laurence ( Laurie ) y a\u00f1os despu\u00e9s, cuando ya es una mujer que trabaja por cuenta propia, se casa con el profesor Bhaer, de origen alem\u00e1n, quien la estimula a seguir escribiendo y desarrollar su intelecto. Margaret ( Meg ): La mayor de las hermanas March. Elizabeth ( Beth ): La tercera de las hijas del Dr. March. Theodore ( Laurie o Teddy ): Un joven encantador, travieso y rico, que vive al lado de la familia March en compa\u00f1\u00eda de su abuelo sobreprotector. Margaret March ( Marmee o Se\u00f1ora March ): La madre de las chicas. Robert March: Padre de las chicas y esposo de Margaret March. James Laurence: Vecino rico de la familia March. Hannah Mullet: La criada de la familia March, una mujer mayor, amable y leal. T\u00eda March: Una viuda rica. Profesor Friedrich \"Fritz\" Bhaer: Un inmigrante alem\u00e1n, pobre e intelectual que era un reconocido profesor en Berl\u00edn , pero ante la enfermedad terminal de su \u00fanica hermana, le promete a esta criar a sus dos sobrinos en Estados Unidos, ya que es la patria del padre de los ni\u00f1os, ya fallecido. John Brooke: Tutor de Laurie que se enamora de Meg, quien duda antes de aceptarlo, hasta que la t\u00eda March le proh\u00edbe a la joven hacerlo, bajo amenaza de desheredarla, y descubre que est\u00e1 tambi\u00e9n enamorada de Brooke.",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Mujercitas",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793362080.3269987",
+            "evidence_scope": "characters",
+            "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+            "work_title": "Little Women",
+            "work_author": "Louisa May Alcott",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793966880.3269987",
+            "evidence_hash": "5a320c666fa4d4ea867cd4d64e2a4033af11334efab07cb3d7512a2cb7c6135a",
+            "memory_source_id": "89ea640a36c62849d2de7a704ab08bba85b872a9fea6622efb66bcaa9c434dfb",
+            "last_verified_at": "1793362080.3269987",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Mujercitas",
+              "url": "https://es.wikipedia.org/wiki/Mujercitas",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "173325880"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "Mujercitas (en ingl\u00e9s, Little Women o Little Women or Meg, Jo, Beth and Amy) es una novela de la escritora estadounidense Louisa May Alcott publicada el 30 de septiembre de 1868, que trata la vida de cuatro ni\u00f1as que, tras pasar la adolescencia con la Guerra Civil en los Estados Unidos como fondo, entre 1861 y 1865, se convierten en mujeres. Est\u00e1 basada en las vivencias de la autora durante su ni\u00f1ez en la ciudad de Concord, Massachusetts.\u200b La novela se public\u00f3 sin que existan indicios de una secuela previamente planeada, si bien en el \u00faltimo p\u00e1rrafo de la novela la autora escribe: Y fue el caso que por el \u00e9xito generado y las peticiones de diversos lectores, en 1869 Alcott volvi\u00f3 a alzar el tel\u00f3n con la publicaci\u00f3n de Aquellas mujercitas (en ingl\u00e9s, Good Wives), que transcurre cuatro a\u00f1os despu\u00e9s de Mujercitas y muestra las dificultades que las protagonistas enfrentan durante su vida adulta. Ambos libros constituyen lo que en Europa se edit\u00f3 como un solo volumen. Los siguientes trabajos de Alcott: Little Men (Hombrecitos) y Jo's Boys (Los muchachos de Jo), son continuaciones de esas dos novelas, muestran a los hijos, sobrinos y alumnos de las Mujercitas construyendo sus vidas.",
+            "character_facts": [
+              {
+                "name": "Amy",
+                "role": "La menor de las hermanas, con doce a\u00f1os.",
+                "evidence": "Amy: La menor de las hermanas, con doce a\u00f1os.",
+                "aliases": []
+              },
+              {
+                "name": "Josephine ( Jo )",
+                "role": "No acepta casarse con su mejor amigo, Theodore Laurence ( Laurie ) y a\u00f1os despu\u00e9s, cuando ya es una mujer que trabaja por cuenta propia, se casa con el profesor Bhaer, de origen alem\u00e1n, quien la estimula a seguir escribiendo y desarrollar su intelecto.",
+                "evidence": "Josephine ( Jo ): No acepta casarse con su mejor amigo, Theodore Laurence ( Laurie ) y a\u00f1os despu\u00e9s, cuando ya es una mujer que trabaja por cuenta propia, se casa con el profesor Bhaer, de origen alem\u00e1n, quien la estimula a seguir escribiendo y desarrollar su intelecto.",
+                "aliases": []
+              },
+              {
+                "name": "Margaret ( Meg )",
+                "role": "La mayor de las hermanas March.",
+                "evidence": "Margaret ( Meg ): La mayor de las hermanas March.",
+                "aliases": []
+              },
+              {
+                "name": "Elizabeth ( Beth )",
+                "role": "La tercera de las hijas del Dr. March.",
+                "evidence": "Elizabeth ( Beth ): La tercera de las hijas del Dr. March.",
+                "aliases": []
+              },
+              {
+                "name": "Theodore ( Laurie o Teddy )",
+                "role": "Un joven encantador, travieso y rico, que vive al lado de la familia March en compa\u00f1\u00eda de su abuelo sobreprotector.",
+                "evidence": "Theodore ( Laurie o Teddy ): Un joven encantador, travieso y rico, que vive al lado de la familia March en compa\u00f1\u00eda de su abuelo sobreprotector.",
+                "aliases": []
+              },
+              {
+                "name": "Margaret March ( Marmee o Se\u00f1ora March )",
+                "role": "La madre de las chicas.",
+                "evidence": "Margaret March ( Marmee o Se\u00f1ora March ): La madre de las chicas.",
+                "aliases": []
+              },
+              {
+                "name": "Robert March",
+                "role": "Padre de las chicas y esposo de Margaret March.",
+                "evidence": "Robert March: Padre de las chicas y esposo de Margaret March.",
+                "aliases": []
+              },
+              {
+                "name": "James Laurence",
+                "role": "Vecino rico de la familia March.",
+                "evidence": "James Laurence: Vecino rico de la familia March.",
+                "aliases": []
+              },
+              {
+                "name": "Hannah Mullet",
+                "role": "La criada de la familia March, una mujer mayor, amable y leal.",
+                "evidence": "Hannah Mullet: La criada de la familia March, una mujer mayor, amable y leal.",
+                "aliases": []
+              },
+              {
+                "name": "T\u00eda March",
+                "role": "Una viuda rica.",
+                "evidence": "T\u00eda March: Una viuda rica.",
+                "aliases": []
+              },
+              {
+                "name": "Profesor Friedrich \"Fritz\" Bhaer",
+                "role": "Un inmigrante alem\u00e1n, pobre e intelectual que era un reconocido profesor en Berl\u00edn , pero ante la enfermedad terminal de su \u00fanica hermana, le promete a esta criar a sus dos sobrinos en Estados Unidos, ya que es la patria del padre de los ni\u00f1os, ya fallecido.",
+                "evidence": "Profesor Friedrich \"Fritz\" Bhaer: Un inmigrante alem\u00e1n, pobre e intelectual que era un reconocido profesor en Berl\u00edn , pero ante la enfermedad terminal de su \u00fanica hermana, le promete a esta criar a sus dos sobrinos en Estados Unidos, ya que es la patria del padre de los ni\u00f1os, ya fallecido.",
+                "aliases": []
+              },
+              {
+                "name": "John Brooke",
+                "role": "Tutor de Laurie que se enamora de Meg, quien duda antes de aceptarlo, hasta que la t\u00eda March le proh\u00edbe a la joven hacerlo, bajo amenaza de desheredarla, y descubre que est\u00e1 tambi\u00e9n enamorada de Brooke.",
+                "evidence": "John Brooke: Tutor de Laurie que se enamora de Meg, quien duda antes de aceptarlo, hasta que la t\u00eda March le proh\u00edbe a la joven hacerlo, bajo amenaza de desheredarla, y descubre que est\u00e1 tambi\u00e9n enamorada de Brooke.",
+                "aliases": []
+              }
+            ],
+            "isbns": [],
+            "categories": []
+          }
+        ]
+      }
+    ],
+    "duckduckgo_paused_control": false,
+    "content_manually_reviewed": false,
+    "mysql_row_counts": {
+      "auth_group": 0,
+      "auth_group_permissions": 0,
+      "auth_permission": 152,
+      "auth_user": 179,
+      "auth_user_groups": 0,
+      "auth_user_user_permissions": 0,
+      "core_asistenteia": 1,
+      "core_autor": 31,
+      "core_clickconversion": 185,
+      "core_conversacionia": 50,
+      "core_editorial": 34,
+      "core_elementolistalectura": 2,
+      "core_estadolectura": 451,
+      "core_eventoanalitica": 384,
+      "core_genero": 12,
+      "core_historialchatbot": 5,
+      "core_historialpreciolibro": 223,
+      "core_kbname": 14166,
+      "core_kbprojection": 8,
+      "core_kbrecord": 13518,
+      "core_kbrelation": 2598,
+      "core_kbversion": 13518,
+      "core_libro": 55,
+      "core_libro_generos": 54,
+      "core_librofavorito": 231,
+      "core_listalectura": 2,
+      "core_mensajecontacto": 3,
+      "core_mensajeia": 190,
+      "core_perfilusuario": 158,
+      "core_preciolibrotienda": 117,
+      "core_preguntafrecuente": 0,
+      "core_recomendacion": 0,
+      "core_recomendacionialog": 0,
+      "core_resena": 116,
+      "django_admin_log": 0,
+      "django_content_type": 38,
+      "django_migrations": 27,
+      "django_session": 88,
+      "suscripciones_historialpago": 42,
+      "suscripciones_plansuscripcion": 3,
+      "suscripciones_suscripcionusuario": 157
+    },
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  },
+  {
+    "passed": true,
+    "question": "Dime la trama de The Secret Garden de Frances Hodgson Burnett",
+    "answer": "The Secret Garden narra la historia de Mary Lennox, una ni\u00f1a enferma y malcriada que vive en la India hasta que sus padres mueren durante una epidemia de c\u00f3lera.\n\nEste resumen se centra en el planteamiento de la obra.\n\nFuente: https://en.wikipedia.org/wiki/The_Secret_Garden\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+    "status": "answered",
+    "not_in_legacy_catalog": null,
+    "sse_done": true,
+    "seconds": 14.5033,
+    "cards": [
+      {
+        "id": "sqlkb:08d2b5331d2b89759e69875baeede00bc0bb28b13005f7e399588c90dc79e3fc",
+        "title": "The Secret Garden",
+        "author": "Frances Hodgson Burnett",
+        "synopsis": "The Secret Garden narra la historia de Mary Lennox, una ni\u00f1a enferma y malcriada que vive en la India hasta que sus padres mueren durante una epidemia de c\u00f3lera. Este resumen se centra en el planteamiento de la obra.",
+        "image_url": "",
+        "links": [
+          {
+            "label": "Google Books",
+            "url": "https://books.google.com/books?q=The+Secret+Garden+Frances+Hodgson+Burnett"
+          },
+          {
+            "label": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/113"
+          },
+          {
+            "label": "Amazon",
+            "url": "https://www.amazon.com/s?k=The+Secret+Garden+Frances+Hodgson+Burnett&i=stripbooks"
+          },
+          {
+            "label": "Buscalibre",
+            "url": "https://www.buscalibre.cl/libros/search?q=The+Secret+Garden+Frances+Hodgson+Burnett"
+          }
+        ]
+      }
+    ],
+    "diagnostics": {
+      "elapsed_ms": 14455,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 2,
+      "verified_narrative_answer": true,
+      "narrative_synthesized": true,
+      "partial_evidence": true,
+      "work_type": "fiction",
+      "progress_metrics": {
+        "elapsed_ms": 14494.18,
+        "first_phase_emitted_ms": 12.128,
+        "model_calls_started": 2,
+        "stage_totals_ms": {
+          "conversation": 0.596,
+          "cache_lookup": 0.686,
+          "knowledge_lookup": 719.117,
+          "model_inspection": 37.107,
+          "generation": 6723.093,
+          "audit": 7128.935,
+          "finalization": 38.745
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 4.19,
+            "elapsed_ms": 0.596,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 11.431,
+            "elapsed_ms": 0.686,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 21.491,
+            "elapsed_ms": 369.738,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 96.722,
+            "elapsed_ms": 45.27,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 213.251,
+            "elapsed_ms": 176.957,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 281.246,
+            "elapsed_ms": 64.297,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 405.088,
+            "elapsed_ms": 62.855,
+            "status": "ok"
+          },
+          {
+            "stage": "generation",
+            "started_ms": 580.72,
+            "elapsed_ms": 6723.093,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 580.735,
+            "elapsed_ms": 37.101,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 7304.006,
+            "elapsed_ms": 7125.818,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 7304.025,
+            "elapsed_ms": 0.006,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 14430.241,
+            "elapsed_ms": 1.573,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 14432.459,
+            "elapsed_ms": 1.544,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 14455.429,
+            "elapsed_ms": 38.745,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 12.128
+          },
+          {
+            "stage": "writing",
+            "elapsed_ms": 580.71
+          },
+          {
+            "stage": "review",
+            "elapsed_ms": 7303.988
+          }
+        ]
+      },
+      "stage_timings": [
+        {
+          "model": "qwen3.5:9b-q4_K_M",
+          "total_ms": 6659.466,
+          "eval_ms": 4971.0,
+          "status": "ok",
+          "stage": "answer",
+          "prompt_eval_count": 2377,
+          "load_ms": 6.217,
+          "eval_count": 143,
+          "elapsed_ms": 6723,
+          "prompt_eval_ms": 1334.211
+        },
+        {
+          "model": "qwen3.5:9b-q4_K_M",
+          "total_ms": 7108.222,
+          "eval_ms": 4827.873,
+          "status": "ok",
+          "stage": "audit",
+          "prompt_eval_count": 4004,
+          "load_ms": 7.973,
+          "eval_count": 141,
+          "elapsed_ms": 7126,
+          "prompt_eval_ms": 2172.355
+        }
+      ],
+      "provider": "verified-narrative-engine"
+    },
+    "reader_data_written": false,
+    "sources": [],
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": null
+      },
+      {
+        "stage": "retrieval",
+        "sources": [
+          {
+            "id": 1,
+            "title": "The Secret Garden",
+            "author": "Frances Hodgson Burnett",
+            "description": "The Secret Garden, de Frances Hodgson Burnett. Temas del cat\u00e1logo: Orphans -- Juvenile fiction, People with disabilities -- Juvenile fiction, Gardens -- Juvenile fiction, Yorkshire (England) -- Juvenile fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "sqlkb:08d2b5331d2b89759e69875baeede00bc0bb28b13005f7e399588c90dc79e3fc",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/113",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "",
+            "license": "CC0-1.0",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "synopsis": "",
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Orphans -- Juvenile fiction",
+              "People with disabilities -- Juvenile fiction",
+              "Gardens -- Juvenile fiction",
+              "Yorkshire (England) -- Juvenile fiction"
+            ]
+          },
+          {
+            "id": 2,
+            "title": "The Secret Garden",
+            "author": "Fuente web",
+            "description": "The Secret Garden is a children's novel by Frances Hodgson Burnett first published in book form in 1911, after serialisation in The American Magazine (November 1910 \u2013 August 1911). Set in England, it is seen as a classic of English children's literature. The American edition was published by the Frederick A. Stokes Company with illustrations by M. L. Kirk, and the British edition by Heinemann with illustrations by Charles Robinson. Several stage and film adaptations have been made of The Secret Garden. == Plot summary == At the turn of the 20th century, Mary Lennox is a sickly, neglected and unloved 10-year-old girl, born in British India to wealthy, self-indulgent British parents. She is cared for primarily by native servants, who spoil her and allow her to become aggressive, self-centred and unpleasant. After a cholera epidemic kills her parents, Mary is left alone when the few surviving servants flee. Mary is discovered by British soldiers who place her in the care of an English clergyman, whose children taunt her by calling her \"Mistress Mary, quite contrary\". She is sent to England to live with her uncle, Archibald Craven, husband of her father's sister Lilias. He lives on the Yorkshire Moors in a large country house, Misselthwaite Manor. On arrival, Mary discovers that Lilias is dead and that Archibald is a hunchback. At first, Mary remains angry and defiant. She dislikes her new home, the people living in it, who do not pander to her as she was in India, and, most of all, the bleak moor on which it sits. Over time, however, she becomes healthier and less cantankerous. She befriends her maid, Martha Sowerby, who tells Mary about Lilias, who would spend hours in a private walled garden growing roses. Lilias died after an accident in the garden ten years previous",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://en.wikipedia.org/wiki/The_Secret_Garden",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793362111.4137256",
+            "evidence_scope": "summary",
+            "work_id": "litmate:1740cd8c34812644000a8d8d",
+            "work_title": "The Secret Garden",
+            "work_author": "Frances Hodgson Burnett",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793966911.4137256",
+            "evidence_hash": "ead8ddc820876563ddb73b2290f0e1340c497fda96bf75c26ab35cccca0f75ed",
+            "memory_source_id": "f530a650f9042a8d934b1cb0cca82a98083f20da3541a68f62fc4f5b8bd4459c",
+            "last_verified_at": "1793362111.4137256",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "The Secret Garden",
+              "url": "https://en.wikipedia.org/wiki/The_Secret_Garden",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "1379393998"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "The Secret Garden is a children's novel by Frances Hodgson Burnett first published in book form in 1911, after serialisation in The American Magazine (November 1910 \u2013 August 1911).",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "premise"
+              },
+              {
+                "subject": "The Secret Garden",
+                "relation": "",
+                "value": "",
+                "evidence": "The Secret Garden is a children's novel by Frances Hodgson Burnett first published in book form in 1911, after serialisation in The American Magazine (November 1910 \u2013 August 1911). Set in England, it is seen as a classic of English children's literature. The American edition was published by the Frederick A. Stokes Company with illustrations by M. L. Kirk, and the British edition by Heinemann with illustrations by Charles Robinson. Several stage and film adaptations have been made of The Secret Garden. == Plot summary == At the turn of the 20th century, Mary Lennox is a sickly, neglected and unloved 10-year-old girl, born in British India to wealthy, self-indulgent British parents. She is ca",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "events",
+                "type": "",
+                "scope": "partial"
+              }
+            ],
+            "identity_text": "The Secret Garden is a children's novel by Frances Hodgson Burnett first published in book form in 1911, after serialisation in The American Magazine (November 1910 \u2013 August 1911). Set in England, it is seen as a classic of English children's literature. The American edition was published by the Frederick A. Stokes Company with illustrations by M. L. Kirk, and the British edition by Heinemann with illustrations by Charles Robinson. Several stage and film adaptations have been made of The Secret Garden.",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          }
+        ]
+      },
+      {
+        "stage": "draft",
+        "output": {
+          "status": "answer",
+          "text": "The Secret Garden narra la historia de Mary Lennox, una ni\u00f1a enferma y malcriada que vive en la India hasta que sus padres mueren durante una epidemia de c\u00f3lera. Tras ser enviada a Inglaterra para vivir con su t\u00edo Archibald Craven, Mary descubre un jard\u00edn secreto abandonado y comienza a restaurarlo junto con otros personajes, lo que le permite sanar f\u00edsicamente y emocionalmente mientras recupera la confianza en s\u00ed misma.",
+          "basis": "sources",
+          "citations": [
+            2
+          ],
+          "needs_web": false,
+          "books": []
+        }
+      },
+      {
+        "stage": "audit",
+        "output": {
+          "decision": "repair",
+          "only_books": true,
+          "coverage": [
+            {
+              "question_id": 1,
+              "status": "answered"
+            }
+          ],
+          "claims": [
+            {
+              "statement": "The Secret Garden narra la historia de Mary Lennox, una ni\u00f1a enferma y malcriada que vive en la India hasta que sus padres mueren durante una epidemia de c\u00f3lera.",
+              "verdict": "supported",
+              "source_id": 2,
+              "evidence": "Garden. == Plot summary == At the turn of the 20th century, Mary Lennox is a sickly, neglected and unloved 10-year-old girl, born in British India to wealthy, self-indulgent British parents. She is cared for primarily by native servants, who spoil her and allow her to become aggressive, self-centred"
+            },
+            {
+              "statement": "Tras ser enviada a Inglaterra para vivir con su t\u00edo Archibald Craven, Mary descubre un jard\u00edn secreto abandonado y comienza a restaurarlo junto con otros personajes, lo que le permite sanar f\u00edsicamente y emocionalmente mientras recupera la confianza en s\u00ed misma.",
+              "verdict": "unverified",
+              "source_id": 0,
+              "evidence": ""
+            }
+          ],
+          "search_queries": [],
+          "issues": [
+            "La afirmaci\u00f3n c2 sobre la restauraci\u00f3n del jard\u00edn y la sanaci\u00f3n de Mary no est\u00e1 respaldada por el texto literal de las fuentes proporcionadas (audit_evidence_pool), que solo menciona el descubrimiento del jard\u00edn y la muerte de Lilias, sin describir el proceso de restauraci\u00f3n ni la recuperaci\u00f3n f\u00edsica/emocional detallada. Se requiere unverified para esa parte espec\u00edfica."
+          ]
+        }
+      },
+      {
+        "request": {
+          "task": "summary",
+          "title": "The Secret Garden",
+          "targets": [],
+          "author_hint": "Frances Hodgson Burnett",
+          "format": "",
+          "ambiguous": false
+        },
+        "diagnostics": {
+          "verified_narrative_answer": true,
+          "audit": {
+            "decision": "approve",
+            "only_books": true,
+            "coverage": [
+              {
+                "question_id": 1,
+                "status": "uncertain"
+              }
+            ],
+            "claims": [
+              {
+                "statement": "The Secret Garden narra la historia de Mary Lennox, una ni\u00f1a enferma y malcriada que vive en la India hasta que sus padres mueren durante una epidemia de c\u00f3lera.",
+                "verdict": "supported",
+                "source_id": 2,
+                "evidence": "Garden. == Plot summary == At the turn of the 20th century, Mary Lennox is a sickly, neglected and unloved 10-year-old girl, born in British India to wealthy, self-indulgent British parents. She is cared for primarily by native servants, who spoil her and allow her to become aggressive, self-centred"
+              }
+            ],
+            "search_queries": [],
+            "issues": []
+          },
+          "work_type": "fiction",
+          "model_calls": 2,
+          "narrative_coverage": "premise",
+          "partial_evidence": true,
+          "narrative_synthesized": true,
+          "temporal_claims_rejected": 0,
+          "character_list_claims_rejected": 0,
+          "event_target_claims_rejected": 0,
+          "unsupported_sentences_removed": true,
+          "usage": {
+            "prompt_tokens": 6381,
+            "completion_tokens": 284,
+            "total_tokens": 6665
+          },
+          "stage_timings": [
+            {
+              "stage": "answer",
+              "model": "qwen3.5:9b-q4_K_M",
+              "elapsed_ms": 6723,
+              "status": "ok",
+              "load_ms": 6.217,
+              "prompt_eval_ms": 1334.211,
+              "eval_ms": 4971.0,
+              "total_ms": 6659.466,
+              "prompt_eval_count": 2377,
+              "eval_count": 143
+            },
+            {
+              "stage": "audit",
+              "model": "qwen3.5:9b-q4_K_M",
+              "elapsed_ms": 7126,
+              "status": "ok",
+              "load_ms": 7.973,
+              "prompt_eval_ms": 2172.355,
+              "eval_ms": 4827.873,
+              "total_ms": 7108.222,
+              "prompt_eval_count": 4004,
+              "eval_count": 141
+            }
+          ],
+          "narrative_trace": [
+            {
+              "stage": "stored_content",
+              "bound": 2,
+              "content": 1,
+              "providers": [
+                "Project Gutenberg",
+                "Wikipedia"
+              ]
+            }
+          ],
+          "progress_metrics": {
+            "stage_timings": [
+              {
+                "stage": "conversation",
+                "started_ms": 4.19,
+                "elapsed_ms": 0.596,
+                "status": "ok"
+              },
+              {
+                "stage": "cache_lookup",
+                "started_ms": 11.431,
+                "elapsed_ms": 0.686,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 21.491,
+                "elapsed_ms": 369.738,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 96.722,
+                "elapsed_ms": 45.27,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 213.251,
+                "elapsed_ms": 176.957,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 281.246,
+                "elapsed_ms": 64.297,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 405.088,
+                "elapsed_ms": 62.855,
+                "status": "ok"
+              },
+              {
+                "stage": "generation",
+                "started_ms": 580.72,
+                "elapsed_ms": 6723.093,
+                "status": "ok"
+              },
+              {
+                "stage": "model_inspection",
+                "started_ms": 580.735,
+                "elapsed_ms": 37.101,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 7304.006,
+                "elapsed_ms": 7125.818,
+                "status": "ok"
+              },
+              {
+                "stage": "model_inspection",
+                "started_ms": 7304.025,
+                "elapsed_ms": 0.006,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 14430.241,
+                "elapsed_ms": 1.573,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 14432.459,
+                "elapsed_ms": 1.544,
+                "status": "ok"
+              }
+            ],
+            "stage_totals_ms": {
+              "conversation": 0.596,
+              "cache_lookup": 0.686,
+              "knowledge_lookup": 719.117,
+              "model_inspection": 37.107,
+              "generation": 6723.093,
+              "audit": 7128.935
+            },
+            "model_calls_started": 2,
+            "progress_events": [
+              {
+                "stage": "search",
+                "elapsed_ms": 12.128
+              },
+              {
+                "stage": "writing",
+                "elapsed_ms": 580.71
+              },
+              {
+                "stage": "review",
+                "elapsed_ms": 7303.988
+              }
+            ],
+            "elapsed_ms": 14438.531,
+            "first_phase_emitted_ms": 12.128
+          },
+          "language_presentation": {
+            "target": "es",
+            "original_text": "The Secret Garden narra la historia de Mary Lennox, una ni\u00f1a enferma y malcriada que vive en la India hasta que sus padres mueren durante una epidemia de c\u00f3lera.\n\nEste resumen se centra en el planteamiento de la obra.\n\nFuente: https://en.wikipedia.org/wiki/The_Secret_Garden\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+            "translated_fields": 0,
+            "cache_hits": 0,
+            "untranslated_fields": [],
+            "card_excerpt_from_audited_response": true,
+            "audit_applies_to_original": true,
+            "cards": [
+              {
+                "id": "sqlkb:08d2b5331d2b89759e69875baeede00bc0bb28b13005f7e399588c90dc79e3fc",
+                "title": "The Secret Garden",
+                "author": "Frances Hodgson Burnett",
+                "synopsis": "The Secret Garden narra la historia de Mary Lennox, una ni\u00f1a enferma y malcriada que vive en la India hasta que sus padres mueren durante una epidemia de c\u00f3lera.\n\nEste resumen se centra en el planteamiento de la obra.",
+                "image_url": "",
+                "links": [
+                  {
+                    "label": "Google Books",
+                    "url": "https://books.google.com/books?q=The+Secret+Garden+Frances+Hodgson+Burnett"
+                  },
+                  {
+                    "label": "Project Gutenberg",
+                    "url": "https://www.gutenberg.org/ebooks/113"
+                  },
+                  {
+                    "label": "Amazon",
+                    "url": "https://www.amazon.com/s?k=The+Secret+Garden+Frances+Hodgson+Burnett&i=stripbooks"
+                  },
+                  {
+                    "label": "Buscalibre",
+                    "url": "https://www.buscalibre.cl/libros/search?q=The+Secret+Garden+Frances+Hodgson+Burnett"
+                  }
+                ]
+              }
+            ]
+          },
+          "elapsed_ms": 14439,
+          "chat_budget_seconds": 36.0
+        },
+        "sources": [
+          {
+            "id": 1,
+            "title": "The Secret Garden",
+            "author": "Frances Hodgson Burnett",
+            "description": "The Secret Garden, de Frances Hodgson Burnett. Temas del cat\u00e1logo: Orphans -- Juvenile fiction, People with disabilities -- Juvenile fiction, Gardens -- Juvenile fiction, Yorkshire (England) -- Juvenile fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "sqlkb:08d2b5331d2b89759e69875baeede00bc0bb28b13005f7e399588c90dc79e3fc",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/113",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "",
+            "license": "CC0-1.0",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "synopsis": "",
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Orphans -- Juvenile fiction",
+              "People with disabilities -- Juvenile fiction",
+              "Gardens -- Juvenile fiction",
+              "Yorkshire (England) -- Juvenile fiction"
+            ]
+          },
+          {
+            "id": 2,
+            "title": "The Secret Garden",
+            "author": "Fuente web",
+            "description": "The Secret Garden is a children's novel by Frances Hodgson Burnett first published in book form in 1911, after serialisation in The American Magazine (November 1910 \u2013 August 1911). Set in England, it is seen as a classic of English children's literature. The American edition was published by the Frederick A. Stokes Company with illustrations by M. L. Kirk, and the British edition by Heinemann with illustrations by Charles Robinson. Several stage and film adaptations have been made of The Secret Garden. == Plot summary == At the turn of the 20th century, Mary Lennox is a sickly, neglected and unloved 10-year-old girl, born in British India to wealthy, self-indulgent British parents. She is cared for primarily by native servants, who spoil her and allow her to become aggressive, self-centred and unpleasant. After a cholera epidemic kills her parents, Mary is left alone when the few surviving servants flee. Mary is discovered by British soldiers who place her in the care of an English clergyman, whose children taunt her by calling her \"Mistress Mary, quite contrary\". She is sent to England to live with her uncle, Archibald Craven, husband of her father's sister Lilias. He lives on the Yorkshire Moors in a large country house, Misselthwaite Manor. On arrival, Mary discovers that Lilias is dead and that Archibald is a hunchback. At first, Mary remains angry and defiant. She dislikes her new home, the people living in it, who do not pander to her as she was in India, and, most of all, the bleak moor on which it sits. Over time, however, she becomes healthier and less cantankerous. She befriends her maid, Martha Sowerby, who tells Mary about Lilias, who would spend hours in a private walled garden growing roses. Lilias died after an accident in the garden ten years previous",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://en.wikipedia.org/wiki/The_Secret_Garden",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793362111.4137256",
+            "evidence_scope": "summary",
+            "work_id": "litmate:1740cd8c34812644000a8d8d",
+            "work_title": "The Secret Garden",
+            "work_author": "Frances Hodgson Burnett",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793966911.4137256",
+            "evidence_hash": "ead8ddc820876563ddb73b2290f0e1340c497fda96bf75c26ab35cccca0f75ed",
+            "memory_source_id": "f530a650f9042a8d934b1cb0cca82a98083f20da3541a68f62fc4f5b8bd4459c",
+            "last_verified_at": "1793362111.4137256",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "The Secret Garden",
+              "url": "https://en.wikipedia.org/wiki/The_Secret_Garden",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "1379393998"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "The Secret Garden is a children's novel by Frances Hodgson Burnett first published in book form in 1911, after serialisation in The American Magazine (November 1910 \u2013 August 1911).",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "premise"
+              },
+              {
+                "subject": "The Secret Garden",
+                "relation": "",
+                "value": "",
+                "evidence": "The Secret Garden is a children's novel by Frances Hodgson Burnett first published in book form in 1911, after serialisation in The American Magazine (November 1910 \u2013 August 1911). Set in England, it is seen as a classic of English children's literature. The American edition was published by the Frederick A. Stokes Company with illustrations by M. L. Kirk, and the British edition by Heinemann with illustrations by Charles Robinson. Several stage and film adaptations have been made of The Secret Garden. == Plot summary == At the turn of the 20th century, Mary Lennox is a sickly, neglected and unloved 10-year-old girl, born in British India to wealthy, self-indulgent British parents. She is ca",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "events",
+                "type": "",
+                "scope": "partial"
+              }
+            ],
+            "identity_text": "The Secret Garden is a children's novel by Frances Hodgson Burnett first published in book form in 1911, after serialisation in The American Magazine (November 1910 \u2013 August 1911). Set in England, it is seen as a classic of English children's literature. The American edition was published by the Frederick A. Stokes Company with illustrations by M. L. Kirk, and the British edition by Heinemann with illustrations by Charles Robinson. Several stage and film adaptations have been made of The Secret Garden.",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          }
+        ]
+      }
+    ],
+    "duckduckgo_paused_control": false,
+    "content_manually_reviewed": false,
+    "mysql_row_counts": {
+      "auth_group": 0,
+      "auth_group_permissions": 0,
+      "auth_permission": 152,
+      "auth_user": 179,
+      "auth_user_groups": 0,
+      "auth_user_user_permissions": 0,
+      "core_asistenteia": 1,
+      "core_autor": 31,
+      "core_clickconversion": 185,
+      "core_conversacionia": 50,
+      "core_editorial": 34,
+      "core_elementolistalectura": 2,
+      "core_estadolectura": 451,
+      "core_eventoanalitica": 384,
+      "core_genero": 12,
+      "core_historialchatbot": 5,
+      "core_historialpreciolibro": 223,
+      "core_kbname": 14166,
+      "core_kbprojection": 8,
+      "core_kbrecord": 13518,
+      "core_kbrelation": 2598,
+      "core_kbversion": 13518,
+      "core_libro": 55,
+      "core_libro_generos": 54,
+      "core_librofavorito": 231,
+      "core_listalectura": 2,
+      "core_mensajecontacto": 3,
+      "core_mensajeia": 190,
+      "core_perfilusuario": 158,
+      "core_preciolibrotienda": 117,
+      "core_preguntafrecuente": 0,
+      "core_recomendacion": 0,
+      "core_recomendacionialog": 0,
+      "core_resena": 116,
+      "django_admin_log": 0,
+      "django_content_type": 38,
+      "django_migrations": 27,
+      "django_session": 88,
+      "suscripciones_historialpago": 42,
+      "suscripciones_plansuscripcion": 3,
+      "suscripciones_suscripcionusuario": 157
+    },
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  }
+]

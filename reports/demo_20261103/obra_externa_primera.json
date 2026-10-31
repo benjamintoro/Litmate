@@ -1,0 +1,146 @@
+{
+  "scope": "local HTTP",
+  "external_network_tested": false,
+  "checks": {
+    "chat_auth_required": false,
+    "static_auth_required": false,
+    "admin_blocked": true,
+    "unknown_host_blocked": true,
+    "chat_html": true,
+    "frame_denied": true,
+    "csrf_cookie_present": true,
+    "javascript": true,
+    "avatar": true,
+    "csrf_enforced": true
+  },
+  "conversation": [
+    {
+      "question": "\u00bfDe qu\u00e9 trata La mala costumbre de Alana S. Portero?",
+      "status": "answered",
+      "answer": "La historia se centra en la vida de una joven mujer trans, proveniente de una familia obrera, quien crece en el extrarradio de Madrid durante las d\u00e9cadas de 1980 y 1990.\n\nFuente: https://es.wikipedia.org/wiki/La_mala_costumbre\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+      "books": [
+        {
+          "id": "/works/OL35243227W",
+          "title": "La mala costumbre",
+          "author": "Alana S. Portero",
+          "synopsis": "",
+          "image_url": "https://covers.openlibrary.org/b/id/14271573-M.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=La+mala+costumbre+Alana+S.+Portero"
+            },
+            {
+              "label": "Open Library",
+              "url": "https://openlibrary.org/works/OL35243227W"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=La+mala+costumbre+Alana+S.+Portero&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=La+mala+costumbre+Alana+S.+Portero"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 4387,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "partial_evidence": true,
+        "work_type": "nonfiction",
+        "progress_metrics": {
+          "elapsed_ms": 4422.777,
+          "first_phase_emitted_ms": 21.625,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 1.693,
+            "cache_lookup": 8.832,
+            "knowledge_lookup": 604.419,
+            "retrieval": 3811.309,
+            "audit": 3.006,
+            "finalization": 35.848
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 4.07,
+              "elapsed_ms": 1.693,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 12.781,
+              "elapsed_ms": 8.832,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 24.177,
+              "elapsed_ms": 249.274,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 25.352,
+              "elapsed_ms": 243.495,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 125.079,
+              "elapsed_ms": 96.015,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 381.107,
+              "elapsed_ms": 15.635,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 470.727,
+              "elapsed_ms": 3811.309,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 4345.809,
+              "elapsed_ms": 3.006,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 4386.922,
+              "elapsed_ms": 35.848,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 21.625
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 4345.776
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "sse_done": true,
+      "seconds": 4.4338,
+      "http_timing": {
+        "first_progress_seconds": 0.0271,
+        "verified_ready_seconds": 4.373,
+        "first_verified_text_seconds": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "tests": {
+    "modules": [
+      "core.test_literary_cohesion",
+      "core.test_character_extraction",
+      "core.test_character_depth",
+      "core.test_character_context_resolution",
+      "core.test_character_alias_generalization",
+      "core.test_character_alias_holdout",
+      "core.test_character_memory",
+      "core.test_narrative_answers",
+      "core.test_narrative_coverage",
+      "core.test_narrative_enrichment",
+      "core.test_presentation_language",
+      "core.test_scoped_narrative_evidence",
+      "core.test_subject_attribution_audit",
+      "core.test_fact_audit_contract",
+      "core.test_compact_audit_transport",
+      "core.test_completion_batch",
+      "core.test_conversational_relevance",
+      "core.test_related_recommendation_cards",
+      "core.test_recommendation_count",
+      "core.test_recommendation_relations",
+      "core.test_recommendation_grounding",
+      "core.test_recommendation_cards_regression",
+      "core.test_recommendation_candidates",
+      "core.test_topic_task_boundaries",
+      "core.test_topic_return_memory",
+      "core.test_literary_conversation",
+      "core.test_topic_intent",
+      "core.test_free_topic_recommendations",
+      "core.test_local_audit_slots",
+      "core.test_local_ai.LocalProviderTests",
+      "core.test_chat_deadline",
+      "core.test_ai_answer_cache"
+    ],
+    "tests_run": 525,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 13.782,
+    "production_databases_used": false,
+    "failed_tests": []
+  },
+  "conversation": [
+    {
+      "question": "Quiero leer un libro de Heinz Wuth",
+      "status": "answered",
+      "seconds": 2.1543,
+      "model_calls": 0,
+      "card_titles": [
+        "Esto es ciencia & cocina"
+      ],
+      "sse_done": true,
+      "mysql_counts_unchanged": true,
+      "original_memory_unchanged": true,
+      "original_retrieval_stores_unchanged": true
+    },
+    {
+      "question": "\u00bfDe qu\u00e9 g\u00e9nero es ese libro?",
+      "status": "answered",
+      "seconds": 0.4698,
+      "model_calls": 0,
+      "card_titles": [
+        "Esto es ciencia & cocina"
+      ],
+      "sse_done": true,
+      "mysql_counts_unchanged": true,
+      "original_memory_unchanged": true,
+      "original_retrieval_stores_unchanged": true
+    },
+    {
+      "question": "Recomi\u00e9ndame otros similares",
+      "status": "answered",
+      "seconds": 6.7351,
+      "model_calls": 2,
+      "card_titles": [
+        "The Science of Sugar Confectionery"
+      ],
+      "sse_done": true,
+      "mysql_counts_unchanged": true,
+      "original_memory_unchanged": true,
+      "original_retrieval_stores_unchanged": true
+    },
+    {
+      "question": "\u00bfPor qu\u00e9 se parece el primero?",
+      "status": "answered",
+      "seconds": 6.6127,
+      "model_calls": 2,
+      "card_titles": [
+        "Esto es ciencia & cocina",
+        "The Science of Sugar Confectionery"
+      ],
+      "sse_done": true,
+      "mysql_counts_unchanged": true,
+      "original_memory_unchanged": true,
+      "original_retrieval_stores_unchanged": true
+    },
+    {
+      "question": "Dame otro que trate sobre qu\u00edmica en la cocina",
+      "status": "answered",
+      "seconds": 3.3543,
+      "model_calls": 0,
+      "card_titles": [
+        "Chemistry of Cookery"
+      ],
+      "sse_done": true,
+      "mysql_counts_unchanged": true,
+      "original_memory_unchanged": true,
+      "original_retrieval_stores_unchanged": true
+    },
+    {
+      "question": "hola quiero leer los libros de el extra\u00f1o mundo de jack me lo recomienda",
+      "status": "unavailable",
+      "seconds": 4.3589,
+      "model_calls": 0,
+      "card_titles": [],
+      "sse_done": true,
+      "mysql_counts_unchanged": true,
+      "original_memory_unchanged": true,
+      "original_retrieval_stores_unchanged": true
+    }
+  ],
+  "jack_recheck": {
+    "status": "answered",
+    "seconds": 2.7011,
+    "sse_done": true,
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true,
+    "passed": true,
+    "card_titles": [
+      "El extra\u00f1o mundo de Jack. Tesoros de la animaci\u00f3n",
+      "El extra\u00f1o mundo de Jack. El viaje de Zero",
+      "El extra\u00f1o mundo de Jack. La luna espejo"
+    ],
+    "model_calls": 0,
+    "original_retrieval_stores_unchanged": true
+  },
+  "sample_only_not_accuracy_or_representative_p95": {
+    "n": 6,
+    "mean_seconds": 3.9475,
+    "p50_seconds": 3.8566000000000003,
+    "p95_nearest_rank_seconds": 6.7351,
+    "under_5": 4,
+    "under_10": 6,
+    "under_30": 6
+  },
+  "known_limits": [
+    "One actual temporary Google Books failure in the last six-turn sequence; isolated retry succeeded.",
+    "Prior independent philosophy and microbiology followups rejected or timed out at about 35 seconds.",
+    "No representative factual error-rate measurement.",
+    "Some translated Spanish and broader literary comparisons remain unresolved."
+  ]
+}

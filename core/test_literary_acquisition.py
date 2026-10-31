@@ -57,6 +57,29 @@ def marc(identifier='BXX0001', title='Libro de prueba', author='Autora de prueba
 
 
 class AcquisitionTests(SimpleTestCase):
+    def test_downloaded_description_is_read_by_verified_pointer_without_copying_it(self):
+        from .literary_acquisition import local_openlibrary_detail
+        description='Esta obra estudia los intercambios culturales entre comunidades de dos islas.'
+        self.dump.write_bytes(corpus()[0]+ol_line('work','/works/OL2W',title='Novela de prueba',
+            authors=[{'author':{'key':'/authors/OL1A'}}],description=description))
+        import_openlibrary_dump(self.dump,**self.options)
+        detail=local_openlibrary_detail('/works/OL2W',database=self.memory)
+        self.assertEqual(detail['description'],description)
+        self.assertNotIn(description,json.dumps(self.stored()))
+        self.assertNotIn(description,json.dumps(retrieve_evidence('Novela de prueba',database=self.memory)))
+        self.dump.write_bytes(self.dump.read_bytes()+b'changed')
+        self.assertIsNone(local_openlibrary_detail('/works/OL2W',database=self.memory))
+
+    def test_selective_author_import_keeps_only_dependencies_and_its_own_checkpoint(self):
+        self.dump.write_bytes(b''.join([corpus()[0],ol_line('author','/authors/OL99A',name='Otra autora')]))
+        result=import_openlibrary_dump(self.dump,**self.options,record_ids=['/authors/OL99A'])
+        self.assertEqual(result['accepted'],1)
+        self.assertEqual([r['external_id'] for r in self.stored()],['/authors/OL99A'])
+        self.assertEqual(result['filtered'],1)
+        second=import_openlibrary_dump(self.dump,**self.options,record_ids=['/authors/OL1A'])
+        self.assertEqual(second['offset_before'],0)
+        self.assertEqual(second['accepted'],1)
+
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory()
         self.addCleanup(self.temporary.cleanup)

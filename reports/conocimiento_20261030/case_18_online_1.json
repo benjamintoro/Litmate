@@ -1,0 +1,323 @@
+{
+  "case": {
+    "case": 18,
+    "title": "Frankenstein",
+    "author": "Mary Shelley",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": true
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": true
+        },
+        {
+          "table": "memory_aliases",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_aliases",
+          "title_match": true,
+          "full_author_match": true
+        },
+        {
+          "table": "memory_entities",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_entities",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_entities",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [
+        {
+          "table": "library_items",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "LITMATE_LIBRARY_RAG_DB": [
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "mysql": {
+        "name_record_ids": [
+          "3ea0e25bd5db4de78d7c47123612c575a0ebb01e62f1edac146b7ce54199355e"
+        ],
+        "direct_records": [
+          {
+            "id": "3ea0e25bd5db4de78d7c47123612c575a0ebb01e62f1edac146b7ce54199355e",
+            "label": "Frankenstein; or, The modern Prometheus",
+            "kind": "edition"
+          }
+        ],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": false
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de Frankenstein de Mary Shelley",
+      "answer": "La novela narra la historia de V\u00edctor Frankenstein, un estudiante de filosof\u00eda de la naturaleza de la Universidad de Ingolstadt que consigue dar vida a un ser de apariencia humana pero de dos metros y medio de altura y aspecto repulsivo. V\u00edctor Frankenstein comprende en ese momento el horror que ha creado, rechaza con espanto el resultado de su experimento y huye de su laboratorio. V\u00edctor decide ir a la monta\u00f1a para recuperar su deca\u00eddo \u00e1nimo.\n\nFuente: https://es.wikipedia.org/wiki/Frankenstein_o_El_moderno_Prometeo\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+      "status": "answered",
+      "books": [
+        {
+          "id": "1",
+          "title": "Frankenstein",
+          "author": "Mary Shelley",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=Frankenstein+Mary+Shelley"
+            },
+            {
+              "label": "Wikidata",
+              "url": "https://www.wikidata.org/wiki/Q102292880"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Frankenstein+Mary+Shelley&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Frankenstein+Mary+Shelley"
+            }
+          ]
+        }
+      ],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 687,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "partial_evidence": false,
+        "work_type": "fiction",
+        "progress_metrics": {
+          "elapsed_ms": 700.473,
+          "first_phase_emitted_ms": 27.47,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 8.853,
+            "cache_lookup": 7.391,
+            "knowledge_lookup": 526.832,
+            "audit": 12.64,
+            "finalization": 13.297
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 4.565,
+              "elapsed_ms": 8.853,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 20.068,
+              "elapsed_ms": 7.391,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 41.482,
+              "elapsed_ms": 299.668,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 124.368,
+              "elapsed_ms": 27.115,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 197.592,
+              "elapsed_ms": 142.293,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 268.209,
+              "elapsed_ms": 44.34,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 415.236,
+              "elapsed_ms": 13.416,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 576.175,
+              "elapsed_ms": 7.639,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 658.571,
+              "elapsed_ms": 5.001,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 687.171,
+              "elapsed_ms": 13.297,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 27.47
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 576.157
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 0.7098,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 0.6794,
+        "first_verified_text_seconds": 0.7098
+      }
+    }
+  ],
+  "seconds": 2.997,
+  "coverage_before": {
+    "works": 14475,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14648,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14475,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14648,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "factual_review_pending": true
+}

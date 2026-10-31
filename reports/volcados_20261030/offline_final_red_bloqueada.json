@@ -1,0 +1,2670 @@
+[
+  {
+    "passed": true,
+    "question": "Dime la trama de The jade cabinet de Rikki Ducornet",
+    "answer": "En *The Jade Cabinet*, la hermosa Etheria es silenciada por su padre exc\u00e9ntrico y intercambiada como pago por un trozo de jade precioso. Su hermana, Memory, relata esta historia desde la perspectiva de una infancia marcada por las influencias de Lewis Carroll y un orangut\u00e1n llamado Dr. Johnson, as\u00ed como por el cortejo t\u00f3xico de Radulph Tubbs. La narrativa viaja desde Oxford hasta Egipto, donde se desarrollan eventos extravagantes que incluyen la transformaci\u00f3n de momias de ibis en fertilizante, el colapso de una pir\u00e1mide y las intrigas de un artista del hambre que vengar\u00e1 su desprecio.\n\nFuente: https://openlibrary.org/works/OL104666W",
+    "status": "answered",
+    "not_in_legacy_catalog": null,
+    "sse_done": true,
+    "seconds": 19.3094,
+    "cards": [
+      {
+        "id": "sqlkb:d0931ac21558c7606cbba8b9cc04fa15f6cdf3a7987faefa56eec2660dcfffcc",
+        "title": "The jade cabinet",
+        "author": "Rikki Ducornet",
+        "synopsis": "No pude preparar una traducci\u00f3n fiable de esta descripci\u00f3n.",
+        "image_url": "",
+        "links": [
+          {
+            "label": "Google Books",
+            "url": "https://books.google.com/books?q=The+jade+cabinet+Rikki+Ducornet"
+          },
+          {
+            "label": "Open Library",
+            "url": "https://openlibrary.org/works/OL104666W"
+          },
+          {
+            "label": "Amazon",
+            "url": "https://www.amazon.com/s?k=The+jade+cabinet+Rikki+Ducornet&i=stripbooks"
+          },
+          {
+            "label": "Buscalibre",
+            "url": "https://www.buscalibre.cl/libros/search?q=The+jade+cabinet+Rikki+Ducornet"
+          }
+        ]
+      }
+    ],
+    "diagnostics": {
+      "elapsed_ms": 19265,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 2,
+      "verified_narrative_answer": true,
+      "narrative_synthesized": true,
+      "partial_evidence": false,
+      "work_type": "fiction",
+      "progress_metrics": {
+        "elapsed_ms": 19296.672,
+        "first_phase_emitted_ms": 59.198,
+        "model_calls_started": 4,
+        "stage_totals_ms": {
+          "conversation": 27.878,
+          "cache_lookup": 0.999,
+          "knowledge_lookup": 1151.268,
+          "model_inspection": 53.55,
+          "generation": 12772.111,
+          "audit": 5432.051,
+          "finalization": 31.861
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 9.987,
+            "elapsed_ms": 27.878,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 58.184,
+            "elapsed_ms": 0.999,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 120.322,
+            "elapsed_ms": 568.337,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 239.768,
+            "elapsed_ms": 84.438,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 426.506,
+            "elapsed_ms": 260.487,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 501.1,
+            "elapsed_ms": 118.041,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 708.116,
+            "elapsed_ms": 119.965,
+            "status": "ok"
+          },
+          {
+            "stage": "generation",
+            "started_ms": 1018.683,
+            "elapsed_ms": 8564.369,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 1018.701,
+            "elapsed_ms": 27.729,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 9584.811,
+            "elapsed_ms": 4908.542,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 9584.833,
+            "elapsed_ms": 0.01,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 14496.374,
+            "elapsed_ms": 4.086,
+            "status": "ok"
+          },
+          {
+            "stage": "generation",
+            "started_ms": 14516.877,
+            "elapsed_ms": 4207.742,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 14516.882,
+            "elapsed_ms": 25.8,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 18724.668,
+            "elapsed_ms": 519.423,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 18724.674,
+            "elapsed_ms": 0.011,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 19264.803,
+            "elapsed_ms": 31.861,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 59.198
+          },
+          {
+            "stage": "writing",
+            "elapsed_ms": 1018.654
+          },
+          {
+            "stage": "review",
+            "elapsed_ms": 9584.792
+          },
+          {
+            "stage": "writing",
+            "elapsed_ms": 14516.856
+          },
+          {
+            "stage": "review",
+            "elapsed_ms": 18724.649
+          }
+        ]
+      },
+      "stage_timings": [
+        {
+          "eval_ms": 3980.346,
+          "eval_count": 115,
+          "status": "ok",
+          "load_ms": 8.724,
+          "prompt_eval_count": 327,
+          "prompt_eval_ms": 81.814,
+          "stage": "language_translate",
+          "elapsed_ms": 4208,
+          "total_ms": 4168.395,
+          "model": "qwen3.5:9b-q4_K_M"
+        },
+        {
+          "eval_ms": 374.919,
+          "eval_count": 10,
+          "status": "ok",
+          "load_ms": 8.107,
+          "prompt_eval_count": 382,
+          "prompt_eval_ms": 74.997,
+          "stage": "language_verify",
+          "elapsed_ms": 519,
+          "total_ms": 508.751,
+          "model": "qwen3.5:9b-q4_K_M"
+        }
+      ],
+      "provider": "ollama-local"
+    },
+    "reader_data_written": false,
+    "sources": [],
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": null
+      },
+      {
+        "stage": "retrieval",
+        "sources": [
+          {
+            "id": 1,
+            "title": "The jade cabinet",
+            "author": "Rikki Ducornet",
+            "description": "The jade cabinet, de Rikki Ducornet. Temas del cat\u00e1logo: In literature, Fiction, general, Fiction Made speechless by her eccentric father, the beautiful Etheria is traded for a piece of precious jade. Memory, her sister, tells her story, that of a childhood enlivened by Lewis Carroll and an orangutan named Dr. Johnson and envenomed by the pernicious courtship of Radulph Tubbs, Queen Victoria's own Dragon of Industry. The novel travels from Oxford to Egypt where one million ibis mummies wait to be transformed into fertilizer, where Baconfield the architect will cause a pyramid to collapse, and where a scorned and bloated hunger artist who speaks in tongues will plot a bloody revenge. The fourth element in a tetralogy of novels - Earth (The Stain), Fire (Entering Fire), Water (The Fountains of Neptune) and Air - The Jade Cabinet is both a riveting novel and a reflection on the nature of memory and desire, language and power. Following the novel is an afterword, \"Waking to Eden,\" in which Ducornet reflects on the sources for her writing and on the quartet of novels completed by The Jade Cabinet.",
+            "source": "Open Library",
+            "year": "",
+            "book_id": "sqlkb:d0931ac21558c7606cbba8b9cc04fa15f6cdf3a7987faefa56eec2660dcfffcc",
+            "kind": "book",
+            "url": "https://openlibrary.org/works/OL104666W",
+            "locator": "",
+            "read_mode": "metadatos bibliogr\u00e1ficos; no sinopsis ni texto de la obra",
+            "retrieved_at": "",
+            "license": "Open Library bibliographic facts; rights vary",
+            "policy": "openlibrary-minimal-metadata-v1",
+            "memory_verified": true,
+            "synopsis": "Made speechless by her eccentric father, the beautiful Etheria is traded for a piece of precious jade. Memory, her sister, tells her story, that of a childhood enlivened by Lewis Carroll and an orangutan named Dr. Johnson and envenomed by the pernicious courtship of Radulph Tubbs, Queen Victoria's own Dragon of Industry. The novel travels from Oxford to Egypt where one million ibis mummies wait to be transformed into fertilizer, where Baconfield the architect will cause a pyramid to collapse, and where a scorned and bloated hunger artist who speaks in tongues will plot a bloody revenge. The fourth element in a tetralogy of novels - Earth (The Stain), Fire (Entering Fire), Water (The Fountains of Neptune) and Air - The Jade Cabinet is both a riveting novel and a reflection on the nature of memory and desire, language and power. Following the novel is an afterword, \"Waking to Eden,\" in which Ducornet reflects on the sources for her writing and on the quartet of novels completed by The Jade Cabinet.",
+            "synopsis_source_url": "https://openlibrary.org/works/OL104666W",
+            "description_source": "Open Library, registro de obra",
+            "language": "",
+            "isbns": [],
+            "categories": [
+              "In literature",
+              "Fiction, general",
+              "Fiction"
+            ]
+          }
+        ]
+      },
+      {
+        "stage": "draft",
+        "output": {
+          "status": "answer",
+          "text": "En *The Jade Cabinet*, la hermosa Etheria es silenciada por su padre exc\u00e9ntrico y intercambiada como pago por un trozo de jade precioso. Su hermana, Memory, relata esta historia desde la perspectiva de una infancia marcada por las influencias de Lewis Carroll y un orangut\u00e1n llamado Dr. Johnson, as\u00ed como por el cortejo t\u00f3xico de Radulph Tubbs. La narrativa viaja desde Oxford hasta Egipto, donde se desarrollan eventos extravagantes que incluyen la transformaci\u00f3n de momias de ibis en fertilizante, el colapso de una pir\u00e1mide y las intrigas de un artista del hambre que vengar\u00e1 su desprecio.",
+          "basis": "sources",
+          "citations": [
+            1
+          ],
+          "needs_web": false,
+          "books": []
+        }
+      },
+      {
+        "stage": "audit",
+        "output": {
+          "decision": "approve",
+          "only_books": true,
+          "coverage": [
+            {
+              "question_id": 1,
+              "status": "answered"
+            }
+          ],
+          "claims": [
+            {
+              "statement": "En *The Jade Cabinet*, la hermosa Etheria es silenciada por su padre exc\u00e9ntrico y intercambiada como pago por un trozo de jade precioso.",
+              "verdict": "supported",
+              "source_id": 1,
+              "evidence": "The jade cabinet, de Rikki Ducornet. Temas del cat\u00e1logo: In literature, Fiction, general, Fiction Made speechless by her eccentric father, the beautiful Etheria is traded for a piece of precious jade. Memory, her sister, tells her story, that of a childhood enlivened by Lewis Carroll and an oranguta"
+            },
+            {
+              "statement": "Su hermana, Memory, relata esta historia desde la perspectiva de una infancia marcada por las influencias de Lewis Carroll y un orangut\u00e1n llamado Dr. Johnson, as\u00ed como por el cortejo t\u00f3xico de Radulph Tubbs.",
+              "verdict": "supported",
+              "source_id": 1,
+              "evidence": "The jade cabinet, de Rikki Ducornet. Temas del cat\u00e1logo: In literature, Fiction, general, Fiction Made speechless by her eccentric father, the beautiful Etheria is traded for a piece of precious jade. Memory, her sister, tells her story, that of a childhood enlivened by Lewis Carroll and an oranguta"
+            },
+            {
+              "statement": "La narrativa viaja desde Oxford hasta Egipto, donde se desarrollan eventos extravagantes que incluyen la transformaci\u00f3n de momias de ibis en fertilizante, el colapso de una pir\u00e1mide y las intrigas de un artista del hambre que vengar\u00e1 su desprecio.",
+              "verdict": "supported",
+              "source_id": 1,
+              "evidence": "ildhood enlivened by Lewis Carroll and an orangutan named Dr. Johnson and envenomed by the pernicious courtship of Radulph Tubbs, Queen Victoria's own Dragon of Industry. The novel travels from Oxford to Egypt where one million ibis mummies wait to be transformed into fertilizer, where Baconfield th"
+            }
+          ],
+          "search_queries": [],
+          "issues": []
+        }
+      },
+      {
+        "request": {
+          "task": "summary",
+          "title": "The jade cabinet",
+          "targets": [],
+          "author_hint": "Rikki Ducornet",
+          "format": "",
+          "ambiguous": false
+        },
+        "diagnostics": {
+          "verified_narrative_answer": true,
+          "audit": {
+            "decision": "approve",
+            "only_books": true,
+            "coverage": [
+              {
+                "question_id": 1,
+                "status": "answered"
+              }
+            ],
+            "claims": [
+              {
+                "statement": "En *The Jade Cabinet*, la hermosa Etheria es silenciada por su padre exc\u00e9ntrico y intercambiada como pago por un trozo de jade precioso.",
+                "verdict": "supported",
+                "source_id": 1,
+                "evidence": "The jade cabinet, de Rikki Ducornet. Temas del cat\u00e1logo: In literature, Fiction, general, Fiction Made speechless by her eccentric father, the beautiful Etheria is traded for a piece of precious jade. Memory, her sister, tells her story, that of a childhood enlivened by Lewis Carroll and an oranguta"
+              },
+              {
+                "statement": "Su hermana, Memory, relata esta historia desde la perspectiva de una infancia marcada por las influencias de Lewis Carroll y un orangut\u00e1n llamado Dr. Johnson, as\u00ed como por el cortejo t\u00f3xico de Radulph Tubbs.",
+                "verdict": "supported",
+                "source_id": 1,
+                "evidence": "The jade cabinet, de Rikki Ducornet. Temas del cat\u00e1logo: In literature, Fiction, general, Fiction Made speechless by her eccentric father, the beautiful Etheria is traded for a piece of precious jade. Memory, her sister, tells her story, that of a childhood enlivened by Lewis Carroll and an oranguta"
+              },
+              {
+                "statement": "La narrativa viaja desde Oxford hasta Egipto, donde se desarrollan eventos extravagantes que incluyen la transformaci\u00f3n de momias de ibis en fertilizante, el colapso de una pir\u00e1mide y las intrigas de un artista del hambre que vengar\u00e1 su desprecio.",
+                "verdict": "supported",
+                "source_id": 1,
+                "evidence": "ildhood enlivened by Lewis Carroll and an orangutan named Dr. Johnson and envenomed by the pernicious courtship of Radulph Tubbs, Queen Victoria's own Dragon of Industry. The novel travels from Oxford to Egypt where one million ibis mummies wait to be transformed into fertilizer, where Baconfield th"
+              }
+            ],
+            "search_queries": [],
+            "issues": []
+          },
+          "work_type": "fiction",
+          "model_calls": 2,
+          "narrative_coverage": "premise",
+          "partial_evidence": false,
+          "narrative_synthesized": true,
+          "temporal_claims_rejected": 0,
+          "character_list_claims_rejected": 0,
+          "event_target_claims_rejected": 0,
+          "usage": {
+            "prompt_tokens": 6430,
+            "completion_tokens": 265,
+            "total_tokens": 6695
+          },
+          "stage_timings": [
+            {
+              "stage": "language_translate",
+              "model": "qwen3.5:9b-q4_K_M",
+              "elapsed_ms": 4208,
+              "status": "ok",
+              "load_ms": 8.724,
+              "prompt_eval_ms": 81.814,
+              "eval_ms": 3980.346,
+              "total_ms": 4168.395,
+              "prompt_eval_count": 327,
+              "eval_count": 115
+            },
+            {
+              "stage": "language_verify",
+              "model": "qwen3.5:9b-q4_K_M",
+              "elapsed_ms": 519,
+              "status": "ok",
+              "load_ms": 8.107,
+              "prompt_eval_ms": 74.997,
+              "eval_ms": 374.919,
+              "total_ms": 508.751,
+              "prompt_eval_count": 382,
+              "eval_count": 10
+            }
+          ],
+          "narrative_trace": [
+            {
+              "stage": "stored_content",
+              "bound": 1,
+              "content": 1,
+              "providers": [
+                "Open Library"
+              ]
+            }
+          ],
+          "progress_metrics": {
+            "stage_timings": [
+              {
+                "stage": "conversation",
+                "started_ms": 9.987,
+                "elapsed_ms": 27.878,
+                "status": "ok"
+              },
+              {
+                "stage": "cache_lookup",
+                "started_ms": 58.184,
+                "elapsed_ms": 0.999,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 120.322,
+                "elapsed_ms": 568.337,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 239.768,
+                "elapsed_ms": 84.438,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 426.506,
+                "elapsed_ms": 260.487,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 501.1,
+                "elapsed_ms": 118.041,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 708.116,
+                "elapsed_ms": 119.965,
+                "status": "ok"
+              },
+              {
+                "stage": "generation",
+                "started_ms": 1018.683,
+                "elapsed_ms": 8564.369,
+                "status": "ok"
+              },
+              {
+                "stage": "model_inspection",
+                "started_ms": 1018.701,
+                "elapsed_ms": 27.729,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 9584.811,
+                "elapsed_ms": 4908.542,
+                "status": "ok"
+              },
+              {
+                "stage": "model_inspection",
+                "started_ms": 9584.833,
+                "elapsed_ms": 0.01,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 14496.374,
+                "elapsed_ms": 4.086,
+                "status": "ok"
+              },
+              {
+                "stage": "generation",
+                "started_ms": 14516.877,
+                "elapsed_ms": 4207.742,
+                "status": "ok"
+              },
+              {
+                "stage": "model_inspection",
+                "started_ms": 14516.882,
+                "elapsed_ms": 25.8,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 18724.668,
+                "elapsed_ms": 519.423,
+                "status": "ok"
+              },
+              {
+                "stage": "model_inspection",
+                "started_ms": 18724.674,
+                "elapsed_ms": 0.011,
+                "status": "ok"
+              }
+            ],
+            "stage_totals_ms": {
+              "conversation": 27.878,
+              "cache_lookup": 0.999,
+              "knowledge_lookup": 1151.268,
+              "model_inspection": 53.55,
+              "generation": 12772.111,
+              "audit": 5432.051
+            },
+            "model_calls_started": 4,
+            "progress_events": [
+              {
+                "stage": "search",
+                "elapsed_ms": 59.198
+              },
+              {
+                "stage": "writing",
+                "elapsed_ms": 1018.654
+              },
+              {
+                "stage": "review",
+                "elapsed_ms": 9584.792
+              },
+              {
+                "stage": "writing",
+                "elapsed_ms": 14516.856
+              },
+              {
+                "stage": "review",
+                "elapsed_ms": 18724.649
+              }
+            ],
+            "elapsed_ms": 19244.148,
+            "first_phase_emitted_ms": 59.198
+          },
+          "language_presentation": {
+            "target": "es",
+            "original_text": "En *The Jade Cabinet*, la hermosa Etheria es silenciada por su padre exc\u00e9ntrico y intercambiada como pago por un trozo de jade precioso. Su hermana, Memory, relata esta historia desde la perspectiva de una infancia marcada por las influencias de Lewis Carroll y un orangut\u00e1n llamado Dr. Johnson, as\u00ed como por el cortejo t\u00f3xico de Radulph Tubbs. La narrativa viaja desde Oxford hasta Egipto, donde se desarrollan eventos extravagantes que incluyen la transformaci\u00f3n de momias de ibis en fertilizante, el colapso de una pir\u00e1mide y las intrigas de un artista del hambre que vengar\u00e1 su desprecio.\n\nFuente: https://openlibrary.org/works/OL104666W",
+            "translated_fields": 0,
+            "cache_hits": 0,
+            "untranslated_fields": [
+              "card0"
+            ],
+            "audit_applies_to_original": true,
+            "cards": [
+              {
+                "id": "sqlkb:d0931ac21558c7606cbba8b9cc04fa15f6cdf3a7987faefa56eec2660dcfffcc",
+                "title": "The jade cabinet",
+                "author": "Rikki Ducornet",
+                "synopsis": "No pude preparar una traducci\u00f3n fiable de esta descripci\u00f3n.",
+                "image_url": "",
+                "links": [
+                  {
+                    "label": "Google Books",
+                    "url": "https://books.google.com/books?q=The+jade+cabinet+Rikki+Ducornet"
+                  },
+                  {
+                    "label": "Open Library",
+                    "url": "https://openlibrary.org/works/OL104666W"
+                  },
+                  {
+                    "label": "Amazon",
+                    "url": "https://www.amazon.com/s?k=The+jade+cabinet+Rikki+Ducornet&i=stripbooks"
+                  },
+                  {
+                    "label": "Buscalibre",
+                    "url": "https://www.buscalibre.cl/libros/search?q=The+jade+cabinet+Rikki+Ducornet"
+                  }
+                ]
+              }
+            ]
+          },
+          "elapsed_ms": 19244,
+          "chat_budget_seconds": 36.0
+        },
+        "sources": [
+          {
+            "id": 1,
+            "title": "The jade cabinet",
+            "author": "Rikki Ducornet",
+            "description": "The jade cabinet, de Rikki Ducornet. Temas del cat\u00e1logo: In literature, Fiction, general, Fiction Made speechless by her eccentric father, the beautiful Etheria is traded for a piece of precious jade. Memory, her sister, tells her story, that of a childhood enlivened by Lewis Carroll and an orangutan named Dr. Johnson and envenomed by the pernicious courtship of Radulph Tubbs, Queen Victoria's own Dragon of Industry. The novel travels from Oxford to Egypt where one million ibis mummies wait to be transformed into fertilizer, where Baconfield the architect will cause a pyramid to collapse, and where a scorned and bloated hunger artist who speaks in tongues will plot a bloody revenge. The fourth element in a tetralogy of novels - Earth (The Stain), Fire (Entering Fire), Water (The Fountains of Neptune) and Air - The Jade Cabinet is both a riveting novel and a reflection on the nature of memory and desire, language and power. Following the novel is an afterword, \"Waking to Eden,\" in which Ducornet reflects on the sources for her writing and on the quartet of novels completed by The Jade Cabinet.",
+            "source": "Open Library",
+            "year": "",
+            "book_id": "sqlkb:d0931ac21558c7606cbba8b9cc04fa15f6cdf3a7987faefa56eec2660dcfffcc",
+            "kind": "book",
+            "url": "https://openlibrary.org/works/OL104666W",
+            "locator": "",
+            "read_mode": "metadatos bibliogr\u00e1ficos; no sinopsis ni texto de la obra",
+            "retrieved_at": "",
+            "license": "Open Library bibliographic facts; rights vary",
+            "policy": "openlibrary-minimal-metadata-v1",
+            "memory_verified": true,
+            "synopsis": "Made speechless by her eccentric father, the beautiful Etheria is traded for a piece of precious jade. Memory, her sister, tells her story, that of a childhood enlivened by Lewis Carroll and an orangutan named Dr. Johnson and envenomed by the pernicious courtship of Radulph Tubbs, Queen Victoria's own Dragon of Industry. The novel travels from Oxford to Egypt where one million ibis mummies wait to be transformed into fertilizer, where Baconfield the architect will cause a pyramid to collapse, and where a scorned and bloated hunger artist who speaks in tongues will plot a bloody revenge. The fourth element in a tetralogy of novels - Earth (The Stain), Fire (Entering Fire), Water (The Fountains of Neptune) and Air - The Jade Cabinet is both a riveting novel and a reflection on the nature of memory and desire, language and power. Following the novel is an afterword, \"Waking to Eden,\" in which Ducornet reflects on the sources for her writing and on the quartet of novels completed by The Jade Cabinet.",
+            "synopsis_source_url": "https://openlibrary.org/works/OL104666W",
+            "description_source": "Open Library, registro de obra",
+            "language": "",
+            "isbns": [],
+            "categories": [
+              "In literature",
+              "Fiction, general",
+              "Fiction"
+            ],
+            "narrative_context": "Made speechless by her eccentric father, the beautiful Etheria is traded for a piece of precious jade. Memory, her sister, tells her story, that of a childhood enlivened by Lewis Carroll and an orangutan named Dr. Johnson and envenomed by the pernicious courtship of Radulph Tubbs, Queen Victoria's own Dragon of Industry. The novel travels from Oxford to Egypt where one million ibis mummies wait to be transformed into fertilizer, where Baconfield the architect will cause a pyramid to collapse, and where a scorned and bloated hunger artist who speaks in tongues will plot a bloody revenge. The fourth element in a tetralogy of novels - Earth (The Stain), Fire (Entering Fire), Water (The Fountains of Neptune) and Air - The Jade Cabinet is both a riveting novel and a reflection on the nature of memory and desire, language and power. Following the novel is an afterword, \"Waking to Eden,\" in which Ducornet reflects on the sources for her writing and on the quartet of novels completed by The Jade Cabinet."
+          }
+        ]
+      }
+    ],
+    "content_manually_reviewed": false,
+    "mysql_row_counts": {
+      "auth_group": 0,
+      "auth_group_permissions": 0,
+      "auth_permission": 152,
+      "auth_user": 179,
+      "auth_user_groups": 0,
+      "auth_user_user_permissions": 0,
+      "core_asistenteia": 1,
+      "core_autor": 31,
+      "core_clickconversion": 185,
+      "core_conversacionia": 50,
+      "core_editorial": 34,
+      "core_elementolistalectura": 2,
+      "core_estadolectura": 451,
+      "core_eventoanalitica": 384,
+      "core_genero": 12,
+      "core_historialchatbot": 5,
+      "core_historialpreciolibro": 223,
+      "core_kbname": 14166,
+      "core_kbprojection": 8,
+      "core_kbrecord": 13518,
+      "core_kbrelation": 2598,
+      "core_kbversion": 13518,
+      "core_libro": 55,
+      "core_libro_generos": 54,
+      "core_librofavorito": 231,
+      "core_listalectura": 2,
+      "core_mensajecontacto": 3,
+      "core_mensajeia": 190,
+      "core_perfilusuario": 158,
+      "core_preciolibrotienda": 117,
+      "core_preguntafrecuente": 0,
+      "core_recomendacion": 0,
+      "core_recomendacionialog": 0,
+      "core_resena": 116,
+      "django_admin_log": 0,
+      "django_content_type": 38,
+      "django_migrations": 27,
+      "django_session": 88,
+      "suscripciones_historialpago": 42,
+      "suscripciones_plansuscripcion": 3,
+      "suscripciones_suscripcionusuario": 157
+    },
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  },
+  {
+    "passed": true,
+    "question": "Dime la trama de Emma",
+    "answer": "Emma Woodhouse es una joven en la Inglaterra de la Regencia. En contra del consejo de Knightley, busca posibles novios para su nueva amiga, Harriet Smith, una joven sencilla y modesta, alejada del estilo de vida de la alta sociedad.\n\nFuente: https://es.wikipedia.org/wiki/Emma\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+    "status": "answered",
+    "not_in_legacy_catalog": null,
+    "sse_done": true,
+    "seconds": 0.7903,
+    "cards": [
+      {
+        "id": "1",
+        "title": "Emma",
+        "author": "Jane Austen",
+        "synopsis": "",
+        "image_url": "",
+        "links": [
+          {
+            "label": "Google Books",
+            "url": "https://books.google.com/books?q=Emma+Jane+Austen"
+          },
+          {
+            "label": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/158"
+          },
+          {
+            "label": "Amazon",
+            "url": "https://www.amazon.com/s?k=Emma+Jane+Austen&i=stripbooks"
+          },
+          {
+            "label": "Buscalibre",
+            "url": "https://www.buscalibre.cl/libros/search?q=Emma+Jane+Austen"
+          }
+        ]
+      }
+    ],
+    "diagnostics": {
+      "elapsed_ms": 769,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 0,
+      "verified_narrative_answer": true,
+      "partial_evidence": false,
+      "work_type": "fiction",
+      "progress_metrics": {
+        "elapsed_ms": 779.27,
+        "first_phase_emitted_ms": 15.072,
+        "model_calls_started": 0,
+        "stage_totals_ms": {
+          "conversation": 1.199,
+          "cache_lookup": 0.916,
+          "knowledge_lookup": 787.918,
+          "audit": 4.032,
+          "finalization": 10.427
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 5.001,
+            "elapsed_ms": 1.199,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 14.144,
+            "elapsed_ms": 0.916,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 16.265,
+            "elapsed_ms": 387.213,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 95.569,
+            "elapsed_ms": 59.024,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 220.679,
+            "elapsed_ms": 182.584,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 291.913,
+            "elapsed_ms": 72.016,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 482.18,
+            "elapsed_ms": 87.081,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 705.386,
+            "elapsed_ms": 2.188,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 742.428,
+            "elapsed_ms": 1.844,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 768.836,
+            "elapsed_ms": 10.427,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 15.072
+          },
+          {
+            "stage": "review",
+            "elapsed_ms": 705.366
+          }
+        ]
+      },
+      "stage_timings": [],
+      "provider": "verified-narrative-engine"
+    },
+    "reader_data_written": false,
+    "sources": [],
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": null
+      },
+      {
+        "stage": "retrieval",
+        "sources": [
+          {
+            "id": 1,
+            "title": "Emma",
+            "author": "Jane Austen",
+            "description": "Emma, de Jane Austen. Temas del cat\u00e1logo: Humorous stories, England -- Fiction, Young women -- Fiction, Love stories, Fathers and daughters -- Fiction, Bildungsromans, Mate selection -- Fiction, Female friendship -- Fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/158",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793072074.9906428",
+            "work_id": "litmate:cf86a03659678c1f89a26583",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795664074.9906428",
+            "evidence_hash": "1cb0e6be77520c3c417c5a3601bc23fe9b21dba62c2a1fdc65d9c5e43ebfa4cf",
+            "memory_source_id": "5e0ddc31ab61ce31b919d99bd4d5e365ba61fbb6354c794756f842e02d982313",
+            "last_verified_at": "1793072074.9906428",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Humorous stories",
+              "England -- Fiction",
+              "Young women -- Fiction",
+              "Love stories",
+              "Fathers and daughters -- Fiction"
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Emma",
+            "author": "Fuente web",
+            "description": "== Argumento == Emma Woodhouse es una joven en la Inglaterra de la Regencia. En contra del consejo de Knightley, busca posibles novios para su nueva amiga, Harriet Smith, una joven sencilla y modesta, alejada del estilo de vida de la alta sociedad. musicales, es el orgullo y alegr\u00eda de la se\u00f1orita Bates; a Emma, sin embargo, no le gusta, y envidia su talento. En su deseo de encontrar alg\u00fan defecto en Jane - y tambi\u00e9n para encontrar algo con lo que divertirse en esta villa encantadora pero aburrida - a Emma le da por compartir la fantas\u00eda inventada por Frank de que a Jane le gustaba el marido de la se\u00f1orita Campbell, el se\u00f1or Dixon, y que es por esta raz\u00f3n por la que tuvo que regresar a casa, en vez de irse a Irlanda a visitarlos.",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Emma",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793339353.6706216",
+            "evidence_scope": "summary",
+            "work_id": "litmate:cf86a03659678c1f89a26583",
+            "work_title": "Emma",
+            "work_author": "Jane Austen",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793944153.6706216",
+            "evidence_hash": "b0dc824608bc910a852cf31f565847eba1459ed25ba503676e2ab2f825a01671",
+            "memory_source_id": "1d9725904b2fc3f4aab19e0f51b647ceb59f61427419edd9db30c272bfc5a088",
+            "last_verified_at": "1793339353.6706216",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Emma",
+              "url": "https://es.wikipedia.org/wiki/Emma",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "172946823"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "Emma Woodhouse es una joven en la Inglaterra de la Regencia.",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "development_excerpt"
+              },
+              {
+                "subject": "Emma",
+                "relation": "",
+                "value": "",
+                "evidence": "== Argumento == Emma Woodhouse es una joven en la Inglaterra de la Regencia. En contra del consejo de Knightley, busca posibles novios para su nueva amiga, Harriet Smith, una joven sencilla y modesta, alejada del estilo de vida de la alta sociedad. musicales, es el orgullo y alegr\u00eda de la se\u00f1orita Bates; a Emma, sin embargo, no le gusta, y envidia su talento. En su deseo de encontrar alg\u00fan defecto en Jane - y tambi\u00e9n para encontrar algo con lo que divertirse en esta villa encantadora pero aburrida - a Emma le da por compartir la fantas\u00eda inventada por Frank de que a Jane le gustaba el marido de la se\u00f1orita Campbell, el se\u00f1or Dixon, y que es por esta raz\u00f3n por la que tuvo que regresar a casa,",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "events",
+                "type": "",
+                "scope": "partial"
+              },
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "Emma Woodhouse es una joven en la Inglaterra de la Regencia. En contra del consejo de Knightley, busca posibles novios para su nueva amiga, Harriet Smith, una joven sencilla y modesta, alejada del estilo de vida de la alta sociedad. musicales, es el orgullo y alegr\u00eda de la se\u00f1orita Bates; a Emma, sin embargo, no le gusta, y envidia su talento. En su deseo de encontrar alg\u00fan defecto en Jane - y tambi\u00e9n para encontrar algo con lo que divertirse en esta villa encantadora pero aburrida - a Emma le da por compartir la fantas\u00eda inventada por Frank de que a Jane le gustaba el marido de la se\u00f1orita Campbell, el se\u00f1or Dixon, y que es por esta raz\u00f3n por la que tuvo que regresar a casa, en vez de irse",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "partial"
+              }
+            ],
+            "identity_text": "Emma es una novela c\u00f3mica escrita por Jane Austen, en ingl\u00e9s, publicada por primera vez en 1815 por el editor John Murray, sobre los peligros de malinterpretar el romance. El personaje principal, Emma Woodhouse, es descrito como \"hermosa, lista y rica\" pero tambi\u00e9n es bastante mimada. Antes de comenzar la novela, Austen escribi\u00f3: \"Voy a elegir una hero\u00edna que, excepto a m\u00ed, no gustar\u00e1 mucho\".",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 3,
+            "title": "Emma",
+            "author": "Fuente web",
+            "description": "== Personajes == === Personajes principales === Emma Woodhouse: una joven de 21 a\u00f1os, protagonista de la historia. Jane Fairfax: una hu\u00e9rfana cuya familia se reduce a su t\u00eda, la se\u00f1orita Bates y a su abuela materna, la se\u00f1ora Bates. Harriet Smith: joven amiga de Emma, una chica muy hermosa que se deja manipular f\u00e1cilmente por otros, especialmente por Emma. Philip Elton: es un guapo y ambicioso joven vicario anglicano. Augusta Elton: es la esposa rica del se\u00f1or Elton, de car\u00e1cater mordaz.",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Emma",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793331402.956122",
+            "evidence_scope": "characters",
+            "work_id": "litmate:cf86a03659678c1f89a26583",
+            "work_title": "Emma",
+            "work_author": "Jane Austen",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793936202.956122",
+            "evidence_hash": "0121f1467226c6b638a5b903d3b40646dedbe132674c799c1a2c279f688affdf",
+            "memory_source_id": "e155d6465f2dab06d5cf793dbc3c5e44722d8d2540157aceb6c0ce53bead549d",
+            "last_verified_at": "1793331402.956122",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Emma",
+              "url": "https://es.wikipedia.org/wiki/Emma",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "172946823"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "Emma es una novela c\u00f3mica escrita por Jane Austen, en ingl\u00e9s, publicada por primera vez en 1815 por el editor John Murray, sobre los peligros de malinterpretar el romance. El personaje principal, Emma Woodhouse, es descrito como \"hermosa, lista y rica\" pero tambi\u00e9n es bastante mimada. Antes de comenzar la novela, Austen escribi\u00f3: \"Voy a elegir una hero\u00edna que, excepto a m\u00ed, no gustar\u00e1 mucho\".",
+            "character_facts": [
+              {
+                "name": "Emma Woodhouse",
+                "role": "una joven de 21 a\u00f1os, protagonista de la historia.",
+                "evidence": "Emma Woodhouse: una joven de 21 a\u00f1os, protagonista de la historia.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales",
+                "aliases": []
+              },
+              {
+                "name": "Jane Fairfax",
+                "role": "una hu\u00e9rfana cuya familia se reduce a su t\u00eda, la se\u00f1orita Bates y a su abuela materna, la se\u00f1ora Bates.",
+                "evidence": "Jane Fairfax: una hu\u00e9rfana cuya familia se reduce a su t\u00eda, la se\u00f1orita Bates y a su abuela materna, la se\u00f1ora Bates.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales",
+                "aliases": []
+              },
+              {
+                "name": "Harriet Smith",
+                "role": "joven amiga de Emma, una chica muy hermosa que se deja manipular f\u00e1cilmente por otros, especialmente por Emma.",
+                "evidence": "Harriet Smith: joven amiga de Emma, una chica muy hermosa que se deja manipular f\u00e1cilmente por otros, especialmente por Emma.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales",
+                "aliases": []
+              },
+              {
+                "name": "Philip Elton",
+                "role": "es un guapo y ambicioso joven vicario anglicano.",
+                "evidence": "Philip Elton: es un guapo y ambicioso joven vicario anglicano.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales",
+                "aliases": []
+              },
+              {
+                "name": "Augusta Elton",
+                "role": "es la esposa rica del se\u00f1or Elton, de car\u00e1cater mordaz.",
+                "evidence": "Augusta Elton: es la esposa rica del se\u00f1or Elton, de car\u00e1cater mordaz.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales",
+                "aliases": []
+              }
+            ],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 4,
+            "title": "Emma (novel)",
+            "author": "Fuente web",
+            "description": "Emma is a novel written by English author Jane Austen. It is set in the fictional Surrey village of Highbury and the surrounding estates of Hartfield, Randalls, and Donwell Abbey, and involves the relationships among people from a small number of families. The novel was first published in December 1815, although the title page is dated 1816. As in her other novels, Austen explores the concerns and difficulties of genteel women living in Georgian\u2013Regency England. Emma is a comedy of manners. Before she began the novel, Austen wrote, \"I am going to take a heroine whom no one but myself will much like.\" In the first sentence, she introduces the title character by stating \"Emma Woodhouse, handsome, clever, and rich, with a comfortable home and a happy disposition, seemed to unite some of the best blessings of existence; and had lived nearly twenty-one years in the world with very little to distress or vex her.\" Emma is spoiled, headstrong, and self-satisfied; she greatly overestimates her own matchmaking abilities; she is blind to the dangers of meddling in other people's lives; and her imagination and perceptions often lead her astray. Emma, written after Austen's move to Chawton, was...",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://en.wikipedia.org/wiki/Emma_(novel)",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793268185.7978268",
+            "evidence_scope": "characters",
+            "work_id": "litmate:cf86a03659678c1f89a26583",
+            "work_title": "Emma",
+            "work_author": "Jane Austen",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793872985.7978268",
+            "evidence_hash": "9e1ce3fb756ca8797cd96637e302712969546e4517d02df667d66d6c1a07ddad",
+            "memory_source_id": "6436db701c87213e7d33153b773bdf4ad68f188baf2fcaf267ed8e9aad89c944",
+            "last_verified_at": "1793268185.7978268",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Emma (novel)",
+              "url": "https://en.wikipedia.org/wiki/Emma_(novel)",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "1382473297"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "Emma is a novel written by English author Jane Austen. It is set in the fictional Surrey village of Highbury and the surrounding estates of Hartfield, Randalls, and Donwell Abbey, and involves the relationships among people from a small number of families. The novel was first published in December 1815, although the title page is dated 1816. As in her other novels, Austen explores the concerns and difficulties of genteel women living in Georgian\u2013Regency England. Emma is a comedy of manners. Before she began the novel, Austen wrote, \"I am going to take a heroine whom no one but myself will much like.\" In the first sentence, she introduces the title character by stating \"Emma Woodhouse, handsome, clever, and rich, with a comfortable home and a happy disposition, seemed to unite some of the best blessings of existence; and had lived nearly twenty-one years in the world with very little to distress or vex her.\" Emma is spoiled, headstrong, and self-satisfied; she greatly overestimates her own matchmaking abilities; she is blind to the dangers of meddling in other people's lives; and her imagination and perceptions often lead her astray. Emma, written after Austen's move to Chawton, was",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          }
+        ]
+      },
+      {
+        "request": {
+          "task": "summary",
+          "title": "Emma",
+          "targets": [],
+          "author_hint": "",
+          "format": "",
+          "ambiguous": false
+        },
+        "diagnostics": {
+          "verified_narrative_answer": true,
+          "audit": {
+            "decision": "approve",
+            "only_books": true,
+            "claims": [
+              {
+                "statement": "Emma Woodhouse es una joven en la Inglaterra de la Regencia.",
+                "verdict": "supported",
+                "source_id": 2,
+                "evidence": "Emma Woodhouse es una joven en la Inglaterra de la Regencia."
+              },
+              {
+                "statement": "En contra del consejo de Knightley, busca posibles novios para su nueva amiga, Harriet Smith, una joven sencilla y modesta, alejada del estilo de vida de la alta sociedad.",
+                "verdict": "supported",
+                "source_id": 2,
+                "evidence": "En contra del consejo de Knightley, busca posibles novios para su nueva amiga, Harriet Smith, una joven sencilla y modesta, alejada del estilo de vida de la alta sociedad."
+              }
+            ],
+            "coverage": [
+              {
+                "question_id": 1,
+                "status": "answered"
+              }
+            ],
+            "issues": [],
+            "search_queries": []
+          },
+          "work_type": "fiction",
+          "model_calls": 0,
+          "narrative_coverage": "development_excerpt",
+          "partial_evidence": false,
+          "progress_metrics": {
+            "stage_timings": [
+              {
+                "stage": "conversation",
+                "started_ms": 5.001,
+                "elapsed_ms": 1.199,
+                "status": "ok"
+              },
+              {
+                "stage": "cache_lookup",
+                "started_ms": 14.144,
+                "elapsed_ms": 0.916,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 16.265,
+                "elapsed_ms": 387.213,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 95.569,
+                "elapsed_ms": 59.024,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 220.679,
+                "elapsed_ms": 182.584,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 291.913,
+                "elapsed_ms": 72.016,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 482.18,
+                "elapsed_ms": 87.081,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 705.386,
+                "elapsed_ms": 2.188,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 742.428,
+                "elapsed_ms": 1.844,
+                "status": "ok"
+              }
+            ],
+            "stage_totals_ms": {
+              "conversation": 1.199,
+              "cache_lookup": 0.916,
+              "knowledge_lookup": 787.918,
+              "audit": 4.032
+            },
+            "model_calls_started": 0,
+            "progress_events": [
+              {
+                "stage": "search",
+                "elapsed_ms": 15.072
+              },
+              {
+                "stage": "review",
+                "elapsed_ms": 705.366
+              }
+            ],
+            "elapsed_ms": 751.597,
+            "first_phase_emitted_ms": 15.072
+          },
+          "language_presentation": {
+            "target": "es",
+            "original_text": "Emma Woodhouse es una joven en la Inglaterra de la Regencia. En contra del consejo de Knightley, busca posibles novios para su nueva amiga, Harriet Smith, una joven sencilla y modesta, alejada del estilo de vida de la alta sociedad.\n\nFuente: https://es.wikipedia.org/wiki/Emma\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+            "translated_fields": 0,
+            "cache_hits": 0,
+            "untranslated_fields": [],
+            "audit_applies_to_original": true,
+            "cards": [
+              {
+                "id": "1",
+                "title": "Emma",
+                "author": "Jane Austen",
+                "synopsis": "",
+                "image_url": "",
+                "links": [
+                  {
+                    "label": "Google Books",
+                    "url": "https://books.google.com/books?q=Emma+Jane+Austen"
+                  },
+                  {
+                    "label": "Project Gutenberg",
+                    "url": "https://www.gutenberg.org/ebooks/158"
+                  },
+                  {
+                    "label": "Amazon",
+                    "url": "https://www.amazon.com/s?k=Emma+Jane+Austen&i=stripbooks"
+                  },
+                  {
+                    "label": "Buscalibre",
+                    "url": "https://www.buscalibre.cl/libros/search?q=Emma+Jane+Austen"
+                  }
+                ]
+              }
+            ]
+          },
+          "stage_timings": [],
+          "elapsed_ms": 752,
+          "chat_budget_seconds": 36.0
+        },
+        "sources": [
+          {
+            "id": 1,
+            "title": "Emma",
+            "author": "Jane Austen",
+            "description": "Emma, de Jane Austen. Temas del cat\u00e1logo: Humorous stories, England -- Fiction, Young women -- Fiction, Love stories, Fathers and daughters -- Fiction, Bildungsromans, Mate selection -- Fiction, Female friendship -- Fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/158",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793072074.9906428",
+            "work_id": "litmate:cf86a03659678c1f89a26583",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795664074.9906428",
+            "evidence_hash": "1cb0e6be77520c3c417c5a3601bc23fe9b21dba62c2a1fdc65d9c5e43ebfa4cf",
+            "memory_source_id": "5e0ddc31ab61ce31b919d99bd4d5e365ba61fbb6354c794756f842e02d982313",
+            "last_verified_at": "1793072074.9906428",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Humorous stories",
+              "England -- Fiction",
+              "Young women -- Fiction",
+              "Love stories",
+              "Fathers and daughters -- Fiction"
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Emma",
+            "author": "Fuente web",
+            "description": "== Argumento == Emma Woodhouse es una joven en la Inglaterra de la Regencia. En contra del consejo de Knightley, busca posibles novios para su nueva amiga, Harriet Smith, una joven sencilla y modesta, alejada del estilo de vida de la alta sociedad. musicales, es el orgullo y alegr\u00eda de la se\u00f1orita Bates; a Emma, sin embargo, no le gusta, y envidia su talento. En su deseo de encontrar alg\u00fan defecto en Jane - y tambi\u00e9n para encontrar algo con lo que divertirse en esta villa encantadora pero aburrida - a Emma le da por compartir la fantas\u00eda inventada por Frank de que a Jane le gustaba el marido de la se\u00f1orita Campbell, el se\u00f1or Dixon, y que es por esta raz\u00f3n por la que tuvo que regresar a casa, en vez de irse a Irlanda a visitarlos.",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Emma",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793339353.6706216",
+            "evidence_scope": "summary",
+            "work_id": "litmate:cf86a03659678c1f89a26583",
+            "work_title": "Emma",
+            "work_author": "Jane Austen",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793944153.6706216",
+            "evidence_hash": "b0dc824608bc910a852cf31f565847eba1459ed25ba503676e2ab2f825a01671",
+            "memory_source_id": "1d9725904b2fc3f4aab19e0f51b647ceb59f61427419edd9db30c272bfc5a088",
+            "last_verified_at": "1793339353.6706216",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Emma",
+              "url": "https://es.wikipedia.org/wiki/Emma",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "172946823"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "Emma Woodhouse es una joven en la Inglaterra de la Regencia.",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "development_excerpt"
+              },
+              {
+                "subject": "Emma",
+                "relation": "",
+                "value": "",
+                "evidence": "== Argumento == Emma Woodhouse es una joven en la Inglaterra de la Regencia. En contra del consejo de Knightley, busca posibles novios para su nueva amiga, Harriet Smith, una joven sencilla y modesta, alejada del estilo de vida de la alta sociedad. musicales, es el orgullo y alegr\u00eda de la se\u00f1orita Bates; a Emma, sin embargo, no le gusta, y envidia su talento. En su deseo de encontrar alg\u00fan defecto en Jane - y tambi\u00e9n para encontrar algo con lo que divertirse en esta villa encantadora pero aburrida - a Emma le da por compartir la fantas\u00eda inventada por Frank de que a Jane le gustaba el marido de la se\u00f1orita Campbell, el se\u00f1or Dixon, y que es por esta raz\u00f3n por la que tuvo que regresar a casa,",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "events",
+                "type": "",
+                "scope": "partial"
+              },
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "Emma Woodhouse es una joven en la Inglaterra de la Regencia. En contra del consejo de Knightley, busca posibles novios para su nueva amiga, Harriet Smith, una joven sencilla y modesta, alejada del estilo de vida de la alta sociedad. musicales, es el orgullo y alegr\u00eda de la se\u00f1orita Bates; a Emma, sin embargo, no le gusta, y envidia su talento. En su deseo de encontrar alg\u00fan defecto en Jane - y tambi\u00e9n para encontrar algo con lo que divertirse en esta villa encantadora pero aburrida - a Emma le da por compartir la fantas\u00eda inventada por Frank de que a Jane le gustaba el marido de la se\u00f1orita Campbell, el se\u00f1or Dixon, y que es por esta raz\u00f3n por la que tuvo que regresar a casa, en vez de irse",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "partial"
+              }
+            ],
+            "identity_text": "Emma es una novela c\u00f3mica escrita por Jane Austen, en ingl\u00e9s, publicada por primera vez en 1815 por el editor John Murray, sobre los peligros de malinterpretar el romance. El personaje principal, Emma Woodhouse, es descrito como \"hermosa, lista y rica\" pero tambi\u00e9n es bastante mimada. Antes de comenzar la novela, Austen escribi\u00f3: \"Voy a elegir una hero\u00edna que, excepto a m\u00ed, no gustar\u00e1 mucho\".",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 3,
+            "title": "Emma",
+            "author": "Fuente web",
+            "description": "== Personajes == === Personajes principales === Emma Woodhouse: una joven de 21 a\u00f1os, protagonista de la historia. Jane Fairfax: una hu\u00e9rfana cuya familia se reduce a su t\u00eda, la se\u00f1orita Bates y a su abuela materna, la se\u00f1ora Bates. Harriet Smith: joven amiga de Emma, una chica muy hermosa que se deja manipular f\u00e1cilmente por otros, especialmente por Emma. Philip Elton: es un guapo y ambicioso joven vicario anglicano. Augusta Elton: es la esposa rica del se\u00f1or Elton, de car\u00e1cater mordaz.",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Emma",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793331402.956122",
+            "evidence_scope": "characters",
+            "work_id": "litmate:cf86a03659678c1f89a26583",
+            "work_title": "Emma",
+            "work_author": "Jane Austen",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793936202.956122",
+            "evidence_hash": "0121f1467226c6b638a5b903d3b40646dedbe132674c799c1a2c279f688affdf",
+            "memory_source_id": "e155d6465f2dab06d5cf793dbc3c5e44722d8d2540157aceb6c0ce53bead549d",
+            "last_verified_at": "1793331402.956122",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Emma",
+              "url": "https://es.wikipedia.org/wiki/Emma",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "172946823"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "Emma es una novela c\u00f3mica escrita por Jane Austen, en ingl\u00e9s, publicada por primera vez en 1815 por el editor John Murray, sobre los peligros de malinterpretar el romance. El personaje principal, Emma Woodhouse, es descrito como \"hermosa, lista y rica\" pero tambi\u00e9n es bastante mimada. Antes de comenzar la novela, Austen escribi\u00f3: \"Voy a elegir una hero\u00edna que, excepto a m\u00ed, no gustar\u00e1 mucho\".",
+            "character_facts": [
+              {
+                "name": "Emma Woodhouse",
+                "role": "una joven de 21 a\u00f1os, protagonista de la historia.",
+                "evidence": "Emma Woodhouse: una joven de 21 a\u00f1os, protagonista de la historia.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales",
+                "aliases": []
+              },
+              {
+                "name": "Jane Fairfax",
+                "role": "una hu\u00e9rfana cuya familia se reduce a su t\u00eda, la se\u00f1orita Bates y a su abuela materna, la se\u00f1ora Bates.",
+                "evidence": "Jane Fairfax: una hu\u00e9rfana cuya familia se reduce a su t\u00eda, la se\u00f1orita Bates y a su abuela materna, la se\u00f1ora Bates.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales",
+                "aliases": []
+              },
+              {
+                "name": "Harriet Smith",
+                "role": "joven amiga de Emma, una chica muy hermosa que se deja manipular f\u00e1cilmente por otros, especialmente por Emma.",
+                "evidence": "Harriet Smith: joven amiga de Emma, una chica muy hermosa que se deja manipular f\u00e1cilmente por otros, especialmente por Emma.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales",
+                "aliases": []
+              },
+              {
+                "name": "Philip Elton",
+                "role": "es un guapo y ambicioso joven vicario anglicano.",
+                "evidence": "Philip Elton: es un guapo y ambicioso joven vicario anglicano.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales",
+                "aliases": []
+              },
+              {
+                "name": "Augusta Elton",
+                "role": "es la esposa rica del se\u00f1or Elton, de car\u00e1cater mordaz.",
+                "evidence": "Augusta Elton: es la esposa rica del se\u00f1or Elton, de car\u00e1cater mordaz.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales",
+                "aliases": []
+              }
+            ],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 4,
+            "title": "Emma (novel)",
+            "author": "Fuente web",
+            "description": "Emma is a novel written by English author Jane Austen. It is set in the fictional Surrey village of Highbury and the surrounding estates of Hartfield, Randalls, and Donwell Abbey, and involves the relationships among people from a small number of families. The novel was first published in December 1815, although the title page is dated 1816. As in her other novels, Austen explores the concerns and difficulties of genteel women living in Georgian\u2013Regency England. Emma is a comedy of manners. Before she began the novel, Austen wrote, \"I am going to take a heroine whom no one but myself will much like.\" In the first sentence, she introduces the title character by stating \"Emma Woodhouse, handsome, clever, and rich, with a comfortable home and a happy disposition, seemed to unite some of the best blessings of existence; and had lived nearly twenty-one years in the world with very little to distress or vex her.\" Emma is spoiled, headstrong, and self-satisfied; she greatly overestimates her own matchmaking abilities; she is blind to the dangers of meddling in other people's lives; and her imagination and perceptions often lead her astray. Emma, written after Austen's move to Chawton, was...",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://en.wikipedia.org/wiki/Emma_(novel)",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793268185.7978268",
+            "evidence_scope": "characters",
+            "work_id": "litmate:cf86a03659678c1f89a26583",
+            "work_title": "Emma",
+            "work_author": "Jane Austen",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793872985.7978268",
+            "evidence_hash": "9e1ce3fb756ca8797cd96637e302712969546e4517d02df667d66d6c1a07ddad",
+            "memory_source_id": "6436db701c87213e7d33153b773bdf4ad68f188baf2fcaf267ed8e9aad89c944",
+            "last_verified_at": "1793268185.7978268",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Emma (novel)",
+              "url": "https://en.wikipedia.org/wiki/Emma_(novel)",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "1382473297"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "Emma is a novel written by English author Jane Austen. It is set in the fictional Surrey village of Highbury and the surrounding estates of Hartfield, Randalls, and Donwell Abbey, and involves the relationships among people from a small number of families. The novel was first published in December 1815, although the title page is dated 1816. As in her other novels, Austen explores the concerns and difficulties of genteel women living in Georgian\u2013Regency England. Emma is a comedy of manners. Before she began the novel, Austen wrote, \"I am going to take a heroine whom no one but myself will much like.\" In the first sentence, she introduces the title character by stating \"Emma Woodhouse, handsome, clever, and rich, with a comfortable home and a happy disposition, seemed to unite some of the best blessings of existence; and had lived nearly twenty-one years in the world with very little to distress or vex her.\" Emma is spoiled, headstrong, and self-satisfied; she greatly overestimates her own matchmaking abilities; she is blind to the dangers of meddling in other people's lives; and her imagination and perceptions often lead her astray. Emma, written after Austen's move to Chawton, was",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          }
+        ]
+      }
+    ],
+    "content_manually_reviewed": false,
+    "mysql_row_counts": {
+      "auth_group": 0,
+      "auth_group_permissions": 0,
+      "auth_permission": 152,
+      "auth_user": 179,
+      "auth_user_groups": 0,
+      "auth_user_user_permissions": 0,
+      "core_asistenteia": 1,
+      "core_autor": 31,
+      "core_clickconversion": 185,
+      "core_conversacionia": 50,
+      "core_editorial": 34,
+      "core_elementolistalectura": 2,
+      "core_estadolectura": 451,
+      "core_eventoanalitica": 384,
+      "core_genero": 12,
+      "core_historialchatbot": 5,
+      "core_historialpreciolibro": 223,
+      "core_kbname": 14166,
+      "core_kbprojection": 8,
+      "core_kbrecord": 13518,
+      "core_kbrelation": 2598,
+      "core_kbversion": 13518,
+      "core_libro": 55,
+      "core_libro_generos": 54,
+      "core_librofavorito": 231,
+      "core_listalectura": 2,
+      "core_mensajecontacto": 3,
+      "core_mensajeia": 190,
+      "core_perfilusuario": 158,
+      "core_preciolibrotienda": 117,
+      "core_preguntafrecuente": 0,
+      "core_recomendacion": 0,
+      "core_recomendacionialog": 0,
+      "core_resena": 116,
+      "django_admin_log": 0,
+      "django_content_type": 38,
+      "django_migrations": 27,
+      "django_session": 88,
+      "suscripciones_historialpago": 42,
+      "suscripciones_plansuscripcion": 3,
+      "suscripciones_suscripcionusuario": 157
+    },
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  },
+  {
+    "passed": true,
+    "question": "Dime la trama de The Time Machine",
+    "answer": "Ante el escepticismo de sus amigos, un cient\u00edfico de finales del siglo XIX logra descubrir las claves de la denominada \"cuarta dimensi\u00f3n\" (el Tiempo) y construye un veh\u00edculo que le permite viajar f\u00edsicamente a trav\u00e9s del mismo. Luego de esperar un rato, sus amigos lo ven entrar en un estado calamitoso. El Viajero supone que as\u00ed debi\u00f3 de terminar la humanidad tras resolver todos sus conflictos existenciales y tras lograr el comunismo.\n\nFuente: https://es.wikipedia.org/wiki/La_m%C3%A1quina_del_tiempo\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+    "status": "answered",
+    "not_in_legacy_catalog": null,
+    "sse_done": true,
+    "seconds": 0.7221,
+    "cards": [
+      {
+        "id": "sqlkb:f40104531b8553a523e53008ba81628684d20ca352297b49a29a64b6cebe8a20",
+        "title": "The Time Machine",
+        "author": "H. G. (Herbert George) Wells",
+        "synopsis": "",
+        "image_url": "",
+        "links": [
+          {
+            "label": "Google Books",
+            "url": "https://books.google.com/books?q=The+Time+Machine+H.+G.+%28Herbert+George%29+Wells"
+          },
+          {
+            "label": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/35"
+          },
+          {
+            "label": "Amazon",
+            "url": "https://www.amazon.com/s?k=The+Time+Machine+H.+G.+%28Herbert+George%29+Wells&i=stripbooks"
+          },
+          {
+            "label": "Buscalibre",
+            "url": "https://www.buscalibre.cl/libros/search?q=The+Time+Machine+H.+G.+%28Herbert+George%29+Wells"
+          }
+        ]
+      }
+    ],
+    "diagnostics": {
+      "elapsed_ms": 684,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 0,
+      "verified_narrative_answer": true,
+      "partial_evidence": false,
+      "work_type": "fiction",
+      "progress_metrics": {
+        "elapsed_ms": 709.357,
+        "first_phase_emitted_ms": 14.074,
+        "model_calls_started": 0,
+        "stage_totals_ms": {
+          "conversation": 0.588,
+          "cache_lookup": 0.736,
+          "knowledge_lookup": 750.704,
+          "audit": 5.36,
+          "finalization": 25.504
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 4.051,
+            "elapsed_ms": 0.588,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 13.325,
+            "elapsed_ms": 0.736,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 15.238,
+            "elapsed_ms": 324.91,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 39.8,
+            "elapsed_ms": 54.653,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 174.818,
+            "elapsed_ms": 165.111,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 193.38,
+            "elapsed_ms": 105.163,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 359.932,
+            "elapsed_ms": 100.867,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 601.882,
+            "elapsed_ms": 3.374,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 658.965,
+            "elapsed_ms": 1.986,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 683.844,
+            "elapsed_ms": 25.504,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 14.074
+          },
+          {
+            "stage": "review",
+            "elapsed_ms": 601.863
+          }
+        ]
+      },
+      "stage_timings": [],
+      "provider": "verified-narrative-engine"
+    },
+    "reader_data_written": false,
+    "sources": [],
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": null
+      },
+      {
+        "stage": "retrieval",
+        "sources": [
+          {
+            "id": 1,
+            "title": "The Time Machine",
+            "author": "H. G. (Herbert George) Wells",
+            "description": "The Time Machine, de H. G. (Herbert George) Wells. Temas del cat\u00e1logo: Science fiction, Time travel -- Fiction, Dystopias -- Fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "sqlkb:f40104531b8553a523e53008ba81628684d20ca352297b49a29a64b6cebe8a20",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/35",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "",
+            "license": "CC0-1.0",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "synopsis": "",
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Science fiction",
+              "Time travel -- Fiction",
+              "Dystopias -- Fiction"
+            ]
+          },
+          {
+            "id": 2,
+            "title": "The Time Machine",
+            "author": "Fuente web",
+            "description": "The Time Machine is an 1895 dystopian science fiction novella by H. G. Wells about a Victorian scientist known as the Time Traveller who travels to the year 802,701. The work is generally credited with the popularization of the concept of time travel by using a vehicle or device to travel intentionally and selectively forward or backward through time. The term \"time machine\", coined by Wells, is now almost universally used to refer to such a vehicle or device. Utilizing a frame story set in then-present Victorian England, Wells's text focuses on a recount of the otherwise anonymous Time Traveller's journey into the far future. A work of future history and speculative evolution, The Time Machine is interpreted in modern times as a commentary on the increasing inequality and class divisions of Wells's era, which he projects as giving rise to two separate human species: the fair, childlike Eloi; and the savage, simian Morlocks, distant descendants of the contemporary upper and lower classes respectively. It is believed that Wells's depiction of the Eloi as a race living in plenitude and abandon was inspired by the utopic romance novel News from Nowhere (1890), though Wells's universe in...",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://en.wikipedia.org/wiki/The_Time_Machine",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793338870.8525963",
+            "evidence_scope": "summary",
+            "work_id": "litmate:cd01a12f9f01f2eb764bc33a",
+            "work_title": "The Time Machine",
+            "work_author": "H. G. (Herbert George) Wells",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793943670.8525963",
+            "evidence_hash": "4e4178ae7d66bf3afbeb6394ffbe579ae71978e6b30a49e1c374eb85946e1964",
+            "memory_source_id": "0ae8443b37242affd7b73c1cd36c0ef6aa3dd396c404c490b13e26dad40c757f",
+            "last_verified_at": "1793338870.8525963",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "The Time Machine",
+              "url": "https://en.wikipedia.org/wiki/The_Time_Machine",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "1382396968"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "The Time Machine is an 1895 dystopian science fiction novella by H. G. Wells about a Victorian scientist known as the Time Traveller who travels to the year 802,701. The work is generally credited with the popularization of the concept of time travel by using a vehicle or device to travel intentionally and selectively forward or backward through time. The term \"time machine\", coined by Wells, is now almost universally used to refer to such a vehicle or device. Utilizing a frame story set in then-present Victorian England, Wells's text focuses on a recount of the otherwise anonymous Time Traveller's journey into the far future. A work of future history and speculative evolution, The Time Machine is interpreted in modern times as a commentary on the increasing inequality and class divisions of Wells's era, which he projects as giving rise to two separate human species: the fair, childlike Eloi; and the savage, simian Morlocks, distant descendants of the contemporary upper and lower classes respectively. It is believed that Wells's depiction of the Eloi as a race living in plenitude and abandon was inspired by the utopic romance novel News from Nowhere (1890), though Wells's universe",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 3,
+            "title": "The Time Machine",
+            "author": "Fuente web",
+            "description": "The Time Machine is an 1895 dystopian science fiction novella by H. G. Wells about a Victorian scientist known as the Time Traveller who travels to the year 802,701. The work is generally credited with the popularization of the concept of time travel by using a vehicle or device to travel intentionally and selectively forward or backward through time. The term \"time machine\", coined by Wells, is now almost universally used to refer to such a vehicle or device. Utilizing a frame story set in then-present Victorian England, Wells's text focuses on a recount of the otherwise anonymous Time Traveller's journey into the far future. A work of future history and speculative evolution, The Time Machine is interpreted in modern times as a commentary on the increasing inequality and class divisions of Wells's era, which he projects as giving rise to two separate human species: the fair, childlike Eloi; and the savage, simian Morlocks, distant descendants of the contemporary upper and lower classes respectively. It is believed that Wells's depiction of the Eloi as a race living in plenitude and abandon was inspired by the utopic romance novel News from Nowhere (1890), though Wells's universe in...",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://en.wikipedia.org/wiki/The_Time_Machine",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793338875.4706595",
+            "evidence_scope": "characters",
+            "work_id": "litmate:cd01a12f9f01f2eb764bc33a",
+            "work_title": "The Time Machine",
+            "work_author": "H. G. (Herbert George) Wells",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793943675.4706595",
+            "evidence_hash": "dfe743e8915747a935bff2af3f6087369003f047ae4e4659ee601b23e1c1bee2",
+            "memory_source_id": "628d1c82166d3a5d0748ae6e8e7268ce4c852e6d96faa5bb319008c5423e7efb",
+            "last_verified_at": "1793338875.4706595",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "The Time Machine",
+              "url": "https://en.wikipedia.org/wiki/The_Time_Machine",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "1382396968"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "The Time Machine is an 1895 dystopian science fiction novella by H. G. Wells about a Victorian scientist known as the Time Traveller who travels to the year 802,701. The work is generally credited with the popularization of the concept of time travel by using a vehicle or device to travel intentionally and selectively forward or backward through time. The term \"time machine\", coined by Wells, is now almost universally used to refer to such a vehicle or device. Utilizing a frame story set in then-present Victorian England, Wells's text focuses on a recount of the otherwise anonymous Time Traveller's journey into the far future. A work of future history and speculative evolution, The Time Machine is interpreted in modern times as a commentary on the increasing inequality and class divisions of Wells's era, which he projects as giving rise to two separate human species: the fair, childlike Eloi; and the savage, simian Morlocks, distant descendants of the contemporary upper and lower classes respectively. It is believed that Wells's depiction of the Eloi as a race living in plenitude and abandon was inspired by the utopic romance novel News from Nowhere (1890), though Wells's universe",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 4,
+            "title": "La m\u00e1quina del tiempo",
+            "author": "Fuente web",
+            "description": "== Argumento == Ante el escepticismo de sus amigos, un cient\u00edfico de finales del siglo XIX logra descubrir las claves de la denominada \"cuarta dimensi\u00f3n\" (el Tiempo) y construye un veh\u00edculo que le permite viajar f\u00edsicamente a trav\u00e9s del mismo. Luego de esperar un rato, sus amigos lo ven entrar en un estado calamitoso. El Viajero supone que as\u00ed debi\u00f3 de terminar la humanidad tras resolver todos sus conflictos existenciales y tras lograr el comunismo. Tras hacer algunas exploraciones por los alrededores a su llegada al futuro, vuelve al lugar donde dej\u00f3 la m\u00e1quina del tiempo, pero ya no est\u00e1; m\u00e1s tarde se percatar\u00e1 de que los Morlocks la han encerrado en el pedestal de una estatua que representa a una Esfinge situada en el lugar donde apareci\u00f3 el Viajero del tiempo.",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/La_m%C3%A1quina_del_tiempo",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793339210.7604527",
+            "evidence_scope": "summary",
+            "narrative_context": "La m\u00e1quina del tiempo (en ingl\u00e9s, The Time Machine) es una novela de ciencia ficci\u00f3n del escritor brit\u00e1nico Herbert George Wells, publicada por primera vez en Londres en el a\u00f1o 1895 por William Heineman. Consta de diecis\u00e9is cap\u00edtulos y un ep\u00edlogo. Contrario a Julio Verne, padre del detalle y la explicaci\u00f3n minuciosa, Wells describe a prop\u00f3sito la m\u00e1quina de modo superficial y a la ligera, con algunas pinceladas de color, dejando la apariencia y el mecanismo del artilugio a interpretaci\u00f3n del lector. Fue la primera novela de uno de los padres de la ciencia ficci\u00f3n. Con su mezcla de aventuras y doctrina social y pol\u00edtica alcanz\u00f3 un notable \u00e9xito, contribuyendo as\u00ed a la estabilidad de Wells, que a partir de ese momento pudo dedicarse plenamente a la escritura. Una parte del libro, la que versa sobre la explicaci\u00f3n del invento y en la que se discute sobre la cuarta dimensi\u00f3n, fue publicada en el a\u00f1o 1893 en el Henley's National Observer. El escritor desarroll\u00f3 el resto de la novela, que trata de las aventuras del Viajero a trav\u00e9s del Tiempo en el futuro dos a\u00f1os despu\u00e9s, tarea que le llev\u00f3 escasos quince d\u00edas.\u200b Con esta obra, Herbert George Wells inauguraba para el gran p\u00fablico\u200b la tem",
+            "work_id": "litmate:cd01a12f9f01f2eb764bc33a",
+            "work_title": "The Time Machine",
+            "work_author": "H. G. (Herbert George) Wells",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793944010.7604527",
+            "evidence_hash": "742c098f920a412ebb40b65b05fcad7d8683382195c0cf1b486851ae5de38d9a",
+            "memory_source_id": "d2f7ae186d36e31b0ec3c2018b95d06ec0900a82df7f07899b19fa900b4130a2",
+            "last_verified_at": "1793339210.7604527",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "La m\u00e1quina del tiempo",
+              "url": "https://es.wikipedia.org/wiki/La_m%C3%A1quina_del_tiempo",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "174214392"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "Ante el escepticismo de sus amigos, un cient\u00edfico de finales del siglo XIX logra descubrir las claves de la denominada \"cuarta dimensi\u00f3n\" (el Tiempo) y construye un veh\u00edculo que le permite viajar f\u00edsicamente a trav\u00e9s del mismo.",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "development_excerpt"
+              },
+              {
+                "subject": "La m\u00e1quina del tiempo",
+                "relation": "",
+                "value": "",
+                "evidence": "== Argumento == Ante el escepticismo de sus amigos, un cient\u00edfico de finales del siglo XIX logra descubrir las claves de la denominada \"cuarta dimensi\u00f3n\" (el Tiempo) y construye un veh\u00edculo que le permite viajar f\u00edsicamente a trav\u00e9s del mismo. Luego de esperar un rato, sus amigos lo ven entrar en un estado calamitoso. El Viajero supone que as\u00ed debi\u00f3 de terminar la humanidad tras resolver todos sus conflictos existenciales y tras lograr el comunismo. Tras hacer algunas exploraciones por los alrededores a su llegada al futuro, vuelve al lugar donde dej\u00f3 la m\u00e1quina del tiempo, pero ya no est\u00e1; m\u00e1s tarde se percatar\u00e1 de que los Morlocks la han encerrado en el pedestal de una estatua que represen",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "events",
+                "type": "",
+                "scope": "partial"
+              },
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "Ante el escepticismo de sus amigos, un cient\u00edfico de finales del siglo XIX logra descubrir las claves de la denominada \"cuarta dimensi\u00f3n\" (el Tiempo) y construye un veh\u00edculo que le permite viajar f\u00edsicamente a trav\u00e9s del mismo. Luego de esperar un rato, sus amigos lo ven entrar en un estado calamitoso. El Viajero supone que as\u00ed debi\u00f3 de terminar la humanidad tras resolver todos sus conflictos existenciales y tras lograr el comunismo. Tras hacer algunas exploraciones por los alrededores a su llegada al futuro, vuelve al lugar donde dej\u00f3 la m\u00e1quina del tiempo, pero ya no est\u00e1; m\u00e1s tarde se percatar\u00e1 de que los Morlocks la han encerrado en el pedestal de una estatua que representa a una Esfinge",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "partial"
+              }
+            ],
+            "identity_text": "La m\u00e1quina del tiempo (en ingl\u00e9s, The Time Machine) es una novela de ciencia ficci\u00f3n del escritor brit\u00e1nico Herbert George Wells, publicada por primera vez en Londres en el a\u00f1o 1895 por William Heineman. Consta de diecis\u00e9is cap\u00edtulos y un ep\u00edlogo. Contrario a Julio Verne, padre del detalle y la explicaci\u00f3n minuciosa, Wells describe a prop\u00f3sito la m\u00e1quina de modo superficial y a la ligera, con algunas pinceladas de color, dejando la apariencia y el mecanismo del artilugio a interpretaci\u00f3n del lector. Fue la primera novela de uno de los padres de la ciencia ficci\u00f3n. Con su mezcla de aventuras y doctrina social y pol\u00edtica alcanz\u00f3 un notable \u00e9xito, contribuyendo as\u00ed a la estabilidad de Wells, que a partir de ese momento pudo dedicarse plenamente a la escritura. Una parte del libro, la que versa sobre la explicaci\u00f3n del invento y en la que se discute sobre la cuarta dimensi\u00f3n, fue publicada en el a\u00f1o 1893 en el Henley's National Observer. El escritor desarroll\u00f3 el resto de la novela, que trata de las aventuras del Viajero a trav\u00e9s del Tiempo en el futuro dos a\u00f1os despu\u00e9s, tarea que le llev\u00f3 escasos quince d\u00edas.\u200b Con esta obra, Herbert George Wells inauguraba para el gran p\u00fablico\u200b la tem",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          }
+        ]
+      },
+      {
+        "request": {
+          "task": "summary",
+          "title": "The Time Machine",
+          "targets": [],
+          "author_hint": "",
+          "format": "",
+          "ambiguous": false
+        },
+        "diagnostics": {
+          "verified_narrative_answer": true,
+          "audit": {
+            "decision": "approve",
+            "only_books": true,
+            "claims": [
+              {
+                "statement": "Ante el escepticismo de sus amigos, un cient\u00edfico de finales del siglo XIX logra descubrir las claves de la denominada \"cuarta dimensi\u00f3n\" (el Tiempo) y construye un veh\u00edculo que le permite viajar f\u00edsicamente a trav\u00e9s del mismo.",
+                "verdict": "supported",
+                "source_id": 4,
+                "evidence": "Ante el escepticismo de sus amigos, un cient\u00edfico de finales del siglo XIX logra descubrir las claves de la denominada \"cuarta dimensi\u00f3n\" (el Tiempo) y construye un veh\u00edculo que le permite viajar f\u00edsicamente a trav\u00e9s del mismo."
+              },
+              {
+                "statement": "Luego de esperar un rato, sus amigos lo ven entrar en un estado calamitoso.",
+                "verdict": "supported",
+                "source_id": 4,
+                "evidence": "Luego de esperar un rato, sus amigos lo ven entrar en un estado calamitoso."
+              },
+              {
+                "statement": "El Viajero supone que as\u00ed debi\u00f3 de terminar la humanidad tras resolver todos sus conflictos existenciales y tras lograr el comunismo.",
+                "verdict": "supported",
+                "source_id": 4,
+                "evidence": "El Viajero supone que as\u00ed debi\u00f3 de terminar la humanidad tras resolver todos sus conflictos existenciales y tras lograr el comunismo."
+              }
+            ],
+            "coverage": [
+              {
+                "question_id": 1,
+                "status": "answered"
+              }
+            ],
+            "issues": [],
+            "search_queries": []
+          },
+          "work_type": "fiction",
+          "model_calls": 0,
+          "narrative_coverage": "development_excerpt",
+          "partial_evidence": false,
+          "progress_metrics": {
+            "stage_timings": [
+              {
+                "stage": "conversation",
+                "started_ms": 4.051,
+                "elapsed_ms": 0.588,
+                "status": "ok"
+              },
+              {
+                "stage": "cache_lookup",
+                "started_ms": 13.325,
+                "elapsed_ms": 0.736,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 15.238,
+                "elapsed_ms": 324.91,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 39.8,
+                "elapsed_ms": 54.653,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 174.818,
+                "elapsed_ms": 165.111,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 193.38,
+                "elapsed_ms": 105.163,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 359.932,
+                "elapsed_ms": 100.867,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 601.882,
+                "elapsed_ms": 3.374,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 658.965,
+                "elapsed_ms": 1.986,
+                "status": "ok"
+              }
+            ],
+            "stage_totals_ms": {
+              "conversation": 0.588,
+              "cache_lookup": 0.736,
+              "knowledge_lookup": 750.704,
+              "audit": 5.36
+            },
+            "model_calls_started": 0,
+            "progress_events": [
+              {
+                "stage": "search",
+                "elapsed_ms": 14.074
+              },
+              {
+                "stage": "review",
+                "elapsed_ms": 601.863
+              }
+            ],
+            "elapsed_ms": 663.879,
+            "first_phase_emitted_ms": 14.074
+          },
+          "language_presentation": {
+            "target": "es",
+            "original_text": "Ante el escepticismo de sus amigos, un cient\u00edfico de finales del siglo XIX logra descubrir las claves de la denominada \"cuarta dimensi\u00f3n\" (el Tiempo) y construye un veh\u00edculo que le permite viajar f\u00edsicamente a trav\u00e9s del mismo. Luego de esperar un rato, sus amigos lo ven entrar en un estado calamitoso. El Viajero supone que as\u00ed debi\u00f3 de terminar la humanidad tras resolver todos sus conflictos existenciales y tras lograr el comunismo.\n\nFuente: https://es.wikipedia.org/wiki/La_m%C3%A1quina_del_tiempo\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+            "translated_fields": 0,
+            "cache_hits": 0,
+            "untranslated_fields": [],
+            "audit_applies_to_original": true,
+            "cards": [
+              {
+                "id": "sqlkb:f40104531b8553a523e53008ba81628684d20ca352297b49a29a64b6cebe8a20",
+                "title": "The Time Machine",
+                "author": "H. G. (Herbert George) Wells",
+                "synopsis": "",
+                "image_url": "",
+                "links": [
+                  {
+                    "label": "Google Books",
+                    "url": "https://books.google.com/books?q=The+Time+Machine+H.+G.+%28Herbert+George%29+Wells"
+                  },
+                  {
+                    "label": "Project Gutenberg",
+                    "url": "https://www.gutenberg.org/ebooks/35"
+                  },
+                  {
+                    "label": "Amazon",
+                    "url": "https://www.amazon.com/s?k=The+Time+Machine+H.+G.+%28Herbert+George%29+Wells&i=stripbooks"
+                  },
+                  {
+                    "label": "Buscalibre",
+                    "url": "https://www.buscalibre.cl/libros/search?q=The+Time+Machine+H.+G.+%28Herbert+George%29+Wells"
+                  }
+                ]
+              }
+            ]
+          },
+          "stage_timings": [],
+          "elapsed_ms": 664,
+          "chat_budget_seconds": 36.0
+        },
+        "sources": [
+          {
+            "id": 1,
+            "title": "The Time Machine",
+            "author": "H. G. (Herbert George) Wells",
+            "description": "The Time Machine, de H. G. (Herbert George) Wells. Temas del cat\u00e1logo: Science fiction, Time travel -- Fiction, Dystopias -- Fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "sqlkb:f40104531b8553a523e53008ba81628684d20ca352297b49a29a64b6cebe8a20",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/35",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "",
+            "license": "CC0-1.0",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "synopsis": "",
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Science fiction",
+              "Time travel -- Fiction",
+              "Dystopias -- Fiction"
+            ]
+          },
+          {
+            "id": 2,
+            "title": "The Time Machine",
+            "author": "Fuente web",
+            "description": "The Time Machine is an 1895 dystopian science fiction novella by H. G. Wells about a Victorian scientist known as the Time Traveller who travels to the year 802,701. The work is generally credited with the popularization of the concept of time travel by using a vehicle or device to travel intentionally and selectively forward or backward through time. The term \"time machine\", coined by Wells, is now almost universally used to refer to such a vehicle or device. Utilizing a frame story set in then-present Victorian England, Wells's text focuses on a recount of the otherwise anonymous Time Traveller's journey into the far future. A work of future history and speculative evolution, The Time Machine is interpreted in modern times as a commentary on the increasing inequality and class divisions of Wells's era, which he projects as giving rise to two separate human species: the fair, childlike Eloi; and the savage, simian Morlocks, distant descendants of the contemporary upper and lower classes respectively. It is believed that Wells's depiction of the Eloi as a race living in plenitude and abandon was inspired by the utopic romance novel News from Nowhere (1890), though Wells's universe in...",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://en.wikipedia.org/wiki/The_Time_Machine",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793338870.8525963",
+            "evidence_scope": "summary",
+            "work_id": "litmate:cd01a12f9f01f2eb764bc33a",
+            "work_title": "The Time Machine",
+            "work_author": "H. G. (Herbert George) Wells",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793943670.8525963",
+            "evidence_hash": "4e4178ae7d66bf3afbeb6394ffbe579ae71978e6b30a49e1c374eb85946e1964",
+            "memory_source_id": "0ae8443b37242affd7b73c1cd36c0ef6aa3dd396c404c490b13e26dad40c757f",
+            "last_verified_at": "1793338870.8525963",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "The Time Machine",
+              "url": "https://en.wikipedia.org/wiki/The_Time_Machine",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "1382396968"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "The Time Machine is an 1895 dystopian science fiction novella by H. G. Wells about a Victorian scientist known as the Time Traveller who travels to the year 802,701. The work is generally credited with the popularization of the concept of time travel by using a vehicle or device to travel intentionally and selectively forward or backward through time. The term \"time machine\", coined by Wells, is now almost universally used to refer to such a vehicle or device. Utilizing a frame story set in then-present Victorian England, Wells's text focuses on a recount of the otherwise anonymous Time Traveller's journey into the far future. A work of future history and speculative evolution, The Time Machine is interpreted in modern times as a commentary on the increasing inequality and class divisions of Wells's era, which he projects as giving rise to two separate human species: the fair, childlike Eloi; and the savage, simian Morlocks, distant descendants of the contemporary upper and lower classes respectively. It is believed that Wells's depiction of the Eloi as a race living in plenitude and abandon was inspired by the utopic romance novel News from Nowhere (1890), though Wells's universe",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 3,
+            "title": "The Time Machine",
+            "author": "Fuente web",
+            "description": "The Time Machine is an 1895 dystopian science fiction novella by H. G. Wells about a Victorian scientist known as the Time Traveller who travels to the year 802,701. The work is generally credited with the popularization of the concept of time travel by using a vehicle or device to travel intentionally and selectively forward or backward through time. The term \"time machine\", coined by Wells, is now almost universally used to refer to such a vehicle or device. Utilizing a frame story set in then-present Victorian England, Wells's text focuses on a recount of the otherwise anonymous Time Traveller's journey into the far future. A work of future history and speculative evolution, The Time Machine is interpreted in modern times as a commentary on the increasing inequality and class divisions of Wells's era, which he projects as giving rise to two separate human species: the fair, childlike Eloi; and the savage, simian Morlocks, distant descendants of the contemporary upper and lower classes respectively. It is believed that Wells's depiction of the Eloi as a race living in plenitude and abandon was inspired by the utopic romance novel News from Nowhere (1890), though Wells's universe in...",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://en.wikipedia.org/wiki/The_Time_Machine",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793338875.4706595",
+            "evidence_scope": "characters",
+            "work_id": "litmate:cd01a12f9f01f2eb764bc33a",
+            "work_title": "The Time Machine",
+            "work_author": "H. G. (Herbert George) Wells",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793943675.4706595",
+            "evidence_hash": "dfe743e8915747a935bff2af3f6087369003f047ae4e4659ee601b23e1c1bee2",
+            "memory_source_id": "628d1c82166d3a5d0748ae6e8e7268ce4c852e6d96faa5bb319008c5423e7efb",
+            "last_verified_at": "1793338875.4706595",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "The Time Machine",
+              "url": "https://en.wikipedia.org/wiki/The_Time_Machine",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "1382396968"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "The Time Machine is an 1895 dystopian science fiction novella by H. G. Wells about a Victorian scientist known as the Time Traveller who travels to the year 802,701. The work is generally credited with the popularization of the concept of time travel by using a vehicle or device to travel intentionally and selectively forward or backward through time. The term \"time machine\", coined by Wells, is now almost universally used to refer to such a vehicle or device. Utilizing a frame story set in then-present Victorian England, Wells's text focuses on a recount of the otherwise anonymous Time Traveller's journey into the far future. A work of future history and speculative evolution, The Time Machine is interpreted in modern times as a commentary on the increasing inequality and class divisions of Wells's era, which he projects as giving rise to two separate human species: the fair, childlike Eloi; and the savage, simian Morlocks, distant descendants of the contemporary upper and lower classes respectively. It is believed that Wells's depiction of the Eloi as a race living in plenitude and abandon was inspired by the utopic romance novel News from Nowhere (1890), though Wells's universe",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 4,
+            "title": "La m\u00e1quina del tiempo",
+            "author": "Fuente web",
+            "description": "== Argumento == Ante el escepticismo de sus amigos, un cient\u00edfico de finales del siglo XIX logra descubrir las claves de la denominada \"cuarta dimensi\u00f3n\" (el Tiempo) y construye un veh\u00edculo que le permite viajar f\u00edsicamente a trav\u00e9s del mismo. Luego de esperar un rato, sus amigos lo ven entrar en un estado calamitoso. El Viajero supone que as\u00ed debi\u00f3 de terminar la humanidad tras resolver todos sus conflictos existenciales y tras lograr el comunismo. Tras hacer algunas exploraciones por los alrededores a su llegada al futuro, vuelve al lugar donde dej\u00f3 la m\u00e1quina del tiempo, pero ya no est\u00e1; m\u00e1s tarde se percatar\u00e1 de que los Morlocks la han encerrado en el pedestal de una estatua que representa a una Esfinge situada en el lugar donde apareci\u00f3 el Viajero del tiempo.",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/La_m%C3%A1quina_del_tiempo",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793339210.7604527",
+            "evidence_scope": "summary",
+            "narrative_context": "La m\u00e1quina del tiempo (en ingl\u00e9s, The Time Machine) es una novela de ciencia ficci\u00f3n del escritor brit\u00e1nico Herbert George Wells, publicada por primera vez en Londres en el a\u00f1o 1895 por William Heineman. Consta de diecis\u00e9is cap\u00edtulos y un ep\u00edlogo. Contrario a Julio Verne, padre del detalle y la explicaci\u00f3n minuciosa, Wells describe a prop\u00f3sito la m\u00e1quina de modo superficial y a la ligera, con algunas pinceladas de color, dejando la apariencia y el mecanismo del artilugio a interpretaci\u00f3n del lector. Fue la primera novela de uno de los padres de la ciencia ficci\u00f3n. Con su mezcla de aventuras y doctrina social y pol\u00edtica alcanz\u00f3 un notable \u00e9xito, contribuyendo as\u00ed a la estabilidad de Wells, que a partir de ese momento pudo dedicarse plenamente a la escritura. Una parte del libro, la que versa sobre la explicaci\u00f3n del invento y en la que se discute sobre la cuarta dimensi\u00f3n, fue publicada en el a\u00f1o 1893 en el Henley's National Observer. El escritor desarroll\u00f3 el resto de la novela, que trata de las aventuras del Viajero a trav\u00e9s del Tiempo en el futuro dos a\u00f1os despu\u00e9s, tarea que le llev\u00f3 escasos quince d\u00edas.\u200b Con esta obra, Herbert George Wells inauguraba para el gran p\u00fablico\u200b la tem",
+            "work_id": "litmate:cd01a12f9f01f2eb764bc33a",
+            "work_title": "The Time Machine",
+            "work_author": "H. G. (Herbert George) Wells",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793944010.7604527",
+            "evidence_hash": "742c098f920a412ebb40b65b05fcad7d8683382195c0cf1b486851ae5de38d9a",
+            "memory_source_id": "d2f7ae186d36e31b0ec3c2018b95d06ec0900a82df7f07899b19fa900b4130a2",
+            "last_verified_at": "1793339210.7604527",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "La m\u00e1quina del tiempo",
+              "url": "https://es.wikipedia.org/wiki/La_m%C3%A1quina_del_tiempo",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "174214392"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "Ante el escepticismo de sus amigos, un cient\u00edfico de finales del siglo XIX logra descubrir las claves de la denominada \"cuarta dimensi\u00f3n\" (el Tiempo) y construye un veh\u00edculo que le permite viajar f\u00edsicamente a trav\u00e9s del mismo.",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "development_excerpt"
+              },
+              {
+                "subject": "La m\u00e1quina del tiempo",
+                "relation": "",
+                "value": "",
+                "evidence": "== Argumento == Ante el escepticismo de sus amigos, un cient\u00edfico de finales del siglo XIX logra descubrir las claves de la denominada \"cuarta dimensi\u00f3n\" (el Tiempo) y construye un veh\u00edculo que le permite viajar f\u00edsicamente a trav\u00e9s del mismo. Luego de esperar un rato, sus amigos lo ven entrar en un estado calamitoso. El Viajero supone que as\u00ed debi\u00f3 de terminar la humanidad tras resolver todos sus conflictos existenciales y tras lograr el comunismo. Tras hacer algunas exploraciones por los alrededores a su llegada al futuro, vuelve al lugar donde dej\u00f3 la m\u00e1quina del tiempo, pero ya no est\u00e1; m\u00e1s tarde se percatar\u00e1 de que los Morlocks la han encerrado en el pedestal de una estatua que represen",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "events",
+                "type": "",
+                "scope": "partial"
+              },
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "Ante el escepticismo de sus amigos, un cient\u00edfico de finales del siglo XIX logra descubrir las claves de la denominada \"cuarta dimensi\u00f3n\" (el Tiempo) y construye un veh\u00edculo que le permite viajar f\u00edsicamente a trav\u00e9s del mismo. Luego de esperar un rato, sus amigos lo ven entrar en un estado calamitoso. El Viajero supone que as\u00ed debi\u00f3 de terminar la humanidad tras resolver todos sus conflictos existenciales y tras lograr el comunismo. Tras hacer algunas exploraciones por los alrededores a su llegada al futuro, vuelve al lugar donde dej\u00f3 la m\u00e1quina del tiempo, pero ya no est\u00e1; m\u00e1s tarde se percatar\u00e1 de que los Morlocks la han encerrado en el pedestal de una estatua que representa a una Esfinge",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "partial"
+              }
+            ],
+            "identity_text": "La m\u00e1quina del tiempo (en ingl\u00e9s, The Time Machine) es una novela de ciencia ficci\u00f3n del escritor brit\u00e1nico Herbert George Wells, publicada por primera vez en Londres en el a\u00f1o 1895 por William Heineman. Consta de diecis\u00e9is cap\u00edtulos y un ep\u00edlogo. Contrario a Julio Verne, padre del detalle y la explicaci\u00f3n minuciosa, Wells describe a prop\u00f3sito la m\u00e1quina de modo superficial y a la ligera, con algunas pinceladas de color, dejando la apariencia y el mecanismo del artilugio a interpretaci\u00f3n del lector. Fue la primera novela de uno de los padres de la ciencia ficci\u00f3n. Con su mezcla de aventuras y doctrina social y pol\u00edtica alcanz\u00f3 un notable \u00e9xito, contribuyendo as\u00ed a la estabilidad de Wells, que a partir de ese momento pudo dedicarse plenamente a la escritura. Una parte del libro, la que versa sobre la explicaci\u00f3n del invento y en la que se discute sobre la cuarta dimensi\u00f3n, fue publicada en el a\u00f1o 1893 en el Henley's National Observer. El escritor desarroll\u00f3 el resto de la novela, que trata de las aventuras del Viajero a trav\u00e9s del Tiempo en el futuro dos a\u00f1os despu\u00e9s, tarea que le llev\u00f3 escasos quince d\u00edas.\u200b Con esta obra, Herbert George Wells inauguraba para el gran p\u00fablico\u200b la tem",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          }
+        ]
+      }
+    ],
+    "content_manually_reviewed": false,
+    "mysql_row_counts": {
+      "auth_group": 0,
+      "auth_group_permissions": 0,
+      "auth_permission": 152,
+      "auth_user": 179,
+      "auth_user_groups": 0,
+      "auth_user_user_permissions": 0,
+      "core_asistenteia": 1,
+      "core_autor": 31,
+      "core_clickconversion": 185,
+      "core_conversacionia": 50,
+      "core_editorial": 34,
+      "core_elementolistalectura": 2,
+      "core_estadolectura": 451,
+      "core_eventoanalitica": 384,
+      "core_genero": 12,
+      "core_historialchatbot": 5,
+      "core_historialpreciolibro": 223,
+      "core_kbname": 14166,
+      "core_kbprojection": 8,
+      "core_kbrecord": 13518,
+      "core_kbrelation": 2598,
+      "core_kbversion": 13518,
+      "core_libro": 55,
+      "core_libro_generos": 54,
+      "core_librofavorito": 231,
+      "core_listalectura": 2,
+      "core_mensajecontacto": 3,
+      "core_mensajeia": 190,
+      "core_perfilusuario": 158,
+      "core_preciolibrotienda": 117,
+      "core_preguntafrecuente": 0,
+      "core_recomendacion": 0,
+      "core_recomendacionialog": 0,
+      "core_resena": 116,
+      "django_admin_log": 0,
+      "django_content_type": 38,
+      "django_migrations": 27,
+      "django_session": 88,
+      "suscripciones_historialpago": 42,
+      "suscripciones_plansuscripcion": 3,
+      "suscripciones_suscripcionusuario": 157
+    },
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  },
+  {
+    "passed": true,
+    "question": "Dime los personajes de Papelucho y el marciano",
+    "answer": "**Papelucho**: Narra su convivencia con Det.\n\n**Det**: Amigo extraterrestre de Papelucho, cuya convivencia causa dificultades y permite imaginar viajes a otros mundos.\n\nFuente: https://literaturasm.cl/diario-secreto-de-papelucho-y-el-marciano/",
+    "status": "answered",
+    "not_in_legacy_catalog": null,
+    "sse_done": true,
+    "seconds": 0.2196,
+    "cards": [
+      {
+        "id": "1",
+        "title": "Diario secreto de Papelucho y el marciano",
+        "author": "Marcela Paz",
+        "synopsis": "",
+        "image_url": "",
+        "links": [
+          {
+            "label": "Amazon",
+            "url": "https://www.amazon.com/s?k=Diario+secreto+de+Papelucho+y+el+marciano+Marcela+Paz&i=stripbooks"
+          },
+          {
+            "label": "Buscalibre",
+            "url": "https://www.buscalibre.cl/libros/search?q=Diario+secreto+de+Papelucho+y+el+marciano+Marcela+Paz"
+          }
+        ]
+      }
+    ],
+    "diagnostics": {
+      "elapsed_ms": 182,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 0,
+      "verified_narrative_answer": true,
+      "verified_character_answer": true,
+      "character_count": 2,
+      "work_type": "unknown",
+      "progress_metrics": {
+        "elapsed_ms": 197.122,
+        "first_phase_emitted_ms": 18.569,
+        "model_calls_started": 0,
+        "stage_totals_ms": {
+          "conversation": 3.176,
+          "cache_lookup": 1.004,
+          "knowledge_lookup": 134.788,
+          "audit": 1.497,
+          "finalization": 15.269
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 4.86,
+            "elapsed_ms": 3.176,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 17.555,
+            "elapsed_ms": 1.004,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 19.751,
+            "elapsed_ms": 128.514,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 99.26,
+            "elapsed_ms": 6.274,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 145.933,
+            "elapsed_ms": 1.497,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 181.846,
+            "elapsed_ms": 15.269,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 18.569
+          },
+          {
+            "stage": "review",
+            "elapsed_ms": 145.912
+          }
+        ]
+      },
+      "stage_timings": [],
+      "external_research": {
+        "http_requests_started": 0,
+        "logical_searches": 0,
+        "pages_extracted": 0,
+        "page_slots_reserved": 0,
+        "external_seconds": 0.0
+      },
+      "provider": "verified-character-evidence"
+    },
+    "reader_data_written": false,
+    "sources": [],
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": {
+          "task": "characters",
+          "focus": "all",
+          "title": "Papelucho y el marciano",
+          "targets": [],
+          "names": [],
+          "ambiguous": false,
+          "object_name": "",
+          "author_hint": ""
+        }
+      },
+      {
+        "stage": "character_binding",
+        "sources": [
+          {
+            "id": 1,
+            "title": "Diario secreto de Papelucho y el marciano",
+            "author": "Marcela Paz",
+            "description": "Papelucho relata su convivencia con Det, un amigo extraterrestre. Su amistad combina dificultades cotidianas con la posibilidad de conocer otros mundos.",
+            "source": "Conocimiento literario local",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://literaturasm.cl/diario-secreto-de-papelucho-y-el-marciano/",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "",
+            "work_id": "litmate:7ca53fecffe1e3976b13fafd",
+            "license": "CC0-1.0 (redacci\u00f3n factual original de LitMate; no licencia de la obra ni de las p\u00e1ginas citadas)",
+            "confirmed_aliases": [
+              {
+                "title": "Papelucho y el marciano",
+                "source_url": "https://ci.nii.ac.jp/ncid/BA64258717",
+                "evidence": "El cat\u00e1logo bibliogr\u00e1fico CiNii registra Diario secreto de Papelucho y el Marciano, de Marcela Paz, y Papelucho y el Marciano como Other Title."
+              }
+            ],
+            "isbns": [
+              "9789563495768",
+              "9789563634136"
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Diario secreto de Papelucho y el marciano",
+            "author": "Fuente web",
+            "description": "En Diario secreto de Papelucho y el marciano, de Marcela Paz, Papelucho cuenta c\u00f3mo convive con Det. Det es su amigo de otro planeta; esa convivencia provoca problemas y enfados, y abre la posibilidad de viajar a otros mundos. La convivencia de Papelucho con Det provoca problemas y enfados y ofrece la posibilidad de viajar a otros mundos. Papelucho: Narra su convivencia con Det. Det: Amigo extraterrestre de Papelucho, cuya convivencia causa dificultades y permite imaginar viajes a otros mundos.",
+            "source": "Conocimiento literario local",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://literaturasm.cl/diario-secreto-de-papelucho-y-el-marciano/",
+            "locator": "",
+            "read_mode": "resumen factual original con procedencia; no texto de la nov",
+            "retrieved_at": "",
+            "work_id": "litmate:7ca53fecffe1e3976b13fafd",
+            "work_title": "Diario secreto de Papelucho y el marciano",
+            "work_author": "Marcela Paz",
+            "license": "CC0-1.0 (redacci\u00f3n factual original de LitMate; no licencia de la obra ni de las p\u00e1ginas citadas)",
+            "character_scope": "partial",
+            "work_binding_verified": true,
+            "fact_ids": [
+              "4112a73e4238db33a182efd35eec32f9",
+              "80d05e71d9ab33980cd22ad13bc9b789"
+            ],
+            "fact_topics": [
+              "characters",
+              "relationships"
+            ],
+            "confirmed_aliases": [
+              {
+                "title": "Papelucho y el marciano",
+                "source_url": "https://ci.nii.ac.jp/ncid/BA64258717",
+                "evidence": "El cat\u00e1logo bibliogr\u00e1fico CiNii registra Diario secreto de Papelucho y el Marciano, de Marcela Paz, y Papelucho y el Marciano como Other Title."
+              }
+            ],
+            "literary_facts": [
+              {
+                "subject": "Diario secreto de Papelucho y el marciano",
+                "relation": "",
+                "value": "",
+                "evidence": "En Diario secreto de Papelucho y el marciano, de Marcela Paz, Papelucho cuenta c\u00f3mo convive con Det. Det es su amigo de otro planeta; esa convivencia provoca problemas y enfados, y abre la posibilidad de viajar a otros mundos.",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "characters",
+                "type": "",
+                "scope": ""
+              },
+              {
+                "subject": "Diario secreto de Papelucho y el marciano",
+                "relation": "",
+                "value": "",
+                "evidence": "La convivencia de Papelucho con Det provoca problemas y enfados y ofrece la posibilidad de viajar a otros mundos.",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "relationships",
+                "type": "",
+                "scope": ""
+              }
+            ],
+            "identity_text": "",
+            "character_facts": [
+              {
+                "name": "Papelucho",
+                "role": "Narra su convivencia con Det."
+              },
+              {
+                "name": "Det",
+                "role": "Amigo extraterrestre de Papelucho, cuya convivencia causa dificultades y permite imaginar viajes a otros mundos."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "stage": "characters",
+        "diagnostics": {
+          "verified_narrative_answer": true,
+          "audit": {
+            "decision": "approve",
+            "only_books": true,
+            "claims": [
+              {
+                "statement": "**Papelucho**: Narra su convivencia con Det.",
+                "source_id": 2,
+                "verdict": "supported",
+                "evidence": "Papelucho: Narra su convivencia con Det."
+              },
+              {
+                "statement": "**Det**: Amigo extraterrestre de Papelucho, cuya convivencia causa dificultades y permite imaginar viajes a otros mundos.",
+                "source_id": 2,
+                "verdict": "supported",
+                "evidence": "Det: Amigo extraterrestre de Papelucho, cuya convivencia causa dificultades y permite imaginar viajes a otros mundos."
+              }
+            ],
+            "coverage": [
+              {
+                "question_id": 1,
+                "status": "answered"
+              }
+            ],
+            "issues": [],
+            "search_queries": []
+          },
+          "work_type": "unknown",
+          "model_calls": 0,
+          "verified_character_answer": true,
+          "character_count": 2,
+          "character_task": "characters",
+          "character_focus": "all",
+          "character_trace": [
+            {
+              "stage": "stored_content",
+              "facts": 2
+            }
+          ],
+          "external_research": {
+            "logical_searches": 0,
+            "page_slots_reserved": 0,
+            "page_slots_limit": 3,
+            "external_seconds": 0.0,
+            "events": [],
+            "http_requests_started": 0,
+            "pages_extracted": 0
+          },
+          "progress_metrics": {
+            "stage_timings": [
+              {
+                "stage": "conversation",
+                "started_ms": 4.86,
+                "elapsed_ms": 3.176,
+                "status": "ok"
+              },
+              {
+                "stage": "cache_lookup",
+                "started_ms": 17.555,
+                "elapsed_ms": 1.004,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 19.751,
+                "elapsed_ms": 128.514,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 99.26,
+                "elapsed_ms": 6.274,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 145.933,
+                "elapsed_ms": 1.497,
+                "status": "ok"
+              }
+            ],
+            "stage_totals_ms": {
+              "conversation": 3.176,
+              "cache_lookup": 1.004,
+              "knowledge_lookup": 134.788,
+              "audit": 1.497
+            },
+            "model_calls_started": 0,
+            "progress_events": [
+              {
+                "stage": "search",
+                "elapsed_ms": 18.569
+              },
+              {
+                "stage": "review",
+                "elapsed_ms": 145.912
+              }
+            ],
+            "elapsed_ms": 162.223,
+            "first_phase_emitted_ms": 18.569
+          },
+          "language_presentation": {
+            "target": "es",
+            "original_text": "**Papelucho**: Narra su convivencia con Det.\n\n**Det**: Amigo extraterrestre de Papelucho, cuya convivencia causa dificultades y permite imaginar viajes a otros mundos.\n\nFuente: https://literaturasm.cl/diario-secreto-de-papelucho-y-el-marciano/",
+            "translated_fields": 0,
+            "cache_hits": 0,
+            "untranslated_fields": [],
+            "audit_applies_to_original": true,
+            "cards": [
+              {
+                "id": "1",
+                "title": "Diario secreto de Papelucho y el marciano",
+                "author": "Marcela Paz",
+                "synopsis": "",
+                "image_url": "",
+                "links": [
+                  {
+                    "label": "Amazon",
+                    "url": "https://www.amazon.com/s?k=Diario+secreto+de+Papelucho+y+el+marciano+Marcela+Paz&i=stripbooks"
+                  },
+                  {
+                    "label": "Buscalibre",
+                    "url": "https://www.buscalibre.cl/libros/search?q=Diario+secreto+de+Papelucho+y+el+marciano+Marcela+Paz"
+                  }
+                ]
+              }
+            ]
+          },
+          "stage_timings": [],
+          "elapsed_ms": 162,
+          "chat_budget_seconds": 36.0
+        },
+        "sources": [
+          {
+            "id": 1,
+            "title": "Diario secreto de Papelucho y el marciano",
+            "author": "Marcela Paz",
+            "description": "Papelucho relata su convivencia con Det, un amigo extraterrestre. Su amistad combina dificultades cotidianas con la posibilidad de conocer otros mundos.",
+            "source": "Conocimiento literario local",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://literaturasm.cl/diario-secreto-de-papelucho-y-el-marciano/",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "",
+            "work_id": "litmate:7ca53fecffe1e3976b13fafd",
+            "license": "CC0-1.0 (redacci\u00f3n factual original de LitMate; no licencia de la obra ni de las p\u00e1ginas citadas)",
+            "confirmed_aliases": [
+              {
+                "title": "Papelucho y el marciano",
+                "source_url": "https://ci.nii.ac.jp/ncid/BA64258717",
+                "evidence": "El cat\u00e1logo bibliogr\u00e1fico CiNii registra Diario secreto de Papelucho y el Marciano, de Marcela Paz, y Papelucho y el Marciano como Other Title."
+              }
+            ],
+            "isbns": [
+              "9789563495768",
+              "9789563634136"
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Diario secreto de Papelucho y el marciano",
+            "author": "Fuente web",
+            "description": "En Diario secreto de Papelucho y el marciano, de Marcela Paz, Papelucho cuenta c\u00f3mo convive con Det. Det es su amigo de otro planeta; esa convivencia provoca problemas y enfados, y abre la posibilidad de viajar a otros mundos. La convivencia de Papelucho con Det provoca problemas y enfados y ofrece la posibilidad de viajar a otros mundos. Papelucho: Narra su convivencia con Det. Det: Amigo extraterrestre de Papelucho, cuya convivencia causa dificultades y permite imaginar viajes a otros mundos.",
+            "source": "Conocimiento literario local",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://literaturasm.cl/diario-secreto-de-papelucho-y-el-marciano/",
+            "locator": "",
+            "read_mode": "resumen factual original con procedencia; no texto de la nov",
+            "retrieved_at": "",
+            "work_id": "litmate:7ca53fecffe1e3976b13fafd",
+            "work_title": "Diario secreto de Papelucho y el marciano",
+            "work_author": "Marcela Paz",
+            "license": "CC0-1.0 (redacci\u00f3n factual original de LitMate; no licencia de la obra ni de las p\u00e1ginas citadas)",
+            "character_scope": "partial",
+            "work_binding_verified": true,
+            "fact_ids": [
+              "4112a73e4238db33a182efd35eec32f9",
+              "80d05e71d9ab33980cd22ad13bc9b789"
+            ],
+            "fact_topics": [
+              "characters",
+              "relationships"
+            ],
+            "confirmed_aliases": [
+              {
+                "title": "Papelucho y el marciano",
+                "source_url": "https://ci.nii.ac.jp/ncid/BA64258717",
+                "evidence": "El cat\u00e1logo bibliogr\u00e1fico CiNii registra Diario secreto de Papelucho y el Marciano, de Marcela Paz, y Papelucho y el Marciano como Other Title."
+              }
+            ],
+            "literary_facts": [
+              {
+                "subject": "Diario secreto de Papelucho y el marciano",
+                "relation": "",
+                "value": "",
+                "evidence": "En Diario secreto de Papelucho y el marciano, de Marcela Paz, Papelucho cuenta c\u00f3mo convive con Det. Det es su amigo de otro planeta; esa convivencia provoca problemas y enfados, y abre la posibilidad de viajar a otros mundos.",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "characters",
+                "type": "",
+                "scope": ""
+              },
+              {
+                "subject": "Diario secreto de Papelucho y el marciano",
+                "relation": "",
+                "value": "",
+                "evidence": "La convivencia de Papelucho con Det provoca problemas y enfados y ofrece la posibilidad de viajar a otros mundos.",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "relationships",
+                "type": "",
+                "scope": ""
+              }
+            ],
+            "identity_text": "",
+            "character_facts": [
+              {
+                "name": "Papelucho",
+                "role": "Narra su convivencia con Det."
+              },
+              {
+                "name": "Det",
+                "role": "Amigo extraterrestre de Papelucho, cuya convivencia causa dificultades y permite imaginar viajes a otros mundos."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "content_manually_reviewed": false,
+    "mysql_row_counts": {
+      "auth_group": 0,
+      "auth_group_permissions": 0,
+      "auth_permission": 152,
+      "auth_user": 179,
+      "auth_user_groups": 0,
+      "auth_user_user_permissions": 0,
+      "core_asistenteia": 1,
+      "core_autor": 31,
+      "core_clickconversion": 185,
+      "core_conversacionia": 50,
+      "core_editorial": 34,
+      "core_elementolistalectura": 2,
+      "core_estadolectura": 451,
+      "core_eventoanalitica": 384,
+      "core_genero": 12,
+      "core_historialchatbot": 5,
+      "core_historialpreciolibro": 223,
+      "core_kbname": 14166,
+      "core_kbprojection": 8,
+      "core_kbrecord": 13518,
+      "core_kbrelation": 2598,
+      "core_kbversion": 13518,
+      "core_libro": 55,
+      "core_libro_generos": 54,
+      "core_librofavorito": 231,
+      "core_listalectura": 2,
+      "core_mensajecontacto": 3,
+      "core_mensajeia": 190,
+      "core_perfilusuario": 158,
+      "core_preciolibrotienda": 117,
+      "core_preguntafrecuente": 0,
+      "core_recomendacion": 0,
+      "core_recomendacionialog": 0,
+      "core_resena": 116,
+      "django_admin_log": 0,
+      "django_content_type": 38,
+      "django_migrations": 27,
+      "django_session": 88,
+      "suscripciones_historialpago": 42,
+      "suscripciones_plansuscripcion": 3,
+      "suscripciones_suscripcionusuario": 157
+    },
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  }
+]

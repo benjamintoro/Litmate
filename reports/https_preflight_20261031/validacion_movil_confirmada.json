@@ -1,0 +1,52 @@
+{
+  "publication_authorized": true,
+  "funnel_active": true,
+  "mobile_validation": {
+    "method": "explicit_user_confirmation",
+    "reply": "Todo funcion\u00f3 desde datos m\u00f3viles, con Wi-Fi y VPN apagados",
+    "wifi_off": true,
+    "phone_tailscale_vpn_off": true,
+    "authenticated_access": true,
+    "ui_and_avatar": true,
+    "covers_and_cards": true,
+    "conversation_continuity": true,
+    "progress_observed": true,
+    "latency_measured_on_phone": false
+  },
+  "firewall_modified": false,
+  "uac_requested": false,
+  "original_hashes_unchanged": {
+    ".env": true,
+    "data/literary_memory.sqlite3": true,
+    "data/literary_memory_rag.sqlite3": true
+  },
+  "funnel_config": {
+    "Foreground": {
+      "05619147116f0c78": {
+        "TCP": {
+          "443": {
+            "HTTPS": true
+          }
+        },
+        "Web": {
+          "xato.taila70665.ts.net:443": {
+            "Handlers": {
+              "/": {
+                "Proxy": "http://127.0.0.1:8003"
+              }
+            }
+          }
+        },
+        "AllowFunnel": {
+          "xato.taila70665.ts.net:443": true
+        }
+      }
+    }
+  },
+  "local_ports": {
+    "3306": true,
+    "11434": true,
+    "8080": true,
+    "8003": true
+  }
+}

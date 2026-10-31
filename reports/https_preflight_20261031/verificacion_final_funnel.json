@@ -1,0 +1,725 @@
+{
+  "scope": "loopback backend after TLS termination",
+  "external_network_tested": false,
+  "checks": {
+    "chat_auth_required": true,
+    "chat_auth_required_http_status": 401,
+    "static_auth_required": true,
+    "static_auth_required_http_status": 401,
+    "admin_blocked": true,
+    "unknown_host_blocked": true,
+    "chat_html": true,
+    "frame_denied": true,
+    "csrf_cookie_present": true,
+    "csrf_secure_flag": true,
+    "hsts_present": true,
+    "javascript": true,
+    "avatar": true,
+    "csrf_enforced": true,
+    "homepage_routes_to_chat": true,
+    "blocked:/.env": true,
+    "blocked:/backups/": true,
+    "blocked:/admin/login/": true,
+    "blocked:/login/": true,
+    "blocked:/registro/": true,
+    "blocked:/suscripciones/": true,
+    "blocked:/media/private.pdf": true,
+    "blocked:/static/.env": true,
+    "blocked:/static/../.env": true,
+    "invalid_password_rejected": true,
+    "forwarded_headers_do_not_override_host": true,
+    "foreign_origin_rejected": true,
+    "invalid_message:null": true,
+    "invalid_message:too_long": true,
+    "query_requires_post": true,
+    "asset:/static/css/chat-books.css": true,
+    "asset:/static/js/litmate_safe.js?v=chat-v9": true,
+    "current_finalize_client": true
+  },
+  "conversation": [
+    {
+      "question": "Recuerdo un libro donde un ni\u00f1o vive en un planeta peque\u00f1o y cuida una rosa",
+      "status": "answered",
+      "answer": "Por tus pistas, podr\u00edas estar buscando **El principito**, de **Antoine de Saint-Exup\u00e9ry**. \u00bfTe suena?",
+      "books": [
+        {
+          "id": "1",
+          "title": "El principito",
+          "author": "Antoine de Saint-Exup\u00e9ry",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+principito+Antoine+de+Saint-Exup%C3%A9ry&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+principito+Antoine+de+Saint-Exup%C3%A9ry"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 1052,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 1057.776,
+          "first_phase_emitted_ms": 114.981,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 89.056,
+            "cache_lookup": 0.71,
+            "knowledge_lookup": 791.098,
+            "audit": 3.508,
+            "finalization": 5.965
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 8.097,
+              "elapsed_ms": 89.056,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 114.25,
+              "elapsed_ms": 0.71,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 213.457,
+              "elapsed_ms": 397.115,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 326.292,
+              "elapsed_ms": 45.489,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 427.798,
+              "elapsed_ms": 181.436,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 497.559,
+              "elapsed_ms": 69.933,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 690.542,
+              "elapsed_ms": 61.656,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 904.405,
+              "elapsed_ms": 35.469,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 985.424,
+              "elapsed_ms": 3.508,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 1051.803,
+              "elapsed_ms": 5.965,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 114.981
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 985.397
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "local-identification"
+      },
+      "sse_done": true,
+      "seconds": 1.0681,
+      "http_timing": {
+        "first_progress_seconds": 0.1171,
+        "verified_ready_seconds": 1.0367,
+        "first_verified_text_seconds": null
+      },
+      "progress_before_ready": true,
+      "progress_events": [
+        {
+          "stage": "search",
+          "elapsed_ms": 4.589
+        },
+        {
+          "stage": "review",
+          "elapsed_ms": 875.005
+        }
+      ]
+    },
+    {
+      "question": "Recomi\u00e9ndame dos novelas de fantas\u00eda en espa\u00f1ol",
+      "status": "answered",
+      "answer": "\u00a1Claro!\n\n1. **Harry Potter y el misterio del pr\u00edncipe** \u2014 J.K. Rowling.\n\n2. **Choque de Reyes (Canci\u00f3n de Hielo y Fuego 2)** \u2014 George R.R. Martin.\n\n\u00bfCu\u00e1l te interesa m\u00e1s?",
+      "books": [
+        {
+          "id": "db_30013",
+          "title": "Harry Potter y el misterio del pr\u00edncipe",
+          "author": "J.K. Rowling",
+          "synopsis": "Harry descubre un viejo libro de pociones perteneciente al misterioso 'Pr\u00edncipe Mestizo' y junto a Dumbledore desentra\u00f1a los secretos del pasado de Voldemort.",
+          "image_url": "https://covers.openlibrary.org/b/id/9393000-L.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=Harry+Potter+y+el+misterio+del+pr%C3%ADncipe+J.K.+Rowling"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Harry+Potter+y+el+misterio+del+pr%C3%ADncipe+J.K.+Rowling&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Harry+Potter+y+el+misterio+del+pr%C3%ADncipe+J.K.+Rowling"
+            }
+          ]
+        },
+        {
+          "id": "db_30019",
+          "title": "Choque de Reyes (Canci\u00f3n de Hielo y Fuego 2)",
+          "author": "George R.R. Martin",
+          "synopsis": "La Guerra de los Cinco Reyes desgarra los Siete Reinos, mientras un cometa rojo cruza los cielos anunciando sangre y fuego.",
+          "image_url": "https://covers.openlibrary.org/b/id/8231751-L.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 114,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 117.26,
+          "first_phase_emitted_ms": 22.59,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 5.106,
+            "cache_lookup": 0.871,
+            "audit": 1.667,
+            "finalization": 3.143
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 9.404,
+              "elapsed_ms": 5.106,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 21.703,
+              "elapsed_ms": 0.871,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 87.76,
+              "elapsed_ms": 1.667,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 114.11,
+              "elapsed_ms": 3.143,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 22.59
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 87.733
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-genre-catalogue"
+      },
+      "sse_done": true,
+      "seconds": 0.1416,
+      "http_timing": {
+        "first_progress_seconds": 0.0415,
+        "verified_ready_seconds": 0.1164,
+        "first_verified_text_seconds": null
+      },
+      "progress_before_ready": true,
+      "progress_events": [
+        {
+          "stage": "search",
+          "elapsed_ms": 1.247
+        },
+        {
+          "stage": "review",
+          "elapsed_ms": 66.39
+        }
+      ]
+    },
+    {
+      "question": "Cu\u00e9ntame m\u00e1s del segundo",
+      "status": "answered",
+      "answer": "**Choque de Reyes (Canci\u00f3n de Hielo y Fuego 2) \u2014 George R.R. Martin**: La Guerra de los Cinco Reyes desgarra los Siete Reinos, mientras un cometa rojo cruza los cielos anunciando sangre y fuego.",
+      "books": [
+        {
+          "id": "db_30019",
+          "title": "Choque de Reyes (Canci\u00f3n de Hielo y Fuego 2)",
+          "author": "George R.R. Martin",
+          "synopsis": "La Guerra de los Cinco Reyes desgarra los Siete Reinos, mientras un cometa rojo cruza los cielos anunciando sangre y fuego.",
+          "image_url": "https://covers.openlibrary.org/b/id/8231751-L.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 81,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 94.966,
+          "first_phase_emitted_ms": 28.93,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 11.174,
+            "cache_lookup": 0.925,
+            "audit": 2.738,
+            "knowledge_lookup": 8.363,
+            "finalization": 14.405
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 9.953,
+              "elapsed_ms": 11.174,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 27.994,
+              "elapsed_ms": 0.925,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 33.277,
+              "elapsed_ms": 8.363,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 39.652,
+              "elapsed_ms": 1.968,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 42.434,
+              "elapsed_ms": 0.77,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 80.553,
+              "elapsed_ms": 14.405,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 28.93
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 39.643
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-indexed-evidence"
+      },
+      "sse_done": true,
+      "seconds": 0.1184,
+      "http_timing": {
+        "first_progress_seconds": 0.0589,
+        "verified_ready_seconds": 0.0808,
+        "first_verified_text_seconds": null
+      },
+      "progress_before_ready": true,
+      "progress_events": [
+        {
+          "stage": "search",
+          "elapsed_ms": 1.382
+        },
+        {
+          "stage": "review",
+          "elapsed_ms": 12.095
+        }
+      ]
+    },
+    {
+      "question": "\u00bfD\u00f3nde puedo encontrarlo?",
+      "status": "answered",
+      "answer": "**Choque de Reyes (Canci\u00f3n de Hielo y Fuego 2)** \u2014 George R.R. Martin.\n\nPuedes usar los enlaces de la tarjeta para buscarlo; no puedo confirmar disponibilidad ni precio.",
+      "books": [
+        {
+          "id": "db_30019",
+          "title": "Choque de Reyes (Canci\u00f3n de Hielo y Fuego 2)",
+          "author": "George R.R. Martin",
+          "synopsis": "La Guerra de los Cinco Reyes desgarra los Siete Reinos, mientras un cometa rojo cruza los cielos anunciando sangre y fuego.",
+          "image_url": "https://covers.openlibrary.org/b/id/8231751-L.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 61,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 69.868,
+          "first_phase_emitted_ms": 33.378,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 9.345,
+            "cache_lookup": 6.118,
+            "audit": 0.582,
+            "finalization": 8.427
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 11.006,
+              "elapsed_ms": 9.345,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 27.25,
+              "elapsed_ms": 6.118,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 37.843,
+              "elapsed_ms": 0.582,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 61.435,
+              "elapsed_ms": 8.427,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 33.378
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 37.834
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-conversation-evidence"
+      },
+      "sse_done": true,
+      "seconds": 0.0994,
+      "http_timing": {
+        "first_progress_seconds": 0.0612,
+        "verified_ready_seconds": 0.0687,
+        "first_verified_text_seconds": null
+      },
+      "progress_before_ready": true,
+      "progress_events": [
+        {
+          "stage": "search",
+          "elapsed_ms": 6.629
+        },
+        {
+          "stage": "review",
+          "elapsed_ms": 11.085
+        }
+      ]
+    },
+    {
+      "question": "Dime de qu\u00e9 trata El mundo de Sof\u00eda",
+      "status": "answered",
+      "answer": "El mundo de Sof\u00eda es una novela que utiliza una trama novelesca para ofrecer una gu\u00eda b\u00e1sica sobre la historia de la filosof\u00eda occidental. La historia sigue a Sof\u00eda Amundsen, una ni\u00f1a noruega de catorce a\u00f1os que recibe misteriosas cartas en su buz\u00f3n invit\u00e1ndola a un curso de filosof\u00eda por correspondencia impartido por el profesor Alberto Knox. A trav\u00e9s de este intercambio epistolar y otros eventos, la protagonista explora conceptos filos\u00f3ficos fundamentales mientras se adentra en una vida llena de sorpresas e intrigas.\n\nFuente: https://es.wikipedia.org/wiki/El_mundo_de_Sof%C3%ADa\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+      "books": [
+        {
+          "id": "/works/OL922421W",
+          "title": "El Mundo de Sofia",
+          "author": "Jostein Gaarder",
+          "synopsis": "El mundo de Sof\u00eda es una novela que utiliza una trama novelesca para ofrecer una gu\u00eda b\u00e1sica sobre la historia de la filosof\u00eda occidental. La historia sigue a Sof\u00eda Amundsen, una ni\u00f1a noruega de catorce a\u00f1os que recibe misteriosas cartas en su buz\u00f3n invit\u00e1ndola a un curso de filosof\u00eda por correspondencia impartido por el profesor Alberto Knox. A trav\u00e9s de este intercambio epistolar y otros eventos, la protagonista ex",
+          "image_url": "https://covers.openlibrary.org/b/id/1048142-M.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=El+Mundo+de+Sofia+Jostein+Gaarder"
+            },
+            {
+              "label": "Open Library",
+              "url": "https://openlibrary.org/works/OL922421W"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+Mundo+de+Sofia+Jostein+Gaarder&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+Mundo+de+Sofia+Jostein+Gaarder"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 20546,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 2,
+        "verified_narrative_answer": true,
+        "narrative_synthesized": true,
+        "partial_evidence": false,
+        "work_type": "fiction",
+        "progress_metrics": {
+          "elapsed_ms": 20570.503,
+          "first_phase_emitted_ms": 33.464,
+          "model_calls_started": 2,
+          "stage_totals_ms": {
+            "conversation": 9.382,
+            "cache_lookup": 7.518,
+            "knowledge_lookup": 715.379,
+            "retrieval": 2398.131,
+            "model_inspection": 21.772,
+            "generation": 12167.828,
+            "audit": 5219.929,
+            "finalization": 24.132
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 9.756,
+              "elapsed_ms": 9.382,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 25.935,
+              "elapsed_ms": 7.518,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 38.441,
+              "elapsed_ms": 366.652,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 118.736,
+              "elapsed_ms": 48.248,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 227.259,
+              "elapsed_ms": 172.459,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 299.529,
+              "elapsed_ms": 62.797,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 476.769,
+              "elapsed_ms": 65.223,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 598.45,
+              "elapsed_ms": 2398.131,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 3085.84,
+              "elapsed_ms": 12167.828,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 3085.866,
+              "elapsed_ms": 21.764,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 15256.537,
+              "elapsed_ms": 5214.363,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 15256.567,
+              "elapsed_ms": 0.008,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 20474.092,
+              "elapsed_ms": 5.566,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 20546.365,
+              "elapsed_ms": 24.132,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 33.464
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 3085.821
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 15256.51
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "prompt_eval_count": 2331,
+            "total_ms": 12134.622,
+            "status": "ok",
+            "elapsed_ms": 12168,
+            "stage": "answer",
+            "prompt_eval_ms": 1507.389,
+            "eval_count": 138,
+            "model": "qwen3.5:9b-q4_K_M",
+            "load_ms": 4519.464,
+            "eval_ms": 6092.216
+          },
+          {
+            "prompt_eval_count": 3698,
+            "total_ms": 5198.587,
+            "status": "ok",
+            "elapsed_ms": 5214,
+            "stage": "audit",
+            "prompt_eval_ms": 2098.458,
+            "eval_count": 79,
+            "model": "qwen3.5:9b-q4_K_M",
+            "load_ms": 6.858,
+            "eval_ms": 3020.804
+          }
+        ],
+        "provider": "verified-narrative-engine"
+      },
+      "sse_done": true,
+      "seconds": 20.5913,
+      "http_timing": {
+        "first_progress_seconds": 0.0553,
+        "verified_ready_seconds": 20.5257,
+        "first_verified_text_seconds": null
+      },
+      "progress_before_ready": true,
+      "progress_events": [
+        {
+          "stage": "search",
+          "elapsed_ms": 8.064
+        },
+        {
+          "stage": "writing",
+          "elapsed_ms": 3060.421
+        },
+        {
+          "stage": "review",
+          "elapsed_ms": 15231.11
+        }
+      ]
+    }
+  ],
+  "cookie_flags": {
+    "csrftoken": {
+      "secure": true,
+      "httponly": false,
+      "samesite": "Lax"
+    },
+    "litmate_demo_sessionid": {
+      "secure": true,
+      "httponly": true,
+      "samesite": "Lax"
+    }
+  }
+}

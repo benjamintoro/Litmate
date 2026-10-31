@@ -89,11 +89,14 @@ def _covers_requirement(work, books, sources, requirement):
         return False
     if requirement in {'', 'metadata', 'author', 'bibliography', 'book_identity'}:
         return True
-    if requirement in {'themes', 'genres', 'recommend', 'recommendation'}:
+    if requirement in {'genres', 'recommend', 'recommendation'}:
         return any(source.get('categories') for source in matching)
-    if requirement in {'historical_context', 'adaptations'}:
+    if requirement in {'themes', 'historical_context', 'adaptations'}:
         from .literary_memory import _literal_facts
-        return any(fact.get('topic') == requirement for source in matching for fact in
+        # A subject heading helps classify a book, but does not establish its
+        # thesis or treatment of that subject. Require a literal scoped passage.
+        return any(fact.get('topic') == requirement for source in matching
+                   if not source.get('conflicts_with') and not source.get('injection_detected') for fact in
                    _literal_facts(source.get('literary_facts', []), source.get('description', ''), 'literary_facts'))
     # Las materias/identificadores de un catálogo no son una sinopsis ni
     # prueban escenas, personajes o relaciones.

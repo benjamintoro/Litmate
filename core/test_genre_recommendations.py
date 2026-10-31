@@ -24,6 +24,13 @@ class GenreTests(SimpleTestCase):
         self.assertTrue(result.diagnostics['audit']['claims'])
         self.assertNotIn('Fuentes de las fichas',result.text)
 
+    def test_written_one_and_two_use_the_same_bounded_genre_route(self):
+        for word, count in [('un', 1), ('una', 1), ('uno', 1), ('dos', 2)]:
+            with self.subTest(word=word):
+                result = self.answer('Recomiéndame ' + word + ' novelas de crimen')
+                self.assertIsNotNone(result)
+                self.assertEqual(len(result.books), count)
+
     def test_more_and_rejection_exclude_all_previous_variants(self):
         first=self.answer('Recomiéndame libros de crimen')
         state={};remember_recommendations(state,'Recomiéndame libros de crimen',{'intent':'recommend'},first)

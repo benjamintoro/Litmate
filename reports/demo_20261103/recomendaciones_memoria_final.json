@@ -1,0 +1,711 @@
+{
+  "scope": "local HTTP",
+  "external_network_tested": false,
+  "checks": {
+    "chat_auth_required": true,
+    "chat_auth_required_http_status": 401,
+    "static_auth_required": true,
+    "static_auth_required_http_status": 401,
+    "admin_blocked": true,
+    "unknown_host_blocked": true,
+    "chat_html": true,
+    "frame_denied": true,
+    "csrf_cookie_present": true,
+    "javascript": true,
+    "avatar": true,
+    "csrf_enforced": true
+  },
+  "conversation": [
+    {
+      "question": "Recomi\u00e9ndame dos novelas de fantas\u00eda en espa\u00f1ol",
+      "status": "answered",
+      "answer": "\u00a1Claro!\n\n1. **Harry Potter y el misterio del pr\u00edncipe** \u2014 J.K. Rowling.\n\n2. **Choque de Reyes (Canci\u00f3n de Hielo y Fuego 2)** \u2014 George R.R. Martin.\n\n\u00bfCu\u00e1l te interesa m\u00e1s?",
+      "books": [
+        {
+          "id": "db_30013",
+          "title": "Harry Potter y el misterio del pr\u00edncipe",
+          "author": "J.K. Rowling",
+          "synopsis": "Harry descubre un viejo libro de pociones perteneciente al misterioso 'Pr\u00edncipe Mestizo' y junto a Dumbledore desentra\u00f1a los secretos del pasado de Voldemort.",
+          "image_url": "https://covers.openlibrary.org/b/id/9393000-L.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=Harry+Potter+y+el+misterio+del+pr%C3%ADncipe+J.K.+Rowling"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Harry+Potter+y+el+misterio+del+pr%C3%ADncipe+J.K.+Rowling&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Harry+Potter+y+el+misterio+del+pr%C3%ADncipe+J.K.+Rowling"
+            }
+          ]
+        },
+        {
+          "id": "db_30019",
+          "title": "Choque de Reyes (Canci\u00f3n de Hielo y Fuego 2)",
+          "author": "George R.R. Martin",
+          "synopsis": "La Guerra de los Cinco Reyes desgarra los Siete Reinos, mientras un cometa rojo cruza los cielos anunciando sangre y fuego.",
+          "image_url": "https://covers.openlibrary.org/b/id/8231751-L.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 135,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 135.609,
+          "first_phase_emitted_ms": 21.492,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 1.653,
+            "cache_lookup": 7.132,
+            "audit": 1.581,
+            "finalization": 1.069
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 4.122,
+              "elapsed_ms": 1.653,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 14.35,
+              "elapsed_ms": 7.132,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 88.286,
+              "elapsed_ms": 1.581,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 134.534,
+              "elapsed_ms": 1.069,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 21.492
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 88.266
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-genre-catalogue"
+      },
+      "sse_done": true,
+      "seconds": 0.1701,
+      "http_timing": {
+        "first_progress_seconds": 0.059,
+        "verified_ready_seconds": 0.1269,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "Ya le\u00ed el primero y no me interesa el segundo",
+      "status": "social",
+      "answer": "Lo tendr\u00e9 en cuenta: excluir\u00e9 esas lecturas de las pr\u00f3ximas recomendaciones de esta conversaci\u00f3n.",
+      "books": [],
+      "diagnostics": {
+        "elapsed_ms": 59,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 62.061,
+          "first_phase_emitted_ms": 24.515,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 2.474,
+            "cache_lookup": 6.341,
+            "finalization": 3.533
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 9.059,
+              "elapsed_ms": 2.474,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 18.163,
+              "elapsed_ms": 6.341,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 58.522,
+              "elapsed_ms": 3.533,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 24.515
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-conversation-evidence"
+      },
+      "sse_done": true,
+      "seconds": 0.0802,
+      "http_timing": {
+        "first_progress_seconds": 0.0363,
+        "verified_ready_seconds": 0.0422,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "Dame otros dos libros de fantas\u00eda en espa\u00f1ol",
+      "status": "answered",
+      "answer": "\u00a1Claro!\n\n1. **El Camino de los Reyes (El Archivo de las Tormentas 1)** \u2014 Brandon Sanderson.\n\n2. **El Hobbit** \u2014 J.R.R. Tolkien.\n\n\u00bfCu\u00e1l te interesa m\u00e1s?",
+      "books": [
+        {
+          "id": "db_30022",
+          "title": "El Camino de los Reyes (El Archivo de las Tormentas 1)",
+          "author": "Brandon Sanderson",
+          "synopsis": "En el azotado mundo de Roshar, Kaladin un esclavo quebrado, Dalinar un noble atormentado por visiones y Shallan una erudita buscan salvar el mundo del regreso de los Desoladores.",
+          "image_url": "https://covers.openlibrary.org/b/id/14658316-L.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=El+Camino+de+los+Reyes+%28El+Archivo+de+las+Tormentas+1%29+Brandon+Sanderson"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+Camino+de+los+Reyes+%28El+Archivo+de+las+Tormentas+1%29+Brandon+Sanderson&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+Camino+de+los+Reyes+%28El+Archivo+de+las+Tormentas+1%29+Brandon+Sanderson"
+            }
+          ]
+        },
+        {
+          "id": "db_30015",
+          "title": "El Hobbit",
+          "author": "J.R.R. Tolkien",
+          "synopsis": "Bilbo Bols\u00f3n es un hobbit pac\u00edfico que es reclutado por el mago Gandalf y trece enanos para recuperar el tesoro custodiado por el drag\u00f3n Smaug.",
+          "image_url": "https://covers.openlibrary.org/b/id/10472492-L.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=El+Hobbit+J.R.R.+Tolkien"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+Hobbit+J.R.R.+Tolkien&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+Hobbit+J.R.R.+Tolkien"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 109,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 112.964,
+          "first_phase_emitted_ms": 25.427,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 2.983,
+            "cache_lookup": 6.239,
+            "audit": 1.494,
+            "finalization": 4.012
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 9.734,
+              "elapsed_ms": 2.983,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 19.178,
+              "elapsed_ms": 6.239,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 82.049,
+              "elapsed_ms": 1.494,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 108.946,
+              "elapsed_ms": 4.012,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 25.427
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 82.03
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-genre-catalogue"
+      },
+      "sse_done": true,
+      "seconds": 0.1448,
+      "http_timing": {
+        "first_progress_seconds": 0.0505,
+        "verified_ready_seconds": 0.1178,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "Cu\u00e9ntame m\u00e1s del segundo",
+      "status": "unavailable",
+      "answer": "No pude completar esta consulta dentro del tiempo disponible. Prueba con una pregunta m\u00e1s concreta sobre la obra.",
+      "books": [],
+      "diagnostics": {
+        "elapsed_ms": 35074,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 4,
+        "failure_kind": "technical_failure",
+        "progress_metrics": {
+          "elapsed_ms": 35079.404,
+          "first_phase_emitted_ms": 26.787,
+          "model_calls_started": 4,
+          "stage_totals_ms": {
+            "conversation": 4.969,
+            "cache_lookup": 6.496,
+            "knowledge_lookup": 736.241,
+            "web_search": 0.548,
+            "intent": 0.755,
+            "model_inspection": 44.766,
+            "routing": 5995.868,
+            "retrieval": 1.095,
+            "generation": 19733.443,
+            "audit": 8633.937,
+            "finalization": 5.458
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 8.721,
+              "elapsed_ms": 4.969,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 20.28,
+              "elapsed_ms": 6.496,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 32.02,
+              "elapsed_ms": 374.706,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 104.118,
+              "elapsed_ms": 50.726,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 216.842,
+              "elapsed_ms": 186.239,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 288.285,
+              "elapsed_ms": 74.348,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 481.758,
+              "elapsed_ms": 50.222,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 602.076,
+              "elapsed_ms": 0.548,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 607.933,
+              "elapsed_ms": 0.157,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 608.099,
+              "elapsed_ms": 0.012,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 608.117,
+              "elapsed_ms": 3627.235,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 608.121,
+              "elapsed_ms": 44.744,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 4249.34,
+              "elapsed_ms": 0.586,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 4249.947,
+              "elapsed_ms": 2368.633,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 4249.952,
+              "elapsed_ms": 0.005,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 6638.516,
+              "elapsed_ms": 1.095,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 6659.341,
+              "elapsed_ms": 19733.443,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 6659.356,
+              "elapsed_ms": 0.008,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 26394.96,
+              "elapsed_ms": 8633.937,
+              "status": "failed"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 26394.983,
+              "elapsed_ms": 0.009,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 35073.94,
+              "elapsed_ms": 5.458,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 26.787
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 6659.321
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 26394.941
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "prompt_eval_ms": 658.382,
+            "elapsed_ms": 3627,
+            "load_ms": 6.038,
+            "total_ms": 3547.437,
+            "eval_ms": 2499.443,
+            "prompt_eval_count": 1795,
+            "status": "ok",
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 69,
+            "stage": "route"
+          },
+          {
+            "prompt_eval_ms": 594.425,
+            "elapsed_ms": 2369,
+            "load_ms": 5.814,
+            "total_ms": 2358.995,
+            "eval_ms": 1695.937,
+            "prompt_eval_count": 947,
+            "status": "ok",
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 48,
+            "stage": "plan"
+          },
+          {
+            "prompt_eval_ms": 4026.6,
+            "elapsed_ms": 19733,
+            "load_ms": 7.397,
+            "total_ms": 19722.835,
+            "eval_ms": 15551.482,
+            "prompt_eval_count": 7169,
+            "status": "ok",
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 418,
+            "stage": "answer"
+          },
+          {
+            "elapsed_ms": 8634,
+            "status": "failed",
+            "model": "qwen3.5:9b-q4_K_M",
+            "stage": "audit"
+          }
+        ],
+        "external_research": {
+          "pages_extracted": 0,
+          "page_slots_reserved": 0,
+          "logical_searches": 0,
+          "external_seconds": 0.0,
+          "http_requests_started": 0
+        },
+        "provider": "ollama-local"
+      },
+      "sse_done": true,
+      "seconds": 35.1067,
+      "http_timing": {
+        "first_progress_seconds": 0.0531,
+        "verified_ready_seconds": 35.0759,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "\u00bfD\u00f3nde puedo encontrarlo?",
+      "status": "clarification",
+      "answer": "\u00bfRecuerdas alg\u00fan personaje, parte de la trama, el autor o la portada del libro?",
+      "books": [],
+      "diagnostics": {
+        "elapsed_ms": 9095,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 2,
+        "progress_metrics": {
+          "elapsed_ms": 9100.197,
+          "first_phase_emitted_ms": 32.446,
+          "model_calls_started": 2,
+          "stage_totals_ms": {
+            "conversation": 7.562,
+            "cache_lookup": 7.057,
+            "knowledge_lookup": 399.424,
+            "intent": 0.116,
+            "model_inspection": 36.389,
+            "extraction": 1816.491,
+            "web_search": 2658.078,
+            "routing": 8648.099,
+            "finalization": 5.669
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 11.444,
+              "elapsed_ms": 7.562,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 25.378,
+              "elapsed_ms": 7.057,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 40.698,
+              "elapsed_ms": 240.649,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 115.908,
+              "elapsed_ms": 21.357,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 176.031,
+              "elapsed_ms": 102.404,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 240.624,
+              "elapsed_ms": 17.865,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 351.232,
+              "elapsed_ms": 17.149,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 414.608,
+              "elapsed_ms": 2658.078,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 421.326,
+              "elapsed_ms": 0.107,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 421.439,
+              "elapsed_ms": 0.009,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 421.452,
+              "elapsed_ms": 4833.805,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 421.456,
+              "elapsed_ms": 36.383,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 1489.952,
+              "elapsed_ms": 109.417,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 1490.682,
+              "elapsed_ms": 125.899,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 1491.272,
+              "elapsed_ms": 1581.175,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 5255.314,
+              "elapsed_ms": 3814.294,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 5255.32,
+              "elapsed_ms": 0.006,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 9094.522,
+              "elapsed_ms": 5.669,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 32.446
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "prompt_eval_ms": 608.386,
+            "elapsed_ms": 4834,
+            "load_ms": 5.909,
+            "total_ms": 4776.686,
+            "eval_ms": 4033.673,
+            "prompt_eval_count": 1734,
+            "status": "ok",
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 109,
+            "stage": "route"
+          },
+          {
+            "prompt_eval_ms": 441.614,
+            "elapsed_ms": 3814,
+            "load_ms": 7.197,
+            "total_ms": 3793.157,
+            "eval_ms": 3331.945,
+            "prompt_eval_count": 1818,
+            "status": "ok",
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 92,
+            "stage": "route_rescue"
+          }
+        ],
+        "external_research": {
+          "pages_extracted": 0,
+          "page_slots_reserved": 3,
+          "logical_searches": 1,
+          "external_seconds": 2.658,
+          "http_requests_started": 3
+        },
+        "provider": "ollama-local"
+      },
+      "sse_done": true,
+      "seconds": 9.131,
+      "http_timing": {
+        "first_progress_seconds": 0.0672,
+        "verified_ready_seconds": 9.1022,
+        "first_verified_text_seconds": null
+      }
+    }
+  ]
+}

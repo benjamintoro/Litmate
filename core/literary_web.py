@@ -380,6 +380,8 @@ def _character_role_score(value):
 
 def _character_description(text, context='', *, prefer_first=False):
     text = re.sub('[\u200b-\u200f\u2060\ufeff]', '', _plain(text, 1600))
+    if _short_narrative_role(text):
+        return text
     from .literary_quality import factual_statements
     # Conserva iniciales (J. R. R. Tolkien) y abreviaturas como parte de la
     # misma oración publicada; no corta el predicado en la primera letra.
@@ -525,7 +527,7 @@ def _character_table_content(html, *, context='', maximum=1800, appendix=False):
                 # que una genealogía tangencial; nunca un resumen generado.
                 role = _character_description(cells[roles[0]].get_text(' ', strip=True), context)
                 if (not re.fullmatch(r'[A-ZÁÉÍÓÚÑ][^\n,:;]{0,64}', name)
-                        or len(name.split()) > 6 or not 12 <= len(role) <= 280
+                        or len(name.split()) > 6 or not (12 <= len(role) <= 280 or _short_narrative_role(role))
                         or adaptation.search(_normalized(role))):
                     continue
                 rows.append((name, role, heading.get_text(' ', strip=True), aliases))
@@ -649,10 +651,16 @@ def _character_classification(label):
     return ''
 
 
-_NARRATIVE_ROLE_HEAD = (r'(?:(?:un|una|el|la)\s+)?(?:protagonista|antagonista|narrador|'
+_NARRATIVE_ROLE_HEAD = (r'(?:(?:un|una|el|la)\s+)?(?:protagonista|antagonista|narrador|arponero|'
     r'navegante|estudiante|cient[ií]fic[oa]|m[eé]dic[oa]|capit[aá]n|rey|reina|'
     r'h[eé]roe|hero[ií]na|hij[oa]|padre|madre|espos[oa]|amig[oa]|sirvient[ea]|'
     r'criad[oa]|pretendiente|dios(?:a)?|ninfa|hechicera|c[ií]clope|criatura)\b')
+
+
+def _short_narrative_role(value):
+    """A short explicit office is useful; length is not its verification."""
+    return bool(re.fullmatch(r'(?:capitán|capitana|arponero|arponera|narrador|narradora|'
+        r'rey|reina|médico|médica|estudiante|sirviente|sirvienta|criado|criada)',str(value).strip(),re.I))
 
 
 def distinct_character_mentions(facts):
@@ -712,6 +720,16 @@ def narrative_character_facts(text, names=()):
              r'(?P<name>'+nominal_name+r')(?!\w)')
     for match in re.finditer(nominal,str(text or '')[:60000]):
         result.append({'name':match['name'],'role':match['role'],'evidence':match.group(0)})
+    # Explicit titles/appositions, including one-word names linked by HTML.
+    # This is a nominal definition, not a nearby mention donating its role.
+    titled=(r'(?<!\w)(?i:el|la|un|una)\s+(?P<role>(?i:capit[aá]n|capitana|arponer[oa]|'
+        r'narrador(?:a)?|rey|reina|m[eé]dic[oa]|estudiante))\s*,?\s+'
+        r'(?P<name>'+nominal_name+r')(?!\w)')
+    for match in re.finditer(titled,str(text or '')[:60000]):
+        prefix=re.split(r'[.!?;\n]',str(text)[:match.start()])[-1]
+        if re.search(r'\b(?:no|nunca|quizás|quizá|podría|podria)\b',prefix,re.I):
+            continue
+        result.append({'name':match['name'],'role':match['role'],'evidence':match.group(0)})
     return result
 
 
@@ -759,7 +777,7 @@ def character_content(html, *, context='', title='', maximum=1800):
         if len(name) > 70:
             return False  # El contrato canónico admite 70 caracteres; nunca cortar un nombre.
         if (not re.fullmatch(r'[A-ZÁÉÍÓÚÑ][^\n,:;]{0,89}', name)
-                or len(name.split()) > 9 or not 12 <= len(role) <= 280
+                or len(name.split()) > 9 or not (12 <= len(role) <= 280 or _short_narrative_role(role))
                 or _ADAPTATION_LABEL.search(_normalized(role))
                 or _INJECTION.search(name + ' ' + role)):
             return False
@@ -840,7 +858,7 @@ def character_content(html, *, context='', title='', maximum=1800):
             role = value[position + len(name):]
             role = re.sub(r'^[\s,;:—–-]+', '', role)
             role = re.sub(r'(?i)^(?:es|fue|era)\s+', '', role)
-            if len(role) < 12:
+            if len(role) < 12 and not _short_narrative_role(role):
                 continue
             add(name, role, classification, classification_evidence)
             return

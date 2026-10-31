@@ -1,0 +1,52 @@
+[
+  {
+    "question": "Dime la trama de El nombre de la rosa de Umberto Eco",
+    "status": "answered",
+    "seconds": 2.1505,
+    "model_calls": 0,
+    "wiki_calls": 1,
+    "searx": [],
+    "mysql_unchanged": true,
+    "original_memory_unchanged": true
+  },
+  {
+    "question": "Dime la trama del manga Naruto",
+    "status": "answered",
+    "seconds": 5.8,
+    "model_calls": 0,
+    "wiki_calls": 1,
+    "searx": [],
+    "mysql_unchanged": true,
+    "original_memory_unchanged": true
+  },
+  {
+    "question": "Recomi\u00e9ndame tres libros sobre la historia del Per\u00fa",
+    "status": "answered",
+    "seconds": 16.0845,
+    "model_calls": 2,
+    "wiki_calls": 0,
+    "searx": [],
+    "mysql_unchanged": true,
+    "original_memory_unchanged": true
+  },
+  {
+    "question": "\u00bfDe qu\u00e9 trata El infinito en un junco de Irene Vallejo?",
+    "status": "answered",
+    "seconds": 1.5501,
+    "model_calls": 0,
+    "wiki_calls": 0,
+    "searx": [],
+    "mysql_unchanged": true,
+    "original_memory_unchanged": true
+  },
+  {
+    "question": "Dime la trama de Emma",
+    "status": "answered",
+    "seconds": 0.6843,
+    "model_calls": 0,
+    "wiki_calls": 0,
+    "searx": [],
+    "mysql_unchanged": true,
+    "original_memory_unchanged": true
+  }
+]

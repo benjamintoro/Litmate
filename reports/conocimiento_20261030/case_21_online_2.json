@@ -1,0 +1,488 @@
+{
+  "case": {
+    "case": 21,
+    "title": "Nana",
+    "author": "\u00c9mile Zola",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": true
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_aliases",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_aliases",
+          "title_match": true,
+          "full_author_match": true
+        },
+        {
+          "table": "memory_aliases",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "LITMATE_LIBRARY_RAG_DB": [
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "mysql": {
+        "name_record_ids": [
+          "810575c8a973a00452f8ab38bd4666f63cbe6dfe8682665890656ffd5575539b",
+          "4b878eaa504c0aaea3d3df9cbdaf6a0e043181c252510e2118b59f4beddcca44",
+          "9a0ab390dd930a7746a433af79d3e90fe41140a371a2ab15c0e891cde174ee84",
+          "d0b3f645bf5bd34e118203fb2accdd23cf94e78327831af24587c3c106033587",
+          "d41a31e3cba216ff06cd2b85c8886ceda41083c8084bda9cb9d97801a20e6cd2"
+        ],
+        "direct_records": [
+          {
+            "id": "4b878eaa504c0aaea3d3df9cbdaf6a0e043181c252510e2118b59f4beddcca44",
+            "label": "Tananarive en 1900",
+            "kind": "work"
+          },
+          {
+            "id": "810575c8a973a00452f8ab38bd4666f63cbe6dfe8682665890656ffd5575539b",
+            "label": "Ang Mananayaw",
+            "kind": "edition"
+          },
+          {
+            "id": "9a0ab390dd930a7746a433af79d3e90fe41140a371a2ab15c0e891cde174ee84",
+            "label": "Gur\u016b N\u0101naka d\u012b s\u0101hittaka pratibh\u0101 te hora lekha",
+            "kind": "work"
+          },
+          {
+            "id": "d0b3f645bf5bd34e118203fb2accdd23cf94e78327831af24587c3c106033587",
+            "label": "Nan\u00e0 a Milano",
+            "kind": "edition"
+          },
+          {
+            "id": "d41a31e3cba216ff06cd2b85c8886ceda41083c8084bda9cb9d97801a20e6cd2",
+            "label": "Nana",
+            "kind": "edition"
+          }
+        ],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": false
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de Nana de \u00c9mile Zola",
+      "answer": "La obra trata de la vida de Nan\u00e1 (Anne Copeau), de la rama familiar de los Macquart afectada por las taras gen\u00e9ticas. La acci\u00f3n se desarrolla en la casa de la familia Muffat. Cerca de all\u00ed, los Hugon y los Muffat pasan los d\u00edas en una casa de campo. Nan\u00e1 termina refugi\u00e1ndose en su amiga Satin, quien llega a ser pr\u00e1cticamente una amante para ella y con el tiempo termina por huir de Fountan y acaba volviendo con su t\u00eda, la cual le informa de que su hijo est\u00e1 enfermo.\n\nFuente: https://es.wikipedia.org/wiki/Nana_(Zola)\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+      "status": "answered",
+      "books": [
+        {
+          "id": "sqlkb:d41a31e3cba216ff06cd2b85c8886ceda41083c8084bda9cb9d97801a20e6cd2",
+          "title": "Nana",
+          "author": "\u00c9mile Zola",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=Nana+%C3%89mile+Zola"
+            },
+            {
+              "label": "Project Gutenberg",
+              "url": "https://www.gutenberg.org/ebooks/5250"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Nana+%C3%89mile+Zola&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Nana+%C3%89mile+Zola"
+            }
+          ]
+        }
+      ],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 454,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "partial_evidence": false,
+        "work_type": "fiction",
+        "progress_metrics": {
+          "elapsed_ms": 466.853,
+          "first_phase_emitted_ms": 18.716,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 7.637,
+            "cache_lookup": 0.617,
+            "knowledge_lookup": 512.565,
+            "audit": 7.549,
+            "finalization": 12.404
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 3.938,
+              "elapsed_ms": 7.637,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 18.089,
+              "elapsed_ms": 0.617,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 30.708,
+              "elapsed_ms": 287.447,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 101.708,
+              "elapsed_ms": 32.606,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 178.77,
+              "elapsed_ms": 138.441,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 243.96,
+              "elapsed_ms": 47.481,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 329.529,
+              "elapsed_ms": 6.59,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 402.29,
+              "elapsed_ms": 5.024,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 428.751,
+              "elapsed_ms": 2.525,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 454.443,
+              "elapsed_ms": 12.404,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 18.716
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 402.275
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 0.4754,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.0332,
+        "verified_ready_seconds": 0.4475,
+        "first_verified_text_seconds": 0.4754
+      }
+    }
+  ],
+  "seconds": 2.633,
+  "research_profile": "cold_after",
+  "public_research_trace": [
+    {
+      "stage": "retrieved_public_evidence",
+      "sources": [
+        {
+          "id": 1,
+          "title": "Nana",
+          "author": "\u00c9mile Zola",
+          "description": "Nana, de \u00c9mile Zola. Temas del cat\u00e1logo: Man-woman relationships -- Fiction, Prostitutes -- France -- Fiction, French fiction -- 19th century, France -- History -- Second Empire, 1852-1870 -- Fiction, Young women -- France -- Fiction",
+          "source": "Project Gutenberg",
+          "year": "",
+          "book_id": "sqlkb:d41a31e3cba216ff06cd2b85c8886ceda41083c8084bda9cb9d97801a20e6cd2",
+          "kind": "book",
+          "url": "https://www.gutenberg.org/ebooks/5250",
+          "locator": "",
+          "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+          "retrieved_at": "",
+          "license": "CC0-1.0",
+          "policy": "gutenberg-catalog-public-domain-v1",
+          "memory_verified": true,
+          "synopsis": "",
+          "language": "fr",
+          "isbns": [],
+          "categories": [
+            "Man-woman relationships -- Fiction",
+            "Prostitutes -- France -- Fiction",
+            "French fiction -- 19th century",
+            "France -- History -- Second Empire, 1852-1870 -- Fiction",
+            "Young women -- France -- Fiction"
+          ]
+        },
+        {
+          "id": 2,
+          "title": "Nana (Zola)",
+          "author": "Fuente web",
+          "description": "== Argumento == La obra trata de la vida de Nan\u00e1 (Anne Copeau), de la rama familiar de los Macquart afectada por las taras gen\u00e9ticas. La acci\u00f3n se desarrolla en la casa de la familia Muffat. Cerca de all\u00ed, los Hugon y los Muffat pasan los d\u00edas en una casa de campo. Nan\u00e1 termina refugi\u00e1ndose en su amiga Satin, quien llega a ser pr\u00e1cticamente una amante para ella y con el tiempo termina por huir de Fountan y acaba volviendo con su t\u00eda, la cual le informa de que su hijo est\u00e1 enfermo.",
+          "source": "Wikipedia",
+          "year": "",
+          "book_id": "",
+          "kind": "web",
+          "url": "https://es.wikipedia.org/wiki/Nana_(Zola)",
+          "locator": "",
+          "read_mode": "",
+          "retrieved_at": "1793338878.730822",
+          "evidence_scope": "summary",
+          "narrative_context": "Nana es una de las obras m\u00e1s representativas del escritor \u00c9mile Zola, autor franc\u00e9s del siglo XIX, padre del movimiento naturalista y mayor exponente de este. Nan\u00e1 fue publicada en 1880. El t\u00edtulo de la obra hace referencia al apelativo que se le da a la protagonista, Anne Copeau, descendiente de la l\u00ednea familiar de los Macquart, perteneciente a la rama bastarda de la familia, que se ve influida por las taras y defectos de la herencia gen\u00e9tica, tal como indica el pensamiento determinista. Esta novela pertenece a la serie Los Rougon-Macquart, conjunto que agrupa 20 obras de este autor, de las cuales las m\u00e1s destacadas son, junto a esta, La bestia Humana y Germinal. La obra pertenece a una serie de tres libros que comparten personajes y tambi\u00e9n miseria de las clases pobres de la \u00e9poca: Nan\u00e1 La taberna Germinal El tema fundamental de la obra son las aventuras de la protagonista en la cual predomina una gran personalidad que vive ejerciendo la prostituci\u00f3n. El autor trata de trasmitir la situaci\u00f3n de la \u00e9poca a trav\u00e9s de la obra y la importancia para la protagonista del dinero en vez de un amor verdadero a trav\u00e9s del personaje principal.",
+          "work_id": "litmate:d8fec8c040722f1627acb945",
+          "work_title": "Nana",
+          "work_author": "\u00c9mile Zola",
+          "license": "CC-BY-SA-4.0",
+          "trust": "untrusted_data",
+          "expires_at": "1793943678.730822",
+          "evidence_hash": "77b4df29a6aba9fd78fab65ec6ac54ca7a0654c2e931bc1d3bb3be144a84f7ff",
+          "memory_source_id": "c0644ae35bd1c88d8df4387d1f17503e93366603dac236e82177aa275462ca5f",
+          "last_verified_at": "1793338878.730822",
+          "policy": "wikipedia-cc-by-sa-4.0-v1",
+          "work_binding_verified": true,
+          "memory_verified": true,
+          "attribution": {
+            "authors": "Wikipedia contributors",
+            "title": "Nana (Zola)",
+            "url": "https://es.wikipedia.org/wiki/Nana_(Zola)",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+            "revision_id": "172986173"
+          },
+          "confirmed_aliases": [],
+          "literary_facts": [
+            {
+              "subject": "",
+              "relation": "",
+              "value": "",
+              "evidence": "La obra trata de la vida de Nan\u00e1 (Anne Copeau), de la rama familiar de los Macquart afectada por las taras gen\u00e9ticas.",
+              "source_url": "",
+              "fact_kind": "",
+              "topic": "plot",
+              "type": "",
+              "scope": "development_excerpt"
+            },
+            {
+              "subject": "",
+              "relation": "",
+              "value": "",
+              "evidence": "La obra trata de la vida de Nan\u00e1 (Anne Copeau), de la rama familiar de los Macquart afectada por las taras gen\u00e9ticas. La acci\u00f3n se desarrolla en la casa de la familia Muffat. Cerca de all\u00ed, los Hugon y los Muffat pasan los d\u00edas en una casa de campo. Nan\u00e1 termina refugi\u00e1ndose en su amiga Satin, quien llega a ser pr\u00e1cticamente una amante para ella y con el tiempo termina por huir de Fountan y acaba volviendo con su t\u00eda, la cual le informa de que su hijo est\u00e1 enfermo.",
+              "source_url": "",
+              "fact_kind": "",
+              "topic": "plot",
+              "type": "",
+              "scope": "partial"
+            }
+          ],
+          "identity_text": "Nana es una de las obras m\u00e1s representativas del escritor \u00c9mile Zola, autor franc\u00e9s del siglo XIX, padre del movimiento naturalista y mayor exponente de este. Nan\u00e1 fue publicada en 1880. El t\u00edtulo de la obra hace referencia al apelativo que se le da a la protagonista, Anne Copeau, descendiente de la l\u00ednea familiar de los Macquart, perteneciente a la rama bastarda de la familia, que se ve influida por las taras y defectos de la herencia gen\u00e9tica, tal como indica el pensamiento determinista. Esta novela pertenece a la serie Los Rougon-Macquart, conjunto que agrupa 20 obras de este autor, de las cuales las m\u00e1s destacadas son, junto a esta, La bestia Humana y Germinal. La obra pertenece a una serie de tres libros que comparten personajes y tambi\u00e9n miseria de las clases pobres de la \u00e9poca: Nan\u00e1 La taberna Germinal El tema fundamental de la obra son las aventuras de la protagonista en la cual predomina una gran personalidad que vive ejerciendo la prostituci\u00f3n. El autor trata de trasmitir la situaci\u00f3n de la \u00e9poca a trav\u00e9s de la obra y la importancia para la protagonista del dinero en vez de un amor verdadero a trav\u00e9s del personaje principal.",
+          "character_facts": [],
+          "isbns": [],
+          "categories": []
+        },
+        {
+          "id": 3,
+          "title": "Nana (Zola)",
+          "author": "Fuente web",
+          "description": "Nana es una de las obras m\u00e1s representativas del escritor \u00c9mile Zola, autor franc\u00e9s del siglo XIX, padre del movimiento naturalista y mayor exponente de este. Nan\u00e1 fue publicada en 1880. El t\u00edtulo de la obra hace referencia al apelativo que se le da a la protagonista, Anne Copeau, descendiente de la l\u00ednea familiar de los Macquart, perteneciente a la rama bastarda de la familia, que se ve influida por las taras y defectos de la herencia gen\u00e9tica, tal como indica el pensamiento determinista. Esta novela pertenece a la serie Los Rougon-Macquart, conjunto que agrupa 20 obras de este autor, de las cuales las m\u00e1s destacadas son, junto a esta, La bestia Humana y Germinal. La obra pertenece a una serie de tres libros que comparten personajes y tambi\u00e9n miseria de las clases pobres de la \u00e9poca: Nan\u00e1 La taberna Germinal El tema fundamental de la obra son las aventuras de la protagonista en la cual predomina una gran personalidad que vive ejerciendo la prostituci\u00f3n. El autor trata de trasmitir la situaci\u00f3n de la \u00e9poca a trav\u00e9s de la obra y la importancia para la protagonista del dinero en vez de un amor verdadero a trav\u00e9s del personaje principal.",
+          "source": "Wikipedia",
+          "year": "",
+          "book_id": "",
+          "kind": "web",
+          "url": "https://es.wikipedia.org/wiki/Nana_(Zola)",
+          "locator": "",
+          "read_mode": "",
+          "retrieved_at": "1793338882.163015",
+          "evidence_scope": "characters",
+          "work_id": "litmate:d8fec8c040722f1627acb945",
+          "work_title": "Nana",
+          "work_author": "\u00c9mile Zola",
+          "license": "CC-BY-SA-4.0",
+          "trust": "untrusted_data",
+          "expires_at": "1793943682.163015",
+          "evidence_hash": "d02554f1b652481739571fa388e1fc3452a295b83464e0dbcc15f69aee5d9265",
+          "memory_source_id": "6a8a8c7a365644eed45405acec9ae340af88032a622a153eebcf5cff17b2f96f",
+          "last_verified_at": "1793338882.163015",
+          "policy": "wikipedia-cc-by-sa-4.0-v1",
+          "work_binding_verified": true,
+          "memory_verified": true,
+          "attribution": {
+            "authors": "Wikipedia contributors",
+            "title": "Nana (Zola)",
+            "url": "https://es.wikipedia.org/wiki/Nana_(Zola)",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+            "revision_id": "172986173"
+          },
+          "confirmed_aliases": [],
+          "literary_facts": [],
+          "identity_text": "Nana es una de las obras m\u00e1s representativas del escritor \u00c9mile Zola, autor franc\u00e9s del siglo XIX, padre del movimiento naturalista y mayor exponente de este. Nan\u00e1 fue publicada en 1880. El t\u00edtulo de la obra hace referencia al apelativo que se le da a la protagonista, Anne Copeau, descendiente de la l\u00ednea familiar de los Macquart, perteneciente a la rama bastarda de la familia, que se ve influida por las taras y defectos de la herencia gen\u00e9tica, tal como indica el pensamiento determinista. Esta novela pertenece a la serie Los Rougon-Macquart, conjunto que agrupa 20 obras de este autor, de las cuales las m\u00e1s destacadas son, junto a esta, La bestia Humana y Germinal. La obra pertenece a una serie de tres libros que comparten personajes y tambi\u00e9n miseria de las clases pobres de la \u00e9poca: Nan\u00e1 La taberna Germinal El tema fundamental de la obra son las aventuras de la protagonista en la cual predomina una gran personalidad que vive ejerciendo la prostituci\u00f3n. El autor trata de trasmitir la situaci\u00f3n de la \u00e9poca a trav\u00e9s de la obra y la importancia para la protagonista del dinero en vez de un amor verdadero a trav\u00e9s del personaje principal.",
+          "character_facts": [],
+          "isbns": [],
+          "categories": []
+        }
+      ]
+    }
+  ],
+  "coverage_before": {
+    "works": 14479,
+    "works_with_explicit_plot": 19,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 22,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 36,
+    "linked_sources": 14655,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14479,
+    "works_with_explicit_plot": 19,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 22,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 36,
+    "linked_sources": 14655,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "persistent_exact_cache",
+  "google_books_enabled": false,
+  "factual_review_pending": true
+}

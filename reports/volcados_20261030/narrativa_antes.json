@@ -1,0 +1,1386 @@
+[
+  {
+    "passed": false,
+    "question": "Dime la trama de The Time Machine",
+    "answer": "**The Time Machine**\n\nActualmente no tengo la informaci\u00f3n de este libro :( Si me indicas el autor o la edici\u00f3n, puedo intentar identificarlo mejor.",
+    "status": "unavailable",
+    "not_in_legacy_catalog": null,
+    "sse_done": true,
+    "seconds": 0.6378,
+    "cards": [],
+    "diagnostics": {
+      "elapsed_ms": 576,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 0,
+      "work_type": "fiction",
+      "narrative_failure": "insufficient_content",
+      "progress_metrics": {
+        "elapsed_ms": 617.48,
+        "first_phase_emitted_ms": 43.654,
+        "model_calls_started": 0,
+        "stage_totals_ms": {
+          "conversation": 18.923,
+          "cache_lookup": 0.566,
+          "knowledge_lookup": 632.201,
+          "retrieval": 0.014,
+          "finalization": 41.58
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 8.847,
+            "elapsed_ms": 18.923,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 43.076,
+            "elapsed_ms": 0.566,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 88.796,
+            "elapsed_ms": 303.436,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 144.077,
+            "elapsed_ms": 48.652,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 257.357,
+            "elapsed_ms": 133.387,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 271.023,
+            "elapsed_ms": 76.684,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 405.625,
+            "elapsed_ms": 70.042,
+            "status": "ok"
+          },
+          {
+            "stage": "retrieval",
+            "started_ms": 534.635,
+            "elapsed_ms": 0.014,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 575.894,
+            "elapsed_ms": 41.58,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 43.654
+          }
+        ]
+      },
+      "stage_timings": [],
+      "provider": "verified-narrative-engine"
+    },
+    "reader_data_written": false,
+    "sources": [],
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": null
+      },
+      {
+        "stage": "retrieval",
+        "sources": [
+          {
+            "id": 1,
+            "title": "The Time Machine",
+            "author": "H. G. (Herbert George) Wells",
+            "description": "",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "sqlkb:f40104531b8553a523e53008ba81628684d20ca352297b49a29a64b6cebe8a20",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/35",
+            "locator": "",
+            "read_mode": "metadatos de fuente; sin trama ni texto completo",
+            "retrieved_at": "",
+            "license": "CC0-1.0",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "synopsis": "",
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Science fiction",
+              "Time travel -- Fiction",
+              "Dystopias -- Fiction"
+            ]
+          }
+        ]
+      },
+      {
+        "request": {
+          "task": "summary",
+          "title": "The Time Machine",
+          "targets": [],
+          "author_hint": "",
+          "format": "",
+          "ambiguous": false
+        },
+        "diagnostics": {
+          "narrative_failure": "insufficient_content",
+          "model_calls": 0,
+          "work_type": "fiction",
+          "narrative_trace": [
+            {
+              "stage": "bibliographic",
+              "sources": 16,
+              "bound": 1,
+              "content": 0,
+              "providers": [
+                "Project Gutenberg"
+              ]
+            }
+          ],
+          "progress_metrics": {
+            "stage_timings": [
+              {
+                "stage": "conversation",
+                "started_ms": 8.847,
+                "elapsed_ms": 18.923,
+                "status": "ok"
+              },
+              {
+                "stage": "cache_lookup",
+                "started_ms": 43.076,
+                "elapsed_ms": 0.566,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 88.796,
+                "elapsed_ms": 303.436,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 144.077,
+                "elapsed_ms": 48.652,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 257.357,
+                "elapsed_ms": 133.387,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 271.023,
+                "elapsed_ms": 76.684,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 405.625,
+                "elapsed_ms": 70.042,
+                "status": "ok"
+              },
+              {
+                "stage": "retrieval",
+                "started_ms": 534.635,
+                "elapsed_ms": 0.014,
+                "status": "ok"
+              }
+            ],
+            "stage_totals_ms": {
+              "conversation": 18.923,
+              "cache_lookup": 0.566,
+              "knowledge_lookup": 632.201,
+              "retrieval": 0.014
+            },
+            "model_calls_started": 0,
+            "progress_events": [
+              {
+                "stage": "search",
+                "elapsed_ms": 43.654
+              }
+            ],
+            "elapsed_ms": 561.096,
+            "first_phase_emitted_ms": 43.654
+          },
+          "language_presentation": {
+            "target": "es",
+            "original_text": "**The Time Machine**\n\nActualmente no tengo la informaci\u00f3n de este libro :( Si me indicas el autor o la edici\u00f3n, puedo intentar identificarlo mejor.",
+            "translated_fields": 0,
+            "cache_hits": 0,
+            "untranslated_fields": [],
+            "audit_applies_to_original": true,
+            "cards": []
+          },
+          "stage_timings": [],
+          "elapsed_ms": 561,
+          "chat_budget_seconds": 36.0
+        },
+        "sources": [
+          {
+            "id": 1,
+            "title": "The Time Machine",
+            "author": "H. G. (Herbert George) Wells",
+            "description": "",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "sqlkb:f40104531b8553a523e53008ba81628684d20ca352297b49a29a64b6cebe8a20",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/35",
+            "locator": "",
+            "read_mode": "metadatos de fuente; sin trama ni texto completo",
+            "retrieved_at": "",
+            "license": "CC0-1.0",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "synopsis": "",
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Science fiction",
+              "Time travel -- Fiction",
+              "Dystopias -- Fiction"
+            ]
+          }
+        ]
+      }
+    ],
+    "content_manually_reviewed": false,
+    "mysql_row_counts": {
+      "auth_group": 0,
+      "auth_group_permissions": 0,
+      "auth_permission": 152,
+      "auth_user": 179,
+      "auth_user_groups": 0,
+      "auth_user_user_permissions": 0,
+      "core_asistenteia": 1,
+      "core_autor": 31,
+      "core_clickconversion": 185,
+      "core_conversacionia": 50,
+      "core_editorial": 34,
+      "core_elementolistalectura": 2,
+      "core_estadolectura": 451,
+      "core_eventoanalitica": 384,
+      "core_genero": 12,
+      "core_historialchatbot": 5,
+      "core_historialpreciolibro": 223,
+      "core_kbname": 11104,
+      "core_kbprojection": 7,
+      "core_kbrecord": 11104,
+      "core_kbrelation": 1108,
+      "core_kbversion": 11104,
+      "core_libro": 55,
+      "core_libro_generos": 54,
+      "core_librofavorito": 231,
+      "core_listalectura": 2,
+      "core_mensajecontacto": 3,
+      "core_mensajeia": 190,
+      "core_perfilusuario": 158,
+      "core_preciolibrotienda": 117,
+      "core_preguntafrecuente": 0,
+      "core_recomendacion": 0,
+      "core_recomendacionialog": 0,
+      "core_resena": 116,
+      "django_admin_log": 0,
+      "django_content_type": 38,
+      "django_migrations": 27,
+      "django_session": 88,
+      "suscripciones_historialpago": 42,
+      "suscripciones_plansuscripcion": 3,
+      "suscripciones_suscripcionusuario": 157
+    },
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  },
+  {
+    "passed": true,
+    "question": "Dime la trama de Little Women",
+    "answer": "Little Women narra la vida de las cuatro hermanas March\u2014Meg, Jo, Beth y Amy\u2014durante la Guerra Civil estadounidense, desde su infancia hasta que alcanzan la madurez. La historia explora c\u00f3mo cada hermana enfrenta sus propios desaf\u00edos personales y sociales mientras navega entre el deber familiar, los sue\u00f1os individuales y las expectativas de la sociedad victoriana. A trav\u00e9s de sus experiencias, la novela aborda temas como el amor verdadero, el trabajo y la identidad femenina en un contexto hist\u00f3rico marcado por la guerra y la pobreza.\n\nFuente: https://en.wikipedia.org/wiki/Little_Women\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+    "status": "answered",
+    "not_in_legacy_catalog": null,
+    "sse_done": true,
+    "seconds": 17.0956,
+    "cards": [
+      {
+        "id": "1",
+        "title": "Little Women",
+        "author": "Louisa May Alcott",
+        "synopsis": "",
+        "image_url": "",
+        "links": [
+          {
+            "label": "Google Books",
+            "url": "https://books.google.com/books?q=Little+Women+Louisa+May+Alcott"
+          },
+          {
+            "label": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/514"
+          },
+          {
+            "label": "Amazon",
+            "url": "https://www.amazon.com/s?k=Little+Women+Louisa+May+Alcott&i=stripbooks"
+          },
+          {
+            "label": "Buscalibre",
+            "url": "https://www.buscalibre.cl/libros/search?q=Little+Women+Louisa+May+Alcott"
+          }
+        ]
+      }
+    ],
+    "diagnostics": {
+      "elapsed_ms": 17065,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 2,
+      "verified_narrative_answer": true,
+      "narrative_synthesized": true,
+      "partial_evidence": false,
+      "work_type": "fiction",
+      "progress_metrics": {
+        "elapsed_ms": 17086.373,
+        "first_phase_emitted_ms": 11.962,
+        "model_calls_started": 2,
+        "stage_totals_ms": {
+          "conversation": 0.438,
+          "cache_lookup": 0.707,
+          "knowledge_lookup": 594.122,
+          "retrieval": 0.013,
+          "model_inspection": 19.576,
+          "generation": 10927.042,
+          "audit": 5593.641,
+          "finalization": 20.887
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 4.132,
+            "elapsed_ms": 0.438,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 11.243,
+            "elapsed_ms": 0.707,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 13.077,
+            "elapsed_ms": 299.457,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 75.292,
+            "elapsed_ms": 38.269,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 164.241,
+            "elapsed_ms": 148.106,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 227.858,
+            "elapsed_ms": 55.104,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 374.496,
+            "elapsed_ms": 53.186,
+            "status": "ok"
+          },
+          {
+            "stage": "retrieval",
+            "started_ms": 488.141,
+            "elapsed_ms": 0.013,
+            "status": "ok"
+          },
+          {
+            "stage": "generation",
+            "started_ms": 519.142,
+            "elapsed_ms": 10927.042,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 519.168,
+            "elapsed_ms": 19.569,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 11447.884,
+            "elapsed_ms": 5591.225,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 11447.908,
+            "elapsed_ms": 0.007,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 17040.211,
+            "elapsed_ms": 2.416,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 17065.477,
+            "elapsed_ms": 20.887,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 11.962
+          },
+          {
+            "stage": "writing",
+            "elapsed_ms": 519.126
+          },
+          {
+            "stage": "review",
+            "elapsed_ms": 11447.868
+          }
+        ]
+      },
+      "stage_timings": [
+        {
+          "stage": "answer",
+          "prompt_eval_count": 2110,
+          "prompt_eval_ms": 1339.666,
+          "eval_count": 133,
+          "load_ms": 4838.753,
+          "total_ms": 10886.684,
+          "status": "ok",
+          "eval_ms": 4694.156,
+          "model": "qwen3.5:9b-q4_K_M",
+          "elapsed_ms": 10927
+        },
+        {
+          "stage": "audit",
+          "prompt_eval_count": 4973,
+          "prompt_eval_ms": 2682.805,
+          "eval_count": 79,
+          "load_ms": 6.048,
+          "total_ms": 5574.309,
+          "status": "ok",
+          "eval_ms": 2775.503,
+          "model": "qwen3.5:9b-q4_K_M",
+          "elapsed_ms": 5591
+        }
+      ],
+      "provider": "verified-narrative-engine"
+    },
+    "reader_data_written": false,
+    "sources": [],
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": null
+      },
+      {
+        "stage": "retrieval",
+        "sources": [
+          {
+            "id": 1,
+            "title": "Little Women",
+            "author": "Louisa May Alcott",
+            "description": "Little Women, de Louisa May Alcott. Temas del cat\u00e1logo: Autobiographical fiction, Young women -- Fiction, Sisters -- Fiction, Domestic fiction, Family life -- New England -- Fiction, New England -- Fiction, Bildungsromans, Mothers and daughters -- Fiction, March family (Fictitious characters) -- Fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/514",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793072078.9502962",
+            "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795664078.9502962",
+            "evidence_hash": "75d89bd87e53c2b676b1b69ef79a69bbc9cb76c466c6f2977d09f3e68009bb4a",
+            "memory_source_id": "b2081c651276eb68066865a8e94d0ba22049d412c7d34c8579381831299426cc",
+            "last_verified_at": "1793072078.9502962",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Autobiographical fiction",
+              "Young women -- Fiction",
+              "Sisters -- Fiction",
+              "Domestic fiction",
+              "Family life -- New England -- Fiction"
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Little Women",
+            "author": "Fuente web",
+            "description": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a second volume (titled Good Wives or Little Women Married in the United Kingdom, though the name originated with the publisher and not Alcott). It was also met with success. The two volumes were issued in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdependent and each necessary to the achievement of its heroine's individual identity.\" According to Sarah Elbert, Alcott created a new form of literature, one...",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://en.wikipedia.org/wiki/Little_Women",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793331408.7610302",
+            "evidence_scope": "summary",
+            "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+            "work_title": "Little Women",
+            "work_author": "Louisa May Alcott",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793936208.7610302",
+            "evidence_hash": "31effb167f8938cff8ad03577a6457b4979f7b265278fc717d3c65d2a9c046e6",
+            "memory_source_id": "d7794a1402399d1e11646a9a3daad71e7007ff0d3f83fc64e109297b4e52ef87",
+            "last_verified_at": "1793331408.7610302",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Little Women",
+              "url": "https://en.wikipedia.org/wiki/Little_Women",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "1374015307"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a second volume (titled Good Wives or Little Women Married in the United Kingdom, though the name originated with the publisher and not Alcott). It was also met with success. The two volumes were issued in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdependent and each necessary to the achievement of its heroine's individual identity.\" According to Sarah Elbert, Alcott created a new form of literature, on",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 3,
+            "title": "Little Women",
+            "author": "Fuente web",
+            "description": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a second volume (titled Good Wives or Little Women Married in the United Kingdom, though the name originated with the publisher and not Alcott). It was also met with success. The two volumes were issued in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdependent and each necessary to the achievement of its heroine's individual identity.\" According to Sarah Elbert, Alcott created a new form of literature, one...",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://en.wikipedia.org/wiki/Little_Women",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793331413.462893",
+            "evidence_scope": "characters",
+            "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+            "work_title": "Little Women",
+            "work_author": "Louisa May Alcott",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793936213.462893",
+            "evidence_hash": "931ad0c7aa81b0419745ac668658d59a9d0533f709a511d2e40139980c674a34",
+            "memory_source_id": "d1733bc28dd0de7b4b36f3784cf6b9ba4b6d2123adc9c84966b4bbfbdbab7fa4",
+            "last_verified_at": "1793331413.462893",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Little Women",
+              "url": "https://en.wikipedia.org/wiki/Little_Women",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "1374015307"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a second volume (titled Good Wives or Little Women Married in the United Kingdom, though the name originated with the publisher and not Alcott). It was also met with success. The two volumes were issued in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdependent and each necessary to the achievement of its heroine's individual identity.\" According to Sarah Elbert, Alcott created a new form of literature, on",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          }
+        ]
+      },
+      {
+        "stage": "draft",
+        "output": {
+          "status": "answer",
+          "text": "Little Women narra la vida de las cuatro hermanas March\u2014Meg, Jo, Beth y Amy\u2014durante la Guerra Civil estadounidense, desde su infancia hasta que alcanzan la madurez. La historia explora c\u00f3mo cada hermana enfrenta sus propios desaf\u00edos personales y sociales mientras navega entre el deber familiar, los sue\u00f1os individuales y las expectativas de la sociedad victoriana. A trav\u00e9s de sus experiencias, la novela aborda temas como el amor verdadero, el trabajo y la identidad femenina en un contexto hist\u00f3rico marcado por la guerra y la pobreza.",
+          "basis": "sources",
+          "citations": [
+            2
+          ],
+          "needs_web": false,
+          "books": []
+        }
+      },
+      {
+        "stage": "audit",
+        "output": {
+          "decision": "approve",
+          "only_books": true,
+          "coverage": [
+            {
+              "question_id": 1,
+              "status": "answered"
+            }
+          ],
+          "claims": [
+            {
+              "statement": "Little Women narra la vida de las cuatro hermanas March\u2014Meg, Jo, Beth y Amy\u2014durante la Guerra Civil estadounidense, desde su infancia hasta que alcanzan la madurez.",
+              "verdict": "supported",
+              "source_id": 2,
+              "evidence": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives "
+            },
+            {
+              "statement": "La historia explora c\u00f3mo cada hermana enfrenta sus propios desaf\u00edos personales y sociales mientras navega entre el deber familiar, los sue\u00f1os individuales y las expectativas de la sociedad victoriana.",
+              "verdict": "supported",
+              "source_id": 2,
+              "evidence": "hildhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a "
+            },
+            {
+              "statement": "A trav\u00e9s de sus experiencias, la novela aborda temas como el amor verdadero, el trabajo y la identidad femenina en un contexto hist\u00f3rico marcado por la guerra y la pobreza.",
+              "verdict": "supported",
+              "source_id": 2,
+              "evidence": " in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdepende"
+            }
+          ],
+          "search_queries": [],
+          "issues": []
+        }
+      },
+      {
+        "request": {
+          "task": "summary",
+          "title": "Little Women",
+          "targets": [],
+          "author_hint": "",
+          "format": "",
+          "ambiguous": false
+        },
+        "diagnostics": {
+          "verified_narrative_answer": true,
+          "audit": {
+            "decision": "approve",
+            "only_books": true,
+            "coverage": [
+              {
+                "question_id": 1,
+                "status": "answered"
+              }
+            ],
+            "claims": [
+              {
+                "statement": "Little Women narra la vida de las cuatro hermanas March\u2014Meg, Jo, Beth y Amy\u2014durante la Guerra Civil estadounidense, desde su infancia hasta que alcanzan la madurez.",
+                "verdict": "supported",
+                "source_id": 2,
+                "evidence": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives "
+              },
+              {
+                "statement": "La historia explora c\u00f3mo cada hermana enfrenta sus propios desaf\u00edos personales y sociales mientras navega entre el deber familiar, los sue\u00f1os individuales y las expectativas de la sociedad victoriana.",
+                "verdict": "supported",
+                "source_id": 2,
+                "evidence": "hildhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a "
+              },
+              {
+                "statement": "A trav\u00e9s de sus experiencias, la novela aborda temas como el amor verdadero, el trabajo y la identidad femenina en un contexto hist\u00f3rico marcado por la guerra y la pobreza.",
+                "verdict": "supported",
+                "source_id": 2,
+                "evidence": " in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdepende"
+              }
+            ],
+            "search_queries": [],
+            "issues": []
+          },
+          "work_type": "fiction",
+          "model_calls": 2,
+          "narrative_coverage": "premise",
+          "partial_evidence": false,
+          "narrative_synthesized": true,
+          "temporal_claims_rejected": 0,
+          "character_list_claims_rejected": 0,
+          "usage": {
+            "prompt_tokens": 7083,
+            "completion_tokens": 212,
+            "total_tokens": 7295
+          },
+          "stage_timings": [
+            {
+              "stage": "answer",
+              "model": "qwen3.5:9b-q4_K_M",
+              "elapsed_ms": 10927,
+              "status": "ok",
+              "load_ms": 4838.753,
+              "prompt_eval_ms": 1339.666,
+              "eval_ms": 4694.156,
+              "total_ms": 10886.684,
+              "prompt_eval_count": 2110,
+              "eval_count": 133
+            },
+            {
+              "stage": "audit",
+              "model": "qwen3.5:9b-q4_K_M",
+              "elapsed_ms": 5591,
+              "status": "ok",
+              "load_ms": 6.048,
+              "prompt_eval_ms": 2682.805,
+              "eval_ms": 2775.503,
+              "total_ms": 5574.309,
+              "prompt_eval_count": 4973,
+              "eval_count": 79
+            }
+          ],
+          "narrative_trace": [
+            {
+              "stage": "bibliographic",
+              "sources": 16,
+              "bound": 3,
+              "content": 2,
+              "providers": [
+                "Project Gutenberg",
+                "Wikipedia"
+              ]
+            }
+          ],
+          "progress_metrics": {
+            "stage_timings": [
+              {
+                "stage": "conversation",
+                "started_ms": 4.132,
+                "elapsed_ms": 0.438,
+                "status": "ok"
+              },
+              {
+                "stage": "cache_lookup",
+                "started_ms": 11.243,
+                "elapsed_ms": 0.707,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 13.077,
+                "elapsed_ms": 299.457,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 75.292,
+                "elapsed_ms": 38.269,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 164.241,
+                "elapsed_ms": 148.106,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 227.858,
+                "elapsed_ms": 55.104,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 374.496,
+                "elapsed_ms": 53.186,
+                "status": "ok"
+              },
+              {
+                "stage": "retrieval",
+                "started_ms": 488.141,
+                "elapsed_ms": 0.013,
+                "status": "ok"
+              },
+              {
+                "stage": "generation",
+                "started_ms": 519.142,
+                "elapsed_ms": 10927.042,
+                "status": "ok"
+              },
+              {
+                "stage": "model_inspection",
+                "started_ms": 519.168,
+                "elapsed_ms": 19.569,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 11447.884,
+                "elapsed_ms": 5591.225,
+                "status": "ok"
+              },
+              {
+                "stage": "model_inspection",
+                "started_ms": 11447.908,
+                "elapsed_ms": 0.007,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 17040.211,
+                "elapsed_ms": 2.416,
+                "status": "ok"
+              }
+            ],
+            "stage_totals_ms": {
+              "conversation": 0.438,
+              "cache_lookup": 0.707,
+              "knowledge_lookup": 594.122,
+              "retrieval": 0.013,
+              "model_inspection": 19.576,
+              "generation": 10927.042,
+              "audit": 5593.641
+            },
+            "model_calls_started": 2,
+            "progress_events": [
+              {
+                "stage": "search",
+                "elapsed_ms": 11.962
+              },
+              {
+                "stage": "writing",
+                "elapsed_ms": 519.126
+              },
+              {
+                "stage": "review",
+                "elapsed_ms": 11447.868
+              }
+            ],
+            "elapsed_ms": 17045.925,
+            "first_phase_emitted_ms": 11.962
+          },
+          "language_presentation": {
+            "target": "es",
+            "original_text": "Little Women narra la vida de las cuatro hermanas March\u2014Meg, Jo, Beth y Amy\u2014durante la Guerra Civil estadounidense, desde su infancia hasta que alcanzan la madurez. La historia explora c\u00f3mo cada hermana enfrenta sus propios desaf\u00edos personales y sociales mientras navega entre el deber familiar, los sue\u00f1os individuales y las expectativas de la sociedad victoriana. A trav\u00e9s de sus experiencias, la novela aborda temas como el amor verdadero, el trabajo y la identidad femenina en un contexto hist\u00f3rico marcado por la guerra y la pobreza.\n\nFuente: https://en.wikipedia.org/wiki/Little_Women\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+            "translated_fields": 0,
+            "cache_hits": 0,
+            "untranslated_fields": [],
+            "audit_applies_to_original": true,
+            "cards": [
+              {
+                "id": "1",
+                "title": "Little Women",
+                "author": "Louisa May Alcott",
+                "synopsis": "",
+                "image_url": "",
+                "links": [
+                  {
+                    "label": "Google Books",
+                    "url": "https://books.google.com/books?q=Little+Women+Louisa+May+Alcott"
+                  },
+                  {
+                    "label": "Project Gutenberg",
+                    "url": "https://www.gutenberg.org/ebooks/514"
+                  },
+                  {
+                    "label": "Amazon",
+                    "url": "https://www.amazon.com/s?k=Little+Women+Louisa+May+Alcott&i=stripbooks"
+                  },
+                  {
+                    "label": "Buscalibre",
+                    "url": "https://www.buscalibre.cl/libros/search?q=Little+Women+Louisa+May+Alcott"
+                  }
+                ]
+              }
+            ]
+          },
+          "elapsed_ms": 17046,
+          "chat_budget_seconds": 36.0
+        },
+        "sources": [
+          {
+            "id": 1,
+            "title": "Little Women",
+            "author": "Louisa May Alcott",
+            "description": "Little Women, de Louisa May Alcott. Temas del cat\u00e1logo: Autobiographical fiction, Young women -- Fiction, Sisters -- Fiction, Domestic fiction, Family life -- New England -- Fiction, New England -- Fiction, Bildungsromans, Mothers and daughters -- Fiction, March family (Fictitious characters) -- Fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/514",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793072078.9502962",
+            "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795664078.9502962",
+            "evidence_hash": "75d89bd87e53c2b676b1b69ef79a69bbc9cb76c466c6f2977d09f3e68009bb4a",
+            "memory_source_id": "b2081c651276eb68066865a8e94d0ba22049d412c7d34c8579381831299426cc",
+            "last_verified_at": "1793072078.9502962",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Autobiographical fiction",
+              "Young women -- Fiction",
+              "Sisters -- Fiction",
+              "Domestic fiction",
+              "Family life -- New England -- Fiction"
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Little Women",
+            "author": "Fuente web",
+            "description": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a second volume (titled Good Wives or Little Women Married in the United Kingdom, though the name originated with the publisher and not Alcott). It was also met with success. The two volumes were issued in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdependent and each necessary to the achievement of its heroine's individual identity.\" According to Sarah Elbert, Alcott created a new form of literature, one...",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://en.wikipedia.org/wiki/Little_Women",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793331408.7610302",
+            "evidence_scope": "summary",
+            "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+            "work_title": "Little Women",
+            "work_author": "Louisa May Alcott",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793936208.7610302",
+            "evidence_hash": "31effb167f8938cff8ad03577a6457b4979f7b265278fc717d3c65d2a9c046e6",
+            "memory_source_id": "d7794a1402399d1e11646a9a3daad71e7007ff0d3f83fc64e109297b4e52ef87",
+            "last_verified_at": "1793331408.7610302",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Little Women",
+              "url": "https://en.wikipedia.org/wiki/Little_Women",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "1374015307"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a second volume (titled Good Wives or Little Women Married in the United Kingdom, though the name originated with the publisher and not Alcott). It was also met with success. The two volumes were issued in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdependent and each necessary to the achievement of its heroine's individual identity.\" According to Sarah Elbert, Alcott created a new form of literature, on",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 3,
+            "title": "Little Women",
+            "author": "Fuente web",
+            "description": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a second volume (titled Good Wives or Little Women Married in the United Kingdom, though the name originated with the publisher and not Alcott). It was also met with success. The two volumes were issued in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdependent and each necessary to the achievement of its heroine's individual identity.\" According to Sarah Elbert, Alcott created a new form of literature, one...",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://en.wikipedia.org/wiki/Little_Women",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793331413.462893",
+            "evidence_scope": "characters",
+            "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+            "work_title": "Little Women",
+            "work_author": "Louisa May Alcott",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1793936213.462893",
+            "evidence_hash": "931ad0c7aa81b0419745ac668658d59a9d0533f709a511d2e40139980c674a34",
+            "memory_source_id": "d1733bc28dd0de7b4b36f3784cf6b9ba4b6d2123adc9c84966b4bbfbdbab7fa4",
+            "last_verified_at": "1793331413.462893",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Little Women",
+              "url": "https://en.wikipedia.org/wiki/Little_Women",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "1374015307"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "identity_text": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a second volume (titled Good Wives or Little Women Married in the United Kingdom, though the name originated with the publisher and not Alcott). It was also met with success. The two volumes were issued in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdependent and each necessary to the achievement of its heroine's individual identity.\" According to Sarah Elbert, Alcott created a new form of literature, on",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          }
+        ]
+      }
+    ],
+    "content_manually_reviewed": false,
+    "mysql_row_counts": {
+      "auth_group": 0,
+      "auth_group_permissions": 0,
+      "auth_permission": 152,
+      "auth_user": 179,
+      "auth_user_groups": 0,
+      "auth_user_user_permissions": 0,
+      "core_asistenteia": 1,
+      "core_autor": 31,
+      "core_clickconversion": 185,
+      "core_conversacionia": 50,
+      "core_editorial": 34,
+      "core_elementolistalectura": 2,
+      "core_estadolectura": 451,
+      "core_eventoanalitica": 384,
+      "core_genero": 12,
+      "core_historialchatbot": 5,
+      "core_historialpreciolibro": 223,
+      "core_kbname": 11104,
+      "core_kbprojection": 7,
+      "core_kbrecord": 11104,
+      "core_kbrelation": 1108,
+      "core_kbversion": 11104,
+      "core_libro": 55,
+      "core_libro_generos": 54,
+      "core_librofavorito": 231,
+      "core_listalectura": 2,
+      "core_mensajecontacto": 3,
+      "core_mensajeia": 190,
+      "core_perfilusuario": 158,
+      "core_preciolibrotienda": 117,
+      "core_preguntafrecuente": 0,
+      "core_recomendacion": 0,
+      "core_recomendacionialog": 0,
+      "core_resena": 116,
+      "django_admin_log": 0,
+      "django_content_type": 38,
+      "django_migrations": 27,
+      "django_session": 88,
+      "suscripciones_historialpago": 42,
+      "suscripciones_plansuscripcion": 3,
+      "suscripciones_suscripcionusuario": 157
+    },
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  },
+  {
+    "passed": false,
+    "question": "Dime la trama de Nana del autor \u00c9mile Zola",
+    "answer": "**Nana**\n\nActualmente no tengo la informaci\u00f3n de este libro :( Si me indicas el autor o la edici\u00f3n, puedo intentar identificarlo mejor.",
+    "status": "unavailable",
+    "not_in_legacy_catalog": null,
+    "sse_done": true,
+    "seconds": 0.4145,
+    "cards": [],
+    "diagnostics": {
+      "elapsed_ms": 380,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 0,
+      "work_type": "fiction",
+      "narrative_failure": "insufficient_content",
+      "progress_metrics": {
+        "elapsed_ms": 405.657,
+        "first_phase_emitted_ms": 12.613,
+        "model_calls_started": 0,
+        "stage_totals_ms": {
+          "conversation": 0.489,
+          "cache_lookup": 1.061,
+          "knowledge_lookup": 591.329,
+          "retrieval": 0.012,
+          "finalization": 25.656
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 3.831,
+            "elapsed_ms": 0.489,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 11.537,
+            "elapsed_ms": 1.061,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 14.399,
+            "elapsed_ms": 315.098,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 79.403,
+            "elapsed_ms": 50.653,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 176.704,
+            "elapsed_ms": 152.5,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 234.375,
+            "elapsed_ms": 65.861,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 341.354,
+            "elapsed_ms": 7.217,
+            "status": "ok"
+          },
+          {
+            "stage": "retrieval",
+            "started_ms": 360.499,
+            "elapsed_ms": 0.012,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 379.995,
+            "elapsed_ms": 25.656,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 12.613
+          }
+        ]
+      },
+      "stage_timings": [],
+      "provider": "verified-narrative-engine"
+    },
+    "reader_data_written": false,
+    "sources": [],
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": null
+      },
+      {
+        "stage": "retrieval",
+        "sources": [
+          {
+            "id": 1,
+            "title": "Nana",
+            "author": "\u00c9mile Zola",
+            "description": "",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "sqlkb:d41a31e3cba216ff06cd2b85c8886ceda41083c8084bda9cb9d97801a20e6cd2",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/5250",
+            "locator": "",
+            "read_mode": "metadatos de fuente; sin trama ni texto completo",
+            "retrieved_at": "",
+            "license": "CC0-1.0",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "synopsis": "",
+            "language": "fr",
+            "isbns": [],
+            "categories": [
+              "Man-woman relationships -- Fiction",
+              "Prostitutes -- France -- Fiction",
+              "French fiction -- 19th century",
+              "France -- History -- Second Empire, 1852-1870 -- Fiction",
+              "Young women -- France -- Fiction"
+            ]
+          }
+        ]
+      },
+      {
+        "request": {
+          "task": "summary",
+          "title": "Nana",
+          "targets": [],
+          "author_hint": "\u00c9mile Zola",
+          "format": "",
+          "ambiguous": false
+        },
+        "diagnostics": {
+          "narrative_failure": "insufficient_content",
+          "model_calls": 0,
+          "work_type": "fiction",
+          "narrative_trace": [
+            {
+              "stage": "bibliographic",
+              "sources": 2,
+              "bound": 1,
+              "content": 0,
+              "providers": [
+                "Project Gutenberg"
+              ]
+            }
+          ],
+          "progress_metrics": {
+            "stage_timings": [
+              {
+                "stage": "conversation",
+                "started_ms": 3.831,
+                "elapsed_ms": 0.489,
+                "status": "ok"
+              },
+              {
+                "stage": "cache_lookup",
+                "started_ms": 11.537,
+                "elapsed_ms": 1.061,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 14.399,
+                "elapsed_ms": 315.098,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 79.403,
+                "elapsed_ms": 50.653,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 176.704,
+                "elapsed_ms": 152.5,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 234.375,
+                "elapsed_ms": 65.861,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 341.354,
+                "elapsed_ms": 7.217,
+                "status": "ok"
+              },
+              {
+                "stage": "retrieval",
+                "started_ms": 360.499,
+                "elapsed_ms": 0.012,
+                "status": "ok"
+              }
+            ],
+            "stage_totals_ms": {
+              "conversation": 0.489,
+              "cache_lookup": 1.061,
+              "knowledge_lookup": 591.329,
+              "retrieval": 0.012
+            },
+            "model_calls_started": 0,
+            "progress_events": [
+              {
+                "stage": "search",
+                "elapsed_ms": 12.613
+              }
+            ],
+            "elapsed_ms": 364.819,
+            "first_phase_emitted_ms": 12.613
+          },
+          "language_presentation": {
+            "target": "es",
+            "original_text": "**Nana**\n\nActualmente no tengo la informaci\u00f3n de este libro :( Si me indicas el autor o la edici\u00f3n, puedo intentar identificarlo mejor.",
+            "translated_fields": 0,
+            "cache_hits": 0,
+            "untranslated_fields": [],
+            "audit_applies_to_original": true,
+            "cards": []
+          },
+          "stage_timings": [],
+          "elapsed_ms": 365,
+          "chat_budget_seconds": 36.0
+        },
+        "sources": [
+          {
+            "id": 1,
+            "title": "Nana",
+            "author": "\u00c9mile Zola",
+            "description": "",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "sqlkb:d41a31e3cba216ff06cd2b85c8886ceda41083c8084bda9cb9d97801a20e6cd2",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/5250",
+            "locator": "",
+            "read_mode": "metadatos de fuente; sin trama ni texto completo",
+            "retrieved_at": "",
+            "license": "CC0-1.0",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "synopsis": "",
+            "language": "fr",
+            "isbns": [],
+            "categories": [
+              "Man-woman relationships -- Fiction",
+              "Prostitutes -- France -- Fiction",
+              "French fiction -- 19th century",
+              "France -- History -- Second Empire, 1852-1870 -- Fiction",
+              "Young women -- France -- Fiction"
+            ]
+          }
+        ]
+      }
+    ],
+    "content_manually_reviewed": false,
+    "mysql_row_counts": {
+      "auth_group": 0,
+      "auth_group_permissions": 0,
+      "auth_permission": 152,
+      "auth_user": 179,
+      "auth_user_groups": 0,
+      "auth_user_user_permissions": 0,
+      "core_asistenteia": 1,
+      "core_autor": 31,
+      "core_clickconversion": 185,
+      "core_conversacionia": 50,
+      "core_editorial": 34,
+      "core_elementolistalectura": 2,
+      "core_estadolectura": 451,
+      "core_eventoanalitica": 384,
+      "core_genero": 12,
+      "core_historialchatbot": 5,
+      "core_historialpreciolibro": 223,
+      "core_kbname": 11104,
+      "core_kbprojection": 7,
+      "core_kbrecord": 11104,
+      "core_kbrelation": 1108,
+      "core_kbversion": 11104,
+      "core_libro": 55,
+      "core_libro_generos": 54,
+      "core_librofavorito": 231,
+      "core_listalectura": 2,
+      "core_mensajecontacto": 3,
+      "core_mensajeia": 190,
+      "core_perfilusuario": 158,
+      "core_preciolibrotienda": 117,
+      "core_preguntafrecuente": 0,
+      "core_recomendacion": 0,
+      "core_recomendacionialog": 0,
+      "core_resena": 116,
+      "django_admin_log": 0,
+      "django_content_type": 38,
+      "django_migrations": 27,
+      "django_session": 88,
+      "suscripciones_historialpago": 42,
+      "suscripciones_plansuscripcion": 3,
+      "suscripciones_suscripcionusuario": 157
+    },
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  }
+]

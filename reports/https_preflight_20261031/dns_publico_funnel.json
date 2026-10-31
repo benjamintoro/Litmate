@@ -1,0 +1,36 @@
+{
+  "A": {
+    "status": 0,
+    "answers": [
+      {
+        "type": 1,
+        "data": "209.177.145.97",
+        "ttl": 300,
+        "globally_routable": true
+      },
+      {
+        "type": 1,
+        "data": "209.177.145.192",
+        "ttl": 300,
+        "globally_routable": true
+      }
+    ]
+  },
+  "AAAA": {
+    "status": 0,
+    "answers": [
+      {
+        "type": 28,
+        "data": "2607:f740:f::67",
+        "ttl": 300,
+        "globally_routable": true
+      },
+      {
+        "type": 28,
+        "data": "2607:f740:f::b31",
+        "ttl": 300,
+        "globally_routable": true
+      }
+    ]
+  }
+}

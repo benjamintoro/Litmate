@@ -1,0 +1,371 @@
+{
+  "before": {
+    "auth_group": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "auth_group_permissions": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "auth_permission": {
+      "original_rows_preserved": 152,
+      "added": 0
+    },
+    "auth_user": {
+      "original_rows_preserved": 179,
+      "added": 0
+    },
+    "auth_user_groups": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "auth_user_user_permissions": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_asistenteia": {
+      "original_rows_preserved": 1,
+      "added": 0
+    },
+    "core_autor": {
+      "original_rows_preserved": 31,
+      "added": 0
+    },
+    "core_clickconversion": {
+      "original_rows_preserved": 185,
+      "added": 0
+    },
+    "core_conversacionia": {
+      "original_rows_preserved": 50,
+      "added": 0
+    },
+    "core_editorial": {
+      "original_rows_preserved": 34,
+      "added": 0
+    },
+    "core_elementolistalectura": {
+      "original_rows_preserved": 2,
+      "added": 0
+    },
+    "core_estadolectura": {
+      "original_rows_preserved": 451,
+      "added": 0
+    },
+    "core_eventoanalitica": {
+      "original_rows_preserved": 384,
+      "added": 0
+    },
+    "core_genero": {
+      "original_rows_preserved": 12,
+      "added": 0
+    },
+    "core_historialchatbot": {
+      "original_rows_preserved": 5,
+      "added": 0
+    },
+    "core_historialpreciolibro": {
+      "original_rows_preserved": 223,
+      "added": 0
+    },
+    "core_kbname": {
+      "original_rows_preserved": 14166,
+      "added": 0
+    },
+    "core_kbprojection": {
+      "original_rows_preserved": 8,
+      "added": 0,
+      "derived_worker_checkpoint_updated": true
+    },
+    "core_kbrecord": {
+      "original_rows_preserved": 13518,
+      "added": 0
+    },
+    "core_kbrelation": {
+      "original_rows_preserved": 2598,
+      "added": 0
+    },
+    "core_kbversion": {
+      "original_rows_preserved": 13518,
+      "added": 0
+    },
+    "core_libro": {
+      "original_rows_preserved": 55,
+      "added": 0
+    },
+    "core_libro_generos": {
+      "original_rows_preserved": 54,
+      "added": 0
+    },
+    "core_librofavorito": {
+      "original_rows_preserved": 231,
+      "added": 0
+    },
+    "core_listalectura": {
+      "original_rows_preserved": 2,
+      "added": 0
+    },
+    "core_mensajecontacto": {
+      "original_rows_preserved": 3,
+      "added": 0
+    },
+    "core_mensajeia": {
+      "original_rows_preserved": 190,
+      "added": 0
+    },
+    "core_perfilusuario": {
+      "original_rows_preserved": 158,
+      "added": 0
+    },
+    "core_preciolibrotienda": {
+      "original_rows_preserved": 117,
+      "added": 0
+    },
+    "core_preguntafrecuente": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_recomendacion": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_recomendacionialog": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_resena": {
+      "original_rows_preserved": 116,
+      "added": 0
+    },
+    "django_admin_log": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "django_content_type": {
+      "original_rows_preserved": 38,
+      "added": 0
+    },
+    "django_migrations": {
+      "original_rows_preserved": 27,
+      "added": 0
+    },
+    "django_session": {
+      "original_rows_preserved": 88,
+      "added": 0
+    },
+    "suscripciones_historialpago": {
+      "original_rows_preserved": 42,
+      "added": 0
+    },
+    "suscripciones_plansuscripcion": {
+      "original_rows_preserved": 3,
+      "added": 0
+    },
+    "suscripciones_suscripcionusuario": {
+      "original_rows_preserved": 157,
+      "added": 0
+    }
+  },
+  "batches": [
+    {
+      "work_ids": [
+        "litmate:cd01a12f9f01f2eb764bc33a",
+        "litmate:62f6b717c0fc6a444106f1fd",
+        "litmate:08b8681c9bf72cef50c814de",
+        "litmate:1b64de1ef9aa091efbbf8607",
+        "litmate:6622e17664f02b8cace11892",
+        "litmate:d5d319915f1a94f5443c060d",
+        "litmate:1740cd8c34812644000a8d8d",
+        "litmate:3a15e370f52c5c264c9aed5e",
+        "litmate:58cb8b674da070b6719ec654",
+        "litmate:c52d88b556adf56dd70bfa9a",
+        "litmate:11b609e7c112ba6618253bbf",
+        "litmate:164c23db85ac5562b21356b0",
+        "litmate:c0fe6b35ef1561ffa0eebd70",
+        "litmate:69a900af75a1a3e6cafbc055",
+        "litmate:58dc10951bc9d49b9f406625",
+        "litmate:b8cd68fdf23e898737956ae8",
+        "litmate:c647c7fd2cb1e76c99bdc907",
+        "litmate:f78c4abf0f5374c5f3443a41",
+        "litmate:fc93b74a8314ddaaaa3e305c",
+        "litmate:286caac2a688996bc543f3ea",
+        "litmate:cf67efebae22b928eedc86f3",
+        "litmate:69ec12cc20f39b3cf7fd6b58",
+        "litmate:a5a67748585592f9aa7fa31a",
+        "litmate:afd76cd0969b6910f4b5aa7f",
+        "litmate:968a8e5a29ac3a0ef835be40"
+      ],
+      "references_added": 21
+    }
+  ],
+  "after": {
+    "auth_group": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "auth_group_permissions": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "auth_permission": {
+      "original_rows_preserved": 152,
+      "added": 0
+    },
+    "auth_user": {
+      "original_rows_preserved": 179,
+      "added": 0
+    },
+    "auth_user_groups": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "auth_user_user_permissions": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_asistenteia": {
+      "original_rows_preserved": 1,
+      "added": 0
+    },
+    "core_autor": {
+      "original_rows_preserved": 31,
+      "added": 0
+    },
+    "core_clickconversion": {
+      "original_rows_preserved": 185,
+      "added": 0
+    },
+    "core_conversacionia": {
+      "original_rows_preserved": 50,
+      "added": 0
+    },
+    "core_editorial": {
+      "original_rows_preserved": 34,
+      "added": 0
+    },
+    "core_elementolistalectura": {
+      "original_rows_preserved": 2,
+      "added": 0
+    },
+    "core_estadolectura": {
+      "original_rows_preserved": 451,
+      "added": 0
+    },
+    "core_eventoanalitica": {
+      "original_rows_preserved": 384,
+      "added": 0
+    },
+    "core_genero": {
+      "original_rows_preserved": 12,
+      "added": 0
+    },
+    "core_historialchatbot": {
+      "original_rows_preserved": 5,
+      "added": 0
+    },
+    "core_historialpreciolibro": {
+      "original_rows_preserved": 223,
+      "added": 0
+    },
+    "core_kbname": {
+      "original_rows_preserved": 14166,
+      "added": 0
+    },
+    "core_kbprojection": {
+      "original_rows_preserved": 8,
+      "added": 0,
+      "derived_worker_checkpoint_updated": true
+    },
+    "core_kbrecord": {
+      "original_rows_preserved": 13518,
+      "added": 0
+    },
+    "core_kbrelation": {
+      "original_rows_preserved": 2598,
+      "added": 21
+    },
+    "core_kbversion": {
+      "original_rows_preserved": 13518,
+      "added": 0
+    },
+    "core_libro": {
+      "original_rows_preserved": 55,
+      "added": 0
+    },
+    "core_libro_generos": {
+      "original_rows_preserved": 54,
+      "added": 0
+    },
+    "core_librofavorito": {
+      "original_rows_preserved": 231,
+      "added": 0
+    },
+    "core_listalectura": {
+      "original_rows_preserved": 2,
+      "added": 0
+    },
+    "core_mensajecontacto": {
+      "original_rows_preserved": 3,
+      "added": 0
+    },
+    "core_mensajeia": {
+      "original_rows_preserved": 190,
+      "added": 0
+    },
+    "core_perfilusuario": {
+      "original_rows_preserved": 158,
+      "added": 0
+    },
+    "core_preciolibrotienda": {
+      "original_rows_preserved": 117,
+      "added": 0
+    },
+    "core_preguntafrecuente": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_recomendacion": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_recomendacionialog": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_resena": {
+      "original_rows_preserved": 116,
+      "added": 0
+    },
+    "django_admin_log": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "django_content_type": {
+      "original_rows_preserved": 38,
+      "added": 0
+    },
+    "django_migrations": {
+      "original_rows_preserved": 27,
+      "added": 0
+    },
+    "django_session": {
+      "original_rows_preserved": 88,
+      "added": 0
+    },
+    "suscripciones_historialpago": {
+      "original_rows_preserved": 42,
+      "added": 0
+    },
+    "suscripciones_plansuscripcion": {
+      "original_rows_preserved": 3,
+      "added": 0
+    },
+    "suscripciones_suscripcionusuario": {
+      "original_rows_preserved": 157,
+      "added": 0
+    }
+  },
+  "catalogue_rows_rewritten": 0,
+  "reader_rows_written": 0,
+  "passages_copied_to_mysql": 0
+}

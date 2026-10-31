@@ -1,0 +1,105 @@
+{
+  "external_independent_network_tested": false,
+  "authenticated_chat_tested": false,
+  "tls": {
+    "verified": true,
+    "version": "TLSv1.3",
+    "issuer": [
+      [
+        [
+          "countryName",
+          "US"
+        ]
+      ],
+      [
+        [
+          "organizationName",
+          "Let's Encrypt"
+        ]
+      ],
+      [
+        [
+          "commonName",
+          "YE1"
+        ]
+      ]
+    ],
+    "not_before": "Oct 31 03:23:55 2026 GMT",
+    "not_after": "Jan 29 03:23:54 2027 GMT",
+    "host_in_san": true,
+    "seconds": 0.0334
+  },
+  "http": {
+    "/chat/": {
+      "status": 401,
+      "basic_challenge": true,
+      "bytes": 47
+    },
+    "/static/js/chatbot.js": {
+      "status": 401,
+      "basic_challenge": true,
+      "bytes": 47
+    },
+    "/admin/": {
+      "status": 404,
+      "basic_challenge": false,
+      "bytes": 42
+    },
+    "/.env": {
+      "status": 404,
+      "basic_challenge": false,
+      "bytes": 42
+    },
+    "/backups/": {
+      "status": 404,
+      "basic_challenge": false,
+      "bytes": 42
+    }
+  },
+  "funnel": {
+    "Foreground": {
+      "05619147116f0c78": {
+        "TCP": {
+          "443": {
+            "HTTPS": true
+          }
+        },
+        "Web": {
+          "xato.taila70665.ts.net:443": {
+            "Handlers": {
+              "/": {
+                "Proxy": "http://127.0.0.1:8003"
+              }
+            }
+          }
+        },
+        "AllowFunnel": {
+          "xato.taila70665.ts.net:443": true
+        }
+      }
+    }
+  },
+  "serve": {
+    "Foreground": {
+      "05619147116f0c78": {
+        "TCP": {
+          "443": {
+            "HTTPS": true
+          }
+        },
+        "Web": {
+          "xato.taila70665.ts.net:443": {
+            "Handlers": {
+              "/": {
+                "Proxy": "http://127.0.0.1:8003"
+              }
+            }
+          }
+        },
+        "AllowFunnel": {
+          "xato.taila70665.ts.net:443": true
+        }
+      }
+    }
+  }
+}

@@ -8,6 +8,62 @@ from .ai_presentation import build_book_cards
 
 
 class PresentationLanguageTests(SimpleTestCase):
+    def test_a_failed_narrative_translation_is_not_reported_as_answered(self):
+        from .literary_presentation_language import localize_result
+        result=self.result()
+        result.intent='summary'
+        result.text='The novel follows a young traveller.'
+        model=Mock(side_effect=[{'translations':{'body0':'La novela sigue a un joven viajero.',
+                                                  'card0':'Una introducción a la historia medieval.'}},
+                               {'checks':{'body0':False,'card0':True}}])
+        localize_result(result,'Dime la trama',model,'local')
+        self.assertEqual(result.status,'unavailable')
+        self.assertFalse(result.remember)
+        self.assertEqual(result.diagnostics['language_presentation']['untranslated_fields'],['body0'])
+
+    def test_translation_rejects_changed_death_subject_and_kinship_gender(self):
+        from .literary_presentation_language import _valid_translation
+        original='After an epidemic kills her parents, the young girl moves to her maternal uncle.'
+        for wrong in ('La niña vive en una ciudad hasta que su muerte la deja huérfana.',
+                      'La niña queda huérfana y se traslada a vivir con su tía materna.'):
+            self.assertFalse(_valid_translation(original,wrong,{},'es'))
+        self.assertTrue(_valid_translation(original,
+            'La niña queda huérfana tras la muerte de sus padres y se traslada a vivir con su tío materno.',{},'es'))
+
+    def test_only_audited_literal_public_prose_can_share_translation_cache(self):
+        from .literary_presentation_language import localize_result
+        text='The novel follows a young traveller.'
+        source={'id':2,'kind':'web','source':'Wikipedia','title':'Cuaderno lunar','author':'Ana Robles',
+            'url':'https://en.wikipedia.org/wiki/Example','description':text,'license':'CC-BY-SA-4.0',
+            'storage_policy':'wikipedia-cc-by-sa-4.0-v1'}
+        def result():
+            return ChatResult(text+'\n\nFuente: '+source['url'],'answered',True,[source],[],'sources','summary',
+                {'foreign_literal_summary':True,'verified_narrative_answer':True,'audit':{'decision':'approve',
+                'claims':[{'statement':text,'evidence':text,'source_id':2,'verdict':'supported'}]}})
+        first=result()
+        localize_result(first,'Dime la trama',self.translator(),'local')
+        again=result()
+        unused=Mock(side_effect=AssertionError('Una traducción pública validada no debe repetirse'))
+        localize_result(again,'Dime la trama',unused,'local')
+        unused.assert_not_called()
+        self.assertIn('La novela sigue',again.text)
+        self.assertEqual(again.diagnostics['language_presentation']['cache_hits'],1)
+        # A model-written/private addition, even under the marker, is not a
+        # literal source passage and must not enter this shared cache.
+        private=result()
+        private.text='The novel follows a young traveller. The reader lives near a station.'
+        private.diagnostics['audit']['claims'][0]['statement']=private.text
+        translator=Mock(side_effect=lambda stage,prompt,data,model: (
+            {'checks':{key:True for key in data['translations']}} if stage=='language_verify' else
+            {'translations':{key:'La novela sigue a un joven viajero. El lector vive cerca de una estación.' for key in data['texts']}}))
+        localize_result(private,'Dime la trama',translator,'local')
+        next_private=result()
+        next_private.text='The novel follows a young traveller. The reader lives near a station.'
+        next_private.diagnostics['audit']['claims'][0]['statement']=next_private.text
+        follow=self.translator()
+        localize_result(next_private,'Dime la trama',follow,'local')
+        self.assertTrue(follow.called)
+
     def setUp(self):
         cache.clear()
         self.book = {'id': 1, 'kind': 'book', 'title': 'A History of Medieval Europe',
@@ -53,6 +109,45 @@ class PresentationLanguageTests(SimpleTestCase):
         localize_result(result, 'Recomiéndame historia', model, 'local')
         model.assert_not_called()
         self.assertIn('sus cambios sociales', result.text)
+
+    def test_audited_single_book_summary_can_supply_its_card_without_another_translation(self):
+        from .literary_presentation_language import localize_result
+        result = self.result()
+        text = 'La obra explica la historia medieval y sus cambios sociales con un enfoque introductorio.'
+        result.text = text+'\n\nFuente: '+self.book['url']
+        result.intent = 'summary'
+        result.diagnostics.update(verified_narrative_answer=True, narrative_synthesized=True,
+            audit={'decision':'approve','claims':[{'statement':text,'source_id':1,'verdict':'supported'}]})
+        sources=deepcopy(result.sources)
+        model=self.translator()
+        localize_result(result,'Explica el contenido de este libro',model,'local')
+        model.assert_not_called()
+        self.assertEqual(build_book_cards(result)[0]['synopsis'],text)
+        self.assertEqual(result.sources,sources)
+
+    def test_unapproved_summary_cannot_replace_the_editorial_description(self):
+        from .literary_presentation_language import localize_result
+        result=self.result()
+        result.intent='summary'
+        result.text='Una explicación sin verificación ni respaldo en las fuentes del libro.'
+        result.diagnostics.update(verified_narrative_answer=True,narrative_synthesized=True,
+                                  audit={'decision':'repair','claims':[]})
+        model=self.translator()
+        localize_result(result,'Dime la trama',model,'local')
+        self.assertTrue(model.called)
+        self.assertNotEqual(build_book_cards(result)[0]['synopsis'],result.text)
+
+    def test_audited_excerpt_keeps_card_text_plain_without_altering_the_answer(self):
+        from .literary_presentation_language import localize_result
+        result=self.result()
+        text='La obra *A History of Medieval Europe* explica la historia medieval y sus cambios sociales.'
+        result.text=text+'\n\nFuente: '+self.book['url']
+        result.intent='summary'
+        result.diagnostics.update(verified_narrative_answer=True,narrative_synthesized=True,
+            audit={'decision':'approve','claims':[{'statement':text,'source_id':1,'verdict':'supported'}]})
+        localize_result(result,'Explica el contenido',self.translator(),'local')
+        self.assertNotIn('*',build_book_cards(result)[0]['synopsis'])
+        self.assertIn('*A History of Medieval Europe*',result.text)
 
     def test_original_title_author_cover_and_store_buttons_survive(self):
         from .literary_presentation_language import localize_result

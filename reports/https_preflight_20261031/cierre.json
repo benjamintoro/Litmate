@@ -1,0 +1,17 @@
+{
+  "firewall_applied": false,
+  "uac_requested": false,
+  "funnel_activated": false,
+  "relevant_firewall_rules_unchanged": true,
+  "firewall_profiles_unchanged": true,
+  "tailscale_running": true,
+  "funnel": {},
+  "serve": {},
+  "remote_process_names_preserved": true,
+  "original_hashes_unchanged": {
+    ".env": true,
+    "data/literary_memory.sqlite3": true,
+    "data/literary_memory_rag.sqlite3": true
+  },
+  "external_connectivity_tested": false
+}

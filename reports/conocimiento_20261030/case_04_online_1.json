@@ -1,0 +1,287 @@
+{
+  "case": {
+    "case": 4,
+    "title": "Las indignas",
+    "author": "Agustina Bazterrica",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": true
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de Las indignas de Agustina Bazterrica",
+      "answer": "En la distop\u00eda de Las indignas, las mujeres supervivientes en un planeta colapsado forman una Hermandad jerarquizada que adora a una falsa divinidad abusiva.\n\nEste resumen se centra en el planteamiento de la obra.\n\nFuente: https://www.casadellibro.com/libro-las-indignas/9788420477169/14187049",
+      "status": "answered",
+      "books": [
+        {
+          "id": "/works/OL42422781W",
+          "title": "Las indignas",
+          "author": "Agustina Bazterrica",
+          "synopsis": "",
+          "image_url": "https://covers.openlibrary.org/b/id/15201319-M.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=Las+indignas+Agustina+Bazterrica"
+            },
+            {
+              "label": "Open Library",
+              "url": "https://openlibrary.org/works/OL42422781W"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Las+indignas+Agustina+Bazterrica&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Las+indignas+Agustina+Bazterrica"
+            }
+          ]
+        }
+      ],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 23027,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 2,
+        "verified_narrative_answer": true,
+        "narrative_synthesized": true,
+        "partial_evidence": true,
+        "work_type": "fiction",
+        "progress_metrics": {
+          "elapsed_ms": 23063.216,
+          "first_phase_emitted_ms": 22.203,
+          "model_calls_started": 2,
+          "stage_totals_ms": {
+            "conversation": 6.602,
+            "cache_lookup": 5.847,
+            "knowledge_lookup": 630.115,
+            "retrieval": 1931.399,
+            "web_search": 3955.305,
+            "extraction": 4410.958,
+            "model_inspection": 33.548,
+            "generation": 5354.774,
+            "audit": 8796.261,
+            "finalization": 36.179
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 3.614,
+              "elapsed_ms": 6.602,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 16.345,
+              "elapsed_ms": 5.847,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 34.904,
+              "elapsed_ms": 330.77,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 107.781,
+              "elapsed_ms": 37.223,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 204.623,
+              "elapsed_ms": 159.953,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 273.864,
+              "elapsed_ms": 51.063,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 431.645,
+              "elapsed_ms": 51.106,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 532.583,
+              "elapsed_ms": 1931.399,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 2474.491,
+              "elapsed_ms": 874.212,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 3349.15,
+              "elapsed_ms": 383.442,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 3732.676,
+              "elapsed_ms": 1970.361,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 5706.595,
+              "elapsed_ms": 3081.093,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 6730.322,
+              "elapsed_ms": 2057.155,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 8840.585,
+              "elapsed_ms": 5354.774,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 8840.597,
+              "elapsed_ms": 33.542,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 14197.301,
+              "elapsed_ms": 8794.632,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 14197.32,
+              "elapsed_ms": 0.006,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 22993.484,
+              "elapsed_ms": 0.936,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 22994.846,
+              "elapsed_ms": 0.693,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 23027.028,
+              "elapsed_ms": 36.179,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 22.203
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 8840.575
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 14197.282
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "prompt_eval_ms": 1213.335,
+            "total_ms": 5301.533,
+            "eval_ms": 3712.336,
+            "elapsed_ms": 5355,
+            "eval_count": 106,
+            "status": "ok",
+            "prompt_eval_count": 1930,
+            "stage": "answer",
+            "load_ms": 5.906,
+            "model": "qwen3.5:9b-q4_K_M"
+          },
+          {
+            "prompt_eval_ms": 1814.858,
+            "total_ms": 8758.964,
+            "eval_ms": 6828.03,
+            "elapsed_ms": 8795,
+            "eval_count": 199,
+            "status": "ok",
+            "prompt_eval_count": 3303,
+            "stage": "audit",
+            "load_ms": 7.439,
+            "model": "qwen3.5:9b-q4_K_M"
+          }
+        ],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 23.0721,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 23.0203,
+        "first_verified_text_seconds": 23.0721
+      }
+    }
+  ],
+  "seconds": 25.234,
+  "coverage_before": {
+    "works": 14468,
+    "works_with_explicit_plot": 14,
+    "works_with_development_excerpt": 10,
+    "works_with_admitted_description": 17,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 31,
+    "linked_sources": 14640,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14469,
+    "works_with_explicit_plot": 14,
+    "works_with_development_excerpt": 10,
+    "works_with_admitted_description": 17,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 31,
+    "linked_sources": 14641,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "factual_review_pending": true
+}

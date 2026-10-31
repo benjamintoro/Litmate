@@ -34,21 +34,74 @@ def local_genre_sources(codes):
         for b in rows]
 
 
+def feedback_books(message, history):
+    """Preferencias explícitas privadas, resueltas contra la lista anterior."""
+    from .literary_identity import resolve_followup_context
+    clauses = re.split(r'\s+y\s+(?=no me|ya lei)', normalize_identity(message))
+    feedback = {'read': [], 'rejected': []}
+    for clause in clauses:
+        match = re.fullmatch(r'(ya lei|no me interesa|no me gusto|rechazo) (?:el|la) '
+            r'(primero|primera|segundo|segunda|tercero|tercera|cuarto|cuarta|quinto|quinta)', clause)
+        if not match:
+            return None
+        selected = resolve_followup_context('el ' + match[2], history)
+        if selected.get('ambiguous') or len(selected.get('books', [])) != 1:
+            return {'read': [], 'rejected': []}
+        key = 'read' if match[1] == 'ya lei' else 'rejected'
+        feedback[key].append(selected['books'][0])
+    return feedback
+
+
+def reading_feedback_answer(message, history):
+    from .literary_ai import ChatResult
+    feedback = feedback_books(message, history)
+    if feedback is None:
+        return None
+    if not any(feedback.values()):
+        return ChatResult('¿Qué libro quieres marcar como leído o descartar? No tengo una lista '
+            'anterior que permita resolver esa posición.', 'clarification', intent='conversation')
+    return ChatResult('Lo tendré en cuenta: excluiré esas lecturas de las próximas recomendaciones '
+        'de esta conversación.', 'social', intent='conversation', diagnostics={'reading_feedback': True})
+
+
 def remember_recommendations(state,message,context,result):
-    if context.get('intent')!='recommend':return
+    from .literary_focus import focus_history
+    feedback = feedback_books(message, focus_history(state))
+    if context.get('intent')!='recommend' and result.intent!='recommend' and feedback is None:return
     previous=state.get('recommendations',{})
     seen=list(previous.get('seen',[]))[-195:]
     names=list(previous.get('excluded_authors',[]))[-20:]
     names.extend(name for name in excluded_authors(message) if name not in names)
     rejected=list(previous.get('rejected_titles',[]))[-20:]
-    rejected.extend(title for title in rejected_titles(message) if title not in rejected)
+    read=list(previous.get('read_titles',[]))[-20:]
+    if feedback:
+        read.extend(book['title'] for book in feedback['read'] if book['title'] not in read)
+        rejected.extend(book['title'] for book in feedback['rejected'] if book['title'] not in rejected)
+    if feedback is None:
+        rejected.extend(title for title in rejected_titles(message) if title not in rejected)
     if result.status=='answered' and result.intent=='recommend':
         lookup={s.get('id'):s for s in result.sources}
         for card in result.books:
             raw=lookup.get(card.get('source_id'),card)
             identity=work_identity(raw)
             if identity and not any(same_work(identity,old) for old in seen):seen.append(identity)
-    state['recommendations']={'seen':seen[-200:],'excluded_authors':names[-20:],'rejected_titles':rejected[-20:]}
+    from .literary_constraints import recommendation_constraints
+    from .literary_research import publication_lookup_target
+    constraints = dict(previous.get('constraints', {}))
+    if context.get('reset_work_context') or publication_lookup_target(message) or (
+            context.get('subject') and not context.get('followup')):
+        constraints = {}
+    constraints.update({key: value for key, value in recommendation_constraints(message).items() if value})
+    from .literary_identity import resolve_followup_context
+    reference = resolve_followup_context(message, focus_history(state))
+    related_reference = previous.get('related_reference')
+    if reference.get('reason') == 'similar' and len(reference.get('books', [])) == 1:
+        related_reference = reference['books'][0]
+    if context.get('reset_work_context') or publication_lookup_target(message):
+        related_reference = None
+    state['recommendations']={'seen':seen[-200:],'excluded_authors':names[-20:],
+                             'rejected_titles':rejected[-20:],'read_titles':read[-20:],
+                             'constraints':constraints, 'related_reference':related_reference}
 
 
 def genre_answer(message,history,context,*,candidates=None):
@@ -86,7 +139,8 @@ def genre_answer(message,history,context,*,candidates=None):
     constraints.update({key:value for key,value in recommendation_constraints(message).items() if value})
     forbidden=excluded_categories(query)|excluded_categories(message)
     rejected=[*memory.get('excluded_authors',[]),*excluded_authors(message)]
-    rejected_labels={normalize_identity(title) for title in [*memory.get('rejected_titles',[]),*rejected_titles(message)]}
+    rejected_labels={normalize_identity(title) for title in
+        [*memory.get('rejected_titles',[]),*memory.get('read_titles',[]),*rejected_titles(message)]}
     count=requested_book_count(message) or (1 if re.match(r'^otr[oa]\b',normalize_identity(message)) else 3)
     count=min(5,count)
     valid=[]
@@ -125,10 +179,19 @@ def genre_answer(message,history,context,*,candidates=None):
     from .literary_quality import validate_audit,required_fact_statements
     from .literary_evidence import validate_evidence
     plan={'questions':[message],'search_queries':[],'needs_contents':False,'needs_fresh_sources':False,'spoilers_requested':False}
+    claims=[]
+    for source,line in zip(sources,lines):
+        # Un título corto («1984», «Dune») sigue siendo identidad bibliográfica,
+        # pero no alcanza el mínimo literal del auditor. Usar el campo de
+        # identidad más largo disponible sin inventar contenido.
+        proof=next((str(source.get(field) or '') for field in ('title','author','description')
+                    if 8<=len(str(source.get(field) or ''))<=300),'')
+        if not proof:
+            return None
+        claims.extend({'statement':statement,'verdict':'supported','source_id':source['id'],'evidence':proof}
+                      for statement in required_fact_statements(line) or [line])
     audit={'decision':'approve','only_books':True,'coverage':[{'question_id':1,'status':'uncertain' if len(chosen)<count else 'answered'}],
-        'claims':[{'statement':statement,'verdict':'supported','source_id':s['id'],'evidence':s['title']}
-                  for s,line in zip(sources,lines) for statement in required_fact_statements(line)],
-        'search_queries':[],'issues':[]}
+        'claims':claims,'search_queries':[],'issues':[]}
     try:
         validate_draft(draft,sources);validate_recommendation_text(draft,sources)
         validate_evidence(draft,sources,message);validate_audit(audit,plan,draft,sources,message,strict_facts=True)

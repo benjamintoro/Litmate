@@ -11,6 +11,36 @@ from .literary_research import (VAGUE, _matches, _words, assess_evidence,
                                is_topic_recommendation, public_research_queries, rank_candidates)
 
 
+def identification_explanation_answer(message, history):
+    """Reutiliza las pistas y descripciones recibidas; no afirma unicidad universal."""
+    from .literary_ai import sanitized_history
+    from .ai_quick_answers import _validated_result
+    from .literary_quality import factual_statements
+    from .literary_research import _clues
+    value = normalize_identity(message)
+    if not re.fullmatch(r'que pistas (?:te hicieron pensar en ese libro|coinciden|usaste|'
+                        r'permiten identificarlo)', value):
+        return None
+    turns = sanitized_history(list(history or []))
+    turn = next((turn for turn in reversed(turns) if turn.get('intent') == 'identify' and turn['books']), None)
+    if not turn or len(turn['books']) != 1:
+        return None
+    clues = _clues(turn['question'])
+    for source in turn['sources']:
+        if source['kind'] != 'book' or not same_work(source, turn['books'][0]):
+            continue
+        for sentence in factual_statements(source['description'], strip_markers=False):
+            if (8 <= len(sentence) <= 300 and sentence in source['description'] and
+                    sum(_matches(clue, set(_words(sentence))) for clue in clues) >= 2):
+                result = _validated_result(message, [{**source, 'description': sentence}])
+                if result is not None:
+                    result.text = '**Coincidencias con tu recuerdo**\n\n' + result.text
+                    result.intent = 'identify'
+                    result.diagnostics.update(identification_explanation=True, model_calls=0)
+                    return result
+    return None
+
+
 def identification_answer(message, *, search=None):
     """Propone solo una identidad o devuelve None para el recorrido normal.
 

@@ -1,0 +1,183 @@
+{
+  "case": {
+    "case": 1,
+    "title": "La pen\u00ednsula de las casas vac\u00edas",
+    "author": "David Ucl\u00e9s",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": true
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de La pen\u00ednsula de las casas vac\u00edas de David Ucl\u00e9s",
+      "answer": "**La pen\u00ednsula de las casas vac\u00edas**\n\nActualmente no tengo la informaci\u00f3n de este libro :( Si me indicas el autor o la edici\u00f3n, puedo intentar identificarlo mejor.",
+      "status": "unavailable",
+      "books": [],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 11582,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "work_type": "fiction",
+        "narrative_failure": "insufficient_content",
+        "progress_metrics": {
+          "elapsed_ms": 11623.239,
+          "first_phase_emitted_ms": 91.743,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 53.118,
+            "cache_lookup": 19.065,
+            "knowledge_lookup": 668.656,
+            "retrieval": 1939.542,
+            "web_search": 2249.224,
+            "extraction": 5537.777,
+            "finalization": 41.64
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 4.682,
+              "elapsed_ms": 53.118,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 72.661,
+              "elapsed_ms": 19.065,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 175.298,
+              "elapsed_ms": 352.78,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 257.58,
+              "elapsed_ms": 44.24,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 366.469,
+              "elapsed_ms": 160.449,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 432.701,
+              "elapsed_ms": 55.247,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 594.397,
+              "elapsed_ms": 55.94,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 1719.332,
+              "elapsed_ms": 1939.542,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 3670.133,
+              "elapsed_ms": 997.777,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 4668.333,
+              "elapsed_ms": 1696.199,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 6370.361,
+              "elapsed_ms": 3841.578,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 10228.004,
+              "elapsed_ms": 1251.447,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 11581.592,
+              "elapsed_ms": 41.64,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 91.743
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 11.6316,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.0949,
+        "verified_ready_seconds": 11.5755,
+        "first_verified_text_seconds": 11.6316
+      }
+    }
+  ],
+  "seconds": 14.27,
+  "coverage_before": {
+    "works": 14477,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14650,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14477,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14650,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "persistent_exact_cache",
+  "google_books_enabled": false,
+  "factual_review_pending": true
+}

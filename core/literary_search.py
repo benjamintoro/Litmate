@@ -4,6 +4,7 @@ import ipaddress
 import logging
 import re
 import socket
+import sqlite3
 import time
 import unicodedata
 from datetime import datetime, timezone
@@ -439,6 +440,11 @@ def _openlibrary_detail(work_id, *, editions, reads):
     if not (re.fullmatch(r'/works/OL\d+W', str(work_id))
             or (not editions and re.fullmatch(r'/books/OL\d+M', str(work_id)))):
         return None
+    if not editions:
+        from .literary_acquisition import local_openlibrary_detail
+        local = local_openlibrary_detail(work_id)
+        if local is not None:
+            return local
     key = _cache_key('litmate_ol_editions_v1:' if editions else 'litmate_ol_work_v1:', work_id)
     try:
         detail = cache.get(key)
@@ -1022,6 +1028,12 @@ class PageText(HTMLParser):
             self.parts.append(text)
 
 
+def _catalogue_api_only(url):
+    """Estos catálogos se consultan mediante su API, no gastan lecturas HTML."""
+    host=(urlsplit(str(url or '')).hostname or '').lower()
+    return host=='openlibrary.org' or host.endswith('.openlibrary.org') or host.startswith('books.google.')
+
+
 def read_public_page(url, query, *, details=False):
     """Extractor controlado; nunca navega por una URL aportada por el modelo."""
     url = trusted_url(url)
@@ -1030,7 +1042,7 @@ def read_public_page(url, query, *, details=False):
     host = urlsplit(url).hostname
     # Open Library solicita usar su API. Google Books suele requerir JS:
     # en ambos casos conservamos el fragmento del buscador.
-    if host.endswith('openlibrary.org') or host.startswith('books.google.'):
+    if _catalogue_api_only(url):
         return ''
     from .literary_web import extract_public_page
     with measure_stage('extraction'):
@@ -1045,13 +1057,14 @@ def read_public_web_page(url, query, *, details=False):
     """Lee una página descubierta por un buscador general público.
 
     La URL no procede del lector ni del modelo: sólo de resultados de
-    DuckDuckGo. Aun así se exige HTTPS, host público, robots y tamaño máximo.
+    DuckDuckGo o motores autorizados del SearXNG local. Se exige HTTPS,
+    host público, robots y tamaño máximo.
     """
     url = safe_source_url(url)
     if not url:
         return ''
     host = (urlsplit(url).hostname or '').lower()
-    if host.endswith('openlibrary.org') or host.startswith('books.google.'):
+    if _catalogue_api_only(url):
         return ''
     from .literary_web import extract_public_page
     with measure_stage('extraction'):
@@ -1132,9 +1145,10 @@ def _detail_focus(query):
                  r'caracterizacion|relacion|parentesco)\b|\bquien es\b', value):
         return ('personajes', 'protagonistas', 'characters', 'main characters', 'character list')
     if re.search(r'\bargumento|\btrama|\bresumen|\bsinopsis|\bdesenlace|\bfinal\b', value):
-        return ('argumento', 'trama', 'sinopsis', 'plot', 'resumen', 'desenlace', 'final', 'la obra')
+        return ('argumento', 'trama', 'sinopsis', 'plot', 'plot summary', 'summary', 'synopsis',
+                'resumen', 'desenlace', 'final', 'la obra')
     if re.search(r'\btemas?|\banalisis|\bideas?|\binterpretacion', value):
-        return ('temas', 'analisis', 'interpretacion', 'themes')
+        return ('temas', 'analisis', 'interpretacion', 'themes', 'contenido', 'contents')
     return ()
 
 
@@ -1175,31 +1189,40 @@ def _plot_selection(section, maximum):
         first = lines[0]
         value = normalized(first)
         if (not first.endswith(('.', '!', '?')) or not 30 <= len(first) <= 700
+                or re.match(r'^(?:se expone un resumen|se presenta un resumen|invocacion a|exhortacion a)\b',value)
                 or re.search(r'\b(?:finalmente|al final|desenlace|epilogo)\b',value[:100])
-                or re.match(r'^(?:ella|ellos|ellas|este|esta|esto|estos|estas|su|sus|alli|entonces)\b',value)
-                or re.match(r'^Él\b',first)
+                or (not candidates and re.match(r'^(?:ella|ellos|ellas|este|esta|esto|estos|estas|su|sus|alli|entonces)\b',value))
+                or (not candidates and re.match(r'^Él\b',first))
                 or re.search(r'\b(?:maestria|recepcion|publicada|erudicion|critica literaria)\b',value)
                 or re.match(r'^(?:lograr|conseguir|obtener|controlar|transformar|convertir|provocar)\b',value)):
+            if candidates:
+                break  # Do not splice across a missing antecedent or ending.
             continue
-        candidates.append((index,first))
-    # Short sources need no resampling; never manufacture development from one
-    # commercial premise or a single paragraph.
-    if len(section) <= maximum and len(paragraphs) < 3:
-        return {'passage':clean_text(section,maximum),'scope':'premise'}
-    if len(candidates) < 2:
-        return {'passage':clean_text(section,maximum),'scope':'premise'}
-    count = len(candidates)
-    positions = sorted(set([0, *[min(count-1,int(count*f)) for f in (.25,.45,.65)]]))
+        # Conservar las primeras oraciones de la premisa: la segunda suele
+        # presentar el conflicto o los personajes que dan sentido al viaje.
+        # El muestreo posterior no debe sustituirlas por escenas aisladas.
+        opening = first
+        if not candidates:
+            for line in lines[1:3]:
+                if (line.endswith(('.', '!', '?')) and len(opening)+len(line)<min(900,maximum//2)
+                        and not re.search(r'\b(?:finalmente|al final|desenlace|epilogo)\b',normalized(line))):
+                    opening += ' ' + line
+        candidates.append((index,opening))
+    if not candidates:
+        return {'passage':'','scope':'premise'}
+    # A quick synopsis needs a connected sequence. Quartile sampling preserved
+    # isolated facts but omitted their antecedents and causal transitions.
     chosen = []
-    for position in positions:
-        item = candidates[position]
+    for item in candidates:
         proposed = '== Argumento ==\n'+'\n'.join(text for unused,text in [*chosen,item])
         if len(proposed) <= maximum:
             chosen.append(item)
+        else:
+            break
     if not chosen:
         return {'passage':clean_text(section,maximum),'scope':'premise'}
     passage = '== Argumento ==\n'+'\n'.join(text for unused,text in chosen)
-    scope = 'development_excerpt' if len(chosen)>=2 and len(paragraphs)>=3 else 'premise'
+    scope = 'sequential_excerpt' if len(chosen)>=2 else 'premise'
     return {'passage':clean_text(passage,maximum),'scope':scope}
 
 
@@ -1212,8 +1235,11 @@ def relevant_passage(text, query, maximum=1800, *, with_details=False):
     if focus:
         labels = '|'.join(re.escape(label) for label in focus)
         # TextExtracts wiki conserva encabezados; PageText conserva saltos de bloque.
-        heading = re.search(r'(?im)^\s*(?:={2,}\s*)?(?:' + labels + r')'
+        heading = (re.search(r'(?im)(?:^|\s)={2,}\s*(?:' + labels + r')'
+                            r'(?: principales?| de la (?:obra|novela))?\s*={2,}(?=\s|$)',text)
+                   or re.search(r'(?im)^\s*(?:={2,}\s*)?(?:' + labels + r')'
                             r'(?: principales?| de la (?:obra|novela))?\s*(?:={2,})?\s*$', text)
+                   )
         if heading:
             section = text[heading.start():]
             start_level = re.match(r'\s*(={2,})', heading.group(0))
@@ -1238,8 +1264,11 @@ def relevant_passage(text, query, maximum=1800, *, with_details=False):
                     section = 'Personajes (descripciones del artículo):\n' + '\n'.join(descriptions)
             if focus[0] in {'argumento','trama','sinopsis','resumen'}:
                 selected = _plot_selection(section,maximum)
+                selected['topic']='plot'
                 return selected if with_details else selected['passage']
-            selected = {'passage':clean_text(section,maximum),'scope':'premise'}
+            topic=('historical_context' if focus[0]=='contexto historico' else
+                   'adaptations' if focus[0]=='adaptaciones' else 'themes' if focus[0]=='temas' else '')
+            selected = {'passage':clean_text(section,maximum),'scope':'premise','topic':topic}
             return selected if with_details else selected['passage']
     terms = [term for term in re.findall(r'\w+', normalized(query))
              if len(term) >= 4 and term not in STOPWORDS]
@@ -1250,6 +1279,22 @@ def relevant_passage(text, query, maximum=1800, *, with_details=False):
         return targeted * 12 + sum(min(3, value.count(term)) for term in terms)
     passage = clean_text(max(windows, key=score), maximum)
     return {'passage':passage,'scope':'premise'} if with_details else passage
+
+
+def selected_section_facts(selection):
+    """Only a published targeted section labels the topic of literal evidence.
+
+    An arbitrary introductory window (often just title/publication metadata)
+    must not become a plot, nor may a themes/context section become a plot.
+    """
+    if not isinstance(selection,dict) or selection.get('topic') not in {
+            'plot','themes','historical_context','adaptations'}:
+        return []
+    from .literary_quality import factual_statements
+    body=re.sub(r'==+[^=]+==+',' ',selection.get('passage','')).strip()
+    proof=next((line for line in factual_statements(body) if 30<=len(line)<=1000),'')
+    return ([{'topic':selection['topic'],'scope':selection.get('scope','partial'),'evidence':proof}]
+            if proof else [])
 
 
 def character_facts(text):
@@ -1301,6 +1346,25 @@ def _duckduckgo_target(value):
     return safe_source_url(href)
 
 
+def _provider_paused(key):
+    if cache.get(key):
+        return True
+    from .ai_concurrency import pause_active
+    try:
+        return pause_active(key)
+    except (OSError,ValueError,sqlite3.Error):
+        return False  # La caché local conserva la pausa si el runtime está ocupado.
+
+
+def _pause_provider(key,status,seconds):
+    cache.set(key,status,seconds)
+    from .ai_concurrency import pause_provider
+    try:
+        pause_provider(key,seconds)
+    except (OSError,ValueError,sqlite3.Error):
+        pass
+
+
 def search_duckduckgo(query):
     """Buscador web general gratuito, sin clave ni cookies.
 
@@ -1319,7 +1383,7 @@ def search_duckduckgo(query):
     cached = _cached(key)
     if cached is not None:
         return cached
-    if cache.get('litmate_ddg_cooldown'):
+    if _provider_paused('litmate_ddg_cooldown'):
         return SearchResults(status='cooldown')
     from .literary_web import public_text_has_injection, read_public_html
     params = {'q': query, 'kl': 'es-es'}
@@ -1336,14 +1400,15 @@ def search_duckduckgo(query):
     except Exception as exc:
         status = 'access_denied' if getattr(exc, 'code', '') == 'http_202' else error_status(exc)
         record_research_event('http_request', 'DuckDuckGo', status)
-        cache.set('litmate_ddg_cooldown', status, cooldown_seconds(exc))
+        _pause_provider('litmate_ddg_cooldown',status,
+                        3600 if status=='access_denied' else cooldown_seconds(exc))
         return SearchResults(status=status)
     try:
         from bs4 import BeautifulSoup
         soup = BeautifulSoup(html, 'html.parser')
         if soup.select_one('#challenge-form, .anomaly-modal, form[action*="anomaly.js"]'):
             record_research_event('http_request', 'DuckDuckGo', 'access_denied')
-            cache.set('litmate_ddg_cooldown', 'access_denied', 180)
+            _pause_provider('litmate_ddg_cooldown','access_denied',3600)
             return SearchResults(status='access_denied', providers={'DuckDuckGo': 'access_denied'})
         # El enlace y su fragmento ocupan filas distintas. No emparejar dos
         # listas tras filtrar URLs: una URL rechazada desalinearía las pruebas.
@@ -1363,7 +1428,7 @@ def search_duckduckgo(query):
                 current['snippet'] = clean_text(cell.get_text(' ', strip=True), 700)
     except Exception:
         record_research_event('http_request', 'DuckDuckGo', 'invalid_response')
-        cache.set('litmate_ddg_cooldown', 'invalid_response', 300)
+        _pause_provider('litmate_ddg_cooldown','invalid_response',300)
         return SearchResults(status='invalid_response')
     results, seen = [], set()
     for item in links[:20]:
@@ -1403,6 +1468,11 @@ def search_searx(query, *, web=False):
     engines = (getattr(settings, 'LITMATE_SEARXNG_WEB_ENGINES', ('mwmbl', 'duckduckgo'))
                if web else getattr(settings, 'LITMATE_SEARXNG_ENGINES', ('wikipedia', 'openlibrary', 'mwmbl')))
     engines = [engine for engine in engines if engine in allowed]
+    if web and _provider_paused('litmate_ddg_cooldown'):
+        # La caída del buscador general no elimina los catálogos ya habilitados.
+        engines.extend(engine for engine in getattr(settings,'LITMATE_SEARXNG_ENGINES',
+            ('wikipedia','openlibrary','mwmbl')) if engine in allowed-{'duckduckgo','qwant'})
+    engines=list(dict.fromkeys(engines))
     if not engines:
         return SearchResults(status='disabled')
     key = _cache_key('litmate_searx_json_v2:', origin + ':' + _cache_fingerprint(query) + ':' + ','.join(engines))
@@ -1412,7 +1482,8 @@ def search_searx(query, *, web=False):
     if cache.get('litmate_searx_cooldown'):
         return SearchResults(status='cooldown')
     engine_pause = lambda engine: _cache_key('litmate_searx_engine_pause:', origin + ':' + engine)
-    ready = [engine for engine in engines if not cache.get(engine_pause(engine))]
+    ready = [engine for engine in dict.fromkeys(engines) if not _provider_paused(engine_pause(engine))
+             and not (engine=='duckduckgo' and _provider_paused('litmate_ddg_cooldown'))]
     if not ready:
         return SearchResults(status='cooldown', providers={engine: 'cooldown' for engine in engines})
     params = {'q': query, 'format': 'json', 'language': 'es',
@@ -1438,7 +1509,10 @@ def search_searx(query, *, web=False):
             continue
         if not isinstance(item.get('content', ''), str) or not isinstance(item.get('url'), str):
             continue
-        url = discovery_url(item.get('url'))
+        # La búsqueda web usa la misma admisión HTTPS pública que DuckDuckGo.
+        # Mostrar un destino no autoriza su lectura: DNS/IP, redirecciones,
+        # robots e inyección se comprueban en el lector público existente.
+        url = (safe_source_url(item.get('url')) if web else discovery_url(item.get('url')))
         if not url:
             continue
         results.append({'title': item.get('title'), 'author': 'Fuente web',
@@ -1448,19 +1522,42 @@ def search_searx(query, *, web=False):
                         'search_engines': [name for name in item.get('engines', [])
                                            if isinstance(name, str) and name in allowed]
                         if isinstance(item.get('engines'), list) else []})
-        if len(results) == 5:
+    # El orden del metabuscador mezcla catálogos y páginas. Recortar antes de
+    # comprobar relevancia ocultaba páginas útiles detrás de cinco fichas sin
+    # descripción. El ranking sólo elige candidatos; nunca prueba su contenido.
+    terms={word for word in re.findall(r'\w{3,}',normalized(query))
+           if word not in STOPWORDS|{'argumento','trama','sinopsis','personajes','contenido'}}
+    def relevance(source):
+        title_words=set(re.findall(r'\w{3,}',normalized(source['title'])))
+        body_words=set(re.findall(r'\w{3,}',normalized(source['description'])))
+        return len(terms&title_words)*4+len(terms&body_words),len(source['description'])>=60
+    if terms:
+        results.sort(key=relevance,reverse=True)
+    chosen,seen,catalogue_count=[],set(),0
+    has_readable_candidate=any(urlsplit(s['url']).hostname!='openlibrary.org'
+                              and (not terms or relevance(s)[0]) for s in results)
+    for source in results:
+        if source['url'] in seen:
+            continue
+        catalogue=urlsplit(source['url']).hostname=='openlibrary.org'
+        if catalogue and catalogue_count>=2 and has_readable_candidate:
+            continue
+        chosen.append(source);seen.add(source['url']);catalogue_count+=int(catalogue)
+        if len(chosen)==5:
             break
+    results=chosen
     failures = data.get('unresponsive_engines') or []
     for item in failures:
         if not isinstance(item, list) or len(item) < 2 or item[0] not in allowed:
             continue
         reason = str(item[1]).lower()
-        seconds = 180 if any(word in reason for word in ('captcha', 'denied', 'too many', '429')) else 30
-        cache.set(engine_pause(item[0]), str(item[1])[:60], seconds)
+        seconds = 3600 if 'captcha' in reason else 180 if any(
+            word in reason for word in ('denied','too many','toomanyrequests','429')) else 30
+        _pause_provider(engine_pause(item[0]),str(item[1])[:60],seconds)
         if item[0] == 'duckduckgo':
             # No volver a probar otro endpoint de ese mismo proveedor tras un
             # CAPTCHA/rechazo; el fallback debe usar un proveedor distinto.
-            cache.set('litmate_ddg_cooldown', str(item[1])[:60], seconds)
+            _pause_provider('litmate_ddg_cooldown',str(item[1])[:60],seconds)
     result = SearchResults(results, status='partial' if failures and results else
                          'unavailable' if failures else 'ok' if results else 'empty',
                          providers={str(item[0])[:40]: str(item[1])[:60]
@@ -1477,12 +1574,86 @@ def _wikipedia_cooldown_key(host):
     return 'litmate_wikipedia_cooldown:' + str(host or 'wikipedia.org')
 
 
+def _wikipedia_spanish_counterpart(candidate, *, query=''):
+    """Follow one official language link, preserving bibliographic identity.
+
+    Never fetch a URL supplied in a page. A bounded title query uses the fixed
+    Spanish API, and both pages must identify the same Wikidata item, author
+    and literary medium before a cross-language title becomes an alias.
+    Missing/ambiguous data simply leaves the English source in use.
+    """
+    from .literary_identity import _verified_web_work, same_author_name, ambiguous_work_page, published_title_alias
+    qid = (candidate.get('pageprops') or {}).get('wikibase_item', '')
+    links = candidate.get('langlinks', [])
+    title = next((link.get('*', '') for link in links if isinstance(link, dict)
+                  and link.get('lang') == 'es'), '') if isinstance(links, list) else ''
+    if (not re.fullmatch(r'Q[1-9]\d*', str(qid)) or not isinstance(title, str)
+            or not 2 <= len(title) <= 220 or re.search(r'[|#\\/\x00-\x1f]', title)
+            or cache.get(_wikipedia_cooldown_key('es.wikipedia.org'))):
+        return None
+    def identity(page):
+        return _verified_web_work({'kind':'web','source':'Wikipedia','title':page.get('title'),
+            'url':page.get('fullurl'),'identity_text':page.get('extract'),
+            'read_mode':'extracto de introducción',**_wikipedia_storage_metadata(page)})
+    original = identity(candidate)
+    if not original:
+        return None
+    endpoint = 'https://es.wikipedia.org/w/api.php?'
+    params = {'action':'query','format':'json','titles':title,'redirects':1,
+        'prop':'extracts|info|revisions|pageprops','ppprop':'disambiguation|wikibase_item',
+        'rvprop':'ids','inprop':'url','explaintext':1,'exintro':1,'exchars':1200}
+    if query:
+        if not reserve_page():
+            return None
+        params.pop('exintro')
+        params.pop('exchars')
+        params['exsectionformat']='wiki'
+    payload = _wikipedia_fetch(endpoint + urlencode(params))
+    pages = ((payload.get('query') or {}).get('pages') or {}) if isinstance(payload,dict) else {}
+    for page in pages.values() if isinstance(pages,dict) else []:
+        if (not isinstance(page,dict) or 'missing' in page or ambiguous_work_page(page)
+                or (page.get('pageprops') or {}).get('wikibase_item') != qid):
+            continue
+        intro = re.split(r'(?m)^\s*==+',str(page.get('extract','')),maxsplit=1)[0]
+        translated = identity({**page,'extract':intro})
+        if not translated or not same_author_name(original['author'],translated['author']):
+            continue
+        if query:
+            selection=relevant_passage(page.get('extract',''),query,with_details=True)
+            # A Spanish character list or publication lead is not a plot.
+            # Prefer the original English article when the localized article
+            # does not contain evidence for this particular question.
+            premise=bool(re.search(r'\b(?:narra|relata|trata de|historia de|se centra|sigue)\b',normalized(intro)))
+            if selection.get('topic')!='plot' and not premise:
+                record_research_event('interlanguage_identity','Wikipedia','insufficient_plot')
+                return None
+        proof = ('MediaWiki langlinks: title=' + str(candidate['title']) + '; lang=es; title='
+            + str(page['title']) + '; wikibase_item=' + qid + '; revisions='
+            + str(candidate['revisions'][0]['revid']) + ',' + str(page['revisions'][0]['revid']))
+        aliases=[{'title':candidate['title'],'source_url':candidate['fullurl'],'evidence':proof}]
+        hint=re.search(r'[«“"]([^»”"\n]{2,180})[»”"]',query)
+        original_page={'kind':'web','source':'Wikipedia','title':candidate['title'],
+            'url':candidate['fullurl'],'identity_text':candidate.get('extract',''),
+            **_wikipedia_storage_metadata(candidate)}
+        if hint and published_title_alias(original_page,hint[1]):
+            # Preserve the explicit published subtitle, not an inferred prefix
+            # equivalence. Keep both the original lead and cross-language IDs
+            # in the structured proof rather than fabricating a quotation.
+            aliases.append({'title':hint[1],'source_url':candidate['fullurl'],
+                'evidence':proof.replace('; lang=es;', '; published_title='+hint[1]
+                    +'; lead='+clean_text(candidate.get('extract'),700)+'; lang=es;',1)})
+        record_research_event('interlanguage_identity','Wikipedia','ok',count=1)
+        return {**page,'confirmed_aliases':aliases,**({'_prefetched_document':True,
+            'identity_text':clean_text(intro,1200)} if query else {})}
+    return None
+
+
 def search_wikipedia(query):
     """API oficial: español primero; inglés solo si falta una página utilizable."""
     # Sólo se conserva durante un turno real. Los comandos y las pruebas deben
     # observar cada petición y no recibir páginas de otra consulta/contexto.
     active = current_deadline() is not None
-    cache_name = _cache_key('litmate_local_wikipedia_v4:', _cache_fingerprint(query) + ':pages='
+    cache_name = _cache_key('litmate_local_wikipedia_v5:', _cache_fingerprint(query) + ':pages='
                             + str(getattr(settings, 'LITMATE_RESEARCH_MAX_PAGES', 3)))
     if active:
         cached = _cached(cache_name)
@@ -1505,12 +1676,22 @@ def search_wikipedia(query):
             result = _search_wikipedia(query, language=language)
             statuses[language] = 'ok' if result else 'empty'
             if result:
+                from .literary_identity import published_title_alias, _literal_title, _verified_web_work
+                title_hint=re.search(r'[«“"]([^»”"\n]{2,180})[»”"]',query)
+                def same_article_title(source):
+                    if not title_hint or not _verified_web_work(source):
+                        return False
+                    bare=lambda label:re.sub(r'^(?:el|la|los|las|the)\s+','',normalized(_literal_title(label)))
+                    return bare(source.get('title'))==bare(title_hint[1])
                 # La API puede devolver artículos tangenciales aun sin ninguna
                 # palabra identificativa del título. No cerrar por eso la etapa
                 # multilingüe (p. ej. artículo sobre una ceremonia en vez del libro).
-                if language == 'es' and query_terms and not any(query_terms & set(
-                        re.findall(r'\w+', normalized(source.get('title'))))
-                        or normalized(source.get('title')).replace(' ', '') in query_terms for source in result):
+                usable = (any(normalized(_literal_title(source.get('title'))).replace(' ','')
+                              == normalized(_literal_title(title_hint[1])).replace(' ','')
+                              or published_title_alias(source,title_hint[1]) or same_article_title(source) for source in result)
+                          if title_hint else any(query_terms & set(re.findall(r'\w+', normalized(source.get('title'))))
+                              or normalized(source.get('title')).replace(' ', '') in query_terms for source in result))
+                if language == 'es' and query_terms and not usable:
                     spanish_alternatives = result
                     continue
                 return finish(SearchResults(result, status='partial' if any(
@@ -1681,10 +1862,14 @@ def _search_wikipedia(query, *, language='es'):
               # principal puede aparecer después de secuelas o adaptaciones.
               # Diez introducciones acotadas no amplían las lecturas completas.
               'gsrsearch': identity_query, 'gsrlimit': 10 if focus else 2,
-              'gsrnamespace': '0|104' if focus else 0, 'prop': 'extracts|info|revisions', 'rvprop': 'ids',
+              'gsrnamespace': '0|104' if focus else 0, 'prop': 'extracts|info|revisions|pageprops',
+              'ppprop': 'disambiguation|wikibase_item', 'rvprop': 'ids',
               'inprop': 'url', 'explaintext': 1, 'exintro': 1, 'exchars': 1200}
     if language not in {'es', 'en'}:
         raise ValueError('unsupported_wikipedia_language')
+    if language == 'en':
+        params['prop'] += '|langlinks'
+        params.update(lllang='es',lllimit=1)
     endpoint = 'https://' + language + '.wikipedia.org/w/api.php?'
     data = _wikipedia_fetch(endpoint + urlencode(params))
     if not isinstance(data, dict) or data.get('error'):
@@ -1703,6 +1888,19 @@ def _search_wikipedia(query, *, language='es'):
         bare = lambda title: re.sub(r'^(?:el|la|los|las|the)\s+', '', normalized(title))
         def same_work(page):
             title = normalized(page.get('title'))
+            from .literary_identity import published_title_alias
+            public_page={'kind':'web','source':'Wikipedia','title':page.get('title',''),
+                         'identity_text':page.get('extract',''),'url':trusted_url(page.get('fullurl')),
+                         **_wikipedia_storage_metadata(page)}
+            if any(published_title_alias(public_page,hint) for hint in title_hints):
+                return True
+            qualifier=re.fullmatch(r'(.+?)\s*\(([^()]+)\)\s*',str(page.get('title','')))
+            if qualifier and normalized(qualifier[1]) in wanted:
+                from .literary_identity import _identity_author
+                author=_identity_author({'identity_text':page.get('extract','')})
+                if (author and normalized(qualifier[2])==normalized(author).split()[-1]
+                        and normalized(author) in normalized(identity_query)):
+                    return True
             title = re.sub(r'\s*\((?:novela|libro|book|novel)\)\s*$', '', title)
             title = re.sub(r'^(?:anexo\s*:\s*)?(?:personajes|characters)\s+(?:de|of)\s+', '', title)
             # Formatting only guides discovery, never merges book identities.
@@ -1729,13 +1927,18 @@ def _search_wikipedia(query, *, language='es'):
             lookup_titles = list(dict.fromkeys([*variants,
                 *(title[:1].upper() + title[1:].casefold() for title in variants)]))
             exact_params = {'action': 'query', 'format': 'json', 'titles': '|'.join(lookup_titles),
-                'redirects': 1, 'prop': 'extracts|info|revisions', 'rvprop': 'ids', 'inprop': 'url',
+                'redirects': 1, 'prop': 'extracts|info|revisions|pageprops', 'ppprop': 'disambiguation|wikibase_item',
+                'rvprop': 'ids', 'inprop': 'url',
                 'explaintext': 1, 'exintro': 1, 'exchars': 1200}
+            if language == 'en':
+                exact_params['prop'] += '|langlinks'
+                exact_params.update(lllang='es',lllimit=1)
             try:
                 exact = _wikipedia_fetch(endpoint + urlencode(exact_params))
                 exact_pages = ((exact.get('query') or {}).get('pages') or {}) if isinstance(exact, dict) else {}
                 exact_pages = [page for page in exact_pages.values() if isinstance(page, dict)
                     and 'missing' not in page and str(page.get('pageid', '')).isdigit()
+                    and not ambiguous_work_page(page)
                     and page.get('extract') and same_work(page)] if isinstance(exact_pages, dict) else []
                 if exact_pages:
                     order = [normalized(title) for title in title_hints]
@@ -1744,22 +1947,61 @@ def _search_wikipedia(query, *, language='es'):
                     pages = exact_pages[:1]
             except Exception as exc:
                 logger.warning('IA: título exacto de Wikipedia no disponible (%s)', type(exc).__name__)
+    if focus and quoted_title:
+        # El nombre que acompaña a un título entrecomillado en el trabajador
+        # es una restricción, no otra palabra temática. Descartar homónimos
+        # antes de gastar la única lectura permite probar el idioma siguiente.
+        author_hint=re.sub(r'^intitle:"[^"]*"\s*','',identity_query).strip()
+        if (2<=len(author_hint.split())<=12 and re.fullmatch(r'[\w .()’\'-]+',author_hint)
+                and re.search(r'[A-ZÁÉÍÓÚÑ]',author_hint)):
+            from .literary_identity import author_name_forms,same_author_name
+            def author_present(page):
+                words=normalized(page.get('extract','')).split()
+                exact=any(same_author_name(form,' '.join(words[i:i+len(form.split())]))
+                           for form in author_name_forms(author_hint)
+                           for i in range(max(0,len(words)-len(form.split())+1)))
+                if exact:
+                    return True
+                # A detail query can append a character after the author:
+                # "Title" Author Surname Character acontecimientos. These
+                # extra search terms are not another author surname. This is
+                # discovery only; same_work still checks the actual FULL work
+                # author before binding, answering or persisting anything.
+                if re.search(r'\b(?:acontecimientos|escenas?|relacion|events|scenes?)\b',normalized(query)):
+                    from .literary_identity import _identity_author
+                    published=_identity_author({'identity_text':page.get('extract','')})
+                    return bool(published and any(same_author_name(' '.join(author_hint.split()[:end]),published)
+                                for end in range(2,len(author_hint.split()))))
+                return False
+            pages=[page for page in pages if author_present(page)]
     if not re.search(r'\b(?:pelicula|film|adaptacion|cine|serie)\b', normalized(query)):
         pages = [page for page in pages if not re.search(
             r'\((?:pelicula|film|serie|videojuego)\b', normalized(page.get('title', '')))]
     if focus and pages:
         pages.sort(key=lambda page: _wikipedia_page_rank(page, identity_query, focus), reverse=True)
         candidate = pages[0]
+        if language == 'en' and focus[0]=='argumento':
+            try:
+                counterpart = _wikipedia_spanish_counterpart(candidate,query=query)
+                if counterpart:
+                    candidate = pages[0] = counterpart
+                    endpoint = 'https://es.wikipedia.org/w/api.php?'
+            except Exception as exc:
+                # One optional metadata lookup cannot discard a usable source
+                # or cause a retry loop when a host is unavailable.
+                record_research_event('interlanguage_identity','Wikipedia',error_status(exc))
         page_id = str(candidate.get('pageid', ''))
         # El artículo completo es una lectura de evidencia igual que una página
         # HTML. La introducción bibliográfica se conserva si se agotó el cupo.
-        if page_id.isdigit() and int(page_id) > 0 and reserve_page():
+        if page_id.isdigit() and int(page_id) > 0 and (candidate.get('_prefetched_document') or reserve_page()):
             try:
                 from .literary_sources import research_snapshot
                 reserved = research_snapshot().get('page_slots_reserved', 0)
                 page_limit = max(0, min(int(getattr(settings, 'LITMATE_RESEARCH_MAX_PAGES', 3)),
                                        research_snapshot().get('page_slots_limit', 3), 3))
-                if focus[0] == 'personajes' and reserved >= page_limit:
+                if candidate.get('_prefetched_document'):
+                    full_page=candidate
+                elif focus[0] == 'personajes' and reserved >= page_limit:
                     # Si solo queda una lectura, Parse puede obtener la tabla
                     # que TextExtracts omitiría. No se amplía el presupuesto.
                     full_page = _wikipedia_table_page(candidate, page_id, endpoint, query=query)
@@ -1777,13 +2019,9 @@ def _search_wikipedia(query, *, language='es'):
                                      relevant_passage(full_page['extract'],query))
                     plot_facts = []
                     if selection is not None:
-                        from .literary_quality import factual_statements
-                        body = re.sub(r'==+[^=]+==+',' ',selected_text).strip()
-                        proof = next((line for line in factual_statements(body) if 30<=len(line)<=1000),'')
-                        if proof:
-                            plot_facts = [{'topic':'plot','scope':selection['scope'],'evidence':proof}]
+                        plot_facts = selected_section_facts(selection)
                     pages[0] = {**candidate, **full_page,
-                                'identity_text': clean_text(candidate.get('extract'), 1200),
+                                'identity_text': candidate.get('identity_text') or clean_text(candidate.get('extract'), 1200),
                                 'character_facts': (full_page.get('character_facts') or
                                     character_facts(full_page['extract'])) if focus[0] == 'personajes' else [],
                                 'extract': selected_text,'literary_facts':plot_facts,
@@ -1830,6 +2068,7 @@ def _search_wikipedia(query, *, language='es'):
              # identidad: para eso está identity_text.
              'identity_text': page.get('identity_text') or clean_text(page.get('extract'), 1200),
              'character_facts': page.get('character_facts', []),
+             'confirmed_aliases': page.get('confirmed_aliases', []),
              # Un anexo conserva la obra de la que fue descubierto para que la
              # validación posterior pueda vincularlo sin confundirlo con una
              # secuela o una adaptación.
@@ -1940,7 +2179,7 @@ def _retrieve_web(query):
     results = [item for group in groups for item in group]
     if not results and getattr(settings, 'LITMATE_AI_USE_SEARXNG', True):
         try:
-            result = search_searx(query)
+            result = search_searx(query,web=True)
             groups.append(result)
             statuses['SearXNG'] = getattr(result, 'status', 'ok' if result else 'empty')
             results.extend(result)
@@ -1963,7 +2202,10 @@ def _retrieve_web(query):
     results.sort(key=rank, reverse=True)
     unique, seen_passages = [], set()
     for source in results:
-        signature = normalized(source.get('description', ''))
+        # Dos páginas distintas pueden tener un fragmento vacío o genérico.
+        # El destino es la unidad de lectura; no descartar su URL por compartir
+        # un texto breve con una ficha de catálogo que no se puede leer por HTML.
+        signature = safe_source_url(source.get('url','')) or normalized(source.get('description',''))
         if signature and signature not in seen_passages:
             unique.append(source)
             seen_passages.add(signature)
@@ -1978,9 +2220,12 @@ def _retrieve_web(query):
         if not url:
             return source
         trusted = bool(trusted_url(url))
-        # Un resultado general se lee sólo si procede de DuckDuckGo; una tienda
-        # descubierta por él conserva el fragmento si su robots no lo permite.
-        if not trusted and source.get('source') != 'DuckDuckGo':
+        # Los resultados del SearXNG local pasan por el mismo lector con SSRF,
+        # robots, límites y control de inyección que los de DuckDuckGo. La
+        # procedencia debe incluir un motor realmente aceptado del adaptador.
+        searx_discovery=(str(source.get('source','')).startswith('SearXNG (')
+            and bool(set(source.get('search_engines') or [])&{'mwmbl','duckduckgo','openlibrary','wikipedia','wikidata'}))
+        if not trusted and source.get('source') != 'DuckDuckGo' and not searx_discovery:
             return source
         if not reserve_page():
             return source
@@ -2003,7 +2248,8 @@ def _retrieve_web(query):
             logger.warning('IA: página no disponible (%s)', type(exc).__name__)
         return source
     maximum = max(0, min(int(getattr(settings, 'LITMATE_RESEARCH_MAX_PAGES', 3)), 3))
-    candidates = [source for source in sources if source.get('read_mode') == 'fragmento del buscador']
+    candidates = [source for source in sources if source.get('read_mode') == 'fragmento del buscador'
+                  and not _catalogue_api_only(source.get('url',''))]
     # Primero editoriales y fuentes de confianza; después páginas generales.
     candidates.sort(key=lambda source: 0 if trusted_url(source.get('url')) else 1)
     with pool_in_budget(max(1, maximum)) as pool:

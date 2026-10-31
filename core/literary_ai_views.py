@@ -2,6 +2,7 @@
 import hashlib
 import json
 import os
+import re
 import logging
 import copy
 import secrets
@@ -85,6 +86,10 @@ def _safe_diagnostics(result, client):
               if type(diagnostics.get(key)) in {int, float, bool}}
     if diagnostics.get('work_type') in {'fiction', 'nonfiction', 'unknown'}:
         values['work_type'] = diagnostics['work_type']
+    if diagnostics.get('failure_kind') in {'technical_failure', 'insufficient_evidence', 'quality_rejected', 'partial_recovery'}:
+        values['failure_kind'] = diagnostics['failure_kind']
+    if diagnostics.get('evidence_state') in {'sufficient', 'partial', 'insufficient'}:
+        values['evidence_state'] = diagnostics['evidence_state']
     if diagnostics.get('narrative_failure') in {'audit_not_approved', 'insufficient_content',
             'model_not_configured', 'retrieval_unavailable', 'ValueError', 'TypeError', 'ProviderUnavailable', 'BudgetExpired', 'TimeoutError'}:
         values['narrative_failure'] = diagnostics['narrative_failure']
@@ -320,7 +325,8 @@ def _model_answer(message, history, topic_context, retrieval_message):
             if backup is not None:
                 backup.diagnostics.update(original_failure=result.diagnostics, web_backup=True)
                 result = backup
-        if result.status == 'unavailable' and getattr(settings, 'LITMATE_AI_CATALOG_FALLBACK', True):
+        if (result.status == 'unavailable' and getattr(settings, 'LITMATE_AI_CATALOG_FALLBACK', True)
+                and reference.get('reason') not in {'similar', 'same_author'}):
             from .ai_catalog_fallback import catalog_fallback
             from .literary_search import search_google
             try:
@@ -381,6 +387,25 @@ def _answer_with_cache(message, history, topic_context, cache_state, cache_owner
     enabled = getattr(settings, 'LITMATE_AI_QUICK_ANSWERS', True)
     with progress_scope() as progress:
         def measured(result, client):
+            if result.status == 'answered' and result.intent == 'recommend':
+                from .literary_constraints import recommendation_constraints, constraints_match
+                from .literary_identity import normalize_identity
+                memory = cache_state.get('recommendations', {})
+                continuation = bool(re.search(r'\b(?:otros?|otras?|similares?|parecidos?|mas opciones)\b',
+                                              normalize_identity(message)))
+                constraints = recommendation_constraints('')
+                if continuation:
+                    constraints.update(memory.get('constraints', {}))
+                constraints.update({key: value for key, value in recommendation_constraints(message).items() if value})
+                rejected = {normalize_identity(title) for title in
+                            [*memory.get('read_titles', []), *memory.get('rejected_titles', [])]}
+                chosen_ids = {book['source_id'] for book in result.books}
+                selected = [source for source in result.sources if source.get('id') in chosen_ids]
+                if any(not constraints_match(source, constraints) or
+                       normalize_identity(source.get('title')) in rejected for source in selected):
+                    result = ChatResult('No pude confirmar opciones que cumplan todas tus preferencias. '
+                        'Puedo ampliar la búsqueda si quieres flexibilizar alguno de esos criterios.',
+                        'clarification', intent='recommend', diagnostics={'preference_evidence_missing': True})
             from .literary_presentation_language import prepare_presentation
             client = prepare_presentation(result, message, client)
             metrics = snapshot_metrics()
@@ -450,6 +475,13 @@ def _compute_answer_impl(message, history, topic_context, *, pending_clarificati
             except BudgetExpired:
                 pass
         if getattr(settings, 'LITMATE_AI_QUICK_ANSWERS', True):
+            from .ai_quick_answers import book_links_answer
+            from .ai_identification_details import identification_explanation_answer
+            from .genre_recommendations import reading_feedback_answer
+            for direct in (book_links_answer, identification_explanation_answer, reading_feedback_answer):
+                answer = direct(message, history)
+                if answer is not None:
+                    return answer, SimpleNamespace(usage={}, provider='verified-conversation-evidence', calls=0)
             from .genre_recommendations import genre_answer
             genre_result=genre_answer(message,history,topic_context)
             if genre_result is not None:
@@ -462,7 +494,11 @@ def _compute_answer_impl(message, history, topic_context, *, pending_clarificati
             if character is not None:
                 return character, SimpleNamespace(usage=character.diagnostics.get('usage', {}),
                     provider='verified-character-evidence', calls=character.diagnostics.get('model_calls', 0))
-            from .ai_related_recommendations import related_recommendation_answer
+            from .ai_related_recommendations import (related_recommendation_answer,
+                related_explanation_answer, is_related_continuation)
+            explanation = related_explanation_answer(message, history)
+            if explanation is not None:
+                return explanation, SimpleNamespace(usage={}, provider='verified-related-explanation', calls=0)
             from .literary_search import retrieve_discovery_books, enrich_discovery_book_records
             related_candidates = 0
 
@@ -474,15 +510,24 @@ def _compute_answer_impl(message, history, topic_context, *, pending_clarificati
 
             try:
                 with request_budget(time.monotonic() + budget_timeout(6)):
-                    related = related_recommendation_answer(message, history, related_search)
+                    related = related_recommendation_answer(message, history, related_search, context=topic_context)
             except (BudgetExpired, TimeoutError, OSError, ValueError):
                 related = None
             if related is not None:
                 related.diagnostics.update(discovery_candidates=related_candidates,
                                            verified_recommendations=len(related.books))
                 return related, SimpleNamespace(usage={}, provider='verified-related-books', calls=0)
+            if is_related_continuation(message, topic_context):
+                # Una búsqueda sin opciones válidas no autoriza a reemplazar
+                # la afinidad solicitada por una consulta literal «dame otras».
+                return (ChatResult('No pude confirmar otras lecturas relacionadas que cumplan '
+                    'tus preferencias con las fuentes disponibles. Podemos ampliar los criterios '
+                    'o intentarlo más tarde.', 'clarification', intent='recommend',
+                    diagnostics={'related_evidence_missing': True, 'model_calls': 0,
+                                 'discovery_candidates': related_candidates}),
+                    SimpleNamespace(usage={}, provider='verified-related-books', calls=0))
             from .ai_narrative_answers import goal_answer, comparison_answer
-            comparison = comparison_answer(message, history)
+            comparison = comparison_answer(message, history, config=settings)
             if comparison is not None:
                 return comparison, SimpleNamespace(usage={}, provider='verified-context-comparison', calls=0)
             goal = goal_answer(message, history)

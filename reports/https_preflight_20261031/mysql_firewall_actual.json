@@ -1,0 +1,101 @@
+{
+    "ReadOnly":  true,
+    "ActiveInboundRules":  204,
+    "Profiles":  [
+                     {
+                         "Profile":  1,
+                         "Enabled":  true,
+                         "DefaultInbound":  "Block"
+                     },
+                     {
+                         "Profile":  2,
+                         "Enabled":  true,
+                         "DefaultInbound":  "Block"
+                     },
+                     {
+                         "Profile":  4,
+                         "Enabled":  true,
+                         "DefaultInbound":  "Block"
+                     }
+                 ],
+    "PackagedApplicationRulesExcluded":  20,
+    "MySQLCandidates":  [
+                            {
+                                "Name":  "codex_sandbox_offline_block_inbound",
+                                "RuleId":  "{822145F1-740C-4341-ADAC-5A6F1EDE4C6A}",
+                                "Action":  "Block",
+                                "Profiles":  "Any",
+                                "Program":  "",
+                                "Service":  "",
+                                "LocalPorts":  "*",
+                                "LocalIPv4":  [
+                                                  null
+                                              ],
+                                "LocalIPv6":  [
+                                                  null
+                                              ],
+                                "RemoteIPv4":  [
+                                                   "0.0.0.0-126.255.255.255",
+                                                   "128.0.0.0-255.255.255.255"
+                                               ],
+                                "RemoteIPv6":  [
+                                                   "::",
+                                                   "::2-ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"
+                                               ],
+                                "HasLocalUserCondition":  true,
+                                "PackageRestricted":  false
+                            },
+                            {
+                                "Name":  "Tailscale-In",
+                                "RuleId":  "{8C7E4761-BF01-412E-9ED2-681F4E90F49B}",
+                                "Action":  "Allow",
+                                "Profiles":  "Domain, Private",
+                                "Program":  "",
+                                "Service":  "",
+                                "LocalPorts":  "*",
+                                "LocalIPv4":  [
+                                                  "100.103.164.43"
+                                              ],
+                                "LocalIPv6":  [
+                                                  null
+                                              ],
+                                "RemoteIPv4":  [
+                                                   null
+                                               ],
+                                "RemoteIPv6":  [
+                                                   null
+                                               ],
+                                "HasLocalUserCondition":  false,
+                                "PackageRestricted":  false
+                            },
+                            {
+                                "Name":  "Tailscale-In",
+                                "RuleId":  "{647127D2-641C-4F62-AF98-FC03E3972778}",
+                                "Action":  "Allow",
+                                "Profiles":  "Domain, Private",
+                                "Program":  "",
+                                "Service":  "",
+                                "LocalPorts":  "*",
+                                "LocalIPv4":  [
+                                                  null
+                                              ],
+                                "LocalIPv6":  [
+                                                  "fd7a:115c:a1e0::cb01:a4db"
+                                              ],
+                                "RemoteIPv4":  [
+                                                   null
+                                               ],
+                                "RemoteIPv6":  [
+                                                   null
+                                               ],
+                                "HasLocalUserCondition":  false,
+                                "PackageRestricted":  false
+                            }
+                        ],
+    "UnresolvedActiveRuleIds":  [
+
+                                ],
+    "ExternalConnectivityTested":  false,
+    "FirewallChanged":  false,
+    "RouterConfigurationRead":  false
+}

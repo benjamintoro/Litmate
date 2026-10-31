@@ -1,0 +1,268 @@
+{
+  "case": {
+    "case": 15,
+    "title": "Pluto",
+    "author": "Naoki Urasawa",
+    "kind": "manga",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_aliases",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_entities",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_entities",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_sources",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_assertions",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_fts",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_fts_content",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks_content",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks_content",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "LITMATE_LIBRARY_RAG_DB": [
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks_content",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks_content",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "mysql": {
+        "name_record_ids": [
+          "cb141b9aa92a1b5be3e149b94c2a6368450b9ad0a9cf1eaa0454c492446bf6e2"
+        ],
+        "direct_records": [
+          {
+            "id": "cb141b9aa92a1b5be3e149b94c2a6368450b9ad0a9cf1eaa0454c492446bf6e2",
+            "label": "Escape From Pluto",
+            "kind": "edition"
+          }
+        ],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": false
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de Pluto de Naoki Urasawa",
+      "answer": "Pluto narra la historia de Gesicht (en alem\u00e1n: \u00abcara\u00bb), un robot detective que trabaja para la Europol, cuando investiga un caso que gira en torno a los asesinatos de robots y humanos que est\u00e1n teniendo lugar. El caso se complica cuando las pruebas empiezan a sugerir que quien est\u00e1 detr\u00e1s de todo es un robot. La acci\u00f3n se sit\u00faa en un futuro donde los robots han ganado derechos similares a los que tienen los humanos, y en el que tuvo lugar una guerra que asol\u00f3 el Imperio Persa, situado en el Medio Oriente, la cual marc\u00f3 el pasado de muchos de sus personajes.\n\nFuente: https://es.wikipedia.org/wiki/Pluto_(manga)\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+      "status": "answered",
+      "books": [],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 2208,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "partial_evidence": true,
+        "work_type": "nonfiction",
+        "progress_metrics": {
+          "elapsed_ms": 2214.31,
+          "first_phase_emitted_ms": 23.477,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 7.081,
+            "cache_lookup": 6.084,
+            "knowledge_lookup": 557.384,
+            "retrieval": 1728.238,
+            "audit": 3.671,
+            "finalization": 6.705
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 4.098,
+              "elapsed_ms": 7.081,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 17.377,
+              "elapsed_ms": 6.084,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 36.248,
+              "elapsed_ms": 321.233,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 107.963,
+              "elapsed_ms": 45.497,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 214.394,
+              "elapsed_ms": 142.091,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 282.318,
+              "elapsed_ms": 43.31,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 424.902,
+              "elapsed_ms": 5.253,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 440.123,
+              "elapsed_ms": 1728.238,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 2185.331,
+              "elapsed_ms": 3.671,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 2207.6,
+              "elapsed_ms": 6.705,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 23.477
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 2185.315
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 2.2407,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 2.219,
+        "first_verified_text_seconds": 2.2407
+      }
+    }
+  ],
+  "seconds": 4.452,
+  "coverage_before": {
+    "works": 14475,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14648,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14475,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14648,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "factual_review_pending": true
+}

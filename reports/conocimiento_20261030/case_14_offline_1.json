@@ -1,0 +1,195 @@
+{
+  "case": {
+    "case": 14,
+    "title": "Dandadan",
+    "author": "Yukinobu Tatsu",
+    "kind": "manga",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": true
+  },
+  "offline": true,
+  "turns": [
+    {
+      "question": "Dime la trama de Dandadan de Yukinobu Tatsu",
+      "answer": "Hay un problema temporal al consultar las fuentes de este libro. Puedes volver a intentarlo en unos instantes.",
+      "status": "unavailable",
+      "books": [],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 2676,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "work_type": "unknown",
+        "narrative_failure": "retrieval_unavailable",
+        "progress_metrics": {
+          "elapsed_ms": 2679.085,
+          "first_phase_emitted_ms": 21.719,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 9.51,
+            "cache_lookup": 0.618,
+            "knowledge_lookup": 531.172,
+            "retrieval": 4.29,
+            "web_search": 2224.361,
+            "extraction": 0.444,
+            "finalization": 3.439
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 4.427,
+              "elapsed_ms": 9.51,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 21.091,
+              "elapsed_ms": 0.618,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 34.74,
+              "elapsed_ms": 313.264,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 109.005,
+              "elapsed_ms": 37.652,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 208.137,
+              "elapsed_ms": 138.898,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 275.517,
+              "elapsed_ms": 38.935,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 412.333,
+              "elapsed_ms": 2.423,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 425.854,
+              "elapsed_ms": 4.29,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 430.307,
+              "elapsed_ms": 1392.888,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 1823.703,
+              "elapsed_ms": 0.108,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 1823.873,
+              "elapsed_ms": 0.174,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 1824.177,
+              "elapsed_ms": 831.473,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 2655.055,
+              "elapsed_ms": 0.162,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 2675.64,
+              "elapsed_ms": 3.439,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 21.719
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 2.6866,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.0371,
+        "verified_ready_seconds": 2.6696,
+        "first_verified_text_seconds": 2.6866
+      }
+    }
+  ],
+  "seconds": 4.901,
+  "public_research_trace": [
+    {
+      "stage": "retrieved_public_evidence",
+      "sources": []
+    }
+  ],
+  "coverage_before": {
+    "works": 14477,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14650,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14477,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14650,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "new_empty_store",
+  "google_books_enabled": false,
+  "factual_review_pending": true
+}

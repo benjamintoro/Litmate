@@ -1,0 +1,4 @@
+# Perfil opcional de demostración local/remota. No activa ningún túnel.
+-r requirements.txt
+waitress==3.0.2
+whitenoise==6.12.0

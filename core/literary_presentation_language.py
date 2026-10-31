@@ -11,7 +11,7 @@ from pathlib import Path
 from django.core.cache import cache
 from .literary_language import narrative_language, response_language
 
-VERSION = 'presentation-language-v3'
+VERSION = 'presentation-language-v6'
 LANGUAGES = {'es': 'español', 'en': 'inglés', 'fr': 'francés',
              'pt': 'portugués', 'de': 'alemán', 'it': 'italiano'}
 TRANSLATE_PROMPT = '''Traduce fielmente cada texto al idioma target_language.
@@ -52,18 +52,62 @@ def _terminology():
     return json.loads(raw)['terms'], hashlib.sha256(raw.encode()).hexdigest()
 
 
+def presentation_identities(sources):
+    """Spellings to preserve, not new entities or narrative assertions.
+
+    Use existing structured names and explicit named appositions. Mere capital
+    letters/co-occurrence do not identify a character or establish a relation.
+    """
+    values=[]
+    for source in sources:
+        values.extend(str(source.get(key) or '') for key in ('title','author','isbn','isbn13','isbn10'))
+        for fact in source.get('character_facts',[]):
+            if isinstance(fact,dict):
+                values.append(str(fact.get('name') or ''))
+        for fact in source.get('literary_facts',[]):
+            if not isinstance(fact,dict) or fact.get('topic')!='relationships':
+                continue
+            proof=str(fact.get('evidence') or '')
+            if proof and proof in str(source.get('description') or ''):
+                values.extend(str(fact[key]) for key in ('subject','value') if fact.get(key)
+                              and str(fact[key]) in proof and str(fact[key])[:1].isupper())
+        body=str(source.get('synopsis') or source.get('description') or '')
+        named=r'[A-ZÁÉÍÓÚÑ][\w’\'-]+(?:\s+[A-ZÁÉÍÓÚÑ][\w’\'-]+){0,3}'
+        for match in re.finditer(r'(?<!\w)('+named+r'),\s+(?:her|his|their)\s+'
+                r'(?:sister|brother|mother|father|daughter|son|wife|husband|friend)\b',body):
+            if match[1] not in {'He','She','They','It'}:
+                values.append(match[1])
+    return list(dict.fromkeys(value for value in values if value))
+
+
+def _century_translation(value):
+    match=re.search(r'\b(\d{1,2})(?:st|nd|rd|th)\s+century\b',value,re.I)
+    if not match or not 1<=int(match[1])<=99:
+        return value
+    number=int(match[1]);roman=''
+    for amount,label in ((90,'XC'),(50,'L'),(40,'XL'),(10,'X'),(9,'IX'),(5,'V'),(4,'IV'),(1,'I')):
+        count,number=divmod(number,amount);roman+=label*count
+    return ('cambio al ' if value.casefold().startswith('turn of the ') else '')+'siglo '+roman
+
+
 def _protect(text, identities, target='es'):
     literals = [re.escape(value) for value in sorted(set(identities), key=len, reverse=True) if value]
     terms = {term['original'].casefold(): term['translation'] for term in _terminology()[0]
              if term['language'] == target}
-    pattern = (r'https?://\S+|«[^»]*»|“[^”]*”|"[^"\n]*"|\b\d[\d.,:/-]*\b|\[\d+\]'
-               + ('|' + '|'.join(literals) if literals else '')
+    century=r'(?i:\b(?:turn of the )?\d{1,2}(?:st|nd|rd|th)\s+century\b)'
+    identity_keys={str(value).casefold() for value in identities}
+    pattern = (r'https?://\S+|«[^»]*»|“[^”]*”|"[^"\n]*"'
+               + (r'|(?i:(?<!\w)(?:' + '|'.join(literals) + r')(?!\w))' if literals else '')
+               + ('|'+century if target=='es' else '')
+               + r'|\b\d[\d.,:/-]*\b|\[\d+\]'
                + ('|(?i:' + '|'.join(re.escape(term) for term in terms) + ')' if terms else ''))
     saved = {}
     def replace(match):
         token = 'LMPROTECTED' + str(len(saved)) + 'X'
         original = match.group(0)
-        saved[token] = original if original in identities else terms.get(original.casefold(), original)
+        saved[token] = (original if original.casefold() in identity_keys else
+            _century_translation(original) if target=='es' and re.fullmatch(century,original) else
+            terms.get(original.casefold(), original))
         return token
     return re.sub(pattern, replace, text), saved
 
@@ -81,8 +125,70 @@ def _valid_translation(original, translated, protected, target):
     from .literary_web import public_text_has_injection
     if public_text_has_injection(plain):
         return False
+    if target == 'es':
+        from .literary_quality import unsupported_orphanhood_claim,unsupported_kinship_claim
+        if unsupported_orphanhood_claim(plain, original) or unsupported_kinship_claim(plain,original):
+            return False
     language = narrative_language(plain)
     return language == target
+
+
+def _public_literal_summary(result, body):
+    """Only exact, licensed public proofs may share a translation cache.
+
+    A route marker or an approving model alone cannot authorize caching a
+    reader's prose. Every displayed sentence must equal its literal proof in
+    the cited Wikipedia passage, and the complete body must be accounted for.
+    """
+    if not result.diagnostics.get('foreign_literal_summary') or result.intent != 'summary':
+        return False
+    audit = result.diagnostics.get('audit', {})
+    claims = audit.get('claims', []) if isinstance(audit, dict) else []
+    if result.status != 'answered' or audit.get('decision') != 'approve' or not claims:
+        return False
+    sources = {source.get('id'): source for source in result.sources}
+    statements = []
+    for claim in claims:
+        source = sources.get(claim.get('source_id'), {})
+        statement = claim.get('statement', '')
+        proof = claim.get('evidence', '')
+        if (claim.get('verdict') != 'supported' or not statement or statement != proof
+                or source.get('kind') != 'web' or source.get('source') != 'Wikipedia'
+                or source.get('license') != 'CC-BY-SA-4.0'
+                or source.get('storage_policy') != 'wikipedia-cc-by-sa-4.0-v1'
+                or not any(proof in source.get(key, '') for key in ('description', 'narrative_context'))):
+            return False
+        statements.append(statement)
+    return ' '.join(body.split()) == ' '.join(' '.join(statements).split())
+
+
+def _audited_card_excerpt(result, cards, target):
+    """Reuse this turn's audited prose for its single card, never as new facts.
+
+    No recommendation/comparison, character answer, quotation-only extract or
+    unapproved draft may replace the editorial synopsis. No shared cache stores
+    the reader's answer. Original provider records and audit remain untouched.
+    """
+    audit=result.diagnostics.get('audit',{})
+    claims=audit.get('claims',[]) if isinstance(audit,dict) else []
+    if (len(cards)!=1 or len(result.books)!=1 or result.intent!='summary'
+            or result.status!='answered' or not result.diagnostics.get('verified_narrative_answer')
+            or not result.diagnostics.get('narrative_synthesized') or not isinstance(audit,dict) or audit.get('decision')!='approve'
+            or not claims or any(not isinstance(c,dict) or c.get('verdict')!='supported' for c in claims)):
+        return False
+    ids={source.get('id') for source in result.sources}
+    if any(claim.get('source_id') not in ids for claim in claims):
+        return False
+    body=result.text.partition('\n\nFuente:')[0].strip()
+    masked, unused=_protect(body,[cards[0]['title'],cards[0]['author']],target)
+    if narrative_language(masked)!=target or narrative_language(cards[0]['synopsis']) in {None,target}:
+        return False
+    # A faithful summary, not a claim that the provider supplied this Spanish
+    # wording. The UI already truncates card synopses through clean_text.
+    if len(body)<60 or re.search(r'https?://|\[\d+\]',body):
+        return False
+    cards[0]['synopsis']=re.sub(r'(?<!\w)(\*{1,2}|_{1,2})(.+?)\1(?!\w)',r'\2',body)
+    return True
 
 
 def localize_result(result, message, llm, model):
@@ -99,6 +205,7 @@ def localize_result(result, message, llm, model):
     if result.diagnostics.get('language_presentation', {}).get('target') == target:
         return
     cards = build_book_cards(result)
+    reused_card = _audited_card_excerpt(result,cards,target)
     text = result.text
     if result.intent == 'recommend':
         body, marker, footer = text.partition('\n\nFuentes de las fichas:\n')
@@ -113,10 +220,7 @@ def localize_result(result, message, llm, model):
     # Historical responses and every output route use the same presentation
     # policy. Keep destinations/evidence and rights notices, not the heading.
     text = re.sub(r'(?im)^(?:\*\*)?Fuentes (?:consultadas|de las fichas):?(?:\*\*)?[ \t]*\n?', '', text)
-    identities = [str(source.get(key) or '') for source in result.sources
-                  for key in ('title', 'author', 'isbn', 'isbn13', 'isbn10')]
-    identities.extend(str(fact.get('name') or '') for source in result.sources
-                      for fact in source.get('character_facts', []) if isinstance(fact, dict))
+    identities = presentation_identities(result.sources)
     units, originals, protected, cached, keys = {}, {}, {}, {}, {}
     def add(key, value, public=False):
         masked, saved = _protect(value, identities, target)
@@ -136,13 +240,14 @@ def localize_result(result, message, llm, model):
         units[key] = masked
     # Paragraphs keep source footers/copyright and literal quotations separate.
     paragraphs = text.split('\n\n')
+    public_literal = _public_literal_summary(result, text.partition('\n\nFuente:')[0])
     public_synopses = {card['synopsis'] for card in cards if any(
         str(source.get('book_id') or source.get('id', '')) == card['id']
         and source.get('kind') == 'book' and source.get('url', '').startswith('https://')
         for source in result.sources)}
     for index, paragraph in enumerate(paragraphs):
         if not re.match(r'^(?:Fuente|Fuentes|\[\d+\])', paragraph):
-            add('body' + str(index), paragraph, public=paragraph in public_synopses)
+            add('body' + str(index), paragraph, public=paragraph in public_synopses or public_literal)
     for index, card in enumerate(cards):
         add('card' + str(index), card['synopsis'], public=card['synopsis'] in public_synopses)
     translated, failed = dict(cached), []
@@ -188,7 +293,13 @@ def localize_result(result, message, llm, model):
             paragraphs[int(key[4:])] = value
     result.diagnostics['language_presentation'] = {'target': target, 'original_text': result.text,
         'translated_fields': len(translated), 'cache_hits': len(cached), 'untranslated_fields': failed,
+        'card_excerpt_from_audited_response': bool(reused_card),
         'audit_applies_to_original': True, 'cards': cards}
+    body_keys = {key for key in originals if key.startswith('body')}
+    if body_keys and body_keys.issubset(failed) and result.intent in {'summary', 'analysis'}:
+        result.status = 'unavailable'
+        result.remember = False
+        result.diagnostics['presentation_failure'] = 'unverified_translation'
     result.text = '\n\n'.join(paragraphs)
 
 

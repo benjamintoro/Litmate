@@ -522,10 +522,28 @@ def requested_book_count(message):
     )
     match = next((found for pattern in patterns if (found := re.search(pattern, value))), None)
     if not match:
-        return None
+        # Singular elíptico: no perder la cantidad en rutas de respaldo que
+        # reciben el tema resuelto de una recomendación anterior.
+        return 1 if re.search(r'\b(?:otro|otra)\s+(?:libro|obra|lectura|novela|opcion|sobre|del|acerca|que)\b',value) else None
     token = match.group(1)
     return {'un': 1, 'uno': 1, 'una': 1, 'dos': 2, 'tres': 3,
             'cuatro': 4, 'cinco': 5}.get(token, int(token) if token.isdigit() else None)
+
+
+def _retrieval_failed(diagnostics):
+    """Un resultado local irrelevante no oculta una dependencia fallida."""
+    if diagnostics.get('dependency_errors'):
+        return True
+    benign = {'ok', 'empty', 'disabled', 'partial'}
+    for status in diagnostics.get('research_statuses', []):
+        if status not in benign:
+            return True
+    for lookup in [*diagnostics.get('bibliographic_lookups', []),
+                   *diagnostics.get('research_lookups', [])]:
+        statuses = [lookup.get('status', 'ok'), *lookup.get('providers', {}).values()]
+        if any(status not in benign for status in statuses):
+            return True
+    return False
 
 
 def _explicit_work_context(message, value):
@@ -561,6 +579,19 @@ def compound_literary_request(value):
         or re.search(r'\b(?:y|e|con)\s+(?:el|la|los|las)\s+(?:de|del)\b', value))
 
 
+def sentence_check_text(message):
+    """Text used only to detect multiple requests, not to rewrite book titles.
+
+    A formal alternative subtitle ("X; or, Y" / "X; o, Y") and consecutive
+    author initials are punctuation within one identity. Every other separator
+    and all original privacy/instruction checks remain active.
+    """
+    if not isinstance(message,str):
+        return ''
+    value=re.sub(r'\b[A-ZÁÉÍÓÚÑ]\.(?=\s*[A-ZÁÉÍÓÚÑ])',lambda m:m[0][0],message)
+    return re.sub(r';\s*(?:or|o|ou)\s*,\s+',': ',value,flags=re.I)
+
+
 def simple_literary_route(message):
     """Clasifica sólo preguntas factuales simples y literarias inequívocas.
 
@@ -569,9 +600,10 @@ def simple_literary_route(message):
     forma explícita. No acepta tareas compuestas, fragmentos ni instrucciones;
     esos casos conservan el clasificador completo.
     """
+    sentence_check=sentence_check_text(message)
     if (not isinstance(message, str) or has_excerpt(message) or requires_exact_text(message)
-            or message.count('?') > 1 or re.search(r'[;\n\r]', message)
-            or re.search(r'[.!?]\s+\S', message)):
+            or message.count('?') > 1 or re.search(r'[;\n\r]', sentence_check)
+            or re.search(r'[.!?]\s+\S', sentence_check)):
         return None
     value = normalized(message).strip(' ¿?¡!.,')
     if (compound_literary_request(value)
@@ -582,8 +614,14 @@ def simple_literary_route(message):
                          r'codigo|programa|receta|ecuacion|constitucion|ley|tratado|'
                          r'python|javascript|html|sql|java)\b', value)):
         return None
-    from .literary_research import is_topic_recommendation
+    from .literary_research import (is_topic_recommendation, publication_lookup_target,
+                                   publication_search_queries)
     from .ai_quick_answers import _simple_topic_request
+    publication_target = publication_lookup_target(message)
+    if publication_target:
+        return {'decision': 'allow', 'intent': 'recommend',
+                'queries': publication_search_queries(publication_target), 'candidates': [],
+                'followup': False, 'clarification': ''}
     if is_topic_recommendation(message) and _simple_topic_request(message, message):
         return {'decision': 'allow', 'intent': 'recommend',
                 'queries': [clean_text(message, 240)], 'candidates': [],
@@ -1084,6 +1122,10 @@ def canonical_sources(items, maximum=8):
         }
         if scope:
             source['evidence_scope'] = scope
+        if kind=='web' and source['source'].startswith('SearXNG (') and isinstance(item.get('search_engines'),list):
+            # Procedencia del descubrimiento, no permiso para leer direcciones.
+            source['search_engines']=list(dict.fromkeys(name for name in item['search_engines']
+                if isinstance(name,str) and name in {'mwmbl','duckduckgo','openlibrary','wikipedia','wikidata','qwant'}))[:6]
         if item.get('narrative_context'):
             source['narrative_context'] = clean_text(item['narrative_context'], 1800)
         # Procedencia interna: no confundir el autor de una página con la obra.
@@ -1183,8 +1225,8 @@ def sanitized_history(history):
                       'answer': clean_text(item.get('answer'), 1200),
                       'books': books,
                       'sources': chosen})
-        if item.get('intent') == 'recommend':
-            turns[-1]['intent'] = 'recommend'
+        if item.get('intent') in {'recommend', 'identify'}:
+            turns[-1]['intent'] = item['intent']
         focus = item.get('context_work')
         if isinstance(focus, dict) and isinstance(focus.get('title'), str):
             turns[-1]['context_work'] = {
@@ -1641,6 +1683,14 @@ class LiteraryAssistant:
                 route = validate_route(self.llm('route_rescue', ROUTE_RESCUE_PROMPT,
                                                 route_data, self.answer_model))
             route = adjust_route_for_message(route, message)
+            from .literary_research import (publication_lookup_target, publication_matches,
+                                           publication_search_queries)
+            publication_target = publication_lookup_target(message)
+            if publication_target:
+                retrieval_message = publication_target
+                route = {**route, 'decision': 'allow', 'intent': 'recommend',
+                         'queries': publication_search_queries(publication_target), 'candidates': [], 'followup': False}
+                diagnostics['publication_lookup'] = True
             if route['decision'] == 'reject':
                 return ChatResult(REFUSAL, 'rejected', diagnostics=diagnostics)
             if relation and followup['books']:
@@ -1727,7 +1777,8 @@ class LiteraryAssistant:
             from .books_google import book_topic_profile
             grounded_recommendation = (self.research_enabled and self.quality_checks
                 and route['intent'] == 'recommend' and
-                ((topic_request and book_topic_profile(retrieval_message)['structured']) or relation))
+                (self.require_book_sources or
+                 (topic_request and book_topic_profile(retrieval_message)['structured']) or relation or publication_target))
             fallback_recommendation = (route['intent'] == 'recommend' and not relation
                 and (grounded_recommendation or fallback_recommendation_allowed(message)))
             diagnostics['fallback_recommendation'] = fallback_recommendation
@@ -1824,6 +1875,9 @@ class LiteraryAssistant:
                             diagnostics.setdefault('bibliographic_lookups', []).append({
                                 'status': found.status, 'results': len(found),
                                 'providers': getattr(found, 'providers', {})})
+                        if publication_target and any(publication_matches(item, publication_target)
+                                for item in found if isinstance(item, dict) and item.get('kind') == 'book'):
+                            break
                         if (topic_request and self.research_enabled
                                 and book_topic_profile(retrieval_message)['structured']):
                             from .books_google import rank_book_sources
@@ -1837,6 +1891,9 @@ class LiteraryAssistant:
                                 break
                 except Exception as exc:
                     logger.warning('IA: búsqueda no disponible (%s)', type(exc).__name__)
+                    diagnostics.setdefault('dependency_errors', []).append({
+                        'provider': 'bibliographic_search', 'stage': 'retrieval',
+                        'code': type(exc).__name__})
             # Las fichas que contrastan candidatos concretos deben sobrevivir
             # al límite de contexto, aunque se hayan encontrado al final.
             expected = {(normalized(book['title']), normalized(book['author']))
@@ -1877,6 +1934,19 @@ class LiteraryAssistant:
                              and (relation != 'same_author'
                                   or same_author_name(item.get('author'), references[0]['author']))]
             sources = canonical_sources(items)
+            if route['intent'] == 'recommend' and publication_target:
+                sources = canonical_sources([source for source in sources
+                    if source['kind'] not in {'book', 'excerpt'}
+                    or publication_matches(source, publication_target)])
+            if route['intent'] == 'recommend' and relation == 'similar':
+                from .ai_related_recommendations import related_relevance, repeated_recommendation
+                reference_sources = [source for turn in history for source in turn['sources']
+                    if any(same_work(source, book) for book in followup['books'])]
+                previously_shown = [book for turn in history for book in turn['books']]
+                sources = canonical_sources([source for source in sources
+                    if source['kind'] not in {'book', 'excerpt'}
+                    or (related_relevance(source, reference_sources)
+                        and not any(repeated_recommendation(source, book) for book in previously_shown))])
             evidence_state = None
             if self.research_enabled and route['intent'] != 'conversation' and not has_excerpt(message):
                 from .literary_research import assess_evidence
@@ -1935,6 +2005,40 @@ class LiteraryAssistant:
             web_only = (self.allow_web_only and route['intent'] != 'recommend'
                         and not any(s['kind'] in {'book', 'excerpt'} for s in sources)
                         and any(s['kind'] == 'web' and s.get('url') for s in sources))
+            if route['intent'] == 'recommend' and relation == 'similar':
+                sources = canonical_sources([source for source in sources
+                    if source['kind'] not in {'book', 'excerpt'}
+                    or (related_relevance(source, reference_sources)
+                        and not any(repeated_recommendation(source, book) for book in previously_shown))])
+                if not any(source['kind'] == 'book' for source in sources):
+                    failed = _retrieval_failed(diagnostics)
+                    diagnostics.update(failure_kind='technical_failure' if failed else 'insufficient_evidence',
+                                       evidence_state='insufficient')
+                    return ChatResult('Tuve un problema temporal al buscar otras lecturas relacionadas. '
+                        'Puedes intentarlo nuevamente en unos instantes.' if failed else
+                        'No encontré otras lecturas con una relación suficientemente clara '
+                        'con el libro que comentamos. ¿Qué aspecto te gustaría conservar: su tema, '
+                        'su estilo o su enfoque?', 'unavailable' if failed else 'clarification',
+                        intent='recommend', diagnostics=diagnostics)
+            if route['intent'] == 'recommend' and publication_target:
+                sources = canonical_sources([source for source in sources
+                    if source['kind'] not in {'book', 'excerpt'}
+                    or publication_matches(source, publication_target)])
+                if not any(source['kind'] == 'book' for source in sources):
+                    failed = _retrieval_failed(diagnostics)
+                    diagnostics['failure_kind'] = ('technical_failure' if failed else 'insufficient_evidence')
+                    diagnostics['evidence_state'] = 'insufficient'
+                    return ChatResult(
+                        'Tuve un problema temporal al consultar las publicaciones. Puedes intentarlo '
+                        'nuevamente en unos instantes.' if failed else
+                        'Por ahora no pude confirmar publicaciones suficientemente relacionadas con lo que '
+                        'buscas. ¿Recuerdas algún título, autor o editorial que nos ayude a encontrarlas?',
+                        'unavailable' if failed else 'clarification', intent='recommend', diagnostics=diagnostics)
+                from .ai_quick_answers import publication_synopsis_answer
+                extracted = publication_synopsis_answer(message, sources)
+                if extracted is not None:
+                    extracted.diagnostics = {**diagnostics, **extracted.diagnostics}
+                    return extracted
             context = {'message': message, 'intent': route['intent'],
                        'current_date': current_date,
                        'accepted_history': history, 'sources': sources,
@@ -2365,9 +2469,19 @@ class LiteraryAssistant:
         except (ProviderUnavailable, BudgetExpired) as exc:
             code = exc.code if isinstance(exc, ProviderUnavailable) else 'tiempo_total_agotado'
             diagnostics['provider_error'] = code
+            diagnostics['failure_kind'] = 'technical_failure'
             logger.warning('IA local: %s', code)
             current_route = locals().get('route') or {}
             current_sources = locals().get('sources') or []
+            if current_route.get('intent') == 'recommend' and locals().get('publication_target'):
+                from .ai_quick_answers import verified_book_list_answer
+                safe_sources = [source for source in current_sources
+                    if publication_matches(source, publication_target)]
+                fallback = verified_book_list_answer(message, safe_sources, history=history)
+                if fallback is not None:
+                    fallback.diagnostics = {**diagnostics, **fallback.diagnostics,
+                        'failure_kind': 'partial_recovery', 'evidence_state': 'partial'}
+                    return fallback
             if self.allow_web_only and not requires_exact_text(message) and not has_excerpt(message):
                 web_fallback = self._web_reference_fallback(
                     current_sources, current_route.get('intent', ''), diagnostics, message=message, history=history)
@@ -2377,7 +2491,7 @@ class LiteraryAssistant:
                     'Divide las preguntas o indica el pasaje concreto que quieres analizar.',
                     'tiempo_total_agotado': 'No pude completar esta consulta dentro del tiempo disponible. '
                     'Prueba con una pregunta más concreta sobre la obra.'}.get(code,
-                    'El servicio de IA no pudo completar la consulta. Vuelve a intentar en unos instantes.')
+                    'Tuve un problema temporal al consultar la información. Puedes intentarlo nuevamente en unos instantes.')
             return ChatResult(text, 'unavailable', diagnostics=diagnostics)
         except (ValueError, TypeError, KeyError, IndexError) as exc:
             logger.warning('IA: validación no completada (%s)', type(exc).__name__)
@@ -2443,6 +2557,9 @@ class LiteraryAssistant:
                     result = self.web_search(query)
                 if isinstance(result, list):
                     provider_status = getattr(result, 'status', None)
+                    if provider_status:
+                        diagnostics.setdefault('research_lookups', []).append({
+                            'status': provider_status, 'providers': getattr(result, 'providers', {})})
                     from .literary_identity import bind_source, same_work
                     if route['candidates']:
                         result = [source for source in result if not source.get('work_binding_verified')
@@ -2469,6 +2586,8 @@ class LiteraryAssistant:
                             break
             except Exception as exc:
                 logger.warning('IA: búsqueda web no disponible (%s)', type(exc).__name__)
+                diagnostics.setdefault('dependency_errors', []).append({
+                    'provider': 'web_search', 'stage': 'research', 'code': type(exc).__name__})
         diagnostics['research_seconds'] = round(spent + time.monotonic() - research_start, 3)
         # Reserva lugar al contenido web sin eliminar todas las fichas del libro.
         if prefer_new:

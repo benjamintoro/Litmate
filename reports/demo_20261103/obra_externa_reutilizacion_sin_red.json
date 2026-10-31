@@ -1,0 +1,498 @@
+[
+  {
+    "passed": true,
+    "question": "\u00bfDe qu\u00e9 trata La mala costumbre de Alana S. Portero?",
+    "answer": "La historia se centra en la vida de una joven mujer trans, proveniente de una familia obrera, quien crece en el extrarradio de Madrid durante las d\u00e9cadas de 1980 y 1990.\n\nFuente: https://es.wikipedia.org/wiki/La_mala_costumbre\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+    "status": "answered",
+    "not_in_legacy_catalog": null,
+    "sse_done": true,
+    "seconds": 0.6212,
+    "cards": [
+      {
+        "id": "1",
+        "title": "La mala costumbre",
+        "author": "Alana S. Portero",
+        "synopsis": "",
+        "image_url": "",
+        "links": [
+          {
+            "label": "Google Books",
+            "url": "https://books.google.com/books?q=La+mala+costumbre+Alana+S.+Portero"
+          },
+          {
+            "label": "Open Library",
+            "url": "https://openlibrary.org/works/OL35243227W"
+          },
+          {
+            "label": "Amazon",
+            "url": "https://www.amazon.com/s?k=La+mala+costumbre+Alana+S.+Portero&i=stripbooks"
+          },
+          {
+            "label": "Buscalibre",
+            "url": "https://www.buscalibre.cl/libros/search?q=La+mala+costumbre+Alana+S.+Portero"
+          }
+        ]
+      }
+    ],
+    "diagnostics": {
+      "elapsed_ms": 565,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 0,
+      "verified_narrative_answer": true,
+      "partial_evidence": true,
+      "work_type": "nonfiction",
+      "progress_metrics": {
+        "elapsed_ms": 611.744,
+        "first_phase_emitted_ms": 62.137,
+        "model_calls_started": 0,
+        "stage_totals_ms": {
+          "conversation": 27.612,
+          "cache_lookup": 0.658,
+          "knowledge_lookup": 517.927,
+          "audit": 3.606,
+          "finalization": 46.31
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 18.409,
+            "elapsed_ms": 27.612,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 61.465,
+            "elapsed_ms": 0.658,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 118.169,
+            "elapsed_ms": 221.913,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 120.179,
+            "elapsed_ms": 215.187,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 230.688,
+            "elapsed_ms": 65.708,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 412.088,
+            "elapsed_ms": 15.119,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 511.984,
+            "elapsed_ms": 3.087,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 525.723,
+            "elapsed_ms": 0.519,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 565.427,
+            "elapsed_ms": 46.31,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 62.137
+          },
+          {
+            "stage": "review",
+            "elapsed_ms": 511.96
+          }
+        ]
+      },
+      "stage_timings": [],
+      "provider": "verified-narrative-engine"
+    },
+    "reader_data_written": false,
+    "sources": [],
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": null
+      },
+      {
+        "stage": "retrieval",
+        "sources": [
+          {
+            "id": 1,
+            "title": "La mala costumbre",
+            "author": "Alana S. Portero",
+            "description": "La mala costumbre, de Alana S. Portero.",
+            "source": "Open Library",
+            "year": "2023",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://openlibrary.org/works/OL35243227W",
+            "locator": "",
+            "read_mode": "metadatos bibliogr\u00e1ficos; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793416162.408252",
+            "work_id": "litmate:02e4e3e2b609a9aad90f9ab1",
+            "license": "Open Library bibliographic facts; rights vary",
+            "trust": "untrusted_data",
+            "expires_at": "1796008162.408252",
+            "evidence_hash": "f32ff8fedaf118449458dfbf14d891aad8af52e18f5b358ed06567909366e578",
+            "memory_source_id": "f9c830da0da8f918c46bdcc324da15d95b98a588fdf6445f6e8d1287ef1f8ea1",
+            "last_verified_at": "1793416162.408252",
+            "policy": "openlibrary-minimal-metadata-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 2,
+            "title": "La mala costumbre",
+            "author": "Fuente web",
+            "description": "== Argumento == La historia se centra en la vida de una joven mujer trans, proveniente de una familia obrera, quien crece en el extrarradio de Madrid durante las d\u00e9cadas de 1980 y 1990.",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/La_mala_costumbre",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793416162.408252",
+            "work_id": "litmate:02e4e3e2b609a9aad90f9ab1",
+            "work_title": "La mala costumbre",
+            "work_author": "Alana S. Portero",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1794020962.408252",
+            "evidence_hash": "02ac616ac9b638796634bf9c3cae6742957b3912baf1a1e8bb9b819ece91231d",
+            "memory_source_id": "a1ed1d3d77bf64129989d7dcd75547677d464abcbf2d0de3d784977b8378e765",
+            "last_verified_at": "1793416162.408252",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "La mala costumbre",
+              "url": "https://es.wikipedia.org/wiki/La_mala_costumbre",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "173360727"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "La historia se centra en la vida de una joven mujer trans, proveniente de una familia obrera, quien crece en el extrarradio de Madrid durante las d\u00e9cadas de 1980 y 1990.",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "premise"
+              }
+            ],
+            "identity_text": "La mala costumbre es una novela de la escritora espa\u00f1ola Alana S. Portero, publicada el 3 de mayo de 2023. La novela ha sido traducida a 17 idiomas incluyendo el ingl\u00e9s, franc\u00e9s, alem\u00e1n, portugu\u00e9s, coreano y griego\u200b y publicada por un total de 17 editoriales.\u200b",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          }
+        ]
+      },
+      {
+        "request": {
+          "task": "summary",
+          "title": "La mala costumbre",
+          "targets": [],
+          "author_hint": "Alana S. Portero",
+          "format": "",
+          "ambiguous": false
+        },
+        "diagnostics": {
+          "verified_narrative_answer": true,
+          "audit": {
+            "decision": "approve",
+            "only_books": true,
+            "claims": [
+              {
+                "statement": "La historia se centra en la vida de una joven mujer trans, proveniente de una familia obrera, quien crece en el extrarradio de Madrid durante las d\u00e9cadas de 1980 y 1990.",
+                "verdict": "supported",
+                "source_id": 2,
+                "evidence": "La historia se centra en la vida de una joven mujer trans, proveniente de una familia obrera, quien crece en el extrarradio de Madrid durante las d\u00e9cadas de 1980 y 1990."
+              }
+            ],
+            "coverage": [
+              {
+                "question_id": 1,
+                "status": "answered"
+              }
+            ],
+            "issues": [],
+            "search_queries": []
+          },
+          "work_type": "nonfiction",
+          "model_calls": 0,
+          "narrative_coverage": "premise",
+          "partial_evidence": true,
+          "progress_metrics": {
+            "stage_timings": [
+              {
+                "stage": "conversation",
+                "started_ms": 18.409,
+                "elapsed_ms": 27.612,
+                "status": "ok"
+              },
+              {
+                "stage": "cache_lookup",
+                "started_ms": 61.465,
+                "elapsed_ms": 0.658,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 118.169,
+                "elapsed_ms": 221.913,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 120.179,
+                "elapsed_ms": 215.187,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 230.688,
+                "elapsed_ms": 65.708,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 412.088,
+                "elapsed_ms": 15.119,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 511.984,
+                "elapsed_ms": 3.087,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 525.723,
+                "elapsed_ms": 0.519,
+                "status": "ok"
+              }
+            ],
+            "stage_totals_ms": {
+              "conversation": 27.612,
+              "cache_lookup": 0.658,
+              "knowledge_lookup": 517.927,
+              "audit": 3.606
+            },
+            "model_calls_started": 0,
+            "progress_events": [
+              {
+                "stage": "search",
+                "elapsed_ms": 62.137
+              },
+              {
+                "stage": "review",
+                "elapsed_ms": 511.96
+              }
+            ],
+            "elapsed_ms": 548.978,
+            "first_phase_emitted_ms": 62.137
+          },
+          "language_presentation": {
+            "target": "es",
+            "original_text": "La historia se centra en la vida de una joven mujer trans, proveniente de una familia obrera, quien crece en el extrarradio de Madrid durante las d\u00e9cadas de 1980 y 1990.\n\nFuente: https://es.wikipedia.org/wiki/La_mala_costumbre\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+            "translated_fields": 0,
+            "cache_hits": 0,
+            "untranslated_fields": [],
+            "card_excerpt_from_audited_response": false,
+            "audit_applies_to_original": true,
+            "cards": [
+              {
+                "id": "1",
+                "title": "La mala costumbre",
+                "author": "Alana S. Portero",
+                "synopsis": "",
+                "image_url": "",
+                "links": [
+                  {
+                    "label": "Google Books",
+                    "url": "https://books.google.com/books?q=La+mala+costumbre+Alana+S.+Portero"
+                  },
+                  {
+                    "label": "Open Library",
+                    "url": "https://openlibrary.org/works/OL35243227W"
+                  },
+                  {
+                    "label": "Amazon",
+                    "url": "https://www.amazon.com/s?k=La+mala+costumbre+Alana+S.+Portero&i=stripbooks"
+                  },
+                  {
+                    "label": "Buscalibre",
+                    "url": "https://www.buscalibre.cl/libros/search?q=La+mala+costumbre+Alana+S.+Portero"
+                  }
+                ]
+              }
+            ]
+          },
+          "stage_timings": [],
+          "elapsed_ms": 549,
+          "chat_budget_seconds": 36.0
+        },
+        "sources": [
+          {
+            "id": 1,
+            "title": "La mala costumbre",
+            "author": "Alana S. Portero",
+            "description": "La mala costumbre, de Alana S. Portero.",
+            "source": "Open Library",
+            "year": "2023",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://openlibrary.org/works/OL35243227W",
+            "locator": "",
+            "read_mode": "metadatos bibliogr\u00e1ficos; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793416162.408252",
+            "work_id": "litmate:02e4e3e2b609a9aad90f9ab1",
+            "license": "Open Library bibliographic facts; rights vary",
+            "trust": "untrusted_data",
+            "expires_at": "1796008162.408252",
+            "evidence_hash": "f32ff8fedaf118449458dfbf14d891aad8af52e18f5b358ed06567909366e578",
+            "memory_source_id": "f9c830da0da8f918c46bdcc324da15d95b98a588fdf6445f6e8d1287ef1f8ea1",
+            "last_verified_at": "1793416162.408252",
+            "policy": "openlibrary-minimal-metadata-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "isbns": [],
+            "categories": []
+          },
+          {
+            "id": 2,
+            "title": "La mala costumbre",
+            "author": "Fuente web",
+            "description": "== Argumento == La historia se centra en la vida de una joven mujer trans, proveniente de una familia obrera, quien crece en el extrarradio de Madrid durante las d\u00e9cadas de 1980 y 1990.",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/La_mala_costumbre",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "1793416162.408252",
+            "work_id": "litmate:02e4e3e2b609a9aad90f9ab1",
+            "work_title": "La mala costumbre",
+            "work_author": "Alana S. Portero",
+            "license": "CC-BY-SA-4.0",
+            "trust": "untrusted_data",
+            "expires_at": "1794020962.408252",
+            "evidence_hash": "02ac616ac9b638796634bf9c3cae6742957b3912baf1a1e8bb9b819ece91231d",
+            "memory_source_id": "a1ed1d3d77bf64129989d7dcd75547677d464abcbf2d0de3d784977b8378e765",
+            "last_verified_at": "1793416162.408252",
+            "policy": "wikipedia-cc-by-sa-4.0-v1",
+            "work_binding_verified": true,
+            "memory_verified": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "La mala costumbre",
+              "url": "https://es.wikipedia.org/wiki/La_mala_costumbre",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "173360727"
+            },
+            "confirmed_aliases": [],
+            "literary_facts": [
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "La historia se centra en la vida de una joven mujer trans, proveniente de una familia obrera, quien crece en el extrarradio de Madrid durante las d\u00e9cadas de 1980 y 1990.",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "premise"
+              }
+            ],
+            "identity_text": "La mala costumbre es una novela de la escritora espa\u00f1ola Alana S. Portero, publicada el 3 de mayo de 2023. La novela ha sido traducida a 17 idiomas incluyendo el ingl\u00e9s, franc\u00e9s, alem\u00e1n, portugu\u00e9s, coreano y griego\u200b y publicada por un total de 17 editoriales.\u200b",
+            "character_facts": [],
+            "isbns": [],
+            "categories": []
+          }
+        ]
+      }
+    ],
+    "duckduckgo_paused_control": false,
+    "content_manually_reviewed": false,
+    "mysql_row_counts": {
+      "auth_group": 0,
+      "auth_group_permissions": 0,
+      "auth_permission": 152,
+      "auth_user": 179,
+      "auth_user_groups": 0,
+      "auth_user_user_permissions": 0,
+      "core_asistenteia": 1,
+      "core_autor": 31,
+      "core_clickconversion": 185,
+      "core_conversacionia": 50,
+      "core_editorial": 34,
+      "core_elementolistalectura": 2,
+      "core_estadolectura": 451,
+      "core_eventoanalitica": 384,
+      "core_genero": 12,
+      "core_historialchatbot": 5,
+      "core_historialpreciolibro": 223,
+      "core_kbname": 14166,
+      "core_kbprojection": 8,
+      "core_kbrecord": 13518,
+      "core_kbrelation": 2621,
+      "core_kbversion": 13518,
+      "core_libro": 55,
+      "core_libro_generos": 54,
+      "core_librofavorito": 231,
+      "core_listalectura": 2,
+      "core_mensajecontacto": 3,
+      "core_mensajeia": 190,
+      "core_perfilusuario": 158,
+      "core_preciolibrotienda": 117,
+      "core_preguntafrecuente": 0,
+      "core_recomendacion": 0,
+      "core_recomendacionialog": 0,
+      "core_resena": 116,
+      "django_admin_log": 0,
+      "django_content_type": 38,
+      "django_migrations": 27,
+      "django_session": 89,
+      "suscripciones_historialpago": 42,
+      "suscripciones_plansuscripcion": 3,
+      "suscripciones_suscripcionusuario": 157
+    },
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true,
+    "original_retrieval_stores_unchanged": {
+      "LITMATE_KNOWLEDGE_DB": true,
+      "LITMATE_KNOWLEDGE_RAG_DB": true,
+      "LITMATE_LIBRARY_DB": true,
+      "LITMATE_LIBRARY_RAG_DB": true,
+      "LITMATE_LITERARY_MEMORY_RAG_DB": true
+    }
+  }
+]

@@ -636,6 +636,13 @@ class OllamaJSON:
             self.last_error = {404: 'modelo_no_descargado', 503: 'ollama_ocupado',
                                400: 'actualiza_ollama_o_revisa_modelo'}.get(exc.code, 'ollama_no_disponible')
             raise ProviderUnavailable(self.last_error) from None
-        except (URLError, OSError, TimeoutError, ValueError, TypeError, KeyError, AttributeError):
+        except (URLError, OSError, TimeoutError) as exc:
+            reason = getattr(exc, 'reason', exc)
+            timeout = isinstance(reason, TimeoutError)
+            self.last_error_detail = 'transport_timeout' if timeout else 'transport_unavailable'
+            self.last_error = ('tiempo_total_agotado' if time.monotonic() >= self.deadline else
+                               'ollama_timeout' if timeout else 'ollama_no_disponible')
+            raise ProviderUnavailable(self.last_error) from None
+        except (ValueError, TypeError, KeyError, AttributeError):
             self.last_error = 'ollama_sin_respuesta_valida'
             raise ProviderUnavailable(self.last_error) from None

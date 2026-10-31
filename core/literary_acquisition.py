@@ -154,7 +154,7 @@ def _memory_path(database):
 def _limits(max_records, max_scanned, max_seconds, max_storage_mb):
     if type(max_records) is not int or not 1 <= max_records <= 100000:
         raise ValueError('max_records debe estar entre 1 y 100000.')
-    if type(max_scanned) is not int or not max_records <= max_scanned <= 1000000:
+    if type(max_scanned) is not int or not max_records <= max_scanned <= 50000000:
         raise ValueError('max_scanned debe estar entre max_records y 1000000.')
     if not math.isfinite(float(max_seconds)) or not 1 <= float(max_seconds) <= 3600:
         raise ValueError('max_seconds debe estar entre 1 y 3600.')
@@ -266,6 +266,12 @@ def openlibrary_record(line):
                        if isinstance(row, dict) and re.fullmatch(r'/languages/[a-z]{3}', str(row.get('key', '')))])
         if not record['title']:
             raise ValueError('invalid_record')
+        # Disponibilidad, no licencia de copia ni una sinopsis sintética. La
+        # prosa del volcado sigue fuera de la proyección bibliográfica mínima.
+        description=data.get('description')
+        if isinstance(description,dict):
+            description=description.get('value')
+        record['description_available']=isinstance(description,str) and len(description.strip())>=60
     from .literary_web import public_text_has_injection
     if public_text_has_injection(_json(record)):
         raise ValueError('untrusted_record')
@@ -562,8 +568,13 @@ def _xml_records(stream, *, clock, deadline):
 
 def _import(path, *, provider, state_database, memory_database, source_url, max_records=1000,
             max_scanned=10000, max_seconds=60, max_storage_mb=64, dry_run=False, subjects=(),
-            languages=(), expected_sha256='', resume=True, clock=None):
+            languages=(), expected_sha256='', resume=True, clock=None, record_ids=()):
     _limits(max_records, max_scanned, max_seconds, max_storage_mb)
+    if (not isinstance(record_ids,(tuple,list,set,frozenset)) or len(record_ids)>25000
+            or any(not isinstance(key,str) or not re.fullmatch(r'/(?:authors/OL\d+A|works/OL\d+W|books/OL\d+M)',key)
+                   for key in record_ids)):
+        raise ValueError('Selecciona hasta 25000 identificadores oficiales.')
+    selected_ids=set(record_ids)
     state = _path(state_database)
     if state == _memory_path(memory_database):
         raise ValueError('Indica una memoria auxiliar distinta del ledger.')
@@ -577,7 +588,8 @@ def _import(path, *, provider, state_database, memory_database, source_url, max_
     digest, signature = _fingerprint(path, deadline=deadline, clock=clock)
     if expected_sha256 and digest != expected_sha256.lower():
         raise ValueError('El SHA256 no coincide con el esperado.')
-    filters = _json({'subjects': sorted(subjects), 'languages': sorted(languages)})
+    filters = _json({'subjects': sorted(subjects), 'languages': sorted(languages),
+                     **({'record_ids':sorted(selected_ids)} if selected_ids else {})})
     dataset = _hash(provider + '\0' + str(path.resolve()) + '\0' + source_url + '\0' + filters)
     previous, db = None, _connect(state)
     if db is not None:
@@ -637,7 +649,14 @@ def _import(path, *, provider, state_database, memory_database, source_url, max_
                 report['scanned'] += 1
                 number += 1
                 try:
-                    record = openlibrary_record(raw) if provider == 'openlibrary' else bne_record(raw)
+                    columns=raw.split(b'\t',2) if selected_ids and provider=='openlibrary' else None
+                    if columns is not None and len(columns)<3:
+                        raise ValueError('invalid_record')
+                    if columns is not None and columns[1].decode('utf8') not in selected_ids:
+                        record=None
+                        report['filtered']+=1
+                    else:
+                        record = openlibrary_record(raw) if provider == 'openlibrary' else bne_record(raw)
                 except (ValueError, TypeError, KeyError, UnicodeError, OverflowError, RecursionError):
                     record = None
                     report['rejected'] += 1
@@ -651,10 +670,13 @@ def _import(path, *, provider, state_database, memory_database, source_url, max_
                     else:
                         record['provenance'] = {'dataset_url': source_url, 'dataset_sha256': digest,
                                                 'record_number': number, 'source_id': record['external_id'],
+                                                'raw_offset': position-len(raw) if provider=='openlibrary' else 0,
+                                                'raw_length': len(raw) if provider=='openlibrary' else 0,
+                                                'raw_sha256': hashlib.sha256(raw).hexdigest() if provider=='openlibrary' else '',
                                                 'admission': 'staged'}
                         report['accepted'] += 1
                 inserted = None
-                if writable:
+                if writable and (record or report['scanned']%250==0):
                     with writable:
                         if record:
                             inserted = _put(writable, record)
@@ -688,6 +710,8 @@ def _import(path, *, provider, state_database, memory_database, source_url, max_
             try:
                 report['admission'] = verify_and_release(path, state_database=state,
                     source_url=source_url, expected_sha256=digest, deadline=deadline, clock=clock)
+                if provider=='openlibrary':
+                    _register_dump(path,state,memory_database,digest,signature)
             except (TimeoutError, ValueError) as exc:
                 if isinstance(exc, ValueError) and 'Presupuesto' not in str(exc):
                     raise
@@ -703,6 +727,89 @@ def _import(path, *, provider, state_database, memory_database, source_url, max_
 def import_openlibrary_dump(path, **options):
     """TSV oficial plano/gzip; autores→obras→ediciones recomendado, sin HTML."""
     return _import(path, provider='openlibrary', **options)
+
+
+def _register_dump(path, ledger, memory, digest, signature):
+    """Punteros de procedencia en los metadatos existentes; no otro índice."""
+    from .literary_memory import _connection
+    with closing(_connect(ledger,write=True)) as db,db:
+        db.execute('INSERT OR REPLACE INTO acquisition_meta VALUES (?,?)',
+            ('verified_file:'+digest,_json({'path':str(path.resolve()),'size':signature[0],
+                                          'mtime_ns':signature[1]})))
+    with _connection(memory,write=True) as db,db:
+        row=db.execute("SELECT value FROM memory_meta WHERE key='openlibrary_dump_ledgers'").fetchone()
+        values=json.loads(row[0]) if row else []
+        label=str(Path(ledger).resolve())
+        if label not in values:
+            values.append(label)
+        db.execute('INSERT OR REPLACE INTO memory_meta VALUES (?,?)',('openlibrary_dump_ledgers',_json(values)))
+
+
+def local_openlibrary_detail(key, *, database=None):
+    """Lee un registro ya descargado, sin duplicar prosa en MySQL o memoria.
+
+    El volcado conserva los derechos originales. El lector devuelve datos
+    no confiables al mismo flujo de síntesis/auditoría de la API. No concede
+    licencia de persistencia a descripciones, ni interpreta materias como trama.
+    Para evitar un seek gzip de gigabytes en el chat, sólo lee hasta 64 MiB.
+    """
+    if not isinstance(key,str) or not re.fullmatch(r'/works/OL\d+W',key):
+        return None
+    from .literary_memory import _connection
+    from .ai_budget import check_budget,request_budget,budget_timeout
+    from .literary_web import public_text_has_injection
+    with _connection(database) as memory:
+        if memory is None:
+            return None
+        row=memory.execute("SELECT value FROM memory_meta WHERE key='openlibrary_dump_ledgers'").fetchone()
+    try:
+        ledgers=json.loads(row[0]) if row else []
+    except (ValueError,TypeError):
+        return None
+    for value in reversed(ledgers[-8:]):
+        try:
+            ledger=Path(value)
+            with closing(_connect(ledger)) as db:
+                if db is None:
+                    continue
+                record=_stored(db,'openlibrary',key)
+                if not record:
+                    continue
+                provenance=record.get('provenance',{})
+                receipt=db.execute('SELECT value FROM acquisition_meta WHERE key=?',
+                    ('verified_file:'+str(provenance.get('dataset_sha256','')),)).fetchone()
+                verified=json.loads(receipt[0]) if receipt else {}
+            path=Path(verified.get('path',''))
+            offset,length=provenance.get('raw_offset'),provenance.get('raw_length')
+            if (type(offset) is not int or not 0<=offset<=64*1024**2 or type(length) is not int
+                    or not 0<length<=MAX_LINE or path.is_symlink() or not path.is_file()
+                    or not path.resolve().is_relative_to(ledger.resolve().parent)
+                    or (path.stat().st_size,path.stat().st_mtime_ns)!=(verified['size'],verified['mtime_ns'])):
+                continue
+            with request_budget(time.monotonic()+budget_timeout(1.5)):
+                opener=gzip.open if path.suffix=='.gz' else open
+                with opener(path,'rb') as stream:
+                    left=offset
+                    while left:
+                        check_budget()
+                        chunk=stream.read(min(left,MAX_LINE))
+                        if not chunk:
+                            raise ValueError('invalid_offset')
+                        left-=len(chunk)
+                    raw=stream.read(length)
+                check_budget()
+            if hashlib.sha256(raw).hexdigest()!=provenance.get('raw_sha256'):
+                continue
+            columns=raw.decode('utf8').rstrip('\r\n').split('\t',4)
+            if len(columns)!=5 or columns[1]!=key:
+                continue
+            document=json.loads(columns[4])
+            if document.get('key')!=key or public_text_has_injection(_json(document)):
+                continue
+            return document
+        except (OSError,ValueError,TypeError,KeyError,sqlite3.Error,TimeoutError):
+            continue
+    return None
 
 
 def import_bne_marcxml(path, **options):

@@ -1,0 +1,224 @@
+{
+  "case": {
+    "case": 1,
+    "title": "La pen\u00ednsula de las casas vac\u00edas",
+    "author": "David Ucl\u00e9s",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": true
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de La pen\u00ednsula de las casas vac\u00edas de David Ucl\u00e9s",
+      "answer": "Hay un problema temporal al consultar las fuentes de este libro. Puedes volver a intentarlo en unos instantes.",
+      "status": "unavailable",
+      "books": [],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 9309,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "work_type": "fiction",
+        "narrative_failure": "retrieval_unavailable",
+        "progress_metrics": {
+          "elapsed_ms": 9351.272,
+          "first_phase_emitted_ms": 51.461,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 27.757,
+            "cache_lookup": 0.471,
+            "knowledge_lookup": 676.401,
+            "retrieval": 2026.455,
+            "web_search": 3140.984,
+            "extraction": 2330.472,
+            "finalization": 42.068
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 8.232,
+              "elapsed_ms": 27.757,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 50.978,
+              "elapsed_ms": 0.471,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 133.998,
+              "elapsed_ms": 361.928,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 230.364,
+              "elapsed_ms": 40.672,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 332.666,
+              "elapsed_ms": 162.181,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 400.045,
+              "elapsed_ms": 55.911,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 562.349,
+              "elapsed_ms": 55.709,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 675.047,
+              "elapsed_ms": 2026.455,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 2708.972,
+              "elapsed_ms": 853.984,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 3562.97,
+              "elapsed_ms": 1084.967,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 4648.23,
+              "elapsed_ms": 2330.472,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 6991.223,
+              "elapsed_ms": 1202.033,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 9309.196,
+              "elapsed_ms": 42.068,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 51.461
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 9.3595,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.0534,
+        "verified_ready_seconds": 9.303,
+        "first_verified_text_seconds": 9.3595
+      }
+    }
+  ],
+  "seconds": 11.984,
+  "research_profile": "cold_after",
+  "public_research_trace": [
+    {
+      "stage": "retrieved_public_evidence",
+      "sources": [
+        {
+          "id": 1,
+          "title": "La pen\u00ednsula de las casas vac\u00edas",
+          "author": "David Ucl\u00e9s",
+          "description": "Temas del cat\u00e1logo: Fiction, Spanish Literature, Historical Fiction, Historical, Novels, Drama, Magical Realism\n**Toda la Guerra Civil Espa\u00f1ola en clave de realismo m\u00e1gico.** He aqu\u00ed la historia de la descomposici\u00f3n total de una familia, de la deshumanizaci\u00f3n de un pueblo, de la desintegraci\u00f3n de un territorio y de una pen\u00ednsula de casas vac\u00edas. La historia de un soldado que se raja la piel para dejar salir la ceniza acumulada, de un poeta que cose la sombra de una ni\u00f1a tras un bombardeo, y de un maestro que ense\u00f1a a sus alumnos a hacerse los muertos; de un general que duerme junto a la mano cortada de una santa, de un ni\u00f1o ciego que recupera la vista durante un apag\u00f3n, y de una campesina que pinta de negro todos los \u00e1rboles de su huerto; de un fot\u00f3grafo extranjero que pisa una mina cerca de Brunete y no levanta el pie en cuarenta a\u00f1os, de un gernikarra que conduce hasta el centro de Par\u00eds una camioneta con los restos humeantes de un ataque a\u00e9reo, y de un perro herido cuya sangre te\u00f1ir\u00e1 la \u00faltima franja de una bandera abandonada en Badajoz. He aqu\u00ed pues la historia total de la Guerra Civil espa\u00f1ola y de una Iberia agonizante donde lo fant\u00e1stico apuntala la crudeza de lo real; donde los an\u00f3nimos miembros de un extenso clan de olivareros de J\u00e1ndula cruzan sus destinos con los de Alberti, Lorca y Unamuno; Rodoreda, Zambrano y Kent; Hemingway, Orwell y Bernanos; Picasso y Mallo; Aza\u00f1a y Fox\u00e1; donde lo \u00e9pico y lo costumbrista se entrelazan para tejer un portentoso tapiz, po\u00e9tico y grotesco, bello y delirante.",
+          "source": "Open Library",
+          "year": "2024",
+          "book_id": "/works/OL43994375W",
+          "kind": "book",
+          "url": "https://openlibrary.org/works/OL43994375W",
+          "locator": "",
+          "read_mode": "descripci\u00f3n del registro bibliogr\u00e1fico; no texto de la obra",
+          "retrieved_at": "",
+          "image_url": "https://covers.openlibrary.org/b/id/15118577-M.jpg",
+          "categories": [
+            "Fiction",
+            "Spanish Literature",
+            "Historical Fiction",
+            "Historical",
+            "Novels"
+          ],
+          "subjects": [
+            "Fiction",
+            "Spanish Literature",
+            "Historical Fiction",
+            "Historical",
+            "Novels",
+            "Drama",
+            "Magical Realism"
+          ],
+          "synopsis": "**Toda la Guerra Civil Espa\u00f1ola en clave de realismo m\u00e1gico.** He aqu\u00ed la historia de la descomposici\u00f3n total de una familia, de la deshumanizaci\u00f3n de un pueblo, de la desintegraci\u00f3n de un territorio y de una pen\u00ednsula de casas vac\u00edas. La historia de un soldado que se raja la piel para dejar salir la ceniza acumulada, de un poeta que cose la sombra de una ni\u00f1a tras un bombardeo, y de un maestro que ense\u00f1a a sus alumnos a hacerse los muertos; de un general que duerme junto a la mano cortada de una santa, de un ni\u00f1o ciego que recupera la vista durante un apag\u00f3n, y de una campesina que pinta de negro todos los \u00e1rboles de su huerto; de un fot\u00f3grafo extranjero que pisa una mina cerca de Brunete y no levanta el pie en cuarenta a\u00f1os, de un gernikarra que conduce hasta el centro de Par\u00eds una camioneta con los restos humeantes de un ataque a\u00e9reo, y de un perro herido cuya sangre te\u00f1ir\u00e1 la \u00faltima franja de una bandera abandonada en Badajoz. He aqu\u00ed pues la historia total de la Guerra Civil espa\u00f1ola y de una Iberia agonizante donde lo fant\u00e1stico apuntala la crudeza de lo real; donde los an\u00f3nimos miembros de un extenso clan de olivareros de J\u00e1ndula cruzan sus destinos con los de Alberti, Lorca y Unamuno; Rodoreda, Zambrano y Kent; Hemingway, Orwell y Bernanos; Picasso y Mallo; Aza\u00f1a y Fox\u00e1; donde lo \u00e9pico y lo costumbrista se entrelazan para tejer un portentoso tapiz, po\u00e9tico y grotesco, bello y delirante.",
+          "description_source": "Open Library, registro de obra"
+        }
+      ]
+    }
+  ],
+  "coverage_before": {
+    "works": 14466,
+    "works_with_explicit_plot": 14,
+    "works_with_development_excerpt": 10,
+    "works_with_admitted_description": 17,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 31,
+    "linked_sources": 14638,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14467,
+    "works_with_explicit_plot": 14,
+    "works_with_development_excerpt": 10,
+    "works_with_admitted_description": 17,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 31,
+    "linked_sources": 14639,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "persistent_exact_cache",
+  "google_books_enabled": false,
+  "factual_review_pending": true
+}

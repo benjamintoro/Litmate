@@ -1,0 +1,13 @@
+{
+  "failures": 0,
+  "tests_run": 2157,
+  "skipped": 1,
+  "errors": 0,
+  "assertion_failures": 0,
+  "passed": 2156,
+  "modules": [
+    "core"
+  ],
+  "seconds": 75.083,
+  "isolated_sqlite_and_auxiliary_stores": true
+}

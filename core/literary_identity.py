@@ -22,6 +22,14 @@ IDENTITY_DOMAINS = (
 )
 UNKNOWN_AUTHORS = {'', 'autor no informado', 'autor desconocido', 'fuente web'}
 
+# A declaration can include publication year/genre before its literary form.
+# Film/character predicates are deliberately excluded. This only discovers a
+# published identity; callers still verify author, medium and provenance.
+_LITERARY_DECLARATION = (r'(?:es|fue|era|son|is|was)\s+(?:una?|la|el|a|an)\s+'
+    r'(?:(?!(?:film|movie|pelicula|adaptation|adaptacion|anime|character|personaje)\b)[\w\x27-]+\s+){0,3}?'
+    r'(?:novela|libro|obra|saga|serie de novelas|poema|epopeya|serie de manga|manga|comic|historieta|'
+    r'novel|book|play|poem|manga series)\b')
+
 
 def is_literary_identity(text):
     """Published literary form; a format label does not infer a genre."""
@@ -41,7 +49,24 @@ def ambiguous_work_page(source):
     text = normalize_identity(source.get('identity_text') or source.get('extract')
                               or source.get('description', ''))[:500]
     return (isinstance(source.get('pageprops'), dict) and 'disambiguation' in source['pageprops']
-            or bool(re.search(r'\b(?:puede referirse a|may refer to|desambiguacion|disambiguation)\b', text)))
+            or bool(re.search(r'\b(?:puede referirse a|puede hacer referencia a|may refer to|desambiguacion|disambiguation)\b', text)))
+
+
+def author_name_forms(value):
+    """Sólo expansiones de iniciales expresamente publicadas entre paréntesis."""
+    raw=str(value or '')
+    forms={normalize_identity(raw)}
+    match=re.fullmatch(r'\s*([A-ZÁÉÍÓÚÑ][\w.\s]{1,80}?)\s*\(([^()]{3,100})\)\s+([^()]{2,100})\s*',raw)
+    if match:
+        initials=match[1].split()
+        expanded=match[2].split()
+        if (any(re.fullmatch(r'[A-ZÁÉÍÓÚÑ]\.',part) for part in initials)
+                and len(initials)==len(expanded) and all(
+                    normalize_identity(a)==normalize_identity(b[0] if len(a)==2 and a.endswith('.') else b)
+                    for a,b in zip(initials,expanded))):
+            forms.add(normalize_identity(match[1]+' '+match[3]))
+            forms.add(normalize_identity(match[2]+' '+match[3]))
+    return forms
 
 
 def same_author_name(first, second):
@@ -55,7 +80,8 @@ def same_author_name(first, second):
         return False
     if left == right:
         return True
-    return len(left.split()) >= 2 and sorted(left.split()) == sorted(right.split())
+    return any(len(a.split())>=2 and sorted(a.split())==sorted(b.split())
+               for a in author_name_forms(first) for b in author_name_forms(second))
 
 
 def stable_work_id(title, author):
@@ -85,9 +111,30 @@ def _literal_title(title):
     return re.sub(r'(?i)\s*\((?:novela|novel|libro|book)\)\s*$', '', title).strip()
 
 
+def _attributed_wikipedia(source):
+    attribution=source.get('attribution',{})
+    try:
+        parts=urlsplit(str(source.get('url','')))
+        port=parts.port
+    except (ValueError,TypeError):
+        return False
+    return (source.get('source')=='Wikipedia' and source.get('license')=='CC-BY-SA-4.0'
+        and isinstance(attribution,dict) and attribution.get('url')==source.get('url')
+        and attribution.get('title')==source.get('title')
+        and str(attribution.get('revision_id','')).isdigit()
+        and int(attribution['revision_id'])>0
+        and attribution.get('authors')=='Wikipedia contributors'
+        and attribution.get('license_url')=='https://creativecommons.org/licenses/by-sa/4.0/'
+        and parts.scheme=='https' and parts.hostname in {'es.wikipedia.org','en.wikipedia.org'}
+        and not parts.username and not parts.password and port in {None,443})
+
+
 def confirmed_aliases(source):
     """Solo devuelve variantes con procedencia y ambos títulos en la prueba."""
-    if not isinstance(source, dict) or not _known_origin(source):
+    if not isinstance(source, dict):
+        return []
+    wikipedia=_attributed_wikipedia(source)
+    if not _known_origin(source) and not wikipedia:
         return []
     canonical = normalize_identity(source.get('work_title') or source.get('title'))
     author = normalize_identity(source.get('work_author') or source.get('author'))
@@ -102,7 +149,12 @@ def confirmed_aliases(source):
         literal = normalize_identity(evidence)
         url = str(item.get('source_url', '')).strip()[:1500]
         stated_author = normalize_identity(item.get('author'))
-        if (not alias or alias == canonical or alias in seen or not _identity_url(url)
+        wiki_proof=(wikipedia and urlsplit(url).scheme=='https'
+            and urlsplit(url).hostname in {'es.wikipedia.org','en.wikipedia.org'}
+            and evidence.startswith('MediaWiki langlinks: title=')
+            and re.search(r'; wikibase_item=Q[1-9]\d*; revisions=\d+,\d+$',evidence)
+            and evidence.endswith(','+str(source['attribution']['revision_id'])))
+        if (not alias or alias == canonical or alias in seen or not (_identity_url(url) or wiki_proof)
                 or not canonical or canonical not in literal or alias not in literal
                 or (stated_author and stated_author != author)):
             continue
@@ -222,6 +274,13 @@ def web_title_matches(title, book):
         return True
     author = normalize_identity(identity.get('author'))
     if author:
+        qualified=re.fullmatch(r'(.+?)\s*\(([^()]+)\)\s*',str(title))
+        if (qualified and normalize_identity(qualified[1]) in known
+                and normalize_identity(qualified[2])==author.split()[-1]
+                and len(author.split())>=2):
+            # Sólo formato de página. same_work sigue exigiendo autor completo
+            # en su introducción y rechaza películas/adaptaciones.
+            return True
         trimmed = re.sub(r'\s*[,/]\s*(?:de|por|by)\s+' + re.escape(author)
                          + r'(?:\b|$).*$', '', normalized).strip()
         if trimmed in known:
@@ -261,12 +320,25 @@ def published_title_alias(source, title):
     text = normalize_identity(source.get('identity_text', ''))
     canonical = normalize_identity(_literal_title(source.get('title')))
     alias = normalize_identity(title)
+    if alias in {normalize_identity(item['title']) for item in confirmed_aliases(source)}:
+        return True
     raw = ''.join(c for c in unicodedata.normalize('NFKD', str(source.get('identity_text', '')).casefold())
                   if not unicodedata.combining(c))
+    # Article headings can omit an alternative subtitle that the introduction
+    # explicitly publishes ("X; or, Y is a novel by ..."). This is literal
+    # evidence of the FULL requested title, never a shared-prefix alias. The
+    # caller still requires the complete author and checks literary medium.
+    leading = re.match(r'(.{2,240}?)\s+'+_LITERARY_DECLARATION,raw[:700])
+    if (leading and normalize_identity(leading[1]) == alias and canonical
+            and re.match(re.escape(canonical)+r'(?:\s|$)',alias)):
+        return True
+    alias_marker=(r'\b(?:o simplemente|tambien (?:llamad[oa]|conocid[oa] como)|also known as)\s+[«“"]?')
+    translated_marker=(r'\(\s*(?:en (?:ingles|frances|aleman|italiano|portugues|japones)|'
+                       r'titulo original(?: en \w+)?|original title)\s*[:,]?\s*[«“"]?')
     return bool(canonical and alias and text.startswith(canonical + ' ')
-        and re.search(r'\b(?:o simplemente|tambien (?:llamad[oa]|conocid[oa] como)|also known as)\s+[«“"]?'
+        and re.search('(?:'+alias_marker+'|'+translated_marker+')'
                       + re.escape(alias).replace(r'\ ', r'\s+')
-                      + r'(?=[»”"]?(?:\s*[(,.;:]|\s+(?:es|fue|is|was)\b|$))', raw[:700]))
+                      + r'(?=[»”"]?(?:\s*[)(,.;:]|\s+(?:es|fue|is|was|o)\b|$))', raw[:700]))
 
 
 def same_work(source, book):
@@ -295,9 +367,10 @@ def same_work(source, book):
             # Nombre y apellido pueden aparecer en orden bibliográfico inverso.
             # Exige una secuencia contigua de TODOS los términos, no palabras
             # dispersas por una reseña que podrían pertenecer a autores distintos.
-            full_name_present = any(same_author_name(author, ' '.join(words))
-                for words in (identity_text.split()[offset:offset + len(tokens)]
-                              for offset in range(max(0, len(identity_text.split()) - len(tokens) + 1))))
+            full_name_present = any(same_author_name(form, ' '.join(words))
+                for form in author_name_forms(book_identity['author'])
+                for words in (identity_text.split()[offset:offset + len(form.split())]
+                              for offset in range(max(0,len(identity_text.split())-len(form.split())+1))))
         if not full_name_present:
             return False
         adaptation = re.search(r'\b(?:pelicula|serie de television|adaptacion|film|movie|anime|serie de animacion)\b', identity_text)
@@ -400,7 +473,9 @@ def _identity_author(source):
         r'([A-ZÁÉÍÓÚÑ][\wÁÉÍÓÚÜÑáéíóúüñ’\'-]+)(?=[.,;:]|$)', text)
     if attributed:
         return attributed.group(1)
-    for marker in (r'escrit[oa]\s+por', r'creada?\s+por', r'obra\s+de', r'autor(?:a)?\s+',
+    for marker in (r'escrit[oa](?:\s+e\s+ilustrad[oa])?\s+por',
+                   r'written(?:\s+and\s+illustrated)?\s+by',
+                   r'creada?\s+por', r'obra\s+de', r'autor(?:a)?\s+',
                    r'escritor(?:a)?\s+', r'novel\s+by\s+', r'(?:novela|libro|poema(?:\s+épico)?)\s+de\s+'):
         match = re.search(r'(?i)\b' + marker + r'\b(.{0,120})', text)
         if not match:
@@ -408,11 +483,15 @@ def _identity_author(source):
         # No cortar en las iniciales («J. R. R. Tolkien»): sólo cierra la
         # oración un punto que no sigue a una única letra mayúscula.
         segment = re.split(r'(?<![A-ZÁÉÍÓÚÑ])[.;]', match.group(1), maxsplit=1)[0]
+        segment = re.split(r'(?i)\b(?:first published|published|publicad[oa]|seriali[sz]ed|'
+                           r'ilustrad[oa]|illustrated|traducid[oa]|translated)\b',segment,maxsplit=1)[0]
         names = re.findall(
             r'\b(?:[A-ZÁÉÍÓÚÑ]\.|[A-ZÁÉÍÓÚÑ][\wáéíóúüñ\'’\-]+)'
             r'(?:\s+(?:[A-ZÁÉÍÓÚÑ]\.|[A-ZÁÉÍÓÚÑ][\wáéíóúüñ\'’\-]+)){1,5}', segment)
-        if names:
-            return names[-1].strip()
+        if len(names) == 1:
+            # The byline is the first name after the authorship marker. A
+            # later magazine, publisher or another title is not its author.
+            return names[0].strip()
     return ''
 
 
@@ -442,8 +521,7 @@ def _verified_web_work(source):
     identity = normalize_identity(source.get('identity_text', ''))
     token = normalize_identity(title)
     if (not title or not identity or re.search(r'\b(?:categoria|category|anexo)\b', token)
-            or not re.search(r'(?<!\w)' + re.escape(token) + r'.{0,400}?\b(?:es|fue|era|son)\s+'
-                             r'(?:una?|la|el)\s+(?:novela|libro|obra|saga|serie de novelas|poema|epopeya)\b', identity)):
+            or not re.search(r'(?<!\w)' + re.escape(token) + r'.{0,400}?\b'+_LITERARY_DECLARATION, identity)):
         return {}
     author = _identity_author(source)
     if normalize_identity(author) in UNKNOWN_AUTHORS:
@@ -565,7 +643,10 @@ def resolve_followup_context(message, history):
                  'quinto': 4, 'quinta': 4}[ordinal.group(1)]
         returning = bool(re.search(r'\b(?:volvamos|volver|regresemos|retomemos|'
                                    r'vuelve|regresa|retoma)\b', value))
-        selected = _ordinal_works(selection_lists, index, returning=returning)
+        recommendations=[books for turn,books in zip(turns,selection_lists)
+                         if turn.get('intent')=='recommend' or is_topic_recommendation(turn.get('question',''))]
+        selected = (recommendations[-1][index:index+1] if recommendations and not returning
+                    else _ordinal_works(selection_lists, index, returning=returning))
         if selected:
             return {**result, 'books': selected, 'reason': relation or 'ordinal'}
         return result

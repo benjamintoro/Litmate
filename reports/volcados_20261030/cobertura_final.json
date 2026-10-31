@@ -1,0 +1,292 @@
+{
+  "before": {
+    "works": 16,
+    "works_with_explicit_plot": 8,
+    "works_with_development_excerpt": 0,
+    "works_with_admitted_description": 9,
+    "characters_with_literal_roles": 68,
+    "works_with_literal_roles": 8,
+    "characters_with_membership_only": 11,
+    "works_with_explicit_protagonist": 6,
+    "explicit_protagonist_mentions": 11,
+    "relationships": 2,
+    "narrative_facts": 12,
+    "linked_sources": 51,
+    "per_work": {
+      "litmate:3cff7f2c2dc9a05e130a4007": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 12,
+        "relationships": 1,
+        "facts": 2
+      },
+      "litmate:16161e50bcd8f96c0243a7b0": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 12,
+        "relationships": 0,
+        "facts": 1
+      },
+      "litmate:4b6309351b8f4c7f545228a6": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 12,
+        "relationships": 0,
+        "facts": 2
+      },
+      "litmate:612813c24f5478b4b3abd50f": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:68319f2cca92a21a05ed626d": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:cd01a12f9f01f2eb764bc33a": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:cf67efebae22b928eedc86f3": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:cf86a03659678c1f89a26583": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 5,
+        "relationships": 0,
+        "facts": 1
+      },
+      "litmate:46dfb046114b9bb495766e91": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 9,
+        "relationships": 0,
+        "facts": 2
+      },
+      "litmate:62f6b717c0fc6a444106f1fd": {
+        "synopsis": false,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:d078997cc9d2175b8e27e594": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:71db6dd229e48489ec616c73": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 5,
+        "relationships": 0,
+        "facts": 1
+      },
+      "litmate:eb690907d6b78d319c8d7a26": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 12,
+        "relationships": 0,
+        "facts": 1
+      },
+      "litmate:dbf1b649da3901c4fabe7152": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 1,
+        "relationships": 1,
+        "facts": 2
+      },
+      "litmate:88b9c8812b635801a19ac0f2": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:d8fec8c040722f1627acb945": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "after": {
+    "works": 16,
+    "works_with_explicit_plot": 11,
+    "works_with_development_excerpt": 10,
+    "works_with_admitted_description": 11,
+    "characters_with_literal_roles": 68,
+    "works_with_literal_roles": 8,
+    "characters_with_membership_only": 11,
+    "works_with_explicit_protagonist": 6,
+    "explicit_protagonist_mentions": 11,
+    "relationships": 2,
+    "narrative_facts": 27,
+    "linked_sources": 57,
+    "per_work": {
+      "litmate:3cff7f2c2dc9a05e130a4007": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 12,
+        "relationships": 1,
+        "facts": 3
+      },
+      "litmate:16161e50bcd8f96c0243a7b0": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 12,
+        "relationships": 0,
+        "facts": 1
+      },
+      "litmate:4b6309351b8f4c7f545228a6": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 12,
+        "relationships": 0,
+        "facts": 3
+      },
+      "litmate:612813c24f5478b4b3abd50f": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:68319f2cca92a21a05ed626d": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:cd01a12f9f01f2eb764bc33a": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 3
+      },
+      "litmate:cf67efebae22b928eedc86f3": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:cf86a03659678c1f89a26583": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 5,
+        "relationships": 0,
+        "facts": 3
+      },
+      "litmate:46dfb046114b9bb495766e91": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 9,
+        "relationships": 0,
+        "facts": 3
+      },
+      "litmate:62f6b717c0fc6a444106f1fd": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 2
+      },
+      "litmate:d078997cc9d2175b8e27e594": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:71db6dd229e48489ec616c73": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 5,
+        "relationships": 0,
+        "facts": 2
+      },
+      "litmate:eb690907d6b78d319c8d7a26": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 12,
+        "relationships": 0,
+        "facts": 2
+      },
+      "litmate:dbf1b649da3901c4fabe7152": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 1,
+        "relationships": 1,
+        "facts": 3
+      },
+      "litmate:88b9c8812b635801a19ac0f2": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:d8fec8c040722f1627acb945": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 2
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  }
+}

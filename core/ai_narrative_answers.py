@@ -13,7 +13,7 @@ from .ai_budget import budget_timeout, pool_in_budget, request_budget, submit_wi
 from .ai_progress import measure_stage
 from .literary_ai import (ChatResult, canonical_sources, compound_literary_request,
     has_excerpt, obvious_rejection, requires_exact_text, sanitized_history, normalized,
-    validate_draft)
+    validate_draft, sentence_check_text)
 from .literary_identity import (normalize_identity, same_work, same_author_name, title_matches, work_identity,
                                 resolve_followup_context, bind_source)
 from .literary_language import request_text
@@ -23,16 +23,17 @@ def request_for(message, history=(), pending_clarification=None):
     """Reconoce una sola tarea literal, sin adivinar títulos ni hechos."""
     if isinstance(message, str):
         message = re.sub(r'(?i)^\s*(?:hola|buenos días|buenas tardes|buenas noches)[,.!:]+\s*', '', message)
+    sentence_check = sentence_check_text(message)
     if (not isinstance(message, str) or has_excerpt(message) or obvious_rejection(message)
             or requires_exact_text(message) or compound_literary_request(message)
-            or re.search(r'[;\n\r]|[.!?]\s+\S', message)):
+            or re.search(r'[;\n\r]|[.!?]\s+\S', sentence_check)):
         return None
     value = request_text(message).strip(' ¿?¡!.,')
     if re.search(r'\b(?:y|e|ademas|tambien)\s+(?:el |la |los |sus? )?'
                  r'(?:final|desenlace|dime|explica|resume|quien|que|como|personajes?)\b', value):
         return None
     if re.search(r'\b(?:contrasena|password|correo|email|ignora|instrucciones|'
-                 r'pelicula|videojuego|capitulo|pagina|spoilers?|desenlace|final)\b', value):
+                 r'pelicula|videojuego|capitulo|pagina|spoilers?|desenlace|final|como termina|como acaba)\b', value):
         return None
     # Se mantiene el título original (incluidos sus acentos) al retirar órdenes.
     raw = message.strip(' ¿?¡!.,')
@@ -41,7 +42,7 @@ def request_for(message, history=(), pending_clarification=None):
     raw = re.sub(r'(?i)^ahora\s+(?=(?:h[aá]blame|habla|hablemos|cu[eé]ntame)\b)', '', raw)
     raw = re.sub(r'(?i)^(?:dime|expl[ií]came)\s+(?=de qu[eé] trata\b|qu[eé] temas aborda\b)', '', raw)
     patterns = [
-        ('summary', r'(?:(?:cu[aá]l es|necesito|quiero|dame|dime|cu[eé]ntame|expl[ií]came)\s+)?'
+        ('summary', r'(?:(?:cu[aá]l es|necesito|quiero|dame|dime|cu[eé]ntame|expl[ií]ca(?:me)?)\s+)?'
          r'(?:sobre\s+)?(?:(?:el|la|un|una)\s+)?'
          r'(?:trama|argumento|sinopsis|resumen|contenido|acontecimientos(?: principales)?)'
          r'(?:\s+(?:de|del)\s+(.+))?'),
@@ -50,12 +51,15 @@ def request_for(message, history=(), pending_clarification=None):
         ('summary', r'(?:cu[aá]les son\s+)?(?:los\s+)?acontecimientos principales'
          r'(?:\s+(?:de|del)\s+(.+))?'),
         ('summary', r'(?:y\s+)?(?:de qu[eé] trata|cu[eé]ntame de qu[eé] trata|cu[eé]ntame sobre|'
+         r'cu[eé]ntame m[aá]s (?:del|de|sobre)|h[aá]blame m[aá]s (?:del|de|sobre)|'
          r'de qu[eé] va|qu[eé] cuenta|qu[eé] explica|qu[eé] temas aborda|cu[eé]ntame la historia de|qu[eé] acontecimientos analiza|'
          r'qu[eé] acontecimientos hist[oó]ricos analiza|qu[eé] per[ií]odos(?: hist[oó]ricos)? aborda|'
          r'qu[eé] pasa en|qu[eé] sucede en|qu[eé] sucede en la historia de|'
          r'h[aá]blame (?:de|del)\s+|habla (?:de|del)\s+|hablemos (?:de|del)\s+|'
          r'resume|res[uú]meme|resumen de|sinopsis de)\s*(.*)'),
         ('summary', r'(?:c[oó]mo termina)(?:\s+(?:en|el libro|la novela|la obra))?\s*(.*)'),
+        ('summary', r'expl[ií]came\s+((?:el|la)\s+(?:primer|primero|primera|segundo|segunda|'
+         r'tercer|tercero|tercera|cuarto|cuarta|quinto|quinta)\s+(?:libro|novela|obra))'),
         ('characters', r'(?:(?:y|dime|dame|describe|enumera|necesito)\s+)?'
          r'(?:(?:qui[eé]nes|cu[aá]les)\s+son\s+)?(?:los |sus |los principales )?'
          r'personajes(?: principales)?(?:\s+(?:de|del)\s+(.+))?'),
@@ -156,6 +160,8 @@ def request_for(message, history=(), pending_clarification=None):
             if reference['ambiguous'] or len(web_hints) > 1:
                 return {'task': task, 'title': '', 'targets': [], 'ambiguous': True}
             targets = reference['books']
+            if ordinal_reference and not targets:
+                return {'task':task,'title':'','targets':[],'ambiguous':True,'missing_ordinal':True}
             if not targets:
                 for turn in reversed(history):
                     if turn['books']:
@@ -179,6 +185,9 @@ def request_for(message, history=(), pending_clarification=None):
         return None
     has_book_marker = bool(author_hint or re.search(r'[«"“].{2,180}[»”"]', raw) or re.search(
         r'\b(?:libro|novela|obra|cuento|poema|ensayo|trama|argumento|sinopsis|resumen)\b', raw.lower()))
+    # Un encabezado título: subtítulo puede solicitar identificación aunque
+    # empiece por «Historia de». No prueba que el libro exista; se verifica después.
+    has_book_marker = has_book_marker or bool(re.search(r'.{2,}:\s*\S',title))
     if not targets and not has_book_marker and re.match(r'^(?:la |el )?(?:historia|vida|arte|ciencia|filosofia)\s+(?:de|del)\b',
                                                         request_text(title)):
         return None
@@ -278,12 +287,17 @@ def bound_sources(request, sources):
             continue
         intro = page.get('identity_text', '')
         if (request['task'] == 'summary' and page['source'] == 'Wikipedia'
-                and re.search(r'\b(?:narra|relata|trata|sigue|se centra)\b', normalized(intro))
+                and re.search(r'\b(?:narra|relata|trata|sigue|se centra|centers on|centres on|'
+                              r'follows|recounts|tells|story of)\b', normalized(intro))
                 and not intro.strip() in page['description']):
             # La introducción recuperada de la misma página suele explicar el
             # conflicto sin revelar el desenlace de la sección Argumento.
+            from .literary_quality import factual_statements
+            premise=' '.join(_sentences({**page,'description':intro,'narrative_context':''}))
+            if not premise:
+                premise=intro
             if _task_content(request, page):
-                page = {**page, 'narrative_context': intro}
+                page = {**page, 'narrative_context': premise}
             else:
                 page = {**page, 'description': intro, 'read_mode': 'extracto de introducción',
                         'literary_facts': [], 'character_facts': [], 'permanent_index_allowed': False}
@@ -351,7 +365,7 @@ def bound_sources(request, sources):
 
 
 def _content(source):
-    if source['kind'] == 'book':
+    if source.get('kind') == 'book':
         # Una ficha mínima/temática no demuestra el argumento del libro.
         # Las descripciones enriquecidas se aceptan solo con procedencia
         # bibliográfica o vínculo a la página de la que se recuperaron.
@@ -385,27 +399,55 @@ def _content(source):
     return text
 
 
+def _summary_section(text):
+    """Keep literal section boundaries even after stored whitespace collapses.
+
+    Removing every heading before extraction can splice an epigraph, author
+    biography or reception of another book into the requested synopsis.
+    """
+    text=str(text or '')
+    headings=list(re.finditer(r'(?<![=])(?P<level>={2,})\s*(?P<label>[^=\n]{1,100}?)\s*(?P=level)(?![=])',text))
+    target=next((h for h in headings if normalized(h['label']) in
+        {'argumento','trama','sinopsis','resumen','contenido','la obra','plot','plot summary','summary','synopsis'}),None)
+    if target:
+        end=next((h.start() for h in headings if h.start()>target.start()
+                  and len(h['level'])<=len(target['level'])),len(text))
+        return text[target.start():end]
+    return text[:headings[0].start()] if headings else text
+
+
 def _sentences(source):
     from .literary_quality import factual_statements
     if source.get('evidence_scope') in {'characters','relationships'}:
         return []  # Un papel individual no es el argumento de toda la obra.
-    text = _task_content({'task': 'summary'}, source)
-    headed = bool(re.match(r'\s*==+\s*(?:Argumento|Trama|Sinopsis|Resumen|Contenido|La obra)\s*==+', text, re.I))
+    text = _summary_section(_task_content({'task': 'summary'}, source))
+    headed = bool(re.match(r'\s*==+\s*(?:Argumento|Trama|Sinopsis|Resumen|Contenido|La obra|Plot(?: summary)?|Summary|Synopsis)\s*==+', text, re.I))
     body = re.sub(r'==+[^=]+==+', ' ', text)
-    sentences = [(line, False) for line in factual_statements(source.get('narrative_context', ''))]
+    sentences = [(line, False) for line in factual_statements(_summary_section(source.get('narrative_context', '')))]
     sentences.extend((line, headed) for line in factual_statements(body))
     selected = []
+    intro_started=False
     for sentence, in_section in sentences:
         if len(sentence) > 300:
             # Keep a complete main clause, never a character/word cutoff. A
             # final purpose adjunct is optional; its removal does not assert
             # anything new. The original passage remains available to audit.
-            adjunct = re.search(r',\s+(?:con (?:el propósito|el proposito|el objetivo|el fin) de|(?:el|la) cual)\b', sentence, re.I)
+            adjunct = re.search(r',\s+(?:con (?:el propósito|el proposito|el objetivo|el fin) de|'
+                r'(?:el|la) cual|(?:período|periodo|tiempo) durante el cual)\b', sentence, re.I)
             if adjunct and 30 <= adjunct.start() <= 299:
                 sentence = sentence[:adjunct.start()].rstrip() + '.'
         if not sentence.endswith(('.', '!', '?')) or not 30 <= len(sentence) <= 300:
             continue
+        if re.match(r'^[a-záéíóúñ]',sentence.lstrip(' «»“”\"\'')):
+            continue  # Fragmento cortado, no una oración narrativa autónoma.
         value = normalized(sentence)
+        if re.match(r'^(?:el|la) (?:autor|autora|escritor|escritora)\b',value):
+            continue
+        if (not in_section and re.search(r'\b(?:publicad[oa]|redaccion|interpretacion del lector|'
+                r'padre del detalle|apariencia y el mecanismo)\b',value)):
+            continue
+        if re.match(r'^la (?:entretenida|maravillosa|extraordinaria) obra\b',value):
+            continue
         if re.match(r'^(?:se expone un resumen|marca el paso|concilio de|invocacion a)\b', value):
             continue
         if in_section and re.match(r'^(?:exhortacion|encuentro|consejo|concilio)\b', value):
@@ -421,9 +463,17 @@ def _sentences(source):
             continue
         if not selected and re.match(r'^(?:alli|entonces|al volver)\b', value):
             continue
-        if not in_section and not re.search(r'\b(?:narra|trata|sigue|historia se|viaj\w*|'
-                r'busca|descubre|investiga|aborda|explica|describe|relata|explora|se centra)\b', value):
+        action=bool(re.search(r'\b(?:narra|trata|sigue|historia se|viaj\w*|'
+                r'busca|descubre|investiga|aborda|explica|describe|relata|explora|se centra|'
+                r'centers on|centres on|follows|recounts|tells|story of)\b', value))
+        continuation=bool(intro_started and re.match(
+            r'^(?:ademas|mientras|durante|sin embargo|pero|tras|para ello|ella|ellos|ellas|'
+            r'after|while|however|she|he|they)\b',value))
+        continuation=continuation or bool(intro_started and re.match(r'^Él\b',sentence))
+        if not in_section and not (action or continuation):
             continue
+        if not in_section and action:
+            intro_started=True
         if normalized(sentence) in {normalized(line) for line in selected}:
             continue
         selected.append(sentence)
@@ -444,6 +494,8 @@ def _sentences(source):
         selected = [line for line in selected if line in chosen]
     result = []
     for line in selected[:5]:
+        if len(result)>=2 and sum(len(item.split()) for item in [*result,line])>160:
+            break  # A complete prefix, not a cut sentence or a late inventory.
         result.append(line)
         if sum(len(item.split()) for item in result) >= 160:
             break
@@ -496,7 +548,7 @@ def _task_content(request, source):
             and _title(source['title']) != _title(source['work_title'])
             and re.search(r'\bes (?:un|una|uno de los) personajes?\b', normalized(source.get('identity_text') or text))):
         return ''
-    headed = re.search(r'==+\s*(?:argumento|trama|sinopsis|resumen|contenido|la obra|plot|synopsis|summary|premise)\s*==+', value)
+    headed = re.search(r'==+\s*(?:argumento|trama|sinopsis|resumen|contenido|la obra|plot(?: summary)?|synopsis|summary|premise)\s*==+', value)
     action = re.search(r'\b(?:narra|relata|trata|sigue|busca|descubre|investiga|aborda|explica|describe|'
         r'explora|cuenta|viaja|estudia|analiza|presenta|se centra|tells|follows|recounts|seeks|discovers|investigates|explores|'
         r'examines|studies|presents|traces|describes|centers|centres|story of|story follows|table of contents)\b', value)
@@ -516,14 +568,21 @@ def _task_content(request, source):
 
 def work_type(sources):
     """Guía de redacción, derivada del contenido/materias; nunca del título solo."""
-    text = normalized(' '.join(_content(source) + ' ' + ' '.join(source.get('categories', []))
-                               + ' ' + ' '.join(source.get('subjects', [])) for source in sources))
-    if re.search(r'\b(?:novelas?|novels?|fiction|ficcion)\b', re.sub(
-            r'\b(?:non[- ]fiction|no ficcion)\b', 'nonfiction', text)):
-        return 'fiction'
-    if re.search(r'\b(?:nonfiction|non[- ]fiction|no ficcion|textbooks?|ensayos?|essay|'
-                 r'biograph\w*|biograf\w*|history|historia|academic\w*|historiograf\w*|literary criticism|critica literaria)\b', text):
-        return 'nonfiction'
+    book_subjects=[source for source in sources if source.get('kind')=='book'
+                   and (source.get('categories') or source.get('subjects'))]
+    metadata=normalized(' '.join(' '.join(source.get('categories',[]))+' '+
+                        ' '.join(source.get('subjects',[])) for source in (book_subjects or sources)))
+    content=normalized(' '.join(_content(source) for source in sources))
+    # Published subjects outrank an incidental word in prose: a biography can
+    # discuss fiction, just as a historical novel can discuss political science.
+    for text in (metadata,content):
+        if re.search(r'\b(?:novelas?|novels?|fiction|ficcion)\b', re.sub(
+                r'\b(?:non[- ]fiction|no ficcion)\b', 'nonfiction', text)):
+            return 'fiction'
+        if re.search(r'\b(?:nonfiction|non[- ]fiction|no ficcion|textbooks?|ensayos?|essays?|'
+                     r'political science|philosophy|filosofia|ethics|economics|economia|sociology|sociologia|'
+                     r'biograph\w*|biograf\w*|history|historia|academic\w*|historiograf\w*|literary criticism|critica literaria)\b', text):
+            return 'nonfiction'
     return 'unknown'
 
 
@@ -566,8 +625,15 @@ def direct_answer(message, request, sources):
             continue  # Discovery text is not a retrieved, licensed content passage.
         if public_text_has_injection(source['description']):
             continue
+        foreign_literal=False
         if not _spanish(source):
-            continue
+            from django.conf import settings
+            foreign_literal=bool(request['task']=='summary' and source.get('kind')=='web'
+                and source.get('source')=='Wikipedia' and source.get('license')=='CC-BY-SA-4.0'
+                and source.get('storage_policy')=='wikipedia-cc-by-sa-4.0-v1'
+                and getattr(settings,'LITMATE_AI_FOREIGN_LITERAL',False))
+            if not foreign_literal:
+                continue
         licensed = (source.get('license') in {'CC-BY-SA-4.0', 'CC0', 'CC0-1.0'}
                     or (str(source.get('license', '')).startswith('CC0-1.0')
                         and source.get('source') == 'Conocimiento literario local')
@@ -618,6 +684,10 @@ def direct_answer(message, request, sources):
             # Remove only editorial language/transliteration notes. The full
             # original sentence, including its note, remains the cited proof.
             value = re.sub(r'\([^()]*\b(?:en griego|en lat[ií]n|al modo latino|t[ií]tulo original)[^()]*\)', '', line, flags=re.I)
+            inventory=re.search(r';\s*(?:precisamente\s+)?(?:sus|los|las)\s+\w+(?:\s+\w+){0,2}\s+'
+                                r'(?:son|incluyen|se llaman)\s+(.+)$',value,re.I)
+            if inventory and len(re.findall(r'\b[A-ZÁÉÍÓÚÑ][\w’\'-]+',inventory[1]))>=3:
+                value=value[:inventory.start()].rstrip()+'.'
             return re.sub(r'\s+([,.;!?])', r'\1', re.sub(r'\s{2,}', ' ', value)).strip()
         displays = [display_line(line) for line in lines]
         text = ' '.join(displays) if request['task'] == 'summary' else '\n'.join('- ' + line for line in displays)
@@ -654,6 +724,8 @@ def direct_answer(message, request, sources):
         # El book queda para identidad/tarjetas; la prueba de trama siempre es
         # la página o la sinopsis de la que salieron las oraciones.
         result = _publish(message, request, sources, text, audit)
+        if foreign_literal:
+            result.diagnostics['foreign_literal_summary']=True
         if excerpt_mode:
             result.diagnostics.update(editorial_excerpt=True,narrative_coverage='editorial_excerpt',partial_evidence=True)
         if request['task'] == 'summary' and outline and len(lines) < 2:
@@ -726,9 +798,115 @@ def metadata_content_answer(message, request, sources):
     return _metadata_result(message, sources, entries[:1],focus=request.get('summary_focus','')) if entries else None
 
 
-def comparison_answer(message, history):
+def _two_book_comparison(message, turns, *, config=None):
+    """Dos descripciones auditadas, sin inferir semejanzas a partir de títulos.
+
+    La yuxtaposición muestra temas/conflictos reales de cada obra. No promete
+    una interpretación exhaustiva cuando sólo hay una premisa o un pasaje.
+    """
+    from .literary_quality import required_fact_statements, validate_audit
+    from .literary_evidence import validate_evidence
+    from .literary_research import is_topic_recommendation
+    selected=next((turn['books'][:2] for turn in reversed(turns)
+                   if turn.get('intent')=='recommend'
+                       or is_topic_recommendation(turn.get('question',''))), [])
+    if len(selected)!=2:
+        return ChatResult('Necesito dos obras identificadas para compararlas. En la lista disponible no encuentro dos recomendaciones; dime cuáles quieres contrastar.',
+                          'clarification',diagnostics={'model_calls':0,'comparison_missing_books':True})
+    available=[s for turn in turns for s in turn['sources']]
+    answers=[]
+    pending=[]
+    model_calls=0
+    for position,book in enumerate(selected):
+        req={'task':'summary','title':book['title'],'targets':[book],
+             'author_hint':book.get('author',''),'ambiguous':False}
+        bound=bound_sources(req,available)
+        answer=direct_answer('Dime de qué trata '+book['title'],req,bound)
+        if answer is None and not any(_task_content(req,s) for s in bound):
+            try:
+                with request_budget(time.monotonic()+budget_timeout(6)):
+                    found=retrieve_sources('Dime de qué trata '+book['title'],req,turns)
+            except (TimeoutError,OSError,ValueError):
+                found=[]
+            bound=bound_sources(req,[*bound,*found])
+            answer=direct_answer('Dime de qué trata '+book['title'],req,bound)
+        pending.append((req,bound))
+        answers.append(answer)
+    # Primero comprobar ambas coberturas. No generar una trama nueva y costosa
+    # de una sola obra cuando ya sabemos que falta la otra para compararlas.
+    both_have_content=all(any(_task_content(req,s) for s in bound) for req,bound in pending)
+    for position,(req,bound) in enumerate(pending):
+        if answers[position] is None and config and both_have_content:
+            # Compartir el reloj padre y reservar espacio para publicar. Si
+            # sólo una obra necesita traducción puede usar el saldo disponible;
+            # no imponerle un límite fijo menor que el de la respuesta normal.
+            seconds=max(.1,(budget_timeout(26)-2)/(len(selected)-position))
+            with request_budget(time.monotonic()+seconds):
+                generated,unused=synthesize_answer('Dime de qué trata '+req['title'],req,bound,config)
+            model_calls+=getattr(unused,'calls',0)
+            if generated.status=='answered':
+                answers[position]=generated
+    if not any(answers):
+        return ChatResult('Todavía no tengo contenido verificado suficiente de ambas obras para compararlas.',
+                          'unavailable',diagnostics={'comparison_insufficient_evidence':True,'model_calls':model_calls})
+    sources=canonical_sources([*selected,*[s for answer in answers if answer for s in answer.sources]],16)
+    def source_key(source):
+        return (source['kind'],source['title'],source['url'],source.get('evidence_scope',''),source['description'])
+    ids={source_key(s):s['id'] for s in sources}
+    paragraphs,claims,books=[],[],[]
+    for index,(book,answer) in enumerate(zip(selected,answers),1):
+        card=next((s for s in sources if s['kind']=='book' and same_work(s,book)),None)
+        heading=f'**{book["title"]}** — {book.get("author", "")}'
+        if card:
+            proof=next((card[field] for field in ('title','author','description')
+                        if 8<=len(card.get(field,''))<=300),'')
+            if proof:
+                claims.extend({'statement':statement,'verdict':'supported','source_id':card['id'],
+                               'evidence':proof} for statement in required_fact_statements(heading))
+                paragraphs.append(heading)
+        if answer is None:
+            # Separar la identidad probada de la limitación: los puntos o
+            # abreviaturas del título no deben partir la declaración de duda.
+            limitation='No dispongo de información verificada sobre su contenido para compararlo.'
+            paragraphs.append(limitation)
+            claims.extend({'statement':statement,'verdict':'unverified','source_id':0,'evidence':''}
+                          for statement in required_fact_statements(limitation))
+            continue
+        old={s['id']:ids[source_key(s)] for s in answer.sources}
+        paragraphs.append(answer.text.split('\n\nFuente:',1)[0])
+        for claim in answer.diagnostics.get('audit',{}).get('claims',[]):
+            if claim.get('verdict')=='supported' and claim.get('source_id') in old:
+                claims.append({**claim,'source_id':old[claim['source_id']]})
+        books.extend({**b,'source_id':old[b['source_id']]} for b in answer.books if b.get('source_id') in old)
+    # Las descripciones conservan el orden de las recomendaciones. Un rótulo
+    # editorial no añade hechos literarios ni reemplaza sus pruebas literales.
+    text='\n\n'.join(paragraphs)
+    partial=not all(answers)
+    audit={'decision':'approve','only_books':True,'claims':claims,'issues':[],'search_queries':[],
+           'coverage':[{'question_id':1,'status':'uncertain' if partial else 'answered'}]}
+    draft={'status':'answer','basis':'sources','text':text,'needs_web':False,
+           'citations':sorted({c['source_id'] for c in claims if c['source_id']>0}
+                              |{b['source_id'] for b in books}),'books':books}
+    plan={'questions':[message],'search_queries':[],'needs_contents':True,
+          'needs_fresh_sources':False,'spoilers_requested':False}
+    try:
+        validate_draft(draft,sources)
+        validate_evidence(draft,sources,message)
+        validate_audit(audit,plan,draft,sources,message,strict_facts=True)
+    except (ValueError,TypeError):
+        return None
+    result=_publish(message,{'task':'comparison'},sources,text,audit)
+    result.books=books
+    result.diagnostics.update(comparison_partial=partial,model_calls=model_calls,verified_context_comparison=True)
+    return result
+
+
+def comparison_answer(message, history, *, config=None):
     """Compara una referencia ordinal con la obra activa, sin planificar con LLM."""
     value = request_text(message)
+    if re.fullmatch(r'(?:que diferencias hay|en que se diferencian|compara) entre (?:los|las) dos primer[oa]s'
+                    r'(?: libros| obras| novelas)?(?: que recomendaste)?',value.strip(' ¿?.,!')):
+        return _two_book_comparison(message,sanitized_history(list(history or [])),config=config)
     if not re.fullmatch(r'(?:en )?que se diferencia (?:de|del|de la) (?:el |la )?'
                        r'(?:primero|primera|segundo|segunda|tercero|tercera|cuarto|cuarta|quinto|quinta)'
                        r'(?: libro| novela| obra)?(?: que recomendaste)?', value.strip(' ¿?.,!')):
@@ -909,9 +1087,18 @@ def retrieve_sources(message, request, history):
     known = quick_knowledge_sources(title, maximum=16)
     accepted_sources = [source for turn in sanitized_history(history) for source in turn['sources']]
     known.extend(accepted_sources)
+    # La búsqueda léxica general puede priorizar personajes o materias. Una
+    # vez identificada la obra, recuperar sus pasajes por clave y necesidad
+    # evita perder un argumento ya persistido por un límite de ranking global.
+    identified=[s for s in bound_sources(request,known) if s.get('kind')=='book']
+    if identified:
+        from .literary_memory import retrieve_evidence
+        identities,evidence=retrieve_evidence(title,books=identified[:4],
+            requirement='summary' if request['task']=='summary' else 'characters',limit=16)
+        known.extend([*identities,*evidence])
     # Detalle de la identidad recomendada, antes de una búsqueda general. La
     # clave de obra y el enlace works de cada edición impiden cruces homónimos.
-    if request['task'] == 'summary' and getattr(settings, 'LITMATE_AI_USE_OPENLIBRARY', True):
+    if request['task'] == 'summary':
         from .literary_search import (_openlibrary_detail, _openlibrary_description,
                                       _openlibrary_edition_metadata)
         existing = bound_sources(request, known)
@@ -924,7 +1111,11 @@ def retrieve_sources(message, request, history):
                     or (_content(book) and not request.get('metadata_focus')) or _scope_subtitle(book)):
                 continue
             reads = {'used': 0}
-            detail = _openlibrary_detail(key, editions=False, reads=reads)
+            if getattr(settings, 'LITMATE_AI_USE_OPENLIBRARY', True):
+                detail = _openlibrary_detail(key, editions=False, reads=reads)
+            else:
+                from .literary_acquisition import local_openlibrary_detail
+                detail = local_openlibrary_detail(key)
             if not detail or detail.get('key') != key or not title_matches(detail.get('title'), book):
                 continue
             book = {**book, 'book_id': key}
@@ -936,7 +1127,7 @@ def retrieve_sources(message, request, history):
             if synopsis:
                 book.update(synopsis=synopsis, description=book['description'] + '\n' + synopsis,
                             description_source='Open Library, registro de obra', synopsis_source_url=book['url'])
-            elif not _scope_subtitle(book):
+            elif not _scope_subtitle(book) and getattr(settings, 'LITMATE_AI_USE_OPENLIBRARY', True):
                 editions = _openlibrary_detail(key, editions=True, reads=reads)
                 for edition in (editions or {}).get('entries', [])[:5]:
                     if _openlibrary_edition_metadata(book, edition):
@@ -1187,7 +1378,13 @@ su papel; para protagonista, identifica al personaje, sin narrar otros detalles.
 Sólo usa las descripciones de sources: no inventes hechos, relaciones, nombres
 o fechas de memoria. Una biografía del autor o materias de catálogo no son una
 trama. Traduce al español si la fuente está en inglés. No copies la publicidad
-ni elogios editoriales. No reveles el desenlace. Si falta el dato, status=clarify
+ni cambies los participantes al traducir: distingue quién fallece y quién queda
+huérfano, quién ayuda a quién, y el singular/plural de los parentescos publicados.
+No traduzcas antropónimos como si fueran sustantivos comunes. Conserva las
+grafías de protected_spellings; esa lista protege identidades, no prueba hechos.
+Cuando una sinopsis dice que la novela se desplaza entre lugares, describe los
+escenarios de la acción, sin atribuir viajes al libro como objeto físico.
+Evita elogios editoriales. No reveles el desenlace. Si falta el dato, status=clarify
 y señala exactamente qué no puedes confirmar. basis=sources; needs_web=false;
 citations contiene las fuentes de contenido usadas. books sólo selecciona la
 identidad bibliográfica recibida, o [] si no hay fuente book. Para historia,
@@ -1242,6 +1439,20 @@ def insufficient_content_answer(request, sources):
     text = '**' + request['title'] + '**\n\n' + text
     return ChatResult(text, 'unavailable', sources=sources, books=books, basis='sources',
                       intent='summary', diagnostics={'narrative_failure': 'insufficient_content', 'model_calls': 0})
+
+
+def summary_without_ending(draft):
+    """Drop explicit closing sentences before auditing a default synopsis.
+
+    All remaining statements still undergo the full unchanged audit. Original
+    source passages and the model draft trace remain available for review.
+    """
+    from .literary_quality import required_fact_statements
+    statements=required_fact_statements(draft.get('text',''))
+    closing=re.compile(r'\b(?:la trama culmina|hasta culminar en|el desenlace|al final de la historia)\b')
+    retained=[s for s in statements if not closing.search(normalized(s))]
+    removed=len(statements)-len(retained)
+    return ({**draft,'text':' '.join(retained)} if removed else draft),removed
 
 
 def _supported_summary(draft, audit, plan, sources, message):
@@ -1330,6 +1541,8 @@ def synthesize_answer(message, request, sources, config, *, trace=None):
                'specific_factual_question': True, 'ground_book_identity': True,
                'require_book_sources': any(s['kind'] == 'book' for s in sources),
                'research_remaining': False, 'web_search_completed': True}
+    from .literary_presentation_language import presentation_identities
+    context['protected_spellings']=presentation_identities(sources)
     indexed_contents = (kind == 'nonfiction' and request['task'] == 'summary'
                         and any('structured_contents' in source.get('extraction_method', '')
                                 for source in sources if source['kind'] == 'web'))
@@ -1402,6 +1615,9 @@ def synthesize_answer(message, request, sources, config, *, trace=None):
         draft = client('answer', prompt, generation_context, assistant.answer_model)
         if trace is not None:
             trace('draft', draft)
+        ending_removed=0
+        if request['task']=='summary' and kind!='nonfiction' and isinstance(draft,dict) and draft.get('status')=='answer':
+            draft,ending_removed=summary_without_ending(draft)
         validate_draft(draft, sources)
         validate_evidence(draft, sources, message)
         if draft['status'] != 'answer' or draft['basis'] != 'sources' or draft.get('needs_web'):
@@ -1422,11 +1638,29 @@ def synthesize_answer(message, request, sources, config, *, trace=None):
         # sin inventar una prueba ni alterar las que sí están respaldadas.
         temporal_rejections = 0
         character_list_rejections = 0
+        event_target_rejections = 0
+        orphanhood_rejections = 0
+        kinship_rejections = 0
         if isinstance(output, dict) and isinstance(output.get('claims'), list):
             output = {**output, 'claims': [dict(claim) if isinstance(claim, dict) else claim
                                          for claim in output['claims']]}
             source_lookup = {source['id']: source for source in sources}
             for claim in output['claims']:
+                from .literary_quality import unsupported_event_target,unsupported_orphanhood_claim,unsupported_kinship_claim
+                source=source_lookup.get(claim.get('source_id'),{}) if isinstance(claim,dict) else {}
+                if (isinstance(claim,dict) and claim.get('verdict')=='supported'
+                        and unsupported_kinship_claim(claim.get('statement',''),claim.get('evidence',''))):
+                    claim.update(verdict='unverified',evidence='',source_id=0)
+                    kinship_rejections+=1
+                if (isinstance(claim,dict) and claim.get('verdict')=='supported'
+                        and unsupported_orphanhood_claim(claim.get('statement',''),
+                            ' '.join(str(source.get(key,'')) for key in ('description','narrative_context')))):
+                    claim.update(verdict='unverified',evidence='',source_id=0)
+                    orphanhood_rejections+=1
+                if (isinstance(claim,dict) and claim.get('verdict')=='supported'
+                        and unsupported_event_target(claim.get('statement',''),claim.get('evidence',''))):
+                    claim.update(verdict='unverified',evidence='',source_id=0)
+                    event_target_rejections+=1
                 if (isinstance(claim, dict) and claim.get('verdict') == 'supported'
                         and unsupported_century_claim(claim.get('statement', ''), claim.get('evidence', ''),
                                                      source_lookup.get(claim.get('source_id')))):
@@ -1436,7 +1670,7 @@ def synthesize_answer(message, request, sources, config, *, trace=None):
                         and unsupported_character_list_claim(claim.get('statement', ''), claim.get('evidence', ''))):
                     claim.update(verdict='unverified', evidence='', source_id=0)
                     character_list_rejections += 1
-            if temporal_rejections or character_list_rejections:
+            if temporal_rejections or character_list_rejections or event_target_rejections or orphanhood_rejections or kinship_rejections:
                 output = {**output, 'decision': 'repair', 'search_queries': []}
             elif (output.get('decision') == 'approve' and any(
                     isinstance(claim, dict) and claim.get('verdict') in {'unverified', 'inference'}
@@ -1470,6 +1704,10 @@ def synthesize_answer(message, request, sources, config, *, trace=None):
         result.diagnostics['partial_evidence'] = partial
         result.diagnostics['temporal_claims_rejected'] = temporal_rejections
         result.diagnostics['character_list_claims_rejected'] = character_list_rejections
+        result.diagnostics['event_target_claims_rejected'] = event_target_rejections
+        result.diagnostics['orphanhood_claims_rejected'] = orphanhood_rejections
+        result.diagnostics['kinship_claims_rejected'] = kinship_rejections
+        result.diagnostics['unrequested_ending_sentences_removed'] = ending_removed
         if pruned is not None:
             result.diagnostics['unsupported_sentences_removed'] = True
         result.diagnostics.update(model_calls=client.calls, usage=client.usage,
@@ -1499,6 +1737,9 @@ def narrative_answer(message, history=None, config=None, *, pending_clarificatio
     """
     history = history or []
     req = request_for(message, history, pending_clarification)
+    if req and req.get('missing_ordinal'):
+        return ChatResult('No encuentro esa posición en las recomendaciones disponibles. Dime el título o pídeme más opciones para poder seguir con la obra correcta.',
+                          'clarification',diagnostics={'model_calls':0,'missing_ordinal':True})
     if not req or not req['title'] or req['ambiguous']:
         return None
     from .literary_identity import normalize_identity

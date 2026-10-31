@@ -1,0 +1,694 @@
+{
+  "case": {
+    "case": 18,
+    "title": "Frankenstein",
+    "author": "Mary Shelley",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": true
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": true
+        },
+        {
+          "table": "memory_aliases",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_aliases",
+          "title_match": true,
+          "full_author_match": true
+        },
+        {
+          "table": "memory_entities",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_entities",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_entities",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [
+        {
+          "table": "library_items",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "LITMATE_LIBRARY_RAG_DB": [
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "mysql": {
+        "name_record_ids": [
+          "3ea0e25bd5db4de78d7c47123612c575a0ebb01e62f1edac146b7ce54199355e"
+        ],
+        "direct_records": [
+          {
+            "id": "3ea0e25bd5db4de78d7c47123612c575a0ebb01e62f1edac146b7ce54199355e",
+            "label": "Frankenstein; or, The modern Prometheus",
+            "kind": "edition"
+          }
+        ],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": false
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de Frankenstein de Mary Shelley",
+      "answer": "La novela narra la historia de V\u00edctor Frankenstein, un estudiante de filosof\u00eda de la naturaleza de la Universidad de Ingolstadt que consigue dar vida a un ser de apariencia humana pero de dos metros y medio de altura y aspecto repulsivo. V\u00edctor Frankenstein comprende en ese momento el horror que ha creado, rechaza con espanto el resultado de su experimento y huye de su laboratorio. V\u00edctor decide ir a la monta\u00f1a para recuperar su deca\u00eddo \u00e1nimo.\n\nFuente: https://es.wikipedia.org/wiki/Frankenstein_o_El_moderno_Prometeo\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+      "status": "answered",
+      "books": [
+        {
+          "id": "1",
+          "title": "Frankenstein",
+          "author": "Mary Shelley",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=Frankenstein+Mary+Shelley"
+            },
+            {
+              "label": "Wikidata",
+              "url": "https://www.wikidata.org/wiki/Q102292880"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Frankenstein+Mary+Shelley&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Frankenstein+Mary+Shelley"
+            }
+          ]
+        }
+      ],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 645,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "partial_evidence": false,
+        "work_type": "fiction",
+        "progress_metrics": {
+          "elapsed_ms": 659.11,
+          "first_phase_emitted_ms": 19.391,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 7.929,
+            "cache_lookup": 0.626,
+            "knowledge_lookup": 481.916,
+            "audit": 14.27,
+            "finalization": 13.734
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 4.29,
+              "elapsed_ms": 7.929,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 18.755,
+              "elapsed_ms": 0.626,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 33.085,
+              "elapsed_ms": 270.572,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 104.183,
+              "elapsed_ms": 23.902,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 168.998,
+              "elapsed_ms": 133.706,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 235.114,
+              "elapsed_ms": 40.867,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 371.743,
+              "elapsed_ms": 12.869,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 532.751,
+              "elapsed_ms": 9.272,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 616.299,
+              "elapsed_ms": 4.998,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 645.37,
+              "elapsed_ms": 13.734,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 19.391
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 532.731
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 0.6681,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.0355,
+        "verified_ready_seconds": 0.637,
+        "first_verified_text_seconds": 0.6681
+      }
+    }
+  ],
+  "seconds": 2.865,
+  "research_profile": "cold_after",
+  "public_research_trace": [
+    {
+      "stage": "retrieved_public_evidence",
+      "sources": [
+        {
+          "id": 1,
+          "title": "Frankenstein",
+          "author": "Mary Shelley",
+          "description": "Frankenstein, de Mary Shelley.",
+          "source": "Wikidata",
+          "year": "",
+          "book_id": "",
+          "kind": "book",
+          "url": "https://www.wikidata.org/wiki/Q102292880",
+          "locator": "",
+          "read_mode": "",
+          "retrieved_at": "1793230995.4281561",
+          "work_id": "litmate:dbf1b649da3901c4fabe7152",
+          "license": "CC0-1.0",
+          "trust": "untrusted_data",
+          "claim_verification": "declaraci\u00f3n de Wikidata; no corroboraci\u00f3n independiente",
+          "expires_at": "1793835795.4281561",
+          "evidence_hash": "39a9c51b4814c699b50c7cb740a4c92a26071694dd174678e2d93a7d36214171",
+          "memory_source_id": "ed8444c7a0f35198b7e133b4e427a853d58bb5fde47d5ca781999d86b5ddbf16",
+          "last_verified_at": "1793230995.4281561",
+          "policy": "wikidata-statements-v1",
+          "memory_verified": true,
+          "confirmed_aliases": [],
+          "isbns": [],
+          "categories": []
+        },
+        {
+          "id": 2,
+          "title": "V\u00edctor Frankenstein",
+          "author": "Fuente web",
+          "description": "V\u00edctor Frankenstein es el personaje principal de la novela Frankenstein, escrita por Mary Shelley a partir de 1816.",
+          "source": "Wikipedia",
+          "year": "",
+          "book_id": "",
+          "kind": "web",
+          "url": "https://es.wikipedia.org/wiki/V%C3%ADctor_Frankenstein",
+          "locator": "",
+          "read_mode": "",
+          "retrieved_at": "1793295084.002158",
+          "evidence_scope": "characters",
+          "work_id": "litmate:dbf1b649da3901c4fabe7152",
+          "work_title": "Frankenstein",
+          "work_author": "Mary Shelley",
+          "license": "CC-BY-SA-4.0",
+          "trust": "untrusted_data",
+          "expires_at": "1793899884.002158",
+          "evidence_hash": "e9f257e18a89e0154af221fb1f31d5121747130ce65324f9e950e970e9c25b44",
+          "memory_source_id": "cc72b807d9f4e09a57edde67cc14bf236493ce58639049f84cff21bc56fe81f9",
+          "last_verified_at": "1793295084.002158",
+          "policy": "wikipedia-cc-by-sa-4.0-v1",
+          "work_binding_verified": true,
+          "memory_verified": true,
+          "attribution": {
+            "authors": "Wikipedia contributors",
+            "title": "V\u00edctor Frankenstein",
+            "url": "https://es.wikipedia.org/wiki/V%C3%ADctor_Frankenstein",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+            "revision_id": "174727856"
+          },
+          "confirmed_aliases": [],
+          "literary_facts": [],
+          "identity_text": "V\u00edctor Frankenstein es el personaje principal de la novela Frankenstein, escrita por Mary Shelley a partir de 1816.",
+          "character_facts": [
+            {
+              "name": "V\u00edctor Frankenstein",
+              "role": "es el personaje principal de la novela Frankenstein, escrita por Mary Shelley a partir de 1816.",
+              "evidence": "V\u00edctor Frankenstein es el personaje principal de la novela Frankenstein, escrita por Mary Shelley a partir de 1816.",
+              "aliases": []
+            }
+          ],
+          "isbns": [],
+          "categories": []
+        },
+        {
+          "id": 3,
+          "title": "Frankenstein o El moderno Prometeo",
+          "author": "Fuente web",
+          "description": "== Personajes == V\u00edctor Frankenstein , un estudiante de filosof\u00eda de la naturaleza de la Universidad de Ingolstadt que consigue dar vida a un ser de apariencia humana pero de dos metros y medio de altura y aspecto repulsivo",
+          "source": "Wikipedia",
+          "year": "",
+          "book_id": "",
+          "kind": "web",
+          "url": "https://es.wikipedia.org/wiki/Frankenstein_o_El_moderno_Prometeo",
+          "locator": "",
+          "read_mode": "",
+          "retrieved_at": "1793298714.3506994",
+          "evidence_scope": "characters",
+          "work_id": "litmate:dbf1b649da3901c4fabe7152",
+          "work_title": "Frankenstein",
+          "work_author": "Mary Shelley",
+          "license": "CC-BY-SA-4.0",
+          "trust": "untrusted_data",
+          "expires_at": "1793903514.3506994",
+          "evidence_hash": "79fdc6c94f038515ed0b1ce1f756f44f7cfb26a7e4f525aa03b3b477e9de1013",
+          "memory_source_id": "289a7bdc4cfc243b6851c9af5b800769fd54c74aabc7ba130f75823c86b24b4e",
+          "last_verified_at": "1793298714.3506994",
+          "policy": "wikipedia-cc-by-sa-4.0-v1",
+          "work_binding_verified": true,
+          "memory_verified": true,
+          "attribution": {
+            "authors": "Wikipedia contributors",
+            "title": "Frankenstein o El moderno Prometeo",
+            "url": "https://es.wikipedia.org/wiki/Frankenstein_o_El_moderno_Prometeo",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+            "revision_id": "175783333"
+          },
+          "confirmed_aliases": [],
+          "literary_facts": [],
+          "identity_text": "Frankenstein o El moderno Prometeo, o simplemente Frankenstein (t\u00edtulo original en ingl\u00e9s: Frankenstein; or, The Modern Prometheus), es una obra literaria de la escritora inglesa Mary Shelley. Publicado el 1 de enero de 1818 y enmarcado en la tradici\u00f3n de la novela g\u00f3tica, el texto habla de temas tales como la moral cient\u00edfica, la creaci\u00f3n y destrucci\u00f3n de vida y el atrevimiento de la humanidad en su relaci\u00f3n con Dios. De ah\u00ed, el subt\u00edtulo de la obra: el protagonista intenta rivalizar en poder con Dios, como una suerte de Prometeo moderno que arrebata el fuego sagrado de la vida a la divinidad. Aunque Frankenstein est\u00e1 impregnado de elementos de la novela g\u00f3tica y el movimiento rom\u00e1ntico, el escritor y editor de ciencia ficci\u00f3n Brian Aldiss ha argumentado que deber\u00eda considerarse la primera historia verdadera de ciencia ficci\u00f3n.\u200b\u200b\u200b\u200b Sin embargo, Carl Sagan e Isaac Asimov coinciden en que Somnium (1634) de Johannes Kepler es el primer relato de ciencia ficci\u00f3n como tal.\u200b\u200b",
+          "character_facts": [
+            {
+              "name": "V\u00edctor Frankenstein",
+              "role": "un estudiante de filosof\u00eda de la naturaleza de la Universidad de Ingolstadt que consigue dar vida a un ser de apariencia humana pero de dos metros y medio de altura y aspecto repulsivo",
+              "evidence": "V\u00edctor Frankenstein , un estudiante de filosof\u00eda de la naturaleza de la Universidad de Ingolstadt que consigue dar vida a un ser de apariencia humana pero de dos metros y medio de altura y aspecto repulsivo",
+              "aliases": []
+            }
+          ],
+          "isbns": [],
+          "categories": []
+        },
+        {
+          "id": 4,
+          "title": "Frankenstein o El moderno Prometeo",
+          "author": "Fuente web",
+          "description": "== Personajes == V\u00edctor Frankenstein , un estudiante de filosof\u00eda de la naturaleza de la Universidad de Ingolstadt que consigue dar vida a un ser de apariencia humana pero de dos metros y medio de altura y aspecto repulsivo",
+          "source": "Wikipedia",
+          "year": "",
+          "book_id": "",
+          "kind": "web",
+          "url": "https://es.wikipedia.org/wiki/Frankenstein_o_El_moderno_Prometeo",
+          "locator": "",
+          "read_mode": "",
+          "retrieved_at": "1793295864.27504",
+          "evidence_scope": "relationships",
+          "work_id": "litmate:dbf1b649da3901c4fabe7152",
+          "work_title": "Frankenstein",
+          "work_author": "Mary Shelley",
+          "license": "CC-BY-SA-4.0",
+          "trust": "untrusted_data",
+          "expires_at": "1793900664.27504",
+          "evidence_hash": "9e7cdf80363eefec8c57fd9032a28d7cf28f9b4ea7b94c9025f6f689094c68cc",
+          "memory_source_id": "31aee1c5dc51a966ff111dc7a748d79663f5ba6f1c5dce4d72c81761f20b1e8e",
+          "last_verified_at": "1793295864.27504",
+          "policy": "wikipedia-cc-by-sa-4.0-v1",
+          "work_binding_verified": true,
+          "memory_verified": true,
+          "attribution": {
+            "authors": "Wikipedia contributors",
+            "title": "Frankenstein o El moderno Prometeo",
+            "url": "https://es.wikipedia.org/wiki/Frankenstein_o_El_moderno_Prometeo",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+            "revision_id": "175783333"
+          },
+          "confirmed_aliases": [],
+          "literary_facts": [],
+          "identity_text": "Frankenstein o El moderno Prometeo, o simplemente Frankenstein (t\u00edtulo original en ingl\u00e9s: Frankenstein; or, The Modern Prometheus), es una obra literaria de la escritora inglesa Mary Shelley. Publicado el 1 de enero de 1818 y enmarcado en la tradici\u00f3n de la novela g\u00f3tica, el texto habla de temas tales como la moral cient\u00edfica, la creaci\u00f3n y destrucci\u00f3n de vida y el atrevimiento de la humanidad en su relaci\u00f3n con Dios. De ah\u00ed, el subt\u00edtulo de la obra: el protagonista intenta rivalizar en poder con Dios, como una suerte de Prometeo moderno que arrebata el fuego sagrado de la vida a la divinidad. Aunque Frankenstein est\u00e1 impregnado de elementos de la novela g\u00f3tica y el movimiento rom\u00e1ntico, el escritor y editor de ciencia ficci\u00f3n Brian Aldiss ha argumentado que deber\u00eda considerarse la primera historia verdadera de ciencia ficci\u00f3n.\u200b\u200b\u200b\u200b Sin embargo, Carl Sagan e Isaac Asimov coinciden en que Somnium (1634) de Johannes Kepler es el primer relato de ciencia ficci\u00f3n como tal.\u200b\u200b",
+          "character_facts": [
+            {
+              "name": "V\u00edctor Frankenstein",
+              "role": "un estudiante de filosof\u00eda de la naturaleza de la Universidad de Ingolstadt que consigue dar vida a un ser de apariencia humana pero de dos metros y medio de altura y aspecto repulsivo",
+              "evidence": "V\u00edctor Frankenstein , un estudiante de filosof\u00eda de la naturaleza de la Universidad de Ingolstadt que consigue dar vida a un ser de apariencia humana pero de dos metros y medio de altura y aspecto repulsivo",
+              "aliases": []
+            }
+          ],
+          "isbns": [],
+          "categories": []
+        },
+        {
+          "id": 5,
+          "title": "Monstruo de Frankenstein",
+          "author": "Fuente web",
+          "description": "El monstruo de Frankenstein es un personaje de ficci\u00f3n que apareci\u00f3 por primera vez en la novela Frankenstein o el moderno Prometeo, de Mary Shelley. Se trata de un ser creado a partir de partes diferentes de cad\u00e1veres, al cual le es otorgada la vida por su creador, V\u00edctor Frankenstein, durante un experimento. El personaje ha llegado a formar parte de la cultura popular y ha sido fuente para la creaci\u00f3n de otros personajes de novelas, c\u00f3mics, series de televisi\u00f3n y pel\u00edculas.",
+          "source": "Wikipedia",
+          "year": "",
+          "book_id": "",
+          "kind": "web",
+          "url": "https://es.wikipedia.org/wiki/Monstruo_de_Frankenstein",
+          "locator": "",
+          "read_mode": "",
+          "retrieved_at": "1793140934.9031656",
+          "work_id": "litmate:dbf1b649da3901c4fabe7152",
+          "work_title": "Frankenstein",
+          "work_author": "Mary Shelley",
+          "license": "CC-BY-SA-4.0",
+          "trust": "untrusted_data",
+          "expires_at": "1793745734.9031656",
+          "evidence_hash": "40d4b8857dceac1f6f155223ecc4f3c6122b726b74d7b8cf2e093187824c03d3",
+          "memory_source_id": "328c168511930980fd5cca86f1df0132931526856d16fce974d9a2f8ac06e4f5",
+          "last_verified_at": "1793140934.9031656",
+          "policy": "wikipedia-cc-by-sa-4.0-v1",
+          "work_binding_verified": true,
+          "memory_verified": true,
+          "attribution": {
+            "authors": "Wikipedia contributors",
+            "title": "Monstruo de Frankenstein",
+            "url": "https://es.wikipedia.org/wiki/Monstruo_de_Frankenstein",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+            "revision_id": "173680272"
+          },
+          "confirmed_aliases": [],
+          "literary_facts": [],
+          "identity_text": "",
+          "character_facts": [],
+          "isbns": [],
+          "categories": []
+        },
+        {
+          "id": 6,
+          "title": "Monstruo de Frankenstein",
+          "author": "Fuente web",
+          "description": "El monstruo de Frankenstein es un personaje de ficci\u00f3n que apareci\u00f3 por primera vez en la novela Frankenstein o el moderno Prometeo, de Mary Shelley. Se trata de un ser creado a partir de partes diferentes de cad\u00e1veres, al cual le es otorgada la vida por su creador, V\u00edctor Frankenstein, durante un experimento. El personaje ha llegado a formar parte de la cultura popular y ha sido fuente para la creaci\u00f3n de otros personajes de novelas, c\u00f3mics, series de televisi\u00f3n y pel\u00edculas.",
+          "source": "Wikipedia",
+          "year": "",
+          "book_id": "",
+          "kind": "web",
+          "url": "https://es.wikipedia.org/wiki/Monstruo_de_Frankenstein",
+          "locator": "",
+          "read_mode": "",
+          "retrieved_at": "1793295864.27504",
+          "evidence_scope": "relationships",
+          "work_id": "litmate:dbf1b649da3901c4fabe7152",
+          "work_title": "Frankenstein",
+          "work_author": "Mary Shelley",
+          "license": "CC-BY-SA-4.0",
+          "trust": "untrusted_data",
+          "expires_at": "1793900664.27504",
+          "evidence_hash": "f4b3fadb9497ff2d024fdbd40b908b46f1cfa1caaf1e096208b09fb1be54b04a",
+          "memory_source_id": "6f9d15f6f92d30495b7062dc0645ff5352d7f39c7191dd6dce3ba6a6e1886dbf",
+          "last_verified_at": "1793295864.27504",
+          "policy": "wikipedia-cc-by-sa-4.0-v1",
+          "work_binding_verified": true,
+          "memory_verified": true,
+          "attribution": {
+            "authors": "Wikipedia contributors",
+            "title": "Monstruo de Frankenstein",
+            "url": "https://es.wikipedia.org/wiki/Monstruo_de_Frankenstein",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+            "revision_id": "173680272"
+          },
+          "confirmed_aliases": [],
+          "literary_facts": [
+            {
+              "subject": "V\u00edctor Frankenstein",
+              "relation": "creador",
+              "value": "Monstruo de Frankenstein",
+              "evidence": "El monstruo de Frankenstein es un personaje de ficci\u00f3n que apareci\u00f3 por primera vez en la novela Frankenstein o el moderno Prometeo, de Mary Shelley. Se trata de un ser creado a partir de partes diferentes de cad\u00e1veres, al cual le es otorgada la vida por su creador, V\u00edctor Frankenstein, durante un experimento.",
+              "source_url": "",
+              "fact_kind": "",
+              "topic": "relationships",
+              "type": "",
+              "scope": "explicit_profile_definition"
+            }
+          ],
+          "identity_text": "El monstruo de Frankenstein es un personaje de ficci\u00f3n que apareci\u00f3 por primera vez en la novela Frankenstein o el moderno Prometeo, de Mary Shelley. Se trata de un ser creado a partir de partes diferentes de cad\u00e1veres, al cual le es otorgada la vida por su creador, V\u00edctor Frankenstein, durante un experimento. El personaje ha llegado a formar parte de la cultura popular y ha sido fuente para la creaci\u00f3n de otros personajes de novelas, c\u00f3mics, series de televisi\u00f3n y pel\u00edculas.",
+          "character_facts": [],
+          "isbns": [],
+          "categories": []
+        },
+        {
+          "id": 7,
+          "title": "Frankenstein o El moderno Prometeo",
+          "author": "Fuente web",
+          "description": "== Argumento == La novela narra la historia de V\u00edctor Frankenstein, un estudiante de filosof\u00eda de la naturaleza de la Universidad de Ingolstadt que consigue dar vida a un ser de apariencia humana pero de dos metros y medio de altura y aspecto repulsivo. V\u00edctor Frankenstein comprende en ese momento el horror que ha creado, rechaza con espanto el resultado de su experimento y huye de su laboratorio. V\u00edctor decide ir a la monta\u00f1a para recuperar su deca\u00eddo \u00e1nimo.",
+          "source": "Wikipedia",
+          "year": "",
+          "book_id": "",
+          "kind": "web",
+          "url": "https://es.wikipedia.org/wiki/Frankenstein_o_El_moderno_Prometeo",
+          "locator": "",
+          "read_mode": "",
+          "retrieved_at": "1793339331.3223138",
+          "evidence_scope": "summary",
+          "work_id": "litmate:dbf1b649da3901c4fabe7152",
+          "work_title": "Frankenstein",
+          "work_author": "Mary Shelley",
+          "license": "CC-BY-SA-4.0",
+          "trust": "untrusted_data",
+          "expires_at": "1793944131.3223138",
+          "evidence_hash": "ca1a71929557979e3cac989c0c99d73e2c06caf8f9cb91236b73b03ee39e45b1",
+          "memory_source_id": "7d869e57bfbd48a78455b8419365e1a34cdd696f03b07995aa8ee39e4df38588",
+          "last_verified_at": "1793339331.3223138",
+          "policy": "wikipedia-cc-by-sa-4.0-v1",
+          "work_binding_verified": true,
+          "memory_verified": true,
+          "attribution": {
+            "authors": "Wikipedia contributors",
+            "title": "Frankenstein o El moderno Prometeo",
+            "url": "https://es.wikipedia.org/wiki/Frankenstein_o_El_moderno_Prometeo",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+            "revision_id": "175783333"
+          },
+          "confirmed_aliases": [],
+          "literary_facts": [
+            {
+              "subject": "",
+              "relation": "",
+              "value": "",
+              "evidence": "La novela narra la historia de V\u00edctor Frankenstein, un estudiante de filosof\u00eda de la naturaleza de la Universidad de Ingolstadt que consigue dar vida a un ser de apariencia humana pero de dos metros y medio de altura y aspecto repulsivo.",
+              "source_url": "",
+              "fact_kind": "",
+              "topic": "plot",
+              "type": "",
+              "scope": "development_excerpt"
+            },
+            {
+              "subject": "",
+              "relation": "",
+              "value": "",
+              "evidence": "La novela narra la historia de V\u00edctor Frankenstein, un estudiante de filosof\u00eda de la naturaleza de la Universidad de Ingolstadt que consigue dar vida a un ser de apariencia humana pero de dos metros y medio de altura y aspecto repulsivo. V\u00edctor Frankenstein comprende en ese momento el horror que ha creado, rechaza con espanto el resultado de su experimento y huye de su laboratorio. V\u00edctor decide ir a la monta\u00f1a para recuperar su deca\u00eddo \u00e1nimo.",
+              "source_url": "",
+              "fact_kind": "",
+              "topic": "plot",
+              "type": "",
+              "scope": "partial"
+            }
+          ],
+          "identity_text": "Frankenstein o El moderno Prometeo, o simplemente Frankenstein (t\u00edtulo original en ingl\u00e9s: Frankenstein; or, The Modern Prometheus), es una obra literaria de la escritora inglesa Mary Shelley. Publicado el 1 de enero de 1818 y enmarcado en la tradici\u00f3n de la novela g\u00f3tica, el texto habla de temas tales como la moral cient\u00edfica, la creaci\u00f3n y destrucci\u00f3n de vida y el atrevimiento de la humanidad en su relaci\u00f3n con Dios. De ah\u00ed, el subt\u00edtulo de la obra: el protagonista intenta rivalizar en poder con Dios, como una suerte de Prometeo moderno que arrebata el fuego sagrado de la vida a la divinidad. Aunque Frankenstein est\u00e1 impregnado de elementos de la novela g\u00f3tica y el movimiento rom\u00e1ntico, el escritor y editor de ciencia ficci\u00f3n Brian Aldiss ha argumentado que deber\u00eda considerarse la primera historia verdadera de ciencia ficci\u00f3n.\u200b\u200b\u200b\u200b Sin embargo, Carl Sagan e Isaac Asimov coinciden en que Somnium (1634) de Johannes Kepler es el primer relato de ciencia ficci\u00f3n como tal.\u200b\u200b",
+          "character_facts": [],
+          "isbns": [],
+          "categories": []
+        },
+        {
+          "id": 8,
+          "title": "Frankenstein o El moderno Prometeo",
+          "author": "Fuente web",
+          "description": "== Argumento == La novela narra la historia de V\u00edctor Frankenstein, un estudiante de filosof\u00eda de la naturaleza de la Universidad de Ingolstadt que consigue dar vida a un ser de apariencia humana pero de dos metros y medio de altura y aspecto repulsivo. El monstruo, de cuya creaci\u00f3n no se dan detalles, carece de nombre y es referido como \"ser demon\u00edaco\", \"engendro\", \"criatura\" u \"horrendo hu\u00e9sped\". V\u00edctor Frankenstein comprende en ese momento el horror que ha creado, rechaza con espanto el resultado de su experimento y huye de su laboratorio. Al volver, el monstruo ha desaparecido y \u00e9l cree que todo ha concluido. Pero la sombra de su pecado le persigue: el monstruo, tras huir del laboratorio, siente el rechazo de la humanidad y se despierta en \u00e9l el odio y la sed de venganza. Tras un per\u00edodo de convalecencia debido al exceso de trabajo, y despu\u00e9s de enterarse del asesinato de su hermano menor William, V\u00edctor regresa a su Ginebra natal con su familia y su prometida, solo para descubrir que detr\u00e1s del crimen est\u00e1 el furor de la criatura que \u00e9l ha tra\u00eddo a la vida. La culpa de V\u00edctor se hace mayor cuando permite que una sirvienta de la familia \u2014Justine Moritz\u2014 sea condenada a muerte y ejecutada, acusada del crimen. V\u00edctor decide ir a la monta\u00f1a para recuperar su deca\u00eddo \u00e1nimo. Cerca del Montblanc se encuentra de nuevo con el monstruo. Este le cuenta c\u00f3mo inicialmente era bondadoso e inocente: su \u00fanico objetivo vital era amar y ser amado, e incluso segu\u00eda de forma consecuente una dieta vegetariana. Aprendi\u00f3 a hablar espiando secretamente a una familia a la que ofrec\u00eda peque\u00f1os regalos de forma an\u00f3nima, pero la familia le rechaz\u00f3 al descubrir su aspecto f\u00edsico, rechazo que se repiti\u00f3 ante cada encuentro con seres humanos. El monstruo admite el asesinato de William y la tergi",
+          "source": "Wikipedia",
+          "year": "",
+          "book_id": "",
+          "kind": "web",
+          "url": "https://es.wikipedia.org/wiki/Frankenstein_o_El_moderno_Prometeo",
+          "locator": "",
+          "read_mode": "",
+          "retrieved_at": "1793140934.9031656",
+          "work_id": "litmate:dbf1b649da3901c4fabe7152",
+          "work_title": "Frankenstein",
+          "work_author": "Mary Shelley",
+          "license": "CC-BY-SA-4.0",
+          "trust": "untrusted_data",
+          "expires_at": "1793745734.9031656",
+          "evidence_hash": "581b3a7385ca04ec7e5cdeec8f02f6418940839f98ee7bc4c0e8b4ad124fffc2",
+          "memory_source_id": "3e82c0d09dc0048060f7463c2b436327d84383628f9c5a5c8803a646d67626cb",
+          "last_verified_at": "1793140934.9031656",
+          "policy": "wikipedia-cc-by-sa-4.0-v1",
+          "work_binding_verified": true,
+          "memory_verified": true,
+          "attribution": {
+            "authors": "Wikipedia contributors",
+            "title": "Frankenstein o El moderno Prometeo",
+            "url": "https://es.wikipedia.org/wiki/Frankenstein_o_El_moderno_Prometeo",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+            "revision_id": "175783333"
+          },
+          "confirmed_aliases": [],
+          "literary_facts": [],
+          "identity_text": "",
+          "character_facts": [],
+          "isbns": [],
+          "categories": []
+        }
+      ]
+    }
+  ],
+  "coverage_before": {
+    "works": 14479,
+    "works_with_explicit_plot": 19,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 22,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 36,
+    "linked_sources": 14655,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14479,
+    "works_with_explicit_plot": 19,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 22,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 36,
+    "linked_sources": 14655,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "persistent_exact_cache",
+  "google_books_enabled": false,
+  "factual_review_pending": true
+}

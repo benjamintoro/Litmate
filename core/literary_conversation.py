@@ -214,9 +214,11 @@ def resolve_topic_context(message, state, *, now=None):
         r'no me gusto ninguno|recomiendame otros del mismo genero|dame algo mas oscuro|'
         r'que no sea de .{2,100}',normalized_message))
     explainable = bool(re.fullmatch(r'(?:recomiendame|dame|sugiereme) (?:otro|otra|algun|alguna) '
-        r'(?:libro|obra|novela) (?:del|de la) que (?:puedas (?:contarme|explicarme|decirme) mas|'
+        r'(?:libro|obra|novela) (?:(?:del|de la) )?que (?:puedas (?:contarme|explicarme|decirme)(?: mas)?|'
         r'tengas (?:mas )?informacion)', normalized_message))
-    elliptical = elliptical or explainable
+    same_topic=bool(re.fullmatch(r'(?:recomiendame|dame|sugiereme) (?:otro|otra|otros|otras)'
+        r'(?: libros?| obras?| novelas?)? (?:sobre|del|acerca de) (?:el )?mismo tema',normalized_message))
+    elliptical = elliptical or explainable or same_topic
     if previous and (elliptical or normalized_message.startswith('ya lei ')):
         subject=previous['subject']
         if 'mas oscuro' in normalized_message and 'fantasy' in requested_categories(subject):

@@ -1,0 +1,112 @@
+{
+  "position": 5,
+  "work": {
+    "author": "Masashi Kishimoto",
+    "categories": [],
+    "confirmed_aliases": [],
+    "isbns": [],
+    "kind": "book",
+    "source": "Wikidata",
+    "title": "Naruto",
+    "url": "https://www.wikidata.org/wiki/Q26971382",
+    "work_id": "litmate:08b8681c9bf72cef50c814de",
+    "year": ""
+  },
+  "kind": "unknown",
+  "requirement": "summary",
+  "before": {
+    "works": 1,
+    "works_with_explicit_plot": 0,
+    "works_with_development_excerpt": 0,
+    "works_with_admitted_description": 0,
+    "characters_with_literal_roles": 0,
+    "works_with_literal_roles": 0,
+    "characters_with_membership_only": 12,
+    "works_with_explicit_protagonist": 0,
+    "explicit_protagonist_mentions": 0,
+    "relationships": 0,
+    "narrative_facts": 0,
+    "linked_sources": 2,
+    "per_work": {
+      "litmate:08b8681c9bf72cef50c814de": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "batch": {
+    "mode": "continuous_once",
+    "scheduled": 1,
+    "llm_calls": 0,
+    "new_global_corrections": 0,
+    "mysql_references_added": 0,
+    "work_ids": [
+      "litmate:08b8681c9bf72cef50c814de"
+    ],
+    "batch": {
+      "claimed": 1,
+      "completed": 1,
+      "deferred": 0,
+      "stored": 1,
+      "seconds": 1.746,
+      "jobs": [
+        {
+          "work_id": "litmate:08b8681c9bf72cef50c814de",
+          "provider": "wikipedia",
+          "requirement": "summary",
+          "status": "ok",
+          "lease_current": true,
+          "seconds": 1.713,
+          "stored": 1,
+          "reused": false
+        }
+      ],
+      "llm_calls": 0,
+      "reused": 0,
+      "verification_scope": "source_policy_identity_and_requirement_coverage",
+      "independent_factual_corroboration": false
+    },
+    "stopped": null,
+    "seconds": 1.792,
+    "cpu_seconds": 0.234,
+    "process": {
+      "rss_mb": 109.234,
+      "peak_rss_mb": 123.586
+    },
+    "storage_delta_bytes": 0,
+    "revision_before": "14816",
+    "revision_after": "14817"
+  },
+  "after": {
+    "works": 1,
+    "works_with_explicit_plot": 1,
+    "works_with_development_excerpt": 1,
+    "works_with_admitted_description": 1,
+    "characters_with_literal_roles": 0,
+    "works_with_literal_roles": 0,
+    "characters_with_membership_only": 12,
+    "works_with_explicit_protagonist": 0,
+    "explicit_protagonist_mentions": 0,
+    "relationships": 0,
+    "narrative_facts": 3,
+    "linked_sources": 3,
+    "per_work": {
+      "litmate:08b8681c9bf72cef50c814de": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 3
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_changed": true,
+  "sql_projection": "existing evidence pointers; not copied prose"
+}
