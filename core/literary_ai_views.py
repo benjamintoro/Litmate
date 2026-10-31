@@ -678,12 +678,13 @@ def _compute_answer_impl(message, history, topic_context, *, pending_clarificati
             try:
                 with request_budget(time.monotonic() + budget_timeout(2.5)):
                     # Identificar con fichas locales antes de intentar leer páginas.
-                    from .ai_identification_details import identification_answer
+                    from .ai_identification_details import identification_recall_answer
                     if getattr(settings, 'LITMATE_AI_QUICK_ANSWERS', True):
                         from .ai_quick_answers import quick_knowledge_sources
-                        direct = identification_answer(message, search=quick_knowledge_sources)
+                        direct = identification_recall_answer(
+                            message, history=history, search=quick_knowledge_sources)
                     else:
-                        direct = identification_answer(message)
+                        direct = identification_recall_answer(message, history=history)
                     if (direct is None and getattr(settings, 'LITMATE_AI_PUBLIC_DETAILS_FAST_PATH', True)
                             and getattr(settings, 'LITMATE_AI_USE_WEB', True)):
                         from .ai_public_details import character_answer

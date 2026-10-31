@@ -24,6 +24,19 @@ VAGUE = set('escena escenas mujer hombre persona protagonista protagonistas pers
             'viaje viajaba viajaban viajando viajero viajera despues antes joven niño niña niños '
             'niñas pequeño pequeña hermana hermano bosque'.split())
 VAGUE = {normalize_identity(item) for item in VAGUE}
+# Verbos habituales de una sinopsis aportan contexto, no identidad de una obra.
+# Se mantienen entre las coincidencias visibles, pero no habilitan candidatos.
+VAGUE.update('sigue siguen seguia seguian seguir siguiendo vive viven vivir '
+             'conoce conocen conocer conocio conocia cuenta cuentan contar '
+             'narra narran narrar relata relatan relatar trata tratan tratar '
+             'busca buscan buscar encuentra encuentran encontrar'.split())
+VAGUE.update('blanco blanca blancos blancas negro negra negros negras rojo roja '
+             'rojos rojas azul azules verde verdes amarillo amarilla amarillos '
+             'amarillas grande grandes'.split())
+VAGUE.update('amigo amiga amigos amigas forma formas manera maneras vida vidas '
+             'gente cosas viaje viajes viajan cambia cambian cambiar'.split())
+VAGUE.update('un una uno dos tres cuatro cinco seis siete ocho nueve diez ver'.split())
+STOP.update('novela novelas cuento cuentos relato relatos historias'.split())
 
 # Una edición completa suele empezar con portada, prefacio, índice o crítica
 # editorial. Esos pasajes identifican la obra, pero no describen su trama. Se
@@ -137,6 +150,27 @@ def _clues(message):
 def _matches(token, words):
     if token in words:
         return True
+    for other in words:
+        if len(token) < 5 or len(other) < 5:
+            continue
+        common = 0
+        for left, right in zip(token, other):
+            if left != right:
+                break
+            common += 1
+        # Las flexiones españolas comparten una raíz estable. Se exige una
+        # raíz larga o una terminación vocálica breve para evitar que dos
+        # palabras sólo parecidas por las primeras letras cuenten como pista.
+        if common >= 6:
+            return True
+        if common >= 5:
+            left, right = token[common:], other[common:]
+            if (not left or not right
+                    or (left[0] in 'aeiou' and right[0] in 'aeiou')
+                    or (len(left) <= 2 and len(right) <= 2
+                        and left in {'a', 'e', 'o', 'n', 'r', 's'}
+                        and right in {'a', 'e', 'o', 'n', 'r', 's'})):
+                return True
     return len(token) >= 6 and any(len(other) >= 6 and abs(len(token) - len(other)) <= 2
         and SequenceMatcher(None, token, other).ratio() >= .85 for other in words)
 
@@ -201,6 +235,51 @@ def is_topic_recommendation(message):
                  r'cuida|cuidaba|viajaba|viaja)\b', value):
         return False
     return True
+
+
+def is_plot_description(message):
+    """Reconoce una escena recordada, no una petición de recomendaciones.
+
+    La descripción puede empezar por «una historia sobre…», por un personaje
+    («un niño que…») o por una situación («alguien despierta…»). Las peticiones
+    explícitas de lecturas siguen su ruta de recomendación.
+    """
+    if not isinstance(message, str) or excerpt_marker(message):
+        return False
+    if is_topic_recommendation(message):
+        return False
+    from .literary_language import request_text
+    value = normalize_identity(request_text(message)).strip(' ¿?¡!.,;:')
+    if not 12 <= len(value) <= 500:
+        return False
+    if re.search(r'\b(?:recomiend\w*|sugier\w*|aconsej\w*|que puedo leer|'
+                 r'que me recomiendas|me gustaria leer)\b', value):
+        return False
+    work_start = re.match(
+        r'^(?:(?:una?|el|la|los|las)\s+)?(?:historia|novela|libro|cuento|relato|'
+        r'trama|argumento|obra)\s+(?:sobre|de|donde|que|acerca de|en (?:el|la) que)\b',
+        value)
+    if work_start:
+        return True
+    subject = (
+        r'^(?:(?:una?|el|la|los|las)\s+)?(?:ni[nñ]o|ni[nñ]a|hombre|mujer|persona|'
+        r'joven|sociedad|ciudad|pais|familia|alguien|protagonista|personaje|chico|'
+        r'chica|muchacho|muchacha|detective|cientifico|escritor|estudiante|grupo|'
+        r'pueblo|mundo|reino|robot|viajero)\b')
+    narrative_action = re.search(
+        r'\b(?:que|donde|quien|cuando|mientras|despierta|despertaba|comete|cometio|'
+        r'vive|vivia|viaja|viajaba|cuidaba|cuida|conoce|conocio|quema|queman|'
+        r'prohiben|busca|buscaba|encuentra|siente|sentia|pierde|perdio|rechaza|'
+        r'rechazaba|lucha|luchaba|descubre|descubrio|llega|llego|vuelve|volvio|'
+        r'transforma|transforma|convierte|convertido|sobrevive|escapa|huye)\b',
+        value)
+    if re.match(subject, value) and narrative_action:
+        return True
+    if re.match(r'^(?:alguien|un desconocido|una desconocida)\b', value) and (
+            narrative_action or re.search(r'\b(?:accidente|misterio|secreto|'
+                                         r'desaparece|aparece)\b', value)):
+        return True
+    return False
 
 
 def resolve_verified_request(message, sources):
@@ -302,6 +381,15 @@ def rank_candidates(message, sources, maximum=3):
     identidad bibliográfica no se convierten en libros candidatos por sí solas.
     """
     clues, groups = _clues(message), []
+    numbers = dict(zip('un una uno dos tres cuatro cinco seis siete ocho nueve diez'.split(),
+                       (1, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)))
+    def counts(text):
+        pairs = defaultdict(set)
+        for number, noun in re.findall(r'\b(\d+|un|una|uno|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez)\s+(\w+)',
+                                       normalize_identity(text)):
+            pairs[noun].add(int(number) if number.isdigit() else numbers[number])
+        return pairs
+    requested_counts = counts(message)
     if not clues:
         return []
     valid = [source for source in sources if isinstance(source, dict)] if isinstance(sources, list) else []
@@ -317,6 +405,12 @@ def rank_candidates(message, sources, maximum=3):
     for group in groups:
         evidence_sources = [source for source in valid if same_work(source, group['book'])]
         texts = [_source_text(source) for source in evidence_sources]
+        # Una cantidad explícita incompatible no se compensa acumulando otras
+        # palabras. Sólo comparar el mismo término; no inferir datos ausentes.
+        documented_counts = counts(' '.join(source.get('description', '') for source in evidence_sources))
+        if any(noun in documented_counts and not values & documented_counts[noun]
+               for noun, values in requested_counts.items()):
+            continue
         words = set(_words('\n'.join(texts)))
         matched = [clue for clue in clues if _matches(clue, words)]
         meaningful = [clue for clue in matched if clue not in VAGUE]
@@ -337,7 +431,7 @@ def rank_candidates(message, sources, maximum=3):
             'work_id': identity['work_id'], 'matched_clues': matched, 'missing_clues': missing,
             'confidence': 'supported' if len(meaningful) >= 2 and len(matched) >= max(2, len(clues) // 2) else 'possible',
             'evidence': evidence[:3], 'source_ids': [source.get('id', 0) for source in evidence_sources],
-            '_score': len(meaningful) * 3 + len(matched) - len(missing) * .2})
+            '_score': len(meaningful) * 4 + (len(matched) - len(meaningful)) * .1 - len(missing) * .2})
     results.sort(key=lambda item: (-item['_score'], normalize_identity(item['title']), item['author']))
     # Una coincidencia incidental («planeta») no crea ambigüedad frente a una
     # obra que respalda esa pista y además la rosa, el zorro y el niño. Conserva
@@ -364,7 +458,8 @@ def evidence_requirements(message, intent=''):
     memory = bool(re.search(
         r'\b(?:recuerdo|no recuerdo|busco un libro|en que libro|a que obra|como se llama el libro)\b', value)) and not topic_recommendation
     explicit_characters = bool(re.search(r'\b(?:personajes|protagonistas)\b', detail_value)) and not memory
-    identifying = memory or (intent == 'identify' and not explicit_characters and not topic_recommendation)
+    identifying = (memory or is_plot_description(message)
+                   or (intent == 'identify' and not explicit_characters and not topic_recommendation))
     if identifying:
         requirements.append('identification')
     if re.search(r'\b(?:personajes|protagonistas|quienes aparecen)\b', detail_value) and not identifying:

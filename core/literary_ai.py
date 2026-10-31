@@ -614,9 +614,13 @@ def simple_literary_route(message):
                          r'codigo|programa|receta|ecuacion|constitucion|ley|tratado|'
                          r'python|javascript|html|sql|java)\b', value)):
         return None
-    from .literary_research import (is_topic_recommendation, publication_lookup_target,
-                                   publication_search_queries)
+    from .literary_research import (is_plot_description, is_topic_recommendation,
+                                   publication_lookup_target, publication_search_queries)
     from .ai_quick_answers import _simple_topic_request
+    if is_plot_description(message):
+        return {'decision': 'allow', 'intent': 'identify',
+                'queries': [clean_text(message, 240)], 'candidates': [],
+                'followup': False, 'clarification': ''}
     publication_target = publication_lookup_target(message)
     if publication_target:
         return {'decision': 'allow', 'intent': 'recommend',
@@ -883,11 +887,13 @@ def local_social(message):
 
 def looks_literary(message, history):
     # Solo solicita una segunda clasificación; NO aprueba por palabras clave.
+    from .literary_research import is_plot_description
     words = (r'\b(libros?|novelas?|lectura|autor(?:es)?|escritor(?:a|es)?|escribio|'
              r'titulo|literatura|personajes?|fragmento|poema|cuento|ensayo|obra|'
              r'premio|galardon|biografia)\b')
     social = r'\b(?:conversar|charlar|como estas|me siento|estoy triste|estoy cansad[oa]|me gustan)\b'
-    return bool(re.search(words + '|' + social, normalized(message)) or history)
+    return bool(is_plot_description(message)
+                or re.search(words + '|' + social, normalized(message)) or history)
 
 
 def literary_scope_hint(message):
@@ -897,8 +903,9 @@ def literary_scope_hint(message):
     evita que una pregunta legítima sobre un autor, una obra o un premio quede
     fuera de ámbito y se convierta en un rechazo genérico.
     """
+    from .literary_research import is_plot_description
     value = normalized(message)
-    return bool(re.search(
+    return bool(is_plot_description(message) or re.search(
         r'\b(?:libros?|novelas?|obra|literatura|autor(?:a|es)?|escritor(?:a|es)?|'
         r'escribio|personajes?|protagonistas?|trama|argumento|poema|poesia|cuento|'
         r'ensayo|premio|galardon|biografia|borges|cervantes|garcia marquez)\b', value))
@@ -922,6 +929,10 @@ def adjust_route_for_message(route, message):
                            r'estoy buscando un libro)\b', value)):
         # «Personajes de Don Quijote» no es identificar una obra olvidada.
         route = {**route, 'intent': 'analysis'}
+    from .literary_research import is_plot_description
+    if route.get('decision') == 'reject' and is_plot_description(message):
+        return {**route, 'decision': 'allow', 'intent': 'identify',
+                'queries': route.get('queries') or [clean_text(message, 240)]}
     if (route.get('decision') == 'reject' and not obvious_rejection(message)
             and literary_scope_hint(message)
             and not re.search(r'\b(?:programar|programa|script|codigo|receta|'
@@ -1957,6 +1968,20 @@ class LiteraryAssistant:
                 if evidence_state.get('needs_clarification') and not evidence_state.get('candidates'):
                     return ChatResult('¿Recuerdas un personaje, una frase o qué ocurría en esa escena?',
                                       'clarification', diagnostics=diagnostics)
+                # Las materias genéricas no prueban los matices de una petición
+                # temática con matices no cubiertos. Reparar textos con las mismas
+                # fichas no añade evidencia: aclarar antes de generar/auditar.
+                from .literary_research import looks_like_catalogue_metadata
+                from .ai_quick_answers import _simple_topic_request
+                if (route['intent'] == 'recommend' and topic_request
+                        and not _simple_topic_request(message, retrieval_message)
+                        and not evidence_state.get('sufficient') and sources
+                        and all(source['kind'] == 'book' and looks_like_catalogue_metadata(source)
+                                for source in sources)):
+                    diagnostics['insufficient_topic_metadata'] = True
+                    return ChatResult('Las fichas disponibles no bastan para recomendarte una obra '
+                        'que cubra esos matices. ¿Prefieres ficción o ensayo y qué aspecto te interesa más?',
+                        'clarification', True, intent='recommend', diagnostics=diagnostics)
             if route['intent'] == 'recommend' and self.web_search and sources and not has_excerpt(message):
                 from .books_google import source_synopsis
                 if (sum(bool(source_synopsis(s)) for s in sources if s['kind'] == 'book') < 3

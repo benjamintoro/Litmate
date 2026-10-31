@@ -115,14 +115,31 @@ def _save(key, result):
 
 
 @timed_stage('local_search')
-def search_catalog(query):
+def search_catalog(query, *, limit=6, expand=False):
+    """Busca en el catálogo local; la expansión morfológica es opt-in.
+
+    El límite histórico de seis resultados se conserva para recomendaciones.
+    La identificación puede pedir un límite mayor y prefijos de cinco letras
+    para recuperar flexiones como «vigilancia/vigilada», sin alterar el resto
+    de los recorridos.
+    """
     from .bibliographic_repository import lookup_sources
     structured = lookup_sources(query)
     from .models import Libro
-    terms = [t for t in re.findall(r'\w+', query)
-             if len(t) >= 3 and normalized(t) not in STOPWORDS][:10]
+    raw_terms = [t for t in re.findall(r'\w+', query)
+                 if len(t) >= 3 and normalized(t) not in STOPWORDS][:10]
+    terms = []
+    for term in raw_terms:
+        if term not in terms:
+            terms.append(term)
+        value = normalized(term)
+        if expand and len(value) >= 6:
+            prefix = value[:5]
+            if prefix not in terms:
+                terms.append(prefix)
     if not terms:
         return []
+    limit = max(1, min(int(limit), 30))
     condition = Q(titulo__icontains=query) | Q(autor__nombre__icontains=query)
     score = Case(When(titulo__iexact=query, then=Value(30)), default=Value(0),
                  output_field=IntegerField())
@@ -133,7 +150,7 @@ def search_catalog(query):
                       When(sinopsis__icontains=term, then=Value(1)),
                       default=Value(0), output_field=IntegerField())
     books = Libro.objects.select_related('autor').filter(condition).annotate(
-        literary_rank=score).order_by('-literary_rank', 'id')[:6]
+        literary_rank=score).order_by('-literary_rank', 'id')[:limit]
     return structured + [{'title': book.titulo, 'author': book.autor.nombre, 'description': book.sinopsis,
              'synopsis': book.sinopsis, 'image_url': safe_source_url(book.portada_url),
              'categories': [book.genero] if book.genero else [], 'language': book.idioma,
