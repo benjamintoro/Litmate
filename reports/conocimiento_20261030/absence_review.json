@@ -1,0 +1,1457 @@
+{
+  "reviewed": [
+    {
+      "case": 1,
+      "title": "La pen\u00ednsula de las casas vac\u00edas",
+      "initial_absence": true,
+      "variant_leads": [],
+      "conservatively_absent": true
+    },
+    {
+      "case": 2,
+      "title": "Mugre rosa",
+      "initial_absence": true,
+      "variant_leads": [],
+      "conservatively_absent": true
+    },
+    {
+      "case": 3,
+      "title": "La dimensi\u00f3n desconocida",
+      "initial_absence": true,
+      "variant_leads": [],
+      "conservatively_absent": true
+    },
+    {
+      "case": 4,
+      "title": "Las indignas",
+      "initial_absence": true,
+      "variant_leads": [],
+      "conservatively_absent": true
+    },
+    {
+      "case": 5,
+      "title": "Un verdor terrible",
+      "initial_absence": true,
+      "variant_leads": [],
+      "conservatively_absent": true
+    },
+    {
+      "case": 6,
+      "title": "El tercer para\u00edso",
+      "initial_absence": true,
+      "variant_leads": [],
+      "conservatively_absent": true
+    },
+    {
+      "case": 7,
+      "title": "Nuestra parte de noche",
+      "initial_absence": true,
+      "variant_leads": [],
+      "conservatively_absent": true
+    },
+    {
+      "case": 8,
+      "title": "Los abismos",
+      "initial_absence": false,
+      "variant_leads": [
+        {
+          "variant": "Los abismos",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\biblioteca\\biblioteca.sqlite3",
+          "hits": [
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "Los abismos",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\biblioteca\\rag.sqlite3",
+          "hits": [
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        }
+      ],
+      "conservatively_absent": false
+    },
+    {
+      "case": 9,
+      "title": "El invencible verano de Liliana",
+      "initial_absence": true,
+      "variant_leads": [],
+      "conservatively_absent": true
+    },
+    {
+      "case": 10,
+      "title": "La bastarda",
+      "initial_absence": false,
+      "variant_leads": [
+        {
+          "variant": "La bastarda",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\biblioteca\\biblioteca.sqlite3",
+          "hits": [
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks_content",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "La bastarda",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\biblioteca\\rag.sqlite3",
+          "hits": [
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks_content",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks_content",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        }
+      ],
+      "conservatively_absent": false
+    },
+    {
+      "case": 11,
+      "title": "Ekomo",
+      "initial_absence": true,
+      "variant_leads": [],
+      "conservatively_absent": true
+    },
+    {
+      "case": 12,
+      "title": "La mucama de Omicunl\u00e9",
+      "initial_absence": true,
+      "variant_leads": [],
+      "conservatively_absent": true
+    },
+    {
+      "case": 13,
+      "title": "Frieren",
+      "initial_absence": true,
+      "variant_leads": [],
+      "conservatively_absent": true
+    },
+    {
+      "case": 14,
+      "title": "Dandadan",
+      "initial_absence": true,
+      "variant_leads": [],
+      "conservatively_absent": true
+    },
+    {
+      "case": 15,
+      "title": "Pluto",
+      "initial_absence": false,
+      "variant_leads": [
+        {
+          "variant": "Pluto",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\adquisicion\\expansion10000_20261028.sqlite3",
+          "hits": [
+            {
+              "table": "acquisition_records",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "Pluto",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\biblioteca\\biblioteca.sqlite3",
+          "hits": [
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks_content",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks_content",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "Pluto",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\biblioteca\\rag.sqlite3",
+          "hits": [
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks_content",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks_content",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "Pluto",
+          "snapshot": "reports\\conocimiento_20261030\\initial_memory.sqlite3",
+          "hits": [
+            {
+              "table": "memory_works",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_aliases",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_entities",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_entities",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_sources",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_assertions",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_fts",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_fts_content",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "Pluto",
+          "mysql_name_matches": 1,
+          "mysql_label_matches": 1
+        }
+      ],
+      "conservatively_absent": false
+    },
+    {
+      "case": 16,
+      "title": "Sapiens",
+      "initial_absence": false,
+      "variant_leads": [],
+      "conservatively_absent": false
+    },
+    {
+      "case": 17,
+      "title": "Emma",
+      "initial_absence": false,
+      "variant_leads": [
+        {
+          "variant": "Emma",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\adquisicion\\expansion10000_20261028.sqlite3",
+          "hits": [
+            {
+              "table": "acquisition_records",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "acquisition_records",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "acquisition_records",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "acquisition_records",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "acquisition_records",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "acquisition_records",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "acquisition_records",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "acquisition_records",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "Emma",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\adquisicion\\expansion1000_20261028.sqlite3",
+          "hits": [
+            {
+              "table": "acquisition_records",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "acquisition_records",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "acquisition_records",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "Emma",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\adquisicion\\ledger.sqlite3",
+          "hits": [
+            {
+              "table": "acquisition_records",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "acquisition_records",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "acquisition_records",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "Emma",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\biblioteca\\biblioteca.sqlite3",
+          "hits": [
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "Emma",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\biblioteca\\rag.sqlite3",
+          "hits": [
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "Emma",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\biblioteca\\rag.sqlite3.vectors.sqlite3",
+          "hits": [
+            {
+              "table": "vectors",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "vectors",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "vectors",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "vectors",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "vectors",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "vectors",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "vectors",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "vectors",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "Emma",
+          "snapshot": "reports\\conocimiento_20261030\\initial_memory.sqlite3",
+          "hits": [
+            {
+              "table": "memory_works",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "memory_works",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_works",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_works",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_works",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_works",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_works",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_works",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "Emma",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\literary_memory_rag.sqlite3",
+          "hits": [
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "chunks_content",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "chunks_content",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "documents",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "documents",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "document_metadata",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "document_metadata",
+              "title_match": true,
+              "full_author_match": true
+            }
+          ]
+        },
+        {
+          "variant": "Emma",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\litmate_knowledge_rag.sqlite3",
+          "hits": [
+            {
+              "table": "rag_metadata",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "Emma",
+          "mysql_name_matches": 11,
+          "mysql_label_matches": 11
+        }
+      ],
+      "conservatively_absent": false
+    },
+    {
+      "case": 18,
+      "title": "Frankenstein",
+      "initial_absence": false,
+      "variant_leads": [
+        {
+          "variant": "Frankenstein",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\adquisicion\\ledger.sqlite3",
+          "hits": [
+            {
+              "table": "acquisition_records",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "acquisition_records",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "acquisition_records",
+              "title_match": true,
+              "full_author_match": true
+            }
+          ]
+        },
+        {
+          "variant": "Frankenstein",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\adquisicion\\mysql_pilot_20261028.sqlite3",
+          "hits": [
+            {
+              "table": "acquisition_records",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "Frankenstein",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\biblioteca\\biblioteca.sqlite3",
+          "hits": [
+            {
+              "table": "library_items",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "Frankenstein",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\biblioteca\\rag.sqlite3",
+          "hits": [
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "Frankenstein",
+          "snapshot": "reports\\conocimiento_20261030\\initial_memory.sqlite3",
+          "hits": [
+            {
+              "table": "memory_works",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_works",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "memory_works",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "memory_aliases",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_aliases",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "memory_entities",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_entities",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_entities",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "Frankenstein",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\literary_memory_rag.sqlite3",
+          "hits": [
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "chunks_content",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "chunks_content",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "chunks_content",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "chunks_content",
+              "title_match": true,
+              "full_author_match": true
+            }
+          ]
+        },
+        {
+          "variant": "Frankenstein",
+          "mysql_name_matches": 1,
+          "mysql_label_matches": 1
+        }
+      ],
+      "conservatively_absent": false
+    },
+    {
+      "case": 19,
+      "title": "The jade cabinet",
+      "initial_absence": false,
+      "variant_leads": [
+        {
+          "variant": "The jade cabinet",
+          "snapshot": "reports\\conocimiento_20261030\\initial_memory.sqlite3",
+          "hits": [
+            {
+              "table": "memory_works",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "memory_aliases",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "memory_entities",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_sources",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "memory_assertions",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "memory_fts",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "memory_fts_content",
+              "title_match": true,
+              "full_author_match": true
+            }
+          ]
+        },
+        {
+          "variant": "The jade cabinet",
+          "mysql_name_matches": 1,
+          "mysql_label_matches": 1
+        }
+      ],
+      "conservatively_absent": false
+    },
+    {
+      "case": 20,
+      "title": "El Se\u00f1or de los Anillos",
+      "initial_absence": false,
+      "variant_leads": [
+        {
+          "variant": "El Se\u00f1or de los Anillos",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\adquisicion\\ledger.sqlite3",
+          "hits": [
+            {
+              "table": "acquisition_records",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "acquisition_history",
+              "title_match": true,
+              "full_author_match": true
+            }
+          ]
+        },
+        {
+          "variant": "El Se\u00f1or de los Anillos",
+          "snapshot": "reports\\conocimiento_20261030\\initial_memory.sqlite3",
+          "hits": [
+            {
+              "table": "memory_works",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_works",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_works",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "memory_aliases",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_aliases",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_aliases",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "memory_entities",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_entities",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "El Se\u00f1or de los Anillos",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\literary_memory_rag.sqlite3",
+          "hits": [
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "chunks_content",
+              "title_match": true,
+              "full_author_match": true
+            }
+          ]
+        }
+      ],
+      "conservatively_absent": false
+    },
+    {
+      "case": 21,
+      "title": "Nana",
+      "initial_absence": false,
+      "variant_leads": [
+        {
+          "variant": "Nana",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\adquisicion\\expansion10000_20261028.sqlite3",
+          "hits": [
+            {
+              "table": "acquisition_records",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "acquisition_records",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "Nana",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\adquisicion\\expansion1000_20261028.sqlite3",
+          "hits": [
+            {
+              "table": "acquisition_records",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "Nana",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\biblioteca\\biblioteca.sqlite3",
+          "hits": [
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "Nana",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\biblioteca\\rag.sqlite3",
+          "hits": [
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "Nana",
+          "snapshot": "reports\\conocimiento_20261030\\initial_memory.sqlite3",
+          "hits": [
+            {
+              "table": "memory_works",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_works",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "memory_works",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_works",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_works",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_aliases",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_aliases",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "memory_aliases",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "Nana",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\literary_memory_rag.sqlite3",
+          "hits": [
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "chunks_content",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "documents",
+              "title_match": true,
+              "full_author_match": true
+            },
+            {
+              "table": "document_metadata",
+              "title_match": true,
+              "full_author_match": true
+            }
+          ]
+        },
+        {
+          "variant": "Nana",
+          "mysql_name_matches": 5,
+          "mysql_label_matches": 5
+        }
+      ],
+      "conservatively_absent": false
+    },
+    {
+      "case": 22,
+      "title": "La Odisea",
+      "initial_absence": true,
+      "variant_leads": [
+        {
+          "variant": "The Odyssey",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\adquisicion\\expansion10000_20261028.sqlite3",
+          "hits": [
+            {
+              "table": "acquisition_records",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "The Odyssey",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\biblioteca\\biblioteca.sqlite3",
+          "hits": [
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "library_chapters",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks_content",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks_content",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "The Odyssey",
+          "snapshot": "backups\\volcados_20261030_03\\files\\data\\biblioteca\\rag.sqlite3",
+          "hits": [
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks_content",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "chunks_content",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "The Odyssey",
+          "snapshot": "reports\\conocimiento_20261030\\initial_memory.sqlite3",
+          "hits": [
+            {
+              "table": "memory_works",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_aliases",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_entities",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_sources",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_assertions",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_fts",
+              "title_match": true,
+              "full_author_match": false
+            },
+            {
+              "table": "memory_fts_content",
+              "title_match": true,
+              "full_author_match": false
+            }
+          ]
+        },
+        {
+          "variant": "The Odyssey",
+          "mysql_name_matches": 1,
+          "mysql_label_matches": 1
+        }
+      ],
+      "conservatively_absent": false
+    }
+  ],
+  "absent_count": 12,
+  "omission": "Initial settings inventory did not resolve the default memory RAG path; immutable pre-experiment backup inspected here.",
+  "aliases_are_search_leads_not_verified_identity_merges": true
+}

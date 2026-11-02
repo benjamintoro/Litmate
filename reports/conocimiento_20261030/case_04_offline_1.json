@@ -1,0 +1,216 @@
+{
+  "case": {
+    "case": 4,
+    "title": "Las indignas",
+    "author": "Agustina Bazterrica",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": true
+  },
+  "offline": true,
+  "turns": [
+    {
+      "question": "Dime la trama de Las indignas de Agustina Bazterrica",
+      "answer": "Hay un problema temporal al consultar las fuentes de este libro. Puedes volver a intentarlo en unos instantes.",
+      "status": "unavailable",
+      "books": [],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 4254,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "work_type": "unknown",
+        "narrative_failure": "retrieval_unavailable",
+        "progress_metrics": {
+          "elapsed_ms": 4279.832,
+          "first_phase_emitted_ms": 20.64,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 9.916,
+            "cache_lookup": 0.684,
+            "knowledge_lookup": 625.333,
+            "retrieval": 2.301,
+            "web_search": 3668.681,
+            "extraction": 0.218,
+            "finalization": 25.461
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 3.698,
+              "elapsed_ms": 9.916,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 19.946,
+              "elapsed_ms": 0.684,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 33.093,
+              "elapsed_ms": 331.83,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 107.127,
+              "elapsed_ms": 36.59,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 207.646,
+              "elapsed_ms": 156.246,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 275.854,
+              "elapsed_ms": 49.942,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 431.276,
+              "elapsed_ms": 50.725,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 547.639,
+              "elapsed_ms": 2.301,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 555.576,
+              "elapsed_ms": 2318.767,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 2874.475,
+              "elapsed_ms": 360.528,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 3235.114,
+              "elapsed_ms": 0.218,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 3238.433,
+              "elapsed_ms": 989.386,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 4254.365,
+              "elapsed_ms": 25.461,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 20.64
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 4.2879,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.0358,
+        "verified_ready_seconds": 4.2483,
+        "first_verified_text_seconds": 4.2879
+      }
+    }
+  ],
+  "seconds": 6.458,
+  "public_research_trace": [
+    {
+      "stage": "retrieved_public_evidence",
+      "sources": [
+        {
+          "id": 1,
+          "title": "Las indignas",
+          "author": "Agustina Bazterrica",
+          "description": "Las indignas, de Agustina Bazterrica.",
+          "source": "Open Library",
+          "year": "2025",
+          "book_id": "",
+          "kind": "book",
+          "url": "https://openlibrary.org/works/OL42422781W",
+          "locator": "",
+          "read_mode": "metadatos bibliogr\u00e1ficos; no sinopsis ni texto de la obra",
+          "retrieved_at": "1793361912.5521894",
+          "work_id": "litmate:dc11cadd1e2c11586bc32cf2",
+          "license": "Open Library bibliographic facts; rights vary",
+          "trust": "untrusted_data",
+          "expires_at": "1795953912.5521894",
+          "evidence_hash": "b9417213747f0f9638455b6cb7689b6b9676e058973341c834d0f37f9e6b699d",
+          "memory_source_id": "ae2217e90ddcbbb1828629dc16ea9bf7b388d274356012c79384f83416aa06cd",
+          "last_verified_at": "1793361912.5521894",
+          "policy": "openlibrary-minimal-metadata-v1",
+          "memory_verified": true,
+          "confirmed_aliases": [],
+          "isbns": [],
+          "categories": []
+        }
+      ]
+    }
+  ],
+  "coverage_before": {
+    "works": 14477,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14650,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14477,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14650,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "new_empty_store",
+  "google_books_enabled": false,
+  "factual_review_pending": true
+}

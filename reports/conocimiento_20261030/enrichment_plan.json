@@ -1,0 +1,2448 @@
+{
+  "works": [
+    {
+      "author": "Bram Stoker",
+      "categories": [
+        "Horror tales",
+        "Epistolary fiction",
+        "Gothic fiction",
+        "Vampires -- Fiction",
+        "Dracula, Count (Fictitious character) -- Fiction",
+        "Transylvania (Romania) -- Fiction",
+        "Whitby (England) -- Fiction",
+        "English literature",
+        "Fiction",
+        "Horror",
+        "Horror stories",
+        "Monsters",
+        "Thriller",
+        "Vampires",
+        "Vampires in literature",
+        "Horror fiction",
+        "Irish authors",
+        "Epistolary novels"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:345",
+      "isbns": [],
+      "kind": "book",
+      "language": "en",
+      "source": "Open Library",
+      "title": "Dracula",
+      "url": "https://openlibrary.org/works/OL85892W",
+      "work_id": "litmate:46dfb046114b9bb495766e91",
+      "year": "1897"
+    },
+    {
+      "author": "Hermann Hesse",
+      "categories": [
+        "Gautama Buddha -- Fiction",
+        "India -- Social life and customs -- Fiction",
+        "Spiritual life -- Fiction",
+        "Self-realization -- Fiction",
+        "Buddhism -- Fiction",
+        "Buddhist philosophy -- Fiction",
+        "Brahmans -- Fiction",
+        "India -- Religion -- Fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:2500",
+      "isbns": [],
+      "kind": "book",
+      "language": "en",
+      "source": "Project Gutenberg",
+      "title": "Siddhartha",
+      "url": "https://www.gutenberg.org/ebooks/2500",
+      "work_id": "litmate:71db6dd229e48489ec616c73"
+    },
+    {
+      "author": "H. G. (Herbert George) Wells",
+      "categories": [
+        "Science fiction",
+        "Time travel -- Fiction",
+        "Dystopias -- Fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:35",
+      "isbns": [],
+      "kind": "book",
+      "language": "en",
+      "source": "Project Gutenberg",
+      "title": "The Time Machine",
+      "url": "https://www.gutenberg.org/ebooks/35",
+      "work_id": "litmate:cd01a12f9f01f2eb764bc33a"
+    },
+    {
+      "author": "Louisa May Alcott",
+      "categories": [
+        "Autobiographical fiction",
+        "Young women -- Fiction",
+        "Sisters -- Fiction",
+        "Domestic fiction",
+        "Family life -- New England -- Fiction",
+        "New England -- Fiction",
+        "Bildungsromans",
+        "Mothers and daughters -- Fiction",
+        "March family (Fictitious characters) -- Fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:514",
+      "isbns": [],
+      "kind": "book",
+      "language": "en",
+      "source": "Project Gutenberg",
+      "title": "Little Women",
+      "url": "https://www.gutenberg.org/ebooks/514",
+      "work_id": "litmate:62f6b717c0fc6a444106f1fd"
+    },
+    {
+      "author": "Masashi Kishimoto",
+      "categories": [],
+      "confirmed_aliases": [],
+      "isbns": [],
+      "kind": "book",
+      "source": "Wikidata",
+      "title": "Naruto",
+      "url": "https://www.wikidata.org/wiki/Q26971382",
+      "work_id": "litmate:08b8681c9bf72cef50c814de",
+      "year": ""
+    },
+    {
+      "author": "William Shakespeare",
+      "categories": [
+        "Tragedies (Drama)",
+        "Hamlet (Legendary character) -- Drama",
+        "Kings and rulers -- Succession -- Drama",
+        "Murder victims' families -- Drama",
+        "Fathers -- Death -- Drama",
+        "Revenge -- Drama",
+        "Princes -- Drama",
+        "Denmark -- Drama"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:2265",
+      "isbns": [],
+      "kind": "book",
+      "language": "en",
+      "source": "Project Gutenberg",
+      "title": "Hamlet",
+      "url": "https://www.gutenberg.org/ebooks/2265",
+      "work_id": "litmate:1b64de1ef9aa091efbbf8607"
+    },
+    {
+      "author": "Jane Austen",
+      "categories": [
+        "England -- Fiction",
+        "Young women -- Fiction",
+        "Love stories",
+        "Sisters -- Fiction",
+        "Domestic fiction",
+        "Courtship -- Fiction",
+        "Social classes -- Fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:1342",
+      "isbns": [],
+      "kind": "book",
+      "language": "en",
+      "source": "Project Gutenberg",
+      "title": "Pride and Prejudice",
+      "url": "https://www.gutenberg.org/ebooks/1342",
+      "work_id": "litmate:6622e17664f02b8cace11892"
+    },
+    {
+      "author": "Horacio Quiroga",
+      "categories": [
+        "Short stories, Uruguayan",
+        "Uruguayan fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:13507",
+      "isbns": [],
+      "kind": "book",
+      "language": "es",
+      "source": "Project Gutenberg",
+      "title": "Cuentos de Amor de Locura y de Muerte",
+      "url": "https://www.gutenberg.org/ebooks/13507",
+      "work_id": "litmate:d5d319915f1a94f5443c060d"
+    },
+    {
+      "author": "Walter Pater",
+      "categories": [
+        "Renaissance -- Italy",
+        "Renaissance",
+        "Arts, Renaissance"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:2398",
+      "isbns": [],
+      "kind": "book",
+      "language": "en",
+      "source": "Project Gutenberg",
+      "title": "The Renaissance: Studies in Art and Poetry",
+      "url": "https://www.gutenberg.org/ebooks/2398",
+      "work_id": "litmate:e7bdcccf098e3d5f783b6eda"
+    },
+    {
+      "author": "Percy Bysshe Shelley",
+      "categories": [
+        "Poetry",
+        "English essays"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:5428",
+      "isbns": [],
+      "kind": "book",
+      "language": "en",
+      "source": "Project Gutenberg",
+      "title": "A Defence of Poetry and Other Essays",
+      "url": "https://www.gutenberg.org/ebooks/5428",
+      "work_id": "litmate:31fef4ab8119d6b7dc0e6095"
+    },
+    {
+      "author": "Miguel de Cervantes Saavedra",
+      "categories": [
+        "Spain -- Social life and customs -- 16th century -- Fiction",
+        "Knights and knighthood -- Spain -- Fiction",
+        "Picaresque literature",
+        "Romances"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:2000",
+      "isbns": [],
+      "kind": "book",
+      "language": "es",
+      "source": "Project Gutenberg",
+      "title": "Don Quijote",
+      "url": "https://www.gutenberg.org/ebooks/2000",
+      "work_id": "litmate:d078997cc9d2175b8e27e594"
+    },
+    {
+      "author": "Herman Melville",
+      "categories": [
+        "Whaling -- Fiction",
+        "Sea stories",
+        "Psychological fiction",
+        "Ship captains -- Fiction",
+        "Adventure stories",
+        "Mentally ill -- Fiction",
+        "Ahab, Captain (Fictitious character) -- Fiction",
+        "Whales -- Fiction",
+        "Whaling ships -- Fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:15",
+      "isbns": [],
+      "kind": "book",
+      "language": "en",
+      "source": "Project Gutenberg",
+      "title": "Moby-Dick; or, The Whale",
+      "url": "https://www.gutenberg.org/ebooks/15",
+      "work_id": "litmate:68319f2cca92a21a05ed626d"
+    },
+    {
+      "author": "Frances Hodgson Burnett",
+      "categories": [
+        "Orphans -- Juvenile fiction",
+        "People with disabilities -- Juvenile fiction",
+        "Gardens -- Juvenile fiction",
+        "Yorkshire (England) -- Juvenile fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:113",
+      "isbns": [],
+      "kind": "book",
+      "language": "en",
+      "source": "Project Gutenberg",
+      "title": "The Secret Garden",
+      "url": "https://www.gutenberg.org/ebooks/113",
+      "work_id": "litmate:1740cd8c34812644000a8d8d"
+    },
+    {
+      "author": "W. E. B. (William Edward Burghardt) Du Bois",
+      "categories": [
+        "African Americans"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:408",
+      "isbns": [],
+      "kind": "book",
+      "language": "en",
+      "source": "Project Gutenberg",
+      "title": "The Souls of Black Folk",
+      "url": "https://www.gutenberg.org/ebooks/408",
+      "work_id": "litmate:3a15e370f52c5c264c9aed5e"
+    },
+    {
+      "author": "Emperor of Rome Marcus Aurelius",
+      "categories": [
+        "Stoics",
+        "Ethics",
+        "Life"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:2680",
+      "isbns": [],
+      "kind": "book",
+      "language": "en",
+      "source": "Project Gutenberg",
+      "title": "Meditations",
+      "url": "https://www.gutenberg.org/ebooks/2680",
+      "work_id": "litmate:ebd2db2691f71e6e6d811390"
+    },
+    {
+      "author": "Edgar Rice Burroughs",
+      "categories": [
+        "Science fiction",
+        "Mars (Planet) -- Fiction",
+        "Princesses -- Fiction",
+        "Carter, John (Fictitious character) -- Fiction",
+        "Dejah Thoris (Fictitious character) -- Fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:62",
+      "isbns": [],
+      "kind": "book",
+      "language": "en",
+      "source": "Project Gutenberg",
+      "title": "A princess of Mars",
+      "url": "https://www.gutenberg.org/ebooks/62",
+      "work_id": "litmate:58cb8b674da070b6719ec654"
+    },
+    {
+      "author": "Charlotte Perkins Gilman",
+      "categories": [
+        "Psychological fiction",
+        "Mentally ill women -- Fiction",
+        "Feminist fiction",
+        "Married women -- Psychology -- Fiction",
+        "Sex role -- Fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:1952",
+      "isbns": [],
+      "kind": "book",
+      "language": "en",
+      "source": "Project Gutenberg",
+      "title": "The Yellow Wallpaper",
+      "url": "https://www.gutenberg.org/ebooks/1952",
+      "work_id": "litmate:c52d88b556adf56dd70bfa9a"
+    },
+    {
+      "author": "Jianren Wu",
+      "categories": [
+        "Chinese fiction -- Qing dynasty, 1644-1912"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:24227",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u60c5\u8b8a",
+      "url": "https://www.gutenberg.org/ebooks/24227",
+      "work_id": "litmate:00217424a77db78ffc4c2ffb"
+    },
+    {
+      "author": "Yu Lu",
+      "categories": [
+        "Tea -- China -- Early works to 1800",
+        "Tea -- China -- History"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:7406",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u8336\u7d93",
+      "url": "https://www.gutenberg.org/ebooks/7406",
+      "work_id": "litmate:089c914f02a0fd992a54800f"
+    },
+    {
+      "author": "Guanzhong Luo",
+      "categories": [
+        "China -- History -- Tang dynasty, 618-907 -- Fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:23824",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u8aaa\u5510",
+      "url": "https://www.gutenberg.org/ebooks/23824",
+      "work_id": "litmate:11704f702c7c17626c7e5bda"
+    },
+    {
+      "author": "Shang L\u00fc",
+      "categories": [
+        "Military art and science -- China -- Early works to 1800"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:7340",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u516d\u97dc",
+      "url": "https://www.gutenberg.org/ebooks/7340",
+      "work_id": "litmate:117466959d24453db84ca739"
+    },
+    {
+      "author": "Laozi",
+      "categories": [
+        "Taoism",
+        "Philosophy, Chinese"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:24039",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u8001\u5b50",
+      "url": "https://www.gutenberg.org/ebooks/24039",
+      "work_id": "litmate:1351f4f9bf76a12404391d37"
+    },
+    {
+      "author": "Ant\u00f3nio Pereira Nobre",
+      "categories": [
+        "Poetry",
+        "Portuguese poetry"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:17193",
+      "isbns": [],
+      "kind": "book",
+      "language": "pt",
+      "source": "Project Gutenberg",
+      "title": "S\u00f3",
+      "url": "https://www.gutenberg.org/ebooks/17193",
+      "work_id": "litmate:1b6d3fefee9737d5f089d2c7"
+    },
+    {
+      "author": "Guan, Zhong, -646 BCE",
+      "categories": [
+        "Philosophy, Chinese",
+        "Chinese classics"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:7367",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u7ba1\u5b50",
+      "url": "https://www.gutenberg.org/ebooks/7367",
+      "work_id": "litmate:1cb1b24c3f0f4bbfb959b312"
+    },
+    {
+      "author": "Saneatsu Mushanokoji",
+      "categories": [
+        "Fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:33307",
+      "isbns": [],
+      "kind": "book",
+      "language": "ja",
+      "source": "Project Gutenberg",
+      "title": "\u53cb\u60c5",
+      "url": "https://www.gutenberg.org/ebooks/33307",
+      "work_id": "litmate:231fd6981deb6662a1346979"
+    },
+    {
+      "author": "Ke Yue",
+      "categories": [
+        "China -- History -- Song dynasty, 960-1279 -- Anecdotes"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:26887",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u686f\u53f2",
+      "url": "https://www.gutenberg.org/ebooks/26887",
+      "work_id": "litmate:2f1a937ecce9e0664a9c2131"
+    },
+    {
+      "author": "Nanzhuang Zhang",
+      "categories": [
+        "Chinese fiction -- Qing dynasty, 1644-1912"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:24327",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u4f55\u5178",
+      "url": "https://www.gutenberg.org/ebooks/24327",
+      "work_id": "litmate:3788ec78a6ce7db275ce67e3"
+    },
+    {
+      "author": "Zhong, Rong, active 502-519",
+      "categories": [
+        "Chinese poetry -- History and criticism"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:7342",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u8a69\u54c1",
+      "url": "https://www.gutenberg.org/ebooks/7342",
+      "work_id": "litmate:3dfc614c2167c581b890152b"
+    },
+    {
+      "author": "Zhou, Gong, -1106 BCE",
+      "categories": [],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:25263",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u5468\u79ae",
+      "url": "https://www.gutenberg.org/ebooks/25263",
+      "work_id": "litmate:46d877581f3c4c99a9329ca1"
+    },
+    {
+      "author": "Chong Wang",
+      "categories": [
+        "Philosophy, Chinese"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:25397",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u8ad6\u8861",
+      "url": "https://www.gutenberg.org/ebooks/25397",
+      "work_id": "litmate:4a590b2e114289e936eb988a"
+    },
+    {
+      "author": "Shen, Dao, 351? BCE-276? BCE",
+      "categories": [
+        "Taoism",
+        "Philosophy, Chinese"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:25366",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u614e\u5b50",
+      "url": "https://www.gutenberg.org/ebooks/25366",
+      "work_id": "litmate:5351d6250d7dee2b8227b03f"
+    },
+    {
+      "author": "Liu, Xiang, 78? BCE-7? BCE",
+      "categories": [
+        "China -- History -- Anecdotes"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:7332",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u8aaa\u82d1",
+      "url": "https://www.gutenberg.org/ebooks/7332",
+      "work_id": "litmate:53f93d2884d637101b7a0cda"
+    },
+    {
+      "author": "Anonymous",
+      "categories": [
+        "Chinese poetry"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:23873",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u8a69\u7d93",
+      "url": "https://www.gutenberg.org/ebooks/23873",
+      "work_id": "litmate:630166628b652955fc5455c4"
+    },
+    {
+      "author": "Shiying Mu",
+      "categories": [
+        "Short stories, Chinese"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:25259",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u516c\u5893",
+      "url": "https://www.gutenberg.org/ebooks/25259",
+      "work_id": "litmate:6b08ec0623c157f7c0566915"
+    },
+    {
+      "author": "Huang, Shigong, active 3rd century B.C.",
+      "categories": [
+        "Military art and science -- China -- Early works to 1800"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:7218",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u4e09\u7565",
+      "url": "https://www.gutenberg.org/ebooks/7218",
+      "work_id": "litmate:6cb6c5278cb7493dc0c37e2d"
+    },
+    {
+      "author": "Unknown",
+      "categories": [
+        "Chinese language -- To 600",
+        "Encyclopedias and dictionaries, Chinese"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:51620",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u723e\u96c5",
+      "url": "https://www.gutenberg.org/ebooks/51620",
+      "work_id": "litmate:72698a0040721e0ea08764ca"
+    },
+    {
+      "author": "Ming Zuoqiu",
+      "categories": [
+        "Confucius. Chun qiu"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:24136",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u5de6\u50b3",
+      "url": "https://www.gutenberg.org/ebooks/24136",
+      "work_id": "litmate:73ea9728765200a402bf87f8"
+    },
+    {
+      "author": "Anonymous",
+      "categories": [
+        "Ethics -- China",
+        "Etiquette -- China",
+        "China -- Social life and customs"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:24048",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u79ae\u8a18",
+      "url": "https://www.gutenberg.org/ebooks/24048",
+      "work_id": "litmate:79d1d511471698944d3f7354"
+    },
+    {
+      "author": "Xun Lu",
+      "categories": [
+        "Short stories, Chinese"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:24042",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u5fac\u5fa8",
+      "url": "https://www.gutenberg.org/ebooks/24042",
+      "work_id": "litmate:7b1877d1aad7e1a0a2fbd38c"
+    },
+    {
+      "author": "Jalmari Finne",
+      "categories": [
+        "Finnish literature"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:62556",
+      "isbns": [],
+      "kind": "book",
+      "language": "fi",
+      "source": "Project Gutenberg",
+      "title": "Me",
+      "url": "https://www.gutenberg.org/ebooks/62556",
+      "work_id": "litmate:7c5339caac260972417801a7"
+    },
+    {
+      "author": "Yang, Xiong, 54 BCE-18",
+      "categories": [
+        "Chinese language -- Dialects"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:27294",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u65b9\u8a00",
+      "url": "https://www.gutenberg.org/ebooks/27294",
+      "work_id": "litmate:7d094ab03b03964780636366"
+    },
+    {
+      "author": "Sima, Qian, 146? BCE-87? BCE",
+      "categories": [
+        "China -- History -- To 221 B.C.",
+        "China -- History -- Qin dynasty, 221-207 B.C.",
+        "China -- History -- Han dynasty, 202 B.C.-220 A.D."
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:24226",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u53f2\u8a18",
+      "url": "https://www.gutenberg.org/ebooks/24226",
+      "work_id": "litmate:7fe9b19564c2144b4449fa21"
+    },
+    {
+      "author": "Jun'ichiro Tanizaki",
+      "categories": [
+        "Man-woman relationships -- Fiction",
+        "Japan -- Fiction",
+        "Tattoo artists -- Fiction",
+        "Tattooed people -- Fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:31617",
+      "isbns": [],
+      "kind": "book",
+      "language": "ja",
+      "source": "Project Gutenberg",
+      "title": "\u523a\u9751",
+      "url": "https://www.gutenberg.org/ebooks/31617",
+      "work_id": "litmate:8132dd099247a7e6cfd199d4"
+    },
+    {
+      "author": "Shang, Yang, -339 BCE",
+      "categories": [
+        "China -- Politics and government -- To 221 B.C.",
+        "Shang, Yang, -338 B.C.",
+        "Political science -- Early works to 1800"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:7383",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u5546\u5b50",
+      "url": "https://www.gutenberg.org/ebooks/7383",
+      "work_id": "litmate:82d812c808e041c178044d59"
+    },
+    {
+      "author": "373? BCE-290? BCE Mencius",
+      "categories": [
+        "Philosophy, Chinese -- Early works to 1800",
+        "Conduct of life -- Early works to 1800",
+        "Philosophy, Confucian -- Early works to 1800"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:24178",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u5b5f\u5b50",
+      "url": "https://www.gutenberg.org/ebooks/24178",
+      "work_id": "litmate:8a6ff05eeb248b380054711a"
+    },
+    {
+      "author": "Ni Zhang",
+      "categories": [
+        "Go (Game) -- China"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:7407",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u68cb\u7d93",
+      "url": "https://www.gutenberg.org/ebooks/7407",
+      "work_id": "litmate:8b66b4f668596b7fbd98e6bc"
+    },
+    {
+      "author": "Jun'ichiro Tanizaki",
+      "categories": [
+        "Fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:37605",
+      "isbns": [],
+      "kind": "book",
+      "language": "ja",
+      "source": "Project Gutenberg",
+      "title": "\u60e1\u9b54",
+      "url": "https://www.gutenberg.org/ebooks/37605",
+      "work_id": "litmate:947b5df1e30536c1d920cf2f"
+    },
+    {
+      "author": "Peng, Zunsi, jin shi 1737",
+      "categories": [
+        "Sichuan Sheng (China) -- History"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:23947",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u8700\u78a7",
+      "url": "https://www.gutenberg.org/ebooks/23947",
+      "work_id": "litmate:97ec4f9e270a156d032641c8"
+    },
+    {
+      "author": "active 4th century B.C. Liezi",
+      "categories": [
+        "Taoism",
+        "China -- Politics and government -- To 221 B.C.",
+        "Chinese classics",
+        "China -- Politics and government -- 221 B.C.-960 A.D.",
+        "China -- Politics and government -- 960-1644"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:7341",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u5217\u5b50",
+      "url": "https://www.gutenberg.org/ebooks/7341",
+      "work_id": "litmate:9b83f688f4a6a96988e29f48"
+    },
+    {
+      "author": "Liu, Xiang, 78? BCE-7? BCE",
+      "categories": [
+        "China -- History -- Anecdotes"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:23945",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u65b0\u5e8f",
+      "url": "https://www.gutenberg.org/ebooks/23945",
+      "work_id": "litmate:9c6342f9fdedde7de70238f2"
+    },
+    {
+      "author": "Xun Lu",
+      "categories": [
+        "Chinese literature",
+        "Prose poems"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:25242",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u91ce\u8349",
+      "url": "https://www.gutenberg.org/ebooks/25242",
+      "work_id": "litmate:ac2adce798854a3e1cc76bd1"
+    },
+    {
+      "author": "552 BCE-480 BCE Confucius",
+      "categories": [
+        "Ethics -- China",
+        "Philosophy, Chinese"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:23839",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u8ad6\u8a9e",
+      "url": "https://www.gutenberg.org/ebooks/23839",
+      "work_id": "litmate:b2be6ac861cfb4b05b655067"
+    },
+    {
+      "author": "Tuotuo",
+      "categories": [
+        "China -- History -- Song dynasty, 960-1279"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:24183",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u5b8b\u53f2",
+      "url": "https://www.gutenberg.org/ebooks/24183",
+      "work_id": "litmate:b7f9754234b71603c299bb48"
+    },
+    {
+      "author": "Mo, Di, 471? BCE-392? BCE",
+      "categories": [
+        "Philosophy, Chinese"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:24240",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u58a8\u5b50",
+      "url": "https://www.gutenberg.org/ebooks/24240",
+      "work_id": "litmate:c0eb9ad76f6aeaa722172a22"
+    },
+    {
+      "author": "Zi Ye",
+      "categories": [
+        "Short stories, Chinese"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:25260",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u8c50\u6536",
+      "url": "https://www.gutenberg.org/ebooks/25260",
+      "work_id": "litmate:c7340797e35f233289737985"
+    },
+    {
+      "author": "Qifeng Shen",
+      "categories": [
+        "Chinese fiction -- Qing dynasty, 1644-1912",
+        "Short stories, Chinese"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:25375",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u8ae7\u9438",
+      "url": "https://www.gutenberg.org/ebooks/25375",
+      "work_id": "litmate:c7d38db305703e90ceb44865"
+    },
+    {
+      "author": "Unknown",
+      "categories": [
+        "Ethics -- China"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:24232",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u5b5d\u7d93",
+      "url": "https://www.gutenberg.org/ebooks/24232",
+      "work_id": "litmate:df37240678e38e9ae36e5d38"
+    },
+    {
+      "author": "Yue Xun",
+      "categories": [
+        "Taoism",
+        "Ethics -- China",
+        "Philosophy, Chinese",
+        "Confucius"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:7408",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u7533\u9452",
+      "url": "https://www.gutenberg.org/ebooks/7408",
+      "work_id": "litmate:e029666431650ebd0c43ac9c"
+    },
+    {
+      "author": "Jianren Wu",
+      "categories": [
+        "Chinese fiction -- Qing dynasty, 1644-1912",
+        "Arranged marriage -- Fiction",
+        "China -- History -- Boxer Rebellion, 1899-1901 -- Fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:23865",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u6068\u6d77",
+      "url": "https://www.gutenberg.org/ebooks/23865",
+      "work_id": "litmate:e7544b0c67ef066738937cf3"
+    },
+    {
+      "author": "Dafu Yu",
+      "categories": [
+        "Chinese prose literature",
+        "Chinese fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:27636",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u6c89\u6ca6",
+      "url": "https://www.gutenberg.org/ebooks/27636",
+      "work_id": "litmate:f9569ed893b924bbf6923542"
+    },
+    {
+      "author": "Ming Zuoqiu",
+      "categories": [
+        "China -- History -- Spring and Autumn period, 722-481 B.C."
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:23911",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u570b\u8a9e",
+      "url": "https://www.gutenberg.org/ebooks/23911",
+      "work_id": "litmate:fcb49067f20aef4ffa4972ef"
+    },
+    {
+      "author": "Sima, Rangju, active 4th century B.C.",
+      "categories": [
+        "Military art and science -- Early works to 1800"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:25167",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u53f8\u99ac\u6cd5",
+      "url": "https://www.gutenberg.org/ebooks/25167",
+      "work_id": "litmate:00f487b06589fd5f40b11e6b"
+    },
+    {
+      "author": "Hakuch\u014d Masamune",
+      "categories": [
+        "Fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:32941",
+      "isbns": [],
+      "kind": "book",
+      "language": "ja",
+      "source": "Project Gutenberg",
+      "title": "\u4f55\u8655\u3078",
+      "url": "https://www.gutenberg.org/ebooks/32941",
+      "work_id": "litmate:014a7a51e7e9cdf66e3eca02"
+    },
+    {
+      "author": "Tianranchisou",
+      "categories": [
+        "Chinese fiction -- Ming dynasty, 1368-1644"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:25399",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u77f3\u9ede\u982d",
+      "url": "https://www.gutenberg.org/ebooks/25399",
+      "work_id": "litmate:02495dc82f8613a4ddb89116"
+    },
+    {
+      "author": "active 18th century Su'anzhuren",
+      "categories": [
+        "Chinese fiction -- Qing dynasty, 1644-1912"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:25279",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u9326\u9999\u4ead",
+      "url": "https://www.gutenberg.org/ebooks/25279",
+      "work_id": "litmate:04c6e953434e820e97c295ae"
+    },
+    {
+      "author": "Xiaoxiaosheng",
+      "categories": [
+        "Domestic fiction",
+        "Chinese fiction -- Ming dynasty, 1368-1644",
+        "China -- Social life and customs -- 960-1644 -- Fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:52200",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u91d1\u74f6\u6885",
+      "url": "https://www.gutenberg.org/ebooks/52200",
+      "work_id": "litmate:060eb62528354506cab00436"
+    },
+    {
+      "author": "Juyi Bai",
+      "categories": [
+        "Chinese poetry",
+        "Yang, gui fei, 719-756 -- Poetry",
+        "Tang Xuanzong, Emperor of China, 685-762 -- Poetry"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:25352",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u9577\u6068\u6b4c",
+      "url": "https://www.gutenberg.org/ebooks/25352",
+      "work_id": "litmate:07ebc841f1799840d7a4efad"
+    },
+    {
+      "author": "Jun Yue",
+      "categories": [
+        "Chinese fiction -- Qing dynasty, 1644-1912"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:27459",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u8033\u98df\u9304",
+      "url": "https://www.gutenberg.org/ebooks/27459",
+      "work_id": "litmate:0b3e45cd260e6dc0613f2981"
+    },
+    {
+      "author": "Daochuo",
+      "categories": [
+        "Pure Land Buddhism -- Doctrines -- Early works to 1800"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:24106",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u5b89\u6a02\u96c6",
+      "url": "https://www.gutenberg.org/ebooks/24106",
+      "work_id": "litmate:0e4c575056b20a68cf6fba78"
+    },
+    {
+      "author": "active 17th century-18th century Yuanhuyanshuisanren",
+      "categories": [
+        "Chinese fiction -- Qing dynasty, 1644-1912"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:27734",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u5408\u6d66\u73e0",
+      "url": "https://www.gutenberg.org/ebooks/27734",
+      "work_id": "litmate:0fd1bb4bf9136db4d45b2a8a"
+    },
+    {
+      "author": "Adolfo Albertazzi",
+      "categories": [
+        "Fiction",
+        "Short stories, Italian"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:38338",
+      "isbns": [],
+      "kind": "book",
+      "language": "it",
+      "source": "Project Gutenberg",
+      "title": "Top",
+      "url": "https://www.gutenberg.org/ebooks/38338",
+      "work_id": "litmate:100697b8678a19944ae80730"
+    },
+    {
+      "author": "Han, Fei, -234 BCE",
+      "categories": [
+        "Philosophy, Chinese",
+        "Legalism (Chinese philosophy)"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:24049",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u97e9\u975e\u5b50",
+      "url": "https://www.gutenberg.org/ebooks/24049",
+      "work_id": "litmate:105b56fd9c4025fccc83b9f1"
+    },
+    {
+      "author": "Rudyard Kipling",
+      "categories": [
+        "Orphans -- Fiction",
+        "India -- Fiction",
+        "Boys -- Fiction",
+        "Adventure stories",
+        "Spy stories",
+        "Lamas -- Fiction",
+        "Irish -- India -- Fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:2226",
+      "isbns": [],
+      "kind": "book",
+      "language": "en",
+      "source": "Project Gutenberg",
+      "title": "Kim",
+      "url": "https://www.gutenberg.org/ebooks/2226",
+      "work_id": "litmate:11b609e7c112ba6618253bbf"
+    },
+    {
+      "author": "Nanbeiheguanshizhe",
+      "categories": [
+        "Chinese fiction -- Qing dynasty, 1644-1912"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:26922",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u6625\u67f3\u9daf",
+      "url": "https://www.gutenberg.org/ebooks/26922",
+      "work_id": "litmate:11dade0137904f703aad2490"
+    },
+    {
+      "author": "Deng, Xi, 546 BCE-502 BCE",
+      "categories": [
+        "Philosophy, Chinese"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:7215",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u9127\u6790\u5b50",
+      "url": "https://www.gutenberg.org/ebooks/7215",
+      "work_id": "litmate:14bec8f8b6c6e4df98e5bb98"
+    },
+    {
+      "author": "Hanqing Guan",
+      "categories": [
+        "Chinese drama (Tragedy)"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:52276",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u7ac7\u5a25\u51a4",
+      "url": "https://www.gutenberg.org/ebooks/52276",
+      "work_id": "litmate:15c9a1e730a0cd1465e2a6f9"
+    },
+    {
+      "author": "Zhuo Zhang",
+      "categories": [
+        "Chinese fiction -- Tang dynasty, 618-907"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:24295",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u904a\u4ed9\u7a9f",
+      "url": "https://www.gutenberg.org/ebooks/24295",
+      "work_id": "litmate:169ae58bd3cd5e40ccd246e9"
+    },
+    {
+      "author": "Zuohuasanren",
+      "categories": [
+        "Chinese fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:27402",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u98a8\u6d41\u609f",
+      "url": "https://www.gutenberg.org/ebooks/27402",
+      "work_id": "litmate:19a27252d3c3c1e85b27b4c2"
+    },
+    {
+      "author": "Qingzhao Li",
+      "categories": [
+        "Chinese poetry -- Song dynasty, 960-1279",
+        "Ci (Chinese poetry) -- Women authors"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:25367",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u6f31\u7389\u8a5e",
+      "url": "https://www.gutenberg.org/ebooks/25367",
+      "work_id": "litmate:1a49983e5bcc4ffafb989fb6"
+    },
+    {
+      "author": "active 17th century-18th century Yunyangchichidaoren",
+      "categories": [
+        "Chinese fiction -- Qing dynasty, 1644-1912"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:25284",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u4e94\u9cf3\u541f",
+      "url": "https://www.gutenberg.org/ebooks/25284",
+      "work_id": "litmate:1a7da41adb06c6094199fccd"
+    },
+    {
+      "author": "Huayangsanren",
+      "categories": [
+        "Chinese fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:27753",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u4e00\u6795\u5947",
+      "url": "https://www.gutenberg.org/ebooks/27753",
+      "work_id": "litmate:1d545a41f56c00ebe2388bea"
+    },
+    {
+      "author": "Junqing Wang",
+      "categories": [
+        "Chinese fiction -- Qing dynasty, 1644-1912"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:24029",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u51b7\u773c\u89c2",
+      "url": "https://www.gutenberg.org/ebooks/24029",
+      "work_id": "litmate:1d96125e13d84aad0ab33dd1"
+    },
+    {
+      "author": "Liang Zhuge",
+      "categories": [
+        "China -- History -- Three kingdoms, 220-265 -- Sources"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:30460",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u51fa\u5e2b\u8868",
+      "url": "https://www.gutenberg.org/ebooks/30460",
+      "work_id": "litmate:1e19a6d4040f63703d8e1c10"
+    },
+    {
+      "author": "Chuo Zhuang",
+      "categories": [
+        "China -- History -- Song dynasty, 960-1279 -- Anecdotes"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:27398",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u96de\u808b\u7de8",
+      "url": "https://www.gutenberg.org/ebooks/27398",
+      "work_id": "litmate:21481d501e233fa94c984ba1"
+    },
+    {
+      "author": "Zhang, Zhongjing, active 168-196",
+      "categories": [
+        "Medicine, Chinese -- Early works to 1800",
+        "Medicine, Chinese -- Formulae, receipts, prescriptions",
+        "Medicine, Ancient",
+        "Medicine, Chinese -- Terminology"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:24272",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u50b7\u5bd2\u8ad6",
+      "url": "https://www.gutenberg.org/ebooks/24272",
+      "work_id": "litmate:21a2e7218226a9303608596f"
+    },
+    {
+      "author": "Shangren Kong",
+      "categories": [
+        "Chinese drama"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:24234",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u6843\u82b1\u6247",
+      "url": "https://www.gutenberg.org/ebooks/24234",
+      "work_id": "litmate:23047358796f546589e72b4c"
+    },
+    {
+      "author": "Hong Ge",
+      "categories": [
+        "Taoism"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:25696",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u62b1\u6734\u5b50",
+      "url": "https://www.gutenberg.org/ebooks/25696",
+      "work_id": "litmate:28e20d94a3d10df9f491e65a"
+    },
+    {
+      "author": "Cheng'en Wu",
+      "categories": [
+        "Folklore -- China",
+        "Legends -- China",
+        "Xuanzang, approximately 596-664 -- Fiction",
+        "Chinese fiction -- Ming dynasty, 1368-1644"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:23962",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u897f\u904a\u8a18",
+      "url": "https://www.gutenberg.org/ebooks/23962",
+      "work_id": "litmate:29e81e01fc72c60150bafe02"
+    },
+    {
+      "author": "Xu Liu",
+      "categories": [
+        "China -- History -- Tang dynasty, 618-907"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:24229",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u820a\u5510\u66f8",
+      "url": "https://www.gutenberg.org/ebooks/24229",
+      "work_id": "litmate:2aa004dcdf7585e09f221123"
+    },
+    {
+      "author": "Kong, Fu, 265? BCE-209 BCE",
+      "categories": [
+        "Chinese language -- Semantics"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:24223",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u5c0f\u723e\u96c5",
+      "url": "https://www.gutenberg.org/ebooks/24223",
+      "work_id": "litmate:2c95c9ab54c554538af4943d"
+    },
+    {
+      "author": "Xi Zhu",
+      "categories": [
+        "Philosophy, Chinese -- Early works to 1800"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:23840",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u8fd1\u601d\u9304",
+      "url": "https://www.gutenberg.org/ebooks/23840",
+      "work_id": "litmate:3076501f60f5762674fa7e9e"
+    },
+    {
+      "author": "Ry\u016bnosuke Akutagawa",
+      "categories": [
+        "Short stories",
+        "Japan -- Social life and customs -- Fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:1982",
+      "isbns": [],
+      "kind": "book",
+      "language": "ja",
+      "source": "Project Gutenberg",
+      "title": "\u7f85\u751f\u9580",
+      "url": "https://www.gutenberg.org/ebooks/1982",
+      "work_id": "litmate:3402a4db82021e14921b0dfb"
+    },
+    {
+      "author": "Guxiang Tenggu",
+      "categories": [
+        "Chinese fiction -- Qing dynasty, 1644-1912"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:24142",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u8f5f\u5929\u96f7",
+      "url": "https://www.gutenberg.org/ebooks/24142",
+      "work_id": "litmate:348cac848218b524328769bd"
+    },
+    {
+      "author": "Hong, Zicheng, active 1596",
+      "categories": [
+        "Conduct of life"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:24050",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u83dc\u6839\u8b5a",
+      "url": "https://www.gutenberg.org/ebooks/24050",
+      "work_id": "litmate:34fc881284e91b5a9b0c1946"
+    },
+    {
+      "author": "Guanzhong Luo",
+      "categories": [
+        "China -- History -- Tang dynasty, 618-907 -- Fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:4580",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u7c89\u599d\u6a13",
+      "url": "https://www.gutenberg.org/ebooks/4580",
+      "work_id": "litmate:3578c437da91903af050bb4d"
+    },
+    {
+      "author": "Qian Tao",
+      "categories": [
+        "Chinese literature"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:30544",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u4e94\u5b5d\u50b3",
+      "url": "https://www.gutenberg.org/ebooks/30544",
+      "work_id": "litmate:3765bc1c4c6f8270dffc15bf"
+    },
+    {
+      "author": "Yu Li",
+      "categories": [
+        "Erotic literature, Chinese",
+        "Chinese fiction",
+        "Erotic fiction, Chinese"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:52205",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u8089\u84b2\u5718",
+      "url": "https://www.gutenberg.org/ebooks/52205",
+      "work_id": "litmate:3b89e827cc01fd770bbdd8a5"
+    },
+    {
+      "author": "Lingyanqiaozi",
+      "categories": [
+        "Chinese fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:27415",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u6bba\u5b50\u5831",
+      "url": "https://www.gutenberg.org/ebooks/27415",
+      "work_id": "litmate:3ceaef60d79c6953c58845d7"
+    },
+    {
+      "author": "ju ren 1738 Wuseshizhuren",
+      "categories": [
+        "Chinese fiction -- Qing dynasty, 1644-1912"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:25237",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u5feb\u58eb\u50b3",
+      "url": "https://www.gutenberg.org/ebooks/25237",
+      "work_id": "litmate:3e5fc1066fc3e80ac60afde8"
+    },
+    {
+      "author": "Youhuanyusheng",
+      "categories": [
+        "Beijing (China) -- History -- Siege, 1900 -- Fiction",
+        "China -- History -- Boxer Rebellion, 1899-1901 -- Fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:27302",
+      "isbns": [],
+      "kind": "book",
+      "language": "zh",
+      "source": "Project Gutenberg",
+      "title": "\u9130\u5973\u8a9e",
+      "url": "https://www.gutenberg.org/ebooks/27302",
+      "work_id": "litmate:4191ba18184cc8d5be2ad24c"
+    }
+  ],
+  "baseline": {
+    "works": 100,
+    "works_with_explicit_plot": 4,
+    "works_with_development_excerpt": 4,
+    "works_with_admitted_description": 4,
+    "characters_with_literal_roles": 14,
+    "works_with_literal_roles": 2,
+    "characters_with_membership_only": 12,
+    "works_with_explicit_protagonist": 2,
+    "explicit_protagonist_mentions": 3,
+    "relationships": 0,
+    "narrative_facts": 10,
+    "linked_sources": 121,
+    "per_work": {
+      "litmate:68319f2cca92a21a05ed626d": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:cd01a12f9f01f2eb764bc33a": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 3
+      },
+      "litmate:58cb8b674da070b6719ec654": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:1740cd8c34812644000a8d8d": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:46dfb046114b9bb495766e91": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 9,
+        "relationships": 0,
+        "facts": 3
+      },
+      "litmate:3a15e370f52c5c264c9aed5e": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:62f6b717c0fc6a444106f1fd": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 2
+      },
+      "litmate:1b64de1ef9aa091efbbf8607": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:6622e17664f02b8cace11892": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:c52d88b556adf56dd70bfa9a": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:d078997cc9d2175b8e27e594": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:11b609e7c112ba6618253bbf": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:e7bdcccf098e3d5f783b6eda": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:71db6dd229e48489ec616c73": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 5,
+        "relationships": 0,
+        "facts": 2
+      },
+      "litmate:ebd2db2691f71e6e6d811390": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:d5d319915f1a94f5443c060d": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:3402a4db82021e14921b0dfb": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:3578c437da91903af050bb4d": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:117466959d24453db84ca739": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:089c914f02a0fd992a54800f": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:e029666431650ebd0c43ac9c": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:2aa004dcdf7585e09f221123": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:c0eb9ad76f6aeaa722172a22": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:169ae58bd3cd5e40ccd246e9": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:c7340797e35f233289737985": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:1a49983e5bcc4ffafb989fb6": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:2f1a937ecce9e0664a9c2131": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:1e19a6d4040f63703d8e1c10": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:3765bc1c4c6f8270dffc15bf": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:8132dd099247a7e6cfd199d4": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:014a7a51e7e9cdf66e3eca02": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:231fd6981deb6662a1346979": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:947b5df1e30536c1d920cf2f": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:15c9a1e730a0cd1465e2a6f9": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:31fef4ab8119d6b7dc0e6095": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:14bec8f8b6c6e4df98e5bb98": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:6cb6c5278cb7493dc0c37e2d": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:53f93d2884d637101b7a0cda": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:9b83f688f4a6a96988e29f48": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:3dfc614c2167c581b890152b": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:1cb1b24c3f0f4bbfb959b312": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:82d812c808e041c178044d59": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:8b66b4f668596b7fbd98e6bc": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:1b6d3fefee9737d5f089d2c7": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:11704f702c7c17626c7e5bda": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:b2be6ac861cfb4b05b655067": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:3076501f60f5762674fa7e9e": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:e7544b0c67ef066738937cf3": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:630166628b652955fc5455c4": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:fcb49067f20aef4ffa4972ef": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:9c6342f9fdedde7de70238f2": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:97ec4f9e270a156d032641c8": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:29e81e01fc72c60150bafe02": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:1d96125e13d84aad0ab33dd1": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:1351f4f9bf76a12404391d37": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:7b1877d1aad7e1a0a2fbd38c": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:79d1d511471698944d3f7354": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:105b56fd9c4025fccc83b9f1": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:34fc881284e91b5a9b0c1946": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:0e4c575056b20a68cf6fba78": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:73ea9728765200a402bf87f8": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:348cac848218b524328769bd": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:8a6ff05eeb248b380054711a": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:b7f9754234b71603c299bb48": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:2c95c9ab54c554538af4943d": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:7fe9b19564c2144b4449fa21": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:00217424a77db78ffc4c2ffb": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:df37240678e38e9ae36e5d38": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:23047358796f546589e72b4c": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:21a2e7218226a9303608596f": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:3788ec78a6ce7db275ce67e3": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:00f487b06589fd5f40b11e6b": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:3e5fc1066fc3e80ac60afde8": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:ac2adce798854a3e1cc76bd1": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:6b08ec0623c157f7c0566915": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:46d877581f3c4c99a9329ca1": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:04c6e953434e820e97c295ae": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:1a7da41adb06c6094199fccd": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:07ebc841f1799840d7a4efad": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:5351d6250d7dee2b8227b03f": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:c7d38db305703e90ceb44865": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:4a590b2e114289e936eb988a": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:02495dc82f8613a4ddb89116": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:28e20d94a3d10df9f491e65a": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:11dade0137904f703aad2490": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:7d094ab03b03964780636366": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:4191ba18184cc8d5be2ad24c": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:21481d501e233fa94c984ba1": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:19a27252d3c3c1e85b27b4c2": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:3ceaef60d79c6953c58845d7": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:0b3e45cd260e6dc0613f2981": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:f9569ed893b924bbf6923542": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:0fd1bb4bf9136db4d45b2a8a": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:1d545a41f56c00ebe2388bea": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:100697b8678a19944ae80730": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:72698a0040721e0ea08764ca": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:060eb62528354506cab00436": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:3b89e827cc01fd770bbdd8a5": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:7c5339caac260972417801a7": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:08b8681c9bf72cef50c814de": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "selection": "public evaluation exclusions; diverse authors; preferred public pilot corpus then shortest titles",
+  "maximum": 100,
+  "no_factual_claim_from_selection": true
+}

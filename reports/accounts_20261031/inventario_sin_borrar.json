@@ -1,0 +1,4741 @@
+{
+  "tracked_categories": {
+    "A_codigo_configuracion": [
+      {
+        "path": ".env.example",
+        "bytes": 4320
+      },
+      {
+        "path": ".gitattributes",
+        "bytes": 184
+      },
+      {
+        "path": ".gitignore",
+        "bytes": 1630
+      },
+      {
+        "path": ".vscode/launch.json",
+        "bytes": 523
+      },
+      {
+        "path": "activar_ollama_local.py",
+        "bytes": 833
+      },
+      {
+        "path": "analizar_evaluacion_ia.py",
+        "bytes": 377
+      },
+      {
+        "path": "auditar_conversaciones.py",
+        "bytes": 9919
+      },
+      {
+        "path": "char2_err.txt",
+        "bytes": 2051
+      },
+      {
+        "path": "char2_out.txt",
+        "bytes": 68
+      },
+      {
+        "path": "char_err.txt",
+        "bytes": 2030
+      },
+      {
+        "path": "char_out.txt",
+        "bytes": 68
+      },
+      {
+        "path": "core/__init__.py",
+        "bytes": 0
+      },
+      {
+        "path": "core/admin.py",
+        "bytes": 5512
+      },
+      {
+        "path": "core/ai_answer_cache.py",
+        "bytes": 11823
+      },
+      {
+        "path": "core/ai_budget.py",
+        "bytes": 4383
+      },
+      {
+        "path": "core/ai_catalog_fallback.py",
+        "bytes": 30048
+      },
+      {
+        "path": "core/ai_character_answers.py",
+        "bytes": 76036
+      },
+      {
+        "path": "core/ai_concurrency.py",
+        "bytes": 4458
+      },
+      {
+        "path": "core/ai_http.py",
+        "bytes": 3806
+      },
+      {
+        "path": "core/ai_identification_details.py",
+        "bytes": 8147
+      },
+      {
+        "path": "core/ai_library_router.py",
+        "bytes": 6124
+      },
+      {
+        "path": "core/ai_literal_followup.py",
+        "bytes": 4284
+      },
+      {
+        "path": "core/ai_narrative_answers.py",
+        "bytes": 114322
+      },
+      {
+        "path": "core/ai_persistent_router.py",
+        "bytes": 18511
+      },
+      {
+        "path": "core/ai_presentation.py",
+        "bytes": 4777
+      },
+      {
+        "path": "core/ai_privacy.py",
+        "bytes": 1296
+      },
+      {
+        "path": "core/ai_progress.py",
+        "bytes": 7795
+      },
+      {
+        "path": "core/ai_public_details.py",
+        "bytes": 8269
+      },
+      {
+        "path": "core/ai_quick_answers.py",
+        "bytes": 58825
+      },
+      {
+        "path": "core/ai_recommendation_candidates.py",
+        "bytes": 6853
+      },
+      {
+        "path": "core/ai_recommendation_provenance.py",
+        "bytes": 5388
+      },
+      {
+        "path": "core/ai_related_recommendations.py",
+        "bytes": 23913
+      },
+      {
+        "path": "core/ai_stream_jobs.py",
+        "bytes": 8493
+      },
+      {
+        "path": "core/apps.py",
+        "bytes": 146
+      },
+      {
+        "path": "core/bibliographic_expansion.py",
+        "bytes": 9814
+      },
+      {
+        "path": "core/bibliographic_http_probe.py",
+        "bytes": 7879
+      },
+      {
+        "path": "core/bibliographic_operations.py",
+        "bytes": 7186
+      },
+      {
+        "path": "core/bibliographic_repository.py",
+        "bytes": 26615
+      },
+      {
+        "path": "core/books_google.py",
+        "bytes": 37783
+      },
+      {
+        "path": "core/chatbot_data.py",
+        "bytes": 3639
+      },
+      {
+        "path": "core/context_processors.py",
+        "bytes": 171
+      },
+      {
+        "path": "core/continuous_knowledge.py",
+        "bytes": 19826
+      },
+      {
+        "path": "core/conversation_audit.py",
+        "bytes": 15250
+      },
+      {
+        "path": "core/data/character_benchmark.json",
+        "bytes": 1231
+      },
+      {
+        "path": "core/data/conversation_audit_cases.json",
+        "bytes": 70783
+      },
+      {
+        "path": "core/data/library_aliases.json",
+        "bytes": 3686
+      },
+      {
+        "path": "core/data/library_retrieval_benchmark.json",
+        "bytes": 53977
+      },
+      {
+        "path": "core/data/narrative_benchmark.json",
+        "bytes": 687
+      },
+      {
+        "path": "core/data/presentation_terminology.json",
+        "bytes": 603
+      },
+      {
+        "path": "core/data/retrieval_benchmark.json",
+        "bytes": 110645
+      },
+      {
+        "path": "core/data/topic_reference.json",
+        "bytes": 117490
+      },
+      {
+        "path": "core/data/verified_readings.json",
+        "bytes": 7565
+      },
+      {
+        "path": "core/database_transfer.py",
+        "bytes": 29265
+      },
+      {
+        "path": "core/demo_frontend.py",
+        "bytes": 3107
+      },
+      {
+        "path": "core/demo_gateway.py",
+        "bytes": 5684
+      },
+      {
+        "path": "core/forms.py",
+        "bytes": 6302
+      },
+      {
+        "path": "core/genre_recommendations.py",
+        "bytes": 13123
+      },
+      {
+        "path": "core/knowledge_models.py",
+        "bytes": 2911
+      },
+      {
+        "path": "core/library_vector_cache.py",
+        "bytes": 6911
+      },
+      {
+        "path": "core/literary_acquisition.py",
+        "bytes": 47593
+      },
+      {
+        "path": "core/literary_ai.py",
+        "bytes": 170678
+      },
+      {
+        "path": "core/literary_ai_views.py",
+        "bytes": 65846
+      },
+      {
+        "path": "core/literary_constraints.py",
+        "bytes": 6573
+      },
+      {
+        "path": "core/literary_conversation.py",
+        "bytes": 19336
+      },
+      {
+        "path": "core/literary_enrichment.py",
+        "bytes": 8018
+      },
+      {
+        "path": "core/literary_entity_facts.py",
+        "bytes": 4556
+      },
+      {
+        "path": "core/literary_evidence.py",
+        "bytes": 6861
+      },
+      {
+        "path": "core/literary_focus.py",
+        "bytes": 6858
+      },
+      {
+        "path": "core/literary_genres.py",
+        "bytes": 4619
+      },
+      {
+        "path": "core/literary_gutenberg.py",
+        "bytes": 13458
+      },
+      {
+        "path": "core/literary_identity.py",
+        "bytes": 38616
+      },
+      {
+        "path": "core/literary_knowledge.py",
+        "bytes": 20717
+      },
+      {
+        "path": "core/literary_language.py",
+        "bytes": 3868
+      },
+      {
+        "path": "core/literary_learning.py",
+        "bytes": 24494
+      },
+      {
+        "path": "core/literary_library.py",
+        "bytes": 46266
+      },
+      {
+        "path": "core/literary_memory.py",
+        "bytes": 69608
+      },
+      {
+        "path": "core/literary_memory_rag.py",
+        "bytes": 9672
+      },
+      {
+        "path": "core/literary_presentation_language.py",
+        "bytes": 17296
+      },
+      {
+        "path": "core/literary_quality.py",
+        "bytes": 53016
+      },
+      {
+        "path": "core/literary_ranking.py",
+        "bytes": 29521
+      },
+      {
+        "path": "core/literary_research.py",
+        "bytes": 36806
+      },
+      {
+        "path": "core/literary_search.py",
+        "bytes": 125349
+      },
+      {
+        "path": "core/literary_sources.py",
+        "bytes": 6882
+      },
+      {
+        "path": "core/literary_web.py",
+        "bytes": 68108
+      },
+      {
+        "path": "core/literary_wikidata.py",
+        "bytes": 3967
+      },
+      {
+        "path": "core/local_embeddings.py",
+        "bytes": 7484
+      },
+      {
+        "path": "core/local_llm.py",
+        "bytes": 43221
+      },
+      {
+        "path": "core/local_rag.py",
+        "bytes": 22253
+      },
+      {
+        "path": "core/management/__init__.py",
+        "bytes": 0
+      },
+      {
+        "path": "core/management/commands/__init__.py",
+        "bytes": 0
+      },
+      {
+        "path": "core/management/commands/actualizar_conocimiento.py",
+        "bytes": 6774
+      },
+      {
+        "path": "core/management/commands/adquirir_literatura.py",
+        "bytes": 5130
+      },
+      {
+        "path": "core/management/commands/diagnosticar_ia.py",
+        "bytes": 12386
+      },
+      {
+        "path": "core/management/commands/evaluar_ia.py",
+        "bytes": 7032
+      },
+      {
+        "path": "core/management/commands/evaluar_recuperacion.py",
+        "bytes": 5946
+      },
+      {
+        "path": "core/management/commands/importar_biblioteca.py",
+        "bytes": 4284
+      },
+      {
+        "path": "core/management/commands/importar_catalogo_gutenberg.py",
+        "bytes": 2147
+      },
+      {
+        "path": "core/management/commands/indexar_biblioteca.py",
+        "bytes": 5330
+      },
+      {
+        "path": "core/management/commands/indexar_libros.py",
+        "bytes": 2199
+      },
+      {
+        "path": "core/management/commands/indexar_memoria_literaria.py",
+        "bytes": 2852
+      },
+      {
+        "path": "core/management/commands/precalentar_ia.py",
+        "bytes": 5298
+      },
+      {
+        "path": "core/management/commands/preparar_conocimiento.py",
+        "bytes": 3981
+      },
+      {
+        "path": "core/management/commands/proyectar_catalogo_mysql.py",
+        "bytes": 2795
+      },
+      {
+        "path": "core/management/commands/scrape_precios.py",
+        "bytes": 2140
+      },
+      {
+        "path": "core/migrations/0001_initial.py",
+        "bytes": 19603
+      },
+      {
+        "path": "core/migrations/0002_mensajecontacto.py",
+        "bytes": 1079
+      },
+      {
+        "path": "core/migrations/0003_negociopartner_itemcatalogopartner.py",
+        "bytes": 5589
+      },
+      {
+        "path": "core/migrations/0004_remove_negociopartner_usuario_and_more.py",
+        "bytes": 534
+      },
+      {
+        "path": "core/migrations/0005_listalectura_and_profile_fields.py",
+        "bytes": 3043
+      },
+      {
+        "path": "core/migrations/0006_elementolistalectura_estado_lectura.py",
+        "bytes": 560
+      },
+      {
+        "path": "core/migrations/0007_historialpreciolibro_preciolibrotienda.py",
+        "bytes": 3510
+      },
+      {
+        "path": "core/migrations/0008_bibliographic_repository.py",
+        "bytes": 4000
+      },
+      {
+        "path": "core/migrations/__init__.py",
+        "bytes": 0
+      },
+      {
+        "path": "core/models.py",
+        "bytes": 22770
+      },
+      {
+        "path": "core/mysql_activation.py",
+        "bytes": 11686
+      },
+      {
+        "path": "core/quotas.py",
+        "bytes": 6784
+      },
+      {
+        "path": "core/scraper.py",
+        "bytes": 35860
+      },
+      {
+        "path": "core/security.py",
+        "bytes": 3686
+      },
+      {
+        "path": "core/services.py",
+        "bytes": 20315
+      },
+      {
+        "path": "core/services_voice.py",
+        "bytes": 9271
+      },
+      {
+        "path": "core/test_acquisition_reporting.py",
+        "bytes": 3382
+      },
+      {
+        "path": "core/test_ai_answer_cache.py",
+        "bytes": 12402
+      },
+      {
+        "path": "core/test_ai_conversation.py",
+        "bytes": 20462
+      },
+      {
+        "path": "core/test_ai_diagnostics_free.py",
+        "bytes": 3066
+      },
+      {
+        "path": "core/test_ai_http.py",
+        "bytes": 15211
+      },
+      {
+        "path": "core/test_ai_identification_details.py",
+        "bytes": 10163
+      },
+      {
+        "path": "core/test_ai_library_router.py",
+        "bytes": 11793
+      },
+      {
+        "path": "core/test_ai_presentation.py",
+        "bytes": 9707
+      },
+      {
+        "path": "core/test_ai_progress_stream.py",
+        "bytes": 25134
+      },
+      {
+        "path": "core/test_ai_public_details.py",
+        "bytes": 23208
+      },
+      {
+        "path": "core/test_ai_quality.py",
+        "bytes": 28843
+      },
+      {
+        "path": "core/test_ai_runtime.py",
+        "bytes": 25290
+      },
+      {
+        "path": "core/test_ai_voice.py",
+        "bytes": 7226
+      },
+      {
+        "path": "core/test_benchmark_public_memory.py",
+        "bytes": 1332
+      },
+      {
+        "path": "core/test_benchmark_summary.py",
+        "bytes": 3225
+      },
+      {
+        "path": "core/test_bibliographic_expansion.py",
+        "bytes": 9164
+      },
+      {
+        "path": "core/test_bibliographic_repository.py",
+        "bytes": 15294
+      },
+      {
+        "path": "core/test_catalogue_narrative_proof.py",
+        "bytes": 5214
+      },
+      {
+        "path": "core/test_catalogue_scope_and_entry.py",
+        "bytes": 5565
+      },
+      {
+        "path": "core/test_character_alias_generalization.py",
+        "bytes": 2937
+      },
+      {
+        "path": "core/test_character_alias_holdout.py",
+        "bytes": 3393
+      },
+      {
+        "path": "core/test_character_context_resolution.py",
+        "bytes": 7313
+      },
+      {
+        "path": "core/test_character_depth.py",
+        "bytes": 2239
+      },
+      {
+        "path": "core/test_character_extraction.py",
+        "bytes": 21599
+      },
+      {
+        "path": "core/test_character_false_premise.py",
+        "bytes": 7549
+      },
+      {
+        "path": "core/test_character_memory.py",
+        "bytes": 21151
+      },
+      {
+        "path": "core/test_character_quality_regression.py",
+        "bytes": 39222
+      },
+      {
+        "path": "core/test_chat_deadline.py",
+        "bytes": 29654
+      },
+      {
+        "path": "core/test_compact_audit_context.py",
+        "bytes": 3370
+      },
+      {
+        "path": "core/test_compact_audit_transport.py",
+        "bytes": 7409
+      },
+      {
+        "path": "core/test_compact_book_transport.py",
+        "bytes": 5880
+      },
+      {
+        "path": "core/test_completion_batch.py",
+        "bytes": 19620
+      },
+      {
+        "path": "core/test_context_reference_scope.py",
+        "bytes": 6064
+      },
+      {
+        "path": "core/test_continuous_knowledge.py",
+        "bytes": 21651
+      },
+      {
+        "path": "core/test_conversation_audit.py",
+        "bytes": 11847
+      },
+      {
+        "path": "core/test_conversational_relevance.py",
+        "bytes": 19709
+      },
+      {
+        "path": "core/test_database_transfer.py",
+        "bytes": 12335
+      },
+      {
+        "path": "core/test_demo_frontend.py",
+        "bytes": 8723
+      },
+      {
+        "path": "core/test_demo_gateway.py",
+        "bytes": 4760
+      },
+      {
+        "path": "core/test_demo_preflight.py",
+        "bytes": 2713
+      },
+      {
+        "path": "core/test_detective_demo.py",
+        "bytes": 11404
+      },
+      {
+        "path": "core/test_discovery_card_synopsis.py",
+        "bytes": 7299
+      },
+      {
+        "path": "core/test_editorial_contents.py",
+        "bytes": 4650
+      },
+      {
+        "path": "core/test_external_summary_transport.py",
+        "bytes": 12866
+      },
+      {
+        "path": "core/test_fact_audit_contract.py",
+        "bytes": 11688
+      },
+      {
+        "path": "core/test_factual_repair_context.py",
+        "bytes": 5415
+      },
+      {
+        "path": "core/test_free_topic_recommendations.py",
+        "bytes": 15932
+      },
+      {
+        "path": "core/test_genre_recommendations.py",
+        "bytes": 11239
+      },
+      {
+        "path": "core/test_goal_evidence.py",
+        "bytes": 1531
+      },
+      {
+        "path": "core/test_google_books.py",
+        "bytes": 51908
+      },
+      {
+        "path": "core/test_grounded_topic_fallback.py",
+        "bytes": 16044
+      },
+      {
+        "path": "core/test_http_work_focus.py",
+        "bytes": 10278
+      },
+      {
+        "path": "core/test_hybrid_ai.py",
+        "bytes": 19886
+      },
+      {
+        "path": "core/test_identity_recommendation_references.py",
+        "bytes": 8827
+      },
+      {
+        "path": "core/test_identity_stabilization.py",
+        "bytes": 9478
+      },
+      {
+        "path": "core/test_integral_retrieval.py",
+        "bytes": 14826
+      },
+      {
+        "path": "core/test_knowledge_campaign.py",
+        "bytes": 28731
+      },
+      {
+        "path": "core/test_knowledge_sql_projection.py",
+        "bytes": 2881
+      },
+      {
+        "path": "core/test_library_vector_cache.py",
+        "bytes": 7117
+      },
+      {
+        "path": "core/test_literal_followup.py",
+        "bytes": 8050
+      },
+      {
+        "path": "core/test_literal_followup_integration.py",
+        "bytes": 3677
+      },
+      {
+        "path": "core/test_literary_acquisition.py",
+        "bytes": 30724
+      },
+      {
+        "path": "core/test_literary_ai.py",
+        "bytes": 34064
+      },
+      {
+        "path": "core/test_literary_answer_depth.py",
+        "bytes": 12638
+      },
+      {
+        "path": "core/test_literary_cohesion.py",
+        "bytes": 13529
+      },
+      {
+        "path": "core/test_literary_constraints.py",
+        "bytes": 3574
+      },
+      {
+        "path": "core/test_literary_conversation.py",
+        "bytes": 16648
+      },
+      {
+        "path": "core/test_literary_evaluation_tools.py",
+        "bytes": 10811
+      },
+      {
+        "path": "core/test_literary_gutenberg.py",
+        "bytes": 10300
+      },
+      {
+        "path": "core/test_literary_identity.py",
+        "bytes": 13705
+      },
+      {
+        "path": "core/test_literary_knowledge.py",
+        "bytes": 16103
+      },
+      {
+        "path": "core/test_literary_learning.py",
+        "bytes": 17303
+      },
+      {
+        "path": "core/test_literary_library.py",
+        "bytes": 21980
+      },
+      {
+        "path": "core/test_literary_memory.py",
+        "bytes": 24645
+      },
+      {
+        "path": "core/test_literary_ranking.py",
+        "bytes": 18168
+      },
+      {
+        "path": "core/test_literary_research.py",
+        "bytes": 18655
+      },
+      {
+        "path": "core/test_literary_web.py",
+        "bytes": 20210
+      },
+      {
+        "path": "core/test_local_ai.py",
+        "bytes": 25274
+      },
+      {
+        "path": "core/test_local_audit_slots.py",
+        "bytes": 14076
+      },
+      {
+        "path": "core/test_local_control_schema.py",
+        "bytes": 4393
+      },
+      {
+        "path": "core/test_local_excerpt_basis.py",
+        "bytes": 2636
+      },
+      {
+        "path": "core/test_local_output_budget.py",
+        "bytes": 1576
+      },
+      {
+        "path": "core/test_local_prewarm.py",
+        "bytes": 8608
+      },
+      {
+        "path": "core/test_local_recommendation_minimum.py",
+        "bytes": 2640
+      },
+      {
+        "path": "core/test_local_stage_metrics.py",
+        "bytes": 2949
+      },
+      {
+        "path": "core/test_memory_trace.py",
+        "bytes": 2291
+      },
+      {
+        "path": "core/test_mysql_activation.py",
+        "bytes": 2396
+      },
+      {
+        "path": "core/test_narrative_answers.py",
+        "bytes": 19965
+      },
+      {
+        "path": "core/test_narrative_coverage.py",
+        "bytes": 24598
+      },
+      {
+        "path": "core/test_narrative_enrichment.py",
+        "bytes": 12029
+      },
+      {
+        "path": "core/test_narrative_failure_context.py",
+        "bytes": 13694
+      },
+      {
+        "path": "core/test_narrative_review.py",
+        "bytes": 6639
+      },
+      {
+        "path": "core/test_narrative_synopsis.py",
+        "bytes": 19028
+      },
+      {
+        "path": "core/test_openlibrary_editions.py",
+        "bytes": 19845
+      },
+      {
+        "path": "core/test_persistent_depth_bridge.py",
+        "bytes": 1313
+      },
+      {
+        "path": "core/test_persistent_router.py",
+        "bytes": 16272
+      },
+      {
+        "path": "core/test_prepare_text_model.py",
+        "bytes": 9183
+      },
+      {
+        "path": "core/test_presentation_language.py",
+        "bytes": 17731
+      },
+      {
+        "path": "core/test_presentation_language_live.py",
+        "bytes": 6881
+      },
+      {
+        "path": "core/test_profile_depth.py",
+        "bytes": 2981
+      },
+      {
+        "path": "core/test_progressive_free_sources.py",
+        "bytes": 15927
+      },
+      {
+        "path": "core/test_protagonist_from_description.py",
+        "bytes": 2749
+      },
+      {
+        "path": "core/test_published_title_alias.py",
+        "bytes": 2048
+      },
+      {
+        "path": "core/test_quality_work_binding.py",
+        "bytes": 8579
+      },
+      {
+        "path": "core/test_question_specific_citations.py",
+        "bytes": 3168
+      },
+      {
+        "path": "core/test_quotas.py",
+        "bytes": 2380
+      },
+      {
+        "path": "core/test_recommendation_candidates.py",
+        "bytes": 8351
+      },
+      {
+        "path": "core/test_recommendation_cards_regression.py",
+        "bytes": 14757
+      },
+      {
+        "path": "core/test_recommendation_count.py",
+        "bytes": 7155
+      },
+      {
+        "path": "core/test_recommendation_grounding.py",
+        "bytes": 17081
+      },
+      {
+        "path": "core/test_recommendation_provenance.py",
+        "bytes": 13040
+      },
+      {
+        "path": "core/test_recommendation_provenance_integration.py",
+        "bytes": 3976
+      },
+      {
+        "path": "core/test_recommendation_relations.py",
+        "bytes": 4520
+      },
+      {
+        "path": "core/test_recommendation_web_evidence.py",
+        "bytes": 12084
+      },
+      {
+        "path": "core/test_recommended_content.py",
+        "bytes": 21931
+      },
+      {
+        "path": "core/test_related_recommendation_cards.py",
+        "bytes": 7363
+      },
+      {
+        "path": "core/test_repository_layout.py",
+        "bytes": 6594
+      },
+      {
+        "path": "core/test_research_integration.py",
+        "bytes": 35241
+      },
+      {
+        "path": "core/test_research_limits.py",
+        "bytes": 6948
+      },
+      {
+        "path": "core/test_research_runtime.py",
+        "bytes": 8834
+      },
+      {
+        "path": "core/test_response_prose.py",
+        "bytes": 4375
+      },
+      {
+        "path": "core/test_retrieval_cache.py",
+        "bytes": 9118
+      },
+      {
+        "path": "core/test_retry_followup.py",
+        "bytes": 773
+      },
+      {
+        "path": "core/test_scoped_narrative_evidence.py",
+        "bytes": 8367
+      },
+      {
+        "path": "core/test_search_narrative_repair.py",
+        "bytes": 11510
+      },
+      {
+        "path": "core/test_searx_diagnostics.py",
+        "bytes": 2347
+      },
+      {
+        "path": "core/test_searx_resilience.py",
+        "bytes": 9090
+      },
+      {
+        "path": "core/test_security_hardening.py",
+        "bytes": 7803
+      },
+      {
+        "path": "core/test_simple_factual_context.py",
+        "bytes": 13326
+      },
+      {
+        "path": "core/test_source_snapshot_merge.py",
+        "bytes": 7146
+      },
+      {
+        "path": "core/test_space_topic_recommendations.py",
+        "bytes": 11634
+      },
+      {
+        "path": "core/test_strict_research_quality.py",
+        "bytes": 8456
+      },
+      {
+        "path": "core/test_subject_attribution_audit.py",
+        "bytes": 7308
+      },
+      {
+        "path": "core/test_synopsis_pipeline.py",
+        "bytes": 582
+      },
+      {
+        "path": "core/test_topic_discovery.py",
+        "bytes": 2961
+      },
+      {
+        "path": "core/test_topic_intent.py",
+        "bytes": 5661
+      },
+      {
+        "path": "core/test_topic_language_memory.py",
+        "bytes": 6548
+      },
+      {
+        "path": "core/test_topic_reference.py",
+        "bytes": 5492
+      },
+      {
+        "path": "core/test_topic_return_memory.py",
+        "bytes": 7083
+      },
+      {
+        "path": "core/test_topic_task_boundaries.py",
+        "bytes": 8046
+      },
+      {
+        "path": "core/test_web_search.py",
+        "bytes": 29256
+      },
+      {
+        "path": "core/test_wikipedia_character_tables.py",
+        "bytes": 15517
+      },
+      {
+        "path": "core/tests.py",
+        "bytes": 63
+      },
+      {
+        "path": "core/topic_reference.py",
+        "bytes": 8730
+      },
+      {
+        "path": "core/urls.py",
+        "bytes": 4642
+      },
+      {
+        "path": "core/views.py",
+        "bytes": 93576
+      },
+      {
+        "path": "core/views_backup.py",
+        "bytes": 18485
+      },
+      {
+        "path": "datos_evaluacion_ia.json",
+        "bytes": 12610
+      },
+      {
+        "path": "datos_evaluacion_ia_v2.json",
+        "bytes": 25543
+      },
+      {
+        "path": "diagnosticar_buscador.py",
+        "bytes": 6774
+      },
+      {
+        "path": "diagnosticar_sinopsis.py",
+        "bytes": 4283
+      },
+      {
+        "path": "docker-compose.ia.yml",
+        "bytes": 891
+      },
+      {
+        "path": "evaluacion/libros_prueba/La_biblioteca_del_faro__Equipo_LitMate.txt",
+        "bytes": 644
+      },
+      {
+        "path": "evaluacion_ia.json",
+        "bytes": 7364
+      },
+      {
+        "path": "evaluar_cache_rag.py",
+        "bytes": 7572
+      },
+      {
+        "path": "evaluar_chat_http.py",
+        "bytes": 26523
+      },
+      {
+        "path": "evaluar_inferencia_local.py",
+        "bytes": 3573
+      },
+      {
+        "path": "evaluar_litmate.py",
+        "bytes": 12039
+      },
+      {
+        "path": "evaluar_rag_local.py",
+        "bytes": 11284
+      },
+      {
+        "path": "fast_seed_interactions.py",
+        "bytes": 7157
+      },
+      {
+        "path": "fixtures/ia/transporte_local_compacto.json",
+        "bytes": 9277
+      },
+      {
+        "path": "iniciar_buscador.py",
+        "bytes": 2072
+      },
+      {
+        "path": "iniciar_demo.py",
+        "bytes": 7842
+      },
+      {
+        "path": "iniciar_mysql_local.py",
+        "bytes": 5495
+      },
+      {
+        "path": "litmate_project/__init__.py",
+        "bytes": 944
+      },
+      {
+        "path": "litmate_project/ai_settings.py",
+        "bytes": 7378
+      },
+      {
+        "path": "litmate_project/asgi.py",
+        "bytes": 423
+      },
+      {
+        "path": "litmate_project/database_settings.py",
+        "bytes": 2107
+      },
+      {
+        "path": "litmate_project/demo_settings.py",
+        "bytes": 1846
+      },
+      {
+        "path": "litmate_project/demo_urls.py",
+        "bytes": 1223
+      },
+      {
+        "path": "litmate_project/settings.py",
+        "bytes": 6966
+      },
+      {
+        "path": "litmate_project/urls.py",
+        "bytes": 649
+      },
+      {
+        "path": "litmate_project/wsgi.py",
+        "bytes": 423
+      },
+      {
+        "path": "manage.py",
+        "bytes": 693
+      },
+      {
+        "path": "poblar_gran_catalogo.py",
+        "bytes": 34021
+      },
+      {
+        "path": "preparar_modelo_texto.py",
+        "bytes": 11506
+      },
+      {
+        "path": "preparar_mysql.py",
+        "bytes": 7805
+      },
+      {
+        "path": "prog2_err.txt",
+        "bytes": 3529
+      },
+      {
+        "path": "prog2_out.txt",
+        "bytes": 68
+      },
+      {
+        "path": "prog3_err.txt",
+        "bytes": 894
+      },
+      {
+        "path": "prog3_out.txt",
+        "bytes": 68
+      },
+      {
+        "path": "prog4_err.txt",
+        "bytes": 1021
+      },
+      {
+        "path": "prog4_out.txt",
+        "bytes": 68
+      },
+      {
+        "path": "prog5_err.txt",
+        "bytes": 1633
+      },
+      {
+        "path": "prog5_out.txt",
+        "bytes": 68
+      },
+      {
+        "path": "prog6_err.txt",
+        "bytes": 1021
+      },
+      {
+        "path": "prog6_out.txt",
+        "bytes": 68
+      },
+      {
+        "path": "prog7_err.txt",
+        "bytes": 894
+      },
+      {
+        "path": "prog7_out.txt",
+        "bytes": 68
+      },
+      {
+        "path": "prog8_err.txt",
+        "bytes": 265
+      },
+      {
+        "path": "prog8_out.txt",
+        "bytes": 68
+      },
+      {
+        "path": "prog_err.txt",
+        "bytes": 3529
+      },
+      {
+        "path": "prog_out.txt",
+        "bytes": 68
+      },
+      {
+        "path": "requirements-demo.txt",
+        "bytes": 130
+      },
+      {
+        "path": "requirements-ia-pc.txt",
+        "bytes": 100
+      },
+      {
+        "path": "requirements-legacy-ai.txt",
+        "bytes": 355
+      },
+      {
+        "path": "requirements.txt",
+        "bytes": 1146
+      },
+      {
+        "path": "resumir_benchmark_ia.py",
+        "bytes": 373
+      },
+      {
+        "path": "scripts/__init__.py",
+        "bytes": 80
+      },
+      {
+        "path": "scripts/analysis/__init__.py",
+        "bytes": 76
+      },
+      {
+        "path": "scripts/analysis/analizar_evaluacion_ia.py",
+        "bytes": 6097
+      },
+      {
+        "path": "scripts/analysis/resumir_benchmark_ia.py",
+        "bytes": 13582
+      },
+      {
+        "path": "scripts/demo/AislarMySqlDemo.ps1",
+        "bytes": 3234
+      },
+      {
+        "path": "scripts/demo/AuditarAcceso.ps1",
+        "bytes": 2895
+      },
+      {
+        "path": "scripts/demo/EstadoDemo.ps1",
+        "bytes": 1043
+      },
+      {
+        "path": "scripts/demo/ProtegerServicios.ps1",
+        "bytes": 1958
+      },
+      {
+        "path": "scripts/demo/RevisarProteccionMySql.ps1",
+        "bytes": 3332
+      },
+      {
+        "path": "scripts/demo/capturar_demo.mjs",
+        "bytes": 14947
+      },
+      {
+        "path": "scripts/demo/capturar_demo.py",
+        "bytes": 2236
+      },
+      {
+        "path": "scripts/demo/check_demo.py",
+        "bytes": 11131
+      },
+      {
+        "path": "scripts/demo/frontend_checks.py",
+        "bytes": 4145
+      },
+      {
+        "path": "scripts/demo/preflight_services.py",
+        "bytes": 7120
+      },
+      {
+        "path": "scripts/demo/test_demo.py",
+        "bytes": 2999
+      },
+      {
+        "path": "scripts/demo/test_finalize_retry.cjs",
+        "bytes": 2495
+      },
+      {
+        "path": "scripts/demo/test_public_transport.py",
+        "bytes": 1438
+      },
+      {
+        "path": "scripts/demo/verificar_integridad.py",
+        "bytes": 4005
+      },
+      {
+        "path": "scripts/knowledge/__init__.py",
+        "bytes": 81
+      },
+      {
+        "path": "scripts/knowledge/audit_expansion.py",
+        "bytes": 5519
+      },
+      {
+        "path": "scripts/knowledge/audit_narrative.py",
+        "bytes": 9164
+      },
+      {
+        "path": "scripts/knowledge/audit_narrative_coverage.py",
+        "bytes": 5560
+      },
+      {
+        "path": "scripts/knowledge/audit_search_sources.py",
+        "bytes": 3485
+      },
+      {
+        "path": "scripts/knowledge/continuous_worker.py",
+        "bytes": 10711
+      },
+      {
+        "path": "scripts/knowledge/download_openlibrary.py",
+        "bytes": 3931
+      },
+      {
+        "path": "scripts/knowledge/enrich_narrative.py",
+        "bytes": 7761
+      },
+      {
+        "path": "scripts/knowledge/expand_catalog.py",
+        "bytes": 8699
+      },
+      {
+        "path": "scripts/knowledge/import_openlibrary_batch.py",
+        "bytes": 4883
+      },
+      {
+        "path": "scripts/knowledge/index_genres.py",
+        "bytes": 3870
+      },
+      {
+        "path": "scripts/knowledge/knowledge_campaign.py",
+        "bytes": 30676
+      },
+      {
+        "path": "scripts/knowledge/mysql_control.py",
+        "bytes": 4866
+      },
+      {
+        "path": "scripts/knowledge/project_content_pilot.py",
+        "bytes": 2212
+      },
+      {
+        "path": "scripts/knowledge/recommendation_check.py",
+        "bytes": 3716
+      },
+      {
+        "path": "scripts/knowledge/search_narrative_check.py",
+        "bytes": 21126
+      },
+      {
+        "path": "scripts/knowledge/searx_engine_regression.py",
+        "bytes": 3284
+      },
+      {
+        "path": "scripts/knowledge/searx_quality_check.py",
+        "bytes": 7249
+      },
+      {
+        "path": "scripts/knowledge/summarize_campaign.py",
+        "bytes": 3804
+      },
+      {
+        "path": "scripts/knowledge/verify_openlibrary_batch.py",
+        "bytes": 7997
+      },
+      {
+        "path": "scripts/repository/__init__.py",
+        "bytes": 71
+      },
+      {
+        "path": "scripts/repository/check_layout.py",
+        "bytes": 4010
+      },
+      {
+        "path": "scripts/repository/inventory.py",
+        "bytes": 8268
+      },
+      {
+        "path": "scripts/repository/verify_runtime.py",
+        "bytes": 5755
+      },
+      {
+        "path": "scripts/windows/enrich_once.ps1",
+        "bytes": 1238
+      },
+      {
+        "path": "searxng/engines/openlibrary.py",
+        "bytes": 4422
+      },
+      {
+        "path": "searxng/limiter.toml",
+        "bytes": 270
+      },
+      {
+        "path": "searxng/settings.yml",
+        "bytes": 1421
+      },
+      {
+        "path": "seed_cloud_database.py",
+        "bytes": 26589
+      },
+      {
+        "path": "server_err.txt",
+        "bytes": 45
+      },
+      {
+        "path": "server_out.txt",
+        "bytes": 0
+      },
+      {
+        "path": "settings_ia_block.py",
+        "bytes": 411
+      },
+      {
+        "path": "static/assets/apple-touch-icon.png",
+        "bytes": 236518
+      },
+      {
+        "path": "static/assets/favicon.ico",
+        "bytes": 81000
+      },
+      {
+        "path": "static/assets/favicon.png",
+        "bytes": 236518
+      },
+      {
+        "path": "static/assets/img/about-bg.jpg",
+        "bytes": 2547880
+      },
+      {
+        "path": "static/assets/img/avatar/agradecida.png",
+        "bytes": 1272610
+      },
+      {
+        "path": "static/assets/img/avatar/cuerpo.jpg",
+        "bytes": 2688041
+      },
+      {
+        "path": "static/assets/img/avatar/enojo.png",
+        "bytes": 1280841
+      },
+      {
+        "path": "static/assets/img/avatar/feliz.png",
+        "bytes": 1425167
+      },
+      {
+        "path": "static/assets/img/avatar/icon.jpg",
+        "bytes": 27157
+      },
+      {
+        "path": "static/assets/img/avatar/miedo.png",
+        "bytes": 1368701
+      },
+      {
+        "path": "static/assets/img/avatar/pensativa.png",
+        "bytes": 1308361
+      },
+      {
+        "path": "static/assets/img/avatar/sin conexion.png",
+        "bytes": 1306686
+      },
+      {
+        "path": "static/assets/img/avatar/sorprendida.png",
+        "bytes": 1318376
+      },
+      {
+        "path": "static/assets/img/avatar/triste.png",
+        "bytes": 1265439
+      },
+      {
+        "path": "static/assets/img/buscarlibros.jpg",
+        "bytes": 3343708
+      },
+      {
+        "path": "static/assets/img/chatbot.jpg",
+        "bytes": 3441552
+      },
+      {
+        "path": "static/assets/img/contact-bg.jpg",
+        "bytes": 500680
+      },
+      {
+        "path": "static/assets/img/evolucion-inteligencia-artificial.jpg",
+        "bytes": 33963
+      },
+      {
+        "path": "static/assets/img/home-bg.jpg",
+        "bytes": 1007801
+      },
+      {
+        "path": "static/assets/img/libreria.jpg",
+        "bytes": 5700513
+      },
+      {
+        "path": "static/assets/img/litmate-logo-transparent.png",
+        "bytes": 109253
+      },
+      {
+        "path": "static/assets/img/litmate-navbar-logo-light.png",
+        "bytes": 55068
+      },
+      {
+        "path": "static/assets/img/litmate-navbar-logo.png",
+        "bytes": 109253
+      },
+      {
+        "path": "static/assets/img/litmate_navbar-logo-light.png",
+        "bytes": 55068
+      },
+      {
+        "path": "static/assets/img/litmate_navbar-logo.png",
+        "bytes": 109253
+      },
+      {
+        "path": "static/assets/img/logo-litmate.png",
+        "bytes": 236518
+      },
+      {
+        "path": "static/assets/img/payments/applepay.png",
+        "bytes": 47162
+      },
+      {
+        "path": "static/assets/img/payments/banktransfer.png",
+        "bytes": 31280
+      },
+      {
+        "path": "static/assets/img/payments/banktransfer.svg",
+        "bytes": 598
+      },
+      {
+        "path": "static/assets/img/payments/gpay.png",
+        "bytes": 43453
+      },
+      {
+        "path": "static/assets/img/payments/mastercard.png",
+        "bytes": 43814
+      },
+      {
+        "path": "static/assets/img/payments/mercadopago.png",
+        "bytes": 73975
+      },
+      {
+        "path": "static/assets/img/payments/paypal.png",
+        "bytes": 49219
+      },
+      {
+        "path": "static/assets/img/payments/paypal.svg",
+        "bytes": 835
+      },
+      {
+        "path": "static/assets/img/payments/visa.png",
+        "bytes": 44118
+      },
+      {
+        "path": "static/assets/img/payments/webpay.png",
+        "bytes": 33210
+      },
+      {
+        "path": "static/assets/img/post-bg.jpg",
+        "bytes": 1803228
+      },
+      {
+        "path": "static/assets/img/post-sample-image.jpg",
+        "bytes": 115144
+      },
+      {
+        "path": "static/assets/img/team/3.jpg",
+        "bytes": 57725
+      },
+      {
+        "path": "static/assets/img/team/jp.jpg",
+        "bytes": 129412
+      },
+      {
+        "path": "static/assets/img/team/sebastian.jpg",
+        "bytes": 87889
+      },
+      {
+        "path": "static/css/auth.css",
+        "bytes": 2907
+      },
+      {
+        "path": "static/css/books.css",
+        "bytes": 20465
+      },
+      {
+        "path": "static/css/chat-books.css",
+        "bytes": 5678
+      },
+      {
+        "path": "static/css/dark-mode.css",
+        "bytes": 39431
+      },
+      {
+        "path": "static/css/index.css",
+        "bytes": 2539
+      },
+      {
+        "path": "static/css/litmate-minimal.css",
+        "bytes": 46517
+      },
+      {
+        "path": "static/css/pages.css",
+        "bytes": 29374
+      },
+      {
+        "path": "static/css/styles.css",
+        "bytes": 265870
+      },
+      {
+        "path": "static/css/subscriptions.css",
+        "bytes": 7637
+      },
+      {
+        "path": "static/js/chatbot.js",
+        "bytes": 11266
+      },
+      {
+        "path": "static/js/floating_chat.js",
+        "bytes": 8677
+      },
+      {
+        "path": "static/js/litmate_safe.js",
+        "bytes": 37394
+      },
+      {
+        "path": "static/js/scripts.js",
+        "bytes": 1665
+      },
+      {
+        "path": "static/js/verificar_chat_seguro.js",
+        "bytes": 210
+      },
+      {
+        "path": "suscripciones/__init__.py",
+        "bytes": 29
+      },
+      {
+        "path": "suscripciones/admin.py",
+        "bytes": 1300
+      },
+      {
+        "path": "suscripciones/apps.py",
+        "bytes": 211
+      },
+      {
+        "path": "suscripciones/migrations/0001_initial.py",
+        "bytes": 5637
+      },
+      {
+        "path": "suscripciones/migrations/__init__.py",
+        "bytes": 0
+      },
+      {
+        "path": "suscripciones/models.py",
+        "bytes": 5141
+      },
+      {
+        "path": "suscripciones/payment_safety.py",
+        "bytes": 483
+      },
+      {
+        "path": "suscripciones/services/__init__.py",
+        "bytes": 218
+      },
+      {
+        "path": "suscripciones/services/mercadopago_service.py",
+        "bytes": 5839
+      },
+      {
+        "path": "suscripciones/services/paypal_service.py",
+        "bytes": 7457
+      },
+      {
+        "path": "suscripciones/services/transbank_service.py",
+        "bytes": 5680
+      },
+      {
+        "path": "suscripciones/test_payments.py",
+        "bytes": 8049
+      },
+      {
+        "path": "suscripciones/urls.py",
+        "bytes": 1262
+      },
+      {
+        "path": "suscripciones/views.py",
+        "bytes": 21670
+      },
+      {
+        "path": "templates/403.html",
+        "bytes": 2382
+      },
+      {
+        "path": "templates/404.html",
+        "bytes": 2967
+      },
+      {
+        "path": "templates/429.html",
+        "bytes": 2530
+      },
+      {
+        "path": "templates/500.html",
+        "bytes": 2355
+      },
+      {
+        "path": "templates/about.html",
+        "bytes": 13610
+      },
+      {
+        "path": "templates/base.html",
+        "bytes": 42936
+      },
+      {
+        "path": "templates/buscar_libros.html",
+        "bytes": 64361
+      },
+      {
+        "path": "templates/chatbot.html",
+        "bytes": 3376
+      },
+      {
+        "path": "templates/chatbotbase.html",
+        "bytes": 2363
+      },
+      {
+        "path": "templates/contact.html",
+        "bytes": 4427
+      },
+      {
+        "path": "templates/core/editar_perfil.html",
+        "bytes": 4655
+      },
+      {
+        "path": "templates/core/perfil.html",
+        "bytes": 52724
+      },
+      {
+        "path": "templates/index.html",
+        "bytes": 41084
+      },
+      {
+        "path": "templates/legal/cookies.html",
+        "bytes": 8956
+      },
+      {
+        "path": "templates/legal/privacidad.html",
+        "bytes": 8042
+      },
+      {
+        "path": "templates/legal/terminos.html",
+        "bytes": 9110
+      },
+      {
+        "path": "templates/post.html",
+        "bytes": 9974
+      },
+      {
+        "path": "templates/registration/login.html",
+        "bytes": 8959
+      },
+      {
+        "path": "templates/registration/password_reset_complete.html",
+        "bytes": 2137
+      },
+      {
+        "path": "templates/registration/password_reset_confirm.html",
+        "bytes": 7001
+      },
+      {
+        "path": "templates/registration/password_reset_done.html",
+        "bytes": 2699
+      },
+      {
+        "path": "templates/registration/password_reset_email.html",
+        "bytes": 696
+      },
+      {
+        "path": "templates/registration/password_reset_form.html",
+        "bytes": 3426
+      },
+      {
+        "path": "templates/registration/password_reset_subject.txt",
+        "bytes": 38
+      },
+      {
+        "path": "templates/registration/register.html",
+        "bytes": 14639
+      },
+      {
+        "path": "templates/suscripciones/checkout.html",
+        "bytes": 23075
+      },
+      {
+        "path": "templates/suscripciones/mi_suscripcion.html",
+        "bytes": 11283
+      },
+      {
+        "path": "templates/suscripciones/pago_cancelado.html",
+        "bytes": 2897
+      },
+      {
+        "path": "templates/suscripciones/pago_exitoso.html",
+        "bytes": 5391
+      },
+      {
+        "path": "templates/suscripciones/planes.html",
+        "bytes": 7827
+      },
+      {
+        "path": "templates/suscripciones/simulador_gateway.html",
+        "bytes": 7856
+      },
+      {
+        "path": "templates/suscripciones/webpay_redirect.html",
+        "bytes": 1182
+      },
+      {
+        "path": "trace_err.txt",
+        "bytes": 749
+      },
+      {
+        "path": "trace_out.txt",
+        "bytes": 67
+      },
+      {
+        "path": "urls.py",
+        "bytes": 411
+      },
+      {
+        "path": "verificar_asistente.py",
+        "bytes": 196
+      },
+      {
+        "path": "verificar_chat_seguro.js",
+        "bytes": 42504
+      },
+      {
+        "path": "verificar_investigacion.py",
+        "bytes": 9271
+      },
+      {
+        "path": "verificar_proyecto.py",
+        "bytes": 5306
+      },
+      {
+        "path": "searxng/compose.env",
+        "bytes": 138,
+        "references": [
+          "iniciar_buscador.py:14",
+          "docs/guides/README_ASISTENTE_IA.md:39"
+        ],
+        "decision": "Configuraci?n necesaria, preservada sin leer sus valores."
+      }
+    ],
+    "B_datos_indices": [],
+    "C_documentacion_operativa": [
+      {
+        "path": "AGENTS.md",
+        "bytes": 1858
+      },
+      {
+        "path": "LEEME.md",
+        "bytes": 306
+      },
+      {
+        "path": "MYSQL_LOCAL.md",
+        "bytes": 231
+      },
+      {
+        "path": "README.md",
+        "bytes": 1714
+      },
+      {
+        "path": "README_ASISTENTE_IA.md",
+        "bytes": 234
+      },
+      {
+        "path": "docs/CONOCIMIENTO_CONTINUO.md",
+        "bytes": 11024
+      },
+      {
+        "path": "docs/README.md",
+        "bytes": 685
+      },
+      {
+        "path": "docs/architecture/ARQUITECTURA_IA_RENDIMIENTO.md",
+        "bytes": 8710
+      },
+      {
+        "path": "docs/architecture/KNOWLEDGE_REPOSITORY.md",
+        "bytes": 13347
+      },
+      {
+        "path": "docs/architecture/REPOSITORY_LAYOUT.md",
+        "bytes": 5303
+      },
+      {
+        "path": "docs/archive/LEEME_IA_V3.md",
+        "bytes": 14095
+      },
+      {
+        "path": "docs/archive/LitMate_IA_Gratis_Codigo_Completo.md",
+        "bytes": 296038
+      },
+      {
+        "path": "docs/archive/README.md",
+        "bytes": 514
+      },
+      {
+        "path": "docs/guides/MYSQL_LOCAL.md",
+        "bytes": 17104
+      },
+      {
+        "path": "docs/guides/README_ASISTENTE_IA.md",
+        "bytes": 10214
+      },
+      {
+        "path": "scripts/README.md",
+        "bytes": 1962
+      },
+      {
+        "path": "searxng/README.md",
+        "bytes": 5967
+      }
+    ],
+    "D_evidencia_academica": [
+      {
+        "path": "reportes/arquitectura_20261023/cache_entrega_antes_v4.json",
+        "bytes": 12059
+      },
+      {
+        "path": "reportes/arquitectura_20261023/cache_entrega_despues_v5.json",
+        "bytes": 12064
+      },
+      {
+        "path": "reportes/arquitectura_20261023/cache_entrega_despues_v5_resumen.md",
+        "bytes": 1398
+      },
+      {
+        "path": "reportes/arquitectura_20261023/cache_vaciada_despues_v5.json",
+        "bytes": 23433
+      },
+      {
+        "path": "reportes/arquitectura_20261023/integral_progressive_v1.json",
+        "bytes": 80110
+      },
+      {
+        "path": "reportes/arquitectura_20261023/integral_progressive_v1_resumen.md",
+        "bytes": 3421
+      },
+      {
+        "path": "reportes/arquitectura_20261023/integral_progressive_v2_9b_warm.json",
+        "bytes": 78344
+      },
+      {
+        "path": "reportes/arquitectura_20261023/integral_progressive_v2_resumen.md",
+        "bytes": 3376
+      },
+      {
+        "path": "reportes/arquitectura_20261023/integral_progressive_v3_4b_warm.json",
+        "bytes": 86390
+      },
+      {
+        "path": "reportes/arquitectura_20261023/integral_progressive_v3_resumen.md",
+        "bytes": 3456
+      },
+      {
+        "path": "reportes/arquitectura_20261023/integral_sin_cache_v1.json",
+        "bytes": 8956
+      },
+      {
+        "path": "reportes/arquitectura_20261023/matriz_integral_20261023.json",
+        "bytes": 2866
+      },
+      {
+        "path": "reportes/arquitectura_20261023/probe_scopes_http_v6.json",
+        "bytes": 6082
+      },
+      {
+        "path": "reportes/arquitectura_20261023/revision_integral_v1.json",
+        "bytes": 2952
+      },
+      {
+        "path": "reportes/arquitectura_20261023/revision_integral_v2.json",
+        "bytes": 2272
+      },
+      {
+        "path": "reportes/arquitectura_20261023/revision_integral_v3.json",
+        "bytes": 2202
+      },
+      {
+        "path": "reportes/arquitectura_20261023/sinopsis_antes.json",
+        "bytes": 13327
+      },
+      {
+        "path": "reportes/benchmark_30s_descubrimiento_20261022.json",
+        "bytes": 8154
+      },
+      {
+        "path": "reportes/benchmark_30s_descubrimiento_20261022_v2.json",
+        "bytes": 8605
+      },
+      {
+        "path": "reportes/continuidad_opencode.md",
+        "bytes": 217919
+      },
+      {
+        "path": "reportes/descubrimiento_30s_20261022/INFORME.md",
+        "bytes": 9231
+      },
+      {
+        "path": "reportes/descubrimiento_30s_20261022/antes_captura.json",
+        "bytes": 3326
+      },
+      {
+        "path": "reportes/evaluacion_v2_final3_20261022/INFORME.md",
+        "bytes": 8304
+      },
+      {
+        "path": "reportes/expansion_20261027/chat_biblioteca_lexico_20261027.json",
+        "bytes": 6846
+      },
+      {
+        "path": "reportes/expansion_20261027/chat_biblioteca_lexico_v2_20261027.json",
+        "bytes": 6360
+      },
+      {
+        "path": "reportes/expansion_20261027/chat_biblioteca_semantico_20261027.json",
+        "bytes": 6725
+      },
+      {
+        "path": "reportes/expansion_20261027/chat_biblioteca_semantico_v2_20261027.json",
+        "bytes": 7204
+      },
+      {
+        "path": "reportes/expansion_20261027/chat_biblioteca_semantico_v3_20261027.json",
+        "bytes": 7081
+      },
+      {
+        "path": "reportes/expansion_20261027/chat_orgullo_web_20261027.json",
+        "bytes": 2316
+      },
+      {
+        "path": "reportes/expansion_20261027/chat_orgullo_web_semantico_20261027.json",
+        "bytes": 2328
+      },
+      {
+        "path": "reportes/expansion_20261027/descarga_catalogo.json",
+        "bytes": 460
+      },
+      {
+        "path": "reportes/expansion_20261027/descargas_es_20261027.json",
+        "bytes": 1736
+      },
+      {
+        "path": "reportes/expansion_20261027/descargas_originales.json",
+        "bytes": 3494
+      },
+      {
+        "path": "reportes/expansion_20261027/fuentes_licencias.md",
+        "bytes": 17185
+      },
+      {
+        "path": "reportes/expansion_20261027/matriz_chat_biblioteca.json",
+        "bytes": 1247
+      },
+      {
+        "path": "reportes/expansion_20261027/ranking_evaluacion.md",
+        "bytes": 7527
+      },
+      {
+        "path": "reportes/expansion_20261027/recuperacion_biblioteca_bm25.json",
+        "bytes": 35298
+      },
+      {
+        "path": "reportes/expansion_20261027/recuperacion_biblioteca_bm25_12libros_20261027.json",
+        "bytes": 34786
+      },
+      {
+        "path": "reportes/expansion_20261027/recuperacion_biblioteca_bm25_v2.json",
+        "bytes": 30970
+      },
+      {
+        "path": "reportes/expansion_20261027/recuperacion_biblioteca_hibrida.json",
+        "bytes": 34380
+      },
+      {
+        "path": "reportes/expansion_20261027/recuperacion_biblioteca_hibrida_12libros_20261027.json",
+        "bytes": 34324
+      },
+      {
+        "path": "reportes/expansion_20261027/recuperacion_biblioteca_hibrida_v2.json",
+        "bytes": 34325
+      },
+      {
+        "path": "reportes/expansion_20261027/recuperacion_fixture.json",
+        "bytes": 41485
+      },
+      {
+        "path": "reportes/expansion_20261027/recuperacion_fixture_v2.json",
+        "bytes": 39526
+      },
+      {
+        "path": "reportes/expansion_20261027/wikipedia_adquisicion_real.json",
+        "bytes": 1352
+      },
+      {
+        "path": "reportes/expansion_conocimiento_litmate.md",
+        "bytes": 31020
+      },
+      {
+        "path": "reportes/latencia_10s_20261022/INFORME.md",
+        "bytes": 13106
+      },
+      {
+        "path": "reportes/latencia_10s_20261022/analisis_v4.json",
+        "bytes": 969
+      },
+      {
+        "path": "reportes/latencia_10s_20261022/antes.json",
+        "bytes": 307
+      },
+      {
+        "path": "reportes/latencia_10s_20261022/http_consulta_inicial.json",
+        "bytes": 1973
+      },
+      {
+        "path": "reportes/latencia_10s_20261022/http_matriz_v1.json",
+        "bytes": 29226
+      },
+      {
+        "path": "reportes/latencia_10s_20261022/http_matriz_v2.json",
+        "bytes": 32476
+      },
+      {
+        "path": "reportes/latencia_10s_20261022/http_matriz_v3.json",
+        "bytes": 32260
+      },
+      {
+        "path": "reportes/latencia_10s_20261022/http_matriz_v4.json",
+        "bytes": 32277
+      },
+      {
+        "path": "reportes/latencia_10s_20261022/modelos_microbenchmark.json",
+        "bytes": 1281
+      },
+      {
+        "path": "reportes/personajes_20261026/benchmark_final.json",
+        "bytes": 224837
+      },
+      {
+        "path": "reportes/sinopsis_20261026/docker_final.json",
+        "bytes": 15382
+      },
+      {
+        "path": "reportes/sinopsis_20261026/http_final_v4.json",
+        "bytes": 52442
+      },
+      {
+        "path": "reportes/sinopsis_20261026/pruebas_final_v2.txt",
+        "bytes": 3258
+      },
+      {
+        "path": "reports/README.md",
+        "bytes": 826
+      },
+      {
+        "path": "reports/archive/INFORME_ARQUITECTURA_IA_21_OCTUBRE.md",
+        "bytes": 15157
+      },
+      {
+        "path": "reports/archive/INFORME_BUSQUEDA_LITERARIA.md",
+        "bytes": 23663
+      },
+      {
+        "path": "reports/archive/INFORME_CONTINUACION_20_OCTUBRE.md",
+        "bytes": 9810
+      },
+      {
+        "path": "reports/archive/INFORME_FUENTES_MODELOS.md",
+        "bytes": 30703
+      },
+      {
+        "path": "reports/archive/INFORME_RESULTADOS_21_OCTUBRE.md",
+        "bytes": 22745
+      },
+      {
+        "path": "reports/archive/INFORME_SINOPSIS_DOCKER_20261026.md",
+        "bytes": 11739
+      },
+      {
+        "path": "reports/archive/README.md",
+        "bytes": 704
+      },
+      {
+        "path": "reports/calidad_literaria_20261030/README.md",
+        "bytes": 3389
+      },
+      {
+        "path": "reports/calidad_literaria_20261030/after.json",
+        "bytes": 1097948
+      },
+      {
+        "path": "reports/calidad_literaria_20261030/baseline.json",
+        "bytes": 1095467
+      },
+      {
+        "path": "reports/calidad_literaria_20261030/checkpoint.json",
+        "bytes": 1044
+      },
+      {
+        "path": "reports/calidad_literaria_20261030/conversation_cierre.json",
+        "bytes": 1015194
+      },
+      {
+        "path": "reports/calidad_literaria_20261030/conversation_final.json",
+        "bytes": 1987335
+      },
+      {
+        "path": "reports/calidad_literaria_20261030/holdout_final.json",
+        "bytes": 331915
+      },
+      {
+        "path": "reports/calidad_literaria_20261030/tests_directed.json",
+        "bytes": 793
+      },
+      {
+        "path": "reports/conocimiento_20261030/README.md",
+        "bytes": 17931
+      },
+      {
+        "path": "reports/conocimiento_20261030/absence_review.json",
+        "bytes": 42626
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_01_offline_1.json",
+        "bytes": 7471
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_01_offline_2.json",
+        "bytes": 6695
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_01_online_1.json",
+        "bytes": 5822
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_01_online_2.json",
+        "bytes": 5802
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_01_online_3.json",
+        "bytes": 10247
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_01_online_4.json",
+        "bytes": 10252
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_02_offline_1.json",
+        "bytes": 7105
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_02_offline_2.json",
+        "bytes": 6296
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_02_online_1.json",
+        "bytes": 8904
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_02_online_2.json",
+        "bytes": 7451
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_02_online_3.json",
+        "bytes": 6628
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_02_online_4.json",
+        "bytes": 22074
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_03_online_1.json",
+        "bytes": 8685
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_03_online_2.json",
+        "bytes": 12254
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_03_online_3.json",
+        "bytes": 12291
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_04_offline_1.json",
+        "bytes": 6941
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_04_offline_2.json",
+        "bytes": 6309
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_04_online_1.json",
+        "bytes": 9059
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_04_online_2.json",
+        "bytes": 5659
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_04_online_3.json",
+        "bytes": 6500
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_04_online_4.json",
+        "bytes": 20564
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_05_offline_1.json",
+        "bytes": 6981
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_05_offline_2.json",
+        "bytes": 6357
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_05_online_1.json",
+        "bytes": 8969
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_05_online_2.json",
+        "bytes": 5743
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_05_online_3.json",
+        "bytes": 6487
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_05_online_4.json",
+        "bytes": 6484
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_06_offline_1.json",
+        "bytes": 6777
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_06_offline_2.json",
+        "bytes": 6362
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_06_online_1.json",
+        "bytes": 8981
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_06_online_2.json",
+        "bytes": 5527
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_06_online_3.json",
+        "bytes": 6664
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_06_online_4.json",
+        "bytes": 6660
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_07_offline_1.json",
+        "bytes": 7198
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_07_offline_2.json",
+        "bytes": 6582
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_07_online_1.json",
+        "bytes": 9072
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_07_online_2.json",
+        "bytes": 9005
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_07_online_3.json",
+        "bytes": 13413
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_08_online_1.json",
+        "bytes": 7853
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_08_online_2.json",
+        "bytes": 7865
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_09_offline_1.json",
+        "bytes": 13257
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_09_offline_2.json",
+        "bytes": 13025
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_09_offline_3.json",
+        "bytes": 13114
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_09_online_1.json",
+        "bytes": 9567
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_09_online_2.json",
+        "bytes": 12426
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_09_online_3.json",
+        "bytes": 12217
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_10_online_1.json",
+        "bytes": 7582
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_10_online_2.json",
+        "bytes": 12857
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_11_offline_1.json",
+        "bytes": 6739
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_11_offline_2.json",
+        "bytes": 6310
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_11_online_1.json",
+        "bytes": 5812
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_11_online_2.json",
+        "bytes": 5495
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_11_online_3.json",
+        "bytes": 6239
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_12_offline_1.json",
+        "bytes": 6963
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_12_offline_2.json",
+        "bytes": 6354
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_12_online_1.json",
+        "bytes": 5650
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_12_online_2.json",
+        "bytes": 5523
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_12_online_3.json",
+        "bytes": 6476
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_13_offline_1.json",
+        "bytes": 5904
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_13_offline_2.json",
+        "bytes": 5069
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_13_online_1.json",
+        "bytes": 5588
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_13_online_2.json",
+        "bytes": 5639
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_13_online_3.json",
+        "bytes": 5793
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_13_online_4.json",
+        "bytes": 5789
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_14_offline_1.json",
+        "bytes": 5906
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_14_offline_2.json",
+        "bytes": 12550
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_14_offline_3.json",
+        "bytes": 12611
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_14_online_1.json",
+        "bytes": 6175
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_14_online_2.json",
+        "bytes": 6259
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_14_online_3.json",
+        "bytes": 12011
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_14_online_4.json",
+        "bytes": 12039
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_15_online_1.json",
+        "bytes": 8334
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_15_online_2.json",
+        "bytes": 12122
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_16_online_1.json",
+        "bytes": 8664
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_16_online_2.json",
+        "bytes": 12679
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_16_online_3.json",
+        "bytes": 12718
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_17_online_1.json",
+        "bytes": 12104
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_17_online_2.json",
+        "bytes": 27955
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_18_online_1.json",
+        "bytes": 9784
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_18_online_2.json",
+        "bytes": 34511
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_19_offline_1.json",
+        "bytes": 19741
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_19_offline_2.json",
+        "bytes": 19786
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_19_online_1.json",
+        "bytes": 10344
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_19_online_2.json",
+        "bytes": 9817
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_19_online_3.json",
+        "bytes": 19608
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_20_online_1.json",
+        "bytes": 7153
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_20_online_2.json",
+        "bytes": 26407
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_21_online_1.json",
+        "bytes": 10916
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_21_online_2.json",
+        "bytes": 22425
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_22_online_1.json",
+        "bytes": 5596
+      },
+      {
+        "path": "reports/conocimiento_20261030/case_22_online_2.json",
+        "bytes": 7255
+      },
+      {
+        "path": "reports/conocimiento_20261030/continuacion_actual_06.json",
+        "bytes": 1111756
+      },
+      {
+        "path": "reports/conocimiento_20261030/continuacion_actual_06_aislada.json",
+        "bytes": 1080153
+      },
+      {
+        "path": "reports/conocimiento_20261030/continuacion_actual_06_corregida.json",
+        "bytes": 1100060
+      },
+      {
+        "path": "reports/conocimiento_20261030/continuacion_comparacion.json",
+        "bytes": 3511
+      },
+      {
+        "path": "reports/conocimiento_20261030/continuacion_conversacion_07.json",
+        "bytes": 1234962
+      },
+      {
+        "path": "reports/conocimiento_20261030/continuacion_estabilizacion.md",
+        "bytes": 12346
+      },
+      {
+        "path": "reports/conocimiento_20261030/continuacion_final_independientes.json",
+        "bytes": 434098
+      },
+      {
+        "path": "reports/conocimiento_20261030/continuacion_integridad_final.json",
+        "bytes": 1571
+      },
+      {
+        "path": "reports/conocimiento_20261030/continuacion_integridad_local.json",
+        "bytes": 984
+      },
+      {
+        "path": "reports/conocimiento_20261030/continuacion_integridad_ultimo_alias.json",
+        "bytes": 573
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_001.json",
+        "bytes": 3742
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_002.json",
+        "bytes": 3224
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_003.json",
+        "bytes": 3338
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_004.json",
+        "bytes": 3558
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_005.json",
+        "bytes": 3166
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_006.json",
+        "bytes": 3511
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_007.json",
+        "bytes": 3438
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_008.json",
+        "bytes": 3314
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_009.json",
+        "bytes": 3338
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_010.json",
+        "bytes": 3300
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_011.json",
+        "bytes": 3428
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_012.json",
+        "bytes": 3554
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_013.json",
+        "bytes": 3419
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_014.json",
+        "bytes": 3303
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_015.json",
+        "bytes": 3295
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_016.json",
+        "bytes": 3443
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_017.json",
+        "bytes": 3424
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_018.json",
+        "bytes": 3280
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_019.json",
+        "bytes": 3314
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_020.json",
+        "bytes": 3294
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_021.json",
+        "bytes": 3309
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_022.json",
+        "bytes": 3281
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_023.json",
+        "bytes": 3283
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_024.json",
+        "bytes": 3298
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_025.json",
+        "bytes": 3255
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_026.json",
+        "bytes": 3290
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_027.json",
+        "bytes": 3285
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_028.json",
+        "bytes": 3293
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_029.json",
+        "bytes": 3233
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_030.json",
+        "bytes": 3257
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_031.json",
+        "bytes": 3292
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_032.json",
+        "bytes": 3282
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_033.json",
+        "bytes": 3250
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_034.json",
+        "bytes": 3263
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_035.json",
+        "bytes": 3320
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_036.json",
+        "bytes": 3323
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_037.json",
+        "bytes": 3256
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_038.json",
+        "bytes": 3325
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_039.json",
+        "bytes": 3254
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_040.json",
+        "bytes": 3249
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_041.json",
+        "bytes": 3281
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_042.json",
+        "bytes": 3405
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_043.json",
+        "bytes": 3381
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_044.json",
+        "bytes": 3378
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_045.json",
+        "bytes": 3399
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_046.json",
+        "bytes": 3252
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_047.json",
+        "bytes": 3256
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_048.json",
+        "bytes": 3285
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_049.json",
+        "bytes": 3464
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_050.json",
+        "bytes": 3282
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_051.json",
+        "bytes": 3273
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_052.json",
+        "bytes": 3298
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_053.json",
+        "bytes": 3277
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_054.json",
+        "bytes": 3272
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_055.json",
+        "bytes": 3255
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_056.json",
+        "bytes": 3314
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_057.json",
+        "bytes": 3256
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_058.json",
+        "bytes": 3321
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_059.json",
+        "bytes": 3386
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_060.json",
+        "bytes": 3288
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_061.json",
+        "bytes": 3296
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_062.json",
+        "bytes": 3329
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_063.json",
+        "bytes": 3261
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_064.json",
+        "bytes": 3289
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_065.json",
+        "bytes": 3307
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_066.json",
+        "bytes": 3396
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_067.json",
+        "bytes": 3360
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_068.json",
+        "bytes": 3283
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_069.json",
+        "bytes": 3294
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_070.json",
+        "bytes": 3327
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_071.json",
+        "bytes": 3276
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_072.json",
+        "bytes": 3311
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_073.json",
+        "bytes": 3412
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_074.json",
+        "bytes": 3292
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_075.json",
+        "bytes": 3274
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_076.json",
+        "bytes": 3267
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_077.json",
+        "bytes": 3283
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_078.json",
+        "bytes": 3260
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_079.json",
+        "bytes": 3332
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_080.json",
+        "bytes": 3328
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_081.json",
+        "bytes": 3261
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_082.json",
+        "bytes": 3294
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_083.json",
+        "bytes": 3300
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_084.json",
+        "bytes": 3301
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_085.json",
+        "bytes": 3442
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_086.json",
+        "bytes": 3261
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_087.json",
+        "bytes": 3247
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_088.json",
+        "bytes": 3395
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_089.json",
+        "bytes": 3282
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_090.json",
+        "bytes": 3289
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_091.json",
+        "bytes": 3282
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_092.json",
+        "bytes": 3323
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_093.json",
+        "bytes": 3289
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_094.json",
+        "bytes": 3277
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_095.json",
+        "bytes": 3296
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_096.json",
+        "bytes": 3260
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_097.json",
+        "bytes": 3328
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_098.json",
+        "bytes": 3264
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_099.json",
+        "bytes": 3304
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_100.json",
+        "bytes": 3367
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_plan.json",
+        "bytes": 72540
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_summary_100_88116280128100.json",
+        "bytes": 27040
+      },
+      {
+        "path": "reports/conocimiento_20261030/enrichment_summary_20_87675933725500.json",
+        "bytes": 9200
+      },
+      {
+        "path": "reports/conocimiento_20261030/fantasia_conversacion.json",
+        "bytes": 106837
+      },
+      {
+        "path": "reports/conocimiento_20261030/final_integrity.json",
+        "bytes": 3231339
+      },
+      {
+        "path": "reports/conocimiento_20261030/frozen.json",
+        "bytes": 3265211
+      },
+      {
+        "path": "reports/conocimiento_20261030/global_offline_final.json",
+        "bytes": 88294
+      },
+      {
+        "path": "reports/conocimiento_20261030/idioma_interwiki_autor_corregido.json",
+        "bytes": 301007
+      },
+      {
+        "path": "reports/conocimiento_20261030/idioma_interwiki_real.json",
+        "bytes": 347040
+      },
+      {
+        "path": "reports/conocimiento_20261030/local_after.json",
+        "bytes": 94267
+      },
+      {
+        "path": "reports/conocimiento_20261030/local_before.json",
+        "bytes": 17339
+      },
+      {
+        "path": "reports/conocimiento_20261030/metricas.json",
+        "bytes": 42014
+      },
+      {
+        "path": "reports/conocimiento_20261030/moby_garden_guardias_after.json",
+        "bytes": 205936
+      },
+      {
+        "path": "reports/conocimiento_20261030/moby_garden_literal_prototipo.json",
+        "bytes": 199215
+      },
+      {
+        "path": "reports/conocimiento_20261030/moby_garden_literal_revision.json",
+        "bytes": 205571
+      },
+      {
+        "path": "reports/conocimiento_20261030/moby_identidad_after.json",
+        "bytes": 83074
+      },
+      {
+        "path": "reports/conocimiento_20261030/moby_intro_audit_after.json",
+        "bytes": 205975
+      },
+      {
+        "path": "reports/conocimiento_20261030/moby_puntuacion_after.json",
+        "bytes": 103288
+      },
+      {
+        "path": "reports/conocimiento_20261030/moby_titulo_publicado_final.json",
+        "bytes": 94369
+      },
+      {
+        "path": "reports/conocimiento_20261030/nonfiction_themes.json",
+        "bytes": 12989
+      },
+      {
+        "path": "reports/conocimiento_20261030/public_ingestion_14.json",
+        "bytes": 6419
+      },
+      {
+        "path": "reports/conocimiento_20261030/quality_policy_v3.json",
+        "bytes": 6453460
+      },
+      {
+        "path": "reports/conocimiento_20261030/recuerdos_y_generalizacion.json",
+        "bytes": 86919
+      },
+      {
+        "path": "reports/conocimiento_20261030/referencias.md",
+        "bytes": 3966
+      },
+      {
+        "path": "reports/conocimiento_20261030/sql_evidence_projection.json",
+        "bytes": 9091
+      },
+      {
+        "path": "reports/conocimiento_20261030/targeted/enrichment_001.json",
+        "bytes": 2884
+      },
+      {
+        "path": "reports/conocimiento_20261030/targeted/enrichment_002.json",
+        "bytes": 3651
+      },
+      {
+        "path": "reports/conocimiento_20261030/targeted/enrichment_003.json",
+        "bytes": 3419
+      },
+      {
+        "path": "reports/conocimiento_20261030/targeted/enrichment_004.json",
+        "bytes": 3694
+      },
+      {
+        "path": "reports/conocimiento_20261030/targeted/enrichment_005.json",
+        "bytes": 3522
+      },
+      {
+        "path": "reports/conocimiento_20261030/targeted/enrichment_006.json",
+        "bytes": 3470
+      },
+      {
+        "path": "reports/conocimiento_20261030/targeted/enrichment_007.json",
+        "bytes": 3686
+      },
+      {
+        "path": "reports/conocimiento_20261030/targeted/enrichment_008.json",
+        "bytes": 3444
+      },
+      {
+        "path": "reports/conocimiento_20261030/targeted/enrichment_009.json",
+        "bytes": 3321
+      },
+      {
+        "path": "reports/conocimiento_20261030/targeted/enrichment_010.json",
+        "bytes": 3511
+      },
+      {
+        "path": "reports/conocimiento_20261030/targeted/enrichment_011.json",
+        "bytes": 3353
+      },
+      {
+        "path": "reports/conocimiento_20261030/targeted/enrichment_012.json",
+        "bytes": 3438
+      },
+      {
+        "path": "reports/conocimiento_20261030/targeted/enrichment_013.json",
+        "bytes": 3308
+      },
+      {
+        "path": "reports/conocimiento_20261030/targeted/enrichment_014.json",
+        "bytes": 3350
+      },
+      {
+        "path": "reports/conocimiento_20261030/targeted/enrichment_015.json",
+        "bytes": 3528
+      },
+      {
+        "path": "reports/conocimiento_20261030/targeted/enrichment_016.json",
+        "bytes": 3856
+      },
+      {
+        "path": "reports/conocimiento_20261030/targeted/enrichment_017.json",
+        "bytes": 3606
+      },
+      {
+        "path": "reports/conocimiento_20261030/targeted/enrichment_018.json",
+        "bytes": 3587
+      },
+      {
+        "path": "reports/conocimiento_20261030/targeted/enrichment_019.json",
+        "bytes": 3637
+      },
+      {
+        "path": "reports/conocimiento_20261030/targeted/enrichment_020.json",
+        "bytes": 3658
+      },
+      {
+        "path": "reports/conocimiento_20261030/targeted/enrichment_plan.json",
+        "bytes": 19096
+      },
+      {
+        "path": "reports/conocimiento_20261030/targeted/enrichment_summary_20_88699937645600.json",
+        "bytes": 9198
+      },
+      {
+        "path": "reports/conocimiento_20261030/targeted_candidates.json",
+        "bytes": 10478
+      },
+      {
+        "path": "reports/conocimiento_20261030/targeted_candidates_reviewed.json",
+        "bytes": 12431
+      },
+      {
+        "path": "reports/conocimiento_20261030/tests_affected_ultimo_alias.json",
+        "bytes": 1183
+      },
+      {
+        "path": "reports/conocimiento_20261030/tests_core_accepted.json",
+        "bytes": 126
+      },
+      {
+        "path": "reports/conocimiento_20261030/tests_core_continuacion_cierre.json",
+        "bytes": 228
+      },
+      {
+        "path": "reports/conocimiento_20261030/tests_core_continuacion_final.json",
+        "bytes": 126
+      },
+      {
+        "path": "reports/conocimiento_20261030/tests_core_final.json",
+        "bytes": 126
+      },
+      {
+        "path": "reports/conocimiento_20261030/tests_core_policy_v3.json",
+        "bytes": 126
+      },
+      {
+        "path": "reports/conocimiento_20261030/tests_core_recheck.json",
+        "bytes": 125
+      },
+      {
+        "path": "reports/conocimiento_20261030/tests_directed.json",
+        "bytes": 863
+      },
+      {
+        "path": "reports/continuous_20261029/README.md",
+        "bytes": 12703
+      },
+      {
+        "path": "reports/demo_20261103/README.md",
+        "bytes": 8095
+      },
+      {
+        "path": "reports/demo_20261103/ausencia_inicial.json",
+        "bytes": 201
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/captura.json",
+        "bytes": 7388
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-000.png",
+        "bytes": 1525029
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-001.png",
+        "bytes": 418778
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-002.png",
+        "bytes": 425071
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-003.png",
+        "bytes": 415827
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-004.png",
+        "bytes": 418169
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-005.png",
+        "bytes": 430265
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-006.png",
+        "bytes": 433613
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-007.png",
+        "bytes": 439646
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-008.png",
+        "bytes": 435873
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-009.png",
+        "bytes": 431831
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-010.png",
+        "bytes": 438652
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-011.png",
+        "bytes": 440525
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-012.png",
+        "bytes": 440655
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-013.png",
+        "bytes": 429182
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-014.png",
+        "bytes": 424219
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-015.png",
+        "bytes": 415412
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-016.png",
+        "bytes": 423186
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-017.png",
+        "bytes": 432318
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-018.png",
+        "bytes": 424802
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-019.png",
+        "bytes": 420644
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-020.png",
+        "bytes": 421180
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-021.png",
+        "bytes": 454667
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-022.png",
+        "bytes": 470111
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-023.png",
+        "bytes": 470183
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-024.png",
+        "bytes": 554144
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-025.png",
+        "bytes": 552444
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-026.png",
+        "bytes": 551251
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-027.png",
+        "bytes": 551008
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-028.png",
+        "bytes": 491565
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-029.png",
+        "bytes": 494915
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-030.png",
+        "bytes": 494844
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-031.png",
+        "bytes": 519056
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-032.png",
+        "bytes": 528094
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-033.png",
+        "bytes": 520325
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-034.png",
+        "bytes": 509862
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-035.png",
+        "bytes": 505159
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-036.png",
+        "bytes": 501283
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-037.png",
+        "bytes": 500265
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/frame-038.png",
+        "bytes": 500526
+      },
+      {
+        "path": "reports/demo_20261103/captura_entrega/funcionamiento_real.webp",
+        "bytes": 1143082
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/captura.json",
+        "bytes": 6971
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-000.png",
+        "bytes": 1569659
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-001.png",
+        "bytes": 452968
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-002.png",
+        "bytes": 457158
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-003.png",
+        "bytes": 452910
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-004.png",
+        "bytes": 453031
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-005.png",
+        "bytes": 465039
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-006.png",
+        "bytes": 467751
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-007.png",
+        "bytes": 461388
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-008.png",
+        "bytes": 463056
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-009.png",
+        "bytes": 469419
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-010.png",
+        "bytes": 468560
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-011.png",
+        "bytes": 449424
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-012.png",
+        "bytes": 464648
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-013.png",
+        "bytes": 452731
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-014.png",
+        "bytes": 549255
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-015.png",
+        "bytes": 553574
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-016.png",
+        "bytes": 477876
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-017.png",
+        "bytes": 494452
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-018.png",
+        "bytes": 493663
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-019.png",
+        "bytes": 530846
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-020.png",
+        "bytes": 531151
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-021.png",
+        "bytes": 530650
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-022.png",
+        "bytes": 486868
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-023.png",
+        "bytes": 488101
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-024.png",
+        "bytes": 481158
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-025.png",
+        "bytes": 484416
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-026.png",
+        "bytes": 496092
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-027.png",
+        "bytes": 490379
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-028.png",
+        "bytes": 483428
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-029.png",
+        "bytes": 490393
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-030.png",
+        "bytes": 487169
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-031.png",
+        "bytes": 485513
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-032.png",
+        "bytes": 482582
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-033.png",
+        "bytes": 463489
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-034.png",
+        "bytes": 464480
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-035.png",
+        "bytes": 465220
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/frame-036.png",
+        "bytes": 465083
+      },
+      {
+        "path": "reports/demo_20261103/captura_final/funcionamiento_real.webp",
+        "bytes": 1072480
+      },
+      {
+        "path": "reports/demo_20261103/capturas_reales/captura.json",
+        "bytes": 2407
+      },
+      {
+        "path": "reports/demo_20261103/capturas_reales/frame-000.png",
+        "bytes": 1702594
+      },
+      {
+        "path": "reports/demo_20261103/capturas_reales/frame-001.png",
+        "bytes": 314119
+      },
+      {
+        "path": "reports/demo_20261103/capturas_reales/frame-002.png",
+        "bytes": 322740
+      },
+      {
+        "path": "reports/demo_20261103/capturas_reales/frame-003.png",
+        "bytes": 318003
+      },
+      {
+        "path": "reports/demo_20261103/capturas_reales/frame-004.png",
+        "bytes": 325923
+      },
+      {
+        "path": "reports/demo_20261103/capturas_reales/frame-005.png",
+        "bytes": 319192
+      },
+      {
+        "path": "reports/demo_20261103/capturas_reales/frame-006.png",
+        "bytes": 324753
+      },
+      {
+        "path": "reports/demo_20261103/capturas_reales/frame-007.png",
+        "bytes": 316672
+      },
+      {
+        "path": "reports/demo_20261103/capturas_reales/frame-008.png",
+        "bytes": 322445
+      },
+      {
+        "path": "reports/demo_20261103/capturas_reales/frame-009.png",
+        "bytes": 312457
+      },
+      {
+        "path": "reports/demo_20261103/capturas_reales/frame-010.png",
+        "bytes": 311392
+      },
+      {
+        "path": "reports/demo_20261103/capturas_reales/frame-011.png",
+        "bytes": 322334
+      },
+      {
+        "path": "reports/demo_20261103/capturas_reales/funcionamiento_real.webp",
+        "bytes": 425844
+      },
+      {
+        "path": "reports/demo_20261103/capturas_verificadas/captura.json",
+        "bytes": 3163
+      },
+      {
+        "path": "reports/demo_20261103/capturas_verificadas/frame-000.png",
+        "bytes": 1535987
+      },
+      {
+        "path": "reports/demo_20261103/capturas_verificadas/frame-001.png",
+        "bytes": 418571
+      },
+      {
+        "path": "reports/demo_20261103/capturas_verificadas/frame-002.png",
+        "bytes": 419424
+      },
+      {
+        "path": "reports/demo_20261103/capturas_verificadas/frame-003.png",
+        "bytes": 418000
+      },
+      {
+        "path": "reports/demo_20261103/capturas_verificadas/frame-004.png",
+        "bytes": 417941
+      },
+      {
+        "path": "reports/demo_20261103/capturas_verificadas/frame-005.png",
+        "bytes": 430921
+      },
+      {
+        "path": "reports/demo_20261103/capturas_verificadas/frame-006.png",
+        "bytes": 433313
+      },
+      {
+        "path": "reports/demo_20261103/capturas_verificadas/frame-007.png",
+        "bytes": 443713
+      },
+      {
+        "path": "reports/demo_20261103/capturas_verificadas/frame-008.png",
+        "bytes": 446245
+      },
+      {
+        "path": "reports/demo_20261103/capturas_verificadas/frame-009.png",
+        "bytes": 438667
+      },
+      {
+        "path": "reports/demo_20261103/capturas_verificadas/frame-010.png",
+        "bytes": 420430
+      },
+      {
+        "path": "reports/demo_20261103/capturas_verificadas/frame-011.png",
+        "bytes": 434786
+      },
+      {
+        "path": "reports/demo_20261103/capturas_verificadas/frame-012.png",
+        "bytes": 427163
+      },
+      {
+        "path": "reports/demo_20261103/capturas_verificadas/frame-013.png",
+        "bytes": 433520
+      },
+      {
+        "path": "reports/demo_20261103/capturas_verificadas/frame-014.png",
+        "bytes": 439435
+      },
+      {
+        "path": "reports/demo_20261103/capturas_verificadas/frame-015.png",
+        "bytes": 430208
+      },
+      {
+        "path": "reports/demo_20261103/capturas_verificadas/frame-016.png",
+        "bytes": 434996
+      },
+      {
+        "path": "reports/demo_20261103/capturas_verificadas/frame-017.png",
+        "bytes": 434688
+      },
+      {
+        "path": "reports/demo_20261103/capturas_verificadas/frame-018.png",
+        "bytes": 431888
+      },
+      {
+        "path": "reports/demo_20261103/capturas_verificadas/frame-019.png",
+        "bytes": 421445
+      },
+      {
+        "path": "reports/demo_20261103/capturas_verificadas/frame-020.png",
+        "bytes": 431358
+      },
+      {
+        "path": "reports/demo_20261103/capturas_verificadas/frame-021.png",
+        "bytes": 431823
+      },
+      {
+        "path": "reports/demo_20261103/capturas_verificadas/funcionamiento_real.webp",
+        "bytes": 684440
+      },
+      {
+        "path": "reports/demo_20261103/continuacion_similares_corregida.json",
+        "bytes": 17528
+      },
+      {
+        "path": "reports/demo_20261103/estado_cierre.json",
+        "bytes": 417
+      },
+      {
+        "path": "reports/demo_20261103/experiencia_baseline.json",
+        "bytes": 1856845
+      },
+      {
+        "path": "reports/demo_20261103/filosofia_cierre.json",
+        "bytes": 13097
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/captura.json",
+        "bytes": 8932
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-000.png",
+        "bytes": 1522470
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-001.png",
+        "bytes": 452792
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-002.png",
+        "bytes": 457959
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-003.png",
+        "bytes": 462274
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-004.png",
+        "bytes": 454137
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-005.png",
+        "bytes": 464799
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-006.png",
+        "bytes": 467431
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-007.png",
+        "bytes": 455388
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-008.png",
+        "bytes": 470649
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-009.png",
+        "bytes": 470606
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-010.png",
+        "bytes": 455861
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-011.png",
+        "bytes": 464519
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-012.png",
+        "bytes": 463943
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-013.png",
+        "bytes": 547206
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-014.png",
+        "bytes": 550836
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-015.png",
+        "bytes": 551648
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-016.png",
+        "bytes": 489366
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-017.png",
+        "bytes": 493373
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-018.png",
+        "bytes": 531145
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-019.png",
+        "bytes": 529073
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-020.png",
+        "bytes": 527918
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-021.png",
+        "bytes": 527372
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-022.png",
+        "bytes": 501471
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-023.png",
+        "bytes": 505434
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-024.png",
+        "bytes": 502136
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-025.png",
+        "bytes": 505260
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/frame-026.png",
+        "bytes": 502072
+      },
+      {
+        "path": "reports/demo_20261103/grabacion_defensa/funcionamiento_real.webp",
+        "bytes": 855556
+      },
+      {
+        "path": "reports/demo_20261103/guion_8_minutos.md",
+        "bytes": 4083
+      },
+      {
+        "path": "reports/demo_20261103/https_backend_verificado.json",
+        "bytes": 1084
+      },
+      {
+        "path": "reports/demo_20261103/https_cierre.json",
+        "bytes": 1174
+      },
+      {
+        "path": "reports/demo_20261103/integridad_cierre.json",
+        "bytes": 2521
+      },
+      {
+        "path": "reports/demo_20261103/integridad_final_verificada.json",
+        "bytes": 2617
+      },
+      {
+        "path": "reports/demo_20261103/integridad_hashes_actual.json",
+        "bytes": 676
+      },
+      {
+        "path": "reports/demo_20261103/integrity_baseline.json",
+        "bytes": 292
+      },
+      {
+        "path": "reports/demo_20261103/metricas_cierre.json",
+        "bytes": 2642
+      },
+      {
+        "path": "reports/demo_20261103/obra_externa_primera.json",
+        "bytes": 4611
+      },
+      {
+        "path": "reports/demo_20261103/obra_externa_reutilizacion_sin_red.json",
+        "bytes": 19000
+      },
+      {
+        "path": "reports/demo_20261103/recomendaciones_memoria_final.json",
+        "bytes": 22961
+      },
+      {
+        "path": "reports/demo_20261103/recorrido_cierre.json",
+        "bytes": 36604
+      },
+      {
+        "path": "reports/demo_20261103/resultados_actuales.md",
+        "bytes": 12664
+      },
+      {
+        "path": "reports/demo_20261103/servidor_remoto.md",
+        "bytes": 9880
+      },
+      {
+        "path": "reports/demo_20261103/tests_actuales.json",
+        "bytes": 1223
+      },
+      {
+        "path": "reports/demo_20261103/tests_cierre.json",
+        "bytes": 752
+      },
+      {
+        "path": "reports/demo_20261103/tests_cierre_definitivo.json",
+        "bytes": 752
+      },
+      {
+        "path": "reports/demo_20261103/tests_entrega.json",
+        "bytes": 752
+      },
+      {
+        "path": "reports/demo_20261103/tests_finales.json",
+        "bytes": 751
+      },
+      {
+        "path": "reports/demo_20261103/tests_ordinal_final.json",
+        "bytes": 752
+      },
+      {
+        "path": "reports/demo_20261103/tests_release.json",
+        "bytes": 752
+      },
+      {
+        "path": "reports/demo_20261103/waitress_local_actual.json",
+        "bytes": 58464
+      },
+      {
+        "path": "reports/demo_20261103/waitress_local_baseline.json",
+        "bytes": 45892
+      },
+      {
+        "path": "reports/expansion_20261028/README.md",
+        "bytes": 7596
+      },
+      {
+        "path": "reports/expansion_20261028/RESULTADOS.md",
+        "bytes": 6698
+      },
+      {
+        "path": "reports/https_fullsite_20261031/DEFENSA_20261103.md",
+        "bytes": 9554
+      },
+      {
+        "path": "reports/https_fullsite_20261031/README.md",
+        "bytes": 14041
+      },
+      {
+        "path": "reports/https_fullsite_20261031/cierre_ensayos.json",
+        "bytes": 141
+      },
+      {
+        "path": "reports/https_fullsite_20261031/integridad_final.json",
+        "bytes": 2617
+      },
+      {
+        "path": "reports/https_fullsite_20261031/integridad_lectura.json",
+        "bytes": 2617
+      },
+      {
+        "path": "reports/https_fullsite_20261031/integrity_baseline.json",
+        "bytes": 292
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegacion_sse.json",
+        "bytes": 28601
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_enlaces/captura.json",
+        "bytes": 47773
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_enlaces/frame-000.png",
+        "bytes": 860532
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_enlaces/frame-001.png",
+        "bytes": 1306993
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_enlaces/frame-002.png",
+        "bytes": 1522470
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_enlaces/frame-003.png",
+        "bytes": 508965
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_enlaces/frame-004.png",
+        "bytes": 531582
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_enlaces/frame-005.png",
+        "bytes": 528577
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_enlaces/frame-006.png",
+        "bytes": 534907
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_enlaces/frame-007.png",
+        "bytes": 533144
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_enlaces/frame-008.png",
+        "bytes": 1427130
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_enlaces/frame-009.png",
+        "bytes": 1286013
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_enlaces/frame-010.png",
+        "bytes": 1530930
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_enlaces/frame-011.png",
+        "bytes": 1056699
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_enlaces/frame-012.png",
+        "bytes": 508940
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_enlaces/frame-013.png",
+        "bytes": 518332
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_enlaces/frame-014.png",
+        "bytes": 517996
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_enlaces/funcionamiento_real.webp",
+        "bytes": 924326
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_real/captura.json",
+        "bytes": 47015
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_real/frame-000.png",
+        "bytes": 860532
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_real/frame-001.png",
+        "bytes": 1306624
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_real/frame-002.png",
+        "bytes": 1522470
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_real/frame-003.png",
+        "bytes": 488386
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_real/frame-004.png",
+        "bytes": 520128
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_real/frame-005.png",
+        "bytes": 526043
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_real/frame-006.png",
+        "bytes": 535137
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_real/frame-007.png",
+        "bytes": 533149
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_real/frame-008.png",
+        "bytes": 1427130
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_real/frame-009.png",
+        "bytes": 1286013
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_real/frame-010.png",
+        "bytes": 1286013
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_real/frame-011.png",
+        "bytes": 982474
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_real/frame-012.png",
+        "bytes": 509492
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_real/frame-013.png",
+        "bytes": 517255
+      },
+      {
+        "path": "reports/https_fullsite_20261031/navegador_real/funcionamiento_real.webp",
+        "bytes": 742308
+      },
+      {
+        "path": "reports/https_fullsite_20261031/publicacion_preservada.json",
+        "bytes": 939
+      },
+      {
+        "path": "reports/https_fullsite_20261031/recorrido_formularios_sse.json",
+        "bytes": 18974
+      },
+      {
+        "path": "reports/https_fullsite_20261031/regresiones_210.json",
+        "bytes": 752
+      },
+      {
+        "path": "reports/https_fullsite_20261031/regresiones_frontend.json",
+        "bytes": 130
+      },
+      {
+        "path": "reports/https_fullsite_20261031/validacion_web_publica_confirmada.json",
+        "bytes": 1079
+      },
+      {
+        "path": "reports/https_preflight_20261031/README.md",
+        "bytes": 15338
+      },
+      {
+        "path": "reports/https_preflight_20261031/activacion_pendiente.md",
+        "bytes": 8129
+      },
+      {
+        "path": "reports/https_preflight_20261031/cierre.json",
+        "bytes": 472
+      },
+      {
+        "path": "reports/https_preflight_20261031/conversacion.json",
+        "bytes": 24364
+      },
+      {
+        "path": "reports/https_preflight_20261031/dns_publico_funnel.json",
+        "bytes": 648
+      },
+      {
+        "path": "reports/https_preflight_20261031/https_activado_sin_credenciales.json",
+        "bytes": 2072
+      },
+      {
+        "path": "reports/https_preflight_20261031/integridad_final_funnel_preparado.json",
+        "bytes": 106
+      },
+      {
+        "path": "reports/https_preflight_20261031/mysql_firewall_actual.json",
+        "bytes": 4882
+      },
+      {
+        "path": "reports/https_preflight_20261031/portadas.json",
+        "bytes": 455
+      },
+      {
+        "path": "reports/https_preflight_20261031/publicacion_20261031.md",
+        "bytes": 6180
+      },
+      {
+        "path": "reports/https_preflight_20261031/red_final.json",
+        "bytes": 3675
+      },
+      {
+        "path": "reports/https_preflight_20261031/red_inicial.json",
+        "bytes": 3415
+      },
+      {
+        "path": "reports/https_preflight_20261031/red_reglas_revisadas.json",
+        "bytes": 3858
+      },
+      {
+        "path": "reports/https_preflight_20261031/relay_publico_verificado.json",
+        "bytes": 276
+      },
+      {
+        "path": "reports/https_preflight_20261031/seguridad_sse.json",
+        "bytes": 12445
+      },
+      {
+        "path": "reports/https_preflight_20261031/servicios.json",
+        "bytes": 3774
+      },
+      {
+        "path": "reports/https_preflight_20261031/servidor_privado_confirmado.json",
+        "bytes": 1006
+      },
+      {
+        "path": "reports/https_preflight_20261031/validacion_movil_confirmada.json",
+        "bytes": 1285
+      },
+      {
+        "path": "reports/https_preflight_20261031/verificacion_final_funnel.json",
+        "bytes": 24403
+      },
+      {
+        "path": "reports/integral_20261029/README.md",
+        "bytes": 18719
+      },
+      {
+        "path": "reports/knowledge_20261028/README.md",
+        "bytes": 9439
+      },
+      {
+        "path": "reports/literary_answers_20261029/README.md",
+        "bytes": 7621
+      },
+      {
+        "path": "reports/narrative_20261028/README.md",
+        "bytes": 14626
+      },
+      {
+        "path": "reports/narrative_20261029/README.md",
+        "bytes": 15114
+      },
+      {
+        "path": "reports/recommendations_20261029/README.md",
+        "bytes": 12400
+      },
+      {
+        "path": "reports/reorganization_20261028/README.md",
+        "bytes": 7645
+      },
+      {
+        "path": "reports/reorganization_20261028/inventory.md",
+        "bytes": 33740
+      },
+      {
+        "path": "reports/reparacion_conversacional_20261030/README.md",
+        "bytes": 11583
+      },
+      {
+        "path": "reports/reparacion_conversacional_20261030/after_google_jack_heinz.json",
+        "bytes": 559967
+      },
+      {
+        "path": "reports/reparacion_conversacional_20261030/after_literal_lookup.json",
+        "bytes": 357983
+      },
+      {
+        "path": "reports/reparacion_conversacional_20261030/baseline_heinz_fresh.json",
+        "bytes": 460038
+      },
+      {
+        "path": "reports/reparacion_conversacional_20261030/baseline_jack_heinz.json",
+        "bytes": 534291
+      },
+      {
+        "path": "reports/reparacion_conversacional_20261030/baseline_jack_trace.json",
+        "bytes": 105063
+      },
+      {
+        "path": "reports/reparacion_conversacional_20261030/closure_http.json",
+        "bytes": 364671
+      },
+      {
+        "path": "reports/reparacion_conversacional_20261030/final_http.json",
+        "bytes": 291331
+      },
+      {
+        "path": "reports/reparacion_conversacional_20261030/heinz_conversation_v2.json",
+        "bytes": 342422
+      },
+      {
+        "path": "reports/reparacion_conversacional_20261030/heinz_conversation_v3.json",
+        "bytes": 333325
+      },
+      {
+        "path": "reports/reparacion_conversacional_20261030/heinz_final.json",
+        "bytes": 252945
+      },
+      {
+        "path": "reports/reparacion_conversacional_20261030/holdouts_corrected.json",
+        "bytes": 493359
+      },
+      {
+        "path": "reports/reparacion_conversacional_20261030/independent_conversations.json",
+        "bytes": 1507498
+      },
+      {
+        "path": "reports/reparacion_conversacional_20261030/integrity_final.json",
+        "bytes": 787
+      },
+      {
+        "path": "reports/reparacion_conversacional_20261030/jack_recheck.json",
+        "bytes": 107509
+      },
+      {
+        "path": "reports/reparacion_conversacional_20261030/measured_summary.json",
+        "bytes": 5063
+      },
+      {
+        "path": "reports/reparacion_conversacional_20261030/resultados.md",
+        "bytes": 5075
+      },
+      {
+        "path": "reports/reparacion_conversacional_20261030/run_directed.py",
+        "bytes": 3388
+      },
+      {
+        "path": "reports/reparacion_conversacional_20261030/tests_closure.json",
+        "bytes": 1468
+      },
+      {
+        "path": "reports/reparacion_conversacional_20261030/tests_final.json",
+        "bytes": 1434
+      },
+      {
+        "path": "reports/reparacion_conversacional_20261030/tests_release.json",
+        "bytes": 1468
+      },
+      {
+        "path": "reports/reparacion_conversacional_20261030/tests_round1.json",
+        "bytes": 1434
+      },
+      {
+        "path": "reports/reparacion_conversacional_20261030/tests_verified.json",
+        "bytes": 1467
+      },
+      {
+        "path": "reports/reparacion_conversacional_20261030/verified_http.json",
+        "bytes": 271956
+      },
+      {
+        "path": "reports/search_narrative_20261029/LOTE_1.md",
+        "bytes": 5150
+      },
+      {
+        "path": "reports/search_narrative_20261029/LOTE_2.md",
+        "bytes": 14184
+      },
+      {
+        "path": "reports/search_narrative_20261029/README.md",
+        "bytes": 2440
+      },
+      {
+        "path": "reports/search_narrative_20261029_peru/README.md",
+        "bytes": 10909
+      },
+      {
+        "path": "reports/searx_20261030/README.md",
+        "bytes": 12104
+      },
+      {
+        "path": "reports/searx_20261030/baseline.json",
+        "bytes": 46415
+      },
+      {
+        "path": "reports/searx_20261030/chat_actual.json",
+        "bytes": 544110
+      },
+      {
+        "path": "reports/searx_20261030/chat_actual_resumen.json",
+        "bytes": 1307
+      },
+      {
+        "path": "reports/searx_20261030/chat_ddg_pausado.json",
+        "bytes": 577533
+      },
+      {
+        "path": "reports/searx_20261030/chat_ddg_pausado_resumen.json",
+        "bytes": 1305
+      },
+      {
+        "path": "reports/searx_20261030/fallback_cierre.json",
+        "bytes": 22508
+      },
+      {
+        "path": "reports/searx_20261030/fallback_despues.json",
+        "bytes": 26467
+      },
+      {
+        "path": "reports/searx_20261030/fallback_real.json",
+        "bytes": 24217
+      },
+      {
+        "path": "reports/searx_20261030/integridad_logica.json",
+        "bytes": 211
+      },
+      {
+        "path": "reports/searx_20261030/logs_cierre.json",
+        "bytes": 99
+      },
+      {
+        "path": "reports/searx_20261030/logs_recientes.json",
+        "bytes": 99
+      },
+      {
+        "path": "reports/searx_20261030/motores_reales.json",
+        "bytes": 22528
+      },
+      {
+        "path": "reports/searx_20261030/pruebas_cierre.json",
+        "bytes": 485
+      },
+      {
+        "path": "reports/volcados_20261030/README.md",
+        "bytes": 18992
+      },
+      {
+        "path": "reports/volcados_20261030/archivos_oficiales.json",
+        "bytes": 440
+      },
+      {
+        "path": "reports/volcados_20261030/assertions_integridad_diagnostico.json",
+        "bytes": 20415
+      },
+      {
+        "path": "reports/volcados_20261030/authors_lote02.json",
+        "bytes": 16591
+      },
+      {
+        "path": "reports/volcados_20261030/authors_piloto.json",
+        "bytes": 12256
+      },
+      {
+        "path": "reports/volcados_20261030/busqueda_volumen_real.json",
+        "bytes": 49
+      },
+      {
+        "path": "reports/volcados_20261030/catalogo_nuevo_offline.json",
+        "bytes": 159999
+      },
+      {
+        "path": "reports/volcados_20261030/cobertura_cierre17.json",
+        "bytes": 8680
+      },
+      {
+        "path": "reports/volcados_20261030/cobertura_controles_antes.json",
+        "bytes": 3199
+      },
+      {
+        "path": "reports/volcados_20261030/cobertura_final.json",
+        "bytes": 8234
+      },
+      {
+        "path": "reports/volcados_20261030/cobertura_narrativa_actual.json",
+        "bytes": 1541
+      },
+      {
+        "path": "reports/volcados_20261030/comparacion_http_final.json",
+        "bytes": 57375
+      },
+      {
+        "path": "reports/volcados_20261030/continuidad_cierre_http.json",
+        "bytes": 54170
+      },
+      {
+        "path": "reports/volcados_20261030/enriquecimiento_ampliado.json",
+        "bytes": 38992
+      },
+      {
+        "path": "reports/volcados_20261030/enriquecimiento_desarrollo.json",
+        "bytes": 15025
+      },
+      {
+        "path": "reports/volcados_20261030/enriquecimiento_diagnostico.json",
+        "bytes": 5415
+      },
+      {
+        "path": "reports/volcados_20261030/enriquecimiento_diagnostico_despues.json",
+        "bytes": 1743
+      },
+      {
+        "path": "reports/volcados_20261030/enriquecimiento_lote01.json",
+        "bytes": 13238
+      },
+      {
+        "path": "reports/volcados_20261030/enriquecimiento_lote02.json",
+        "bytes": 9521
+      },
+      {
+        "path": "reports/volcados_20261030/enriquecimiento_tolkien.json",
+        "bytes": 7378
+      },
+      {
+        "path": "reports/volcados_20261030/integridad_cierre.json",
+        "bytes": 66949
+      },
+      {
+        "path": "reports/volcados_20261030/integridad_final.json",
+        "bytes": 67021
+      },
+      {
+        "path": "reports/volcados_20261030/jade_antes_offline.json",
+        "bytes": 30283
+      },
+      {
+        "path": "reports/volcados_20261030/jade_antes_red_bloqueada.json",
+        "bytes": 9780
+      },
+      {
+        "path": "reports/volcados_20261030/last_days_guard_final.json",
+        "bytes": 25130
+      },
+      {
+        "path": "reports/volcados_20261030/limite_pagina_corregido.json",
+        "bytes": 711
+      },
+      {
+        "path": "reports/volcados_20261030/narrativa_antes.json",
+        "bytes": 60149
+      },
+      {
+        "path": "reports/volcados_20261030/narrativa_despues.json",
+        "bytes": 128573
+      },
+      {
+        "path": "reports/volcados_20261030/narrativa_final.json",
+        "bytes": 85366
+      },
+      {
+        "path": "reports/volcados_20261030/narrativa_memoria_dirigida_final.json",
+        "bytes": 207713
+      },
+      {
+        "path": "reports/volcados_20261030/obras_control.json",
+        "bytes": 6946
+      },
+      {
+        "path": "reports/volcados_20261030/offline_final_red_bloqueada.json",
+        "bytes": 141474
+      },
+      {
+        "path": "reports/volcados_20261030/peru_final.json",
+        "bytes": 733950
+      },
+      {
+        "path": "reports/volcados_20261030/peru_http.json",
+        "bytes": 1005415
+      },
+      {
+        "path": "reports/volcados_20261030/peru_tres_final.json",
+        "bytes": 617644
+      },
+      {
+        "path": "reports/volcados_20261030/proyeccion_lote02.json",
+        "bytes": 16075
+      },
+      {
+        "path": "reports/volcados_20261030/proyeccion_piloto.json",
+        "bytes": 16060
+      },
+      {
+        "path": "reports/volcados_20261030/pruebas_finales.txt",
+        "bytes": 2670
+      },
+      {
+        "path": "reports/volcados_20261030/searx_estado_final.json",
+        "bytes": 297
+      },
+      {
+        "path": "reports/volcados_20261030/tolkien_offline_cierre.json",
+        "bytes": 51284
+      },
+      {
+        "path": "reports/volcados_20261030/tolkien_verificar.json",
+        "bytes": 14861
+      },
+      {
+        "path": "reports/volcados_20261030/traduccion_publicada_corregida.json",
+        "bytes": 626
+      },
+      {
+        "path": "reports/volcados_20261030/traza_pagina_unica.json",
+        "bytes": 7403
+      },
+      {
+        "path": "reports/volcados_20261030/works_lote02.json",
+        "bytes": 16569
+      },
+      {
+        "path": "reports/volcados_20261030/works_piloto.json",
+        "bytes": 12201
+      }
+    ],
+    "E_reproducibles": [],
+    "F_revision_manual": [
+      {
+        "path": "litmate_sinopsis_trama.patch",
+        "bytes": 9389
+      }
+    ]
+  },
+  "candidates": [
+    {
+      "path": "__pycache__",
+      "bytes": 150975,
+      "reason": "Cache reproducible; no borrar durante la defensa ni con procesos en uso.",
+      "references": "Nombre de cache gestionado por Python/herramienta; no se reubica codigo fuente.",
+      "backup": "Regenerable a partir de codigo y entorno, no es respaldo de datos.",
+      "in_use": "No se puede garantizar que este libre mientras hay servidores activos.",
+      "action": "Solo candidato; requiere autorizacion explicita para borrar."
+    },
+    {
+      "path": "core/__pycache__",
+      "bytes": 4087109,
+      "reason": "Cache reproducible; no borrar durante la defensa ni con procesos en uso.",
+      "references": "Nombre de cache gestionado por Python/herramienta; no se reubica codigo fuente.",
+      "backup": "Regenerable a partir de codigo y entorno, no es respaldo de datos.",
+      "in_use": "No se puede garantizar que este libre mientras hay servidores activos.",
+      "action": "Solo candidato; requiere autorizacion explicita para borrar."
+    },
+    {
+      "path": "suscripciones/__pycache__",
+      "bytes": 54635,
+      "reason": "Cache reproducible; no borrar durante la defensa ni con procesos en uso.",
+      "references": "Nombre de cache gestionado por Python/herramienta; no se reubica codigo fuente.",
+      "backup": "Regenerable a partir de codigo y entorno, no es respaldo de datos.",
+      "in_use": "No se puede garantizar que este libre mientras hay servidores activos.",
+      "action": "Solo candidato; requiere autorizacion explicita para borrar."
+    }
+  ],
+  "files_deleted": 0,
+  "files_moved": 0,
+  "protected": [
+    "backups",
+    "data",
+    "memory/RAG",
+    "dump files",
+    "secrets",
+    "defense evidence"
+  ],
+  "distribution": "El gateway no publica informes, manuales internos ni directorios del repositorio.",
+  "reference_check": {
+    "method": "git grep -n -F __pycache__ -- .gitignore *.py *.md",
+    "hits": [
+      ".gitignore:15",
+      "scripts/repository/inventory.py:13"
+    ],
+    "result": "Caches excluidas del versionado e inventario; no se declara que est?n sin uso."
+  },
+  "protected_untracked_data": "Los datos y respaldos est?n ignorados por Git; el conteo B=0 se refiere s?lo a archivos versionados, no a ausencia de datos.",
+  "additional_inventory": "inventario_referencias_existente.json reutiliza scripts/repository/inventory.py; sus propuestas de movimientos NO se ejecutaron."
+}

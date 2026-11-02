@@ -1,0 +1,183 @@
+{
+  "case": {
+    "case": 13,
+    "title": "Frieren",
+    "author": "Kanehito Yamada",
+    "kind": "manga",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": true
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de Frieren de Kanehito Yamada",
+      "answer": "Hay un problema temporal al consultar las fuentes de este libro. Puedes volver a intentarlo en unos instantes.",
+      "status": "unavailable",
+      "books": [],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 6448,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "work_type": "unknown",
+        "narrative_failure": "retrieval_unavailable",
+        "progress_metrics": {
+          "elapsed_ms": 6451.848,
+          "first_phase_emitted_ms": 22.939,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 7.773,
+            "cache_lookup": 6.01,
+            "knowledge_lookup": 557.538,
+            "retrieval": 2712.774,
+            "web_search": 2671.581,
+            "extraction": 595.598,
+            "finalization": 3.573
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 2.922,
+              "elapsed_ms": 7.773,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 16.919,
+              "elapsed_ms": 6.01,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 35.554,
+              "elapsed_ms": 327.587,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 109.067,
+              "elapsed_ms": 42.684,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 218.751,
+              "elapsed_ms": 143.413,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 285.359,
+              "elapsed_ms": 41.284,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 426.794,
+              "elapsed_ms": 2.57,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 439.417,
+              "elapsed_ms": 2712.774,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 3156.536,
+              "elapsed_ms": 521.334,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 3678.115,
+              "elapsed_ms": 595.598,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 4273.753,
+              "elapsed_ms": 1115.627,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 5391.82,
+              "elapsed_ms": 1034.62,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 6448.263,
+              "elapsed_ms": 3.573,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 22.939
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 6.4596,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.0381,
+        "verified_ready_seconds": 6.4421,
+        "first_verified_text_seconds": 6.4596
+      }
+    }
+  ],
+  "seconds": 8.698,
+  "coverage_before": {
+    "works": 14477,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14650,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14477,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14650,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "persistent_exact_cache",
+  "google_books_enabled": false,
+  "factual_review_pending": true
+}

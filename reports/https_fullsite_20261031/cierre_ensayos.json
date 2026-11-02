@@ -1,0 +1,9 @@
+{
+  "mysql_counts_equal": true,
+  "hashes_unchanged": true,
+  "ports": {
+    "8003": true,
+    "8004": false,
+    "8005": false
+  }
+}

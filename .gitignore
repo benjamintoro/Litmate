@@ -21,6 +21,7 @@ __pycache__/
 db.sqlite3
 db.sqlite3-journal
 *.sqlite3
+backups/
 
 # Archivos recolectados de producción y uploads de usuarios
 staticfiles/
@@ -29,6 +30,13 @@ media/
 # Logs del sistema
 *.log
 logs/
+
+# Archivos temporales de pruebas IA (nunca son la base del proyecto)
+.test-tmp/
+.testtmp/
+data/accounts/
+*.signing.dpapi
+reportes/
 
 # Editores y entornos de desarrollo
 .vscode/
@@ -39,3 +47,34 @@ logs/
 # Archivos de sistema operativo
 .DS_Store
 Thumbs.db
+
+# Corpus autorizado y descargas oficiales: datos derivados, nunca commits masivos.
+data/biblioteca/
+data/adquisicion/
+data/corpus_autorizado/
+data/biblioteca_rag/
+
+# Inventarios y salidas derivadas del primer lote; los informes Markdown sí se versionan.
+reports/reorganization_*/*.json
+reports/reorganization_*/*.txt
+reports/knowledge_*/*.json
+reports/knowledge_*/*.txt
+reports/expansion_*/*.json
+reports/expansion_*/*.txt
+reports/narrative_*/*.json
+reports/narrative_*/*.jsonl
+reports/narrative_*/*.txt
+reports/narrative_*/*.sqlite3
+reports/recommendations_*/*.json
+reports/recommendations_*/*.txt
+reports/search_narrative_*/*.json
+reports/search_narrative_*/*.txt
+reports/search_narrative_*/*.log
+reports/literary_answers_*/*.json
+reports/literary_answers_*/*.txt
+reports/continuous_*/*.json
+reports/continuous_*/*.txt
+reports/continuous_runs/
+reports/integral_*/*.json
+reports/integral_*/*.jsonl
+reports/integral_*/*.txt

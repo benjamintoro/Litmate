@@ -1,0 +1,263 @@
+{
+  "case": {
+    "case": 14,
+    "title": "Dandadan",
+    "author": "Yukinobu Tatsu",
+    "kind": "manga",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": true
+  },
+  "offline": true,
+  "turns": [
+    {
+      "question": "Dime la trama de Dandadan de Yukinobu Tatsu",
+      "answer": "Momo Ayase es una estudiante de secundaria que cree en los fantasmas, pero no en los extraterrestres, mientras que su compa\u00f1ero de clase, Ken Takakura, a quien ella apoda \u00abOkarun\u00bb, cree en los extraterrestres, pero no en los fantasmas. En una apuesta para determinar qui\u00e9n tiene raz\u00f3n, los dos deciden visitar por separado lugares relacionados con lo extraterrestre y lo oculto: Momo visita los primeros y Okarun los segundos. Momo es secuestrada por un grupo de extraterrestres que accidentalmente desbloquean sus chakras, lo que le permite desarrollar habilidades ps\u00edquicas. Mientras tanto, Okarun es pose\u00eddo por un esp\u00edritu y, junto con las habilidades de Momo, utilizan su forma pose\u00edda para derrotar a los extraterrestres. El resto de la historia sigue a Momo y Okarun mientras se al\u00edan con compa\u00f1eros de clase, amigos, familiares y nuevos conocidos para combatir entidades sobrenaturales, incluidos esp\u00edritus y seres extraterrestres, al tiempo que navegan por la creciente tensi\u00f3n rom\u00e1ntica entre Momo y Okarun.\n\nFuente: https://es.wikipedia.org/wiki/Dandadan\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+      "status": "answered",
+      "books": [
+        {
+          "id": "1",
+          "title": "Dandadan",
+          "author": "Yukinobu Tatsu",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Dandadan+Yukinobu+Tatsu&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Dandadan+Yukinobu+Tatsu"
+            }
+          ]
+        }
+      ],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 675,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "partial_evidence": true,
+        "work_type": "nonfiction",
+        "progress_metrics": {
+          "elapsed_ms": 708.027,
+          "first_phase_emitted_ms": 42.879,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 26.279,
+            "cache_lookup": 0.474,
+            "knowledge_lookup": 598.091,
+            "audit": 8.864,
+            "finalization": 32.877
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 4.118,
+              "elapsed_ms": 26.279,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 42.392,
+              "elapsed_ms": 0.474,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 123.477,
+              "elapsed_ms": 356.181,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 219.114,
+              "elapsed_ms": 46.678,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 331.431,
+              "elapsed_ms": 147.194,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 401.166,
+              "elapsed_ms": 44.451,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 545.143,
+              "elapsed_ms": 3.587,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 598.585,
+              "elapsed_ms": 5.775,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 637.217,
+              "elapsed_ms": 3.089,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 675.144,
+              "elapsed_ms": 32.877,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 42.879
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 598.571
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 0.7173,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.045,
+        "verified_ready_seconds": 0.6674,
+        "first_verified_text_seconds": 0.7173
+      }
+    }
+  ],
+  "seconds": 3.385,
+  "public_research_trace": [
+    {
+      "stage": "retrieved_public_evidence",
+      "sources": [
+        {
+          "id": 1,
+          "title": "Dandadan",
+          "author": "Yukinobu Tatsu",
+          "description": "",
+          "source": "Wikipedia",
+          "year": "",
+          "book_id": "",
+          "kind": "book",
+          "url": "https://es.wikipedia.org/wiki/Dandadan",
+          "locator": "",
+          "read_mode": "",
+          "retrieved_at": "",
+          "work_id": "litmate:6b0ab4a7071452bd4bf55792",
+          "memory_verified": true,
+          "confirmed_aliases": [],
+          "isbns": [],
+          "categories": []
+        },
+        {
+          "id": 2,
+          "title": "Dandadan",
+          "author": "Fuente web",
+          "description": "== Argumento == Momo Ayase es una estudiante de secundaria que cree en los fantasmas, pero no en los extraterrestres, mientras que su compa\u00f1ero de clase, Ken Takakura, a quien ella apoda \u00abOkarun\u00bb, cree en los extraterrestres, pero no en los fantasmas. En una apuesta para determinar qui\u00e9n tiene raz\u00f3n, los dos deciden visitar por separado lugares relacionados con lo extraterrestre y lo oculto: Momo visita los primeros y Okarun los segundos. Momo es secuestrada por un grupo de extraterrestres que accidentalmente desbloquean sus chakras, lo que le permite desarrollar habilidades ps\u00edquicas. Mientras tanto, Okarun es pose\u00eddo por un esp\u00edritu y, junto con las habilidades de Momo, utilizan su forma pose\u00edda para derrotar a los extraterrestres. El resto de la historia sigue a Momo y Okarun mientras se al\u00edan con compa\u00f1eros de clase, amigos, familiares y nuevos conocidos para combatir entidades sobrenaturales, incluidos esp\u00edritus y seres extraterrestres, al tiempo que navegan por la creciente tensi\u00f3n rom\u00e1ntica entre Momo y Okarun. Inicialmente, la trama se centra en la b\u00fasqueda de Okarun para recuperar sus test\u00edculos perdidos (kintama). Tras lograrlo, la historia pasa a centrarse en Momo, que se ve afectada por una misteriosa maldici\u00f3n que reduce gradualmente su tama\u00f1o f\u00edsico y borra su presencia ante quienes la rodean. Este acontecimiento impulsa la segunda mitad de la trama, en la que los dem\u00e1s personajes trabajan para deshacer la maldici\u00f3n y devolver a Momo a su estado original. Aunque la maldici\u00f3n de Momo finalmente se levanta, ella pierde la mayor parte de sus recuerdos en el proceso, incluidos los de su tiempo con Okarun y los dem\u00e1s.",
+          "source": "Wikipedia",
+          "year": "",
+          "book_id": "",
+          "kind": "web",
+          "url": "https://es.wikipedia.org/wiki/Dandadan",
+          "locator": "",
+          "read_mode": "",
+          "retrieved_at": "1793362893.141287",
+          "work_id": "litmate:6b0ab4a7071452bd4bf55792",
+          "work_title": "Dandadan",
+          "work_author": "Yukinobu Tatsu",
+          "license": "CC-BY-SA-4.0",
+          "trust": "untrusted_data",
+          "expires_at": "1793967693.141287",
+          "evidence_hash": "29e188cb31ca4163cdb053cd541207d28411de39cfec207f41962a8577ec56cf",
+          "memory_source_id": "82579a5330334f3432e71258092e1dafc5221502f264f2159d419a0b61f266c9",
+          "last_verified_at": "1793362893.141287",
+          "policy": "wikipedia-cc-by-sa-4.0-v1",
+          "work_binding_verified": true,
+          "memory_verified": true,
+          "attribution": {
+            "authors": "Wikipedia contributors",
+            "title": "Dandadan",
+            "url": "https://es.wikipedia.org/wiki/Dandadan",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+            "revision_id": "175232767"
+          },
+          "confirmed_aliases": [],
+          "literary_facts": [
+            {
+              "subject": "",
+              "relation": "",
+              "value": "",
+              "evidence": "Momo Ayase es una estudiante de secundaria que cree en los fantasmas, pero no en los extraterrestres, mientras que su compa\u00f1ero de clase, Ken Takakura, a quien ella apoda \u00abOkarun\u00bb, cree en los extraterrestres, pero no en los fantasmas.",
+              "source_url": "",
+              "fact_kind": "",
+              "topic": "plot",
+              "type": "",
+              "scope": "premise"
+            }
+          ],
+          "identity_text": "Dandadan o Dan Da Dan (\u30c0\u30f3\u30c0\u30c0\u30f3, ''Dandadan o Dan Da Dan''?) es una serie de manga japon\u00e9s escrita e ilustrada por Yukinobu Tatsu. Se publica en la aplicaci\u00f3n y web Sh\u014dnen Jump+ de Sh\u016beisha desde el 6 de abril de 2021. Sh\u016beisha tambi\u00e9n publica sus entregas en la web y app Manga Plus en espa\u00f1ol e ingl\u00e9s. Una adaptaci\u00f3n a serie de anime de televisi\u00f3n producida por Science Saru se emiti\u00f3 desde octubre hasta diciembre de 2024. Una segunda temporada sali\u00f3 al aire de julio a septiembre de 2025 y una tercera temporada se estrenar\u00e1 en 2027. La serie ha consagrado su popularidad, al conseguir m\u00e1s de 10 millones de copias en circulaci\u00f3n hasta marzo de 2025, los 14 millones de circulaci\u00f3n el 1 de julio del 2026 con la salida de cap\u00edtulo 235\u200b y superar las mil millones de vistas en la revista digital donde se p\u00fablica, as\u00ed como ha sido nominada a galardones como el Manga Taish\u014d y ha ganado el Premio de Manga Sh\u014dgakukan. Su adaptaci\u00f3n al anime tambi\u00e9n ha ganado viralidad, posicion\u00e1ndose como uno de los animes m\u00e1s vistos mediante diversas plataformas de streaming en 2024 y 2025.",
+          "character_facts": [],
+          "isbns": [],
+          "categories": []
+        }
+      ]
+    }
+  ],
+  "coverage_before": {
+    "works": 14481,
+    "works_with_explicit_plot": 18,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 21,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 35,
+    "linked_sources": 14656,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14481,
+    "works_with_explicit_plot": 18,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 21,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 35,
+    "linked_sources": 14656,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "new_empty_store",
+  "google_books_enabled": false,
+  "factual_review_pending": true
+}

@@ -1,0 +1,1059 @@
+{
+  "scope": "local HTTP",
+  "external_network_tested": false,
+  "checks": {
+    "chat_auth_required": true,
+    "chat_auth_required_http_status": 401,
+    "static_auth_required": true,
+    "static_auth_required_http_status": 401,
+    "admin_blocked": true,
+    "unknown_host_blocked": true,
+    "chat_html": true,
+    "frame_denied": true,
+    "csrf_cookie_present": true,
+    "javascript": true,
+    "avatar": true,
+    "csrf_enforced": true
+  },
+  "conversation": [
+    {
+      "question": "Recuerdo un libro donde un ni\u00f1o vive en un planeta peque\u00f1o y cuida una rosa",
+      "status": "answered",
+      "answer": "Por tus pistas, podr\u00edas estar buscando **El principito**, de **Antoine de Saint-Exup\u00e9ry**. \u00bfTe suena?",
+      "books": [
+        {
+          "id": "1",
+          "title": "El principito",
+          "author": "Antoine de Saint-Exup\u00e9ry",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+principito+Antoine+de+Saint-Exup%C3%A9ry&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+principito+Antoine+de+Saint-Exup%C3%A9ry"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 1195,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 1205.113,
+          "first_phase_emitted_ms": 137.11,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 87.389,
+            "cache_lookup": 32.335,
+            "knowledge_lookup": 748.156,
+            "audit": 6.009,
+            "finalization": 9.821
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 4.162,
+              "elapsed_ms": 87.389,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 104.759,
+              "elapsed_ms": 32.335,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 232.768,
+              "elapsed_ms": 370.852,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 316.616,
+              "elapsed_ms": 47.799,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 421.284,
+              "elapsed_ms": 181.165,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 495.665,
+              "elapsed_ms": 64.377,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 690.459,
+              "elapsed_ms": 46.95,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 930.374,
+              "elapsed_ms": 37.013,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 1045.555,
+              "elapsed_ms": 6.009,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 1195.281,
+              "elapsed_ms": 9.821,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 137.11
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 1045.523
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "local-identification"
+      },
+      "sse_done": true,
+      "seconds": 1.2362,
+      "http_timing": {
+        "first_progress_seconds": 0.1525,
+        "verified_ready_seconds": 1.1745,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "\u00bfQu\u00e9 pistas te hicieron pensar en ese libro?",
+      "status": "answered",
+      "answer": "**Coincidencias con tu recuerdo**\n\n**El principito \u2014 Antoine de Saint-Exup\u00e9ry**: Un ni\u00f1o procede de un planeta diminuto, cuida una rosa y viaja por otros mundos.\n\nFuentes:\nhttps://es.literaturasm.com/personaje/principito",
+      "books": [
+        {
+          "id": "1",
+          "title": "El principito",
+          "author": "Antoine de Saint-Exup\u00e9ry",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+principito+Antoine+de+Saint-Exup%C3%A9ry&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+principito+Antoine+de+Saint-Exup%C3%A9ry"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 101,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 111.706,
+          "first_phase_emitted_ms": 48.214,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 10.473,
+            "cache_lookup": 12.194,
+            "audit": 2.481,
+            "finalization": 10.449
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 16.393,
+              "elapsed_ms": 10.473,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 36.005,
+              "elapsed_ms": 12.194,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 52.522,
+              "elapsed_ms": 1.478,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 56.385,
+              "elapsed_ms": 1.003,
+              "status": "failed"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 101.241,
+              "elapsed_ms": 10.449,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 48.214
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 52.51
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-conversation-evidence"
+      },
+      "sse_done": true,
+      "seconds": 0.1283,
+      "http_timing": {
+        "first_progress_seconds": 0.0614,
+        "verified_ready_seconds": 0.0741,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "\u00bfDe qu\u00e9 trata?",
+      "status": "answered",
+      "answer": "El principito es un cuento po\u00e9tico que viene acompa\u00f1ado de ilustraciones hechas con acuarelas por el mismo Saint-Exup\u00e9ry. En \u00e9l, un piloto se encuentra perdido en el desierto del Sahara despu\u00e9s de que su avi\u00f3n sufriera una aver\u00eda, pero para su sorpresa, es all\u00ed donde conoce a un peque\u00f1o pr\u00edncipe proveniente de otro planeta. La historia tiene una tem\u00e1tica filos\u00f3fica, donde se incluyen cr\u00edticas sociales dirigidas a la \u00abextra\u00f1eza\u00bb con la que los adultos ven las cosas. Estas cr\u00edticas a las cosas \u00abimportantes\u00bb y al mundo de los adultos van apareciendo en el libro a lo largo de la narraci\u00f3n. A pesar de que es considerado un libro infantil por la forma en la que se encuentra escrito, tambi\u00e9n posee observaciones profundas sobre la vida y la naturaleza humana.\n\nFuente: https://es.wikipedia.org/wiki/El_principito\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+      "books": [
+        {
+          "id": "1",
+          "title": "El principito",
+          "author": "Antoine de Saint-Exup\u00e9ry",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+principito+Antoine+de+Saint-Exup%C3%A9ry&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+principito+Antoine+de+Saint-Exup%C3%A9ry"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 2969,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "partial_evidence": true,
+        "work_type": "nonfiction",
+        "progress_metrics": {
+          "elapsed_ms": 3124.256,
+          "first_phase_emitted_ms": 43.785,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 9.016,
+            "cache_lookup": 8.45,
+            "knowledge_lookup": 834.834,
+            "audit": 24.073,
+            "retrieval": 1774.7,
+            "finalization": 155.335
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 16.168,
+              "elapsed_ms": 9.016,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 35.32,
+              "elapsed_ms": 8.45,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 48.194,
+              "elapsed_ms": 461.192,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 163.211,
+              "elapsed_ms": 48.655,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 276.202,
+              "elapsed_ms": 229.006,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 365.695,
+              "elapsed_ms": 85.584,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 637.865,
+              "elapsed_ms": 10.397,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 908.707,
+              "elapsed_ms": 12.26,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 964.58,
+              "elapsed_ms": 1774.7,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 2867.585,
+              "elapsed_ms": 11.813,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 2968.904,
+              "elapsed_ms": 155.335,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 43.785
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 908.68
+            },
+            {
+              "stage": "search",
+              "elapsed_ms": 964.557
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 2867.559
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "sse_done": true,
+      "seconds": 3.1537,
+      "http_timing": {
+        "first_progress_seconds": 0.07,
+        "verified_ready_seconds": 2.9342,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "\u00bfQui\u00e9nes son sus protagonistas?",
+      "status": "answered",
+      "answer": "**El principito**: personaje principal del libro, toda la historia est\u00e1 basada en \u00e9l.\n\nLista parcial.\n\nOtros personajes documentados:\n\n**El zorro**: Amigo que el principito conoce en la Tierra.\n\n**El aviador**: Encuentra al principito en el Sahara.\n\n**El cordero**: Es un amigo que lo ayudar\u00e1 a librarse de los problemas que pueda tener o surgirle, pero como todos los amigos sin querer, alg\u00fan d\u00eda, pueden volverse en tu contra y hacernos da\u00f1o.\n\n**El farolero**: son los trabajadores que incansablemente se dedican a servir.\n\n**La rosa**: se trata del ego, nos pone de manifiesto el amor del principito.\n\n**Los baobabs**: son los malos h\u00e1bitos, pensamientos y problemas, hay que solucionarlos antes que sean demasiado complicados, es la moraleja que nos deja el autor, cuando nos alerta: \u00ab\u00a1Ni\u00f1os, atenci\u00f3n a los baobabs!\u00bb.\n\n**El fanal o globo**: la protecci\u00f3n, los celos o los mimos y cuidados que hay que tener para que la \u00abRosa\u00bb se sienta protegida y querida, aunque realmente no los necesita.\n\n**El rey**: habitante del primer planeta, quien representa a los jefes y reyes que quieren ser obedecidos.\n\nFuente: https://www.lepetitprince.com/loeuvre/\nhttps://es.wikipedia.org/wiki/El_principito\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+      "books": [
+        {
+          "id": "1",
+          "title": "El principito",
+          "author": "Antoine de Saint-Exup\u00e9ry",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+principito+Antoine+de+Saint-Exup%C3%A9ry&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+principito+Antoine+de+Saint-Exup%C3%A9ry"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 663,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "partial_evidence": true,
+        "verified_character_answer": true,
+        "character_count": 9,
+        "work_type": "nonfiction",
+        "progress_metrics": {
+          "elapsed_ms": 728.533,
+          "first_phase_emitted_ms": 90.423,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 59.915,
+            "cache_lookup": 9.59,
+            "knowledge_lookup": 460.426,
+            "audit": 11.156,
+            "finalization": 65.813
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 11.874,
+              "elapsed_ms": 59.915,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 80.818,
+              "elapsed_ms": 9.59,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 143.503,
+              "elapsed_ms": 452.283,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 244.359,
+              "elapsed_ms": 8.143,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 582.482,
+              "elapsed_ms": 11.156,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 662.712,
+              "elapsed_ms": 65.813,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 90.423
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 582.452
+            }
+          ]
+        },
+        "stage_timings": [],
+        "external_research": {
+          "pages_extracted": 0,
+          "page_slots_reserved": 0,
+          "logical_searches": 0,
+          "external_seconds": 0.0,
+          "http_requests_started": 0
+        },
+        "provider": "verified-character-evidence"
+      },
+      "sse_done": true,
+      "seconds": 0.7404,
+      "http_timing": {
+        "first_progress_seconds": 0.1171,
+        "verified_ready_seconds": 0.6275,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "\u00bfQu\u00e9 relaci\u00f3n hay entre el principito y el zorro?",
+      "status": "answered",
+      "answer": "**El zorro**: Amigo que el principito conoce en la Tierra.\n\nFuente: https://www.lepetitprince.com/loeuvre/",
+      "books": [
+        {
+          "id": "1",
+          "title": "El principito",
+          "author": "Antoine de Saint-Exup\u00e9ry",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+principito+Antoine+de+Saint-Exup%C3%A9ry&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+principito+Antoine+de+Saint-Exup%C3%A9ry"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 680,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "verified_character_answer": true,
+        "character_count": 1,
+        "work_type": "nonfiction",
+        "progress_metrics": {
+          "elapsed_ms": 756.495,
+          "first_phase_emitted_ms": 127.331,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 99.348,
+            "cache_lookup": 8.264,
+            "knowledge_lookup": 435.725,
+            "audit": 4.39,
+            "finalization": 76.329
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 11.143,
+              "elapsed_ms": 99.348,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 119.052,
+              "elapsed_ms": 8.264,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 196.436,
+              "elapsed_ms": 429.898,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 277.197,
+              "elapsed_ms": 5.827,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 620.664,
+              "elapsed_ms": 4.39,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 680.158,
+              "elapsed_ms": 76.329,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 127.331
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 620.641
+            }
+          ]
+        },
+        "stage_timings": [],
+        "external_research": {
+          "pages_extracted": 0,
+          "page_slots_reserved": 0,
+          "logical_searches": 0,
+          "external_seconds": 0.0,
+          "http_requests_started": 0
+        },
+        "provider": "verified-character-evidence"
+      },
+      "sse_done": true,
+      "seconds": 0.7863,
+      "http_timing": {
+        "first_progress_seconds": 0.1732,
+        "verified_ready_seconds": 0.6724,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "Recomi\u00e9ndame dos novelas de fantas\u00eda en espa\u00f1ol",
+      "status": "answered",
+      "answer": "\u00a1Claro!\n\n1. **Harry Potter y el misterio del pr\u00edncipe** \u2014 J.K. Rowling.\n\n2. **Choque de Reyes (Canci\u00f3n de Hielo y Fuego 2)** \u2014 George R.R. Martin.\n\n\u00bfCu\u00e1l te interesa m\u00e1s?",
+      "books": [
+        {
+          "id": "db_30013",
+          "title": "Harry Potter y el misterio del pr\u00edncipe",
+          "author": "J.K. Rowling",
+          "synopsis": "Harry descubre un viejo libro de pociones perteneciente al misterioso 'Pr\u00edncipe Mestizo' y junto a Dumbledore desentra\u00f1a los secretos del pasado de Voldemort.",
+          "image_url": "https://covers.openlibrary.org/b/id/9393000-L.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=Harry+Potter+y+el+misterio+del+pr%C3%ADncipe+J.K.+Rowling"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Harry+Potter+y+el+misterio+del+pr%C3%ADncipe+J.K.+Rowling&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Harry+Potter+y+el+misterio+del+pr%C3%ADncipe+J.K.+Rowling"
+            }
+          ]
+        },
+        {
+          "id": "db_30019",
+          "title": "Choque de Reyes (Canci\u00f3n de Hielo y Fuego 2)",
+          "author": "George R.R. Martin",
+          "synopsis": "La Guerra de los Cinco Reyes desgarra los Siete Reinos, mientras un cometa rojo cruza los cielos anunciando sangre y fuego.",
+          "image_url": "https://covers.openlibrary.org/b/id/8231751-L.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 174,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 215.071,
+          "first_phase_emitted_ms": 70.752,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 42.816,
+            "cache_lookup": 8.539,
+            "audit": 1.82,
+            "finalization": 41.202
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 11.292,
+              "elapsed_ms": 42.816,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 62.202,
+              "elapsed_ms": 8.539,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 143.289,
+              "elapsed_ms": 1.82,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 173.861,
+              "elapsed_ms": 41.202,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 70.752
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 143.239
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-genre-catalogue"
+      },
+      "sse_done": true,
+      "seconds": 0.2274,
+      "http_timing": {
+        "first_progress_seconds": 0.0851,
+        "verified_ready_seconds": 0.1583,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "Ya le\u00ed el primero y no me interesa el segundo",
+      "status": "social",
+      "answer": "Lo tendr\u00e9 en cuenta: excluir\u00e9 esas lecturas de las pr\u00f3ximas recomendaciones de esta conversaci\u00f3n.",
+      "books": [],
+      "diagnostics": {
+        "elapsed_ms": 142,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 223.025,
+          "first_phase_emitted_ms": 107.097,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 80.161,
+            "cache_lookup": 7.362,
+            "finalization": 80.623
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 11.282,
+              "elapsed_ms": 80.161,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 99.724,
+              "elapsed_ms": 7.362,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 142.394,
+              "elapsed_ms": 80.623,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 107.097
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-conversation-evidence"
+      },
+      "sse_done": true,
+      "seconds": 0.2486,
+      "http_timing": {
+        "first_progress_seconds": 0.125,
+        "verified_ready_seconds": 0.1307,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "Dame otros dos libros de fantas\u00eda en espa\u00f1ol",
+      "status": "answered",
+      "answer": "\u00a1Claro!\n\n1. **El Camino de los Reyes (El Archivo de las Tormentas 1)** \u2014 Brandon Sanderson.\n\n2. **El Hobbit** \u2014 J.R.R. Tolkien.\n\n\u00bfCu\u00e1l te interesa m\u00e1s?",
+      "books": [
+        {
+          "id": "db_30022",
+          "title": "El Camino de los Reyes (El Archivo de las Tormentas 1)",
+          "author": "Brandon Sanderson",
+          "synopsis": "En el azotado mundo de Roshar, Kaladin un esclavo quebrado, Dalinar un noble atormentado por visiones y Shallan una erudita buscan salvar el mundo del regreso de los Desoladores.",
+          "image_url": "https://covers.openlibrary.org/b/id/14658316-L.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=El+Camino+de+los+Reyes+%28El+Archivo+de+las+Tormentas+1%29+Brandon+Sanderson"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+Camino+de+los+Reyes+%28El+Archivo+de+las+Tormentas+1%29+Brandon+Sanderson&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+Camino+de+los+Reyes+%28El+Archivo+de+las+Tormentas+1%29+Brandon+Sanderson"
+            }
+          ]
+        },
+        {
+          "id": "db_30015",
+          "title": "El Hobbit",
+          "author": "J.R.R. Tolkien",
+          "synopsis": "Bilbo Bols\u00f3n es un hobbit pac\u00edfico que es reclutado por el mago Gandalf y trece enanos para recuperar el tesoro custodiado por el drag\u00f3n Smaug.",
+          "image_url": "https://covers.openlibrary.org/b/id/10472492-L.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=El+Hobbit+J.R.R.+Tolkien"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+Hobbit+J.R.R.+Tolkien&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+Hobbit+J.R.R.+Tolkien"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 213,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 302.921,
+          "first_phase_emitted_ms": 109.506,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 79.267,
+            "cache_lookup": 7.914,
+            "audit": 2.078,
+            "finalization": 89.752
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 12.146,
+              "elapsed_ms": 79.267,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 101.58,
+              "elapsed_ms": 7.914,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 182.611,
+              "elapsed_ms": 2.078,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 213.16,
+              "elapsed_ms": 89.752,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 109.506
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 182.58
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-genre-catalogue"
+      },
+      "sse_done": true,
+      "seconds": 0.3171,
+      "http_timing": {
+        "first_progress_seconds": 0.1121,
+        "verified_ready_seconds": 0.1978,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "Cu\u00e9ntame m\u00e1s del segundo",
+      "status": "answered",
+      "answer": "**El Hobbit \u2014 J.R.R. Tolkien**: Bilbo Bols\u00f3n es un hobbit pac\u00edfico que es reclutado por el mago Gandalf y trece enanos para recuperar el tesoro custodiado por el drag\u00f3n Smaug.\n\nFuentes:\n",
+      "books": [
+        {
+          "id": "db_30015",
+          "title": "El Hobbit",
+          "author": "J.R.R. Tolkien",
+          "synopsis": "Bilbo Bols\u00f3n es un hobbit pac\u00edfico que es reclutado por el mago Gandalf y trece enanos para recuperar el tesoro custodiado por el drag\u00f3n Smaug.",
+          "image_url": "https://covers.openlibrary.org/b/id/10472492-L.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=El+Hobbit+J.R.R.+Tolkien"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+Hobbit+J.R.R.+Tolkien&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+Hobbit+J.R.R.+Tolkien"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 243,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 334.355,
+          "first_phase_emitted_ms": 107.085,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 79.115,
+            "cache_lookup": 7.674,
+            "audit": 1.365,
+            "knowledge_lookup": 42.172,
+            "finalization": 91.635
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 11.988,
+              "elapsed_ms": 79.115,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 99.399,
+              "elapsed_ms": 7.674,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 148.417,
+              "elapsed_ms": 42.172,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 189.853,
+              "elapsed_ms": 0.691,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 191.376,
+              "elapsed_ms": 0.674,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 242.712,
+              "elapsed_ms": 91.635,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 107.085
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 189.831
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-indexed-evidence"
+      },
+      "sse_done": true,
+      "seconds": 0.3467,
+      "http_timing": {
+        "first_progress_seconds": 0.131,
+        "verified_ready_seconds": 0.2134,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "\u00bfD\u00f3nde puedo encontrarlo?",
+      "status": "answered",
+      "answer": "**El Hobbit** \u2014 J.R.R. Tolkien.\n\nPuedes usar los enlaces de la tarjeta para buscarlo; no puedo confirmar disponibilidad ni precio.",
+      "books": [
+        {
+          "id": "db_30015",
+          "title": "El Hobbit",
+          "author": "J.R.R. Tolkien",
+          "synopsis": "Bilbo Bols\u00f3n es un hobbit pac\u00edfico que es reclutado por el mago Gandalf y trece enanos para recuperar el tesoro custodiado por el drag\u00f3n Smaug.",
+          "image_url": "https://covers.openlibrary.org/b/id/10472492-L.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=El+Hobbit+J.R.R.+Tolkien"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+Hobbit+J.R.R.+Tolkien&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+Hobbit+J.R.R.+Tolkien"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 187,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 268.106,
+          "first_phase_emitted_ms": 108.757,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 80.403,
+            "cache_lookup": 8.442,
+            "audit": 0.596,
+            "finalization": 81.039
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 11.418,
+              "elapsed_ms": 80.403,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 100.305,
+              "elapsed_ms": 8.442,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 153.207,
+              "elapsed_ms": 0.596,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 187.058,
+              "elapsed_ms": 81.039,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 108.757
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 153.192
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-conversation-evidence"
+      },
+      "sse_done": true,
+      "seconds": 0.2804,
+      "http_timing": {
+        "first_progress_seconds": 0.1398,
+        "verified_ready_seconds": 0.1635,
+        "first_verified_text_seconds": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "mysql_database": "litmate_db",
+  "mysql_session_read_only": true,
+  "mysql_counts": {
+    "auth_group": 0,
+    "auth_group_permissions": 0,
+    "auth_permission": 152,
+    "auth_user": 179,
+    "auth_user_groups": 0,
+    "auth_user_user_permissions": 0,
+    "core_asistenteia": 1,
+    "core_autor": 31,
+    "core_clickconversion": 185,
+    "core_conversacionia": 50,
+    "core_editorial": 34,
+    "core_elementolistalectura": 2,
+    "core_estadolectura": 451,
+    "core_eventoanalitica": 384,
+    "core_genero": 12,
+    "core_historialchatbot": 5,
+    "core_historialpreciolibro": 223,
+    "core_kbname": 14166,
+    "core_kbprojection": 8,
+    "core_kbrecord": 13518,
+    "core_kbrelation": 2621,
+    "core_kbversion": 13518,
+    "core_libro": 55,
+    "core_libro_generos": 54,
+    "core_librofavorito": 231,
+    "core_listalectura": 2,
+    "core_mensajecontacto": 3,
+    "core_mensajeia": 190,
+    "core_perfilusuario": 158,
+    "core_preciolibrotienda": 117,
+    "core_preguntafrecuente": 0,
+    "core_recomendacion": 0,
+    "core_recomendacionialog": 0,
+    "core_resena": 116,
+    "django_admin_log": 0,
+    "django_content_type": 38,
+    "django_migrations": 27,
+    "django_session": 89,
+    "suscripciones_historialpago": 42,
+    "suscripciones_plansuscripcion": 3,
+    "suscripciones_suscripcionusuario": 157
+  },
+  "mysql_tables": 41,
+  "mysql_rows": 46822,
+  "external_test_work_in_original_libro": 0,
+  "hashes": {
+    ".env": {
+      "before": "1d8e35effc765d26ecb73f3e2ee26c886a1e3d98b1bc45590c356b8604008e74",
+      "after": "1d8e35effc765d26ecb73f3e2ee26c886a1e3d98b1bc45590c356b8604008e74",
+      "unchanged": true
+    },
+    "data/literary_memory.sqlite3": {
+      "before": "70c340b8568683342bdc86514b9ddc0eb5b70c4b06c28224762ffb5bc724c87e",
+      "after": "70c340b8568683342bdc86514b9ddc0eb5b70c4b06c28224762ffb5bc724c87e",
+      "unchanged": true
+    },
+    "data/literary_memory_rag.sqlite3": {
+      "before": "1d69ede229a1d0fa6ba9e95d197fb78bfa273c9eeae0e4b59e913a243f79e876",
+      "after": "1d69ede229a1d0fa6ba9e95d197fb78bfa273c9eeae0e4b59e913a243f79e876",
+      "unchanged": true
+    }
+  },
+  "sqlite": {
+    "data/literary_memory.sqlite3": {
+      "quick_check": "ok",
+      "foreign_key_issues": 0
+    },
+    "data/literary_memory_rag.sqlite3": {
+      "quick_check": "ok",
+      "foreign_key_issues": 0
+    }
+  },
+  "ai_requests_per_minute": 20,
+  "migrations_executed": false,
+  "imports_executed": false
+}

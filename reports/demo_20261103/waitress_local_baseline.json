@@ -1,0 +1,1404 @@
+{
+  "scope": "local HTTP",
+  "external_network_tested": false,
+  "checks": {
+    "chat_auth_required": true,
+    "static_auth_required": true,
+    "admin_blocked": true,
+    "unknown_host_blocked": true,
+    "chat_html": true,
+    "frame_denied": true,
+    "csrf_cookie_present": true,
+    "javascript": true,
+    "avatar": true,
+    "csrf_enforced": true
+  },
+  "conversation": [
+    {
+      "question": "Recuerdo un libro en el que un ni\u00f1o vive en un planeta peque\u00f1o y cuida una rosa. \u00bfCu\u00e1l es?",
+      "status": "answered",
+      "answer": "Por tus pistas, podr\u00edas estar buscando **El principito**, de **Antoine de Saint-Exup\u00e9ry**. \u00bfTe suena?",
+      "books": [
+        {
+          "id": "1",
+          "title": "El principito",
+          "author": "Antoine de Saint-Exup\u00e9ry",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+principito+Antoine+de+Saint-Exup%C3%A9ry&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+principito+Antoine+de+Saint-Exup%C3%A9ry"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 651,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 656.385,
+          "first_phase_emitted_ms": 105.64,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 81.249,
+            "cache_lookup": 0.529,
+            "knowledge_lookup": 558.715,
+            "audit": 3.426,
+            "finalization": 5.523
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 7.965,
+              "elapsed_ms": 81.249,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 105.097,
+              "elapsed_ms": 0.529,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 198.672,
+              "elapsed_ms": 232.497,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 200.79,
+              "elapsed_ms": 229.288,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 321.247,
+              "elapsed_ms": 65.417,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 503.973,
+              "elapsed_ms": 31.513,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 576.176,
+              "elapsed_ms": 3.426,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 650.855,
+              "elapsed_ms": 5.523,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 105.64
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 576.148
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "local-identification"
+      },
+      "sse_done": true,
+      "seconds": 0.677,
+      "http_timing": {
+        "first_progress_seconds": 0.1193,
+        "verified_ready_seconds": 0.6319,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "\u00bfQu\u00e9 pistas te hicieron pensar en ese libro?",
+      "status": "answered",
+      "answer": "**Coincidencias con tu recuerdo**\n\n**El principito \u2014 Antoine de Saint-Exup\u00e9ry**: Un ni\u00f1o procede de un planeta diminuto, cuida una rosa y viaja por otros mundos.\n\nFuentes:\nhttps://es.literaturasm.com/personaje/principito",
+      "books": [
+        {
+          "id": "1",
+          "title": "El principito",
+          "author": "Antoine de Saint-Exup\u00e9ry",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+principito+Antoine+de+Saint-Exup%C3%A9ry&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+principito+Antoine+de+Saint-Exup%C3%A9ry"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 67,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 70.596,
+          "first_phase_emitted_ms": 28.55,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 10.423,
+            "cache_lookup": 0.657,
+            "audit": 1.519,
+            "finalization": 3.896
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 11.058,
+              "elapsed_ms": 10.423,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 27.881,
+              "elapsed_ms": 0.657,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 31.094,
+              "elapsed_ms": 0.942,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 33.249,
+              "elapsed_ms": 0.577,
+              "status": "failed"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 66.694,
+              "elapsed_ms": 3.896,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 28.55
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 31.086
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-conversation-evidence"
+      },
+      "sse_done": true,
+      "seconds": 0.0952,
+      "http_timing": {
+        "first_progress_seconds": 0.0526,
+        "verified_ready_seconds": 0.0581,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "\u00bfDe qu\u00e9 trata?",
+      "status": "answered",
+      "answer": "El principito es un cuento po\u00e9tico que viene acompa\u00f1ado de ilustraciones hechas con acuarelas por el mismo Saint-Exup\u00e9ry. En \u00e9l, un piloto se encuentra perdido en el desierto del Sahara despu\u00e9s de que su avi\u00f3n sufriera una aver\u00eda, pero para su sorpresa, es all\u00ed donde conoce a un peque\u00f1o pr\u00edncipe proveniente de otro planeta. La historia tiene una tem\u00e1tica filos\u00f3fica, donde se incluyen cr\u00edticas sociales dirigidas a la \u00abextra\u00f1eza\u00bb con la que los adultos ven las cosas. Estas cr\u00edticas a las cosas \u00abimportantes\u00bb y al mundo de los adultos van apareciendo en el libro a lo largo de la narraci\u00f3n. A pesar de que es considerado un libro infantil por la forma en la que se encuentra escrito, tambi\u00e9n posee observaciones profundas sobre la vida y la naturaleza humana.\n\nFuente: https://es.wikipedia.org/wiki/El_principito\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+      "books": [
+        {
+          "id": "1",
+          "title": "El principito",
+          "author": "Antoine de Saint-Exup\u00e9ry",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+principito+Antoine+de+Saint-Exup%C3%A9ry&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+principito+Antoine+de+Saint-Exup%C3%A9ry"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 2375,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "partial_evidence": true,
+        "work_type": "nonfiction",
+        "progress_metrics": {
+          "elapsed_ms": 2410.731,
+          "first_phase_emitted_ms": 23.216,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 7.097,
+            "cache_lookup": 0.705,
+            "knowledge_lookup": 681.684,
+            "audit": 13.801,
+            "retrieval": 1598.93,
+            "finalization": 35.39
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 9.188,
+              "elapsed_ms": 7.097,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 22.501,
+              "elapsed_ms": 0.705,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 26.187,
+              "elapsed_ms": 369.534,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 101.686,
+              "elapsed_ms": 48.974,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 208.376,
+              "elapsed_ms": 183.906,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 279.402,
+              "elapsed_ms": 72.558,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 476.24,
+              "elapsed_ms": 6.712,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 611.598,
+              "elapsed_ms": 8.458,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 649.561,
+              "elapsed_ms": 1598.93,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 2317.975,
+              "elapsed_ms": 5.343,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 2375.335,
+              "elapsed_ms": 35.39,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 23.216
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 611.579
+            },
+            {
+              "stage": "search",
+              "elapsed_ms": 649.545
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 2317.96
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "sse_done": true,
+      "seconds": 2.4309,
+      "http_timing": {
+        "first_progress_seconds": 0.042,
+        "verified_ready_seconds": 2.3613,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "\u00bfQu\u00e9 relaci\u00f3n tiene el principito con el zorro?",
+      "status": "answered",
+      "answer": "**El zorro**: Amigo que el principito conoce en la Tierra.\n\nFuente: https://www.lepetitprince.com/loeuvre/",
+      "books": [
+        {
+          "id": "1",
+          "title": "El principito",
+          "author": "Antoine de Saint-Exup\u00e9ry",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+principito+Antoine+de+Saint-Exup%C3%A9ry&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+principito+Antoine+de+Saint-Exup%C3%A9ry"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 555,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "verified_character_answer": true,
+        "character_count": 1,
+        "work_type": "nonfiction",
+        "progress_metrics": {
+          "elapsed_ms": 597.041,
+          "first_phase_emitted_ms": 64.239,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 46.325,
+            "cache_lookup": 0.828,
+            "knowledge_lookup": 395.572,
+            "audit": 4.036,
+            "finalization": 41.885
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 10.256,
+              "elapsed_ms": 46.325,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 63.4,
+              "elapsed_ms": 0.828,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 103.672,
+              "elapsed_ms": 388.789,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 173.904,
+              "elapsed_ms": 6.783,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 487.154,
+              "elapsed_ms": 4.036,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 555.151,
+              "elapsed_ms": 41.885,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 64.239
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 487.139
+            }
+          ]
+        },
+        "stage_timings": [],
+        "external_research": {
+          "page_slots_reserved": 0,
+          "logical_searches": 0,
+          "external_seconds": 0.0,
+          "pages_extracted": 0,
+          "http_requests_started": 0
+        },
+        "provider": "verified-character-evidence"
+      },
+      "sse_done": true,
+      "seconds": 0.6067,
+      "http_timing": {
+        "first_progress_seconds": 0.1055,
+        "verified_ready_seconds": 0.5162,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "Recomi\u00e9ndame dos libros similares en espa\u00f1ol",
+      "status": "unavailable",
+      "answer": "Tuve un problema temporal al buscar otras lecturas relacionadas. Puedes intentarlo nuevamente en unos instantes.",
+      "books": [],
+      "diagnostics": {
+        "elapsed_ms": 10908,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 1,
+        "failure_kind": "technical_failure",
+        "evidence_state": "insufficient",
+        "progress_metrics": {
+          "elapsed_ms": 10936.834,
+          "first_phase_emitted_ms": 49.344,
+          "model_calls_started": 1,
+          "stage_totals_ms": {
+            "conversation": 31.231,
+            "cache_lookup": 0.747,
+            "knowledge_lookup": 723.54,
+            "intent": 1.67,
+            "model_inspection": 42.636,
+            "web_search": 1895.81,
+            "routing": 7616.647,
+            "local_search": 73.408,
+            "retrieval": 1115.938,
+            "finalization": 28.428
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 10.464,
+              "elapsed_ms": 31.231,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 48.587,
+              "elapsed_ms": 0.747,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 86.559,
+              "elapsed_ms": 385.149,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 185.114,
+              "elapsed_ms": 38.298,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 278.705,
+              "elapsed_ms": 167.809,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 346.302,
+              "elapsed_ms": 59.01,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 590.602,
+              "elapsed_ms": 36.682,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 770.889,
+              "elapsed_ms": 36.592,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 867.772,
+              "elapsed_ms": 683.753,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 907.915,
+              "elapsed_ms": 0.236,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 908.158,
+              "elapsed_ms": 1.434,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 909.602,
+              "elapsed_ms": 7616.647,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 909.607,
+              "elapsed_ms": 42.636,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 8529.767,
+              "elapsed_ms": 1115.938,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 8536.025,
+              "elapsed_ms": 73.408,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 9651.592,
+              "elapsed_ms": 1212.057,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 10908.399,
+              "elapsed_ms": 28.428,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 49.344
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "stage": "route",
+            "total_ms": 7553.828,
+            "model": "qwen3.5:9b-q4_K_M",
+            "prompt_eval_ms": 1567.839,
+            "elapsed_ms": 7617,
+            "eval_count": 50,
+            "load_ms": 4285.654,
+            "status": "ok",
+            "prompt_eval_count": 2641,
+            "eval_ms": 1686.394
+          }
+        ],
+        "external_research": {
+          "page_slots_reserved": 0,
+          "logical_searches": 2,
+          "external_seconds": 2.922,
+          "pages_extracted": 0,
+          "http_requests_started": 5
+        },
+        "provider": "ollama-local"
+      },
+      "sse_done": true,
+      "seconds": 10.9469,
+      "http_timing": {
+        "first_progress_seconds": 0.1137,
+        "verified_ready_seconds": 10.8823,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "Ya le\u00ed el primero y no me interesa el segundo.",
+      "status": "clarification",
+      "answer": "\u00bfQu\u00e9 libro quieres marcar como le\u00eddo o descartar? No tengo una lista anterior que permita resolver esa posici\u00f3n.",
+      "books": [],
+      "diagnostics": {
+        "elapsed_ms": 101,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 152.457,
+          "first_phase_emitted_ms": 68.552,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 52.202,
+            "cache_lookup": 0.769,
+            "finalization": 50.968
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 8.611,
+              "elapsed_ms": 52.202,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 67.774,
+              "elapsed_ms": 0.769,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 101.482,
+              "elapsed_ms": 50.968,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 68.552
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-conversation-evidence"
+      },
+      "sse_done": true,
+      "seconds": 0.1622,
+      "http_timing": {
+        "first_progress_seconds": 0.0725,
+        "verified_ready_seconds": 0.0777,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "Dame otras dos opciones.",
+      "status": "answered",
+      "answer": "\u00a1Buen tema! Aqu\u00ed tienes dos opciones que exploran el vuelo, la imaginaci\u00f3n y la amistad:\n\n1. **Aprender a volar \u2014 Alberto Garc\u00eda-Salido**: Una emotiva novela sobre dos amigos que deciden huir del hospital para cumplir un \u00faltimo sue\u00f1o juntos.\n2. **El ni\u00f1o que aprendi\u00f3 a volar \u2014 Alexandre Honrado**: Un relato donde un peque\u00f1o descubre el poder de la imaginaci\u00f3n leyendo los libros de su abuelo.",
+      "books": [
+        {
+          "id": "KaNcEAAAQBAJ",
+          "title": "Aprender a volar",
+          "author": "Alberto Garc\u00eda-Salido",
+          "synopsis": "HAGAMOS UN TRATO, EMPECEMOS A VIVIR. Una emotiva novela sobre dos amigos. Uno sabe que cada minuto cuenta, el otro est\u00e1 a punto de aprenderlo. Luis tiene diecis\u00e9is a\u00f1os y la vida le dio un vuelco cuando le diagnosticaron c\u00e1ncer. A Diego, residente de oncolog\u00eda, la vida le cambia en el momento que conoce a Luis y acepta ayudarlo a cumplir un \u00faltimo sue\u00f1o: huir del hospital y viajar a Tarifa para despedirse de la chica",
+          "image_url": "https://books.google.com/books/content?id=KaNcEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://play.google.com/store/books/details?id=KaNcEAAAQBAJ"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Aprender+a+volar+Alberto+Garc%C3%ADa-Salido&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Aprender+a+volar+Alberto+Garc%C3%ADa-Salido"
+            }
+          ]
+        },
+        {
+          "id": "1aMCMQAACAAJ",
+          "title": "El ni\u00f1o que aprendi\u00f3 a volar",
+          "author": "Alexandre Honrado",
+          "synopsis": "No pude preparar una traducci\u00f3n fiable de esta descripci\u00f3n.",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books/about/El_ni%C3%B1o_que_aprendi%C3%B3_a_volar.html?hl=&id=1aMCMQAACAAJ"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+ni%C3%B1o+que+aprendi%C3%B3+a+volar+Alexandre+Honrado&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+ni%C3%B1o+que+aprendi%C3%B3+a+volar+Alexandre+Honrado"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 35088,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 6,
+        "progress_metrics": {
+          "elapsed_ms": 35146.63,
+          "first_phase_emitted_ms": 68.372,
+          "model_calls_started": 6,
+          "stage_totals_ms": {
+            "conversation": 51.099,
+            "cache_lookup": 0.775,
+            "knowledge_lookup": 743.634,
+            "intent": 0.115,
+            "model_inspection": 26.645,
+            "web_search": 1138.884,
+            "routing": 4748.291,
+            "local_search": 213.842,
+            "retrieval": 4534.731,
+            "generation": 8372.65,
+            "audit": 11537.792,
+            "repair": 4965.368,
+            "finalization": 58.939
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 9.563,
+              "elapsed_ms": 51.099,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 67.586,
+              "elapsed_ms": 0.775,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 131.146,
+              "elapsed_ms": 411.528,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 228.404,
+              "elapsed_ms": 47.166,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 342.6,
+              "elapsed_ms": 173.823,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 409.945,
+              "elapsed_ms": 64.512,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 659.983,
+              "elapsed_ms": 46.605,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 803.158,
+              "elapsed_ms": 1138.884,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 832.719,
+              "elapsed_ms": 0.105,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 832.83,
+              "elapsed_ms": 0.01,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 832.847,
+              "elapsed_ms": 4748.291,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 832.851,
+              "elapsed_ms": 26.616,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 5581.849,
+              "elapsed_ms": 1285.918,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 5592.607,
+              "elapsed_ms": 78.787,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 6867.826,
+              "elapsed_ms": 1528.747,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 6873.468,
+              "elapsed_ms": 70.164,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 8396.621,
+              "elapsed_ms": 1720.066,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 8401.043,
+              "elapsed_ms": 64.891,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 10136.73,
+              "elapsed_ms": 7134.684,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 10136.743,
+              "elapsed_ms": 0.006,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 17276.145,
+              "elapsed_ms": 6391.484,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 17276.158,
+              "elapsed_ms": 0.006,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 23667.656,
+              "elapsed_ms": 3.526,
+              "status": "ok"
+            },
+            {
+              "stage": "repair",
+              "started_ms": 23671.22,
+              "elapsed_ms": 4965.368,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 23671.233,
+              "elapsed_ms": 0.005,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 28638.57,
+              "elapsed_ms": 5140.042,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 28638.583,
+              "elapsed_ms": 0.006,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 33778.634,
+              "elapsed_ms": 2.74,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 33793.396,
+              "elapsed_ms": 1237.966,
+              "status": "failed"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 33793.401,
+              "elapsed_ms": 0.006,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 35087.682,
+              "elapsed_ms": 58.939,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 68.372
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 10136.715
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 17276.127
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 23671.203
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 28638.551
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 33793.38
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "stage": "route",
+            "total_ms": 4697.597,
+            "model": "qwen3.5:9b-q4_K_M",
+            "prompt_eval_ms": 1515.725,
+            "elapsed_ms": 4748,
+            "eval_count": 93,
+            "load_ms": 5.983,
+            "status": "ok",
+            "prompt_eval_count": 2431,
+            "eval_ms": 3112.533
+          },
+          {
+            "stage": "answer",
+            "total_ms": 7114.629,
+            "model": "qwen3.5:9b-q4_K_M",
+            "prompt_eval_ms": 1911.739,
+            "elapsed_ms": 7135,
+            "eval_count": 150,
+            "load_ms": 5.863,
+            "status": "ok",
+            "prompt_eval_count": 3242,
+            "eval_ms": 5065.16
+          },
+          {
+            "stage": "audit",
+            "total_ms": 6372.033,
+            "model": "qwen3.5:9b-q4_K_M",
+            "prompt_eval_ms": 2387.35,
+            "elapsed_ms": 6392,
+            "eval_count": 111,
+            "load_ms": 7.282,
+            "status": "ok",
+            "prompt_eval_count": 4404,
+            "eval_ms": 3887.988
+          },
+          {
+            "stage": "repair",
+            "total_ms": 4938.153,
+            "model": "qwen3.5:9b-q4_K_M",
+            "prompt_eval_ms": 454.924,
+            "elapsed_ms": 4965,
+            "eval_count": 130,
+            "load_ms": 5.948,
+            "status": "ok",
+            "prompt_eval_count": 3381,
+            "eval_ms": 4371.643
+          },
+          {
+            "stage": "audit",
+            "total_ms": 5115.354,
+            "model": "qwen3.5:9b-q4_K_M",
+            "prompt_eval_ms": 2381.662,
+            "elapsed_ms": 5140,
+            "eval_count": 75,
+            "load_ms": 8.761,
+            "status": "ok",
+            "prompt_eval_count": 4363,
+            "eval_ms": 2593.427
+          },
+          {
+            "stage": "language_translate",
+            "model": "qwen3.5:9b-q4_K_M",
+            "elapsed_ms": 1238,
+            "status": "failed"
+          }
+        ],
+        "external_research": {
+          "page_slots_reserved": 0,
+          "logical_searches": 1,
+          "external_seconds": 3.405,
+          "pages_extracted": 0,
+          "http_requests_started": 4
+        },
+        "provider": "ollama-local"
+      },
+      "sse_done": true,
+      "seconds": 35.1595,
+      "http_timing": {
+        "first_progress_seconds": 0.141,
+        "verified_ready_seconds": 35.0485,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "H\u00e1blame del segundo.",
+      "status": "answered",
+      "answer": "En *El ni\u00f1o que aprendi\u00f3 a volar*, de Alexandre Honrado, un peque\u00f1o protagonista busca aprender a volar leyendo los libros de su abuelo. A trav\u00e9s de la lectura descubre el poder de su imaginaci\u00f3n y c\u00f3mo esta le permite experimentar la libertad sin necesidad de medios f\u00edsicos.\n\nEste resumen se centra en el planteamiento de la obra.\n\nFuente: https://books.google.com/books/about/El_ni%C3%B1o_que_aprendi%C3%B3_a_volar.html?hl=&id=1aMCMQAACAAJ",
+      "books": [
+        {
+          "id": "1aMCMQAACAAJ",
+          "title": "El ni\u00f1o que aprendi\u00f3 a volar",
+          "author": "Alexandre Honrado",
+          "synopsis": "En El ni\u00f1o que aprendi\u00f3 a volar, de Alexandre Honrado, un peque\u00f1o protagonista busca aprender a volar leyendo los libros de su abuelo. A trav\u00e9s de la lectura descubre el poder de su imaginaci\u00f3n y c\u00f3mo esta le permite experimentar la libertad sin necesidad de medios f\u00edsicos. Este resumen se centra en el planteamiento de la obra.",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books/about/El_ni%C3%B1o_que_aprendi%C3%B3_a_volar.html?hl=&id=1aMCMQAACAAJ"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+ni%C3%B1o+que+aprendi%C3%B3+a+volar+Alexandre+Honrado&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+ni%C3%B1o+que+aprendi%C3%B3+a+volar+Alexandre+Honrado"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 13227,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 2,
+        "verified_narrative_answer": true,
+        "narrative_synthesized": true,
+        "partial_evidence": true,
+        "work_type": "unknown",
+        "progress_metrics": {
+          "elapsed_ms": 13295.839,
+          "first_phase_emitted_ms": 97.4,
+          "model_calls_started": 2,
+          "stage_totals_ms": {
+            "conversation": 77.309,
+            "cache_lookup": 0.909,
+            "knowledge_lookup": 811.877,
+            "retrieval": 1915.354,
+            "model_inspection": 39.832,
+            "generation": 6007.644,
+            "audit": 4337.033,
+            "finalization": 69.226
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 11.083,
+              "elapsed_ms": 77.309,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 96.478,
+              "elapsed_ms": 0.909,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 137.904,
+              "elapsed_ms": 442.505,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 245.243,
+              "elapsed_ms": 53.403,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 369.629,
+              "elapsed_ms": 183.297,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 437.609,
+              "elapsed_ms": 71.066,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 671.275,
+              "elapsed_ms": 61.606,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 883.596,
+              "elapsed_ms": 1915.354,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 2832.618,
+              "elapsed_ms": 6007.644,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 2832.629,
+              "elapsed_ms": 39.827,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 8842.95,
+              "elapsed_ms": 4333.355,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 8842.965,
+              "elapsed_ms": 0.005,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 13178.475,
+              "elapsed_ms": 1.755,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 13181.073,
+              "elapsed_ms": 1.923,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 13226.605,
+              "elapsed_ms": 69.226,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 97.4
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 2832.609
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 8842.934
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "stage": "answer",
+            "total_ms": 5959.035,
+            "model": "qwen3.5:9b-q4_K_M",
+            "prompt_eval_ms": 1293.837,
+            "elapsed_ms": 6008,
+            "eval_count": 132,
+            "load_ms": 6.358,
+            "status": "ok",
+            "prompt_eval_count": 1941,
+            "eval_ms": 4625.7
+          },
+          {
+            "stage": "audit",
+            "total_ms": 4305.332,
+            "model": "qwen3.5:9b-q4_K_M",
+            "prompt_eval_ms": 1664.515,
+            "elapsed_ms": 4333,
+            "eval_count": 74,
+            "load_ms": 7.481,
+            "status": "ok",
+            "prompt_eval_count": 3025,
+            "eval_ms": 2533.424
+          }
+        ],
+        "provider": "verified-narrative-engine"
+      },
+      "sse_done": true,
+      "seconds": 13.3071,
+      "http_timing": {
+        "first_progress_seconds": 0.1683,
+        "verified_ready_seconds": 13.1981,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "\u00bfD\u00f3nde puedo encontrarlo?",
+      "status": "answered",
+      "answer": "**El ni\u00f1o que aprendi\u00f3 a volar** \u2014 Alexandre Honrado.\n\nPuedes usar los enlaces de la tarjeta para buscarlo; no puedo confirmar disponibilidad ni precio.",
+      "books": [
+        {
+          "id": "1aMCMQAACAAJ",
+          "title": "El ni\u00f1o que aprendi\u00f3 a volar",
+          "author": "Alexandre Honrado",
+          "synopsis": "Deseando aprender a volar, un peque\u00f1o ni\u00f1o lee los libros de su abuelo para aprender y descubre el poder de su imaginaci\u00f3n.",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books/about/El_ni%C3%B1o_que_aprendi%C3%B3_a_volar.html?hl=&id=1aMCMQAACAAJ"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+ni%C3%B1o+que+aprendi%C3%B3+a+volar+Alexandre+Honrado&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+ni%C3%B1o+que+aprendi%C3%B3+a+volar+Alexandre+Honrado"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 2905,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 2,
+        "progress_metrics": {
+          "elapsed_ms": 2969.876,
+          "first_phase_emitted_ms": 87.884,
+          "model_calls_started": 2,
+          "stage_totals_ms": {
+            "conversation": 65.811,
+            "cache_lookup": 4.119,
+            "audit": 633.871,
+            "model_inspection": 42.875,
+            "generation": 2100.886,
+            "finalization": 64.858
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 10.808,
+              "elapsed_ms": 65.811,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 83.754,
+              "elapsed_ms": 4.119,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 117.269,
+              "elapsed_ms": 0.57,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 121.295,
+              "elapsed_ms": 2100.886,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 121.298,
+              "elapsed_ms": 42.866,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 2222.228,
+              "elapsed_ms": 633.301,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 2222.234,
+              "elapsed_ms": 0.009,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 2905.011,
+              "elapsed_ms": 64.858,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 87.884
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 117.262
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 121.288
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 2222.21
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "stage": "language_translate",
+            "total_ms": 2032.376,
+            "model": "qwen3.5:9b-q4_K_M",
+            "prompt_eval_ms": 206.947,
+            "elapsed_ms": 2101,
+            "eval_count": 51,
+            "load_ms": 6.546,
+            "status": "ok",
+            "prompt_eval_count": 260,
+            "eval_ms": 1749.707
+          },
+          {
+            "stage": "language_verify",
+            "total_ms": 623.888,
+            "model": "qwen3.5:9b-q4_K_M",
+            "prompt_eval_ms": 209.582,
+            "elapsed_ms": 633,
+            "eval_count": 10,
+            "load_ms": 6.077,
+            "status": "ok",
+            "prompt_eval_count": 239,
+            "eval_ms": 379.977
+          }
+        ],
+        "provider": "ollama-local"
+      },
+      "sse_done": true,
+      "seconds": 2.9815,
+      "http_timing": {
+        "first_progress_seconds": 0.1304,
+        "verified_ready_seconds": 2.8644,
+        "first_verified_text_seconds": null
+      }
+    }
+  ]
+}

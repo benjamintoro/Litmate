@@ -1,0 +1,12 @@
+{
+  "literary_memory.sqlite3": {
+    "tables": 16,
+    "changed": [],
+    "quick_check": "ok"
+  },
+  "literary_memory_rag.sqlite3": {
+    "tables": 10,
+    "changed": [],
+    "quick_check": "ok"
+  }
+}

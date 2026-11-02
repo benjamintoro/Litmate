@@ -1,0 +1,269 @@
+{
+  "case": {
+    "case": 7,
+    "title": "Nuestra parte de noche",
+    "author": "Mariana Enr\u00edquez",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": true
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de Nuestra parte de noche de Mariana Enr\u00edquez",
+      "answer": "Nuestra parte de noche es una novela de terror que transcurre en la Argentina durante la dictadura militar, entrelazando el horror pol\u00edtico con elementos sobrenaturales. La obra explora c\u00f3mo los cuerpos son utilizados como instrumentos por una entidad misteriosa llamada \"La orden\" en rituales que mezclan dolor y placer, reflejando la brutalidad del r\u00e9gimen autoritario y la lucha entre vida y muerte. A trav\u00e9s de m\u00faltiples l\u00edneas narrativas que saltan entre los a\u00f1os 60 y los 90, la historia indaga en temas como la obsesi\u00f3n por lo eterno, el contacto con entidades sobrenaturales y las relaciones familiares distorsionadas por el miedo.\n\nFuente: https://www.actualidadliteratura.com/nuestra-parte-de-noche-mariana-enriquez/",
+      "status": "answered",
+      "books": [
+        {
+          "id": "/works/OL20901051W",
+          "title": "Nuestra parte de noche",
+          "author": "Mariana Enr\u00edquez",
+          "synopsis": "",
+          "image_url": "https://covers.openlibrary.org/b/id/10239068-M.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=Nuestra+parte+de+noche+Mariana+Enr%C3%ADquez"
+            },
+            {
+              "label": "Open Library",
+              "url": "https://openlibrary.org/works/OL20901051W"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Nuestra+parte+de+noche+Mariana+Enr%C3%ADquez&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Nuestra+parte+de+noche+Mariana+Enr%C3%ADquez"
+            }
+          ]
+        }
+      ],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 19620,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 2,
+        "verified_narrative_answer": true,
+        "narrative_synthesized": true,
+        "partial_evidence": false,
+        "work_type": "fiction",
+        "progress_metrics": {
+          "elapsed_ms": 19638.887,
+          "first_phase_emitted_ms": 23.089,
+          "model_calls_started": 2,
+          "stage_totals_ms": {
+            "conversation": 8.118,
+            "cache_lookup": 5.801,
+            "knowledge_lookup": 657.261,
+            "retrieval": 2520.687,
+            "web_search": 915.22,
+            "extraction": 2955.029,
+            "model_inspection": 30.781,
+            "generation": 7282.636,
+            "audit": 5295.597,
+            "finalization": 18.498
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 2.974,
+              "elapsed_ms": 8.118,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 17.276,
+              "elapsed_ms": 5.801,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 35.731,
+              "elapsed_ms": 340.845,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 109.275,
+              "elapsed_ms": 39.594,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 211.427,
+              "elapsed_ms": 164.032,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 277.292,
+              "elapsed_ms": 55.902,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 441.61,
+              "elapsed_ms": 56.888,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 552.48,
+              "elapsed_ms": 2520.687,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 3081.925,
+              "elapsed_ms": 915.22,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 3997.491,
+              "elapsed_ms": 217.217,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 4214.791,
+              "elapsed_ms": 2737.812,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 7003.048,
+              "elapsed_ms": 7282.636,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 7003.059,
+              "elapsed_ms": 30.775,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 14287.363,
+              "elapsed_ms": 5293.31,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 14287.381,
+              "elapsed_ms": 0.006,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 19582.966,
+              "elapsed_ms": 2.287,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 19620.382,
+              "elapsed_ms": 18.498,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 23.089
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 7003.033
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 14287.344
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "prompt_eval_ms": 1217.85,
+            "total_ms": 7232.265,
+            "eval_ms": 5768.613,
+            "elapsed_ms": 7283,
+            "eval_count": 166,
+            "status": "ok",
+            "prompt_eval_count": 1894,
+            "stage": "answer",
+            "load_ms": 5.787,
+            "model": "qwen3.5:9b-q4_K_M"
+          },
+          {
+            "prompt_eval_ms": 1892.097,
+            "total_ms": 5255.416,
+            "eval_ms": 3248.562,
+            "elapsed_ms": 5293,
+            "eval_count": 92,
+            "status": "ok",
+            "prompt_eval_count": 3450,
+            "stage": "audit",
+            "load_ms": 7.194,
+            "model": "qwen3.5:9b-q4_K_M"
+          }
+        ],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 19.6563,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 19.6127,
+        "first_verified_text_seconds": 19.6563
+      }
+    }
+  ],
+  "seconds": 21.857,
+  "coverage_before": {
+    "works": 14471,
+    "works_with_explicit_plot": 14,
+    "works_with_development_excerpt": 10,
+    "works_with_admitted_description": 17,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 31,
+    "linked_sources": 14643,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14472,
+    "works_with_explicit_plot": 14,
+    "works_with_development_excerpt": 10,
+    "works_with_admitted_description": 17,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 31,
+    "linked_sources": 14644,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "factual_review_pending": true
+}

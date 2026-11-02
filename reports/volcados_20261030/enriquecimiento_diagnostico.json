@@ -1,0 +1,94 @@
+[
+  {
+    "work": {
+      "author": "H. G. (Herbert George) Wells",
+      "categories": [
+        "Science fiction",
+        "Time travel -- Fiction",
+        "Dystopias -- Fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:35",
+      "isbns": [],
+      "kind": "book",
+      "language": "en",
+      "source": "Project Gutenberg",
+      "title": "The Time Machine",
+      "url": "https://www.gutenberg.org/ebooks/35",
+      "work_id": "litmate:cd01a12f9f01f2eb764bc33a"
+    },
+    "status": "ok",
+    "results": [
+      {
+        "title": "Time Machine",
+        "intro": "Time Machine puede hacer referencia a:",
+        "bound": false,
+        "description": "Time Machine puede hacer referencia a: == M\u00fasica == Time Machine, quinto disco de estudio de Joe Satriani. Time Machine, \u00e1lbum de estudio de la banda alemana de heavy metal Axxis. The Time Machine, \u00e1l"
+      }
+    ]
+  },
+  {
+    "work": {
+      "author": "Louisa May Alcott",
+      "categories": [
+        "Autobiographical fiction",
+        "Young women -- Fiction",
+        "Sisters -- Fiction",
+        "Domestic fiction",
+        "Family life -- New England -- Fiction",
+        "New England -- Fiction",
+        "Bildungsromans",
+        "Mothers and daughters -- Fiction",
+        "March family (Fictitious characters) -- Fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:514",
+      "isbns": [],
+      "kind": "book",
+      "language": "en",
+      "source": "Project Gutenberg",
+      "title": "Little Women",
+      "url": "https://www.gutenberg.org/ebooks/514",
+      "work_id": "litmate:62f6b717c0fc6a444106f1fd"
+    },
+    "status": "ok",
+    "results": [
+      {
+        "title": "Little Women",
+        "intro": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, originally published in two volumes, in 1868 and 1869. The story follows the lives of the four March sisters\u2014Meg, Jo, Beth, and Amy\u2014and details their passage from childhood to womanhood. Loosely based on the lives of the author and her three sisters, it is classified as an autobiographical or semi-autobiographical novel. Little Women was an immediate commercial and critical success, and readers were eager for more of the characters. Alcott quickly completed a second volume (titled Good Wives or Little Women Married in the United Kingdom, though the name originated with the publisher and not Alcott). It was also met with success. The two volumes were issued in 1880 as a single novel titled Little Women. Alcott subsequently wrote two sequels to her popular work, both also featuring the March sisters: Little Men (1871) and Jo's Boys (1886). The novel has been said to address three major themes: \"domesticity, work, and true love, all of them interdependent and each necessary to the achievement of its heroine's individual identity.\" According to Sarah Elbert, Alcott created a new form of literature, on",
+        "bound": true,
+        "description": "== Argumento == Meg, Jo, Beth, and Amy, and their mother, whom they call Marmee, live in a new neighborhood (loosely based on Concord) in Massachusetts in genteel poverty. The girls keep busy as the w"
+      }
+    ]
+  },
+  {
+    "work": {
+      "author": "\u00c9mile Zola",
+      "categories": [
+        "Man-woman relationships -- Fiction",
+        "Prostitutes -- France -- Fiction",
+        "French fiction -- 19th century",
+        "France -- History -- Second Empire, 1852-1870 -- Fiction",
+        "Young women -- France -- Fiction"
+      ],
+      "confirmed_aliases": [],
+      "edition_id": "gutenberg:5250",
+      "isbns": [],
+      "kind": "book",
+      "language": "fr",
+      "source": "Project Gutenberg",
+      "title": "Nana",
+      "url": "https://www.gutenberg.org/ebooks/5250",
+      "work_id": "litmate:d8fec8c040722f1627acb945"
+    },
+    "status": "ok",
+    "results": [
+      {
+        "title": "Nana",
+        "intro": "El t\u00e9rmino Nana puede referirse a: Nana, una ni\u00f1era empleada tiempo completo o semicompleto. Nana, canci\u00f3n de ritmo suave y relajante para ayudar a dormir a los beb\u00e9s. Im Jin Ah, m\u00e1s conocida como Nana, cantante surcoreana, exmiembro del grupo femenino surcoreano After School. Kwon Na-yeon, m\u00e1s conocida como Nana, cantante surcoreana, miembro del grupo femenino surcoreano Wooah. Hana Nurul, conocida como Nana, cantante y actriz malaya. Nana, secci\u00f3n de un g\u00e9nero de especies vegetales. Tambi\u00e9n puede referirse a alguna de estas figuras mitol\u00f3gicas: Nana, en la mitolog\u00eda mesopot\u00e1mica, dios masculino de la Luna. Nana, n\u00e1yade hija del dios-r\u00edo frigio Sangario, madre de Atis. Nan\u00e1 Baruqu\u00e9 es una de las deidades de la religi\u00f3n yoruba. O a una de estas obras de arte: Nana (1880), novela de \u00c9mile Zola. Nana (2000), manga y anime de Ai Yazawa. Nana (2004), novela de Chuck Palahniuk. Nana (2004), pel\u00edcula mexicana. Nana (2005), pel\u00edcula basada en el manga.",
+        "bound": false,
+        "description": "El t\u00e9rmino Nana puede referirse a: Nana, una ni\u00f1era empleada tiempo completo o semicompleto. Nana, canci\u00f3n de ritmo suave y relajante para ayudar a dormir a los beb\u00e9s. Im Jin Ah, m\u00e1s conocida como Nan"
+      }
+    ]
+  }
+]

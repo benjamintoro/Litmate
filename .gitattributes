@@ -1,0 +1,2 @@
+# Los informes y revisiones se vinculan por SHA256 de sus bytes originales.
+reportes/arquitectura_20261023/*.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

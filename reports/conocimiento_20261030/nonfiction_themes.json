@@ -1,0 +1,442 @@
+{
+  "mode": "continuous_once",
+  "scheduled": 4,
+  "llm_calls": 0,
+  "new_global_corrections": 0,
+  "mysql_references_added": 2,
+  "work_ids": [
+    "litmate:37fe2c3a901e650cb80c85c8",
+    "litmate:3a15e370f52c5c264c9aed5e",
+    "litmate:31fef4ab8119d6b7dc0e6095",
+    "litmate:e7bdcccf098e3d5f783b6eda"
+  ],
+  "batch": {
+    "claimed": 4,
+    "completed": 0,
+    "deferred": 4,
+    "stored": 1,
+    "seconds": 10.711,
+    "jobs": [
+      {
+        "work_id": "litmate:37fe2c3a901e650cb80c85c8",
+        "provider": "wikipedia",
+        "requirement": "themes",
+        "status": "empty",
+        "lease_current": true,
+        "seconds": 1.725,
+        "stored": 0,
+        "reused": false
+      },
+      {
+        "work_id": "litmate:3a15e370f52c5c264c9aed5e",
+        "provider": "wikipedia",
+        "requirement": "themes",
+        "status": "no_evidence",
+        "lease_current": true,
+        "seconds": 1.97,
+        "stored": 1,
+        "reused": false
+      },
+      {
+        "work_id": "litmate:31fef4ab8119d6b7dc0e6095",
+        "provider": "wikipedia",
+        "requirement": "themes",
+        "status": "empty",
+        "lease_current": true,
+        "seconds": 1.99,
+        "stored": 0,
+        "reused": false
+      },
+      {
+        "work_id": "litmate:e7bdcccf098e3d5f783b6eda",
+        "provider": "wikipedia",
+        "requirement": "themes",
+        "status": "empty",
+        "lease_current": true,
+        "seconds": 1.961,
+        "stored": 0,
+        "reused": false
+      }
+    ],
+    "llm_calls": 0,
+    "reused": 0,
+    "verification_scope": "source_policy_identity_and_requirement_coverage",
+    "independent_factual_corroboration": false
+  },
+  "index": {
+    "sources": 499,
+    "documents": 498,
+    "chunks": 526,
+    "semantic": false,
+    "index_updated": true,
+    "index": "G:\\Proyecto\\Litmate\\data\\literary_memory_rag.sqlite3",
+    "short_sources_skipped": 0
+  },
+  "projected_work_ids": [
+    "litmate:37fe2c3a901e650cb80c85c8",
+    "litmate:3a15e370f52c5c264c9aed5e",
+    "litmate:31fef4ab8119d6b7dc0e6095",
+    "litmate:e7bdcccf098e3d5f783b6eda"
+  ],
+  "stopped": null,
+  "seconds": 12.827,
+  "cpu_seconds": 1.453,
+  "process": {
+    "rss_mb": 78.965,
+    "peak_rss_mb": 121.328
+  },
+  "storage_delta_bytes": 16384,
+  "revision_before": "14840",
+  "revision_after": "14841",
+  "coverage_before": {
+    "works": 4,
+    "works_with_explicit_plot": 1,
+    "works_with_development_excerpt": 0,
+    "works_with_admitted_description": 1,
+    "characters_with_literal_roles": 0,
+    "works_with_literal_roles": 0,
+    "characters_with_membership_only": 0,
+    "works_with_explicit_protagonist": 0,
+    "explicit_protagonist_mentions": 0,
+    "relationships": 0,
+    "narrative_facts": 1,
+    "linked_sources": 5,
+    "per_work": {
+      "litmate:3a15e370f52c5c264c9aed5e": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 1
+      },
+      "litmate:e7bdcccf098e3d5f783b6eda": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:37fe2c3a901e650cb80c85c8": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:31fef4ab8119d6b7dc0e6095": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 4,
+    "works_with_explicit_plot": 1,
+    "works_with_development_excerpt": 0,
+    "works_with_admitted_description": 1,
+    "characters_with_literal_roles": 0,
+    "works_with_literal_roles": 0,
+    "characters_with_membership_only": 0,
+    "works_with_explicit_protagonist": 0,
+    "explicit_protagonist_mentions": 0,
+    "relationships": 0,
+    "narrative_facts": 1,
+    "linked_sources": 6,
+    "per_work": {
+      "litmate:3a15e370f52c5c264c9aed5e": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 1
+      },
+      "litmate:e7bdcccf098e3d5f783b6eda": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:37fe2c3a901e650cb80c85c8": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:31fef4ab8119d6b7dc0e6095": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "database": {
+    "vendor": "mysql",
+    "name": "litmate_db"
+  },
+  "jobs": [
+    {
+      "work_id": "litmate:31fef4ab8119d6b7dc0e6095",
+      "requirement": "summary",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "empty",
+      "not_before": 1793362998.5668912,
+      "payload": "{\"author\":\"Percy Bysshe Shelley\",\"gap_count\":1,\"last_attempt_at\":1793362096.6605532,\"last_gap_reason\":\"insufficient_evidence\",\"title\":\"A Defence of Poetry and Other Essays\"}"
+    },
+    {
+      "work_id": "litmate:31fef4ab8119d6b7dc0e6095",
+      "requirement": "themes",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "empty",
+      "not_before": 1793365322.7420506,
+      "payload": "{\"author\":\"Percy Bysshe Shelley\",\"gap_count\":1,\"last_attempt_at\":1793364420.746892,\"last_gap_reason\":\"insufficient_evidence\",\"title\":\"A Defence of Poetry and Other Essays\"}"
+    },
+    {
+      "work_id": "litmate:37fe2c3a901e650cb80c85c8",
+      "requirement": "summary",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "empty",
+      "not_before": 1793364039.047488,
+      "payload": "{\"author\":\"Thomas Hobbes\",\"gap_count\":1,\"last_attempt_at\":1793363137.4114993,\"last_gap_reason\":\"insufficient_evidence\",\"title\":\"Leviathan\"}"
+    },
+    {
+      "work_id": "litmate:37fe2c3a901e650cb80c85c8",
+      "requirement": "themes",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "empty",
+      "not_before": 1793365316.7511733,
+      "payload": "{\"author\":\"Thomas Hobbes\",\"gap_count\":1,\"last_attempt_at\":1793364415.0180738,\"last_gap_reason\":\"insufficient_evidence\",\"title\":\"Leviathan\"}"
+    },
+    {
+      "work_id": "litmate:3a15e370f52c5c264c9aed5e",
+      "requirement": "summary",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "no_evidence",
+      "not_before": 1793363014.5056205,
+      "payload": "{\"author\":\"W. E. B. (William Edward Burghardt) Du Bois\",\"gap_count\":1,\"last_attempt_at\":1793362112.7415838,\"last_gap_reason\":\"insufficient_evidence\",\"title\":\"The Souls of Black Folk\"}"
+    },
+    {
+      "work_id": "litmate:3a15e370f52c5c264c9aed5e",
+      "requirement": "themes",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "no_evidence",
+      "not_before": 1793365319.7358503,
+      "payload": "{\"author\":\"W. E. B. (William Edward Burghardt) Du Bois\",\"gap_count\":1,\"last_attempt_at\":1793364417.76171,\"last_gap_reason\":\"insufficient_evidence\",\"title\":\"The Souls of Black Folk\"}"
+    },
+    {
+      "work_id": "litmate:e7bdcccf098e3d5f783b6eda",
+      "requirement": "summary",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "empty",
+      "not_before": 1793362995.43791,
+      "payload": "{\"author\":\"Walter Pater\",\"gap_count\":1,\"last_attempt_at\":1793362093.2107952,\"last_gap_reason\":\"insufficient_evidence\",\"title\":\"The Renaissance: Studies in Art and Poetry\"}"
+    },
+    {
+      "work_id": "litmate:e7bdcccf098e3d5f783b6eda",
+      "requirement": "themes",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "empty",
+      "not_before": 1793365325.719166,
+      "payload": "{\"author\":\"Walter Pater\",\"gap_count\":1,\"last_attempt_at\":1793364423.753365,\"last_gap_reason\":\"insufficient_evidence\",\"title\":\"The Renaissance: Studies in Art and Poetry\"}"
+    }
+  ],
+  "original_sql_rows": {
+    "auth_group": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "auth_group_permissions": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "auth_permission": {
+      "original_rows_preserved": 152,
+      "added": 0
+    },
+    "auth_user": {
+      "original_rows_preserved": 179,
+      "added": 0
+    },
+    "auth_user_groups": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "auth_user_user_permissions": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_asistenteia": {
+      "original_rows_preserved": 1,
+      "added": 0
+    },
+    "core_autor": {
+      "original_rows_preserved": 31,
+      "added": 0
+    },
+    "core_clickconversion": {
+      "original_rows_preserved": 185,
+      "added": 0
+    },
+    "core_conversacionia": {
+      "original_rows_preserved": 50,
+      "added": 0
+    },
+    "core_editorial": {
+      "original_rows_preserved": 34,
+      "added": 0
+    },
+    "core_elementolistalectura": {
+      "original_rows_preserved": 2,
+      "added": 0
+    },
+    "core_estadolectura": {
+      "original_rows_preserved": 451,
+      "added": 0
+    },
+    "core_eventoanalitica": {
+      "original_rows_preserved": 384,
+      "added": 0
+    },
+    "core_genero": {
+      "original_rows_preserved": 12,
+      "added": 0
+    },
+    "core_historialchatbot": {
+      "original_rows_preserved": 5,
+      "added": 0
+    },
+    "core_historialpreciolibro": {
+      "original_rows_preserved": 223,
+      "added": 0
+    },
+    "core_kbname": {
+      "original_rows_preserved": 14166,
+      "added": 0
+    },
+    "core_kbprojection": {
+      "original_rows_preserved": 8,
+      "added": 0,
+      "derived_worker_checkpoint_updated": true
+    },
+    "core_kbrecord": {
+      "original_rows_preserved": 13518,
+      "added": 0
+    },
+    "core_kbrelation": {
+      "original_rows_preserved": 2598,
+      "added": 23
+    },
+    "core_kbversion": {
+      "original_rows_preserved": 13518,
+      "added": 0
+    },
+    "core_libro": {
+      "original_rows_preserved": 55,
+      "added": 0
+    },
+    "core_libro_generos": {
+      "original_rows_preserved": 54,
+      "added": 0
+    },
+    "core_librofavorito": {
+      "original_rows_preserved": 231,
+      "added": 0
+    },
+    "core_listalectura": {
+      "original_rows_preserved": 2,
+      "added": 0
+    },
+    "core_mensajecontacto": {
+      "original_rows_preserved": 3,
+      "added": 0
+    },
+    "core_mensajeia": {
+      "original_rows_preserved": 190,
+      "added": 0
+    },
+    "core_perfilusuario": {
+      "original_rows_preserved": 158,
+      "added": 0
+    },
+    "core_preciolibrotienda": {
+      "original_rows_preserved": 117,
+      "added": 0
+    },
+    "core_preguntafrecuente": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_recomendacion": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_recomendacionialog": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_resena": {
+      "original_rows_preserved": 116,
+      "added": 0
+    },
+    "django_admin_log": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "django_content_type": {
+      "original_rows_preserved": 38,
+      "added": 0
+    },
+    "django_migrations": {
+      "original_rows_preserved": 27,
+      "added": 0
+    },
+    "django_session": {
+      "original_rows_preserved": 88,
+      "added": 0
+    },
+    "suscripciones_historialpago": {
+      "original_rows_preserved": 42,
+      "added": 0
+    },
+    "suscripciones_plansuscripcion": {
+      "original_rows_preserved": 3,
+      "added": 0
+    },
+    "suscripciones_suscripcionusuario": {
+      "original_rows_preserved": 157,
+      "added": 0
+    }
+  }
+}

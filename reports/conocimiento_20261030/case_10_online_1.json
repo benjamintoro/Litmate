@@ -1,0 +1,230 @@
+{
+  "case": {
+    "case": 10,
+    "title": "La bastarda",
+    "author": "Trifonia Melibea Obono",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks_content",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "LITMATE_LIBRARY_RAG_DB": [
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks_content",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks_content",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": false
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de La bastarda de Trifonia Melibea Obono",
+      "answer": "Okomo, una hu\u00e9rfana que naci\u00f3 bastarda y cuya madre muri\u00f3 durante el parto, vive en un pueblo tradicional en Guinea Ecuatorial que est\u00e1 a un d\u00eda a pie de Gab\u00f3n. Como joven de diecis\u00e9is a\u00f1os que tuvo su per\u00edodo, es velada por la primera esposa de su abuelo, su abuelo y una comunidad que ya la rechaz\u00f3 por su nacimiento. Dado su lugar en esta familia pol\u00edgama y sin saber qui\u00e9n es, Okomo busca saber m\u00e1s sobre su padre. Okomo tiene una relaci\u00f3n especial con un t\u00edo, el hermano de su madre y otro hijo de la primera esposa de su abuelo, llamado Marcelo.\n\nFuente: https://es.wikipedia.org/wiki/La_bastarda_(novela)\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+      "status": "answered",
+      "books": [
+        {
+          "id": "/works/OL19740672W",
+          "title": "La bastarda",
+          "author": "Trifonia Melibea Obono",
+          "synopsis": "",
+          "image_url": "https://covers.openlibrary.org/b/id/10235255-M.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=La+bastarda+Trifonia+Melibea+Obono"
+            },
+            {
+              "label": "Open Library",
+              "url": "https://openlibrary.org/works/OL19740672W"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=La+bastarda+Trifonia+Melibea+Obono&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=La+bastarda+Trifonia+Melibea+Obono"
+            }
+          ]
+        }
+      ],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 1929,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "partial_evidence": false,
+        "work_type": "fiction",
+        "progress_metrics": {
+          "elapsed_ms": 1943.77,
+          "first_phase_emitted_ms": 21.787,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 5.915,
+            "cache_lookup": 5.981,
+            "knowledge_lookup": 563.448,
+            "retrieval": 1380.698,
+            "audit": 4.102,
+            "finalization": 14.895
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 3.712,
+              "elapsed_ms": 5.915,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 15.795,
+              "elapsed_ms": 5.981,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 34.713,
+              "elapsed_ms": 329.185,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 107.377,
+              "elapsed_ms": 41.701,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 215.401,
+              "elapsed_ms": 147.488,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 284.03,
+              "elapsed_ms": 41.826,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 428.887,
+              "elapsed_ms": 3.248,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 451.276,
+              "elapsed_ms": 1380.698,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 1892.148,
+              "elapsed_ms": 4.102,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 1928.869,
+              "elapsed_ms": 14.895,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 21.787
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 1892.131
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 1.9525,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 1.9225,
+        "first_verified_text_seconds": 1.9525
+      }
+    }
+  ],
+  "seconds": 4.136,
+  "coverage_before": {
+    "works": 14472,
+    "works_with_explicit_plot": 14,
+    "works_with_development_excerpt": 10,
+    "works_with_admitted_description": 17,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 31,
+    "linked_sources": 14644,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14473,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14646,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "factual_review_pending": true
+}

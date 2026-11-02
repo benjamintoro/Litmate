@@ -1,0 +1,16 @@
+[
+  {
+    "query": "\"historia medieval\" libros",
+    "status": "unavailable",
+    "seconds": 3.021,
+    "results": 0,
+    "sources": []
+  },
+  {
+    "query": "\"Historia del Per\u00fa\" libros",
+    "status": "empty",
+    "seconds": 0.38,
+    "results": 0,
+    "sources": []
+  }
+]

@@ -1,0 +1,183 @@
+{
+  "created_at_utc": "2026-10-27T04:23:17.009545+00:00",
+  "mode": "real_http_sse_isolated_database",
+  "model": "qwen3.5:4b",
+  "context": 16384,
+  "prewarm": {
+    "requested": false,
+    "seconds": null,
+    "generates_answers": false
+  },
+  "web_enabled": false,
+  "chat_budget_seconds": 75.0,
+  "response_budget_seconds": 90.0,
+  "progressive": false,
+  "repeat": 1,
+  "knowledge_setup": "empty_auxiliary_databases_with_bundled_catalogue_and_readonly_library",
+  "library": "G:\\Proyecto\\Litmate\\data\\biblioteca\\biblioteca.sqlite3",
+  "library_semantic": true,
+  "resource_scope": "python_server_process_only_not_ollama_or_gpu",
+  "cache_controls": {
+    "empty_answers_each_turn": false,
+    "empty_retrieval_each_turn": false
+  },
+  "factual_review": "not_independently_certified",
+  "turns": [
+    {
+      "case": "frankenstein_carta_william",
+      "turn": 1,
+      "question": "¿Qué noticia sobre William comunica la carta dirigida a Victor en Frankenstein?",
+      "http_status": 200,
+      "status": "unavailable",
+      "completed_sse": true,
+      "seconds": 18.762,
+      "first_text_seconds": 18.761,
+      "first_useful_seconds": null,
+      "first_progress_seconds": null,
+      "progress_phases": [],
+      "diagnostics": {},
+      "stage_totals_ms": {},
+      "delivery_overhead_ms": null,
+      "resources": {
+        "rss_mb": 63.258,
+        "peak_rss_mb": 63.504,
+        "cpu_seconds": 0.25
+      },
+      "category": "contenido_local",
+      "under_response_budget": true,
+      "model_calls": 6,
+      "answer": "Me costó preparar una respuesta fiable esta vez. Podemos intentarlo con una pregunta más concreta.",
+      "source_urls": []
+    },
+    {
+      "case": "quijote_resumen",
+      "turn": 1,
+      "question": "¿De qué trata Don Quijote?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 12.6,
+      "first_text_seconds": 12.599,
+      "first_useful_seconds": 12.599,
+      "first_progress_seconds": null,
+      "progress_phases": [],
+      "diagnostics": {},
+      "stage_totals_ms": {},
+      "delivery_overhead_ms": null,
+      "resources": {
+        "rss_mb": 108.363,
+        "peak_rss_mb": 153.559,
+        "cpu_seconds": 0.390625
+      },
+      "category": "resumen_local_es",
+      "under_response_budget": true,
+      "model_calls": 2,
+      "answer": "Acompañado de su escudero Sancho Panza, don Quijote emprende una serie de viajes donde interpreta objetos cotidianos como gigantes y castillos encantados, enfrentándose a conflictos que revelan la tensión entre la realidad y la fantasía.\n\nFuente: https://www.gutenberg.org/ebooks/2000\n\nEs lo que pude respaldar con la descripción consultada.",
+      "source_urls": [
+        "https://www.gutenberg.org/ebooks/2000"
+      ]
+    },
+    {
+      "case": "orgullo_resumen_alias",
+      "turn": 1,
+      "question": "¿De qué trata Orgullo y prejuicio?",
+      "http_status": 200,
+      "status": "unavailable",
+      "completed_sse": true,
+      "seconds": 9.174,
+      "first_text_seconds": 9.174,
+      "first_useful_seconds": null,
+      "first_progress_seconds": null,
+      "progress_phases": [],
+      "diagnostics": {},
+      "stage_totals_ms": {},
+      "delivery_overhead_ms": null,
+      "resources": {
+        "rss_mb": 110.582,
+        "peak_rss_mb": 153.559,
+        "cpu_seconds": 0.234375
+      },
+      "category": "resumen_alias_es",
+      "under_response_budget": true,
+      "model_calls": 2,
+      "answer": "No pude confirmar una sinopsis fiable de **Orgullo y prejuicio** con las fuentes disponibles. No quiero mezclarlo con otra obra.",
+      "source_urls": []
+    },
+    {
+      "case": "marianela_resumen",
+      "turn": 1,
+      "question": "¿De qué trata Marianela?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 9.902,
+      "first_text_seconds": 9.901,
+      "first_useful_seconds": 9.901,
+      "first_progress_seconds": null,
+      "progress_phases": [],
+      "diagnostics": {},
+      "stage_totals_ms": {},
+      "delivery_overhead_ms": null,
+      "resources": {
+        "rss_mb": 114.891,
+        "peak_rss_mb": 153.559,
+        "cpu_seconds": 0.28125
+      },
+      "category": "resumen_local_es",
+      "under_response_budget": true,
+      "model_calls": 2,
+      "answer": "La obra explora su profunda admiración por lo bello físico mezclado con un culto religioso, así como sus relaciones con los Golfines, una familia adinerada que vive en las alturas y cuya vida gira en torno a negocios mineros y agrícolas. A través de episodios que incluyen operaciones médicas complejas y conversaciones sobre la realidad visible, el texto examina la condición humana, la fe y la percepción del mundo desde una perspectiva naturalista.\n\nFuente: https://www.gutenberg.org/ebooks/17340\n\nEs lo que pude respaldar con la descripción consultada.",
+      "source_urls": [
+        "https://www.gutenberg.org/ebooks/17340"
+      ]
+    },
+    {
+      "case": "dracula_autor",
+      "turn": 1,
+      "question": "¿Quién escribió Drácula?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 0.069,
+      "first_text_seconds": 0.069,
+      "first_useful_seconds": 0.069,
+      "first_progress_seconds": null,
+      "progress_phases": [],
+      "diagnostics": {},
+      "stage_totals_ms": {},
+      "delivery_overhead_ms": null,
+      "resources": {
+        "rss_mb": 114.961,
+        "peak_rss_mb": 153.559,
+        "cpu_seconds": 0.0625
+      },
+      "category": "autoridad_local",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "**Dracula** es una obra de **Bram Stoker**.\n\nFuente de la ficha: https://www.gutenberg.org/ebooks/345",
+      "source_urls": [
+        "https://www.gutenberg.org/ebooks/345"
+      ]
+    }
+  ],
+  "source_sha256": "aadb496705bcd2da94e6257499d3c5184fd26f9dcfa2ba1b5c959abc1f241e51",
+  "runner_sha256": "20ff389e7f67f4a071847fa17a124c380fa19c121fba26195b7d288b47afe5b0",
+  "matrix_sha256": "fd0038e78386dccfd76f262895f06f3ce6d6397c8f11ce34b14ec5db3b67bc1c",
+  "metrics": {
+    "turns": 5,
+    "p50_seconds": 9.902,
+    "mean_seconds": 10.101,
+    "p95_seconds": 18.762,
+    "max_seconds": 18.762,
+    "under_response_budget": 5,
+    "statuses": {
+      "unavailable": 2,
+      "answered": 3
+    },
+    "under_5_seconds": 1,
+    "under_10_seconds": 3,
+    "under_30_seconds": 5,
+    "answered_is_not_factual_certification": true
+  },
+  "source_files_changed_during_run": false
+}

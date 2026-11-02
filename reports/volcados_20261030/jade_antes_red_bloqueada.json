@@ -1,0 +1,312 @@
+[
+  {
+    "passed": false,
+    "question": "Dime la trama de The jade cabinet de Rikki Ducornet",
+    "answer": "**The jade cabinet**\n\nActualmente no tengo la informaci\u00f3n de este libro :( Si me indicas el autor o la edici\u00f3n, puedo intentar identificarlo mejor.",
+    "status": "unavailable",
+    "not_in_legacy_catalog": null,
+    "sse_done": true,
+    "seconds": 0.7995,
+    "cards": [],
+    "diagnostics": {
+      "elapsed_ms": 773,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 0,
+      "work_type": "fiction",
+      "narrative_failure": "insufficient_content",
+      "progress_metrics": {
+        "elapsed_ms": 789.938,
+        "first_phase_emitted_ms": 46.957,
+        "model_calls_started": 0,
+        "stage_totals_ms": {
+          "conversation": 22.211,
+          "cache_lookup": 0.655,
+          "knowledge_lookup": 863.269,
+          "retrieval": 0.015,
+          "finalization": 16.458
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 8.983,
+            "elapsed_ms": 22.211,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 46.289,
+            "elapsed_ms": 0.655,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 93.397,
+            "elapsed_ms": 435.738,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 199.65,
+            "elapsed_ms": 55.27,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 332.922,
+            "elapsed_ms": 195.203,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 402.829,
+            "elapsed_ms": 81.469,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 543.331,
+            "elapsed_ms": 95.589,
+            "status": "ok"
+          },
+          {
+            "stage": "retrieval",
+            "started_ms": 725.702,
+            "elapsed_ms": 0.015,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 773.474,
+            "elapsed_ms": 16.458,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 46.957
+          }
+        ]
+      },
+      "stage_timings": [],
+      "provider": "verified-narrative-engine"
+    },
+    "reader_data_written": false,
+    "sources": [],
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": null
+      },
+      {
+        "stage": "retrieval",
+        "sources": [
+          {
+            "id": 1,
+            "title": "The jade cabinet",
+            "author": "Rikki Ducornet",
+            "description": "",
+            "source": "Open Library",
+            "year": "",
+            "book_id": "sqlkb:d0931ac21558c7606cbba8b9cc04fa15f6cdf3a7987faefa56eec2660dcfffcc",
+            "kind": "book",
+            "url": "https://openlibrary.org/works/OL104666W",
+            "locator": "",
+            "read_mode": "metadatos de fuente; sin trama ni texto completo",
+            "retrieved_at": "",
+            "license": "Open Library bibliographic facts; rights vary",
+            "policy": "openlibrary-minimal-metadata-v1",
+            "memory_verified": true,
+            "synopsis": "",
+            "language": "",
+            "isbns": [],
+            "categories": [
+              "In literature",
+              "Fiction, general",
+              "Fiction"
+            ]
+          }
+        ]
+      },
+      {
+        "request": {
+          "task": "summary",
+          "title": "The jade cabinet",
+          "targets": [],
+          "author_hint": "Rikki Ducornet",
+          "format": "",
+          "ambiguous": false
+        },
+        "diagnostics": {
+          "narrative_failure": "insufficient_content",
+          "model_calls": 0,
+          "work_type": "fiction",
+          "narrative_trace": [
+            {
+              "stage": "bibliographic",
+              "sources": 16,
+              "bound": 1,
+              "content": 0,
+              "providers": [
+                "Open Library",
+                "Project Gutenberg"
+              ]
+            }
+          ],
+          "progress_metrics": {
+            "stage_timings": [
+              {
+                "stage": "conversation",
+                "started_ms": 8.983,
+                "elapsed_ms": 22.211,
+                "status": "ok"
+              },
+              {
+                "stage": "cache_lookup",
+                "started_ms": 46.289,
+                "elapsed_ms": 0.655,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 93.397,
+                "elapsed_ms": 435.738,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 199.65,
+                "elapsed_ms": 55.27,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 332.922,
+                "elapsed_ms": 195.203,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 402.829,
+                "elapsed_ms": 81.469,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 543.331,
+                "elapsed_ms": 95.589,
+                "status": "ok"
+              },
+              {
+                "stage": "retrieval",
+                "started_ms": 725.702,
+                "elapsed_ms": 0.015,
+                "status": "ok"
+              }
+            ],
+            "stage_totals_ms": {
+              "conversation": 22.211,
+              "cache_lookup": 0.655,
+              "knowledge_lookup": 863.269,
+              "retrieval": 0.015
+            },
+            "model_calls_started": 0,
+            "progress_events": [
+              {
+                "stage": "search",
+                "elapsed_ms": 46.957
+              }
+            ],
+            "elapsed_ms": 756.608,
+            "first_phase_emitted_ms": 46.957
+          },
+          "language_presentation": {
+            "target": "es",
+            "original_text": "**The jade cabinet**\n\nActualmente no tengo la informaci\u00f3n de este libro :( Si me indicas el autor o la edici\u00f3n, puedo intentar identificarlo mejor.",
+            "translated_fields": 0,
+            "cache_hits": 0,
+            "untranslated_fields": [],
+            "audit_applies_to_original": true,
+            "cards": []
+          },
+          "stage_timings": [],
+          "elapsed_ms": 757,
+          "chat_budget_seconds": 36.0
+        },
+        "sources": [
+          {
+            "id": 1,
+            "title": "The jade cabinet",
+            "author": "Rikki Ducornet",
+            "description": "",
+            "source": "Open Library",
+            "year": "",
+            "book_id": "sqlkb:d0931ac21558c7606cbba8b9cc04fa15f6cdf3a7987faefa56eec2660dcfffcc",
+            "kind": "book",
+            "url": "https://openlibrary.org/works/OL104666W",
+            "locator": "",
+            "read_mode": "metadatos de fuente; sin trama ni texto completo",
+            "retrieved_at": "",
+            "license": "Open Library bibliographic facts; rights vary",
+            "policy": "openlibrary-minimal-metadata-v1",
+            "memory_verified": true,
+            "synopsis": "",
+            "language": "",
+            "isbns": [],
+            "categories": [
+              "In literature",
+              "Fiction, general",
+              "Fiction"
+            ]
+          }
+        ]
+      }
+    ],
+    "content_manually_reviewed": false,
+    "mysql_row_counts": {
+      "auth_group": 0,
+      "auth_group_permissions": 0,
+      "auth_permission": 152,
+      "auth_user": 179,
+      "auth_user_groups": 0,
+      "auth_user_user_permissions": 0,
+      "core_asistenteia": 1,
+      "core_autor": 31,
+      "core_clickconversion": 185,
+      "core_conversacionia": 50,
+      "core_editorial": 34,
+      "core_elementolistalectura": 2,
+      "core_estadolectura": 451,
+      "core_eventoanalitica": 384,
+      "core_genero": 12,
+      "core_historialchatbot": 5,
+      "core_historialpreciolibro": 223,
+      "core_kbname": 14166,
+      "core_kbprojection": 8,
+      "core_kbrecord": 13518,
+      "core_kbrelation": 2598,
+      "core_kbversion": 13518,
+      "core_libro": 55,
+      "core_libro_generos": 54,
+      "core_librofavorito": 231,
+      "core_listalectura": 2,
+      "core_mensajecontacto": 3,
+      "core_mensajeia": 190,
+      "core_perfilusuario": 158,
+      "core_preciolibrotienda": 117,
+      "core_preguntafrecuente": 0,
+      "core_recomendacion": 0,
+      "core_recomendacionialog": 0,
+      "core_resena": 116,
+      "django_admin_log": 0,
+      "django_content_type": 38,
+      "django_migrations": 27,
+      "django_session": 88,
+      "suscripciones_historialpago": 42,
+      "suscripciones_plansuscripcion": 3,
+      "suscripciones_suscripcionusuario": 157
+    },
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  }
+]

@@ -1,0 +1,214 @@
+{
+  "authenticBrowserCapture": true,
+  "externalNetworkTested": false,
+  "origin": "http://127.0.0.1:8002",
+  "frames": [
+    {
+      "file": "frame-000.png",
+      "seconds": 2.5750119
+    },
+    {
+      "file": "frame-001.png",
+      "seconds": 4.2606394
+    },
+    {
+      "file": "frame-002.png",
+      "seconds": 4.7223116
+    },
+    {
+      "file": "frame-003.png",
+      "seconds": 6.7206574
+    },
+    {
+      "file": "frame-004.png",
+      "seconds": 8.7224006
+    },
+    {
+      "file": "frame-005.png",
+      "seconds": 10.7677992
+    },
+    {
+      "file": "frame-006.png",
+      "seconds": 12.989511100000001
+    },
+    {
+      "file": "frame-007.png",
+      "seconds": 18.336337200000003
+    },
+    {
+      "file": "frame-008.png",
+      "seconds": 21.5338078
+    },
+    {
+      "file": "frame-009.png",
+      "seconds": 25.6707042
+    },
+    {
+      "file": "frame-010.png",
+      "seconds": 29.7480488
+    },
+    {
+      "file": "frame-011.png",
+      "seconds": 34.8116968
+    },
+    {
+      "file": "frame-012.png",
+      "seconds": 39.8233679
+    },
+    {
+      "file": "frame-013.png",
+      "seconds": 43.8754761
+    },
+    {
+      "file": "frame-014.png",
+      "seconds": 47.9391803
+    },
+    {
+      "file": "frame-015.png",
+      "seconds": 51.978117399999995
+    },
+    {
+      "file": "frame-016.png",
+      "seconds": 56.0207719
+    },
+    {
+      "file": "frame-017.png",
+      "seconds": 60.0647957
+    },
+    {
+      "file": "frame-018.png",
+      "seconds": 64.0948051
+    },
+    {
+      "file": "frame-019.png",
+      "seconds": 68.19374529999999
+    },
+    {
+      "file": "frame-020.png",
+      "seconds": 72.2019966
+    },
+    {
+      "file": "frame-021.png",
+      "seconds": 76.2278554
+    },
+    {
+      "file": "frame-022.png",
+      "seconds": 80.2694829
+    },
+    {
+      "file": "frame-023.png",
+      "seconds": 84.3452401
+    },
+    {
+      "file": "frame-024.png",
+      "seconds": 88.3748973
+    },
+    {
+      "file": "frame-025.png",
+      "seconds": 92.45381569999999
+    },
+    {
+      "file": "frame-026.png",
+      "seconds": 96.4684841
+    },
+    {
+      "file": "frame-027.png",
+      "seconds": 100.5055549
+    },
+    {
+      "file": "frame-028.png",
+      "seconds": 104.57757489999999
+    },
+    {
+      "file": "frame-029.png",
+      "seconds": 106.6996491
+    },
+    {
+      "file": "frame-030.png",
+      "seconds": 110.8710604
+    },
+    {
+      "file": "frame-031.png",
+      "seconds": 114.90897589999999
+    },
+    {
+      "file": "frame-032.png",
+      "seconds": 118.9925957
+    },
+    {
+      "file": "frame-033.png",
+      "seconds": 124.084065
+    },
+    {
+      "file": "frame-034.png",
+      "seconds": 128.16573879999999
+    },
+    {
+      "file": "frame-035.png",
+      "seconds": 132.21086540000002
+    },
+    {
+      "file": "frame-036.png",
+      "seconds": 136.223915
+    },
+    {
+      "file": "frame-037.png",
+      "seconds": 140.28884920000002
+    },
+    {
+      "file": "frame-038.png",
+      "seconds": 144.3960005
+    }
+  ],
+  "conversation": [
+    {
+      "question": "Recuerdo un libro donde un niño vive en un planeta pequeño y cuida una rosa",
+      "answer": "La respuesta todavía se está preparando o guardando. Vuelve a intentar.",
+      "completed": true,
+      "seconds": 1.5379205999999996
+    },
+    {
+      "question": "¿Qué pistas te hicieron pensar en ese libro?",
+      "answer": "¿Recuerdas algún personaje, parte de la trama, el autor o la portada del libro?",
+      "completed": true,
+      "seconds": 10.406839800000002
+    },
+    {
+      "question": "¿Qué relación hay entre el principito y el zorro?",
+      "answer": "En 'El principito', el zorro es el amigo y mentor del niño que le enseña sobre la importancia de domesticar a alguien para crear un vínculo único. A través de esta relación, el principito comprende que se hace responsable para siempre de lo que ha domesticado, descubriendo así el verdadero significado del amor y la responsabilidad.\n\n[2] El principito\nlepetitprince.com\nPARA SEGUIR LEYENDO\nSin portada\nEl principito\nAntoine de Saint-Exupéry\nBuscar en Amazon\nBuscar en Buscalibre",
+      "completed": true,
+      "seconds": 32.0458783
+    },
+    {
+      "question": "Recomiéndame dos novelas de fantasía en español",
+      "answer": "¡Claro!\n\n\nHarry Potter y el misterio del príncipe — J.K. Rowling.\n\n\nChoque de Reyes (Canción de Hielo y Fuego 2) — George R.R. Martin.\n\n¿Cuál te interesa más?\nPARA SEGUIR LEYENDO\nHarry Potter y el misterio del príncipe\nJ.K. Rowling\nHarry descubre un viejo libro de pociones perteneciente al misterioso 'Príncipe Mestizo' y junto a Dumbledore desentraña los secretos del pasado de Voldemort.\nBuscar en Google Books\nBuscar en Amazon\nBuscar en Buscalibre\nChoque de Reyes (Canción de Hielo y Fuego 2)\nGeorge R.R. Martin\nLa Guerra de los Cinco Reyes desgarra los Siete Reinos, mientras un cometa rojo cruza los cielos anunciando sangre y fuego.\nBuscar en Google Books\nBuscar en Amazon\nBuscar en Buscalibre",
+      "completed": true,
+      "seconds": 0.5371339000000006
+    },
+    {
+      "question": "Ya leí el primero y no me interesa el segundo",
+      "answer": "Lo tendré en cuenta: excluiré esas lecturas de las próximas recomendaciones de esta conversación.",
+      "completed": true,
+      "seconds": 0.5142377000000096
+    },
+    {
+      "question": "Dame otros dos libros de fantasía en español",
+      "answer": "¡Claro!\n\n\nEl Camino de los Reyes (El Archivo de las Tormentas 1) — Brandon Sanderson.\n\n\nEl Hobbit — J.R.R. Tolkien.\n\n¿Cuál te interesa más?\nPARA SEGUIR LEYENDO\nEl Camino de los Reyes (El Archivo de las Tormentas 1)\nBrandon Sanderson\nEn el azotado mundo de Roshar, Kaladin un esclavo quebrado, Dalinar un noble atormentado por visiones y Shallan una erudita buscan salvar el mundo del regreso de los Desoladores.\nBuscar en Google Books\nBuscar en Amazon\nBuscar en Buscalibre\nEl Hobbit\nJ.R.R. Tolkien\nBilbo Bolsón es un hobbit pacífico que es reclutado por el mago Gandalf y trece enanos para recuperar el tesoro custodiado por el dragón Smaug.\nBuscar en Google Books\nBuscar en Amazon\nBuscar en Buscalibre",
+      "completed": true,
+      "seconds": 0.5163429000000122
+    },
+    {
+      "question": "Cuéntame más del segundo",
+      "answer": "El Hobbit — J.R.R. Tolkien: Bilbo Bolsón es un hobbit pacífico que es reclutado por el mago Gandalf y trece enanos para recuperar el tesoro custodiado por el dragón Smaug.\nPARA SEGUIR LEYENDO\nEl Hobbit\nJ.R.R. Tolkien\nBilbo Bolsón es un hobbit pacífico que es reclutado por el mago Gandalf y trece enanos para recuperar el tesoro custodiado por el dragón Smaug.\nBuscar en Google Books\nBuscar en Amazon\nBuscar en Buscalibre",
+      "completed": true,
+      "seconds": 0.5071080000000023
+    },
+    {
+      "question": "¿Dónde puedo encontrarlo?",
+      "answer": "El Hobbit — J.R.R. Tolkien.\n\nPuedes usar los enlaces de la tarjeta para buscarlo; no puedo confirmar disponibilidad ni precio.\nPARA SEGUIR LEYENDO\nEl Hobbit\nJ.R.R. Tolkien\nBilbo Bolsón es un hobbit pacífico que es reclutado por el mago Gandalf y trece enanos para recuperar el tesoro custodiado por el dragón Smaug.\nBuscar en Google Books\nBuscar en Amazon\nBuscar en Buscalibre",
+      "completed": true,
+      "seconds": 0.5057654000000014
+    }
+  ],
+  "errors": []
+}

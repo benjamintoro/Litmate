@@ -1,0 +1,16 @@
+Using existing test database for alias 'default'...
+.......................................F.................
+======================================================================
+FAIL: test_same_title_with_a_different_author_does_not_establish_work_identity (core.test_character_quality_regression.CharacterEvidenceRegressionTests.test_same_title_with_a_different_author_does_not_establish_work_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\Proyecto\Litmate\core\test_character_quality_regression.py", line 333, in test_same_title_with_a_different_author_does_not_establish_work_identity
+    self.assertTrue(result is None or result.status != 'answered')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 57 tests in 2.219s
+
+FAILED (failures=1)
+Preserving test database for alias 'default'...

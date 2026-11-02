@@ -1,0 +1,288 @@
+{
+  "mode": "continuous_once",
+  "scheduled": 1,
+  "llm_calls": 0,
+  "new_global_corrections": 0,
+  "mysql_references_added": 0,
+  "work_ids": [
+    "litmate:82570f33a9af6d7fd1ad92ef"
+  ],
+  "batch": {
+    "claimed": 1,
+    "completed": 0,
+    "deferred": 1,
+    "stored": 1,
+    "seconds": 1.942,
+    "jobs": [
+      {
+        "work_id": "litmate:82570f33a9af6d7fd1ad92ef",
+        "provider": "wikipedia",
+        "requirement": "plot_development",
+        "status": "no_evidence",
+        "lease_current": true,
+        "seconds": 1.928,
+        "stored": 1,
+        "reused": false
+      }
+    ],
+    "llm_calls": 0,
+    "reused": 0,
+    "verification_scope": "source_policy_identity_and_requirement_coverage",
+    "independent_factual_corroboration": false
+  },
+  "index": {
+    "sources": 499,
+    "documents": 498,
+    "chunks": 508,
+    "semantic": false,
+    "index_updated": true,
+    "index": "G:\\Proyecto\\Litmate\\data\\literary_memory_rag.sqlite3",
+    "short_sources_skipped": 0
+  },
+  "projected_work_ids": [
+    "litmate:82570f33a9af6d7fd1ad92ef"
+  ],
+  "stopped": null,
+  "seconds": 5.345,
+  "cpu_seconds": 1.406,
+  "process": {
+    "rss_mb": 79.57,
+    "peak_rss_mb": 121.672
+  },
+  "storage_delta_bytes": 0,
+  "revision_before": "14813",
+  "revision_after": "14814",
+  "coverage_before": {
+    "works": 1,
+    "works_with_explicit_plot": 0,
+    "works_with_development_excerpt": 0,
+    "works_with_admitted_description": 1,
+    "characters_with_literal_roles": 13,
+    "works_with_literal_roles": 1,
+    "characters_with_membership_only": 0,
+    "works_with_explicit_protagonist": 1,
+    "explicit_protagonist_mentions": 1,
+    "relationships": 0,
+    "narrative_facts": 0,
+    "linked_sources": 3,
+    "per_work": {
+      "litmate:82570f33a9af6d7fd1ad92ef": {
+        "synopsis": false,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 13,
+        "relationships": 0,
+        "facts": 0
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 1,
+    "works_with_explicit_plot": 1,
+    "works_with_development_excerpt": 0,
+    "works_with_admitted_description": 1,
+    "characters_with_literal_roles": 13,
+    "works_with_literal_roles": 1,
+    "characters_with_membership_only": 0,
+    "works_with_explicit_protagonist": 1,
+    "explicit_protagonist_mentions": 1,
+    "relationships": 0,
+    "narrative_facts": 1,
+    "linked_sources": 4,
+    "per_work": {
+      "litmate:82570f33a9af6d7fd1ad92ef": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 13,
+        "relationships": 0,
+        "facts": 1
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "database": {
+    "vendor": "mysql",
+    "name": "litmate_db"
+  },
+  "jobs": [
+    {
+      "work_id": "litmate:82570f33a9af6d7fd1ad92ef",
+      "requirement": "plot_development",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "no_evidence",
+      "not_before": 1793343566.3077614,
+      "payload": "{\"author\":\"J. R. R. Tolkien\",\"gap_count\":1,\"last_attempt_at\":1793342664.375333,\"last_gap_reason\":\"insufficient_evidence\",\"title\":\"El Señor de los Anillos\"}"
+    }
+  ],
+  "original_sql_rows": {
+    "auth_group": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "auth_group_permissions": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "auth_permission": {
+      "original_rows_preserved": 152,
+      "added": 0
+    },
+    "auth_user": {
+      "original_rows_preserved": 179,
+      "added": 0
+    },
+    "auth_user_groups": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "auth_user_user_permissions": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_asistenteia": {
+      "original_rows_preserved": 1,
+      "added": 0
+    },
+    "core_autor": {
+      "original_rows_preserved": 31,
+      "added": 0
+    },
+    "core_clickconversion": {
+      "original_rows_preserved": 185,
+      "added": 0
+    },
+    "core_conversacionia": {
+      "original_rows_preserved": 50,
+      "added": 0
+    },
+    "core_editorial": {
+      "original_rows_preserved": 34,
+      "added": 0
+    },
+    "core_elementolistalectura": {
+      "original_rows_preserved": 2,
+      "added": 0
+    },
+    "core_estadolectura": {
+      "original_rows_preserved": 451,
+      "added": 0
+    },
+    "core_eventoanalitica": {
+      "original_rows_preserved": 384,
+      "added": 0
+    },
+    "core_genero": {
+      "original_rows_preserved": 12,
+      "added": 0
+    },
+    "core_historialchatbot": {
+      "original_rows_preserved": 5,
+      "added": 0
+    },
+    "core_historialpreciolibro": {
+      "original_rows_preserved": 223,
+      "added": 0
+    },
+    "core_kbname": {
+      "original_rows_preserved": 14166,
+      "added": 0
+    },
+    "core_kbprojection": {
+      "original_rows_preserved": 8,
+      "added": 0,
+      "derived_worker_checkpoint_updated": true
+    },
+    "core_kbrecord": {
+      "original_rows_preserved": 13518,
+      "added": 0
+    },
+    "core_kbrelation": {
+      "original_rows_preserved": 2598,
+      "added": 0
+    },
+    "core_kbversion": {
+      "original_rows_preserved": 13518,
+      "added": 0
+    },
+    "core_libro": {
+      "original_rows_preserved": 55,
+      "added": 0
+    },
+    "core_libro_generos": {
+      "original_rows_preserved": 54,
+      "added": 0
+    },
+    "core_librofavorito": {
+      "original_rows_preserved": 231,
+      "added": 0
+    },
+    "core_listalectura": {
+      "original_rows_preserved": 2,
+      "added": 0
+    },
+    "core_mensajecontacto": {
+      "original_rows_preserved": 3,
+      "added": 0
+    },
+    "core_mensajeia": {
+      "original_rows_preserved": 190,
+      "added": 0
+    },
+    "core_perfilusuario": {
+      "original_rows_preserved": 158,
+      "added": 0
+    },
+    "core_preciolibrotienda": {
+      "original_rows_preserved": 117,
+      "added": 0
+    },
+    "core_preguntafrecuente": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_recomendacion": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_recomendacionialog": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_resena": {
+      "original_rows_preserved": 116,
+      "added": 0
+    },
+    "django_admin_log": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "django_content_type": {
+      "original_rows_preserved": 38,
+      "added": 0
+    },
+    "django_migrations": {
+      "original_rows_preserved": 27,
+      "added": 0
+    },
+    "django_session": {
+      "original_rows_preserved": 88,
+      "added": 0
+    },
+    "suscripciones_historialpago": {
+      "original_rows_preserved": 42,
+      "added": 0
+    },
+    "suscripciones_plansuscripcion": {
+      "original_rows_preserved": 3,
+      "added": 0
+    },
+    "suscripciones_suscripcionusuario": {
+      "original_rows_preserved": 157,
+      "added": 0
+    }
+  }
+}

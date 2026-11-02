@@ -1,0 +1,2834 @@
+{
+  "created_at_utc": "2026-10-23T19:26:58.695983+00:00",
+  "mode": "real_http_sse_isolated_database",
+  "model": "qwen3.5:4b",
+  "context": 16384,
+  "prewarm": {
+    "requested": true,
+    "seconds": 5.579,
+    "generates_answers": false
+  },
+  "web_enabled": true,
+  "chat_budget_seconds": 36,
+  "response_budget_seconds": 42,
+  "progressive": true,
+  "repeat": 1,
+  "knowledge_setup": "empty_auxiliary_databases_with_bundled_catalogue",
+  "resource_scope": "python_server_process_only_not_ollama_or_gpu",
+  "cache_controls": {
+    "empty_answers_each_turn": false,
+    "empty_retrieval_each_turn": false
+  },
+  "factual_review": "not_independently_certified",
+  "turns": [
+    {
+      "case": "autoria_simple",
+      "turn": 1,
+      "question": "¿Quién escribió Orgullo y prejuicio?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 2.65,
+      "first_text_seconds": 2.65,
+      "first_useful_seconds": 2.65,
+      "first_progress_seconds": 0.04,
+      "progress_phases": [
+        "search"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 2633,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 2516.03,
+          "first_phase_emitted_ms": 4.417,
+          "stage_totals_ms": {
+            "cache_lookup": 0.508,
+            "knowledge_lookup": 70.643,
+            "retrieval": 2421.483
+          },
+          "stage_timings": [
+            {
+              "stage": "cache_lookup",
+              "started_ms": 3.897,
+              "elapsed_ms": 0.508,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 24.337,
+              "elapsed_ms": 1.523,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 45.865,
+              "elapsed_ms": 1.478,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 45.501,
+              "elapsed_ms": 13.902,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 9.087,
+              "elapsed_ms": 52.615,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 71.245,
+              "elapsed_ms": 1.125,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 81.142,
+              "elapsed_ms": 2421.483,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 4.417
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-progressive-research"
+      },
+      "stage_totals_ms": {
+        "cache_lookup": 0.508,
+        "knowledge_lookup": 70.643,
+        "retrieval": 2421.483
+      },
+      "delivery_overhead_ms": 133.706,
+      "resources": {
+        "rss_mb": 63.668,
+        "peak_rss_mb": 64.457,
+        "cpu_seconds": 0.296875
+      },
+      "category": "simple_autoria",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "**Orgullo y prejuicio** es una obra de **Jane Austen**.\n\nFuente: https://openlibrary.org/works/OL19651512W",
+      "source_urls": [
+        "https://openlibrary.org/works/OL19651512W"
+      ]
+    },
+    {
+      "case": "personajes_simple",
+      "turn": 1,
+      "question": "¿Cuáles son los personajes principales de Nana?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 1.259,
+      "first_text_seconds": 1.259,
+      "first_useful_seconds": 1.259,
+      "first_progress_seconds": 0.016,
+      "progress_phases": [
+        "search",
+        "review"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 1251,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 1135.166,
+          "first_phase_emitted_ms": 4.193,
+          "stage_totals_ms": {
+            "cache_lookup": 3.998,
+            "knowledge_lookup": 31.262,
+            "audit": 2.846,
+            "retrieval": 1097.53
+          },
+          "stage_timings": [
+            {
+              "stage": "cache_lookup",
+              "started_ms": 0.184,
+              "elapsed_ms": 3.998,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 5.13,
+              "elapsed_ms": 1.948,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 16.985,
+              "elapsed_ms": 2.027,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 16.601,
+              "elapsed_ms": 6.113,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 4.267,
+              "elapsed_ms": 19.371,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 24.268,
+              "elapsed_ms": 1.803,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 1101.443,
+              "elapsed_ms": 1.961,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 28.58,
+              "elapsed_ms": 1097.53,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 1126.585,
+              "elapsed_ms": 0.885,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 4.193
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 1101.418
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-progressive-research"
+      },
+      "stage_totals_ms": {
+        "cache_lookup": 3.998,
+        "knowledge_lookup": 31.262,
+        "audit": 2.846,
+        "retrieval": 1097.53
+      },
+      "delivery_overhead_ms": 123.921,
+      "resources": {
+        "rss_mb": 65.098,
+        "peak_rss_mb": 65.156,
+        "cpu_seconds": 0.234375
+      },
+      "category": "simple_personajes",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "Encontré estas referencias relacionadas con tu consulta:\n\n**Nana (Zola)** [1]\n\nPasaje recuperado: «Esta novela pertenece a la serie Los Rougon-Macquart, conjunto que agrupa 20 obras de este autor, de las cuales las más destacadas son, junto a»\n\nSon pasajes atribuidos a sus fuentes, no fichas bibliográficas ni una verificación independiente de todos sus datos. No puedo confirmar con ellos todas las partes de tu consulta.\n\n[1] Nana (Zola)\nhttps://es.wikipedia.org/wiki/Nana_(Zola)",
+      "source_urls": [
+        "https://es.wikipedia.org/wiki/Nana_(Zola)"
+      ]
+    },
+    {
+      "case": "sinopsis_simple",
+      "turn": 1,
+      "question": "¿De qué trata El nombre de la rosa?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 1.528,
+      "first_text_seconds": 1.528,
+      "first_useful_seconds": 1.528,
+      "first_progress_seconds": 0.016,
+      "progress_phases": [
+        "search",
+        "review"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 1518,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 1394.261,
+          "first_phase_emitted_ms": 5.075,
+          "stage_totals_ms": {
+            "cache_lookup": 4.839,
+            "knowledge_lookup": 37.392,
+            "audit": 1.72,
+            "retrieval": 1349.783
+          },
+          "stage_timings": [
+            {
+              "stage": "cache_lookup",
+              "started_ms": 0.226,
+              "elapsed_ms": 4.839,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 5.999,
+              "elapsed_ms": 1.788,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 19.773,
+              "elapsed_ms": 2.487,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 19.449,
+              "elapsed_ms": 7.911,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 5.144,
+              "elapsed_ms": 22.873,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 28.89,
+              "elapsed_ms": 2.333,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 1385.711,
+              "elapsed_ms": 1.067,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 37.068,
+              "elapsed_ms": 1349.783,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 1387.201,
+              "elapsed_ms": 0.653,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 5.075
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 1385.688
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-progressive-research"
+      },
+      "stage_totals_ms": {
+        "cache_lookup": 4.839,
+        "knowledge_lookup": 37.392,
+        "audit": 1.72,
+        "retrieval": 1349.783
+      },
+      "delivery_overhead_ms": 133.243,
+      "resources": {
+        "rss_mb": 65.555,
+        "peak_rss_mb": 65.613,
+        "cpu_seconds": 0.125
+      },
+      "category": "simple_sinopsis",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "Encontré estas referencias relacionadas con tu consulta:\n\n**El nombre de la rosa** [1]\n\nPasaje recuperado: «== Sinopsis == Es la Edad Media a finales de noviembre de 1327 bajo el papado de Juan XXII. El franciscano Guillermo de Baskerville y»\n\nSon pasajes atribuidos a sus fuentes, no fichas bibliográficas ni una verificación independiente de todos sus datos. No puedo confirmar con ellos todas las partes de tu consulta.\n\n[1] El nombre de la rosa\nhttps://es.wikipedia.org/wiki/El_nombre_de_la_rosa",
+      "source_urls": [
+        "https://es.wikipedia.org/wiki/El_nombre_de_la_rosa"
+      ]
+    },
+    {
+      "case": "protagonista_simple",
+      "turn": 1,
+      "question": "¿Quién es el protagonista de Los miserables?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 1.183,
+      "first_text_seconds": 1.183,
+      "first_useful_seconds": 1.183,
+      "first_progress_seconds": 0.016,
+      "progress_phases": [
+        "search",
+        "review"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 1172,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 1047.991,
+          "first_phase_emitted_ms": 4.279,
+          "stage_totals_ms": {
+            "cache_lookup": 4.096,
+            "knowledge_lookup": 35.34,
+            "audit": 0.92,
+            "retrieval": 1007.627
+          },
+          "stage_timings": [
+            {
+              "stage": "cache_lookup",
+              "started_ms": 0.174,
+              "elapsed_ms": 4.096,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 5.226,
+              "elapsed_ms": 1.975,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 17.593,
+              "elapsed_ms": 2.131,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 17.262,
+              "elapsed_ms": 8.208,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 4.348,
+              "elapsed_ms": 21.357,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 26.136,
+              "elapsed_ms": 1.669,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 1017.717,
+              "elapsed_ms": 0.602,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 32.863,
+              "elapsed_ms": 1007.627,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 1040.789,
+              "elapsed_ms": 0.318,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 4.279
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 1017.693
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-progressive-research"
+      },
+      "stage_totals_ms": {
+        "cache_lookup": 4.096,
+        "knowledge_lookup": 35.34,
+        "audit": 0.92,
+        "retrieval": 1007.627
+      },
+      "delivery_overhead_ms": 135.449,
+      "resources": {
+        "rss_mb": 66.41,
+        "peak_rss_mb": 66.469,
+        "cpu_seconds": 0.171875
+      },
+      "category": "simple_protagonista",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "Encontré estas referencias relacionadas con tu consulta:\n\n**Los miserables** [1]\n\nPasaje recuperado: «Los miserables (título original en francés: Les misérables) es una novela del poeta y escritor francés Victor Hugo publicada en 1862, considerada una de las»\n\nSon pasajes atribuidos a sus fuentes, no fichas bibliográficas ni una verificación independiente de todos sus datos. No puedo confirmar con ellos todas las partes de tu consulta.\n\n[1] Los miserables\nhttps://es.wikipedia.org/wiki/Los_miserables",
+      "source_urls": [
+        "https://es.wikipedia.org/wiki/Los_miserables"
+      ]
+    },
+    {
+      "case": "cache_exacta",
+      "turn": 1,
+      "question": "¿Quién escribió Rayuela?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 15.297,
+      "first_text_seconds": 15.297,
+      "first_useful_seconds": 15.297,
+      "first_progress_seconds": 0.037,
+      "progress_phases": [
+        "search",
+        "writing",
+        "review"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 15285,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 3,
+        "progress_metrics": {
+          "elapsed_ms": 15143.09,
+          "first_phase_emitted_ms": 9.657,
+          "stage_totals_ms": {
+            "cache_lookup": 8.757,
+            "knowledge_lookup": 83.891,
+            "retrieval": 1036.722,
+            "local_search": 15.984,
+            "intent": 27.726,
+            "model_inspection": 29.062,
+            "routing": 1501.817,
+            "web_search": 3993.822,
+            "extraction": 329.554,
+            "generation": 4310.372,
+            "audit": 6293.37
+          },
+          "stage_timings": [
+            {
+              "stage": "cache_lookup",
+              "started_ms": 0.874,
+              "elapsed_ms": 8.757,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 12.253,
+              "elapsed_ms": 6.775,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 46.432,
+              "elapsed_ms": 2.161,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 45.921,
+              "elapsed_ms": 16.238,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 9.817,
+              "elapsed_ms": 52.617,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 63.04,
+              "elapsed_ms": 2.582,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 75.49,
+              "elapsed_ms": 1.509,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 78.028,
+              "elapsed_ms": 3.518,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 102.536,
+              "elapsed_ms": 9.525,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 101.11,
+              "elapsed_ms": 12.18,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 127.466,
+              "elapsed_ms": 27.356,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 154.855,
+              "elapsed_ms": 29.043,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 154.845,
+              "elapsed_ms": 1501.817,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 1656.803,
+              "elapsed_ms": 0.37,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 1659.837,
+              "elapsed_ms": 3.235,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 124.575,
+              "elapsed_ms": 2159.481,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 1658.755,
+              "elapsed_ms": 1017.946,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 2677.637,
+              "elapsed_ms": 3.224,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 2676.741,
+              "elapsed_ms": 5.087,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 4189.049,
+              "elapsed_ms": 329.554,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 2684.416,
+              "elapsed_ms": 1834.341,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 4521.672,
+              "elapsed_ms": 0.012,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 4521.646,
+              "elapsed_ms": 4310.372,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 8833.969,
+              "elapsed_ms": 0.007,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 8833.947,
+              "elapsed_ms": 6289.578,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 15123.554,
+              "elapsed_ms": 3.792,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 9.657
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 4521.623
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 8833.93
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "elapsed_ms": 1502,
+            "total_ms": 1459.634,
+            "prompt_eval_ms": 609.29,
+            "prompt_eval_count": 1292,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 829.061,
+            "eval_count": 48,
+            "load_ms": 9.022,
+            "stage": "route"
+          },
+          {
+            "elapsed_ms": 4310,
+            "total_ms": 4288.051,
+            "prompt_eval_ms": 1384.633,
+            "prompt_eval_count": 4052,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 2799.9,
+            "eval_count": 161,
+            "load_ms": 6.963,
+            "stage": "answer"
+          },
+          {
+            "elapsed_ms": 6290,
+            "total_ms": 6263.343,
+            "prompt_eval_ms": 837.542,
+            "prompt_eval_count": 2732,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 5313.393,
+            "eval_count": 311,
+            "load_ms": 6.519,
+            "stage": "audit"
+          }
+        ],
+        "external_research": {
+          "pages_extracted": 0,
+          "logical_searches": 2,
+          "external_seconds": 5.006,
+          "http_requests_started": 8,
+          "page_slots_reserved": 2
+        },
+        "provider": "ollama-local"
+      },
+      "stage_totals_ms": {
+        "cache_lookup": 8.757,
+        "knowledge_lookup": 83.891,
+        "retrieval": 1036.722,
+        "local_search": 15.984,
+        "intent": 27.726,
+        "model_inspection": 29.062,
+        "routing": 1501.817,
+        "web_search": 3993.822,
+        "extraction": 329.554,
+        "generation": 4310.372,
+        "audit": 6293.37
+      },
+      "delivery_overhead_ms": 153.45,
+      "resources": {
+        "rss_mb": 68.0,
+        "peak_rss_mb": 68.059,
+        "cpu_seconds": 0.46875
+      },
+      "category": "cache_exacta",
+      "under_response_budget": true,
+      "model_calls": 3,
+      "answer": "La obra **Rayuela** fue escrita por el escritor argentino **Julio Cortázar**. \n\nAunque la información sobre su autoría aparece en las fichas de búsqueda que consultamos, estas fuentes (como los resultados de SearXNG o las descripciones generales) no detallan el contenido narrativo ni la trama completa. Sin embargo, con base en el conocimiento general de la literatura argentina y la identidad verificada del autor en los registros bibliográficos disponibles, podemos confirmar que es Julio Cortázar quien es considerado uno de los máximos representantes del ensayo novelado y la narrativa experimental en Latinoamérica.\n\n[4] Julio Cortázar\nhttps://en.wikipedia.org/wiki/Julio_Cortázar",
+      "source_urls": [
+        "https://en.wikipedia.org/wiki/Julio_Cortázar"
+      ]
+    },
+    {
+      "case": "cache_exacta",
+      "turn": 2,
+      "question": "¿Quién escribió Rayuela?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 1.022,
+      "first_text_seconds": 1.022,
+      "first_useful_seconds": 1.022,
+      "first_progress_seconds": 0.018,
+      "progress_phases": [
+        "search"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 1004,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 925.009,
+          "first_phase_emitted_ms": 4.706,
+          "stage_totals_ms": {
+            "cache_lookup": 4.327,
+            "knowledge_lookup": 51.087,
+            "retrieval": 866.372
+          },
+          "stage_timings": [
+            {
+              "stage": "cache_lookup",
+              "started_ms": 0.37,
+              "elapsed_ms": 4.327,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 7.22,
+              "elapsed_ms": 2.205,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 24.035,
+              "elapsed_ms": 2.601,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 23.758,
+              "elapsed_ms": 11.771,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 4.771,
+              "elapsed_ms": 32.455,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 37.82,
+              "elapsed_ms": 2.055,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 45.594,
+              "elapsed_ms": 866.372,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 4.706
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-progressive-research"
+      },
+      "stage_totals_ms": {
+        "cache_lookup": 4.327,
+        "knowledge_lookup": 51.087,
+        "retrieval": 866.372
+      },
+      "delivery_overhead_ms": 97.472,
+      "resources": {
+        "rss_mb": 68.383,
+        "peak_rss_mb": 68.512,
+        "cpu_seconds": 0.140625
+      },
+      "category": "cache_exacta",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "**Rayuela** es una obra de **Julio Cortázar**.\n\nFuente: https://openlibrary.org/works/OL14860424W",
+      "source_urls": [
+        "https://openlibrary.org/works/OL14860424W"
+      ]
+    },
+    {
+      "case": "conocimiento_indexado",
+      "turn": 1,
+      "question": "¿De qué trata El principito?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 0.177,
+      "first_text_seconds": 0.177,
+      "first_useful_seconds": 0.177,
+      "first_progress_seconds": 0.019,
+      "progress_phases": [
+        "search",
+        "review"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 168,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 41.173,
+          "first_phase_emitted_ms": 4.663,
+          "stage_totals_ms": {
+            "cache_lookup": 4.465,
+            "knowledge_lookup": 22.545,
+            "audit": 2.171
+          },
+          "stage_timings": [
+            {
+              "stage": "cache_lookup",
+              "started_ms": 0.189,
+              "elapsed_ms": 4.465,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 5.542,
+              "elapsed_ms": 2.313,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 23.653,
+              "elapsed_ms": 1.28,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 4.723,
+              "elapsed_ms": 20.232,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 33.076,
+              "elapsed_ms": 0.891,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 4.663
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 23.637
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-indexed-evidence"
+      },
+      "stage_totals_ms": {
+        "cache_lookup": 4.465,
+        "knowledge_lookup": 22.545,
+        "audit": 2.171
+      },
+      "delivery_overhead_ms": 135.63,
+      "resources": {
+        "rss_mb": 68.402,
+        "peak_rss_mb": 68.512,
+        "cpu_seconds": 0.0625
+      },
+      "category": "conocimiento_indexado",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "**El principito — Antoine de Saint-Exupéry**: Un niño procede de un planeta diminuto, cuida una rosa y viaja por otros mundos. En la Tierra conoce a un zorro y a un aviador.\n\nFuentes de las fichas:\nhttps://es.literaturasm.com/personaje/principito",
+      "source_urls": [
+        "https://es.literaturasm.com/personaje/principito"
+      ]
+    },
+    {
+      "case": "recomendacion_multiturno",
+      "turn": 1,
+      "question": "¿Quién escribió El túnel?",
+      "http_status": 200,
+      "status": "unavailable",
+      "completed_sse": true,
+      "seconds": 22.38,
+      "first_text_seconds": 22.38,
+      "first_useful_seconds": null,
+      "first_progress_seconds": 0.017,
+      "progress_phases": [
+        "search",
+        "writing",
+        "review",
+        "writing",
+        "review"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 22370,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 4,
+        "progress_metrics": {
+          "elapsed_ms": 22340.798,
+          "first_phase_emitted_ms": 4.18,
+          "stage_totals_ms": {
+            "cache_lookup": 3.983,
+            "knowledge_lookup": 37.631,
+            "retrieval": 17.022,
+            "local_search": 4.508,
+            "intent": 0.394,
+            "web_search": 5645.554,
+            "model_inspection": 20.672,
+            "generation": 2979.748,
+            "audit": 9693.258,
+            "repair": 3956.499
+          },
+          "stage_timings": [
+            {
+              "stage": "cache_lookup",
+              "started_ms": 0.188,
+              "elapsed_ms": 3.983,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 5.03,
+              "elapsed_ms": 1.968,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 18.761,
+              "elapsed_ms": 1.885,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 18.465,
+              "elapsed_ms": 7.816,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 4.24,
+              "elapsed_ms": 22.208,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 27.085,
+              "elapsed_ms": 2.072,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 31.719,
+              "elapsed_ms": 1.061,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 34.022,
+              "elapsed_ms": 1.682,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 47.284,
+              "elapsed_ms": 2.594,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 46.367,
+              "elapsed_ms": 4.511,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 61.696,
+              "elapsed_ms": 0.098,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 61.848,
+              "elapsed_ms": 0.296,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 64.091,
+              "elapsed_ms": 1.914,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 62.505,
+              "elapsed_ms": 11.45,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 59.106,
+              "elapsed_ms": 5645.554,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 5705.094,
+              "elapsed_ms": 20.649,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 5705.077,
+              "elapsed_ms": 2979.748,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 8685.188,
+              "elapsed_ms": 0.008,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 8685.168,
+              "elapsed_ms": 2301.197,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 10986.395,
+              "elapsed_ms": 0.065,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 10986.512,
+              "elapsed_ms": 0.008,
+              "status": "ok"
+            },
+            {
+              "stage": "repair",
+              "started_ms": 10986.496,
+              "elapsed_ms": 3956.499,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 14943.193,
+              "elapsed_ms": 0.007,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 14943.173,
+              "elapsed_ms": 7391.839,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 22335.043,
+              "elapsed_ms": 0.157,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 4.18
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 5705.057
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 8685.146
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 10986.479
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 14943.155
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "elapsed_ms": 2980,
+            "total_ms": 2950.001,
+            "prompt_eval_ms": 1088.052,
+            "prompt_eval_count": 3041,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 1636.409,
+            "eval_count": 93,
+            "load_ms": 5.84,
+            "stage": "answer"
+          },
+          {
+            "elapsed_ms": 2301,
+            "total_ms": 2267.756,
+            "prompt_eval_ms": 578.508,
+            "prompt_eval_count": 1684,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 1555.455,
+            "eval_count": 97,
+            "load_ms": 8.118,
+            "stage": "audit"
+          },
+          {
+            "elapsed_ms": 3957,
+            "total_ms": 3946.133,
+            "prompt_eval_ms": 408.865,
+            "prompt_eval_count": 3195,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 3434.608,
+            "eval_count": 208,
+            "load_ms": 6.349,
+            "stage": "repair"
+          },
+          {
+            "elapsed_ms": 7392,
+            "total_ms": 7378.339,
+            "prompt_eval_ms": 382.69,
+            "prompt_eval_count": 1794,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 6882.86,
+            "eval_count": 410,
+            "load_ms": 5.527,
+            "stage": "audit"
+          }
+        ],
+        "external_research": {
+          "pages_extracted": 0,
+          "logical_searches": 1,
+          "external_seconds": 5.646,
+          "http_requests_started": 3,
+          "page_slots_reserved": 0
+        },
+        "provider": "ollama-local"
+      },
+      "stage_totals_ms": {
+        "cache_lookup": 3.983,
+        "knowledge_lookup": 37.631,
+        "retrieval": 17.022,
+        "local_search": 4.508,
+        "intent": 0.394,
+        "web_search": 5645.554,
+        "model_inspection": 20.672,
+        "generation": 2979.748,
+        "audit": 9693.258,
+        "repair": 3956.499
+      },
+      "delivery_overhead_ms": 39.354,
+      "resources": {
+        "rss_mb": 69.629,
+        "peak_rss_mb": 69.688,
+        "cpu_seconds": 0.265625
+      },
+      "category": "multiturno_recomendacion",
+      "under_response_budget": true,
+      "model_calls": 4,
+      "answer": "Encontré información sobre la obra, pero no pude respaldar bien ese detalle. ¿Recuerdas una escena o puedes compartir un pasaje que nos ayude a comprobarlo?",
+      "source_urls": []
+    },
+    {
+      "case": "recomendacion_multiturno",
+      "turn": 2,
+      "question": "Recomiéndame novelas parecidas.",
+      "http_status": 200,
+      "status": "clarification",
+      "completed_sse": true,
+      "seconds": 1.683,
+      "first_text_seconds": 1.683,
+      "first_useful_seconds": null,
+      "first_progress_seconds": 0.018,
+      "progress_phases": [
+        "search"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 1675,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 1556.665,
+          "first_phase_emitted_ms": 3.52,
+          "stage_totals_ms": {
+            "cache_lookup": 3.234,
+            "knowledge_lookup": 49.542,
+            "web_search": 1472.5
+          },
+          "stage_timings": [
+            {
+              "stage": "cache_lookup",
+              "started_ms": 0.276,
+              "elapsed_ms": 3.234,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 5.033,
+              "elapsed_ms": 1.975,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 20.997,
+              "elapsed_ms": 1.951,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 20.619,
+              "elapsed_ms": 12.437,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 3.586,
+              "elapsed_ms": 29.628,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 34.082,
+              "elapsed_ms": 1.748,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 51.614,
+              "elapsed_ms": 1.803,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 68.136,
+              "elapsed_ms": 1472.5,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 3.52
+            }
+          ]
+        },
+        "stage_timings": [],
+        "external_research": {
+          "pages_extracted": 0,
+          "logical_searches": 2,
+          "external_seconds": 1.472,
+          "http_requests_started": 4,
+          "page_slots_reserved": 0
+        },
+        "provider": "ollama-local"
+      },
+      "stage_totals_ms": {
+        "cache_lookup": 3.234,
+        "knowledge_lookup": 49.542,
+        "web_search": 1472.5
+      },
+      "delivery_overhead_ms": 126.008,
+      "resources": {
+        "rss_mb": 70.328,
+        "peak_rss_mb": 70.387,
+        "cpu_seconds": 0.1875
+      },
+      "category": "multiturno_recomendacion",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "¿Qué libro quieres tomar como referencia? Dime el título o el autor.",
+      "source_urls": []
+    },
+    {
+      "case": "identificacion_escena",
+      "turn": 1,
+      "question": "Recuerdo un libro donde una niña atraviesa un armario y encuentra otro mundo. ¿Cuál es?",
+      "http_status": 200,
+      "status": "clarification",
+      "completed_sse": true,
+      "seconds": 4.472,
+      "first_text_seconds": 4.472,
+      "first_useful_seconds": null,
+      "first_progress_seconds": 0.016,
+      "progress_phases": [
+        "search"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 4463,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 2,
+        "progress_metrics": {
+          "elapsed_ms": 4367.868,
+          "first_phase_emitted_ms": 4.033,
+          "stage_totals_ms": {
+            "cache_lookup": 3.78,
+            "knowledge_lookup": 36.599,
+            "intent": 0.098,
+            "model_inspection": 43.568,
+            "routing": 3185.159,
+            "web_search": 1876.683,
+            "local_search": 8.723,
+            "retrieval": 1128.669
+          },
+          "stage_timings": [
+            {
+              "stage": "cache_lookup",
+              "started_ms": 0.239,
+              "elapsed_ms": 3.78,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 5.382,
+              "elapsed_ms": 2.957,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 4.596,
+              "elapsed_ms": 15.208,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 4.154,
+              "elapsed_ms": 16.072,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 21.982,
+              "elapsed_ms": 2.362,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 48.109,
+              "elapsed_ms": 0.057,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 48.178,
+              "elapsed_ms": 43.563,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 48.174,
+              "elapsed_ms": 1361.853,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 1410.186,
+              "elapsed_ms": 0.041,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 1410.247,
+              "elapsed_ms": 0.005,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 41.38,
+              "elapsed_ms": 1876.683,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 1410.244,
+              "elapsed_ms": 1823.306,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 3234.978,
+              "elapsed_ms": 8.723,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 3234.111,
+              "elapsed_ms": 1128.669,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 4.033
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "elapsed_ms": 1362,
+            "total_ms": 1307.683,
+            "prompt_eval_ms": 499.331,
+            "prompt_eval_count": 1357,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 691.625,
+            "eval_count": 45,
+            "load_ms": 5.3,
+            "stage": "route"
+          },
+          {
+            "elapsed_ms": 1823,
+            "total_ms": 1814.253,
+            "prompt_eval_ms": 169.644,
+            "prompt_eval_count": 450,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 1565.528,
+            "eval_count": 97,
+            "load_ms": 7.169,
+            "stage": "plan"
+          }
+        ],
+        "external_research": {
+          "pages_extracted": 0,
+          "logical_searches": 1,
+          "external_seconds": 2.994,
+          "http_requests_started": 4,
+          "page_slots_reserved": 0
+        },
+        "provider": "ollama-local"
+      },
+      "stage_totals_ms": {
+        "cache_lookup": 3.78,
+        "knowledge_lookup": 36.599,
+        "intent": 0.098,
+        "model_inspection": 43.568,
+        "routing": 3185.159,
+        "web_search": 1876.683,
+        "local_search": 8.723,
+        "retrieval": 1128.669
+      },
+      "delivery_overhead_ms": 104.112,
+      "resources": {
+        "rss_mb": 70.051,
+        "peak_rss_mb": 70.699,
+        "cpu_seconds": 0.171875
+      },
+      "category": "identificacion_por_escena",
+      "under_response_budget": true,
+      "model_calls": 2,
+      "answer": "No encontré una obra que pueda recomendarte con confianza esta vez. ¿Te interesa una lectura corta, una aventura o algo que te haga pensar? Con ese detalle puedo intentar una búsqueda más precisa.",
+      "source_urls": []
+    },
+    {
+      "case": "relacion_personajes",
+      "turn": 1,
+      "question": "Explica la relación entre Emma Bovary y Charles Bovary.",
+      "http_status": 200,
+      "status": "unavailable",
+      "completed_sse": true,
+      "seconds": 11.689,
+      "first_text_seconds": 11.689,
+      "first_useful_seconds": null,
+      "first_progress_seconds": 0.016,
+      "progress_phases": [
+        "search",
+        "writing",
+        "review"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 11679,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 5,
+        "progress_metrics": {
+          "elapsed_ms": 11635.657,
+          "first_phase_emitted_ms": 4.333,
+          "stage_totals_ms": {
+            "cache_lookup": 4.103,
+            "knowledge_lookup": 53.576,
+            "intent": 0.396,
+            "model_inspection": 21.829,
+            "routing": 2966.243,
+            "local_search": 9.092,
+            "retrieval": 1474.747,
+            "web_search": 1572.818,
+            "generation": 1880.077,
+            "repair": 1529.464,
+            "audit": 2138.51
+          },
+          "stage_timings": [
+            {
+              "stage": "cache_lookup",
+              "started_ms": 0.218,
+              "elapsed_ms": 4.103,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 5.355,
+              "elapsed_ms": 1.728,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 22.922,
+              "elapsed_ms": 1.76,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 22.595,
+              "elapsed_ms": 14.511,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 4.418,
+              "elapsed_ms": 32.905,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 37.946,
+              "elapsed_ms": 2.672,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 65.547,
+              "elapsed_ms": 0.113,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 65.688,
+              "elapsed_ms": 21.8,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 65.672,
+              "elapsed_ms": 1322.032,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 1387.86,
+              "elapsed_ms": 0.283,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 1388.166,
+              "elapsed_ms": 0.005,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 1388.162,
+              "elapsed_ms": 1644.211,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 3034.553,
+              "elapsed_ms": 5.591,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 3033.263,
+              "elapsed_ms": 1469.218,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 4503.417,
+              "elapsed_ms": 3.501,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 4502.522,
+              "elapsed_ms": 5.529,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 4508.66,
+              "elapsed_ms": 1572.818,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 6082.404,
+              "elapsed_ms": 0.007,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 6082.388,
+              "elapsed_ms": 1880.077,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 7962.691,
+              "elapsed_ms": 0.01,
+              "status": "ok"
+            },
+            {
+              "stage": "repair",
+              "started_ms": 7962.67,
+              "elapsed_ms": 1529.464,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 9492.247,
+              "elapsed_ms": 0.007,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 9492.227,
+              "elapsed_ms": 2138.415,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 11630.674,
+              "elapsed_ms": 0.095,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 4.333
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 6082.369
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 9492.209
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "elapsed_ms": 1322,
+            "total_ms": 1287.155,
+            "prompt_eval_ms": 347.638,
+            "prompt_eval_count": 1298,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 870.734,
+            "eval_count": 57,
+            "load_ms": 8.429,
+            "stage": "route"
+          },
+          {
+            "elapsed_ms": 1644,
+            "total_ms": 1612.231,
+            "prompt_eval_ms": 150.762,
+            "prompt_eval_count": 391,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 1372.696,
+            "eval_count": 91,
+            "load_ms": 6.347,
+            "stage": "plan"
+          },
+          {
+            "elapsed_ms": 1880,
+            "total_ms": 1844.904,
+            "prompt_eval_ms": 417.153,
+            "prompt_eval_count": 792,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 1386.983,
+            "eval_count": 90,
+            "load_ms": 8.04,
+            "stage": "answer"
+          },
+          {
+            "elapsed_ms": 1529,
+            "total_ms": 1517.958,
+            "prompt_eval_ms": 297.56,
+            "prompt_eval_count": 815,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 1203.601,
+            "eval_count": 71,
+            "load_ms": 7.765,
+            "stage": "repair"
+          },
+          {
+            "elapsed_ms": 2138,
+            "total_ms": 2128.515,
+            "prompt_eval_ms": 368.879,
+            "prompt_eval_count": 1736,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 1670.833,
+            "eval_count": 98,
+            "load_ms": 6.489,
+            "stage": "audit"
+          }
+        ],
+        "external_research": {
+          "pages_extracted": 0,
+          "logical_searches": 1,
+          "external_seconds": 3.034,
+          "http_requests_started": 4,
+          "page_slots_reserved": 0
+        },
+        "provider": "ollama-local"
+      },
+      "stage_totals_ms": {
+        "cache_lookup": 4.103,
+        "knowledge_lookup": 53.576,
+        "intent": 0.396,
+        "model_inspection": 21.829,
+        "routing": 2966.243,
+        "local_search": 9.092,
+        "retrieval": 1474.747,
+        "web_search": 1572.818,
+        "generation": 1880.077,
+        "repair": 1529.464,
+        "audit": 2138.51
+      },
+      "delivery_overhead_ms": 52.888,
+      "resources": {
+        "rss_mb": 70.477,
+        "peak_rss_mb": 70.699,
+        "cpu_seconds": 0.234375
+      },
+      "category": "relacion_personajes",
+      "under_response_budget": true,
+      "model_calls": 5,
+      "answer": "Encontré información sobre la obra, pero no pude respaldar bien ese detalle. ¿Recuerdas una escena o puedes compartir un pasaje que nos ayude a comprobarlo?",
+      "source_urls": []
+    },
+    {
+      "case": "fuentes_contradictorias",
+      "turn": 1,
+      "question": "¿En qué año se publicó El túnel? He visto fuentes que dicen 1948 y 1949.",
+      "http_status": 200,
+      "status": "unavailable",
+      "completed_sse": true,
+      "seconds": 18.212,
+      "first_text_seconds": 18.212,
+      "first_useful_seconds": null,
+      "first_progress_seconds": 0.02,
+      "progress_phases": [
+        "search",
+        "writing"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 18204,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 4,
+        "progress_metrics": {
+          "elapsed_ms": 18072.47,
+          "first_phase_emitted_ms": 4.001,
+          "stage_totals_ms": {
+            "cache_lookup": 3.661,
+            "knowledge_lookup": 31.371,
+            "intent": 0.14,
+            "model_inspection": 29.244,
+            "routing": 3186.721,
+            "local_search": 15.235,
+            "retrieval": 1330.572,
+            "web_search": 507.522,
+            "generation": 6940.541,
+            "repair": 6066.166
+          },
+          "stage_timings": [
+            {
+              "stage": "cache_lookup",
+              "started_ms": 0.331,
+              "elapsed_ms": 3.661,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 5.013,
+              "elapsed_ms": 3.047,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 4.322,
+              "elapsed_ms": 13.87,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 4.069,
+              "elapsed_ms": 14.454,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 25.534,
+              "elapsed_ms": 0.102,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 25.656,
+              "elapsed_ms": 29.215,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 25.65,
+              "elapsed_ms": 1664.191,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 1690.06,
+              "elapsed_ms": 0.038,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 1690.117,
+              "elapsed_ms": 0.005,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 1690.113,
+              "elapsed_ms": 1522.53,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 3215.031,
+              "elapsed_ms": 6.545,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 3213.669,
+              "elapsed_ms": 1317.675,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 4532.533,
+              "elapsed_ms": 5.789,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 4531.426,
+              "elapsed_ms": 7.961,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 4540.609,
+              "elapsed_ms": 2.901,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 4539.418,
+              "elapsed_ms": 4.936,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 4545.558,
+              "elapsed_ms": 507.522,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 5060.186,
+              "elapsed_ms": 0.014,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 5060.166,
+              "elapsed_ms": 6940.541,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 12001.382,
+              "elapsed_ms": 0.01,
+              "status": "ok"
+            },
+            {
+              "stage": "repair",
+              "started_ms": 12001.358,
+              "elapsed_ms": 6066.166,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 4.001
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 5060.146
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "elapsed_ms": 1664,
+            "total_ms": 1624.491,
+            "prompt_eval_ms": 348.998,
+            "prompt_eval_count": 1312,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 1160.601,
+            "eval_count": 73,
+            "load_ms": 8.423,
+            "stage": "route"
+          },
+          {
+            "elapsed_ms": 1523,
+            "total_ms": 1512.548,
+            "prompt_eval_ms": 161.83,
+            "prompt_eval_count": 405,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 1253.032,
+            "eval_count": 79,
+            "load_ms": 5.242,
+            "stage": "plan"
+          },
+          {
+            "elapsed_ms": 6941,
+            "total_ms": 6928.619,
+            "prompt_eval_ms": 926.564,
+            "prompt_eval_count": 4512,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 5887.55,
+            "eval_count": 354,
+            "load_ms": 7.912,
+            "stage": "answer"
+          },
+          {
+            "elapsed_ms": 6066,
+            "total_ms": 6055.841,
+            "prompt_eval_ms": 485.105,
+            "prompt_eval_count": 4900,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 5532.031,
+            "eval_count": 337,
+            "load_ms": 7.189,
+            "stage": "repair"
+          }
+        ],
+        "external_research": {
+          "pages_extracted": 0,
+          "logical_searches": 1,
+          "external_seconds": 1.815,
+          "http_requests_started": 2,
+          "page_slots_reserved": 0
+        },
+        "provider": "ollama-local"
+      },
+      "stage_totals_ms": {
+        "cache_lookup": 3.661,
+        "knowledge_lookup": 31.371,
+        "intent": 0.14,
+        "model_inspection": 29.244,
+        "routing": 3186.721,
+        "local_search": 15.235,
+        "retrieval": 1330.572,
+        "web_search": 507.522,
+        "generation": 6940.541,
+        "repair": 6066.166
+      },
+      "delivery_overhead_ms": 139.982,
+      "resources": {
+        "rss_mb": 72.078,
+        "peak_rss_mb": 72.137,
+        "cpu_seconds": 0.203125
+      },
+      "category": "fuentes_contradictorias",
+      "under_response_budget": true,
+      "model_calls": 4,
+      "answer": "Encontré información sobre la obra, pero no pude respaldar bien ese detalle. ¿Recuerdas una escena o puedes compartir un pasaje que nos ayude a comprobarlo?",
+      "source_urls": []
+    },
+    {
+      "case": "cita_exacta",
+      "turn": 1,
+      "question": "¿Qué significa «Muchos años después, frente al pelotón de fusilamiento»?",
+      "http_status": 200,
+      "status": "unavailable",
+      "completed_sse": true,
+      "seconds": 13.267,
+      "first_text_seconds": 13.267,
+      "first_useful_seconds": null,
+      "first_progress_seconds": 0.015,
+      "progress_phases": [
+        "search",
+        "writing"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 13256,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 4,
+        "progress_metrics": {
+          "elapsed_ms": 13126.7,
+          "first_phase_emitted_ms": 3.716,
+          "stage_totals_ms": {
+            "cache_lookup": 3.47,
+            "knowledge_lookup": 43.942,
+            "intent": 0.208,
+            "model_inspection": 29.21,
+            "routing": 3511.187,
+            "local_search": 17.136,
+            "retrieval": 1262.045,
+            "generation": 4232.102,
+            "repair": 4084.798
+          },
+          "stage_timings": [
+            {
+              "stage": "cache_lookup",
+              "started_ms": 0.237,
+              "elapsed_ms": 3.47,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 4.68,
+              "elapsed_ms": 2.53,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 4.029,
+              "elapsed_ms": 20.487,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 3.807,
+              "elapsed_ms": 20.925,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 30.044,
+              "elapsed_ms": 0.129,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 30.184,
+              "elapsed_ms": 29.17,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 30.18,
+              "elapsed_ms": 1466.375,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 1496.697,
+              "elapsed_ms": 0.079,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 1496.795,
+              "elapsed_ms": 0.004,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 1496.791,
+              "elapsed_ms": 2044.812,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 3543.009,
+              "elapsed_ms": 17.136,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 3541.84,
+              "elapsed_ms": 1262.045,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 4804.175,
+              "elapsed_ms": 0.03,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 4804.159,
+              "elapsed_ms": 4232.102,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 9037.225,
+              "elapsed_ms": 0.006,
+              "status": "ok"
+            },
+            {
+              "stage": "repair",
+              "started_ms": 9037.209,
+              "elapsed_ms": 4084.798,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 3.716
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 4804.144
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "elapsed_ms": 1466,
+            "total_ms": 1427.645,
+            "prompt_eval_ms": 349.866,
+            "prompt_eval_count": 1305,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 874.996,
+            "eval_count": 57,
+            "load_ms": 5.822,
+            "stage": "route"
+          },
+          {
+            "elapsed_ms": 2045,
+            "total_ms": 2019.476,
+            "prompt_eval_ms": 158.819,
+            "prompt_eval_count": 398,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 1774.2,
+            "eval_count": 115,
+            "load_ms": 6.419,
+            "stage": "plan"
+          },
+          {
+            "elapsed_ms": 4232,
+            "total_ms": 4200.001,
+            "prompt_eval_ms": 348.724,
+            "prompt_eval_count": 3089,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 3764.659,
+            "eval_count": 230,
+            "load_ms": 5.871,
+            "stage": "answer"
+          },
+          {
+            "elapsed_ms": 4085,
+            "total_ms": 4074.965,
+            "prompt_eval_ms": 420.744,
+            "prompt_eval_count": 3339,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 3629.576,
+            "eval_count": 224,
+            "load_ms": 5.441,
+            "stage": "repair"
+          }
+        ],
+        "external_research": {
+          "pages_extracted": 0,
+          "logical_searches": 0,
+          "external_seconds": 1.243,
+          "http_requests_started": 1,
+          "page_slots_reserved": 0
+        },
+        "provider": "ollama-local"
+      },
+      "stage_totals_ms": {
+        "cache_lookup": 3.47,
+        "knowledge_lookup": 43.942,
+        "intent": 0.208,
+        "model_inspection": 29.21,
+        "routing": 3511.187,
+        "local_search": 17.136,
+        "retrieval": 1262.045,
+        "generation": 4232.102,
+        "repair": 4084.798
+      },
+      "delivery_overhead_ms": 139.844,
+      "resources": {
+        "rss_mb": 70.98,
+        "peak_rss_mb": 72.898,
+        "cpu_seconds": 0.140625
+      },
+      "category": "cita_exacta",
+      "under_response_budget": true,
+      "model_calls": 4,
+      "answer": "Me costó preparar una respuesta fiable esta vez. Podemos intentarlo con una pregunta más concreta.",
+      "source_urls": []
+    },
+    {
+      "case": "materia_general",
+      "turn": 1,
+      "question": "¿Qué características tiene el realismo mágico?",
+      "http_status": 200,
+      "status": "unavailable",
+      "completed_sse": true,
+      "seconds": 24.647,
+      "first_text_seconds": 24.647,
+      "first_useful_seconds": null,
+      "first_progress_seconds": 0.018,
+      "progress_phases": [
+        "search",
+        "writing",
+        "review"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 24638,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 5,
+        "progress_metrics": {
+          "elapsed_ms": 24592.973,
+          "first_phase_emitted_ms": 3.875,
+          "stage_totals_ms": {
+            "cache_lookup": 3.598,
+            "knowledge_lookup": 50.108,
+            "intent": 0.26,
+            "model_inspection": 21.261,
+            "routing": 2864.252,
+            "local_search": 8.023,
+            "retrieval": 1251.35,
+            "generation": 6855.452,
+            "repair": 6823.354,
+            "audit": 6729.626
+          },
+          "stage_timings": [
+            {
+              "stage": "cache_lookup",
+              "started_ms": 0.267,
+              "elapsed_ms": 3.598,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 4.987,
+              "elapsed_ms": 2.446,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 21.605,
+              "elapsed_ms": 2.215,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 21.248,
+              "elapsed_ms": 12.521,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 3.957,
+              "elapsed_ms": 30.128,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 35.167,
+              "elapsed_ms": 2.798,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 57.333,
+              "elapsed_ms": 0.168,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 57.516,
+              "elapsed_ms": 21.227,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 57.511,
+              "elapsed_ms": 1264.731,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 1322.373,
+              "elapsed_ms": 0.092,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 1322.484,
+              "elapsed_ms": 0.004,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 1322.48,
+              "elapsed_ms": 1599.521,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 2923.082,
+              "elapsed_ms": 4.686,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 2922.131,
+              "elapsed_ms": 1245.945,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 4169.239,
+              "elapsed_ms": 3.337,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 4168.12,
+              "elapsed_ms": 5.405,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 4175.296,
+              "elapsed_ms": 0.01,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 4175.203,
+              "elapsed_ms": 6855.452,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 11030.972,
+              "elapsed_ms": 0.01,
+              "status": "ok"
+            },
+            {
+              "stage": "repair",
+              "started_ms": 11030.948,
+              "elapsed_ms": 6823.354,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 17854.983,
+              "elapsed_ms": 0.01,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 17854.944,
+              "elapsed_ms": 6729.114,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 24584.09,
+              "elapsed_ms": 0.512,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 3.875
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 4175.185
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 17854.924
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "elapsed_ms": 1265,
+            "total_ms": 1221.038,
+            "prompt_eval_ms": 344.927,
+            "prompt_eval_count": 1297,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 760.606,
+            "eval_count": 50,
+            "load_ms": 6.887,
+            "stage": "route"
+          },
+          {
+            "elapsed_ms": 1600,
+            "total_ms": 1565.42,
+            "prompt_eval_ms": 149.811,
+            "prompt_eval_count": 390,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 1336.594,
+            "eval_count": 86,
+            "load_ms": 5.926,
+            "stage": "plan"
+          },
+          {
+            "elapsed_ms": 6855,
+            "total_ms": 6826.827,
+            "prompt_eval_ms": 535.389,
+            "prompt_eval_count": 3778,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 6215.339,
+            "eval_count": 378,
+            "load_ms": 5.407,
+            "stage": "answer"
+          },
+          {
+            "elapsed_ms": 6823,
+            "total_ms": 6810.799,
+            "prompt_eval_ms": 542.936,
+            "prompt_eval_count": 4177,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 6230.292,
+            "eval_count": 376,
+            "load_ms": 7.252,
+            "stage": "repair"
+          },
+          {
+            "elapsed_ms": 6729,
+            "total_ms": 6717.533,
+            "prompt_eval_ms": 616.35,
+            "prompt_eval_count": 2623,
+            "model": "qwen3.5:4b",
+            "status": "ok",
+            "eval_ms": 5860.2,
+            "eval_count": 368,
+            "load_ms": 8.296,
+            "stage": "audit"
+          }
+        ],
+        "external_research": {
+          "pages_extracted": 0,
+          "logical_searches": 0,
+          "external_seconds": 1.238,
+          "http_requests_started": 1,
+          "page_slots_reserved": 0
+        },
+        "provider": "ollama-local"
+      },
+      "stage_totals_ms": {
+        "cache_lookup": 3.598,
+        "knowledge_lookup": 50.108,
+        "intent": 0.26,
+        "model_inspection": 21.261,
+        "routing": 2864.252,
+        "local_search": 8.023,
+        "retrieval": 1251.35,
+        "generation": 6855.452,
+        "repair": 6823.354,
+        "audit": 6729.626
+      },
+      "delivery_overhead_ms": 54.06,
+      "resources": {
+        "rss_mb": 72.211,
+        "peak_rss_mb": 72.898,
+        "cpu_seconds": 0.203125
+      },
+      "category": "materia_general",
+      "under_response_budget": true,
+      "model_calls": 5,
+      "answer": "Me costó preparar una respuesta fiable esta vez. Podemos intentarlo con una pregunta más concreta.",
+      "source_urls": []
+    },
+    {
+      "case": "conversacion_multiturno",
+      "turn": 1,
+      "question": "¿Quién escribió El túnel?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 1.128,
+      "first_text_seconds": 1.128,
+      "first_useful_seconds": 1.128,
+      "first_progress_seconds": 0.017,
+      "progress_phases": [
+        "search"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 1113,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 1004.894,
+          "first_phase_emitted_ms": 3.494,
+          "stage_totals_ms": {
+            "cache_lookup": 3.211,
+            "knowledge_lookup": 34.068,
+            "retrieval": 962.343
+          },
+          "stage_timings": [
+            {
+              "stage": "cache_lookup",
+              "started_ms": 0.274,
+              "elapsed_ms": 3.211,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 4.395,
+              "elapsed_ms": 1.753,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 15.696,
+              "elapsed_ms": 2.214,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 15.352,
+              "elapsed_ms": 8.231,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 3.56,
+              "elapsed_ms": 20.174,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 24.143,
+              "elapsed_ms": 1.696,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 27.658,
+              "elapsed_ms": 962.343,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 3.494
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-progressive-research"
+      },
+      "stage_totals_ms": {
+        "cache_lookup": 3.211,
+        "knowledge_lookup": 34.068,
+        "retrieval": 962.343
+      },
+      "delivery_overhead_ms": 122.982,
+      "resources": {
+        "rss_mb": 72.664,
+        "peak_rss_mb": 72.898,
+        "cpu_seconds": 0.09375
+      },
+      "category": "multiturno_memoria",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "**El túnel** es una obra de **Ernesto Sabato**.\n\nFuente: https://openlibrary.org/works/OL617847W",
+      "source_urls": [
+        "https://openlibrary.org/works/OL617847W"
+      ]
+    },
+    {
+      "case": "conversacion_multiturno",
+      "turn": 2,
+      "question": "¿Y quién es su protagonista?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 2.033,
+      "first_text_seconds": 2.033,
+      "first_useful_seconds": 2.033,
+      "first_progress_seconds": 0.017,
+      "progress_phases": [
+        "search",
+        "review"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 2024,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 1901.756,
+          "first_phase_emitted_ms": 4.791,
+          "stage_totals_ms": {
+            "cache_lookup": 4.553,
+            "knowledge_lookup": 89.765,
+            "audit": 0.834,
+            "retrieval": 1818.835
+          },
+          "stage_timings": [
+            {
+              "stage": "cache_lookup",
+              "started_ms": 0.228,
+              "elapsed_ms": 4.553,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 6.316,
+              "elapsed_ms": 7.484,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 34.73,
+              "elapsed_ms": 7.717,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 34.454,
+              "elapsed_ms": 17.406,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 4.856,
+              "elapsed_ms": 49.733,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 55.254,
+              "elapsed_ms": 7.425,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 1894.515,
+              "elapsed_ms": 0.498,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 76.213,
+              "elapsed_ms": 1818.835,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 1895.298,
+              "elapsed_ms": 0.336,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 4.791
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 1894.497
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-progressive-research"
+      },
+      "stage_totals_ms": {
+        "cache_lookup": 4.553,
+        "knowledge_lookup": 89.765,
+        "audit": 0.834,
+        "retrieval": 1818.835
+      },
+      "delivery_overhead_ms": 131.37,
+      "resources": {
+        "rss_mb": 73.754,
+        "peak_rss_mb": 74.938,
+        "cpu_seconds": 0.25
+      },
+      "category": "multiturno_memoria",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "Encontré estas referencias relacionadas con tu consulta:\n\n**El túnel (novela)** [1]\n\nPasaje recuperado: «El Narrador y protagonista de la historia.»\n\nSon pasajes atribuidos a sus fuentes, no fichas bibliográficas ni una verificación independiente de todos sus datos. No puedo confirmar con ellos todas las partes de tu consulta.\n\n[1] El túnel (novela)\nhttps://es.wikipedia.org/wiki/El_t%C3%BAnel_(novela)",
+      "source_urls": [
+        "https://es.wikipedia.org/wiki/El_t%C3%BAnel_(novela)"
+      ]
+    }
+  ],
+  "source_sha256": "84cd6a6e30ee41edb5cb53a36f8717b38a916e07f1a2c4a49b96c8feb48a53e0",
+  "runner_sha256": "fa1955691a757678bcd326237bd8cbfe65c0b32a7120e96538f277a67028e94e",
+  "matrix_sha256": "3e9d7becc0bc653b4d434385213acd00a4985b82ba27a4288c18659451f94786",
+  "metrics": {
+    "turns": 16,
+    "p50_seconds": 2.3415,
+    "mean_seconds": 7.664,
+    "p95_seconds": 24.647,
+    "max_seconds": 24.647,
+    "under_response_budget": 16,
+    "statuses": {
+      "answered": 9,
+      "unavailable": 5,
+      "clarification": 2
+    },
+    "under_5_seconds": 10,
+    "under_10_seconds": 10,
+    "under_30_seconds": 16,
+    "answered_is_not_factual_certification": true
+  },
+  "source_files_changed_during_run": false
+}

@@ -1,0 +1,206 @@
+{
+  "authenticBrowserCapture": true,
+  "externalNetworkTested": false,
+  "origin": "http://127.0.0.1:8002",
+  "frames": [
+    {
+      "file": "frame-000.png",
+      "seconds": 2.533318
+    },
+    {
+      "file": "frame-001.png",
+      "seconds": 4.2153976
+    },
+    {
+      "file": "frame-002.png",
+      "seconds": 4.6825613
+    },
+    {
+      "file": "frame-003.png",
+      "seconds": 6.688826199999999
+    },
+    {
+      "file": "frame-004.png",
+      "seconds": 8.6875504
+    },
+    {
+      "file": "frame-005.png",
+      "seconds": 10.7300295
+    },
+    {
+      "file": "frame-006.png",
+      "seconds": 12.896370500000002
+    },
+    {
+      "file": "frame-007.png",
+      "seconds": 16.28061
+    },
+    {
+      "file": "frame-008.png",
+      "seconds": 19.1051832
+    },
+    {
+      "file": "frame-009.png",
+      "seconds": 23.248495
+    },
+    {
+      "file": "frame-010.png",
+      "seconds": 28.307021799999998
+    },
+    {
+      "file": "frame-011.png",
+      "seconds": 32.3769066
+    },
+    {
+      "file": "frame-012.png",
+      "seconds": 36.455961900000005
+    },
+    {
+      "file": "frame-013.png",
+      "seconds": 40.489524100000004
+    },
+    {
+      "file": "frame-014.png",
+      "seconds": 44.56602719999999
+    },
+    {
+      "file": "frame-015.png",
+      "seconds": 48.635991499999996
+    },
+    {
+      "file": "frame-016.png",
+      "seconds": 52.650866
+    },
+    {
+      "file": "frame-017.png",
+      "seconds": 56.6896931
+    },
+    {
+      "file": "frame-018.png",
+      "seconds": 60.775532500000004
+    },
+    {
+      "file": "frame-019.png",
+      "seconds": 65.8160766
+    },
+    {
+      "file": "frame-020.png",
+      "seconds": 70.8808415
+    },
+    {
+      "file": "frame-021.png",
+      "seconds": 75.9380428
+    },
+    {
+      "file": "frame-022.png",
+      "seconds": 80.0204465
+    },
+    {
+      "file": "frame-023.png",
+      "seconds": 84.05963740000001
+    },
+    {
+      "file": "frame-024.png",
+      "seconds": 88.10478980000002
+    },
+    {
+      "file": "frame-025.png",
+      "seconds": 92.1702255
+    },
+    {
+      "file": "frame-026.png",
+      "seconds": 96.2216619
+    },
+    {
+      "file": "frame-027.png",
+      "seconds": 100.2822483
+    },
+    {
+      "file": "frame-028.png",
+      "seconds": 104.32483420000001
+    },
+    {
+      "file": "frame-029.png",
+      "seconds": 107.09657030000001
+    },
+    {
+      "file": "frame-030.png",
+      "seconds": 113.1268867
+    },
+    {
+      "file": "frame-031.png",
+      "seconds": 118.19577310000001
+    },
+    {
+      "file": "frame-032.png",
+      "seconds": 122.22385150000001
+    },
+    {
+      "file": "frame-033.png",
+      "seconds": 126.3014161
+    },
+    {
+      "file": "frame-034.png",
+      "seconds": 130.3813421
+    },
+    {
+      "file": "frame-035.png",
+      "seconds": 134.39322959999998
+    },
+    {
+      "file": "frame-036.png",
+      "seconds": 138.472679
+    }
+  ],
+  "conversation": [
+    {
+      "question": "Recuerdo un libro donde un niño vive en un planeta pequeño y cuida una rosa",
+      "answer": "Por tus pistas, podrías estar buscando El principito, de Antoine de Saint-Exupéry. ¿Te suena?\nPARA SEGUIR LEYENDO\nSin portada\nEl principito\nAntoine de Saint-Exupéry\nBuscar en Amazon\nBuscar en Buscalibre",
+      "completed": true,
+      "seconds": 1.5353108
+    },
+    {
+      "question": "¿Qué pistas te hicieron pensar en ese libro?",
+      "answer": "Coincidencias con tu recuerdo\n\nEl principito — Antoine de Saint-Exupéry: Un niño procede de un planeta diminuto, cuida una rosa y viaja por otros mundos.\n\nSi quieres profundizar, puedes consultar esta lectura complementaria.\n\nPARA SEGUIR LEYENDO\nSin portada\nEl principito\nAntoine de Saint-Exupéry\nBuscar en Amazon\nBuscar en Buscalibre",
+      "completed": true,
+      "seconds": 0.5161674000000005
+    },
+    {
+      "question": "¿Qué relación hay entre el principito y el zorro?",
+      "answer": "El zorro: Amigo que el principito conoce en la Tierra.\n\nSi quieres profundizar, puedes consultar esta lectura complementaria.\n\nPARA SEGUIR LEYENDO\nSin portada\nEl principito\nAntoine de Saint-Exupéry\nBuscar en Amazon\nBuscar en Buscalibre",
+      "completed": true,
+      "seconds": 0.517032099999998
+    },
+    {
+      "question": "Recomiéndame dos novelas de fantasía en español",
+      "answer": "¡Claro!\n\n\nHarry Potter y el misterio del príncipe — J.K. Rowling.\n\n\nChoque de Reyes (Canción de Hielo y Fuego 2) — George R.R. Martin.\n\n¿Cuál te interesa más?\nPARA SEGUIR LEYENDO\nHarry Potter y el misterio del príncipe\nJ.K. Rowling\nHarry descubre un viejo libro de pociones perteneciente al misterioso 'Príncipe Mestizo' y junto a Dumbledore desentraña los secretos del pasado de Voldemort.\nBuscar en Google Books\nBuscar en Amazon\nBuscar en Buscalibre\nChoque de Reyes (Canción de Hielo y Fuego 2)\nGeorge R.R. Martin\nLa Guerra de los Cinco Reyes desgarra los Siete Reinos, mientras un cometa rojo cruza los cielos anunciando sangre y fuego.\nBuscar en Google Books\nBuscar en Amazon\nBuscar en Buscalibre",
+      "completed": true,
+      "seconds": 0.519289299999997
+    },
+    {
+      "question": "Ya leí el primero y no me interesa el segundo",
+      "answer": "Lo tendré en cuenta: excluiré esas lecturas de las próximas recomendaciones de esta conversación.",
+      "completed": true,
+      "seconds": 0.5149139999999974
+    },
+    {
+      "question": "Dame otros dos libros de fantasía en español",
+      "answer": "¡Claro!\n\n\nEl Camino de los Reyes (El Archivo de las Tormentas 1) — Brandon Sanderson.\n\n\nEl Hobbit — J.R.R. Tolkien.\n\n¿Cuál te interesa más?\nPARA SEGUIR LEYENDO\nEl Camino de los Reyes (El Archivo de las Tormentas 1)\nBrandon Sanderson\nEn el azotado mundo de Roshar, Kaladin un esclavo quebrado, Dalinar un noble atormentado por visiones y Shallan una erudita buscan salvar el mundo del regreso de los Desoladores.\nBuscar en Google Books\nBuscar en Amazon\nBuscar en Buscalibre\nEl Hobbit\nJ.R.R. Tolkien\nBilbo Bolsón es un hobbit pacífico que es reclutado por el mago Gandalf y trece enanos para recuperar el tesoro custodiado por el dragón Smaug.\nBuscar en Google Books\nBuscar en Amazon\nBuscar en Buscalibre",
+      "completed": true,
+      "seconds": 0.5183541000000034
+    },
+    {
+      "question": "Cuéntame más del segundo",
+      "answer": "No pude completar esta consulta dentro del tiempo disponible. Prueba con una pregunta más concreta sobre la obra.",
+      "completed": true,
+      "seconds": 35.2072215
+    },
+    {
+      "question": "¿Dónde puedo encontrarlo?",
+      "answer": "El principito — Antoine de Saint-Exupéry.\n\nPuedes usar los enlaces de la tarjeta para buscarlo; no puedo confirmar disponibilidad ni precio.\nPARA SEGUIR LEYENDO\nSin portada\nEl principito\nAntoine de Saint-Exupéry\nBuscar en Amazon\nBuscar en Buscalibre",
+      "completed": true,
+      "seconds": 0.516046700000004
+    }
+  ],
+  "errors": []
+}

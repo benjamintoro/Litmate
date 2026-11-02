@@ -1,0 +1,2 @@
+# Alias compatible con las guías existentes; una única lista de dependencias.
+-r requirements.txt

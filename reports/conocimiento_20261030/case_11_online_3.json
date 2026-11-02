@@ -1,0 +1,200 @@
+{
+  "case": {
+    "case": 11,
+    "title": "Ekomo",
+    "author": "Mar\u00eda Nsu\u00e9 Ang\u00fce",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": true
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de Ekomo de Mar\u00eda Nsu\u00e9 Ang\u00fce",
+      "answer": "**Ekomo**\n\nActualmente no tengo la informaci\u00f3n de este libro :( Si me indicas el autor o la edici\u00f3n, puedo intentar identificarlo mejor.",
+      "status": "unavailable",
+      "books": [],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 5041,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "work_type": "unknown",
+        "narrative_failure": "insufficient_content",
+        "progress_metrics": {
+          "elapsed_ms": 5065.924,
+          "first_phase_emitted_ms": 18.064,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 7.111,
+            "cache_lookup": 0.666,
+            "knowledge_lookup": 532.9,
+            "retrieval": 1857.655,
+            "web_search": 1682.815,
+            "finalization": 24.966
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 4.184,
+              "elapsed_ms": 7.111,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 17.389,
+              "elapsed_ms": 0.666,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 30.247,
+              "elapsed_ms": 301.898,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 102.107,
+              "elapsed_ms": 36.277,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 188.454,
+              "elapsed_ms": 142.717,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 253.715,
+              "elapsed_ms": 49.552,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 395.035,
+              "elapsed_ms": 2.456,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 404.214,
+              "elapsed_ms": 1857.655,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 2263.176,
+              "elapsed_ms": 318.663,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 2581.987,
+              "elapsed_ms": 403.284,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 2986.21,
+              "elapsed_ms": 960.868,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 5040.948,
+              "elapsed_ms": 24.966,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 18.064
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 5.0738,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.0327,
+        "verified_ready_seconds": 5.0348,
+        "first_verified_text_seconds": 5.0738
+      }
+    }
+  ],
+  "seconds": 7.249,
+  "research_profile": "cold_after",
+  "public_research_trace": [
+    {
+      "stage": "retrieved_public_evidence",
+      "sources": [
+        {
+          "id": 1,
+          "title": "Ekomo",
+          "author": "Mar\u00eda Nsue Ang\u00fce",
+          "description": "Temas del cat\u00e1logo:",
+          "source": "Open Library",
+          "year": "1985",
+          "book_id": "/works/OL4247888W",
+          "kind": "book",
+          "url": "https://openlibrary.org/works/OL4247888W",
+          "locator": "",
+          "read_mode": "ficha bibliogr\u00e1fica; materias de cat\u00e1logo, no texto de la ob",
+          "retrieved_at": "",
+          "image_url": "",
+          "categories": []
+        }
+      ]
+    }
+  ],
+  "coverage_before": {
+    "works": 14475,
+    "works_with_explicit_plot": 17,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 20,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 34,
+    "linked_sources": 14650,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14476,
+    "works_with_explicit_plot": 17,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 20,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 34,
+    "linked_sources": 14651,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "persistent_exact_cache",
+  "google_books_enabled": false,
+  "factual_review_pending": true
+}

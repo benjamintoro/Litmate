@@ -1,0 +1,126 @@
+{
+  "scope": "isolated real HTTP/SSE pilot, synthetic account",
+  "public_server_changed": false,
+  "checks": {
+    "chat_page": true,
+    "guest_first_query": true,
+    "guest_second_rejected": true,
+    "register_to_plans": true,
+    "free_to_chat_without_payment": true,
+    "real_recommendations": true,
+    "model_limit_15_and_one_used": true,
+    "same_session_plan_and_quota_after_restart": true,
+    "followup_after_restart": true,
+    "login_to_plans_after_restart": true,
+    "logout_login_does_not_reset_quota": true
+  },
+  "conversation": [
+    {
+      "question": "Hola",
+      "http_status": 200,
+      "answer": "\u00a1Hola! Qu\u00e9 gusto leerte. Soy LitMate, tu compa\u00f1era de lecturas. Podemos charlar, descubrir tu pr\u00f3ximo libro o comentar esa historia que te dej\u00f3 pensando. \u00bfC\u00f3mo va tu d\u00eda?",
+      "status": "direct",
+      "books": [],
+      "seconds": 0.06470550000085495,
+      "sse_done": true,
+      "timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": null,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "Recomi\u00e9ndame dos novelas de fantas\u00eda en espa\u00f1ol",
+      "http_status": 200,
+      "answer": "\u00a1Claro!\n\n1. **Harry Potter y el misterio del pr\u00edncipe** \u2014 J.K. Rowling.\n\n2. **Choque de Reyes (Canci\u00f3n de Hielo y Fuego 2)** \u2014 George R.R. Martin.\n\n\u00bfCu\u00e1l te interesa m\u00e1s?",
+      "status": "answered",
+      "books": [
+        {
+          "id": "db_30013",
+          "title": "Harry Potter y el misterio del pr\u00edncipe",
+          "author": "J.K. Rowling",
+          "synopsis": "Harry descubre un viejo libro de pociones perteneciente al misterioso 'Pr\u00edncipe Mestizo' y junto a Dumbledore desentra\u00f1a los secretos del pasado de Voldemort.",
+          "image_url": "https://covers.openlibrary.org/b/id/9393000-L.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=Harry+Potter+y+el+misterio+del+pr%C3%ADncipe+J.K.+Rowling"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Harry+Potter+y+el+misterio+del+pr%C3%ADncipe+J.K.+Rowling&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Harry+Potter+y+el+misterio+del+pr%C3%ADncipe+J.K.+Rowling"
+            }
+          ]
+        },
+        {
+          "id": "db_30019",
+          "title": "Choque de Reyes (Canci\u00f3n de Hielo y Fuego 2)",
+          "author": "George R.R. Martin",
+          "synopsis": "La Guerra de los Cinco Reyes desgarra los Siete Reinos, mientras un cometa rojo cruza los cielos anunciando sangre y fuego.",
+          "image_url": "https://covers.openlibrary.org/b/id/8231751-L.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin"
+            }
+          ]
+        }
+      ],
+      "seconds": 0.3419147999957204,
+      "sse_done": true,
+      "timing": {
+        "first_progress_seconds": 0.1138,
+        "verified_ready_seconds": 0.2961,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "Cu\u00e9ntame m\u00e1s del segundo",
+      "http_status": 200,
+      "answer": "**Choque de Reyes (Canci\u00f3n de Hielo y Fuego 2) \u2014 George R.R. Martin**: La Guerra de los Cinco Reyes desgarra los Siete Reinos, mientras un cometa rojo cruza los cielos anunciando sangre y fuego.",
+      "status": "answered",
+      "books": [
+        {
+          "id": "db_30019",
+          "title": "Choque de Reyes (Canci\u00f3n de Hielo y Fuego 2)",
+          "author": "George R.R. Martin",
+          "synopsis": "La Guerra de los Cinco Reyes desgarra los Siete Reinos, mientras un cometa rojo cruza los cielos anunciando sangre y fuego.",
+          "image_url": "https://covers.openlibrary.org/b/id/8231751-L.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin"
+            }
+          ]
+        }
+      ],
+      "seconds": 0.3260993000003509,
+      "sse_done": true,
+      "timing": {
+        "first_progress_seconds": 0.1187,
+        "verified_ready_seconds": 0.2833,
+        "first_verified_text_seconds": null
+      }
+    }
+  ]
+}

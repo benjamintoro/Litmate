@@ -1,0 +1,10 @@
+{
+  "ports": {
+    "8003": true,
+    "8006": false
+  },
+  "public_auth_status": 401,
+  "only_owned_stage_stopped": true,
+  "public_waitress_stopped": false,
+  "funnel_stopped": false
+}

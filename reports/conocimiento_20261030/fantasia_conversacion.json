@@ -1,0 +1,2747 @@
+[
+  {
+    "question": "Recomi\u00e9ndame cinco novelas de fantas\u00eda.",
+    "answer": "\u00a1Claro!\n\n1. **Harry Potter y el misterio del pr\u00edncipe** \u2014 J.K. Rowling.\n\n2. **Choque de Reyes (Canci\u00f3n de Hielo y Fuego 2)** \u2014 George R.R. Martin.\n\n3. **El Camino de los Reyes (El Archivo de las Tormentas 1)** \u2014 Brandon Sanderson.\n\n4. **El Hobbit** \u2014 J.R.R. Tolkien.\n\n5. **Las Cr\u00f3nicas de Narnia: El caballo y su muchacho** \u2014 C.S. Lewis.\n\n\u00bfCu\u00e1l te interesa m\u00e1s?",
+    "status": "answered",
+    "books": [
+      {
+        "id": "db_30013",
+        "title": "Harry Potter y el misterio del pr\u00edncipe",
+        "author": "J.K. Rowling",
+        "synopsis": "Harry descubre un viejo libro de pociones perteneciente al misterioso 'Pr\u00edncipe Mestizo' y junto a Dumbledore desentra\u00f1a los secretos del pasado de Voldemort.",
+        "image_url": "https://covers.openlibrary.org/b/id/9393000-L.jpg",
+        "links": [
+          {
+            "label": "Google Books",
+            "url": "https://books.google.com/books?q=Harry+Potter+y+el+misterio+del+pr%C3%ADncipe+J.K.+Rowling"
+          },
+          {
+            "label": "Amazon",
+            "url": "https://www.amazon.com/s?k=Harry+Potter+y+el+misterio+del+pr%C3%ADncipe+J.K.+Rowling&i=stripbooks"
+          },
+          {
+            "label": "Buscalibre",
+            "url": "https://www.buscalibre.cl/libros/search?q=Harry+Potter+y+el+misterio+del+pr%C3%ADncipe+J.K.+Rowling"
+          }
+        ]
+      },
+      {
+        "id": "db_30019",
+        "title": "Choque de Reyes (Canci\u00f3n de Hielo y Fuego 2)",
+        "author": "George R.R. Martin",
+        "synopsis": "La Guerra de los Cinco Reyes desgarra los Siete Reinos, mientras un cometa rojo cruza los cielos anunciando sangre y fuego.",
+        "image_url": "https://covers.openlibrary.org/b/id/8231751-L.jpg",
+        "links": [
+          {
+            "label": "Google Books",
+            "url": "https://books.google.com/books?q=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin"
+          },
+          {
+            "label": "Amazon",
+            "url": "https://www.amazon.com/s?k=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin&i=stripbooks"
+          },
+          {
+            "label": "Buscalibre",
+            "url": "https://www.buscalibre.cl/libros/search?q=Choque+de+Reyes+%28Canci%C3%B3n+de+Hielo+y+Fuego+2%29+George+R.R.+Martin"
+          }
+        ]
+      },
+      {
+        "id": "db_30022",
+        "title": "El Camino de los Reyes (El Archivo de las Tormentas 1)",
+        "author": "Brandon Sanderson",
+        "synopsis": "En el azotado mundo de Roshar, Kaladin un esclavo quebrado, Dalinar un noble atormentado por visiones y Shallan una erudita buscan salvar el mundo del regreso de los Desoladores.",
+        "image_url": "https://covers.openlibrary.org/b/id/14658316-L.jpg",
+        "links": [
+          {
+            "label": "Google Books",
+            "url": "https://books.google.com/books?q=El+Camino+de+los+Reyes+%28El+Archivo+de+las+Tormentas+1%29+Brandon+Sanderson"
+          },
+          {
+            "label": "Amazon",
+            "url": "https://www.amazon.com/s?k=El+Camino+de+los+Reyes+%28El+Archivo+de+las+Tormentas+1%29+Brandon+Sanderson&i=stripbooks"
+          },
+          {
+            "label": "Buscalibre",
+            "url": "https://www.buscalibre.cl/libros/search?q=El+Camino+de+los+Reyes+%28El+Archivo+de+las+Tormentas+1%29+Brandon+Sanderson"
+          }
+        ]
+      },
+      {
+        "id": "db_30015",
+        "title": "El Hobbit",
+        "author": "J.R.R. Tolkien",
+        "synopsis": "Bilbo Bols\u00f3n es un hobbit pac\u00edfico que es reclutado por el mago Gandalf y trece enanos para recuperar el tesoro custodiado por el drag\u00f3n Smaug.",
+        "image_url": "https://covers.openlibrary.org/b/id/10472492-L.jpg",
+        "links": [
+          {
+            "label": "Google Books",
+            "url": "https://books.google.com/books?q=El+Hobbit+J.R.R.+Tolkien"
+          },
+          {
+            "label": "Amazon",
+            "url": "https://www.amazon.com/s?k=El+Hobbit+J.R.R.+Tolkien&i=stripbooks"
+          },
+          {
+            "label": "Buscalibre",
+            "url": "https://www.buscalibre.cl/libros/search?q=El+Hobbit+J.R.R.+Tolkien"
+          }
+        ]
+      },
+      {
+        "id": "db_30005",
+        "title": "Las Cr\u00f3nicas de Narnia: El caballo y su muchacho",
+        "author": "C.S. Lewis",
+        "synopsis": "Un joven esclavo llamado Shasta y un caballo parlante llamado Bree planean su audaz escape de las tierras del sur de Calormen hacia la libertad y la magia de Narnia.",
+        "image_url": "https://covers.openlibrary.org/b/id/9184792-L.jpg",
+        "links": [
+          {
+            "label": "Google Books",
+            "url": "https://books.google.com/books?q=Las+Cr%C3%B3nicas+de+Narnia%3A+El+caballo+y+su+muchacho+C.S.+Lewis"
+          },
+          {
+            "label": "Amazon",
+            "url": "https://www.amazon.com/s?k=Las+Cr%C3%B3nicas+de+Narnia%3A+El+caballo+y+su+muchacho+C.S.+Lewis&i=stripbooks"
+          },
+          {
+            "label": "Buscalibre",
+            "url": "https://www.buscalibre.cl/libros/search?q=Las+Cr%C3%B3nicas+de+Narnia%3A+El+caballo+y+su+muchacho+C.S.+Lewis"
+          }
+        ]
+      }
+    ],
+    "sources": [],
+    "diagnostics": {
+      "elapsed_ms": 505,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 0,
+      "progress_metrics": {
+        "elapsed_ms": 510.953,
+        "first_phase_emitted_ms": 41.397,
+        "model_calls_started": 0,
+        "stage_totals_ms": {
+          "conversation": 17.589,
+          "cache_lookup": 0.593,
+          "audit": 6.315,
+          "finalization": 6.123
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 8.48,
+            "elapsed_ms": 17.589,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 40.792,
+            "elapsed_ms": 0.593,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 437.107,
+            "elapsed_ms": 6.315,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 504.825,
+            "elapsed_ms": 6.123,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 41.397
+          },
+          {
+            "stage": "review",
+            "elapsed_ms": 437.088
+          }
+        ]
+      },
+      "stage_timings": [],
+      "provider": "verified-genre-catalogue"
+    },
+    "seconds": 0.5217,
+    "sse_done": true,
+    "http_timing": {
+      "first_progress_seconds": 0.0433,
+      "verified_ready_seconds": 0.4975,
+      "first_verified_text_seconds": 0.5217
+    },
+    "duckduckgo_paused_control": false,
+    "narrative_observations": [],
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  },
+  {
+    "question": "\u00bfDe qu\u00e9 trata el tercero?",
+    "answer": "Hay un problema temporal al consultar las fuentes de este libro. Puedes volver a intentarlo en unos instantes.",
+    "status": "unavailable",
+    "books": [],
+    "sources": [],
+    "diagnostics": {
+      "elapsed_ms": 8082,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 0,
+      "work_type": "unknown",
+      "narrative_failure": "retrieval_unavailable",
+      "progress_metrics": {
+        "elapsed_ms": 8102.233,
+        "first_phase_emitted_ms": 25.827,
+        "model_calls_started": 0,
+        "stage_totals_ms": {
+          "conversation": 13.149,
+          "cache_lookup": 0.718,
+          "knowledge_lookup": 789.338,
+          "retrieval": 1893.566,
+          "web_search": 5419.605,
+          "extraction": 1303.784,
+          "finalization": 20.308
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 4.188,
+            "elapsed_ms": 13.149,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 25.097,
+            "elapsed_ms": 0.718,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 56.944,
+            "elapsed_ms": 411.579,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 144.899,
+            "elapsed_ms": 49.312,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 271.599,
+            "elapsed_ms": 189.414,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 341.302,
+            "elapsed_ms": 70.34,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 540.578,
+            "elapsed_ms": 68.693,
+            "status": "ok"
+          },
+          {
+            "stage": "retrieval",
+            "started_ms": 708.963,
+            "elapsed_ms": 1893.566,
+            "status": "ok"
+          },
+          {
+            "stage": "web_search",
+            "started_ms": 2617.725,
+            "elapsed_ms": 689.432,
+            "status": "ok"
+          },
+          {
+            "stage": "web_search",
+            "started_ms": 3307.228,
+            "elapsed_ms": 1340.443,
+            "status": "ok"
+          },
+          {
+            "stage": "web_search",
+            "started_ms": 4657.655,
+            "elapsed_ms": 3389.73,
+            "status": "ok"
+          },
+          {
+            "stage": "extraction",
+            "started_ms": 6743.446,
+            "elapsed_ms": 1303.784,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 8081.919,
+            "elapsed_ms": 20.308,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 25.827
+          }
+        ]
+      },
+      "stage_timings": [],
+      "provider": "verified-narrative-engine"
+    },
+    "seconds": 8.1114,
+    "sse_done": true,
+    "http_timing": {
+      "first_progress_seconds": 0.035,
+      "verified_ready_seconds": 8.0753,
+      "first_verified_text_seconds": 8.1114
+    },
+    "duckduckgo_paused_control": false,
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": null
+      },
+      {
+        "stage": "wikipedia_adapter",
+        "status": "empty",
+        "sources": [],
+        "research": {
+          "logical_searches": 0,
+          "page_slots_reserved": 0,
+          "page_slots_limit": 3,
+          "external_seconds": 0.0,
+          "events": [
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            }
+          ],
+          "http_requests_started": 4,
+          "pages_extracted": 0
+        }
+      },
+      {
+        "stage": "wikipedia_adapter",
+        "status": "empty",
+        "sources": [],
+        "research": {
+          "logical_searches": 1,
+          "page_slots_reserved": 0,
+          "page_slots_limit": 3,
+          "external_seconds": 0.0,
+          "events": [
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "SearXNG",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "SearXNG",
+              "status": "ok",
+              "count": 1
+            },
+            {
+              "stage": "http_request",
+              "provider": "SearXNG",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "SearXNG",
+              "status": "ok",
+              "count": 2
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            }
+          ],
+          "http_requests_started": 8,
+          "pages_extracted": 0
+        }
+      },
+      {
+        "stage": "retrieval",
+        "sources": [
+          {
+            "id": 1,
+            "title": "El Camino de los Reyes (El Archivo de las Tormentas 1)",
+            "author": "Brandon Sanderson",
+            "description": "En el azotado mundo de Roshar, Kaladin un esclavo quebrado, Dalinar un noble atormentado por visiones y Shallan una erudita buscan salvar el mundo del regreso de los Desoladores.",
+            "source": "Cat\u00e1logo LitMate",
+            "year": "2010",
+            "book_id": "db_30022",
+            "kind": "book",
+            "url": "",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "",
+            "synopsis": "En el azotado mundo de Roshar, Kaladin un esclavo quebrado, Dalinar un noble atormentado por visiones y Shallan una erudita buscan salvar el mundo del regreso de los Desoladores.",
+            "image_url": "https://covers.openlibrary.org/b/id/14658316-L.jpg",
+            "language": "es",
+            "categories": [
+              "Fantas\u00eda",
+              "Fantas\u00eda"
+            ],
+            "preview_url": "https://books.google.com/books?q=El+Camino+de+los+Reyes+%28El+Archivo+de+las+Tormentas+1%29+Brandon+Sanderson"
+          }
+        ]
+      },
+      {
+        "request": {
+          "task": "summary",
+          "title": "El Camino de los Reyes (El Archivo de las Tormentas 1)",
+          "targets": [
+            {
+              "work_id": "litmate:df80ce9aa6e9c8814a1045a6",
+              "title": "El Camino de los Reyes (El Archivo de las Tormentas 1)",
+              "author": "Brandon Sanderson",
+              "confirmed_aliases": [],
+              "isbns": [],
+              "source": "Cat\u00e1logo LitMate",
+              "url": ""
+            }
+          ],
+          "author_hint": "",
+          "format": "",
+          "ambiguous": false
+        },
+        "diagnostics": {
+          "narrative_failure": "retrieval_unavailable",
+          "retrieval_failures": [
+            {
+              "provider": "web",
+              "status": "partial"
+            }
+          ],
+          "model_calls": 0,
+          "work_type": "unknown",
+          "narrative_trace": [
+            {
+              "stage": "bibliographic",
+              "sources": 21,
+              "bound": 1,
+              "content": 1,
+              "providers": [
+                "Cat\u00e1logo LitMate",
+                "Project Gutenberg",
+                "Wikipedia"
+              ]
+            },
+            {
+              "stage": "content_discovery",
+              "sources": 21,
+              "bound": 1,
+              "content": 1,
+              "providers": [
+                "Cat\u00e1logo LitMate",
+                "Project Gutenberg",
+                "Wikipedia"
+              ]
+            },
+            {
+              "stage": "web",
+              "sources": 22,
+              "bound": 1,
+              "content": 1,
+              "providers": [
+                "Cat\u00e1logo LitMate",
+                "Project Gutenberg",
+                "SearXNG (www.readinglength.com)",
+                "Wikipedia"
+              ]
+            }
+          ],
+          "progress_metrics": {
+            "stage_timings": [
+              {
+                "stage": "conversation",
+                "started_ms": 4.188,
+                "elapsed_ms": 13.149,
+                "status": "ok"
+              },
+              {
+                "stage": "cache_lookup",
+                "started_ms": 25.097,
+                "elapsed_ms": 0.718,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 56.944,
+                "elapsed_ms": 411.579,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 144.899,
+                "elapsed_ms": 49.312,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 271.599,
+                "elapsed_ms": 189.414,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 341.302,
+                "elapsed_ms": 70.34,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 540.578,
+                "elapsed_ms": 68.693,
+                "status": "ok"
+              },
+              {
+                "stage": "retrieval",
+                "started_ms": 708.963,
+                "elapsed_ms": 1893.566,
+                "status": "ok"
+              },
+              {
+                "stage": "web_search",
+                "started_ms": 2617.725,
+                "elapsed_ms": 689.432,
+                "status": "ok"
+              },
+              {
+                "stage": "web_search",
+                "started_ms": 3307.228,
+                "elapsed_ms": 1340.443,
+                "status": "ok"
+              },
+              {
+                "stage": "web_search",
+                "started_ms": 4657.655,
+                "elapsed_ms": 3389.73,
+                "status": "ok"
+              },
+              {
+                "stage": "extraction",
+                "started_ms": 6743.446,
+                "elapsed_ms": 1303.784,
+                "status": "ok"
+              }
+            ],
+            "stage_totals_ms": {
+              "conversation": 13.149,
+              "cache_lookup": 0.718,
+              "knowledge_lookup": 789.338,
+              "retrieval": 1893.566,
+              "web_search": 5419.605,
+              "extraction": 1303.784
+            },
+            "model_calls_started": 0,
+            "progress_events": [
+              {
+                "stage": "search",
+                "elapsed_ms": 25.827
+              }
+            ],
+            "elapsed_ms": 8066.972,
+            "first_phase_emitted_ms": 25.827
+          },
+          "language_presentation": {
+            "target": "es",
+            "original_text": "Hay un problema temporal al consultar las fuentes de este libro. Puedes volver a intentarlo en unos instantes.",
+            "translated_fields": 0,
+            "cache_hits": 0,
+            "untranslated_fields": [],
+            "card_excerpt_from_audited_response": false,
+            "audit_applies_to_original": true,
+            "cards": []
+          },
+          "stage_timings": [],
+          "elapsed_ms": 8067,
+          "chat_budget_seconds": 36.0
+        },
+        "sources": []
+      }
+    ],
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  },
+  {
+    "question": "\u00bfQui\u00e9n es su protagonista?",
+    "answer": "No pude confirmar ese dato sobre los personajes de **El Camino de los Reyes (El Archivo de las Tormentas 1)** con las fuentes disponibles. \u00bfTienes alg\u00fan pasaje o detalle que podamos comprobar?",
+    "status": "unavailable",
+    "books": [],
+    "sources": [],
+    "diagnostics": {
+      "elapsed_ms": 4288,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 0,
+      "progress_metrics": {
+        "elapsed_ms": 4320.286,
+        "first_phase_emitted_ms": 27.491,
+        "model_calls_started": 0,
+        "stage_totals_ms": {
+          "conversation": 16.099,
+          "cache_lookup": 0.707,
+          "knowledge_lookup": 324.146,
+          "retrieval": 2847.278,
+          "web_search": 977.688,
+          "finalization": 31.868
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 3.587,
+            "elapsed_ms": 16.099,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 26.774,
+            "elapsed_ms": 0.707,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 49.195,
+            "elapsed_ms": 233.695,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 119.532,
+            "elapsed_ms": 90.451,
+            "status": "ok"
+          },
+          {
+            "stage": "retrieval",
+            "started_ms": 288.929,
+            "elapsed_ms": 2847.278,
+            "status": "ok"
+          },
+          {
+            "stage": "web_search",
+            "started_ms": 3273.617,
+            "elapsed_ms": 977.43,
+            "status": "ok"
+          },
+          {
+            "stage": "web_search",
+            "started_ms": 4251.223,
+            "elapsed_ms": 0.258,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 4288.412,
+            "elapsed_ms": 31.868,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 27.491
+          }
+        ]
+      },
+      "stage_timings": [],
+      "external_research": {
+        "pages_extracted": 0,
+        "http_requests_started": 4,
+        "external_seconds": 0.0,
+        "page_slots_reserved": 3,
+        "logical_searches": 0
+      },
+      "provider": "verified-character-evidence"
+    },
+    "seconds": 4.3291,
+    "sse_done": true,
+    "http_timing": {
+      "first_progress_seconds": 0.0512,
+      "verified_ready_seconds": 4.2818,
+      "first_verified_text_seconds": 4.3291
+    },
+    "duckduckgo_paused_control": false,
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": {
+          "task": "protagonist",
+          "focus": "main",
+          "title": "El Camino de los Reyes (El Archivo de las Tormentas 1)",
+          "targets": [
+            {
+              "work_id": "litmate:df80ce9aa6e9c8814a1045a6",
+              "title": "El Camino de los Reyes (El Archivo de las Tormentas 1)",
+              "author": "Brandon Sanderson",
+              "confirmed_aliases": [],
+              "isbns": [],
+              "source": "Cat\u00e1logo LitMate",
+              "url": ""
+            }
+          ],
+          "names": [],
+          "ambiguous": false,
+          "object_name": "",
+          "author_hint": ""
+        }
+      },
+      {
+        "stage": "character_binding",
+        "sources": [
+          {
+            "id": 1,
+            "title": "El Camino de los Reyes (El Archivo de las Tormentas 1)",
+            "author": "Brandon Sanderson",
+            "description": "En el azotado mundo de Roshar, Kaladin un esclavo quebrado, Dalinar un noble atormentado por visiones y Shallan una erudita buscan salvar el mundo del regreso de los Desoladores.",
+            "source": "Cat\u00e1logo LitMate",
+            "year": "2010",
+            "book_id": "db_30022",
+            "kind": "book",
+            "url": "",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "",
+            "synopsis": "En el azotado mundo de Roshar, Kaladin un esclavo quebrado, Dalinar un noble atormentado por visiones y Shallan una erudita buscan salvar el mundo del regreso de los Desoladores.",
+            "image_url": "https://covers.openlibrary.org/b/id/14658316-L.jpg",
+            "language": "es",
+            "categories": [
+              "Fantas\u00eda",
+              "Fantas\u00eda"
+            ],
+            "preview_url": "https://books.google.com/books?q=El+Camino+de+los+Reyes+%28El+Archivo+de+las+Tormentas+1%29+Brandon+Sanderson"
+          }
+        ]
+      },
+      {
+        "stage": "wikipedia_adapter",
+        "status": "ok",
+        "sources": [
+          {
+            "title": "El camino de los reyes",
+            "author": "Fuente web",
+            "description": "== Personajes ==\n=== Personajes principales ===\nSzeth-Hijo-hijo-Vallano: Portador de una hoja esquirlada.\nKaladin: Est\u00e1 acompa\u00f1ado por un Honorspren llamado Sylphrena o Syl.\nShallan Davar: Intenta ser aceptada como la pupila de la renombrada erudita Jasnah Kholin, hermana del rey de Alezkar, Elhokar.\nDalinar Kholin: Un hombre que experimenta visiones durante las altas tormentas y un portador completo, se le tacha de d\u00e9bil cuando empieza a seguir los C\u00f3digos y habla de parar la guerra sinsentido en la que se ve envuelta Alezkar.\nAdolin Kholin: Es un especialista en duelos y un portador completo, adora y respeta a su padre incluso cuando teme que se haya vuelto loco.\nNavani Kholin: Viuda del rey Gavilar, madre del rey Elhokar y de Jasnah.",
+            "identity_text": "El camino de los reyes es una novela de fantas\u00eda \u00e9pica escrita por el autor estadounidense Brandon Sanderson y el primer libro de la saga El archivo de las tormentas.\u200b La novela fue publicada el 31 de agosto de 2010 por Tor Books.\u200b El Camino de los Reyes consta de un preludio, un pr\u00f3logo, 75 cap\u00edtulos, un ep\u00edlogo y 9 interludios.\u200b Le siguieron Palabras Radiantes en 2014,\u200b Juramentada en 2017\u200b y El Ritmo de la Guerra\u200b en 2020. Est\u00e1 previsto que se publique una edici\u00f3n encuadernada en piel en 2021.\u200b En 2011, gan\u00f3 el premio David Gemmel Legend Award a mejor novela.\u200b El audiolibro est\u00e1 \u00edntegramente narrado por Michael Kramer y Kate Reading.",
+            "character_facts": [
+              {
+                "name": "Szeth-Hijo-hijo-Vallano",
+                "role": "Portador de una hoja esquirlada.",
+                "evidence": "Szeth-Hijo-hijo-Vallano: Portador de una hoja esquirlada.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales"
+              },
+              {
+                "name": "Kaladin",
+                "role": "Est\u00e1 acompa\u00f1ado por un Honorspren llamado Sylphrena o Syl.",
+                "evidence": "Kaladin: Est\u00e1 acompa\u00f1ado por un Honorspren llamado Sylphrena o Syl.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales"
+              },
+              {
+                "name": "Shallan Davar",
+                "role": "Intenta ser aceptada como la pupila de la renombrada erudita Jasnah Kholin, hermana del rey de Alezkar, Elhokar.",
+                "evidence": "Shallan Davar: Intenta ser aceptada como la pupila de la renombrada erudita Jasnah Kholin, hermana del rey de Alezkar, Elhokar.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales"
+              },
+              {
+                "name": "Dalinar Kholin",
+                "role": "Un hombre que experimenta visiones durante las altas tormentas y un portador completo, se le tacha de d\u00e9bil cuando empieza a seguir los C\u00f3digos y habla de parar la guerra sinsentido en la que se ve envuelta Alezkar.",
+                "evidence": "Dalinar Kholin: Un hombre que experimenta visiones durante las altas tormentas y un portador completo, se le tacha de d\u00e9bil cuando empieza a seguir los C\u00f3digos y habla de parar la guerra sinsentido en la que se ve envuelta Alezkar.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales"
+              },
+              {
+                "name": "Adolin Kholin",
+                "role": "Es un especialista en duelos y un portador completo, adora y respeta a su padre incluso cuando teme que se haya vuelto loco.",
+                "evidence": "Adolin Kholin: Es un especialista en duelos y un portador completo, adora y respeta a su padre incluso cuando teme que se haya vuelto loco.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales"
+              },
+              {
+                "name": "Navani Kholin",
+                "role": "Viuda del rey Gavilar, madre del rey Elhokar y de Jasnah.",
+                "evidence": "Navani Kholin: Viuda del rey Gavilar, madre del rey Elhokar y de Jasnah.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales"
+              }
+            ],
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/El_camino_de_los_reyes",
+            "license": "CC-BY-SA-4.0",
+            "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+            "permanent_index_allowed": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "El camino de los reyes",
+              "url": "https://es.wikipedia.org/wiki/El_camino_de_los_reyes",
+              "revision_id": "176020628",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
+            "source": "Wikipedia",
+            "read_mode": "pasaje de secci\u00f3n de art\u00edculo p\u00fablico",
+            "literary_facts": []
+          },
+          {
+            "title": "Palabras radiantes",
+            "author": "Fuente web",
+            "description": "Words of Radiance es una novela de fantas\u00eda \u00e9pica escrita por el autor estadounidense Brandon Sanderson, es el segundo libro de la serie El archivo de las tormentas.\u200b La novela fue publicada el 4 de marzo de 2014 por Tor Books.\u200b Palabras Radiantes consta de un pr\u00f3logo, 89 cap\u00edtulos, un ep\u00edlogo y 14 interludios. Est\u00e1 precedido por El camino de los reyes y seguido por Juramentada .\nEn 2015, gan\u00f3 el premio David Gemmell Legend a la mejor novela.\u200b El audiolibro \u00edntegro es le\u00eddo por el equipo de narradores Michael Kramer y Kate Reading.\u200b",
+            "identity_text": "Words of Radiance es una novela de fantas\u00eda \u00e9pica escrita por el autor estadounidense Brandon Sanderson, es el segundo libro de la serie El archivo de las tormentas.\u200b La novela fue publicada el 4 de marzo de 2014 por Tor Books.\u200b Palabras Radiantes consta de un pr\u00f3logo, 89 cap\u00edtulos, un ep\u00edlogo y 14 interludios. Est\u00e1 precedido por El camino de los reyes y seguido por Juramentada . En 2015, gan\u00f3 el premio David Gemmell Legend a la mejor novela.\u200b El audiolibro \u00edntegro es le\u00eddo por el equipo de narradores Michael Kramer y Kate Reading.\u200b",
+            "character_facts": [],
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Palabras_radiantes",
+            "license": "CC-BY-SA-4.0",
+            "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+            "permanent_index_allowed": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Palabras radiantes",
+              "url": "https://es.wikipedia.org/wiki/Palabras_radiantes",
+              "revision_id": "173656884",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
+            "source": "Wikipedia",
+            "read_mode": "extracto de introducci\u00f3n",
+            "literary_facts": []
+          }
+        ],
+        "research": {
+          "logical_searches": 0,
+          "page_slots_reserved": 2,
+          "page_slots_limit": 3,
+          "external_seconds": 0.0,
+          "events": [
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            }
+          ],
+          "http_requests_started": 3,
+          "pages_extracted": 0
+        }
+      },
+      {
+        "stage": "character_binding",
+        "sources": [
+          {
+            "id": 1,
+            "title": "El Camino de los Reyes (El Archivo de las Tormentas 1)",
+            "author": "Brandon Sanderson",
+            "description": "En el azotado mundo de Roshar, Kaladin un esclavo quebrado, Dalinar un noble atormentado por visiones y Shallan una erudita buscan salvar el mundo del regreso de los Desoladores.",
+            "source": "Cat\u00e1logo LitMate",
+            "year": "2010",
+            "book_id": "db_30022",
+            "kind": "book",
+            "url": "",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "",
+            "synopsis": "En el azotado mundo de Roshar, Kaladin un esclavo quebrado, Dalinar un noble atormentado por visiones y Shallan una erudita buscan salvar el mundo del regreso de los Desoladores.",
+            "image_url": "https://covers.openlibrary.org/b/id/14658316-L.jpg",
+            "language": "es",
+            "categories": [
+              "Fantas\u00eda",
+              "Fantas\u00eda"
+            ],
+            "preview_url": "https://books.google.com/books?q=El+Camino+de+los+Reyes+%28El+Archivo+de+las+Tormentas+1%29+Brandon+Sanderson"
+          }
+        ]
+      },
+      {
+        "stage": "character_binding",
+        "sources": [
+          {
+            "id": 1,
+            "title": "El Camino de los Reyes (El Archivo de las Tormentas 1)",
+            "author": "Brandon Sanderson",
+            "description": "En el azotado mundo de Roshar, Kaladin un esclavo quebrado, Dalinar un noble atormentado por visiones y Shallan una erudita buscan salvar el mundo del regreso de los Desoladores.",
+            "source": "Cat\u00e1logo LitMate",
+            "year": "2010",
+            "book_id": "db_30022",
+            "kind": "book",
+            "url": "",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "",
+            "synopsis": "En el azotado mundo de Roshar, Kaladin un esclavo quebrado, Dalinar un noble atormentado por visiones y Shallan una erudita buscan salvar el mundo del regreso de los Desoladores.",
+            "image_url": "https://covers.openlibrary.org/b/id/14658316-L.jpg",
+            "language": "es",
+            "categories": [
+              "Fantas\u00eda",
+              "Fantas\u00eda"
+            ],
+            "preview_url": "https://books.google.com/books?q=El+Camino+de+los+Reyes+%28El+Archivo+de+las+Tormentas+1%29+Brandon+Sanderson"
+          }
+        ]
+      },
+      {
+        "stage": "character_binding",
+        "sources": [
+          {
+            "id": 1,
+            "title": "El Camino de los Reyes (El Archivo de las Tormentas 1)",
+            "author": "Brandon Sanderson",
+            "description": "En el azotado mundo de Roshar, Kaladin un esclavo quebrado, Dalinar un noble atormentado por visiones y Shallan una erudita buscan salvar el mundo del regreso de los Desoladores.",
+            "source": "Cat\u00e1logo LitMate",
+            "year": "2010",
+            "book_id": "db_30022",
+            "kind": "book",
+            "url": "",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "",
+            "synopsis": "En el azotado mundo de Roshar, Kaladin un esclavo quebrado, Dalinar un noble atormentado por visiones y Shallan una erudita buscan salvar el mundo del regreso de los Desoladores.",
+            "image_url": "https://covers.openlibrary.org/b/id/14658316-L.jpg",
+            "language": "es",
+            "categories": [
+              "Fantas\u00eda",
+              "Fantas\u00eda"
+            ],
+            "preview_url": "https://books.google.com/books?q=El+Camino+de+los+Reyes+%28El+Archivo+de+las+Tormentas+1%29+Brandon+Sanderson"
+          }
+        ]
+      },
+      {
+        "stage": "character_binding",
+        "sources": [
+          {
+            "id": 1,
+            "title": "El Camino de los Reyes (El Archivo de las Tormentas 1)",
+            "author": "Brandon Sanderson",
+            "description": "En el azotado mundo de Roshar, Kaladin un esclavo quebrado, Dalinar un noble atormentado por visiones y Shallan una erudita buscan salvar el mundo del regreso de los Desoladores.",
+            "source": "Cat\u00e1logo LitMate",
+            "year": "2010",
+            "book_id": "db_30022",
+            "kind": "book",
+            "url": "",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "",
+            "synopsis": "En el azotado mundo de Roshar, Kaladin un esclavo quebrado, Dalinar un noble atormentado por visiones y Shallan una erudita buscan salvar el mundo del regreso de los Desoladores.",
+            "image_url": "https://covers.openlibrary.org/b/id/14658316-L.jpg",
+            "language": "es",
+            "categories": [
+              "Fantas\u00eda",
+              "Fantas\u00eda"
+            ],
+            "preview_url": "https://books.google.com/books?q=El+Camino+de+los+Reyes+%28El+Archivo+de+las+Tormentas+1%29+Brandon+Sanderson"
+          }
+        ]
+      },
+      {
+        "stage": "character_binding",
+        "sources": [
+          {
+            "id": 1,
+            "title": "El Camino de los Reyes (El Archivo de las Tormentas 1)",
+            "author": "Brandon Sanderson",
+            "description": "En el azotado mundo de Roshar, Kaladin un esclavo quebrado, Dalinar un noble atormentado por visiones y Shallan una erudita buscan salvar el mundo del regreso de los Desoladores.",
+            "source": "Cat\u00e1logo LitMate",
+            "year": "2010",
+            "book_id": "db_30022",
+            "kind": "book",
+            "url": "",
+            "locator": "",
+            "read_mode": "",
+            "retrieved_at": "",
+            "synopsis": "En el azotado mundo de Roshar, Kaladin un esclavo quebrado, Dalinar un noble atormentado por visiones y Shallan una erudita buscan salvar el mundo del regreso de los Desoladores.",
+            "image_url": "https://covers.openlibrary.org/b/id/14658316-L.jpg",
+            "language": "es",
+            "categories": [
+              "Fantas\u00eda",
+              "Fantas\u00eda"
+            ],
+            "preview_url": "https://books.google.com/books?q=El+Camino+de+los+Reyes+%28El+Archivo+de+las+Tormentas+1%29+Brandon+Sanderson"
+          }
+        ]
+      },
+      {
+        "stage": "characters",
+        "diagnostics": {
+          "character_trace": [
+            {
+              "stage": "bibliographic",
+              "sources": 1,
+              "facts": 0
+            },
+            {
+              "stage": "extraction",
+              "status": "unavailable"
+            }
+          ],
+          "character_failure": "insufficient_specific_evidence",
+          "model_calls": 0,
+          "external_research": {
+            "logical_searches": 0,
+            "page_slots_reserved": 3,
+            "page_slots_limit": 3,
+            "external_seconds": 0.0,
+            "events": [
+              {
+                "stage": "http_request",
+                "provider": "Wikipedia",
+                "status": "started",
+                "count": 0
+              },
+              {
+                "stage": "http_request",
+                "provider": "Wikipedia",
+                "status": "ok",
+                "count": 0
+              },
+              {
+                "stage": "http_request",
+                "provider": "Wikipedia",
+                "status": "started",
+                "count": 0
+              },
+              {
+                "stage": "http_request",
+                "provider": "Wikipedia",
+                "status": "ok",
+                "count": 0
+              },
+              {
+                "stage": "http_request",
+                "provider": "Wikipedia",
+                "status": "started",
+                "count": 0
+              },
+              {
+                "stage": "http_request",
+                "provider": "Wikipedia",
+                "status": "ok",
+                "count": 0
+              },
+              {
+                "stage": "http_request",
+                "provider": "SearXNG",
+                "status": "started",
+                "count": 0
+              },
+              {
+                "stage": "http_request",
+                "provider": "SearXNG",
+                "status": "ok",
+                "count": 2
+              }
+            ],
+            "http_requests_started": 4,
+            "pages_extracted": 0
+          },
+          "progress_metrics": {
+            "stage_timings": [
+              {
+                "stage": "conversation",
+                "started_ms": 3.587,
+                "elapsed_ms": 16.099,
+                "status": "ok"
+              },
+              {
+                "stage": "cache_lookup",
+                "started_ms": 26.774,
+                "elapsed_ms": 0.707,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 49.195,
+                "elapsed_ms": 233.695,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 119.532,
+                "elapsed_ms": 90.451,
+                "status": "ok"
+              },
+              {
+                "stage": "retrieval",
+                "started_ms": 288.929,
+                "elapsed_ms": 2847.278,
+                "status": "ok"
+              },
+              {
+                "stage": "web_search",
+                "started_ms": 3273.617,
+                "elapsed_ms": 977.43,
+                "status": "ok"
+              },
+              {
+                "stage": "web_search",
+                "started_ms": 4251.223,
+                "elapsed_ms": 0.258,
+                "status": "ok"
+              }
+            ],
+            "stage_totals_ms": {
+              "conversation": 16.099,
+              "cache_lookup": 0.707,
+              "knowledge_lookup": 324.146,
+              "retrieval": 2847.278,
+              "web_search": 977.688
+            },
+            "model_calls_started": 0,
+            "progress_events": [
+              {
+                "stage": "search",
+                "elapsed_ms": 27.491
+              }
+            ],
+            "elapsed_ms": 4273.506,
+            "first_phase_emitted_ms": 27.491
+          },
+          "language_presentation": {
+            "target": "es",
+            "original_text": "No pude confirmar ese dato sobre los personajes de **El Camino de los Reyes (El Archivo de las Tormentas 1)** con las fuentes disponibles. \u00bfTienes alg\u00fan pasaje o detalle que podamos comprobar?",
+            "translated_fields": 0,
+            "cache_hits": 0,
+            "untranslated_fields": [],
+            "card_excerpt_from_audited_response": false,
+            "audit_applies_to_original": true,
+            "cards": []
+          },
+          "stage_timings": [],
+          "elapsed_ms": 4274,
+          "chat_budget_seconds": 36.0
+        },
+        "sources": []
+      }
+    ],
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  },
+  {
+    "question": "\u00bfQu\u00e9 relaci\u00f3n tiene con los otros personajes principales?",
+    "answer": "\u00bfDe qu\u00e9 libro hablamos? As\u00ed puedo distinguir los personajes y sus papeles.",
+    "status": "clarification",
+    "books": [],
+    "sources": [],
+    "diagnostics": {
+      "elapsed_ms": 75,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 0,
+      "progress_metrics": {
+        "elapsed_ms": 82.559,
+        "first_phase_emitted_ms": 27.42,
+        "model_calls_started": 0,
+        "stage_totals_ms": {
+          "conversation": 16.287,
+          "cache_lookup": 0.739,
+          "finalization": 7.709
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 3.303,
+            "elapsed_ms": 16.287,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 26.67,
+            "elapsed_ms": 0.739,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 74.844,
+            "elapsed_ms": 7.709,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 27.42
+          }
+        ]
+      },
+      "stage_timings": [],
+      "external_research": {
+        "pages_extracted": 0,
+        "http_requests_started": 0,
+        "external_seconds": 0.0,
+        "page_slots_reserved": 0,
+        "logical_searches": 0
+      },
+      "provider": "verified-character-evidence"
+    },
+    "seconds": 0.0909,
+    "sse_done": true,
+    "http_timing": {
+      "first_progress_seconds": 0.0618,
+      "verified_ready_seconds": 0.0683,
+      "first_verified_text_seconds": 0.0909
+    },
+    "duckduckgo_paused_control": false,
+    "narrative_observations": [
+      {
+        "stage": "character_binding",
+        "sources": []
+      },
+      {
+        "stage": "character_binding",
+        "sources": []
+      },
+      {
+        "stage": "character_request",
+        "request": {
+          "task": "relationship",
+          "focus": "all",
+          "title": "El Camino de los Reyes (El Archivo de las Tormentas 1)",
+          "targets": [
+            {
+              "work_id": "litmate:df80ce9aa6e9c8814a1045a6",
+              "title": "El Camino de los Reyes (El Archivo de las Tormentas 1)",
+              "author": "Brandon Sanderson",
+              "confirmed_aliases": [],
+              "isbns": [],
+              "source": "Cat\u00e1logo LitMate",
+              "url": ""
+            }
+          ],
+          "names": [
+            "los otros personajes principales"
+          ],
+          "ambiguous": true,
+          "object_name": "",
+          "author_hint": ""
+        }
+      },
+      {
+        "stage": "character_binding",
+        "sources": []
+      },
+      {
+        "stage": "characters",
+        "diagnostics": {
+          "external_research": {
+            "logical_searches": 0,
+            "page_slots_reserved": 0,
+            "page_slots_limit": 3,
+            "external_seconds": 0.0,
+            "events": [],
+            "http_requests_started": 0,
+            "pages_extracted": 0
+          },
+          "progress_metrics": {
+            "stage_timings": [
+              {
+                "stage": "conversation",
+                "started_ms": 3.303,
+                "elapsed_ms": 16.287,
+                "status": "ok"
+              },
+              {
+                "stage": "cache_lookup",
+                "started_ms": 26.67,
+                "elapsed_ms": 0.739,
+                "status": "ok"
+              }
+            ],
+            "stage_totals_ms": {
+              "conversation": 16.287,
+              "cache_lookup": 0.739
+            },
+            "model_calls_started": 0,
+            "progress_events": [
+              {
+                "stage": "search",
+                "elapsed_ms": 27.42
+              }
+            ],
+            "elapsed_ms": 60.126,
+            "first_phase_emitted_ms": 27.42
+          },
+          "language_presentation": {
+            "target": "es",
+            "original_text": "\u00bfDe qu\u00e9 libro hablamos? As\u00ed puedo distinguir los personajes y sus papeles.",
+            "translated_fields": 0,
+            "cache_hits": 0,
+            "untranslated_fields": [],
+            "card_excerpt_from_audited_response": false,
+            "audit_applies_to_original": true,
+            "cards": []
+          },
+          "stage_timings": [],
+          "model_calls": 0,
+          "elapsed_ms": 61,
+          "chat_budget_seconds": 36.0
+        },
+        "sources": []
+      },
+      {
+        "stage": "character_binding",
+        "sources": []
+      }
+    ],
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  },
+  {
+    "question": "\u00bfC\u00f3mo termina?",
+    "answer": "\u00bfRecuerdas alg\u00fan personaje, parte de la trama, el autor o la portada del libro?",
+    "status": "clarification",
+    "books": [],
+    "sources": [],
+    "diagnostics": {
+      "elapsed_ms": 8630,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 2,
+      "progress_metrics": {
+        "elapsed_ms": 8637.698,
+        "first_phase_emitted_ms": 19.729,
+        "model_calls_started": 2,
+        "stage_totals_ms": {
+          "conversation": 8.202,
+          "cache_lookup": 0.668,
+          "knowledge_lookup": 707.819,
+          "intent": 8.705,
+          "model_inspection": 35.167,
+          "web_search": 737.56,
+          "routing": 7988.086,
+          "finalization": 7.71
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 4.005,
+            "elapsed_ms": 8.202,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 19.05,
+            "elapsed_ms": 0.668,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 27.282,
+            "elapsed_ms": 369.146,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 105.189,
+            "elapsed_ms": 49.448,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 219.75,
+            "elapsed_ms": 170.852,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 284.274,
+            "elapsed_ms": 68.117,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 477.323,
+            "elapsed_ms": 50.256,
+            "status": "ok"
+          },
+          {
+            "stage": "web_search",
+            "started_ms": 602.604,
+            "elapsed_ms": 737.56,
+            "status": "ok"
+          },
+          {
+            "stage": "intent",
+            "started_ms": 612.011,
+            "elapsed_ms": 0.063,
+            "status": "ok"
+          },
+          {
+            "stage": "intent",
+            "started_ms": 612.081,
+            "elapsed_ms": 8.642,
+            "status": "ok"
+          },
+          {
+            "stage": "routing",
+            "started_ms": 620.733,
+            "elapsed_ms": 4657.88,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 620.739,
+            "elapsed_ms": 35.161,
+            "status": "ok"
+          },
+          {
+            "stage": "routing",
+            "started_ms": 5278.672,
+            "elapsed_ms": 3330.206,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 5278.677,
+            "elapsed_ms": 0.006,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 8629.982,
+            "elapsed_ms": 7.71,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 19.729
+          }
+        ]
+      },
+      "stage_timings": [
+        {
+          "model": "qwen3.5:9b-q4_K_M",
+          "total_ms": 4601.857,
+          "elapsed_ms": 4658,
+          "status": "ok",
+          "stage": "route",
+          "prompt_eval_ms": 718.867,
+          "prompt_eval_count": 1883,
+          "load_ms": 6.391,
+          "eval_ms": 3647.422,
+          "eval_count": 109
+        },
+        {
+          "model": "qwen3.5:9b-q4_K_M",
+          "total_ms": 3319.886,
+          "elapsed_ms": 3330,
+          "status": "ok",
+          "stage": "route_rescue",
+          "prompt_eval_ms": 720.333,
+          "prompt_eval_count": 1967,
+          "load_ms": 7.911,
+          "eval_ms": 2578.577,
+          "eval_count": 78
+        }
+      ],
+      "external_research": {
+        "pages_extracted": 0,
+        "http_requests_started": 1,
+        "external_seconds": 0.737,
+        "page_slots_reserved": 0,
+        "logical_searches": 1
+      },
+      "provider": "ollama-local"
+    },
+    "seconds": 8.6479,
+    "sse_done": true,
+    "http_timing": {
+      "first_progress_seconds": 0.0336,
+      "verified_ready_seconds": 8.6228,
+      "first_verified_text_seconds": 8.6479
+    },
+    "duckduckgo_paused_control": false,
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": null
+      },
+      {
+        "request": {
+          "task": "summary",
+          "title": "",
+          "targets": [],
+          "ambiguous": true
+        },
+        "diagnostics": {},
+        "sources": []
+      },
+      {
+        "stage": "wikipedia_adapter",
+        "status": "ok",
+        "sources": [
+          {
+            "title": "Cu\u00e9ntame c\u00f3mo pas\u00f3",
+            "author": "Fuente web",
+            "description": "Cu\u00e9ntame c\u00f3mo pas\u00f3, conocida simplemente en sus inicios como Cu\u00e9ntame, fue una serie de Televisi\u00f3n Espa\u00f1ola emitida por La 1, entre el 13 de septiembre de 2001\u200b\u200b y el 29 de noviembre de 2023.\u200b\u200b Con 413 episodios, 23 temporadas y 22 a\u00f1os en emisi\u00f3n, fue la serie de prime time m\u00e1s longeva de la historia de la televisi\u00f3n en Espa\u00f1a y la sexta de la historia de la televisi\u00f3n mundial.\u200b\nEn un primer momento la serie iba a llamarse Nuestro ayer. Sin embargo, los productores decidieron ponerle el nombre m\u00e1s comercial de Cu\u00e9ntame. Este t\u00edtulo proviene de la famosa canci\u00f3n del mismo t\u00edtulo publicada en 1968 en un disco del conjunto de m\u00fasica pop F\u00f3rmula V. Por estar ya registrado el t\u00edtulo se tuvo que modificar el de la serie\u200b el 7 de marzo de 2002.\nApoy\u00e1ndose en una combinaci\u00f3n de microhistoria y macrohistoria, la serie narraba las vivencias de una familia de clase trabajadora de origen rural, los Alc\u00e1ntara, que se traslada a la capital del pa\u00eds e inicia el ascenso hasta la clase media,\u200b durante los \u00faltimos a\u00f1os del franquismo, la Transici\u00f3n espa\u00f1ola y la democracia y constitu\u00eda una cr\u00f3nica sociopol\u00edtica de la \u00e9poca.\n\n",
+            "identity_text": "Cu\u00e9ntame c\u00f3mo pas\u00f3, conocida simplemente en sus inicios como Cu\u00e9ntame, fue una serie de Televisi\u00f3n Espa\u00f1ola emitida por La 1, entre el 13 de septiembre de 2001\u200b\u200b y el 29 de noviembre de 2023.\u200b\u200b Con 413 episodios, 23 temporadas y 22 a\u00f1os en emisi\u00f3n, fue la serie de prime time m\u00e1s longeva de la historia de la televisi\u00f3n en Espa\u00f1a y la sexta de la historia de la televisi\u00f3n mundial.\u200b En un primer momento la serie iba a llamarse Nuestro ayer. Sin embargo, los productores decidieron ponerle el nombre m\u00e1s comercial de Cu\u00e9ntame. Este t\u00edtulo proviene de la famosa canci\u00f3n del mismo t\u00edtulo publicada en 1968 en un disco del conjunto de m\u00fasica pop F\u00f3rmula V. Por estar ya registrado el t\u00edtulo se tuvo que modificar el de la serie\u200b el 7 de marzo de 2002. Apoy\u00e1ndose en una combinaci\u00f3n de microhistoria y macrohistoria, la serie narraba las vivencias de una familia de clase trabajadora de origen rural, los Alc\u00e1ntara, que se traslada a la capital del pa\u00eds e inicia el ascenso hasta la clase media,\u200b durante los \u00faltimos a\u00f1os del franquismo, la Transici\u00f3n espa\u00f1ola y la democracia y constitu\u00eda una cr\u00f3nica sociopol\u00edtica de la \u00e9poca.",
+            "character_facts": [],
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Cu%C3%A9ntame_c%C3%B3mo_pas%C3%B3",
+            "license": "CC-BY-SA-4.0",
+            "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+            "permanent_index_allowed": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Cu\u00e9ntame c\u00f3mo pas\u00f3",
+              "url": "https://es.wikipedia.org/wiki/Cu%C3%A9ntame_c%C3%B3mo_pas%C3%B3",
+              "revision_id": "175388901",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
+            "source": "Wikipedia",
+            "read_mode": "extracto de introducci\u00f3n",
+            "literary_facts": []
+          },
+          {
+            "title": "\u00a1C\u00f3mo est\u00e1 el servicio!",
+            "author": "Fuente web",
+            "description": "\u00a1C\u00f3mo est\u00e1 el servicio! es una pel\u00edcula espa\u00f1ola dirigida por Mariano Ozores en 1968, basada en la obra hom\u00f3nima del dramaturgo Alfonso Paso.\n\n",
+            "identity_text": "\u00a1C\u00f3mo est\u00e1 el servicio! es una pel\u00edcula espa\u00f1ola dirigida por Mariano Ozores en 1968, basada en la obra hom\u00f3nima del dramaturgo Alfonso Paso.",
+            "character_facts": [],
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/%C2%A1C%C3%B3mo_est%C3%A1_el_servicio!",
+            "license": "CC-BY-SA-4.0",
+            "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+            "permanent_index_allowed": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "\u00a1C\u00f3mo est\u00e1 el servicio!",
+              "url": "https://es.wikipedia.org/wiki/%C2%A1C%C3%B3mo_est%C3%A1_el_servicio!",
+              "revision_id": "161659875",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
+            "source": "Wikipedia",
+            "read_mode": "extracto de introducci\u00f3n",
+            "literary_facts": []
+          }
+        ],
+        "research": {
+          "logical_searches": 1,
+          "page_slots_reserved": 0,
+          "page_slots_limit": 3,
+          "external_seconds": 0.0,
+          "events": [
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            }
+          ],
+          "http_requests_started": 1,
+          "pages_extracted": 0
+        }
+      }
+    ],
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  },
+  {
+    "question": "Recomi\u00e9ndame otro parecido con protagonista femenina.",
+    "answer": "El servicio de IA no pudo completar la consulta. Vuelve a intentar en unos instantes.",
+    "status": "unavailable",
+    "books": [],
+    "sources": [],
+    "diagnostics": {
+      "elapsed_ms": 35041,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 5,
+      "progress_metrics": {
+        "elapsed_ms": 35048.607,
+        "first_phase_emitted_ms": 19.283,
+        "model_calls_started": 5,
+        "stage_totals_ms": {
+          "conversation": 7.006,
+          "cache_lookup": 0.822,
+          "knowledge_lookup": 826.485,
+          "retrieval": 4448.573,
+          "web_search": 2556.227,
+          "intent": 0.209,
+          "model_inspection": 26.36,
+          "routing": 3806.9,
+          "local_search": 70.298,
+          "generation": 5157.896,
+          "audit": 11231.121,
+          "repair": 7379.463,
+          "finalization": 7.19
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 4.09,
+            "elapsed_ms": 7.006,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 18.448,
+            "elapsed_ms": 0.822,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 20.891,
+            "elapsed_ms": 387.101,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 107.226,
+            "elapsed_ms": 48.062,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 223.358,
+            "elapsed_ms": 180.067,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 292.04,
+            "elapsed_ms": 64.056,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 483.361,
+            "elapsed_ms": 48.929,
+            "status": "ok"
+          },
+          {
+            "stage": "retrieval",
+            "started_ms": 574.529,
+            "elapsed_ms": 2603.889,
+            "status": "ok"
+          },
+          {
+            "stage": "web_search",
+            "started_ms": 3182.234,
+            "elapsed_ms": 1920.536,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 5219.191,
+            "elapsed_ms": 50.203,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 5415.574,
+            "elapsed_ms": 48.067,
+            "status": "ok"
+          },
+          {
+            "stage": "web_search",
+            "started_ms": 5538.889,
+            "elapsed_ms": 635.222,
+            "status": "ok"
+          },
+          {
+            "stage": "intent",
+            "started_ms": 5550.276,
+            "elapsed_ms": 0.196,
+            "status": "ok"
+          },
+          {
+            "stage": "intent",
+            "started_ms": 5550.478,
+            "elapsed_ms": 0.013,
+            "status": "ok"
+          },
+          {
+            "stage": "routing",
+            "started_ms": 5550.497,
+            "elapsed_ms": 3806.9,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 5550.501,
+            "elapsed_ms": 26.338,
+            "status": "ok"
+          },
+          {
+            "stage": "retrieval",
+            "started_ms": 9358.723,
+            "elapsed_ms": 1844.684,
+            "status": "ok"
+          },
+          {
+            "stage": "local_search",
+            "started_ms": 9363.616,
+            "elapsed_ms": 70.298,
+            "status": "ok"
+          },
+          {
+            "stage": "web_search",
+            "started_ms": 11210.818,
+            "elapsed_ms": 0.181,
+            "status": "ok"
+          },
+          {
+            "stage": "web_search",
+            "started_ms": 11211.118,
+            "elapsed_ms": 0.154,
+            "status": "ok"
+          },
+          {
+            "stage": "web_search",
+            "started_ms": 11212.896,
+            "elapsed_ms": 0.134,
+            "status": "ok"
+          },
+          {
+            "stage": "generation",
+            "started_ms": 11228.629,
+            "elapsed_ms": 5157.896,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 11228.643,
+            "elapsed_ms": 0.005,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 16387.575,
+            "elapsed_ms": 7449.514,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 16387.593,
+            "elapsed_ms": 0.005,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 23837.12,
+            "elapsed_ms": 0.102,
+            "status": "ok"
+          },
+          {
+            "stage": "repair",
+            "started_ms": 23837.258,
+            "elapsed_ms": 7379.463,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 23837.275,
+            "elapsed_ms": 0.007,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 31221.901,
+            "elapsed_ms": 3781.505,
+            "status": "failed"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 31221.913,
+            "elapsed_ms": 0.005,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 35041.41,
+            "elapsed_ms": 7.19,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 19.283
+          },
+          {
+            "stage": "writing",
+            "elapsed_ms": 11228.614
+          },
+          {
+            "stage": "review",
+            "elapsed_ms": 16387.557
+          },
+          {
+            "stage": "writing",
+            "elapsed_ms": 23837.243
+          },
+          {
+            "stage": "review",
+            "elapsed_ms": 31221.881
+          }
+        ]
+      },
+      "stage_timings": [
+        {
+          "model": "qwen3.5:9b-q4_K_M",
+          "total_ms": 3749.779,
+          "elapsed_ms": 3807,
+          "status": "ok",
+          "stage": "route",
+          "prompt_eval_ms": 919.985,
+          "prompt_eval_count": 2064,
+          "load_ms": 5.589,
+          "eval_ms": 2812.354,
+          "eval_count": 85
+        },
+        {
+          "model": "qwen3.5:9b-q4_K_M",
+          "total_ms": 5133.431,
+          "elapsed_ms": 5158,
+          "status": "ok",
+          "stage": "answer",
+          "prompt_eval_ms": 1806.616,
+          "prompt_eval_count": 2965,
+          "load_ms": 6.421,
+          "eval_ms": 3246.455,
+          "eval_count": 96
+        },
+        {
+          "model": "qwen3.5:9b-q4_K_M",
+          "total_ms": 7420.874,
+          "elapsed_ms": 7450,
+          "status": "ok",
+          "stage": "audit",
+          "prompt_eval_ms": 1863.928,
+          "prompt_eval_count": 3446,
+          "load_ms": 6.912,
+          "eval_ms": 5405.495,
+          "eval_count": 154
+        },
+        {
+          "model": "qwen3.5:9b-q4_K_M",
+          "total_ms": 7368.522,
+          "elapsed_ms": 7379,
+          "status": "ok",
+          "stage": "repair",
+          "prompt_eval_ms": 456.853,
+          "prompt_eval_count": 3116,
+          "load_ms": 7.127,
+          "eval_ms": 6796.243,
+          "eval_count": 199
+        },
+        {
+          "model": "qwen3.5:9b-q4_K_M",
+          "elapsed_ms": 3782,
+          "status": "failed",
+          "stage": "audit"
+        }
+      ],
+      "external_research": {
+        "pages_extracted": 0,
+        "http_requests_started": 8,
+        "external_seconds": 6.909,
+        "page_slots_reserved": 3,
+        "logical_searches": 2
+      },
+      "provider": "ollama-local"
+    },
+    "seconds": 35.0587,
+    "sse_done": true,
+    "http_timing": {
+      "first_progress_seconds": 0.0294,
+      "verified_ready_seconds": 35.0302,
+      "first_verified_text_seconds": 35.0587
+    },
+    "duckduckgo_paused_control": false,
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": null
+      },
+      {
+        "request": null,
+        "diagnostics": {},
+        "sources": []
+      },
+      {
+        "stage": "wikipedia_adapter",
+        "status": "ok",
+        "sources": [
+          {
+            "title": "El camino de los reyes",
+            "author": "Fuente web",
+            "description": "== Personajes ==\n=== Personajes principales ===\nSzeth-Hijo-hijo-Vallano: Portador de una hoja esquirlada.\nKaladin: Est\u00e1 acompa\u00f1ado por un Honorspren llamado Sylphrena o Syl.\nShallan Davar: Intenta ser aceptada como la pupila de la renombrada erudita Jasnah Kholin, hermana del rey de Alezkar, Elhokar.\nDalinar Kholin: Un hombre que experimenta visiones durante las altas tormentas y un portador completo, se le tacha de d\u00e9bil cuando empieza a seguir los C\u00f3digos y habla de parar la guerra sinsentido en la que se ve envuelta Alezkar.\nAdolin Kholin: Es un especialista en duelos y un portador completo, adora y respeta a su padre incluso cuando teme que se haya vuelto loco.\nNavani Kholin: Viuda del rey Gavilar, madre del rey Elhokar y de Jasnah.",
+            "identity_text": "El camino de los reyes es una novela de fantas\u00eda \u00e9pica escrita por el autor estadounidense Brandon Sanderson y el primer libro de la saga El archivo de las tormentas.\u200b La novela fue publicada el 31 de agosto de 2010 por Tor Books.\u200b El Camino de los Reyes consta de un preludio, un pr\u00f3logo, 75 cap\u00edtulos, un ep\u00edlogo y 9 interludios.\u200b Le siguieron Palabras Radiantes en 2014,\u200b Juramentada en 2017\u200b y El Ritmo de la Guerra\u200b en 2020. Est\u00e1 previsto que se publique una edici\u00f3n encuadernada en piel en 2021.\u200b En 2011, gan\u00f3 el premio David Gemmel Legend Award a mejor novela.\u200b El audiolibro est\u00e1 \u00edntegramente narrado por Michael Kramer y Kate Reading.",
+            "character_facts": [
+              {
+                "name": "Szeth-Hijo-hijo-Vallano",
+                "role": "Portador de una hoja esquirlada.",
+                "evidence": "Szeth-Hijo-hijo-Vallano: Portador de una hoja esquirlada.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales"
+              },
+              {
+                "name": "Kaladin",
+                "role": "Est\u00e1 acompa\u00f1ado por un Honorspren llamado Sylphrena o Syl.",
+                "evidence": "Kaladin: Est\u00e1 acompa\u00f1ado por un Honorspren llamado Sylphrena o Syl.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales"
+              },
+              {
+                "name": "Shallan Davar",
+                "role": "Intenta ser aceptada como la pupila de la renombrada erudita Jasnah Kholin, hermana del rey de Alezkar, Elhokar.",
+                "evidence": "Shallan Davar: Intenta ser aceptada como la pupila de la renombrada erudita Jasnah Kholin, hermana del rey de Alezkar, Elhokar.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales"
+              },
+              {
+                "name": "Dalinar Kholin",
+                "role": "Un hombre que experimenta visiones durante las altas tormentas y un portador completo, se le tacha de d\u00e9bil cuando empieza a seguir los C\u00f3digos y habla de parar la guerra sinsentido en la que se ve envuelta Alezkar.",
+                "evidence": "Dalinar Kholin: Un hombre que experimenta visiones durante las altas tormentas y un portador completo, se le tacha de d\u00e9bil cuando empieza a seguir los C\u00f3digos y habla de parar la guerra sinsentido en la que se ve envuelta Alezkar.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales"
+              },
+              {
+                "name": "Adolin Kholin",
+                "role": "Es un especialista en duelos y un portador completo, adora y respeta a su padre incluso cuando teme que se haya vuelto loco.",
+                "evidence": "Adolin Kholin: Es un especialista en duelos y un portador completo, adora y respeta a su padre incluso cuando teme que se haya vuelto loco.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales"
+              },
+              {
+                "name": "Navani Kholin",
+                "role": "Viuda del rey Gavilar, madre del rey Elhokar y de Jasnah.",
+                "evidence": "Navani Kholin: Viuda del rey Gavilar, madre del rey Elhokar y de Jasnah.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales"
+              }
+            ],
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/El_camino_de_los_reyes",
+            "license": "CC-BY-SA-4.0",
+            "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+            "permanent_index_allowed": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "El camino de los reyes",
+              "url": "https://es.wikipedia.org/wiki/El_camino_de_los_reyes",
+              "revision_id": "176020628",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
+            "source": "Wikipedia",
+            "read_mode": "pasaje de secci\u00f3n de art\u00edculo p\u00fablico",
+            "literary_facts": []
+          },
+          {
+            "title": "Palabras radiantes",
+            "author": "Fuente web",
+            "description": "Words of Radiance es una novela de fantas\u00eda \u00e9pica escrita por el autor estadounidense Brandon Sanderson, es el segundo libro de la serie El archivo de las tormentas.\u200b La novela fue publicada el 4 de marzo de 2014 por Tor Books.\u200b Palabras Radiantes consta de un pr\u00f3logo, 89 cap\u00edtulos, un ep\u00edlogo y 14 interludios. Est\u00e1 precedido por El camino de los reyes y seguido por Juramentada .\nEn 2015, gan\u00f3 el premio David Gemmell Legend a la mejor novela.\u200b El audiolibro \u00edntegro es le\u00eddo por el equipo de narradores Michael Kramer y Kate Reading.\u200b",
+            "identity_text": "Words of Radiance es una novela de fantas\u00eda \u00e9pica escrita por el autor estadounidense Brandon Sanderson, es el segundo libro de la serie El archivo de las tormentas.\u200b La novela fue publicada el 4 de marzo de 2014 por Tor Books.\u200b Palabras Radiantes consta de un pr\u00f3logo, 89 cap\u00edtulos, un ep\u00edlogo y 14 interludios. Est\u00e1 precedido por El camino de los reyes y seguido por Juramentada . En 2015, gan\u00f3 el premio David Gemmell Legend a la mejor novela.\u200b El audiolibro \u00edntegro es le\u00eddo por el equipo de narradores Michael Kramer y Kate Reading.\u200b",
+            "character_facts": [],
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Palabras_radiantes",
+            "license": "CC-BY-SA-4.0",
+            "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+            "permanent_index_allowed": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Palabras radiantes",
+              "url": "https://es.wikipedia.org/wiki/Palabras_radiantes",
+              "revision_id": "173656884",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
+            "source": "Wikipedia",
+            "read_mode": "extracto de introducci\u00f3n",
+            "literary_facts": []
+          }
+        ],
+        "research": {
+          "logical_searches": 0,
+          "page_slots_reserved": 2,
+          "page_slots_limit": 3,
+          "external_seconds": 2.588,
+          "events": [
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Open Library",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Open Library",
+              "status": "ok",
+              "count": 0
+            }
+          ],
+          "http_requests_started": 4,
+          "pages_extracted": 0
+        }
+      },
+      {
+        "stage": "wikipedia_adapter",
+        "status": "ok",
+        "sources": [
+          {
+            "title": "El camino de los reyes",
+            "author": "Fuente web",
+            "description": "== Personajes ==\n=== Personajes principales ===\nSzeth-Hijo-hijo-Vallano: Portador de una hoja esquirlada.\nKaladin: Est\u00e1 acompa\u00f1ado por un Honorspren llamado Sylphrena o Syl.\nShallan Davar: Intenta ser aceptada como la pupila de la renombrada erudita Jasnah Kholin, hermana del rey de Alezkar, Elhokar.\nDalinar Kholin: Un hombre que experimenta visiones durante las altas tormentas y un portador completo, se le tacha de d\u00e9bil cuando empieza a seguir los C\u00f3digos y habla de parar la guerra sinsentido en la que se ve envuelta Alezkar.\nAdolin Kholin: Es un especialista en duelos y un portador completo, adora y respeta a su padre incluso cuando teme que se haya vuelto loco.\nNavani Kholin: Viuda del rey Gavilar, madre del rey Elhokar y de Jasnah.",
+            "identity_text": "El camino de los reyes es una novela de fantas\u00eda \u00e9pica escrita por el autor estadounidense Brandon Sanderson y el primer libro de la saga El archivo de las tormentas.\u200b La novela fue publicada el 31 de agosto de 2010 por Tor Books.\u200b El Camino de los Reyes consta de un preludio, un pr\u00f3logo, 75 cap\u00edtulos, un ep\u00edlogo y 9 interludios.\u200b Le siguieron Palabras Radiantes en 2014,\u200b Juramentada en 2017\u200b y El Ritmo de la Guerra\u200b en 2020. Est\u00e1 previsto que se publique una edici\u00f3n encuadernada en piel en 2021.\u200b En 2011, gan\u00f3 el premio David Gemmel Legend Award a mejor novela.\u200b El audiolibro est\u00e1 \u00edntegramente narrado por Michael Kramer y Kate Reading.",
+            "character_facts": [
+              {
+                "name": "Szeth-Hijo-hijo-Vallano",
+                "role": "Portador de una hoja esquirlada.",
+                "evidence": "Szeth-Hijo-hijo-Vallano: Portador de una hoja esquirlada.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales"
+              },
+              {
+                "name": "Kaladin",
+                "role": "Est\u00e1 acompa\u00f1ado por un Honorspren llamado Sylphrena o Syl.",
+                "evidence": "Kaladin: Est\u00e1 acompa\u00f1ado por un Honorspren llamado Sylphrena o Syl.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales"
+              },
+              {
+                "name": "Shallan Davar",
+                "role": "Intenta ser aceptada como la pupila de la renombrada erudita Jasnah Kholin, hermana del rey de Alezkar, Elhokar.",
+                "evidence": "Shallan Davar: Intenta ser aceptada como la pupila de la renombrada erudita Jasnah Kholin, hermana del rey de Alezkar, Elhokar.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales"
+              },
+              {
+                "name": "Dalinar Kholin",
+                "role": "Un hombre que experimenta visiones durante las altas tormentas y un portador completo, se le tacha de d\u00e9bil cuando empieza a seguir los C\u00f3digos y habla de parar la guerra sinsentido en la que se ve envuelta Alezkar.",
+                "evidence": "Dalinar Kholin: Un hombre que experimenta visiones durante las altas tormentas y un portador completo, se le tacha de d\u00e9bil cuando empieza a seguir los C\u00f3digos y habla de parar la guerra sinsentido en la que se ve envuelta Alezkar.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales"
+              },
+              {
+                "name": "Adolin Kholin",
+                "role": "Es un especialista en duelos y un portador completo, adora y respeta a su padre incluso cuando teme que se haya vuelto loco.",
+                "evidence": "Adolin Kholin: Es un especialista en duelos y un portador completo, adora y respeta a su padre incluso cuando teme que se haya vuelto loco.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales"
+              },
+              {
+                "name": "Navani Kholin",
+                "role": "Viuda del rey Gavilar, madre del rey Elhokar y de Jasnah.",
+                "evidence": "Navani Kholin: Viuda del rey Gavilar, madre del rey Elhokar y de Jasnah.",
+                "classification": "principal",
+                "classification_evidence": "Personajes principales"
+              }
+            ],
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/El_camino_de_los_reyes",
+            "license": "CC-BY-SA-4.0",
+            "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+            "permanent_index_allowed": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "El camino de los reyes",
+              "url": "https://es.wikipedia.org/wiki/El_camino_de_los_reyes",
+              "revision_id": "176020628",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
+            "source": "Wikipedia",
+            "read_mode": "pasaje de secci\u00f3n de art\u00edculo p\u00fablico",
+            "literary_facts": []
+          },
+          {
+            "title": "Palabras radiantes",
+            "author": "Fuente web",
+            "description": "Words of Radiance es una novela de fantas\u00eda \u00e9pica escrita por el autor estadounidense Brandon Sanderson, es el segundo libro de la serie El archivo de las tormentas.\u200b La novela fue publicada el 4 de marzo de 2014 por Tor Books.\u200b Palabras Radiantes consta de un pr\u00f3logo, 89 cap\u00edtulos, un ep\u00edlogo y 14 interludios. Est\u00e1 precedido por El camino de los reyes y seguido por Juramentada .\nEn 2015, gan\u00f3 el premio David Gemmell Legend a la mejor novela.\u200b El audiolibro \u00edntegro es le\u00eddo por el equipo de narradores Michael Kramer y Kate Reading.\u200b",
+            "identity_text": "Words of Radiance es una novela de fantas\u00eda \u00e9pica escrita por el autor estadounidense Brandon Sanderson, es el segundo libro de la serie El archivo de las tormentas.\u200b La novela fue publicada el 4 de marzo de 2014 por Tor Books.\u200b Palabras Radiantes consta de un pr\u00f3logo, 89 cap\u00edtulos, un ep\u00edlogo y 14 interludios. Est\u00e1 precedido por El camino de los reyes y seguido por Juramentada . En 2015, gan\u00f3 el premio David Gemmell Legend a la mejor novela.\u200b El audiolibro \u00edntegro es le\u00eddo por el equipo de narradores Michael Kramer y Kate Reading.\u200b",
+            "character_facts": [],
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Palabras_radiantes",
+            "license": "CC-BY-SA-4.0",
+            "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+            "permanent_index_allowed": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Palabras radiantes",
+              "url": "https://es.wikipedia.org/wiki/Palabras_radiantes",
+              "revision_id": "173656884",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
+            "source": "Wikipedia",
+            "read_mode": "extracto de introducci\u00f3n",
+            "literary_facts": []
+          }
+        ],
+        "research": {
+          "logical_searches": 1,
+          "page_slots_reserved": 3,
+          "page_slots_limit": 3,
+          "external_seconds": 2.588,
+          "events": [
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Open Library",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Open Library",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            }
+          ],
+          "http_requests_started": 6,
+          "pages_extracted": 0
+        }
+      },
+      {
+        "stage": "wikipedia_adapter",
+        "status": "ok",
+        "sources": [
+          {
+            "title": "El archivo de las tormentas",
+            "author": "Fuente web",
+            "description": "El archivo de las tormentas (en ingl\u00e9s: The Stormlight Archive) es una serie de novelas de fantas\u00eda \u00e9pica escrita por el autor estadounidense Brandon Sanderson. El primero (de diez vol\u00famenes planificados) es El camino de los reyes, se public\u00f3 el 31 de agosto de 2010. El segundo, Palabras radiantes, se public\u00f3 el 4 de marzo de 2014. El tercero, Juramentada, se public\u00f3 el 14 de noviembre de 2017. El cuarto libro de la saga, El ritmo de la guerra, se public\u00f3 el 17 de noviembre de 2020 en su versi\u00f3n en ingl\u00e9s y la misma semana en su versi\u00f3n en espa\u00f1ol. El quinto libro fue publicado el viernes 6 de diciembre de 2024, con el t\u00edtulo Viento y Verdad.",
+            "identity_text": "El archivo de las tormentas (en ingl\u00e9s: The Stormlight Archive) es una serie de novelas de fantas\u00eda \u00e9pica escrita por el autor estadounidense Brandon Sanderson. El primero (de diez vol\u00famenes planificados) es El camino de los reyes, se public\u00f3 el 31 de agosto de 2010. El segundo, Palabras radiantes, se public\u00f3 el 4 de marzo de 2014. El tercero, Juramentada, se public\u00f3 el 14 de noviembre de 2017. El cuarto libro de la saga, El ritmo de la guerra, se public\u00f3 el 17 de noviembre de 2020 en su versi\u00f3n en ingl\u00e9s y la misma semana en su versi\u00f3n en espa\u00f1ol. El quinto libro fue publicado el viernes 6 de diciembre de 2024, con el t\u00edtulo Viento y Verdad.",
+            "character_facts": [],
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/El_archivo_de_las_tormentas",
+            "license": "CC-BY-SA-4.0",
+            "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+            "permanent_index_allowed": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "El archivo de las tormentas",
+              "url": "https://es.wikipedia.org/wiki/El_archivo_de_las_tormentas",
+              "revision_id": "172700091",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
+            "source": "Wikipedia",
+            "read_mode": "extracto de introducci\u00f3n",
+            "literary_facts": []
+          },
+          {
+            "title": "El camino de los reyes",
+            "author": "Fuente web",
+            "description": "El camino de los reyes es una novela de fantas\u00eda \u00e9pica escrita por el autor estadounidense Brandon Sanderson y el primer libro de la saga El archivo de las tormentas.\u200b La novela fue publicada el 31 de agosto de 2010 por Tor Books.\u200b El Camino de los Reyes consta de un preludio, un pr\u00f3logo, 75 cap\u00edtulos, un ep\u00edlogo y 9 interludios.\u200b Le siguieron Palabras Radiantes en 2014,\u200b Juramentada en 2017\u200b y El Ritmo de la Guerra\u200b en 2020. Est\u00e1 previsto que se publique una edici\u00f3n encuadernada en piel en 2021.\u200b \nEn 2011, gan\u00f3 el premio David Gemmel Legend Award a mejor novela.\u200b El audiolibro est\u00e1 \u00edntegramente narrado por Michael Kramer y Kate Reading.",
+            "identity_text": "El camino de los reyes es una novela de fantas\u00eda \u00e9pica escrita por el autor estadounidense Brandon Sanderson y el primer libro de la saga El archivo de las tormentas.\u200b La novela fue publicada el 31 de agosto de 2010 por Tor Books.\u200b El Camino de los Reyes consta de un preludio, un pr\u00f3logo, 75 cap\u00edtulos, un ep\u00edlogo y 9 interludios.\u200b Le siguieron Palabras Radiantes en 2014,\u200b Juramentada en 2017\u200b y El Ritmo de la Guerra\u200b en 2020. Est\u00e1 previsto que se publique una edici\u00f3n encuadernada en piel en 2021.\u200b En 2011, gan\u00f3 el premio David Gemmel Legend Award a mejor novela.\u200b El audiolibro est\u00e1 \u00edntegramente narrado por Michael Kramer y Kate Reading.",
+            "character_facts": [],
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/El_camino_de_los_reyes",
+            "license": "CC-BY-SA-4.0",
+            "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+            "permanent_index_allowed": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "El camino de los reyes",
+              "url": "https://es.wikipedia.org/wiki/El_camino_de_los_reyes",
+              "revision_id": "176020628",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
+            "source": "Wikipedia",
+            "read_mode": "extracto de introducci\u00f3n",
+            "literary_facts": []
+          }
+        ],
+        "research": {
+          "logical_searches": 2,
+          "page_slots_reserved": 3,
+          "page_slots_limit": 3,
+          "external_seconds": 4.509,
+          "events": [
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Open Library",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Open Library",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            }
+          ],
+          "http_requests_started": 7,
+          "pages_extracted": 0
+        }
+      }
+    ],
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  },
+  {
+    "question": "Ese ya lo le\u00ed, recomi\u00e9ndame uno diferente.",
+    "answer": "El servicio de IA no pudo completar la consulta. Vuelve a intentar en unos instantes.",
+    "status": "unavailable",
+    "books": [],
+    "sources": [],
+    "diagnostics": {
+      "elapsed_ms": 35033,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 3,
+      "progress_metrics": {
+        "elapsed_ms": 35039.35,
+        "first_phase_emitted_ms": 25.722,
+        "model_calls_started": 3,
+        "stage_totals_ms": {
+          "conversation": 12.21,
+          "cache_lookup": 0.9,
+          "knowledge_lookup": 819.496,
+          "web_search": 1.537,
+          "intent": 0.322,
+          "model_inspection": 39.133,
+          "routing": 5151.703,
+          "local_search": 285.319,
+          "retrieval": 11403.475,
+          "generation": 11956.211,
+          "repair": 5598.931,
+          "finalization": 5.886
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 4.006,
+            "elapsed_ms": 12.21,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 24.808,
+            "elapsed_ms": 0.9,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 41.534,
+            "elapsed_ms": 411.936,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 130.315,
+            "elapsed_ms": 48.381,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 260.495,
+            "elapsed_ms": 187.961,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 331.799,
+            "elapsed_ms": 70.106,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 535.517,
+            "elapsed_ms": 50.003,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 730.947,
+            "elapsed_ms": 51.109,
+            "status": "ok"
+          },
+          {
+            "stage": "web_search",
+            "started_ms": 861.539,
+            "elapsed_ms": 1.537,
+            "status": "ok"
+          },
+          {
+            "stage": "intent",
+            "started_ms": 870.582,
+            "elapsed_ms": 0.308,
+            "status": "ok"
+          },
+          {
+            "stage": "intent",
+            "started_ms": 870.897,
+            "elapsed_ms": 0.014,
+            "status": "ok"
+          },
+          {
+            "stage": "routing",
+            "started_ms": 870.916,
+            "elapsed_ms": 5151.703,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 870.92,
+            "elapsed_ms": 39.121,
+            "status": "ok"
+          },
+          {
+            "stage": "retrieval",
+            "started_ms": 6023.877,
+            "elapsed_ms": 4705.219,
+            "status": "ok"
+          },
+          {
+            "stage": "local_search",
+            "started_ms": 6041.961,
+            "elapsed_ms": 85.282,
+            "status": "ok"
+          },
+          {
+            "stage": "retrieval",
+            "started_ms": 10729.28,
+            "elapsed_ms": 3554.635,
+            "status": "ok"
+          },
+          {
+            "stage": "local_search",
+            "started_ms": 10734.954,
+            "elapsed_ms": 63.52,
+            "status": "ok"
+          },
+          {
+            "stage": "retrieval",
+            "started_ms": 14284.103,
+            "elapsed_ms": 77.441,
+            "status": "ok"
+          },
+          {
+            "stage": "local_search",
+            "started_ms": 14288.842,
+            "elapsed_ms": 72.388,
+            "status": "ok"
+          },
+          {
+            "stage": "retrieval",
+            "started_ms": 14361.731,
+            "elapsed_ms": 3066.18,
+            "status": "ok"
+          },
+          {
+            "stage": "local_search",
+            "started_ms": 14366.196,
+            "elapsed_ms": 64.129,
+            "status": "ok"
+          },
+          {
+            "stage": "generation",
+            "started_ms": 17446.957,
+            "elapsed_ms": 11956.211,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 17446.972,
+            "elapsed_ms": 0.005,
+            "status": "ok"
+          },
+          {
+            "stage": "repair",
+            "started_ms": 29405.73,
+            "elapsed_ms": 5598.931,
+            "status": "failed"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 29405.748,
+            "elapsed_ms": 0.007,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 35033.458,
+            "elapsed_ms": 5.886,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 25.722
+          },
+          {
+            "stage": "writing",
+            "elapsed_ms": 17446.94
+          }
+        ]
+      },
+      "stage_timings": [
+        {
+          "model": "qwen3.5:9b-q4_K_M",
+          "total_ms": 5092.856,
+          "elapsed_ms": 5152,
+          "status": "ok",
+          "stage": "route",
+          "prompt_eval_ms": 727.984,
+          "prompt_eval_count": 1968,
+          "load_ms": 6.378,
+          "eval_ms": 4263.241,
+          "eval_count": 125
+        },
+        {
+          "model": "qwen3.5:9b-q4_K_M",
+          "total_ms": 11928.698,
+          "elapsed_ms": 11956,
+          "status": "ok",
+          "stage": "answer",
+          "prompt_eval_ms": 3322.983,
+          "prompt_eval_count": 6034,
+          "load_ms": 6.643,
+          "eval_ms": 8263.852,
+          "eval_count": 240
+        },
+        {
+          "model": "qwen3.5:9b-q4_K_M",
+          "elapsed_ms": 5599,
+          "status": "failed",
+          "stage": "repair"
+        }
+      ],
+      "external_research": {
+        "pages_extracted": 0,
+        "http_requests_started": 5,
+        "external_seconds": 11.064,
+        "page_slots_reserved": 2,
+        "logical_searches": 0
+      },
+      "provider": "ollama-local"
+    },
+    "seconds": 35.049,
+    "sse_done": true,
+    "http_timing": {
+      "first_progress_seconds": 0.0487,
+      "verified_ready_seconds": 35.0262,
+      "first_verified_text_seconds": 35.049
+    },
+    "duckduckgo_paused_control": false,
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": null
+      },
+      {
+        "request": null,
+        "diagnostics": {},
+        "sources": []
+      }
+    ],
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  }
+]

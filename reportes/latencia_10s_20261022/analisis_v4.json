@@ -1,0 +1,29 @@
+{
+  "report": "http_matriz_v4.json",
+  "source_sha256": "710dc64e59dc8c8f2c6adba1977997ea803ccec8bc53f60a4a1836dbf39a2d4a",
+  "source_files_changed_during_run": false,
+  "turns": 46,
+  "latency_metrics": {
+    "turns": 46,
+    "p50_seconds": 0.0465,
+    "p95_seconds": 9.017,
+    "max_seconds": 9.025,
+    "under_10_seconds": 46,
+    "statuses": {
+      "unavailable": 17,
+      "answered": 21,
+      "clarification": 5,
+      "rejected": 3
+    }
+  },
+  "original_matrix_turns": 42,
+  "published_original_matrix": 17,
+  "additional_screenshot_turns": 4,
+  "all_sse_completed": true,
+  "automatic_term_failures_in_published_answers": [],
+  "unknown_model_call_counts_on_unavailable": 17,
+  "correct_answers": null,
+  "incorrect_answers": null,
+  "factual_error_rate": null,
+  "warning": "Tiempo acotado, estados y coincidencias mecanicas no certifican exactitud factual. Fuentes externas variables; no es un experimento ciego o controlado."
+}

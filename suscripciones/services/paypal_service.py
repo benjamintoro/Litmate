@@ -5,6 +5,8 @@ import urllib.parse
 from decimal import Decimal
 from django.conf import settings
 
+from ..payment_safety import simulation_allowed
+
 logger = logging.getLogger('litmate')
 
 
@@ -70,6 +72,7 @@ class PayPalService:
                 "purchase_units": [
                     {
                         "reference_id": f"LITMATE_{plan.slug.upper()}",
+                        "custom_id": f"LITMATE-{usuario.id}-{plan.id}",
                         "description": f"Suscripción LitMate {plan.nombre}",
                         "amount": {
                             "currency_code": "USD",
@@ -109,7 +112,11 @@ class PayPalService:
             except Exception as e:
                 logger.warning(f"[PayPal] API Orders falló: {e}")
 
-        # Redirección Oficial al Portal Web de Checkout de PayPal Sandbox
+        if not simulation_allowed():
+            logger.error("[PayPal] Sin credenciales y el sandbox local está desactivado.")
+            return {"success": False, "error": "provider_unavailable"}
+
+        # Redirección de desarrollo al portal Sandbox; no se usa en producción.
         order_ref = f"PP_ORD_{uuid.uuid4().hex[:8].upper()}"
         success_cb_url = f"{return_url}?token={order_ref}&PayerID=PAYPAL_USER_SANDBOX"
         
@@ -122,7 +129,7 @@ class PayPalService:
             'return': success_cb_url,
             'cancel_return': cancel_url,
             'no_shipping': '1',
-            'custom': order_ref
+            'custom': f"LITMATE-{usuario.id}-{plan.id}|{order_ref}"
         }
         paypal_portal_url = f"https://www.sandbox.paypal.com/cgi-bin/webscr?{urllib.parse.urlencode(params)}"
         
@@ -139,18 +146,23 @@ class PayPalService:
         """
         Captura el pago de una orden previamente aprobada en PayPal.
         """
-        if str(order_id).startswith("PP_ORD_") or str(order_id).startswith("PP_MOCK_") or str(order_id).startswith("PP_SANDBOX"):
+        if (str(order_id).startswith("PP_ORD_")
+                or str(order_id).startswith("PP_MOCK_")
+                or str(order_id).startswith("PP_SANDBOX")):
+            if not simulation_allowed():
+                logger.warning("[PayPal] Orden simulada rechazada fuera del sandbox.")
+                return {"success": False, "status": "simulation_disabled"}
             return {
                 "success": True,
                 "status": "COMPLETED",
                 "order_id": order_id,
                 "capture_id": f"CAP-{uuid.uuid4().hex[:8].upper()}",
-                "is_simulated": False
+                "is_simulated": True
             }
 
         token = self._obtener_token()
         if not token:
-            return {"success": True, "status": "COMPLETED", "order_id": order_id}
+            return {"success": False, "status": "credentials_unavailable"}
 
         headers = {
             "Content-Type": "application/json",
@@ -172,4 +184,4 @@ class PayPalService:
         except Exception as e:
             logger.error(f"[PayPal] Excepción capturando orden: {e}")
 
-        return {"success": True, "status": "COMPLETED", "order_id": order_id}
+        return {"success": False, "status": "capture_failed", "order_id": order_id}

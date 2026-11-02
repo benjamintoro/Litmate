@@ -1,0 +1,22 @@
+[
+  {
+    "id": "litmate:cd01a12f9f01f2eb764bc33a",
+    "sources": [
+      {
+        "title": "La m\u00e1quina del tiempo",
+        "description": "== Argumento == Ante el escepticismo de sus amigos, un cient\u00edfico de finales del siglo XIX logra descubrir las claves de",
+        "facts": 3
+      }
+    ]
+  },
+  {
+    "id": "litmate:62f6b717c0fc6a444106f1fd",
+    "sources": [
+      {
+        "title": "Mujercitas",
+        "description": "== Argumento == En la novela, las chicas traban amistad con un vecino, el joven adolescente Laurie, que se vuelve el mej",
+        "facts": 3
+      }
+    ]
+  }
+]

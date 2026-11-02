@@ -1,0 +1,315 @@
+{
+  "case": {
+    "case": 9,
+    "title": "El invencible verano de Liliana",
+    "author": "Cristina Rivera Garza",
+    "kind": "no_ficcion",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": true
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Explica el contenido de El invencible verano de Liliana de Cristina Rivera Garza",
+      "answer": "El servicio de IA no pudo completar la consulta. Vuelve a intentar en unos instantes.",
+      "status": "unavailable",
+      "books": [],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 35035,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 4,
+        "progress_metrics": {
+          "elapsed_ms": 35037.744,
+          "first_phase_emitted_ms": 26.234,
+          "model_calls_started": 4,
+          "stage_totals_ms": {
+            "conversation": 10.675,
+            "cache_lookup": 6.125,
+            "knowledge_lookup": 515.201,
+            "intent": 0.564,
+            "model_inspection": 37.758,
+            "routing": 5864.185,
+            "local_search": 73.468,
+            "retrieval": 1477.408,
+            "extraction": 4939.807,
+            "web_search": 3736.655,
+            "generation": 17429.462,
+            "audit": 5867.212,
+            "finalization": 2.675
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 3.257,
+              "elapsed_ms": 10.675,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 20.098,
+              "elapsed_ms": 6.125,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 41.263,
+              "elapsed_ms": 297.198,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 115.247,
+              "elapsed_ms": 29.49,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 204.451,
+              "elapsed_ms": 133.075,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 274.517,
+              "elapsed_ms": 26.887,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 407.198,
+              "elapsed_ms": 28.551,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 506.257,
+              "elapsed_ms": 0.207,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 506.49,
+              "elapsed_ms": 0.035,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 506.538,
+              "elapsed_ms": 2690.897,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 506.543,
+              "elapsed_ms": 37.738,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 3204.339,
+              "elapsed_ms": 0.322,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 3204.684,
+              "elapsed_ms": 3173.288,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 3204.689,
+              "elapsed_ms": 0.005,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 6430.256,
+              "elapsed_ms": 1477.408,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 6441.126,
+              "elapsed_ms": 73.468,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 7926.588,
+              "elapsed_ms": 3736.655,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 8993.803,
+              "elapsed_ms": 847.768,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 8994.272,
+              "elapsed_ms": 1425.258,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 8996.257,
+              "elapsed_ms": 2666.781,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 11703.201,
+              "elapsed_ms": 17429.462,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 11703.217,
+              "elapsed_ms": 0.008,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 29136.275,
+              "elapsed_ms": 5867.212,
+              "status": "failed"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 29136.297,
+              "elapsed_ms": 0.007,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 35035.062,
+              "elapsed_ms": 2.675,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 26.234
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 11703.187
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 29136.254
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "prompt_eval_ms": 561.328,
+            "total_ms": 2626.585,
+            "eval_ms": 1840.979,
+            "elapsed_ms": 2691,
+            "eval_count": 52,
+            "status": "ok",
+            "prompt_eval_count": 1304,
+            "stage": "route",
+            "load_ms": 5.357,
+            "model": "qwen3.5:9b-q4_K_M"
+          },
+          {
+            "prompt_eval_ms": 298.743,
+            "total_ms": 3163.959,
+            "eval_ms": 2761.104,
+            "elapsed_ms": 3173,
+            "eval_count": 83,
+            "status": "ok",
+            "prompt_eval_count": 397,
+            "stage": "plan",
+            "load_ms": 6.919,
+            "model": "qwen3.5:9b-q4_K_M"
+          },
+          {
+            "prompt_eval_ms": 4193.299,
+            "total_ms": 17398.364,
+            "eval_ms": 13000.953,
+            "elapsed_ms": 17429,
+            "eval_count": 374,
+            "status": "ok",
+            "prompt_eval_count": 7396,
+            "stage": "answer",
+            "load_ms": 6.905,
+            "model": "qwen3.5:9b-q4_K_M"
+          },
+          {
+            "elapsed_ms": 5867,
+            "status": "failed",
+            "stage": "audit",
+            "model": "qwen3.5:9b-q4_K_M"
+          }
+        ],
+        "external_research": {
+          "logical_searches": 1,
+          "page_slots_reserved": 3,
+          "http_requests_started": 4,
+          "pages_extracted": 3,
+          "external_seconds": 5.125
+        },
+        "provider": "ollama-local"
+      },
+      "seconds": 35.0461,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 35.0268,
+        "first_verified_text_seconds": 35.0461
+      }
+    }
+  ],
+  "seconds": 37.303,
+  "coverage_before": {
+    "works": 14472,
+    "works_with_explicit_plot": 14,
+    "works_with_development_excerpt": 10,
+    "works_with_admitted_description": 17,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 31,
+    "linked_sources": 14644,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14472,
+    "works_with_explicit_plot": 14,
+    "works_with_development_excerpt": 10,
+    "works_with_admitted_description": 17,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 31,
+    "linked_sources": 14644,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "factual_review_pending": true
+}

@@ -1,0 +1,619 @@
+[
+  {
+    "passed": false,
+    "question": "H\u00e1blame de The Last Days of the Incas del autor Kim MacQuarrie",
+    "answer": "Hay un problema temporal al consultar las fuentes de este libro. Puedes volver a intentarlo en unos instantes.",
+    "status": "unavailable",
+    "not_in_legacy_catalog": null,
+    "sse_done": true,
+    "seconds": 7.3579,
+    "cards": [],
+    "diagnostics": {
+      "elapsed_ms": 7306,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 0,
+      "work_type": "nonfiction",
+      "narrative_failure": "retrieval_unavailable",
+      "progress_metrics": {
+        "elapsed_ms": 7349.238,
+        "first_phase_emitted_ms": 42.726,
+        "model_calls_started": 0,
+        "stage_totals_ms": {
+          "conversation": 18.881,
+          "cache_lookup": 0.661,
+          "knowledge_lookup": 847.643,
+          "retrieval": 1832.978,
+          "web_search": 3109.5,
+          "finalization": 43.096
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 8.348,
+            "elapsed_ms": 18.881,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 42.05,
+            "elapsed_ms": 0.661,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 90.328,
+            "elapsed_ms": 432.336,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 189.533,
+            "elapsed_ms": 60.769,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 321.648,
+            "elapsed_ms": 196.008,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 385.542,
+            "elapsed_ms": 93.215,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 586.074,
+            "elapsed_ms": 65.315,
+            "status": "ok"
+          },
+          {
+            "stage": "retrieval",
+            "started_ms": 2272.114,
+            "elapsed_ms": 1832.978,
+            "status": "ok"
+          },
+          {
+            "stage": "web_search",
+            "started_ms": 4116.395,
+            "elapsed_ms": 687.189,
+            "status": "ok"
+          },
+          {
+            "stage": "web_search",
+            "started_ms": 4803.594,
+            "elapsed_ms": 236.868,
+            "status": "ok"
+          },
+          {
+            "stage": "web_search",
+            "started_ms": 5049.238,
+            "elapsed_ms": 2185.443,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 7306.136,
+            "elapsed_ms": 43.096,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 42.726
+          }
+        ]
+      },
+      "stage_timings": [],
+      "provider": "verified-narrative-engine"
+    },
+    "reader_data_written": false,
+    "sources": [],
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": null
+      },
+      {
+        "stage": "wikipedia_adapter",
+        "status": "empty",
+        "sources": [],
+        "research": {
+          "logical_searches": 0,
+          "page_slots_reserved": 1,
+          "page_slots_limit": 3,
+          "external_seconds": 0.0,
+          "events": [
+            {
+              "stage": "http_request",
+              "provider": "Open Library",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Open Library",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            }
+          ],
+          "http_requests_started": 5,
+          "pages_extracted": 0
+        }
+      },
+      {
+        "stage": "wikipedia_adapter",
+        "status": "ok",
+        "sources": [
+          {
+            "title": "Battle of Cajamarca",
+            "author": "Fuente web",
+            "description": "The Battle of Cajamarca, also spelled Cajamalca (though many contemporary scholars prefer to call it the Cajamarca massacre), was the ambush and seizure of the Incan ruler Atahualpa by a small Spanish force led by Francisco Pizarro, on November 16, 1532. The Spanish killed thousands of Atahualpa's counselors, commanders, and unarmed attendants in the great plaza of Cajamarca, and caused his armed host outside the town to flee. The capture of Atahualpa marked the opening stage of the conquest of the pre-Columbian civilization of Peru.",
+            "identity_text": "The Battle of Cajamarca, also spelled Cajamalca (though many contemporary scholars prefer to call it the Cajamarca massacre), was the ambush and seizure of the Incan ruler Atahualpa by a small Spanish force led by Francisco Pizarro, on November 16, 1532. The Spanish killed thousands of Atahualpa's counselors, commanders, and unarmed attendants in the great plaza of Cajamarca, and caused his armed host outside the town to flee. The capture of Atahualpa marked the opening stage of the conquest of the pre-Columbian civilization of Peru.",
+            "character_facts": [],
+            "kind": "web",
+            "url": "https://en.wikipedia.org/wiki/Battle_of_Cajamarca",
+            "license": "CC-BY-SA-4.0",
+            "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+            "permanent_index_allowed": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Battle of Cajamarca",
+              "url": "https://en.wikipedia.org/wiki/Battle_of_Cajamarca",
+              "revision_id": "1379997957",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
+            "source": "Wikipedia",
+            "read_mode": "extracto de introducci\u00f3n",
+            "literary_facts": []
+          },
+          {
+            "title": "Kim MacQuarrie",
+            "author": "Fuente web",
+            "description": "Kim MacQuarrie is an American author, documentary filmmaker, anthropologist, and conservationist whose works include the best-selling The Last Days of the Incas (2007) and The Living Edens. His documentary film work has brought him four national Emmy awards.\nMacQuarrie is known for his fine narrative treatments of the history of indigenous cultures, such as the fall of the Inca Empire, as well as his work in conservation. He has published five books and his work has appeared in worldwide publications such as The Guardian, The Christian Science Monitor and National Geographic Traveller. He has produced and or directed dozens of documentaries for television channels such as Discovery Channel, PBS, FX, Fox and others.",
+            "identity_text": "Kim MacQuarrie is an American author, documentary filmmaker, anthropologist, and conservationist whose works include the best-selling The Last Days of the Incas (2007) and The Living Edens. His documentary film work has brought him four national Emmy awards. MacQuarrie is known for his fine narrative treatments of the history of indigenous cultures, such as the fall of the Inca Empire, as well as his work in conservation. He has published five books and his work has appeared in worldwide publications such as The Guardian, The Christian Science Monitor and National Geographic Traveller. He has produced and or directed dozens of documentaries for television channels such as Discovery Channel, PBS, FX, Fox and others.",
+            "character_facts": [],
+            "kind": "web",
+            "url": "https://en.wikipedia.org/wiki/Kim_MacQuarrie",
+            "license": "CC-BY-SA-4.0",
+            "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+            "permanent_index_allowed": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Kim MacQuarrie",
+              "url": "https://en.wikipedia.org/wiki/Kim_MacQuarrie",
+              "revision_id": "1380922778",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
+            "source": "Wikipedia",
+            "read_mode": "extracto de introducci\u00f3n",
+            "literary_facts": []
+          }
+        ],
+        "research": {
+          "logical_searches": 1,
+          "page_slots_reserved": 1,
+          "page_slots_limit": 3,
+          "external_seconds": 0.0,
+          "events": [
+            {
+              "stage": "http_request",
+              "provider": "Open Library",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Open Library",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "SearXNG",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "SearXNG",
+              "status": "ok",
+              "count": 1
+            },
+            {
+              "stage": "http_request",
+              "provider": "SearXNG",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "SearXNG",
+              "status": "ok",
+              "count": 1
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            }
+          ],
+          "http_requests_started": 9,
+          "pages_extracted": 0
+        }
+      },
+      {
+        "stage": "retrieval",
+        "sources": [
+          {
+            "id": 1,
+            "title": "The Last Days of the Incas",
+            "author": "Kim MacQuarrie",
+            "description": "The Last Days of the Incas, de Kim MacQuarrie. Temas del cat\u00e1logo: History, Conquest of Peru (1522-1548) fast (OCoLC)fst01352533, Incas, Excavations (Archaeology), Antiquities In 1532, the fifty-four year old Spanish conquistador, Francisco Pizarro, led a force of 167 men, including his four brothers, to the shores of Peru. Unbeknownst to the Spaniards, the Inca rulers of Peru had just fought a bloody civil war in which the emperor Atahualpa had defeated his brother Huascar. Pizarro and his men soon clashed with Atahualpa and a huge force of Inca warriors at the Battle of Cajamarca. Despite being out-numbered by more than two hundred to one, the Spaniards prevailed due largely to their horses, their steel armor and swords, and their tactic of surprise. They captured and imprisoned Atahualpa. Although the Inca emperor paid an enormous ransom in gold, the Spaniards executed him anyway. The following year, the Spaniards seized the Inca capital of Cuzco, completing their conquest of the largest native empire the New World has ever known. Peru was now a Spanish colony, and the conquistadors were wealthy beyond their wildest dreams.^ But the Incas did not submit willingly. A young Inca emperor, the brother of Atahualpa, soon led a massive rebellion against the Spaniards, inflicting heavy casualties and nearly wiping out the conquerors. Eventually, however, Pizarro and his men forced the emperor to abandon the Andes and flee to the Amazon. There, he established a hidden capital, called Vilcabamba. Although the Incas fought a deadly, thirty-six year long guerrilla war, the Spanish ultimately captured the last Inca emperor and vanquished the native resistance. The author lived in Peru for five years and became fascinated by the Incas and the history of th",
+            "source": "Open Library",
+            "year": "2007",
+            "book_id": "/works/OL8453721W",
+            "kind": "book",
+            "url": "https://openlibrary.org/works/OL8453721W",
+            "locator": "",
+            "read_mode": "descripci\u00f3n del registro bibliogr\u00e1fico; no texto de la obra",
+            "retrieved_at": "1792784943.7626584",
+            "work_id": "litmate:4a94cf2d9e00079ce1cd13c0",
+            "license": "Open Library bibliographic facts; rights vary",
+            "trust": "untrusted_data",
+            "expires_at": "1795376943.7626584",
+            "evidence_hash": "8a48fc8e9419beef299eada3b21e83aac2990579b625c44dc9dadc2b7bead375",
+            "memory_source_id": "0344e800555a8f25f92159826cdd09630668796d0decded353cf18b5412662d4",
+            "last_verified_at": "1792784943.7626584",
+            "confirmed_aliases": [],
+            "synopsis": "In 1532, the fifty-four year old Spanish conquistador, Francisco Pizarro, led a force of 167 men, including his four brothers, to the shores of Peru. Unbeknownst to the Spaniards, the Inca rulers of Peru had just fought a bloody civil war in which the emperor Atahualpa had defeated his brother Huascar. Pizarro and his men soon clashed with Atahualpa and a huge force of Inca warriors at the Battle of Cajamarca. Despite being out-numbered by more than two hundred to one, the Spaniards prevailed due largely to their horses, their steel armor and swords, and their tactic of surprise. They captured and imprisoned Atahualpa. Although the Inca emperor paid an enormous ransom in gold, the Spaniards executed him anyway. The following year, the Spaniards seized the Inca capital of Cuzco, completing their conquest of the largest native empire the New World has ever known. Peru was now a Spanish colony, and the conquistadors were wealthy beyond their wildest dreams.^ But the Incas did not submit willingly. A young Inca emperor, the brother of Atahualpa, soon led a massive rebellion against the Spaniards, inflicting heavy casualties and nearly wiping out the conquerors. Eventually, however, Pizarro and his men forced the emperor to abandon the Andes and flee to the Amazon. There, he established a hidden capital, called Vilcabamba. Although the Incas fought a deadly, thirty-six year long guerrilla war, the Spanish ultimately captured the last Inca emperor and vanquished the native resistance. The author lived in Peru for five years and became fascinated by the Incas and the history of th",
+            "synopsis_source_url": "https://openlibrary.org/works/OL8453721W",
+            "description_source": "Open Library, registro de obra",
+            "isbns": [],
+            "categories": [
+              "History",
+              "Conquest of Peru (1522-1548) fast (OCoLC)fst01352533",
+              "Incas",
+              "Excavations (Archaeology)",
+              "Antiquities"
+            ],
+            "subjects": [
+              "Incas",
+              "Excavations (Archaeology)",
+              "Antiquities",
+              "History",
+              "American history: pre-Columbian period, BCE to c 1500",
+              "Eroberung",
+              "Histoire",
+              "Conquest of Peru (1522-1548) fast (OCoLC)fst01352533",
+              "Peru, history",
+              "Excavations (archaeology), south america",
+              "Peru, history, to 1548"
+            ]
+          }
+        ]
+      },
+      {
+        "request": {
+          "task": "summary",
+          "title": "The Last Days of the Incas",
+          "targets": [],
+          "author_hint": "Kim MacQuarrie",
+          "format": "",
+          "ambiguous": false
+        },
+        "diagnostics": {
+          "narrative_failure": "retrieval_unavailable",
+          "retrieval_failures": [
+            {
+              "provider": "Google Books",
+              "status": "unavailable"
+            },
+            {
+              "provider": "web",
+              "status": "unavailable"
+            }
+          ],
+          "model_calls": 0,
+          "work_type": "nonfiction",
+          "narrative_trace": [
+            {
+              "stage": "bibliographic",
+              "sources": 17,
+              "bound": 1,
+              "content": 1,
+              "providers": [
+                "Open Library",
+                "Project Gutenberg"
+              ]
+            },
+            {
+              "stage": "content_discovery",
+              "sources": 17,
+              "bound": 1,
+              "content": 1,
+              "providers": [
+                "Open Library",
+                "Project Gutenberg"
+              ]
+            },
+            {
+              "stage": "web",
+              "sources": 19,
+              "bound": 1,
+              "content": 1,
+              "providers": [
+                "Open Library",
+                "Project Gutenberg",
+                "Wikipedia"
+              ]
+            }
+          ],
+          "progress_metrics": {
+            "stage_timings": [
+              {
+                "stage": "conversation",
+                "started_ms": 8.348,
+                "elapsed_ms": 18.881,
+                "status": "ok"
+              },
+              {
+                "stage": "cache_lookup",
+                "started_ms": 42.05,
+                "elapsed_ms": 0.661,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 90.328,
+                "elapsed_ms": 432.336,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 189.533,
+                "elapsed_ms": 60.769,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 321.648,
+                "elapsed_ms": 196.008,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 385.542,
+                "elapsed_ms": 93.215,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 586.074,
+                "elapsed_ms": 65.315,
+                "status": "ok"
+              },
+              {
+                "stage": "retrieval",
+                "started_ms": 2272.114,
+                "elapsed_ms": 1832.978,
+                "status": "ok"
+              },
+              {
+                "stage": "web_search",
+                "started_ms": 4116.395,
+                "elapsed_ms": 687.189,
+                "status": "ok"
+              },
+              {
+                "stage": "web_search",
+                "started_ms": 4803.594,
+                "elapsed_ms": 236.868,
+                "status": "ok"
+              },
+              {
+                "stage": "web_search",
+                "started_ms": 5049.238,
+                "elapsed_ms": 2185.443,
+                "status": "ok"
+              }
+            ],
+            "stage_totals_ms": {
+              "conversation": 18.881,
+              "cache_lookup": 0.661,
+              "knowledge_lookup": 847.643,
+              "retrieval": 1832.978,
+              "web_search": 3109.5
+            },
+            "model_calls_started": 0,
+            "progress_events": [
+              {
+                "stage": "search",
+                "elapsed_ms": 42.726
+              }
+            ],
+            "elapsed_ms": 7290.77,
+            "first_phase_emitted_ms": 42.726
+          },
+          "language_presentation": {
+            "target": "es",
+            "original_text": "Hay un problema temporal al consultar las fuentes de este libro. Puedes volver a intentarlo en unos instantes.",
+            "translated_fields": 0,
+            "cache_hits": 0,
+            "untranslated_fields": [],
+            "audit_applies_to_original": true,
+            "cards": []
+          },
+          "stage_timings": [],
+          "elapsed_ms": 7291,
+          "chat_budget_seconds": 36.0
+        },
+        "sources": []
+      }
+    ],
+    "content_manually_reviewed": false,
+    "mysql_row_counts": {
+      "auth_group": 0,
+      "auth_group_permissions": 0,
+      "auth_permission": 152,
+      "auth_user": 179,
+      "auth_user_groups": 0,
+      "auth_user_user_permissions": 0,
+      "core_asistenteia": 1,
+      "core_autor": 31,
+      "core_clickconversion": 185,
+      "core_conversacionia": 50,
+      "core_editorial": 34,
+      "core_elementolistalectura": 2,
+      "core_estadolectura": 451,
+      "core_eventoanalitica": 384,
+      "core_genero": 12,
+      "core_historialchatbot": 5,
+      "core_historialpreciolibro": 223,
+      "core_kbname": 11596,
+      "core_kbprojection": 8,
+      "core_kbrecord": 11511,
+      "core_kbrelation": 1354,
+      "core_kbversion": 11511,
+      "core_libro": 55,
+      "core_libro_generos": 54,
+      "core_librofavorito": 231,
+      "core_listalectura": 2,
+      "core_mensajecontacto": 3,
+      "core_mensajeia": 190,
+      "core_perfilusuario": 158,
+      "core_preciolibrotienda": 117,
+      "core_preguntafrecuente": 0,
+      "core_recomendacion": 0,
+      "core_recomendacionialog": 0,
+      "core_resena": 116,
+      "django_admin_log": 0,
+      "django_content_type": 38,
+      "django_migrations": 27,
+      "django_session": 88,
+      "suscripciones_historialpago": 42,
+      "suscripciones_plansuscripcion": 3,
+      "suscripciones_suscripcionusuario": 157
+    },
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  }
+]

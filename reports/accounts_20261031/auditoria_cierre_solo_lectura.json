@@ -1,0 +1,57 @@
+{
+  "database": "litmate_db",
+  "read_only": true,
+  "plans": [
+    {
+      "nombre": "Gratuito",
+      "slug": "gratis",
+      "descripcion": "Acceso al catálogo base y consultas diarias con el Asistente IA.",
+      "precio": "0.00",
+      "moneda": "CLP",
+      "periodo": "mensual",
+      "limite_consultas_ia_diarias": 15,
+      "limite_favoritos": 20,
+      "acceso_ia_avanzada": false,
+      "activo": true,
+      "orden": 1
+    },
+    {
+      "nombre": "Lector Pro",
+      "slug": "lector-pro",
+      "descripcion": "Recomendaciones avanzadas de IA, hasta 100 consultas diarias y biblioteca ampliada.",
+      "precio": "4990.00",
+      "moneda": "CLP",
+      "periodo": "mensual",
+      "limite_consultas_ia_diarias": 100,
+      "limite_favoritos": 100,
+      "acceso_ia_avanzada": true,
+      "activo": true,
+      "orden": 2
+    },
+    {
+      "nombre": "Lector VIP",
+      "slug": "lector-vip",
+      "descripcion": "Experiencia ilimitada, modelos de IA de última generación y acceso prioritario a novedades.",
+      "precio": "9990.00",
+      "moneda": "CLP",
+      "periodo": "mensual",
+      "limite_consultas_ia_diarias": 0,
+      "limite_favoritos": 0,
+      "acceso_ia_avanzada": true,
+      "activo": true,
+      "orden": 3
+    }
+  ],
+  "counts": {
+    "auth_user": 179,
+    "core_perfilusuario": 158,
+    "suscripciones_suscripcionusuario": 157,
+    "suscripciones_historialpago": 42,
+    "core_conversacionia": 50,
+    "core_mensajeia": 190
+  },
+  "timezone": "UTC",
+  "existing_quotas_enabled": false,
+  "payment_credentials_inspected_or_printed": false,
+  "writes": false
+}

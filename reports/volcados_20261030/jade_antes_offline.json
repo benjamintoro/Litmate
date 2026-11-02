@@ -1,0 +1,664 @@
+[
+  {
+    "passed": true,
+    "question": "Dime la trama de The jade cabinet de Rikki Ducornet",
+    "answer": "Etheria, una mujer hermosa que ha sido silenciada por su padre exc\u00e9ntrico, es intercambiada como moneda de cambio por un precioso trozo de jade. Su hermana, Memory, relata la historia desde la perspectiva de la memoria, describiendo una infancia marcada por influencias literarias y la presencia de un orangut\u00e1n llamado Dr. Johnson. La narrativa viaja desde Oxford hasta Egipto, donde se desarrollan tramas secundarias que incluyen la transformaci\u00f3n de momias de ibis en fertilizante, el colapso de una pir\u00e1mide provocado por un arquitecto y las acciones de un artista del hambre que busca venganza tras ser despreciado.\n\nFuente: https://openlibrary.org/works/OL104666W",
+    "status": "answered",
+    "not_in_legacy_catalog": null,
+    "sse_done": true,
+    "seconds": 19.7834,
+    "cards": [
+      {
+        "id": "sqlkb:d0931ac21558c7606cbba8b9cc04fa15f6cdf3a7987faefa56eec2660dcfffcc",
+        "title": "The jade cabinet",
+        "author": "Rikki Ducornet",
+        "synopsis": "No pude preparar una traducci\u00f3n fiable de esta descripci\u00f3n.",
+        "image_url": "",
+        "links": [
+          {
+            "label": "Google Books",
+            "url": "https://books.google.com/books?q=The+jade+cabinet+Rikki+Ducornet"
+          },
+          {
+            "label": "Open Library",
+            "url": "https://openlibrary.org/works/OL104666W"
+          },
+          {
+            "label": "Amazon",
+            "url": "https://www.amazon.com/s?k=The+jade+cabinet+Rikki+Ducornet&i=stripbooks"
+          },
+          {
+            "label": "Buscalibre",
+            "url": "https://www.buscalibre.cl/libros/search?q=The+jade+cabinet+Rikki+Ducornet"
+          }
+        ]
+      }
+    ],
+    "diagnostics": {
+      "elapsed_ms": 19748,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 2,
+      "verified_narrative_answer": true,
+      "narrative_synthesized": true,
+      "partial_evidence": false,
+      "work_type": "fiction",
+      "progress_metrics": {
+        "elapsed_ms": 19773.651,
+        "first_phase_emitted_ms": 57.813,
+        "model_calls_started": 4,
+        "stage_totals_ms": {
+          "conversation": 27.376,
+          "cache_lookup": 0.591,
+          "knowledge_lookup": 1066.377,
+          "retrieval": 0.019,
+          "model_inspection": 48.614,
+          "generation": 11948.049,
+          "audit": 5592.709,
+          "finalization": 25.705
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 10.366,
+            "elapsed_ms": 27.376,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 57.209,
+            "elapsed_ms": 0.591,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 123.832,
+            "elapsed_ms": 528.453,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 247.221,
+            "elapsed_ms": 67.894,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 395.401,
+            "elapsed_ms": 255.26,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 472.33,
+            "elapsed_ms": 107.833,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 670.945,
+            "elapsed_ms": 106.937,
+            "status": "ok"
+          },
+          {
+            "stage": "retrieval",
+            "started_ms": 902.946,
+            "elapsed_ms": 0.019,
+            "status": "ok"
+          },
+          {
+            "stage": "generation",
+            "started_ms": 2159.145,
+            "elapsed_ms": 7659.76,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 2159.165,
+            "elapsed_ms": 20.608,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 9820.567,
+            "elapsed_ms": 4875.821,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 9820.586,
+            "elapsed_ms": 0.008,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 14698.692,
+            "elapsed_ms": 4.118,
+            "status": "ok"
+          },
+          {
+            "stage": "generation",
+            "started_ms": 14728.373,
+            "elapsed_ms": 4288.289,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 14728.378,
+            "elapsed_ms": 27.987,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 19016.712,
+            "elapsed_ms": 712.77,
+            "status": "ok"
+          },
+          {
+            "stage": "model_inspection",
+            "started_ms": 19016.719,
+            "elapsed_ms": 0.011,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 19747.938,
+            "elapsed_ms": 25.705,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 57.813
+          },
+          {
+            "stage": "writing",
+            "elapsed_ms": 2159.121
+          },
+          {
+            "stage": "review",
+            "elapsed_ms": 9820.549
+          },
+          {
+            "stage": "writing",
+            "elapsed_ms": 14728.352
+          },
+          {
+            "stage": "review",
+            "elapsed_ms": 19016.693
+          }
+        ]
+      },
+      "stage_timings": [
+        {
+          "prompt_eval_ms": 244.97,
+          "model": "qwen3.5:9b-q4_K_M",
+          "stage": "language_translate",
+          "load_ms": 8.108,
+          "prompt_eval_count": 327,
+          "elapsed_ms": 4288,
+          "eval_count": 115,
+          "eval_ms": 3913.606,
+          "status": "ok",
+          "total_ms": 4248.79
+        },
+        {
+          "prompt_eval_ms": 265.01,
+          "model": "qwen3.5:9b-q4_K_M",
+          "stage": "language_verify",
+          "load_ms": 6.747,
+          "prompt_eval_count": 382,
+          "elapsed_ms": 713,
+          "eval_count": 10,
+          "eval_ms": 370.591,
+          "status": "ok",
+          "total_ms": 687.8
+        }
+      ],
+      "provider": "ollama-local"
+    },
+    "reader_data_written": false,
+    "sources": [],
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": null
+      },
+      {
+        "stage": "retrieval",
+        "sources": [
+          {
+            "id": 1,
+            "title": "The jade cabinet",
+            "author": "Rikki Ducornet",
+            "description": "\nMade speechless by her eccentric father, the beautiful Etheria is traded for a piece of precious jade. Memory, her sister, tells her story, that of a childhood enlivened by Lewis Carroll and an orangutan named Dr. Johnson and envenomed by the pernicious courtship of Radulph Tubbs, Queen Victoria's own Dragon of Industry. The novel travels from Oxford to Egypt where one million ibis mummies wait to be transformed into fertilizer, where Baconfield the architect will cause a pyramid to collapse, and where a scorned and bloated hunger artist who speaks in tongues will plot a bloody revenge. The fourth element in a tetralogy of novels - Earth (The Stain), Fire (Entering Fire), Water (The Fountains of Neptune) and Air - The Jade Cabinet is both a riveting novel and a reflection on the nature of memory and desire, language and power. Following the novel is an afterword, \"Waking to Eden,\" in which Ducornet reflects on the sources for her writing and on the quartet of novels completed by The Jade Cabinet.",
+            "source": "Open Library",
+            "year": "",
+            "book_id": "sqlkb:d0931ac21558c7606cbba8b9cc04fa15f6cdf3a7987faefa56eec2660dcfffcc",
+            "kind": "book",
+            "url": "https://openlibrary.org/works/OL104666W",
+            "locator": "",
+            "read_mode": "descripci\u00f3n del registro bibliogr\u00e1fico; no texto de la obra",
+            "retrieved_at": "",
+            "license": "Open Library bibliographic facts; rights vary",
+            "synopsis": "Made speechless by her eccentric father, the beautiful Etheria is traded for a piece of precious jade. Memory, her sister, tells her story, that of a childhood enlivened by Lewis Carroll and an orangutan named Dr. Johnson and envenomed by the pernicious courtship of Radulph Tubbs, Queen Victoria's own Dragon of Industry. The novel travels from Oxford to Egypt where one million ibis mummies wait to be transformed into fertilizer, where Baconfield the architect will cause a pyramid to collapse, and where a scorned and bloated hunger artist who speaks in tongues will plot a bloody revenge. The fourth element in a tetralogy of novels - Earth (The Stain), Fire (Entering Fire), Water (The Fountains of Neptune) and Air - The Jade Cabinet is both a riveting novel and a reflection on the nature of memory and desire, language and power. Following the novel is an afterword, \"Waking to Eden,\" in which Ducornet reflects on the sources for her writing and on the quartet of novels completed by The Jade Cabinet.",
+            "language": "",
+            "isbns": [],
+            "categories": [
+              "In literature",
+              "Fiction, general",
+              "Fiction"
+            ],
+            "subjects": [
+              "In literature",
+              "Fiction, general",
+              "Fiction"
+            ],
+            "description_source": "Open Library, registro de obra"
+          }
+        ]
+      },
+      {
+        "stage": "draft",
+        "output": {
+          "status": "answer",
+          "text": "Etheria, una mujer hermosa que ha sido silenciada por su padre exc\u00e9ntrico, es intercambiada como moneda de cambio por un precioso trozo de jade. Su hermana, Memory, relata la historia desde la perspectiva de la memoria, describiendo una infancia marcada por influencias literarias y la presencia de un orangut\u00e1n llamado Dr. Johnson. La narrativa viaja desde Oxford hasta Egipto, donde se desarrollan tramas secundarias que incluyen la transformaci\u00f3n de momias de ibis en fertilizante, el colapso de una pir\u00e1mide provocado por un arquitecto y las acciones de un artista del hambre que busca venganza tras ser despreciado.",
+          "basis": "sources",
+          "citations": [
+            1
+          ],
+          "needs_web": false,
+          "books": []
+        }
+      },
+      {
+        "stage": "audit",
+        "output": {
+          "decision": "approve",
+          "only_books": true,
+          "coverage": [
+            {
+              "question_id": 1,
+              "status": "answered"
+            }
+          ],
+          "claims": [
+            {
+              "statement": "Etheria, una mujer hermosa que ha sido silenciada por su padre exc\u00e9ntrico, es intercambiada como moneda de cambio por un precioso trozo de jade.",
+              "verdict": "supported",
+              "source_id": 1,
+              "evidence": "\nMade speechless by her eccentric father, the beautiful Etheria is traded for a piece of precious jade. Memory, her sister, tells her story, that of a childhood enlivened by Lewis Carroll and an orangutan named Dr. Johnson and envenomed by the pernicious courtship of Radulph Tubbs, Queen Victoria's "
+            },
+            {
+              "statement": "Su hermana, Memory, relata la historia desde la perspectiva de la memoria, describiendo una infancia marcada por influencias literarias y la presencia de un orangut\u00e1n llamado Dr. Johnson.",
+              "verdict": "supported",
+              "source_id": 1,
+              "evidence": "\nMade speechless by her eccentric father, the beautiful Etheria is traded for a piece of precious jade. Memory, her sister, tells her story, that of a childhood enlivened by Lewis Carroll and an orangutan named Dr. Johnson and envenomed by the pernicious courtship of Radulph Tubbs, Queen Victoria's "
+            },
+            {
+              "statement": "La narrativa viaja desde Oxford hasta Egipto, donde se desarrollan tramas secundarias que incluyen la transformaci\u00f3n de momias de ibis en fertilizante, el colapso de una pir\u00e1mide provocado por un arquitecto y las acciones de un artista del hambre que busca venganza tras ser despreciado.",
+              "verdict": "supported",
+              "source_id": 1,
+              "evidence": "ious courtship of Radulph Tubbs, Queen Victoria's own Dragon of Industry. The novel travels from Oxford to Egypt where one million ibis mummies wait to be transformed into fertilizer, where Baconfield the architect will cause a pyramid to collapse, and where a scorned and bloated hunger artist who s"
+            }
+          ],
+          "search_queries": [],
+          "issues": []
+        }
+      },
+      {
+        "request": {
+          "task": "summary",
+          "title": "The jade cabinet",
+          "targets": [],
+          "author_hint": "Rikki Ducornet",
+          "format": "",
+          "ambiguous": false
+        },
+        "diagnostics": {
+          "verified_narrative_answer": true,
+          "audit": {
+            "decision": "approve",
+            "only_books": true,
+            "coverage": [
+              {
+                "question_id": 1,
+                "status": "answered"
+              }
+            ],
+            "claims": [
+              {
+                "statement": "Etheria, una mujer hermosa que ha sido silenciada por su padre exc\u00e9ntrico, es intercambiada como moneda de cambio por un precioso trozo de jade.",
+                "verdict": "supported",
+                "source_id": 1,
+                "evidence": "\nMade speechless by her eccentric father, the beautiful Etheria is traded for a piece of precious jade. Memory, her sister, tells her story, that of a childhood enlivened by Lewis Carroll and an orangutan named Dr. Johnson and envenomed by the pernicious courtship of Radulph Tubbs, Queen Victoria's "
+              },
+              {
+                "statement": "Su hermana, Memory, relata la historia desde la perspectiva de la memoria, describiendo una infancia marcada por influencias literarias y la presencia de un orangut\u00e1n llamado Dr. Johnson.",
+                "verdict": "supported",
+                "source_id": 1,
+                "evidence": "\nMade speechless by her eccentric father, the beautiful Etheria is traded for a piece of precious jade. Memory, her sister, tells her story, that of a childhood enlivened by Lewis Carroll and an orangutan named Dr. Johnson and envenomed by the pernicious courtship of Radulph Tubbs, Queen Victoria's "
+              },
+              {
+                "statement": "La narrativa viaja desde Oxford hasta Egipto, donde se desarrollan tramas secundarias que incluyen la transformaci\u00f3n de momias de ibis en fertilizante, el colapso de una pir\u00e1mide provocado por un arquitecto y las acciones de un artista del hambre que busca venganza tras ser despreciado.",
+                "verdict": "supported",
+                "source_id": 1,
+                "evidence": "ious courtship of Radulph Tubbs, Queen Victoria's own Dragon of Industry. The novel travels from Oxford to Egypt where one million ibis mummies wait to be transformed into fertilizer, where Baconfield the architect will cause a pyramid to collapse, and where a scorned and bloated hunger artist who s"
+              }
+            ],
+            "search_queries": [],
+            "issues": []
+          },
+          "work_type": "fiction",
+          "model_calls": 2,
+          "narrative_coverage": "premise",
+          "partial_evidence": false,
+          "narrative_synthesized": true,
+          "temporal_claims_rejected": 0,
+          "character_list_claims_rejected": 0,
+          "event_target_claims_rejected": 0,
+          "usage": {
+            "prompt_tokens": 6228,
+            "completion_tokens": 243,
+            "total_tokens": 6471
+          },
+          "stage_timings": [
+            {
+              "stage": "language_translate",
+              "model": "qwen3.5:9b-q4_K_M",
+              "elapsed_ms": 4288,
+              "status": "ok",
+              "load_ms": 8.108,
+              "prompt_eval_ms": 244.97,
+              "eval_ms": 3913.606,
+              "total_ms": 4248.79,
+              "prompt_eval_count": 327,
+              "eval_count": 115
+            },
+            {
+              "stage": "language_verify",
+              "model": "qwen3.5:9b-q4_K_M",
+              "elapsed_ms": 713,
+              "status": "ok",
+              "load_ms": 6.747,
+              "prompt_eval_ms": 265.01,
+              "eval_ms": 370.591,
+              "total_ms": 687.8,
+              "prompt_eval_count": 382,
+              "eval_count": 10
+            }
+          ],
+          "narrative_trace": [
+            {
+              "stage": "bibliographic",
+              "sources": 16,
+              "bound": 1,
+              "content": 0,
+              "providers": [
+                "Open Library",
+                "Project Gutenberg"
+              ]
+            }
+          ],
+          "progress_metrics": {
+            "stage_timings": [
+              {
+                "stage": "conversation",
+                "started_ms": 10.366,
+                "elapsed_ms": 27.376,
+                "status": "ok"
+              },
+              {
+                "stage": "cache_lookup",
+                "started_ms": 57.209,
+                "elapsed_ms": 0.591,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 123.832,
+                "elapsed_ms": 528.453,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 247.221,
+                "elapsed_ms": 67.894,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 395.401,
+                "elapsed_ms": 255.26,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 472.33,
+                "elapsed_ms": 107.833,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 670.945,
+                "elapsed_ms": 106.937,
+                "status": "ok"
+              },
+              {
+                "stage": "retrieval",
+                "started_ms": 902.946,
+                "elapsed_ms": 0.019,
+                "status": "ok"
+              },
+              {
+                "stage": "generation",
+                "started_ms": 2159.145,
+                "elapsed_ms": 7659.76,
+                "status": "ok"
+              },
+              {
+                "stage": "model_inspection",
+                "started_ms": 2159.165,
+                "elapsed_ms": 20.608,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 9820.567,
+                "elapsed_ms": 4875.821,
+                "status": "ok"
+              },
+              {
+                "stage": "model_inspection",
+                "started_ms": 9820.586,
+                "elapsed_ms": 0.008,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 14698.692,
+                "elapsed_ms": 4.118,
+                "status": "ok"
+              },
+              {
+                "stage": "generation",
+                "started_ms": 14728.373,
+                "elapsed_ms": 4288.289,
+                "status": "ok"
+              },
+              {
+                "stage": "model_inspection",
+                "started_ms": 14728.378,
+                "elapsed_ms": 27.987,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 19016.712,
+                "elapsed_ms": 712.77,
+                "status": "ok"
+              },
+              {
+                "stage": "model_inspection",
+                "started_ms": 19016.719,
+                "elapsed_ms": 0.011,
+                "status": "ok"
+              }
+            ],
+            "stage_totals_ms": {
+              "conversation": 27.376,
+              "cache_lookup": 0.591,
+              "knowledge_lookup": 1066.377,
+              "retrieval": 0.019,
+              "model_inspection": 48.614,
+              "generation": 11948.049,
+              "audit": 5592.709
+            },
+            "model_calls_started": 4,
+            "progress_events": [
+              {
+                "stage": "search",
+                "elapsed_ms": 57.813
+              },
+              {
+                "stage": "writing",
+                "elapsed_ms": 2159.121
+              },
+              {
+                "stage": "review",
+                "elapsed_ms": 9820.549
+              },
+              {
+                "stage": "writing",
+                "elapsed_ms": 14728.352
+              },
+              {
+                "stage": "review",
+                "elapsed_ms": 19016.693
+              }
+            ],
+            "elapsed_ms": 19729.545,
+            "first_phase_emitted_ms": 57.813
+          },
+          "language_presentation": {
+            "target": "es",
+            "original_text": "Etheria, una mujer hermosa que ha sido silenciada por su padre exc\u00e9ntrico, es intercambiada como moneda de cambio por un precioso trozo de jade. Su hermana, Memory, relata la historia desde la perspectiva de la memoria, describiendo una infancia marcada por influencias literarias y la presencia de un orangut\u00e1n llamado Dr. Johnson. La narrativa viaja desde Oxford hasta Egipto, donde se desarrollan tramas secundarias que incluyen la transformaci\u00f3n de momias de ibis en fertilizante, el colapso de una pir\u00e1mide provocado por un arquitecto y las acciones de un artista del hambre que busca venganza tras ser despreciado.\n\nFuente: https://openlibrary.org/works/OL104666W",
+            "translated_fields": 0,
+            "cache_hits": 0,
+            "untranslated_fields": [
+              "card0"
+            ],
+            "audit_applies_to_original": true,
+            "cards": [
+              {
+                "id": "sqlkb:d0931ac21558c7606cbba8b9cc04fa15f6cdf3a7987faefa56eec2660dcfffcc",
+                "title": "The jade cabinet",
+                "author": "Rikki Ducornet",
+                "synopsis": "No pude preparar una traducci\u00f3n fiable de esta descripci\u00f3n.",
+                "image_url": "",
+                "links": [
+                  {
+                    "label": "Google Books",
+                    "url": "https://books.google.com/books?q=The+jade+cabinet+Rikki+Ducornet"
+                  },
+                  {
+                    "label": "Open Library",
+                    "url": "https://openlibrary.org/works/OL104666W"
+                  },
+                  {
+                    "label": "Amazon",
+                    "url": "https://www.amazon.com/s?k=The+jade+cabinet+Rikki+Ducornet&i=stripbooks"
+                  },
+                  {
+                    "label": "Buscalibre",
+                    "url": "https://www.buscalibre.cl/libros/search?q=The+jade+cabinet+Rikki+Ducornet"
+                  }
+                ]
+              }
+            ]
+          },
+          "elapsed_ms": 19730,
+          "chat_budget_seconds": 36.0
+        },
+        "sources": [
+          {
+            "id": 1,
+            "title": "The jade cabinet",
+            "author": "Rikki Ducornet",
+            "description": "\nMade speechless by her eccentric father, the beautiful Etheria is traded for a piece of precious jade. Memory, her sister, tells her story, that of a childhood enlivened by Lewis Carroll and an orangutan named Dr. Johnson and envenomed by the pernicious courtship of Radulph Tubbs, Queen Victoria's own Dragon of Industry. The novel travels from Oxford to Egypt where one million ibis mummies wait to be transformed into fertilizer, where Baconfield the architect will cause a pyramid to collapse, and where a scorned and bloated hunger artist who speaks in tongues will plot a bloody revenge. The fourth element in a tetralogy of novels - Earth (The Stain), Fire (Entering Fire), Water (The Fountains of Neptune) and Air - The Jade Cabinet is both a riveting novel and a reflection on the nature of memory and desire, language and power. Following the novel is an afterword, \"Waking to Eden,\" in which Ducornet reflects on the sources for her writing and on the quartet of novels completed by The Jade Cabinet.",
+            "source": "Open Library",
+            "year": "",
+            "book_id": "sqlkb:d0931ac21558c7606cbba8b9cc04fa15f6cdf3a7987faefa56eec2660dcfffcc",
+            "kind": "book",
+            "url": "https://openlibrary.org/works/OL104666W",
+            "locator": "",
+            "read_mode": "descripci\u00f3n del registro bibliogr\u00e1fico; no texto de la obra",
+            "retrieved_at": "",
+            "license": "Open Library bibliographic facts; rights vary",
+            "synopsis": "Made speechless by her eccentric father, the beautiful Etheria is traded for a piece of precious jade. Memory, her sister, tells her story, that of a childhood enlivened by Lewis Carroll and an orangutan named Dr. Johnson and envenomed by the pernicious courtship of Radulph Tubbs, Queen Victoria's own Dragon of Industry. The novel travels from Oxford to Egypt where one million ibis mummies wait to be transformed into fertilizer, where Baconfield the architect will cause a pyramid to collapse, and where a scorned and bloated hunger artist who speaks in tongues will plot a bloody revenge. The fourth element in a tetralogy of novels - Earth (The Stain), Fire (Entering Fire), Water (The Fountains of Neptune) and Air - The Jade Cabinet is both a riveting novel and a reflection on the nature of memory and desire, language and power. Following the novel is an afterword, \"Waking to Eden,\" in which Ducornet reflects on the sources for her writing and on the quartet of novels completed by The Jade Cabinet.",
+            "language": "",
+            "isbns": [],
+            "categories": [
+              "In literature",
+              "Fiction, general",
+              "Fiction"
+            ],
+            "subjects": [
+              "In literature",
+              "Fiction, general",
+              "Fiction"
+            ],
+            "description_source": "Open Library, registro de obra",
+            "narrative_context": "Made speechless by her eccentric father, the beautiful Etheria is traded for a piece of precious jade. Memory, her sister, tells her story, that of a childhood enlivened by Lewis Carroll and an orangutan named Dr. Johnson and envenomed by the pernicious courtship of Radulph Tubbs, Queen Victoria's own Dragon of Industry. The novel travels from Oxford to Egypt where one million ibis mummies wait to be transformed into fertilizer, where Baconfield the architect will cause a pyramid to collapse, and where a scorned and bloated hunger artist who speaks in tongues will plot a bloody revenge. The fourth element in a tetralogy of novels - Earth (The Stain), Fire (Entering Fire), Water (The Fountains of Neptune) and Air - The Jade Cabinet is both a riveting novel and a reflection on the nature of memory and desire, language and power. Following the novel is an afterword, \"Waking to Eden,\" in which Ducornet reflects on the sources for her writing and on the quartet of novels completed by The Jade Cabinet."
+          }
+        ]
+      }
+    ],
+    "content_manually_reviewed": false,
+    "mysql_row_counts": {
+      "auth_group": 0,
+      "auth_group_permissions": 0,
+      "auth_permission": 152,
+      "auth_user": 179,
+      "auth_user_groups": 0,
+      "auth_user_user_permissions": 0,
+      "core_asistenteia": 1,
+      "core_autor": 31,
+      "core_clickconversion": 185,
+      "core_conversacionia": 50,
+      "core_editorial": 34,
+      "core_elementolistalectura": 2,
+      "core_estadolectura": 451,
+      "core_eventoanalitica": 384,
+      "core_genero": 12,
+      "core_historialchatbot": 5,
+      "core_historialpreciolibro": 223,
+      "core_kbname": 14166,
+      "core_kbprojection": 8,
+      "core_kbrecord": 13518,
+      "core_kbrelation": 2598,
+      "core_kbversion": 13518,
+      "core_libro": 55,
+      "core_libro_generos": 54,
+      "core_librofavorito": 231,
+      "core_listalectura": 2,
+      "core_mensajecontacto": 3,
+      "core_mensajeia": 190,
+      "core_perfilusuario": 158,
+      "core_preciolibrotienda": 117,
+      "core_preguntafrecuente": 0,
+      "core_recomendacion": 0,
+      "core_recomendacionialog": 0,
+      "core_resena": 116,
+      "django_admin_log": 0,
+      "django_content_type": 38,
+      "django_migrations": 27,
+      "django_session": 88,
+      "suscripciones_historialpago": 42,
+      "suscripciones_plansuscripcion": 3,
+      "suscripciones_suscripcionusuario": 157
+    },
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  }
+]

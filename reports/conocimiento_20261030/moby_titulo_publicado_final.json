@@ -1,0 +1,1762 @@
+[
+  {
+    "passed": true,
+    "question": "Dime la trama de Moby-Dick; or, The Whale del autor Herman Melville.",
+    "answer": "Narra la traves\u00eda del barco ballenero Pequod, comandado por el capit\u00e1n Ahab, junto a Ismael y el arponero Queequeg en la obsesiva y autodestructiva persecuci\u00f3n de un gran cachalote blanco. El narrador, Ismael, es un joven estadounidense con experiencia en la marina mercante, que decide que su siguiente viaje ser\u00e1 en un ballenero. De igual forma se convence de que su traves\u00eda debe comenzar en Nantucket, Massachusetts, isla prestigiosa durante el siglo XIX por su industria ballenera. Antes de alcanzar su destino, o el origen de su aventura, Ismael entabla una estrecha amistad con el experimentado arponero polinesio Queequeg, con quien acuerda compartir la empresa. Ambos se enrolan en el ballenero Pequod, con una tripulaci\u00f3n conformada por marineros de las m\u00e1s diversas nacionalidades y razas; precisamente sus arponeros son Queequeg, el piel roja Tashtego y el \u00abnegro salvaje\u00bb Daggoo.\n\nFuente: https://es.wikipedia.org/wiki/Moby_Dick\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+    "status": "answered",
+    "not_in_legacy_catalog": null,
+    "sse_done": true,
+    "seconds": 2.9258,
+    "cards": [
+      {
+        "id": "sqlkb:a200b09cf7c5d5ca845ffb9abf5597423144ad9fababe5af38c6b0792ea861c5",
+        "title": "Moby-Dick; or, The Whale",
+        "author": "Herman Melville",
+        "synopsis": "",
+        "image_url": "",
+        "links": [
+          {
+            "label": "Google Books",
+            "url": "https://books.google.com/books?q=Moby-Dick%3B+or%2C+The+Whale+Herman+Melville"
+          },
+          {
+            "label": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/15"
+          },
+          {
+            "label": "Amazon",
+            "url": "https://www.amazon.com/s?k=Moby-Dick%3B+or%2C+The+Whale+Herman+Melville&i=stripbooks"
+          },
+          {
+            "label": "Buscalibre",
+            "url": "https://www.buscalibre.cl/libros/search?q=Moby-Dick%3B+or%2C+The+Whale+Herman+Melville"
+          }
+        ]
+      }
+    ],
+    "diagnostics": {
+      "elapsed_ms": 2890,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 0,
+      "verified_narrative_answer": true,
+      "partial_evidence": false,
+      "work_type": "fiction",
+      "progress_metrics": {
+        "elapsed_ms": 2916.386,
+        "first_phase_emitted_ms": 43.845,
+        "model_calls_started": 0,
+        "stage_totals_ms": {
+          "conversation": 17.605,
+          "cache_lookup": 0.666,
+          "knowledge_lookup": 607.844,
+          "retrieval": 2301.527,
+          "audit": 6.234,
+          "finalization": 26.701
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 9.592,
+            "elapsed_ms": 17.605,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 43.166,
+            "elapsed_ms": 0.666,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 89.548,
+            "elapsed_ms": 232.264,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 92.533,
+            "elapsed_ms": 228.894,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 198.71,
+            "elapsed_ms": 80.267,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 336.236,
+            "elapsed_ms": 66.419,
+            "status": "ok"
+          },
+          {
+            "stage": "retrieval",
+            "started_ms": 479.695,
+            "elapsed_ms": 2301.527,
+            "status": "ok"
+          },
+          {
+            "stage": "audit",
+            "started_ms": 2845.013,
+            "elapsed_ms": 6.234,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 2889.679,
+            "elapsed_ms": 26.701,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 43.845
+          },
+          {
+            "stage": "review",
+            "elapsed_ms": 2844.992
+          }
+        ]
+      },
+      "stage_timings": [],
+      "provider": "verified-narrative-engine"
+    },
+    "reader_data_written": false,
+    "sources": [],
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": null
+      },
+      {
+        "stage": "known_sources",
+        "sources": [
+          {
+            "id": 1,
+            "title": "Moby-Dick; or, The Whale",
+            "author": "Herman Melville",
+            "description": "Moby-Dick; or, The Whale, de Herman Melville. Temas del cat\u00e1logo: Whaling -- Fiction, Sea stories, Psychological fiction, Ship captains -- Fiction, Adventure stories, Mentally ill -- Fiction, Ahab, Captain (Fictitious character) -- Fiction, Whales -- Fiction, Whaling ships -- Fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/15",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793225498.4756718",
+            "work_id": "litmate:68319f2cca92a21a05ed626d",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795817498.4756718",
+            "evidence_hash": "6de2363d48884d781111048204ed30e7e1a87d71615fbc5b1c661e447d408abc",
+            "memory_source_id": "25b123e41ab923542cb8363b2e91f31405a4dbf557cc592ff9da1cb33bd7cd65",
+            "last_verified_at": "1793225498.4756718",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Whaling -- Fiction",
+              "Sea stories",
+              "Psychological fiction",
+              "Ship captains -- Fiction",
+              "Adventure stories"
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Moby Dick; Or, The Whale",
+            "author": "Herman Melville",
+            "description": "Moby Dick; Or, The Whale, de Herman Melville. Temas del cat\u00e1logo: Whaling -- Fiction, Sea stories, Psychological fiction, Ship captains -- Fiction, Adventure stories, Mentally ill -- Fiction, Ahab, Captain (Fictitious character) -- Fiction, Whales -- Fiction, Whaling ships -- Fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/2489",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793072101.4132948",
+            "work_id": "litmate:68319f2cca92a21a05ed626d",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795664101.4132948",
+            "evidence_hash": "00f4005f103580eed3be5a6e4705313503fd051c9caed3d982ad411d97e7294e",
+            "memory_source_id": "89daee2e06e05819aed679ffb347fcfcc0f97b19bb69ee39abcba230b1b02642",
+            "last_verified_at": "1793072101.4132948",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Whaling -- Fiction",
+              "Sea stories",
+              "Psychological fiction",
+              "Ship captains -- Fiction",
+              "Adventure stories"
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Whale Primer, with Special Attention to the California Gray Whale",
+            "author": "Theodore J. Walker",
+            "description": "Whale Primer, with Special Attention to the California Gray Whale, de Theodore J. Walker. Temas del cat\u00e1logo: Whaling, Whales, Gray whale",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/58695",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793229231.6052148",
+            "work_id": "litmate:3c961f7c6cfc5ad26dd5264c",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795821231.6052148",
+            "evidence_hash": "7b121f446193b17867d5b236f2669f24fdeaeacbafba361e7b4def73a49ee2fc",
+            "memory_source_id": "69938f7ff0374fba780209f8ba7eecd6ec85aac3820b5fa16251a367cdfedc75",
+            "last_verified_at": "1793229231.6052148",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Whaling",
+              "Whales",
+              "Gray whale"
+            ]
+          },
+          {
+            "id": 4,
+            "title": "The Newsboy Partners; Or, Who Was Dick Box?",
+            "author": "Frank V. Webster",
+            "description": "The Newsboy Partners; Or, Who Was Dick Box?, de Frank V. Webster. Temas del cat\u00e1logo: Newspaper vendors -- Juvenile fiction, Paperboys -- Juvenile fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/32537",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793229142.7581599",
+            "work_id": "litmate:60c0d760f98b0c4c24ccf6a8",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795821142.7581599",
+            "evidence_hash": "b4bf44e3a355518d44a3849278df5c922390ec8e0da92b8b65a02794629909f0",
+            "memory_source_id": "2b8403342fb3ed765832334c87da10954188b37123602004fa56357b36bc29a8",
+            "last_verified_at": "1793229142.7581599",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Newspaper vendors -- Juvenile fiction",
+              "Paperboys -- Juvenile fiction"
+            ]
+          },
+          {
+            "id": 5,
+            "title": "Dick Kent with the Malemute Mail",
+            "author": "M. M. (Milo Milton) Oblinger",
+            "description": "Dick Kent with the Malemute Mail, de M. M. (Milo Milton) Oblinger. Temas del cat\u00e1logo: Adventure stories, Royal Canadian Mounted Police -- Juvenile fiction, Smallpox -- Juvenile fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/52385",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793229207.7409966",
+            "work_id": "litmate:06f64b41150a07eeee196315",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795821207.7409966",
+            "evidence_hash": "30800d0d98cf161c076df63c1872a2f6d660f9c65d5eaaf506b6883263875350",
+            "memory_source_id": "dd43c1ac6487f9002aa469aeaf5def0aa4ebb879e4d2e1b2bb276eb0bde82535",
+            "last_verified_at": "1793229207.7409966",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Adventure stories",
+              "Royal Canadian Mounted Police -- Juvenile fiction",
+              "Smallpox -- Juvenile fiction"
+            ]
+          },
+          {
+            "id": 6,
+            "title": "Dick Kent in the Far North",
+            "author": "M. M. (Milo Milton) Oblinger",
+            "description": "Dick Kent in the Far North, de M. M. (Milo Milton) Oblinger. Temas del cat\u00e1logo: Adventure stories, Royal Canadian Mounted Police -- Juvenile fiction, Canada, Northern -- Juvenile fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/50505",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793229200.1978035",
+            "work_id": "litmate:98ff5984d57d09977b1c5ff5",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795821200.1978035",
+            "evidence_hash": "aa5555c340e707303c4b2025f3c9d9d9a11ae741d377995a60daeadd7c6ad807",
+            "memory_source_id": "fdec19b53f2cf555e281a318dbc88309119ca56c24caab86d67bf7d5990aac0d",
+            "last_verified_at": "1793229200.1978035",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Adventure stories",
+              "Royal Canadian Mounted Police -- Juvenile fiction",
+              "Canada, Northern -- Juvenile fiction"
+            ]
+          },
+          {
+            "id": 7,
+            "title": "Dick Hamilton's Airship; Or, A Young Millionaire in the Clouds",
+            "author": "Howard Roger Garis",
+            "description": "Dick Hamilton's Airship; Or, A Young Millionaire in the Clouds, de Howard Roger Garis. Temas del cat\u00e1logo: Millionaires -- Juvenile fiction, Airships -- Juvenile fiction, Aeronautics -- Juvenile fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/2065",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793072096.6254258",
+            "work_id": "litmate:06fa55d3e8947c1dfdd1fa42",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795664096.6254258",
+            "evidence_hash": "0bef0b3e980fc80a7ea57de3983ef8f2403d93d73f5baa896fee26d985988c55",
+            "memory_source_id": "04097f323ca094d9d3307f0c07913b41d1bd05e69b0ceb5cc18bee4ade4d1bc4",
+            "last_verified_at": "1793072096.6254258",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Millionaires -- Juvenile fiction",
+              "Airships -- Juvenile fiction",
+              "Aeronautics -- Juvenile fiction"
+            ]
+          },
+          {
+            "id": 8,
+            "title": "Moby Thesaurus List",
+            "author": "Grady Ward",
+            "description": "Moby Thesaurus List, de Grady Ward. Temas del cat\u00e1logo: Words and phrase lists -- English",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/3202",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793229072.7271807",
+            "work_id": "litmate:e0cc387beaa9aa16aae9a896",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795821072.7271807",
+            "evidence_hash": "b1076e26318d7781f8a1500228591538467427836414db714a8d1e230f9b9bdc",
+            "memory_source_id": "6f7c176915ff07e7d36a498357db19f56dbc4b9b118c4032315ac3cb2c046393",
+            "last_verified_at": "1793229072.7271807",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Words and phrase lists -- English"
+            ]
+          },
+          {
+            "id": 9,
+            "title": "Moby Hyphenation List",
+            "author": "Grady Ward",
+            "description": "Moby Hyphenation List, de Grady Ward. Temas del cat\u00e1logo: Words and phrase lists -- English",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/3204",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793229072.7431633",
+            "work_id": "litmate:23e6f3923d339d9d288c897f",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795821072.7431633",
+            "evidence_hash": "932630247d088c064245fb9fb1d76e0656fb343274a98055fa84e456a3f6ca69",
+            "memory_source_id": "068a25f887cf51577ef0b0bf8584216970da5df6248fac17bd1b173bcb1e44fb",
+            "last_verified_at": "1793229072.7431633",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Words and phrase lists -- English"
+            ]
+          },
+          {
+            "id": 10,
+            "title": "British Airships, Past, Present, and Future",
+            "author": "George Whale",
+            "description": "British Airships, Past, Present, and Future, de George Whale. Temas del cat\u00e1logo: Airships -- Britain -- History, Aircraft",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/762",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793072081.491815",
+            "work_id": "litmate:cbcabbb13d213de761a58228",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795664081.491815",
+            "evidence_hash": "c5e3bf1e11e041f33402fbe4b3dec7814739f8ee3da9e444253983bfc4ac2522",
+            "memory_source_id": "15f68c772fe148303880d74d34975622d8164051dafa6cd5e22c57a2a956e5cb",
+            "last_verified_at": "1793072081.491815",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Airships -- Britain -- History",
+              "Aircraft"
+            ]
+          },
+          {
+            "id": 11,
+            "title": "Arts and crafts of old Japan",
+            "author": "Stewart Dick",
+            "description": "Arts and crafts of old Japan, de Stewart Dick. Temas del cat\u00e1logo: Art -- Japan",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/76830",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793229309.7197993",
+            "work_id": "litmate:aad9d7409a29075054e21a76",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795821309.7197993",
+            "evidence_hash": "7d454d74c8b1d43a8c0dd58eacb7a5276a4858a45e4afa393cdc4cd6a796dea6",
+            "memory_source_id": "3c27c5d6c8a8cc2f237df9b63a267f712a2dbf180f997a9dbdaa990d2f9e9c78",
+            "last_verified_at": "1793229309.7197993",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Art -- Japan"
+            ]
+          },
+          {
+            "id": 12,
+            "title": "I and My Chimney",
+            "author": "Herman Melville",
+            "description": "I and My Chimney, de Herman Melville. Temas del cat\u00e1logo: Family life -- Fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/2694",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793072104.008835",
+            "work_id": "litmate:11d26287cfe53e3296ac6547",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795664104.008835",
+            "evidence_hash": "f70c1f88c799e357c8e02a966ea47422f9f825459aa5e729b96d2f867923e3b4",
+            "memory_source_id": "f7bc68f8e2ff183bc1b1d0082c95b4e5e41bb740311c98837b217cb4279c074d",
+            "last_verified_at": "1793072104.008835",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Family life -- Fiction"
+            ]
+          },
+          {
+            "id": 13,
+            "title": "Splores of a Halloween, Twenty Years Ago",
+            "author": "Alexander Dick",
+            "description": "Splores of a Halloween, Twenty Years Ago, de Alexander Dick. Temas del cat\u00e1logo: Halloween -- Poetry",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/34780",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793229149.2886055",
+            "work_id": "litmate:b1e8d00db9a1eb2cfa788863",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795821149.2886055",
+            "evidence_hash": "28f116d66e0bec2872b9a0b3e7fcb0d08f49c6ab323c460ea245cc674f3a72fe",
+            "memory_source_id": "718688e5e4a7a256d6ddfeb2d0c37c2bc222b0a63ff48b87be5dbad0c0fe3cff",
+            "last_verified_at": "1793229149.2886055",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Halloween -- Poetry"
+            ]
+          },
+          {
+            "id": 14,
+            "title": "Le Roi des \u00c9tudiants",
+            "author": "Vinceslas-Eug\u00e8ne Dick",
+            "description": "Le Roi des \u00c9tudiants, de Vinceslas-Eug\u00e8ne Dick. Temas del cat\u00e1logo: United States -- History -- Civil War, 1861-1865 -- Fiction, Young men -- Fiction, Prisoners -- Fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/14059",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793229091.1669059",
+            "work_id": "litmate:bda70aa7c0fc15dbb762639e",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795821091.1669059",
+            "evidence_hash": "6d8a63587e754344157ed1cda7bb787d468279c84e81ff5d25544a362919c0fb",
+            "memory_source_id": "9a99f3a5cabe3e765b4541561e66285fda59b4d716d82af114774697af69b6f3",
+            "last_verified_at": "1793229091.1669059",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "language": "fr",
+            "isbns": [],
+            "categories": [
+              "United States -- History -- Civil War, 1861-1865 -- Fiction",
+              "Young men -- Fiction",
+              "Prisoners -- Fiction"
+            ]
+          },
+          {
+            "id": 15,
+            "title": "Confessions of a Crap Artist",
+            "author": "Philip K. Dick, Peter Berkrot",
+            "description": "Confessions of a Crap Artist, de Philip K. Dick, Peter Berkrot. Temas del cat\u00e1logo: Fiction in English, Fiction, science fiction, general",
+            "source": "Open Library",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://openlibrary.org/works/OL10570244W",
+            "locator": "",
+            "read_mode": "metadatos bibliogr\u00e1ficos; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793340461.9532375",
+            "work_id": "litmate:5fd63da8ce59d3d0277248c5",
+            "license": "Open Library bibliographic facts; rights vary",
+            "trust": "untrusted_data",
+            "expires_at": "1795932461.9532375",
+            "evidence_hash": "1e721c5d91d5aa2b4c3b4d880bff4b478ddfea84e5533113c9f2cbd69c737a7d",
+            "memory_source_id": "4f0cebca9531fb8a2cac477290f60cb9b35ce59690a3942445e4ae05de15b390",
+            "last_verified_at": "1793340461.9532375",
+            "policy": "openlibrary-minimal-metadata-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "publisher": "",
+            "isbns": [],
+            "categories": [
+              "Fiction in English",
+              "Fiction, science fiction, general"
+            ]
+          }
+        ]
+      },
+      {
+        "stage": "known_sources",
+        "sources": [
+          {
+            "id": 1,
+            "title": "Moby-Dick; or, The Whale",
+            "author": "Herman Melville",
+            "description": "",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "sqlkb:a200b09cf7c5d5ca845ffb9abf5597423144ad9fababe5af38c6b0792ea861c5",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/15",
+            "locator": "",
+            "read_mode": "metadatos de fuente; sin trama ni texto completo",
+            "retrieved_at": "",
+            "license": "CC0-1.0",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "synopsis": "",
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Whaling -- Fiction",
+              "Sea stories",
+              "Psychological fiction",
+              "Ship captains -- Fiction",
+              "Adventure stories"
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Whale Primer, with Special Attention to the California Gray Whale",
+            "author": "Theodore J. Walker",
+            "description": "Whale Primer, with Special Attention to the California Gray Whale, de Theodore J. Walker. Temas del cat\u00e1logo: Whaling, Whales, Gray whale",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/58695",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793229231.6052148",
+            "work_id": "litmate:3c961f7c6cfc5ad26dd5264c",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795821231.6052148",
+            "evidence_hash": "7b121f446193b17867d5b236f2669f24fdeaeacbafba361e7b4def73a49ee2fc",
+            "memory_source_id": "69938f7ff0374fba780209f8ba7eecd6ec85aac3820b5fa16251a367cdfedc75",
+            "last_verified_at": "1793229231.6052148",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Whaling",
+              "Whales",
+              "Gray whale"
+            ]
+          },
+          {
+            "id": 3,
+            "title": "The Newsboy Partners; Or, Who Was Dick Box?",
+            "author": "Frank V. Webster",
+            "description": "The Newsboy Partners; Or, Who Was Dick Box?, de Frank V. Webster. Temas del cat\u00e1logo: Newspaper vendors -- Juvenile fiction, Paperboys -- Juvenile fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/32537",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793229142.7581599",
+            "work_id": "litmate:60c0d760f98b0c4c24ccf6a8",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795821142.7581599",
+            "evidence_hash": "b4bf44e3a355518d44a3849278df5c922390ec8e0da92b8b65a02794629909f0",
+            "memory_source_id": "2b8403342fb3ed765832334c87da10954188b37123602004fa56357b36bc29a8",
+            "last_verified_at": "1793229142.7581599",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Newspaper vendors -- Juvenile fiction",
+              "Paperboys -- Juvenile fiction"
+            ]
+          },
+          {
+            "id": 4,
+            "title": "Dick Kent with the Malemute Mail",
+            "author": "M. M. (Milo Milton) Oblinger",
+            "description": "Dick Kent with the Malemute Mail, de M. M. (Milo Milton) Oblinger. Temas del cat\u00e1logo: Adventure stories, Royal Canadian Mounted Police -- Juvenile fiction, Smallpox -- Juvenile fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/52385",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793229207.7409966",
+            "work_id": "litmate:06f64b41150a07eeee196315",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795821207.7409966",
+            "evidence_hash": "30800d0d98cf161c076df63c1872a2f6d660f9c65d5eaaf506b6883263875350",
+            "memory_source_id": "dd43c1ac6487f9002aa469aeaf5def0aa4ebb879e4d2e1b2bb276eb0bde82535",
+            "last_verified_at": "1793229207.7409966",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Adventure stories",
+              "Royal Canadian Mounted Police -- Juvenile fiction",
+              "Smallpox -- Juvenile fiction"
+            ]
+          },
+          {
+            "id": 5,
+            "title": "Dick Kent in the Far North",
+            "author": "M. M. (Milo Milton) Oblinger",
+            "description": "Dick Kent in the Far North, de M. M. (Milo Milton) Oblinger. Temas del cat\u00e1logo: Adventure stories, Royal Canadian Mounted Police -- Juvenile fiction, Canada, Northern -- Juvenile fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/50505",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793229200.1978035",
+            "work_id": "litmate:98ff5984d57d09977b1c5ff5",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795821200.1978035",
+            "evidence_hash": "aa5555c340e707303c4b2025f3c9d9d9a11ae741d377995a60daeadd7c6ad807",
+            "memory_source_id": "fdec19b53f2cf555e281a318dbc88309119ca56c24caab86d67bf7d5990aac0d",
+            "last_verified_at": "1793229200.1978035",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Adventure stories",
+              "Royal Canadian Mounted Police -- Juvenile fiction",
+              "Canada, Northern -- Juvenile fiction"
+            ]
+          },
+          {
+            "id": 6,
+            "title": "Dick Hamilton's Airship; Or, A Young Millionaire in the Clouds",
+            "author": "Howard Roger Garis",
+            "description": "Dick Hamilton's Airship; Or, A Young Millionaire in the Clouds, de Howard Roger Garis. Temas del cat\u00e1logo: Millionaires -- Juvenile fiction, Airships -- Juvenile fiction, Aeronautics -- Juvenile fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/2065",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793072096.6254258",
+            "work_id": "litmate:06fa55d3e8947c1dfdd1fa42",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795664096.6254258",
+            "evidence_hash": "0bef0b3e980fc80a7ea57de3983ef8f2403d93d73f5baa896fee26d985988c55",
+            "memory_source_id": "04097f323ca094d9d3307f0c07913b41d1bd05e69b0ceb5cc18bee4ade4d1bc4",
+            "last_verified_at": "1793072096.6254258",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Millionaires -- Juvenile fiction",
+              "Airships -- Juvenile fiction",
+              "Aeronautics -- Juvenile fiction"
+            ]
+          },
+          {
+            "id": 7,
+            "title": "Moby Thesaurus List",
+            "author": "Grady Ward",
+            "description": "Moby Thesaurus List, de Grady Ward. Temas del cat\u00e1logo: Words and phrase lists -- English",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/3202",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793229072.7271807",
+            "work_id": "litmate:e0cc387beaa9aa16aae9a896",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795821072.7271807",
+            "evidence_hash": "b1076e26318d7781f8a1500228591538467427836414db714a8d1e230f9b9bdc",
+            "memory_source_id": "6f7c176915ff07e7d36a498357db19f56dbc4b9b118c4032315ac3cb2c046393",
+            "last_verified_at": "1793229072.7271807",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Words and phrase lists -- English"
+            ]
+          },
+          {
+            "id": 8,
+            "title": "Moby Hyphenation List",
+            "author": "Grady Ward",
+            "description": "Moby Hyphenation List, de Grady Ward. Temas del cat\u00e1logo: Words and phrase lists -- English",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/3204",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793229072.7431633",
+            "work_id": "litmate:23e6f3923d339d9d288c897f",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795821072.7431633",
+            "evidence_hash": "932630247d088c064245fb9fb1d76e0656fb343274a98055fa84e456a3f6ca69",
+            "memory_source_id": "068a25f887cf51577ef0b0bf8584216970da5df6248fac17bd1b173bcb1e44fb",
+            "last_verified_at": "1793229072.7431633",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Words and phrase lists -- English"
+            ]
+          },
+          {
+            "id": 9,
+            "title": "British Airships, Past, Present, and Future",
+            "author": "George Whale",
+            "description": "British Airships, Past, Present, and Future, de George Whale. Temas del cat\u00e1logo: Airships -- Britain -- History, Aircraft",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/762",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793072081.491815",
+            "work_id": "litmate:cbcabbb13d213de761a58228",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795664081.491815",
+            "evidence_hash": "c5e3bf1e11e041f33402fbe4b3dec7814739f8ee3da9e444253983bfc4ac2522",
+            "memory_source_id": "15f68c772fe148303880d74d34975622d8164051dafa6cd5e22c57a2a956e5cb",
+            "last_verified_at": "1793072081.491815",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Airships -- Britain -- History",
+              "Aircraft"
+            ]
+          },
+          {
+            "id": 10,
+            "title": "Arts and crafts of old Japan",
+            "author": "Stewart Dick",
+            "description": "Arts and crafts of old Japan, de Stewart Dick. Temas del cat\u00e1logo: Art -- Japan",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/76830",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793229309.7197993",
+            "work_id": "litmate:aad9d7409a29075054e21a76",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795821309.7197993",
+            "evidence_hash": "7d454d74c8b1d43a8c0dd58eacb7a5276a4858a45e4afa393cdc4cd6a796dea6",
+            "memory_source_id": "3c27c5d6c8a8cc2f237df9b63a267f712a2dbf180f997a9dbdaa990d2f9e9c78",
+            "last_verified_at": "1793229309.7197993",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Art -- Japan"
+            ]
+          },
+          {
+            "id": 11,
+            "title": "Splores of a Halloween, Twenty Years Ago",
+            "author": "Alexander Dick",
+            "description": "Splores of a Halloween, Twenty Years Ago, de Alexander Dick. Temas del cat\u00e1logo: Halloween -- Poetry",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/34780",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793229149.2886055",
+            "work_id": "litmate:b1e8d00db9a1eb2cfa788863",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795821149.2886055",
+            "evidence_hash": "28f116d66e0bec2872b9a0b3e7fcb0d08f49c6ab323c460ea245cc674f3a72fe",
+            "memory_source_id": "718688e5e4a7a256d6ddfeb2d0c37c2bc222b0a63ff48b87be5dbad0c0fe3cff",
+            "last_verified_at": "1793229149.2886055",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Halloween -- Poetry"
+            ]
+          },
+          {
+            "id": 12,
+            "title": "Le Roi des \u00c9tudiants",
+            "author": "Vinceslas-Eug\u00e8ne Dick",
+            "description": "Le Roi des \u00c9tudiants, de Vinceslas-Eug\u00e8ne Dick. Temas del cat\u00e1logo: United States -- History -- Civil War, 1861-1865 -- Fiction, Young men -- Fiction, Prisoners -- Fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/14059",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793229091.1669059",
+            "work_id": "litmate:bda70aa7c0fc15dbb762639e",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795821091.1669059",
+            "evidence_hash": "6d8a63587e754344157ed1cda7bb787d468279c84e81ff5d25544a362919c0fb",
+            "memory_source_id": "9a99f3a5cabe3e765b4541561e66285fda59b4d716d82af114774697af69b6f3",
+            "last_verified_at": "1793229091.1669059",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "language": "fr",
+            "isbns": [],
+            "categories": [
+              "United States -- History -- Civil War, 1861-1865 -- Fiction",
+              "Young men -- Fiction",
+              "Prisoners -- Fiction"
+            ]
+          },
+          {
+            "id": 13,
+            "title": "Confessions of a Crap Artist",
+            "author": "Philip K. Dick, Peter Berkrot",
+            "description": "Confessions of a Crap Artist, de Philip K. Dick, Peter Berkrot. Temas del cat\u00e1logo: Fiction in English, Fiction, science fiction, general",
+            "source": "Open Library",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://openlibrary.org/works/OL10570244W",
+            "locator": "",
+            "read_mode": "metadatos bibliogr\u00e1ficos; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793340461.9532375",
+            "work_id": "litmate:5fd63da8ce59d3d0277248c5",
+            "license": "Open Library bibliographic facts; rights vary",
+            "trust": "untrusted_data",
+            "expires_at": "1795932461.9532375",
+            "evidence_hash": "1e721c5d91d5aa2b4c3b4d880bff4b478ddfea84e5533113c9f2cbd69c737a7d",
+            "memory_source_id": "4f0cebca9531fb8a2cac477290f60cb9b35ce59690a3942445e4ae05de15b390",
+            "last_verified_at": "1793340461.9532375",
+            "policy": "openlibrary-minimal-metadata-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "publisher": "",
+            "isbns": [],
+            "categories": [
+              "Fiction in English",
+              "Fiction, science fiction, general"
+            ]
+          },
+          {
+            "id": 14,
+            "title": "The Cruise of the \"Cachalot\" Round the World After Sperm Whales",
+            "author": "Frank Thomas Bullen",
+            "description": "The Cruise of the \"Cachalot\" Round the World After Sperm Whales, de Frank Thomas Bullen. Temas del cat\u00e1logo: Whaling -- Fiction, Sea stories, Sperm whale hunting -- Fiction, Whaling ships -- Fiction, Whalers (Persons) -- Fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/1356",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "1793072088.1204767",
+            "work_id": "litmate:7fb8b72b8bab39a0bea91e3a",
+            "license": "CC0-1.0",
+            "trust": "untrusted_data",
+            "expires_at": "1795664088.1204767",
+            "evidence_hash": "6d951aaabdf6a843cbfa787ff7b235d9051f50683d0c36068bad4f945381f1e3",
+            "memory_source_id": "ab18351a05d287a30355eb17722da19f8f0988b7dbd99fcb564601dc583bf4e9",
+            "last_verified_at": "1793072088.1204767",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "confirmed_aliases": [],
+            "literary_facts": [],
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Whaling -- Fiction",
+              "Sea stories",
+              "Sperm whale hunting -- Fiction",
+              "Whaling ships -- Fiction",
+              "Whalers (Persons) -- Fiction"
+            ]
+          },
+          {
+            "author": "Herman Melville",
+            "categories": [
+              "Whaling -- Fiction",
+              "Sea stories",
+              "Psychological fiction",
+              "Ship captains -- Fiction",
+              "Adventure stories",
+              "Mentally ill -- Fiction",
+              "Ahab, Captain (Fictitious character) -- Fiction",
+              "Whales -- Fiction",
+              "Whaling ships -- Fiction"
+            ],
+            "confirmed_aliases": [],
+            "edition_id": "gutenberg:15",
+            "isbns": [],
+            "kind": "book",
+            "language": "en",
+            "source": "Project Gutenberg",
+            "title": "Moby-Dick; or, The Whale",
+            "url": "https://www.gutenberg.org/ebooks/15",
+            "work_id": "litmate:68319f2cca92a21a05ed626d",
+            "memory_verified": true
+          },
+          {
+            "author": "Herman Melville",
+            "categories": [
+              "Whaling -- Fiction",
+              "Sea stories",
+              "Psychological fiction",
+              "Ship captains -- Fiction",
+              "Adventure stories",
+              "Mentally ill -- Fiction",
+              "Ahab, Captain (Fictitious character) -- Fiction",
+              "Whales -- Fiction",
+              "Whaling ships -- Fiction"
+            ],
+            "confirmed_aliases": [],
+            "description": "Moby-Dick; or, The Whale, de Herman Melville.\nTemas del cat\u00e1logo: Whaling -- Fiction, Sea stories, Psychological fiction, Ship captains -- Fiction, Adventure stories, Mentally ill -- Fiction, Ahab, Captain (Fictitious character) -- Fiction, Whales -- Fiction, Whaling ships -- Fiction",
+            "edition_id": "gutenberg:15",
+            "isbns": [],
+            "kind": "book",
+            "language": "en",
+            "license": "CC0-1.0",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "provider": "gutenberg",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "source": "Project Gutenberg",
+            "title": "Moby-Dick; or, The Whale",
+            "url": "https://www.gutenberg.org/ebooks/15",
+            "work_id": "litmate:68319f2cca92a21a05ed626d",
+            "literary_facts": [],
+            "memory_source_id": "25b123e41ab923542cb8363b2e91f31405a4dbf557cc592ff9da1cb33bd7cd65",
+            "content_hash": "6de2363d48884d781111048204ed30e7e1a87d71615fbc5b1c661e447d408abc",
+            "evidence_hash": "6de2363d48884d781111048204ed30e7e1a87d71615fbc5b1c661e447d408abc",
+            "retrieved_at": 1793225498.4756718,
+            "last_verified_at": 1793225498.4756718,
+            "expires_at": 1795817498.4756718,
+            "memory_verified": true,
+            "trust": "untrusted_data"
+          },
+          {
+            "author": "Herman Melville",
+            "categories": [
+              "Whaling -- Fiction",
+              "Sea stories",
+              "Psychological fiction",
+              "Ship captains -- Fiction",
+              "Adventure stories",
+              "Mentally ill -- Fiction",
+              "Ahab, Captain (Fictitious character) -- Fiction",
+              "Whales -- Fiction",
+              "Whaling ships -- Fiction"
+            ],
+            "confirmed_aliases": [],
+            "description": "Moby Dick; Or, The Whale, de Herman Melville.\nTemas del cat\u00e1logo: Whaling -- Fiction, Sea stories, Psychological fiction, Ship captains -- Fiction, Adventure stories, Mentally ill -- Fiction, Ahab, Captain (Fictitious character) -- Fiction, Whales -- Fiction, Whaling ships -- Fiction",
+            "edition_id": "gutenberg:2701",
+            "isbns": [],
+            "kind": "book",
+            "language": "en",
+            "license": "CC0-1.0",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "provider": "gutenberg",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "source": "Project Gutenberg",
+            "title": "Moby Dick; Or, The Whale",
+            "url": "https://www.gutenberg.org/ebooks/2701",
+            "work_id": "litmate:68319f2cca92a21a05ed626d",
+            "literary_facts": [],
+            "memory_source_id": "fb821c1c2961d43a63b23fb49125ac72d9ca1665cfc10481c8beea52eb4fe8bf",
+            "content_hash": "c35377eab8f8274f11cc7f98ce0145d8616167d6eac4da12fc975732b98e644e",
+            "evidence_hash": "c35377eab8f8274f11cc7f98ce0145d8616167d6eac4da12fc975732b98e644e",
+            "retrieved_at": 1793072104.1370337,
+            "last_verified_at": 1793072104.1370337,
+            "expires_at": 1795664104.1370337,
+            "memory_verified": true,
+            "trust": "untrusted_data"
+          },
+          {
+            "author": "Herman Melville",
+            "categories": [
+              "Whaling -- Fiction",
+              "Sea stories",
+              "Psychological fiction",
+              "Ship captains -- Fiction",
+              "Adventure stories",
+              "Mentally ill -- Fiction",
+              "Ahab, Captain (Fictitious character) -- Fiction",
+              "Whales -- Fiction",
+              "Whaling ships -- Fiction"
+            ],
+            "confirmed_aliases": [],
+            "description": "Moby Dick; Or, The Whale, de Herman Melville.\nTemas del cat\u00e1logo: Whaling -- Fiction, Sea stories, Psychological fiction, Ship captains -- Fiction, Adventure stories, Mentally ill -- Fiction, Ahab, Captain (Fictitious character) -- Fiction, Whales -- Fiction, Whaling ships -- Fiction",
+            "edition_id": "gutenberg:2489",
+            "isbns": [],
+            "kind": "book",
+            "language": "en",
+            "license": "CC0-1.0",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "provider": "gutenberg",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "source": "Project Gutenberg",
+            "title": "Moby Dick; Or, The Whale",
+            "url": "https://www.gutenberg.org/ebooks/2489",
+            "work_id": "litmate:68319f2cca92a21a05ed626d",
+            "literary_facts": [],
+            "memory_source_id": "89daee2e06e05819aed679ffb347fcfcc0f97b19bb69ee39abcba230b1b02642",
+            "content_hash": "00f4005f103580eed3be5a6e4705313503fd051c9caed3d982ad411d97e7294e",
+            "evidence_hash": "00f4005f103580eed3be5a6e4705313503fd051c9caed3d982ad411d97e7294e",
+            "retrieved_at": 1793072101.4132948,
+            "last_verified_at": 1793072101.4132948,
+            "expires_at": 1795664101.4132948,
+            "memory_verified": true,
+            "trust": "untrusted_data"
+          },
+          {
+            "title": "Moby Dick",
+            "author": "Fuente web",
+            "description": "== Argumento == El narrador, Ismael, es un joven estadounidense con experiencia en la marina mercante, que decide que su siguiente viaje ser\u00e1 en un ballenero. De igual forma se convence de que su traves\u00eda debe comenzar en Nantucket, Massachusetts, isla prestigiosa durante el siglo XIX por su industria ballenera. Antes de alcanzar su destino, o el origen de su aventura, Ismael entabla una estrecha amistad con el experimentado arponero polinesio Queequeg, con quien acuerda compartir la empresa. Ambos se enrolan en el ballenero Pequod, con una tripulaci\u00f3n conformada por marineros de las m\u00e1s diversas nacionalidades y razas; precisamente sus arponeros son Queequeg, el piel roja Tashtego y el \u00abnegro salvaje\u00bb Daggoo.",
+            "identity_text": "Moby Dick\u200b es una novela del escritor Herman Melville publicada por primera vez el 14 de noviembre de 1851.\u200b Narra la traves\u00eda del barco ballenero Pequod, comandado por el capit\u00e1n Ahab, junto a Ismael y el arponero Queequeg en la obsesiva y autodestructiva persecuci\u00f3n de un gran cachalote blanco. Al margen de la persecuci\u00f3n y evoluci\u00f3n de sus personajes, el tema de la novela es eminentemente enciclop\u00e9dico al incluir detalladas y extensas descripciones de la caza de las ballenas en el siglo XIX y multitud de otros detalles sobre la vida marinera de la \u00e9poca. Quiz\u00e1s por ello la novela no tuvo ning\u00fan \u00e9xito comercial en su primera publicaci\u00f3n, aunque con posterioridad haya servido para cimentar la reputaci\u00f3n del autor y situarlo entre los mejores escritores estadounidenses. El libro inicia con 80 ep\u00edgrafes, empezando con uno del G\u00e9nesis y terminando con una canci\u00f3n ballenera. Todos los ep\u00edgrafes est\u00e1n relacionados con el mar y las ballenas o el leviat\u00e1n. Melville tambi\u00e9n presenta al inicio definiciones directas de diccionarios para la ballena y luego una tabla donde se muestra la palabra ballena en diferentes idiomas. La frase inicial del narrador \u2014\u00abCall me Ishmael\u00bb en ingl\u00e9s, traducid",
+            "character_facts": [],
+            "confirmed_aliases": [
+              {
+                "title": "Moby-Dick",
+                "source_url": "https://en.wikipedia.org/wiki/Moby-Dick",
+                "evidence": "MediaWiki langlinks: title=Moby-Dick; lang=es; title=Moby Dick; wikibase_item=Q174596; revisions=1382525508,175561875"
+              },
+              {
+                "title": "Moby-Dick; or, The Whale",
+                "source_url": "https://en.wikipedia.org/wiki/Moby-Dick",
+                "evidence": "MediaWiki langlinks: title=Moby-Dick; published_title=Moby-Dick; or, The Whale; lead=Moby-Dick; or, The Whale is an 1851 epic novel by American writer Herman Melville. The book centers on the sailor Ishmael's narrative of the maniacal quest of Ahab, captain of the whaling ship Pequod, for vengeance against Moby Dick, the giant white sperm whale that bit off his leg on the ship's previous voyage. A contribution to the literature of the American Renaissance, Moby-Dick was published to mixed reviews, was a commercial failure, and was out of print at the time of the author's death in 1891. Its reputation as a Great American Novel was established only in the 20th century, after the 1919 centennial of its author's birth. William Faulkner said he wished he had written the book hims; lang=es; title=Moby Dick; wikibase_item=Q174596; revisions=1382525508,175561875"
+              }
+            ],
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Moby_Dick",
+            "license": "CC-BY-SA-4.0",
+            "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+            "permanent_index_allowed": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Moby Dick",
+              "url": "https://es.wikipedia.org/wiki/Moby_Dick",
+              "revision_id": "175561875",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
+            "source": "Wikipedia",
+            "read_mode": "pasaje de secci\u00f3n de art\u00edculo p\u00fablico",
+            "literary_facts": [
+              {
+                "topic": "plot",
+                "scope": "development_excerpt",
+                "evidence": "El narrador, Ismael, es un joven estadounidense con experiencia en la marina mercante, que decide que su siguiente viaje ser\u00e1 en un ballenero."
+              },
+              {
+                "topic": "events",
+                "subject": "Moby Dick",
+                "evidence": "== Argumento == El narrador, Ismael, es un joven estadounidense con experiencia en la marina mercante, que decide que su siguiente viaje ser\u00e1 en un ballenero. De igual forma se convence de que su traves\u00eda debe comenzar en Nantucket, Massachusetts, isla prestigiosa durante el siglo XIX por su industria ballenera. Antes de alcanzar su destino, o el origen de su aventura, Ismael entabla una estrecha amistad con el experimentado arponero polinesio Queequeg, con quien acuerda compartir la empresa. Ambos se enrolan en el ballenero Pequod, con una tripulaci\u00f3n conformada por marineros de las m\u00e1s diversas nacionalidades y razas; precisamente sus arponeros son Queequeg, el piel roja Tashtego y el \u00abnegro salvaje\u00bb Daggoo.",
+                "scope": "partial"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "stage": "wikipedia_adapter",
+        "status": "ok",
+        "sources": [
+          {
+            "title": "Moby Dick",
+            "author": "Fuente web",
+            "description": "== Argumento == El narrador, Ismael, es un joven estadounidense con experiencia en la marina mercante, que decide que su siguiente viaje ser\u00e1 en un ballenero. De igual forma se convence de que su traves\u00eda debe comenzar en Nantucket, Massachusetts, isla prestigiosa durante el siglo XIX por su industria ballenera. Antes de alcanzar su destino, o el origen de su aventura, Ismael entabla una estrecha amistad con el experimentado arponero polinesio Queequeg, con quien acuerda compartir la empresa. Ambos se enrolan en el ballenero Pequod, con una tripulaci\u00f3n conformada por marineros de las m\u00e1s diversas nacionalidades y razas; precisamente sus arponeros son Queequeg, el piel roja Tashtego y el \u00abnegro salvaje\u00bb Daggoo.",
+            "identity_text": "Moby Dick\u200b es una novela del escritor Herman Melville publicada por primera vez el 14 de noviembre de 1851.\u200b Narra la traves\u00eda del barco ballenero Pequod, comandado por el capit\u00e1n Ahab, junto a Ismael y el arponero Queequeg en la obsesiva y autodestructiva persecuci\u00f3n de un gran cachalote blanco. Al margen de la persecuci\u00f3n y evoluci\u00f3n de sus personajes, el tema de la novela es eminentemente enciclop\u00e9dico al incluir detalladas y extensas descripciones de la caza de las ballenas en el siglo XIX y multitud de otros detalles sobre la vida marinera de la \u00e9poca. Quiz\u00e1s por ello la novela no tuvo ning\u00fan \u00e9xito comercial en su primera publicaci\u00f3n, aunque con posterioridad haya servido para cimentar la reputaci\u00f3n del autor y situarlo entre los mejores escritores estadounidenses. El libro inicia con 80 ep\u00edgrafes, empezando con uno del G\u00e9nesis y terminando con una canci\u00f3n ballenera. Todos los ep\u00edgrafes est\u00e1n relacionados con el mar y las ballenas o el leviat\u00e1n. Melville tambi\u00e9n presenta al inicio definiciones directas de diccionarios para la ballena y luego una tabla donde se muestra la palabra ballena en diferentes idiomas. La frase inicial del narrador \u2014\u00abCall me Ishmael\u00bb en ingl\u00e9s, traducid",
+            "character_facts": [],
+            "confirmed_aliases": [
+              {
+                "title": "Moby-Dick",
+                "source_url": "https://en.wikipedia.org/wiki/Moby-Dick",
+                "evidence": "MediaWiki langlinks: title=Moby-Dick; lang=es; title=Moby Dick; wikibase_item=Q174596; revisions=1382525508,175561875"
+              },
+              {
+                "title": "Moby-Dick; or, The Whale",
+                "source_url": "https://en.wikipedia.org/wiki/Moby-Dick",
+                "evidence": "MediaWiki langlinks: title=Moby-Dick; published_title=Moby-Dick; or, The Whale; lead=Moby-Dick; or, The Whale is an 1851 epic novel by American writer Herman Melville. The book centers on the sailor Ishmael's narrative of the maniacal quest of Ahab, captain of the whaling ship Pequod, for vengeance against Moby Dick, the giant white sperm whale that bit off his leg on the ship's previous voyage. A contribution to the literature of the American Renaissance, Moby-Dick was published to mixed reviews, was a commercial failure, and was out of print at the time of the author's death in 1891. Its reputation as a Great American Novel was established only in the 20th century, after the 1919 centennial of its author's birth. William Faulkner said he wished he had written the book hims; lang=es; title=Moby Dick; wikibase_item=Q174596; revisions=1382525508,175561875"
+              }
+            ],
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Moby_Dick",
+            "license": "CC-BY-SA-4.0",
+            "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+            "permanent_index_allowed": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Moby Dick",
+              "url": "https://es.wikipedia.org/wiki/Moby_Dick",
+              "revision_id": "175561875",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
+            "source": "Wikipedia",
+            "read_mode": "pasaje de secci\u00f3n de art\u00edculo p\u00fablico",
+            "literary_facts": [
+              {
+                "topic": "plot",
+                "scope": "development_excerpt",
+                "evidence": "El narrador, Ismael, es un joven estadounidense con experiencia en la marina mercante, que decide que su siguiente viaje ser\u00e1 en un ballenero."
+              },
+              {
+                "topic": "events",
+                "subject": "Moby Dick",
+                "evidence": "== Argumento == El narrador, Ismael, es un joven estadounidense con experiencia en la marina mercante, que decide que su siguiente viaje ser\u00e1 en un ballenero. De igual forma se convence de que su traves\u00eda debe comenzar en Nantucket, Massachusetts, isla prestigiosa durante el siglo XIX por su industria ballenera. Antes de alcanzar su destino, o el origen de su aventura, Ismael entabla una estrecha amistad con el experimentado arponero polinesio Queequeg, con quien acuerda compartir la empresa. Ambos se enrolan en el ballenero Pequod, con una tripulaci\u00f3n conformada por marineros de las m\u00e1s diversas nacionalidades y razas; precisamente sus arponeros son Queequeg, el piel roja Tashtego y el \u00abnegro salvaje\u00bb Daggoo.",
+                "scope": "partial"
+              }
+            ]
+          }
+        ],
+        "research": {
+          "logical_searches": 0,
+          "page_slots_reserved": 1,
+          "page_slots_limit": 3,
+          "external_seconds": 0.0,
+          "events": [
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "started",
+              "count": 0
+            },
+            {
+              "stage": "http_request",
+              "provider": "Wikipedia",
+              "status": "ok",
+              "count": 0
+            }
+          ],
+          "http_requests_started": 4,
+          "pages_extracted": 0
+        }
+      },
+      {
+        "stage": "retrieval",
+        "sources": [
+          {
+            "id": 1,
+            "title": "Moby-Dick; or, The Whale",
+            "author": "Herman Melville",
+            "description": "Moby-Dick; or, The Whale, de Herman Melville. Temas del cat\u00e1logo: Whaling -- Fiction, Sea stories, Psychological fiction, Ship captains -- Fiction, Adventure stories, Mentally ill -- Fiction, Ahab, Captain (Fictitious character) -- Fiction, Whales -- Fiction, Whaling ships -- Fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "sqlkb:a200b09cf7c5d5ca845ffb9abf5597423144ad9fababe5af38c6b0792ea861c5",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/15",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "",
+            "license": "CC0-1.0",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "synopsis": "",
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Whaling -- Fiction",
+              "Sea stories",
+              "Psychological fiction",
+              "Ship captains -- Fiction",
+              "Adventure stories"
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Moby Dick",
+            "author": "Fuente web",
+            "description": "== Argumento == El narrador, Ismael, es un joven estadounidense con experiencia en la marina mercante, que decide que su siguiente viaje ser\u00e1 en un ballenero. De igual forma se convence de que su traves\u00eda debe comenzar en Nantucket, Massachusetts, isla prestigiosa durante el siglo XIX por su industria ballenera. Antes de alcanzar su destino, o el origen de su aventura, Ismael entabla una estrecha amistad con el experimentado arponero polinesio Queequeg, con quien acuerda compartir la empresa. Ambos se enrolan en el ballenero Pequod, con una tripulaci\u00f3n conformada por marineros de las m\u00e1s diversas nacionalidades y razas; precisamente sus arponeros son Queequeg, el piel roja Tashtego y el \u00abnegro salvaje\u00bb Daggoo.",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Moby_Dick",
+            "locator": "",
+            "read_mode": "pasaje de secci\u00f3n de art\u00edculo p\u00fablico",
+            "retrieved_at": "",
+            "narrative_context": "Narra la traves\u00eda del barco ballenero Pequod, comandado por el capit\u00e1n Ahab, junto a Ismael y el arponero Queequeg en la obsesiva y autodestructiva persecuci\u00f3n de un gran cachalote blanco.",
+            "work_id": "litmate:68319f2cca92a21a05ed626d",
+            "work_title": "Moby-Dick; or, The Whale",
+            "work_author": "Herman Melville",
+            "license": "CC-BY-SA-4.0",
+            "work_binding_verified": true,
+            "permanent_index_allowed": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Moby Dick",
+              "url": "https://es.wikipedia.org/wiki/Moby_Dick",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "175561875"
+            },
+            "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+            "confirmed_aliases": [
+              {
+                "title": "Moby-Dick",
+                "source_url": "https://en.wikipedia.org/wiki/Moby-Dick",
+                "evidence": "MediaWiki langlinks: title=Moby-Dick; lang=es; title=Moby Dick; wikibase_item=Q174596; revisions=1382525508,175561875"
+              },
+              {
+                "title": "Moby-Dick; or, The Whale",
+                "source_url": "https://en.wikipedia.org/wiki/Moby-Dick",
+                "evidence": "MediaWiki langlinks: title=Moby-Dick; published_title=Moby-Dick; or, The Whale; lead=Moby-Dick; or, The Whale is an 1851 epic novel by American writer Herman Melville. The book centers on the sailor Ishmael's narrative of the maniacal quest of Ahab, captain of the whaling ship Pequod, for vengeance against Moby Dick, the giant white sperm whale that bit off his leg on the ship's previous voyage. A contribution to the literature of the American Renaissance, Moby-Dick was published to mixed reviews, was a commercial failure, and was out of print at the time of the author's death in 1891. Its reputation as a Great American Novel was established only in the 20th century, after the 1919 centennial of its author's birth. William Faulkner said he wished he had written the book hims; lang=es; title=Moby Dick; wikibase_item=Q174596; revisions=1382525508,175561875"
+              }
+            ],
+            "literary_facts": [
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "El narrador, Ismael, es un joven estadounidense con experiencia en la marina mercante, que decide que su siguiente viaje ser\u00e1 en un ballenero.",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "development_excerpt"
+              },
+              {
+                "subject": "Moby Dick",
+                "relation": "",
+                "value": "",
+                "evidence": "== Argumento == El narrador, Ismael, es un joven estadounidense con experiencia en la marina mercante, que decide que su siguiente viaje ser\u00e1 en un ballenero. De igual forma se convence de que su traves\u00eda debe comenzar en Nantucket, Massachusetts, isla prestigiosa durante el siglo XIX por su industria ballenera. Antes de alcanzar su destino, o el origen de su aventura, Ismael entabla una estrecha amistad con el experimentado arponero polinesio Queequeg, con quien acuerda compartir la empresa. Ambos se enrolan en el ballenero Pequod, con una tripulaci\u00f3n conformada por marineros de las m\u00e1s diversas nacionalidades y razas; precisamente sus arponeros son Queequeg, el piel roja Tashtego y el \u00abneg",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "events",
+                "type": "",
+                "scope": "partial"
+              }
+            ],
+            "identity_text": "Moby Dick\u200b es una novela del escritor Herman Melville publicada por primera vez el 14 de noviembre de 1851.\u200b Narra la traves\u00eda del barco ballenero Pequod, comandado por el capit\u00e1n Ahab, junto a Ismael y el arponero Queequeg en la obsesiva y autodestructiva persecuci\u00f3n de un gran cachalote blanco. Al margen de la persecuci\u00f3n y evoluci\u00f3n de sus personajes, el tema de la novela es eminentemente enciclop\u00e9dico al incluir detalladas y extensas descripciones de la caza de las ballenas en el siglo XIX y multitud de otros detalles sobre la vida marinera de la \u00e9poca. Quiz\u00e1s por ello la novela no tuvo ning\u00fan \u00e9xito comercial en su primera publicaci\u00f3n, aunque con posterioridad haya servido para cimentar la reputaci\u00f3n del autor y situarlo entre los mejores escritores estadounidenses. El libro inicia con 80 ep\u00edgrafes, empezando con uno del G\u00e9nesis y terminando con una canci\u00f3n ballenera. Todos los ep\u00edgrafes est\u00e1n relacionados con el mar y las ballenas o el leviat\u00e1n. Melville tambi\u00e9n presenta al inicio definiciones directas de diccionarios para la ballena y luego una tabla donde se muestra la palabra ballena en diferentes idiomas. La frase inicial del narrador \u2014\u00abCall me Ishmael\u00bb en ingl\u00e9s, traducid",
+            "character_facts": []
+          }
+        ]
+      },
+      {
+        "request": {
+          "task": "summary",
+          "title": "Moby-Dick; or, The Whale",
+          "targets": [],
+          "author_hint": "Herman Melville",
+          "format": "",
+          "ambiguous": false
+        },
+        "diagnostics": {
+          "verified_narrative_answer": true,
+          "audit": {
+            "decision": "approve",
+            "only_books": true,
+            "claims": [
+              {
+                "statement": "Narra la traves\u00eda del barco ballenero Pequod, comandado por el capit\u00e1n Ahab, junto a Ismael y el arponero Queequeg en la obsesiva y autodestructiva persecuci\u00f3n de un gran cachalote blanco.",
+                "verdict": "supported",
+                "source_id": 2,
+                "evidence": "Narra la traves\u00eda del barco ballenero Pequod, comandado por el capit\u00e1n Ahab, junto a Ismael y el arponero Queequeg en la obsesiva y autodestructiva persecuci\u00f3n de un gran cachalote blanco."
+              },
+              {
+                "statement": "El narrador, Ismael, es un joven estadounidense con experiencia en la marina mercante, que decide que su siguiente viaje ser\u00e1 en un ballenero.",
+                "verdict": "supported",
+                "source_id": 2,
+                "evidence": "El narrador, Ismael, es un joven estadounidense con experiencia en la marina mercante, que decide que su siguiente viaje ser\u00e1 en un ballenero."
+              },
+              {
+                "statement": "De igual forma se convence de que su traves\u00eda debe comenzar en Nantucket, Massachusetts, isla prestigiosa durante el siglo XIX por su industria ballenera.",
+                "verdict": "supported",
+                "source_id": 2,
+                "evidence": "De igual forma se convence de que su traves\u00eda debe comenzar en Nantucket, Massachusetts, isla prestigiosa durante el siglo XIX por su industria ballenera."
+              },
+              {
+                "statement": "Antes de alcanzar su destino, o el origen de su aventura, Ismael entabla una estrecha amistad con el experimentado arponero polinesio Queequeg, con quien acuerda compartir la empresa.",
+                "verdict": "supported",
+                "source_id": 2,
+                "evidence": "Antes de alcanzar su destino, o el origen de su aventura, Ismael entabla una estrecha amistad con el experimentado arponero polinesio Queequeg, con quien acuerda compartir la empresa."
+              },
+              {
+                "statement": "Ambos se enrolan en el ballenero Pequod, con una tripulaci\u00f3n conformada por marineros de las m\u00e1s diversas nacionalidades y razas; precisamente sus arponeros son Queequeg, el piel roja Tashtego y el \u00abnegro salvaje\u00bb Daggoo.",
+                "verdict": "supported",
+                "source_id": 2,
+                "evidence": "Ambos se enrolan en el ballenero Pequod, con una tripulaci\u00f3n conformada por marineros de las m\u00e1s diversas nacionalidades y razas; precisamente sus arponeros son Queequeg, el piel roja Tashtego y el \u00abnegro salvaje\u00bb Daggoo."
+              }
+            ],
+            "coverage": [
+              {
+                "question_id": 1,
+                "status": "answered"
+              }
+            ],
+            "issues": [],
+            "search_queries": []
+          },
+          "work_type": "fiction",
+          "model_calls": 0,
+          "narrative_coverage": "development_excerpt",
+          "partial_evidence": false,
+          "progress_metrics": {
+            "stage_timings": [
+              {
+                "stage": "conversation",
+                "started_ms": 9.592,
+                "elapsed_ms": 17.605,
+                "status": "ok"
+              },
+              {
+                "stage": "cache_lookup",
+                "started_ms": 43.166,
+                "elapsed_ms": 0.666,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 89.548,
+                "elapsed_ms": 232.264,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 92.533,
+                "elapsed_ms": 228.894,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 198.71,
+                "elapsed_ms": 80.267,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 336.236,
+                "elapsed_ms": 66.419,
+                "status": "ok"
+              },
+              {
+                "stage": "retrieval",
+                "started_ms": 479.695,
+                "elapsed_ms": 2301.527,
+                "status": "ok"
+              },
+              {
+                "stage": "audit",
+                "started_ms": 2845.013,
+                "elapsed_ms": 6.234,
+                "status": "ok"
+              }
+            ],
+            "stage_totals_ms": {
+              "conversation": 17.605,
+              "cache_lookup": 0.666,
+              "knowledge_lookup": 607.844,
+              "retrieval": 2301.527,
+              "audit": 6.234
+            },
+            "model_calls_started": 0,
+            "progress_events": [
+              {
+                "stage": "search",
+                "elapsed_ms": 43.845
+              },
+              {
+                "stage": "review",
+                "elapsed_ms": 2844.992
+              }
+            ],
+            "elapsed_ms": 2874.566,
+            "first_phase_emitted_ms": 43.845
+          },
+          "language_presentation": {
+            "target": "es",
+            "original_text": "Narra la traves\u00eda del barco ballenero Pequod, comandado por el capit\u00e1n Ahab, junto a Ismael y el arponero Queequeg en la obsesiva y autodestructiva persecuci\u00f3n de un gran cachalote blanco. El narrador, Ismael, es un joven estadounidense con experiencia en la marina mercante, que decide que su siguiente viaje ser\u00e1 en un ballenero. De igual forma se convence de que su traves\u00eda debe comenzar en Nantucket, Massachusetts, isla prestigiosa durante el siglo XIX por su industria ballenera. Antes de alcanzar su destino, o el origen de su aventura, Ismael entabla una estrecha amistad con el experimentado arponero polinesio Queequeg, con quien acuerda compartir la empresa. Ambos se enrolan en el ballenero Pequod, con una tripulaci\u00f3n conformada por marineros de las m\u00e1s diversas nacionalidades y razas; precisamente sus arponeros son Queequeg, el piel roja Tashtego y el \u00abnegro salvaje\u00bb Daggoo.\n\nFuente: https://es.wikipedia.org/wiki/Moby_Dick\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+            "translated_fields": 0,
+            "cache_hits": 0,
+            "untranslated_fields": [],
+            "card_excerpt_from_audited_response": false,
+            "audit_applies_to_original": true,
+            "cards": [
+              {
+                "id": "sqlkb:a200b09cf7c5d5ca845ffb9abf5597423144ad9fababe5af38c6b0792ea861c5",
+                "title": "Moby-Dick; or, The Whale",
+                "author": "Herman Melville",
+                "synopsis": "",
+                "image_url": "",
+                "links": [
+                  {
+                    "label": "Google Books",
+                    "url": "https://books.google.com/books?q=Moby-Dick%3B+or%2C+The+Whale+Herman+Melville"
+                  },
+                  {
+                    "label": "Project Gutenberg",
+                    "url": "https://www.gutenberg.org/ebooks/15"
+                  },
+                  {
+                    "label": "Amazon",
+                    "url": "https://www.amazon.com/s?k=Moby-Dick%3B+or%2C+The+Whale+Herman+Melville&i=stripbooks"
+                  },
+                  {
+                    "label": "Buscalibre",
+                    "url": "https://www.buscalibre.cl/libros/search?q=Moby-Dick%3B+or%2C+The+Whale+Herman+Melville"
+                  }
+                ]
+              }
+            ]
+          },
+          "stage_timings": [],
+          "elapsed_ms": 2875,
+          "chat_budget_seconds": 36.0
+        },
+        "sources": [
+          {
+            "id": 1,
+            "title": "Moby-Dick; or, The Whale",
+            "author": "Herman Melville",
+            "description": "Moby-Dick; or, The Whale, de Herman Melville. Temas del cat\u00e1logo: Whaling -- Fiction, Sea stories, Psychological fiction, Ship captains -- Fiction, Adventure stories, Mentally ill -- Fiction, Ahab, Captain (Fictitious character) -- Fiction, Whales -- Fiction, Whaling ships -- Fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "sqlkb:a200b09cf7c5d5ca845ffb9abf5597423144ad9fababe5af38c6b0792ea861c5",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/15",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "",
+            "license": "CC0-1.0",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "synopsis": "",
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Whaling -- Fiction",
+              "Sea stories",
+              "Psychological fiction",
+              "Ship captains -- Fiction",
+              "Adventure stories"
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Moby Dick",
+            "author": "Fuente web",
+            "description": "== Argumento == El narrador, Ismael, es un joven estadounidense con experiencia en la marina mercante, que decide que su siguiente viaje ser\u00e1 en un ballenero. De igual forma se convence de que su traves\u00eda debe comenzar en Nantucket, Massachusetts, isla prestigiosa durante el siglo XIX por su industria ballenera. Antes de alcanzar su destino, o el origen de su aventura, Ismael entabla una estrecha amistad con el experimentado arponero polinesio Queequeg, con quien acuerda compartir la empresa. Ambos se enrolan en el ballenero Pequod, con una tripulaci\u00f3n conformada por marineros de las m\u00e1s diversas nacionalidades y razas; precisamente sus arponeros son Queequeg, el piel roja Tashtego y el \u00abnegro salvaje\u00bb Daggoo.",
+            "source": "Wikipedia",
+            "year": "",
+            "book_id": "",
+            "kind": "web",
+            "url": "https://es.wikipedia.org/wiki/Moby_Dick",
+            "locator": "",
+            "read_mode": "pasaje de secci\u00f3n de art\u00edculo p\u00fablico",
+            "retrieved_at": "",
+            "narrative_context": "Narra la traves\u00eda del barco ballenero Pequod, comandado por el capit\u00e1n Ahab, junto a Ismael y el arponero Queequeg en la obsesiva y autodestructiva persecuci\u00f3n de un gran cachalote blanco.",
+            "work_id": "litmate:68319f2cca92a21a05ed626d",
+            "work_title": "Moby-Dick; or, The Whale",
+            "work_author": "Herman Melville",
+            "license": "CC-BY-SA-4.0",
+            "work_binding_verified": true,
+            "permanent_index_allowed": true,
+            "attribution": {
+              "authors": "Wikipedia contributors",
+              "title": "Moby Dick",
+              "url": "https://es.wikipedia.org/wiki/Moby_Dick",
+              "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "revision_id": "175561875"
+            },
+            "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+            "confirmed_aliases": [
+              {
+                "title": "Moby-Dick",
+                "source_url": "https://en.wikipedia.org/wiki/Moby-Dick",
+                "evidence": "MediaWiki langlinks: title=Moby-Dick; lang=es; title=Moby Dick; wikibase_item=Q174596; revisions=1382525508,175561875"
+              },
+              {
+                "title": "Moby-Dick; or, The Whale",
+                "source_url": "https://en.wikipedia.org/wiki/Moby-Dick",
+                "evidence": "MediaWiki langlinks: title=Moby-Dick; published_title=Moby-Dick; or, The Whale; lead=Moby-Dick; or, The Whale is an 1851 epic novel by American writer Herman Melville. The book centers on the sailor Ishmael's narrative of the maniacal quest of Ahab, captain of the whaling ship Pequod, for vengeance against Moby Dick, the giant white sperm whale that bit off his leg on the ship's previous voyage. A contribution to the literature of the American Renaissance, Moby-Dick was published to mixed reviews, was a commercial failure, and was out of print at the time of the author's death in 1891. Its reputation as a Great American Novel was established only in the 20th century, after the 1919 centennial of its author's birth. William Faulkner said he wished he had written the book hims; lang=es; title=Moby Dick; wikibase_item=Q174596; revisions=1382525508,175561875"
+              }
+            ],
+            "literary_facts": [
+              {
+                "subject": "",
+                "relation": "",
+                "value": "",
+                "evidence": "El narrador, Ismael, es un joven estadounidense con experiencia en la marina mercante, que decide que su siguiente viaje ser\u00e1 en un ballenero.",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "plot",
+                "type": "",
+                "scope": "development_excerpt"
+              },
+              {
+                "subject": "Moby Dick",
+                "relation": "",
+                "value": "",
+                "evidence": "== Argumento == El narrador, Ismael, es un joven estadounidense con experiencia en la marina mercante, que decide que su siguiente viaje ser\u00e1 en un ballenero. De igual forma se convence de que su traves\u00eda debe comenzar en Nantucket, Massachusetts, isla prestigiosa durante el siglo XIX por su industria ballenera. Antes de alcanzar su destino, o el origen de su aventura, Ismael entabla una estrecha amistad con el experimentado arponero polinesio Queequeg, con quien acuerda compartir la empresa. Ambos se enrolan en el ballenero Pequod, con una tripulaci\u00f3n conformada por marineros de las m\u00e1s diversas nacionalidades y razas; precisamente sus arponeros son Queequeg, el piel roja Tashtego y el \u00abneg",
+                "source_url": "",
+                "fact_kind": "",
+                "topic": "events",
+                "type": "",
+                "scope": "partial"
+              }
+            ],
+            "identity_text": "Moby Dick\u200b es una novela del escritor Herman Melville publicada por primera vez el 14 de noviembre de 1851.\u200b Narra la traves\u00eda del barco ballenero Pequod, comandado por el capit\u00e1n Ahab, junto a Ismael y el arponero Queequeg en la obsesiva y autodestructiva persecuci\u00f3n de un gran cachalote blanco. Al margen de la persecuci\u00f3n y evoluci\u00f3n de sus personajes, el tema de la novela es eminentemente enciclop\u00e9dico al incluir detalladas y extensas descripciones de la caza de las ballenas en el siglo XIX y multitud de otros detalles sobre la vida marinera de la \u00e9poca. Quiz\u00e1s por ello la novela no tuvo ning\u00fan \u00e9xito comercial en su primera publicaci\u00f3n, aunque con posterioridad haya servido para cimentar la reputaci\u00f3n del autor y situarlo entre los mejores escritores estadounidenses. El libro inicia con 80 ep\u00edgrafes, empezando con uno del G\u00e9nesis y terminando con una canci\u00f3n ballenera. Todos los ep\u00edgrafes est\u00e1n relacionados con el mar y las ballenas o el leviat\u00e1n. Melville tambi\u00e9n presenta al inicio definiciones directas de diccionarios para la ballena y luego una tabla donde se muestra la palabra ballena en diferentes idiomas. La frase inicial del narrador \u2014\u00abCall me Ishmael\u00bb en ingl\u00e9s, traducid",
+            "character_facts": []
+          }
+        ]
+      }
+    ],
+    "duckduckgo_paused_control": false,
+    "content_manually_reviewed": false,
+    "mysql_row_counts": {
+      "auth_group": 0,
+      "auth_group_permissions": 0,
+      "auth_permission": 152,
+      "auth_user": 179,
+      "auth_user_groups": 0,
+      "auth_user_user_permissions": 0,
+      "core_asistenteia": 1,
+      "core_autor": 31,
+      "core_clickconversion": 185,
+      "core_conversacionia": 50,
+      "core_editorial": 34,
+      "core_elementolistalectura": 2,
+      "core_estadolectura": 451,
+      "core_eventoanalitica": 384,
+      "core_genero": 12,
+      "core_historialchatbot": 5,
+      "core_historialpreciolibro": 223,
+      "core_kbname": 14166,
+      "core_kbprojection": 8,
+      "core_kbrecord": 13518,
+      "core_kbrelation": 2621,
+      "core_kbversion": 13518,
+      "core_libro": 55,
+      "core_libro_generos": 54,
+      "core_librofavorito": 231,
+      "core_listalectura": 2,
+      "core_mensajecontacto": 3,
+      "core_mensajeia": 190,
+      "core_perfilusuario": 158,
+      "core_preciolibrotienda": 117,
+      "core_preguntafrecuente": 0,
+      "core_recomendacion": 0,
+      "core_recomendacionialog": 0,
+      "core_resena": 116,
+      "django_admin_log": 0,
+      "django_content_type": 38,
+      "django_migrations": 27,
+      "django_session": 88,
+      "suscripciones_historialpago": 42,
+      "suscripciones_plansuscripcion": 3,
+      "suscripciones_suscripcionusuario": 157
+    },
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true,
+    "original_retrieval_stores_unchanged": {
+      "LITMATE_KNOWLEDGE_DB": true,
+      "LITMATE_KNOWLEDGE_RAG_DB": true,
+      "LITMATE_LIBRARY_DB": true,
+      "LITMATE_LIBRARY_RAG_DB": true,
+      "LITMATE_LITERARY_MEMORY_RAG_DB": true
+    }
+  }
+]

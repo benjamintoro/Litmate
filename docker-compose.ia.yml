@@ -1,0 +1,23 @@
+services:
+  searxng:
+    image: docker.io/searxng/searxng@sha256:ddd642cae6eac75412938fd846ddbf440a2df029cfeae8a562b8b205f4e35e25
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:8080"
+    environment:
+      SEARXNG_BASE_URL: "http://127.0.0.1:8080/"
+      SEARXNG_SECRET: "${LITMATE_SEARCH_SECRET:?Ejecuta python iniciar_buscador.py}"
+    volumes:
+      - ./searxng:/etc/searxng:rw
+      # Compatibility fix scoped to the pinned engine; no image-wide update.
+      - ./searxng/engines/openlibrary.py:/usr/local/searxng/searx/engines/litmate_openlibrary.py:ro
+      - litmate_search_cache:/var/cache/searxng:rw
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/healthz', timeout=3).read()"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 25s
+
+volumes:
+  litmate_search_cache:

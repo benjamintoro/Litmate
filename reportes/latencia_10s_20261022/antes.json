@@ -1,0 +1,9 @@
+{
+  "message": "hola recomiendame libros sobre la segunda guerra mundial",
+  "revision": "147c75e",
+  "mode": "assistant_direct_not_http",
+  "seconds_observed": 20.021,
+  "completed": false,
+  "censored_at_seconds": 20,
+  "note": "Proceso aislado detenido a los 20 s; no se conoce latencia final."
+}

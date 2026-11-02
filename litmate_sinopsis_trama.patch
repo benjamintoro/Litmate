@@ -1,0 +1,161 @@
+--- a/core/ai_narrative_answers.py
++++ b/core/ai_narrative_answers.py
+@@ -294,10 +294,27 @@
+ 
+ def _content(source):
+     if source['kind'] == 'book':
+-        if source.get('policy') == 'openlibrary-minimal-metadata-v1':
++        # Una ficha mínima/temática no demuestra el argumento del libro.
++        # Las descripciones enriquecidas se aceptan solo con procedencia
++        # bibliográfica o vínculo a la página de la que se recuperaron.
++        if source.get('policy') == 'openlibrary-minimal-metadata-v1' and not (
++                source.get('synopsis') and source.get('description_source') or
++                source.get('research_summary') and source.get('synopsis_source_url')):
+             return ''
+-        return source.get('synopsis', '') or (source.get('description', '')
+-            if source.get('source') == 'Conocimiento literario local' else '')
++        synopsis = source.get('synopsis')
++        if isinstance(synopsis, str) and synopsis.strip():
++            return synopsis
++        research = source.get('research_summary')
++        if (isinstance(research, str) and research.strip()
++                and source.get('synopsis_source_url')):
++            return research
++        if source.get('source') == 'Conocimiento literario local':
++            return source.get('description', '')
++        if source.get('description_source') and set(str(source.get('source') or '').split(' / ')) & {
++                'Open Library', 'Google Books API', 'Catálogo LitMate'}:
++            from .books_google import source_synopsis
++            return source_synopsis(source)
++        return ''
+     text = source.get('description', '')
+     # Las páginas editoriales suelen continuar con la biografía y otras
+     # publicaciones del autor. Ese bloque no describe el libro consultado.
+@@ -710,8 +727,19 @@
+     from .literary_ai import build_assistant, ProviderUnavailable
+     from .literary_quality import AUDIT_PROMPT, validate_audit, unsupported_century_claim
+     from .literary_evidence import validate_evidence
+-    sources = [{**source, 'description': _content(source)} if source['kind'] == 'web'
+-               else source for source in sources]
++    # El enriquecimiento puede entregar un resumen en research_summary y
++    # mantener description como metadatos. El auditor valida narrative_context,
++    # pero antes ese resumen no llegaba a ese campo ni se podía citar.
++    prepared_sources = []
++    for source in sources:
++        content = _content(source)
++        if source['kind'] == 'web':
++            prepared_sources.append({**source, 'description': content})
++        elif source['kind'] == 'book' and content and content != source.get('description', ''):
++            prepared_sources.append({**source, 'narrative_context': content})
++        else:
++            prepared_sources.append(source)
++    sources = prepared_sources
+     assistant, client = build_assistant(config, search=lambda query: [], web_search=lambda query: [])
+     kind = work_type(sources)
+     resolved_message = (f'Explica el contenido, los temas y el enfoque documentados de {request["title"]}. '
+--- a/core/ai_presentation.py
++++ b/core/ai_presentation.py
+@@ -56,9 +56,21 @@
+             {'label': 'Amazon', 'url': 'https://www.amazon.com/s?' + urlencode({'k': query, 'i': 'stripbooks'})},
+             {'label': 'Buscalibre', 'url': 'https://www.buscalibre.cl/libros/search?' + urlencode({'q': query})},
+         ])
++        # La tarjeta puede recibir una descripción editorial verificada sin
++        # un campo synopsis separado. No usar materias ni texto arbitrario.
++        synopsis = source.get('synopsis') or (source.get('research_summary')
++                    if source.get('synopsis_source_url') else '')
++        if not synopsis and source.get('policy') != 'openlibrary-minimal-metadata-v1':
++            description = str(source.get('description') or '')
++            if (source.get('description_source') and set(str(source.get('source') or '').split(' / ')) & {
++                    'Open Library', 'Google Books API', 'Catálogo LitMate'}
++                    or 'sinopsis editorial:' in description.lower() and
++                    set(str(source.get('source') or '').split(' / ')) & {'Google Books API', 'Open Library'}):
++                from .books_google import source_synopsis
++                synopsis = source_synopsis(source)
+         cards.append({'id': str(source.get('book_id') or source.get('id', '')),
+                       'title': title, 'author': author,
+-                      'synopsis': clean_text(source.get('synopsis') or source.get('research_summary'), 420),
++                      'synopsis': clean_text(synopsis, 420),
+                       'image_url': cover_url(source.get('image_url')),
+                       'links': links})
+     return cards
+--- a/core/test_narrative_synopsis.py
++++ b/core/test_narrative_synopsis.py
+@@ -33,6 +33,45 @@
+ 
+ 
+ class SynopsisRegressionTests(SimpleTestCase):
++    def test_verified_research_summary_survives_content_selection(self):
++        from .ai_narrative_answers import _content
++        candidate = {**HISTORY_BOOK, 'synopsis': '',
++                     'research_summary': 'El texto investiga la vida en una ciudad portuaria.',
++                     'synopsis_source_url': 'https://example.org/descripcion'}
++        self.assertEqual(_content(candidate), candidate['research_summary'])
++        missing_provenance = {**candidate, 'synopsis_source_url': ''}
++        self.assertEqual(_content(missing_provenance), '')
++
++    def test_minimal_catalogue_metadata_is_not_evidence_of_plot(self):
++        from .ai_narrative_answers import _content
++        candidate = {**HISTORY_BOOK, 'policy': 'openlibrary-minimal-metadata-v1',
++                     'description': 'Temas del catálogo: historia.'}
++        self.assertEqual(_content(candidate), '')
++
++    def test_synthesis_places_verified_enrichment_in_auditable_context(self):
++        from .ai_narrative_answers import synthesize_answer
++        from .literary_ai import canonical_sources
++        title = 'Historia del puerto'
++        message = 'Dime la trama de Historia del puerto de Ana Robles'
++        summary = 'La obra estudia el comercio y la navegación en la ciudad portuaria.'
++        candidate = {**HISTORY_BOOK, 'title': title, 'author': 'Ana Robles',
++                     'research_summary': summary,
++                     'synopsis_source_url': 'https://example.org/descripcion'}
++        seen = []
++        class Stub:
++            calls = 0
++            usage = {}
++            stage_timings = []
++            def __call__(self, stage, prompt, context, model):
++                seen.append((stage, context['sources'][0]))
++                raise TimeoutError('prueba controlada sin modelo')
++        with patch('core.literary_ai.build_assistant', return_value=(
++                SimpleNamespace(answer_model='dummy', guard_model='dummy'), Stub())):
++            result, _ = synthesize_answer(message, request_for(message),
++                                          canonical_sources([candidate]), SimpleNamespace())
++        self.assertEqual(result.status, 'unavailable')
++        self.assertEqual(seen[0][1]['narrative_context'], summary)
++
+     def test_explicit_author_and_short_title_bind_to_real_publisher_subtitle(self):
+         req = request_for('Dime la trama de The Unfinished Nation de Alan Brinkley')
+         self.assertEqual(req['title'], HISTORY_BOOK['title'])
+--- a/core/test_ai_presentation.py
++++ b/core/test_ai_presentation.py
+@@ -93,9 +93,30 @@
+ 
+     def test_missing_cover_and_synopsis_remain_missing_instead_of_being_invented(self):
+         source = {key: value for key, value in SOURCE.items() if key not in {'image_url', 'synopsis'}}
++        source['description'] = 'Temas del catálogo: literatura y ficción.'
+         card = build_book_cards(result([source]))[0]
+         self.assertEqual(card['image_url'], '')
+         self.assertEqual(card['synopsis'], '')
++
++    def test_verified_editorial_description_populates_card_without_synopsis_field(self):
++        source = {**SOURCE, 'synopsis': '',
++                  'description_source': 'Google Books, descripción editorial',
++                  'description': 'Una joven encuentra una carta que cambia su vida.'}
++        card = build_book_cards(result([source]))[0]
++        self.assertEqual(card['synopsis'], source['description'])
++
++    def test_subjects_and_unverified_descriptions_do_not_become_plot_cards(self):
++        for description in ('Temas del catálogo: Terror, Literatura.',
++                            'Ficha comercial con datos de edición.'):
++            with self.subTest(description=description):
++                source = {**SOURCE, 'synopsis': '', 'description': description}
++                self.assertEqual(build_book_cards(result([source]))[0]['synopsis'], '')
++
++    def test_research_summary_with_source_provenance_populates_card(self):
++        source = {**SOURCE, 'synopsis': '', 'research_summary': 'Una autora investiga un misterio familiar.',
++                  'synopsis_source_url': 'https://example.org/obra'}
++        self.assertEqual(build_book_cards(result([source]))[0]['synopsis'],
++                         source['research_summary'])
+ 
+     def test_canonical_sources_preserve_synopsis_and_image_for_card_rendering(self):
+         source = canonical_sources([SOURCE])[0]

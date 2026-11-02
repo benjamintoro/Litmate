@@ -1,0 +1,1435 @@
+{
+  "initial_cold": {
+    "cases": 22,
+    "answered_status": 13,
+    "mean_seconds": 13.4428,
+    "p50_seconds": 10.56455,
+    "p95_nearest_rank_seconds": 35.0581,
+    "under_5_seconds": 7,
+    "under_10_seconds": 10,
+    "under_30_seconds": 19,
+    "factual_precision": null,
+    "answered_does_not_mean_correct": true
+  },
+  "after_cold_same_initial_memory": {
+    "cases": 22,
+    "answered_status": 12,
+    "mean_seconds": 5.3917,
+    "p50_seconds": 5.161250000000001,
+    "p95_nearest_rank_seconds": 9.3595,
+    "under_5_seconds": 10,
+    "under_10_seconds": 21,
+    "under_30_seconds": 22,
+    "factual_precision": null,
+    "answered_does_not_mean_correct": true
+  },
+  "strict_offline_new_answer_cache": {
+    "cases": 12,
+    "answered_status": 3,
+    "mean_seconds": 1.796,
+    "p50_seconds": 0.6025,
+    "p95_nearest_rank_seconds": 14.5364,
+    "under_5_seconds": 11,
+    "under_10_seconds": 11,
+    "under_30_seconds": 12,
+    "factual_precision": null,
+    "answered_does_not_mean_correct": true
+  },
+  "google_confirmed_no_billing_profile": {
+    "cases": 6,
+    "answered_status": 1,
+    "mean_seconds": 10.3469,
+    "p50_seconds": 9.9022,
+    "p95_nearest_rank_seconds": 15.881,
+    "under_5_seconds": 0,
+    "under_10_seconds": 3,
+    "under_30_seconds": 6,
+    "factual_precision": null,
+    "answered_does_not_mean_correct": true
+  },
+  "workers": {
+    "unique_works_examined": 120,
+    "work_checkpoints": 120,
+    "works_with_coverage_change": 25,
+    "jobs_claimed": 118,
+    "jobs_completed": 18,
+    "sources_admitted_or_reverified": 25,
+    "measured_worker_seconds": 242.997,
+    "measured_worker_cpu_seconds": 15.154,
+    "peak_worker_rss_mb": 123.586,
+    "llm_calls": 0
+  },
+  "per_case_runs": [
+    {
+      "file": "reports\\conocimiento_20261030\\case_01_offline_1.json",
+      "case": 1,
+      "offline": true,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 4.1418,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0472,
+        "verified_ready_seconds": 4.092,
+        "first_verified_text_seconds": 4.1418
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_01_offline_2.json",
+      "case": 1,
+      "offline": true,
+      "guard_version": 2,
+      "profile": "research",
+      "seconds": 1.0207,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0472,
+        "verified_ready_seconds": 0.9677,
+        "first_verified_text_seconds": 1.0207
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_01_online_1.json",
+      "case": 1,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 14.8015,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 14.7454,
+        "first_verified_text_seconds": 14.8015
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_01_online_2.json",
+      "case": 1,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 11.6316,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0949,
+        "verified_ready_seconds": 11.5755,
+        "first_verified_text_seconds": 11.6316
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_01_online_3.json",
+      "case": 1,
+      "offline": false,
+      "guard_version": null,
+      "profile": "cold_after",
+      "seconds": 9.3595,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0534,
+        "verified_ready_seconds": 9.303,
+        "first_verified_text_seconds": 9.3595
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_01_online_4.json",
+      "case": 1,
+      "offline": false,
+      "guard_version": null,
+      "profile": "free_google",
+      "seconds": 10.2864,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0544,
+        "verified_ready_seconds": 10.229,
+        "first_verified_text_seconds": 10.2863
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_02_offline_1.json",
+      "case": 2,
+      "offline": true,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 3.9591,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0355,
+        "verified_ready_seconds": 3.9168,
+        "first_verified_text_seconds": 3.959
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_02_offline_2.json",
+      "case": 2,
+      "offline": true,
+      "guard_version": 2,
+      "profile": "research",
+      "seconds": 0.6326,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0353,
+        "verified_ready_seconds": 0.5927,
+        "first_verified_text_seconds": 0.6326
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_02_online_1.json",
+      "case": 2,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 27.0584,
+      "status": "answered",
+      "model_calls": 2,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 27.0134,
+        "first_verified_text_seconds": 27.0583
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_02_online_2.json",
+      "case": 2,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 19.8723,
+      "status": "unavailable",
+      "model_calls": 2,
+      "http_timing": {
+        "first_progress_seconds": 0.0407,
+        "verified_ready_seconds": 19.8292,
+        "first_verified_text_seconds": 19.8723
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_02_online_3.json",
+      "case": 2,
+      "offline": false,
+      "guard_version": null,
+      "profile": "cold_after",
+      "seconds": 8.1161,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0343,
+        "verified_ready_seconds": 8.0743,
+        "first_verified_text_seconds": 8.1161
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_02_online_4.json",
+      "case": 2,
+      "offline": false,
+      "guard_version": null,
+      "profile": "free_google",
+      "seconds": 14.4015,
+      "status": "answered",
+      "model_calls": 2,
+      "http_timing": {
+        "first_progress_seconds": 0.0348,
+        "verified_ready_seconds": 14.3743,
+        "first_verified_text_seconds": 14.4015
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_03_online_1.json",
+      "case": 3,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 35.0639,
+      "status": "unavailable",
+      "model_calls": 3,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 35.0457,
+        "first_verified_text_seconds": 35.0639
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_03_online_2.json",
+      "case": 3,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 9.2734,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0397,
+        "verified_ready_seconds": 9.2305,
+        "first_verified_text_seconds": 9.2734
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_03_online_3.json",
+      "case": 3,
+      "offline": false,
+      "guard_version": null,
+      "profile": "cold_after",
+      "seconds": 6.8504,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0318,
+        "verified_ready_seconds": 6.808,
+        "first_verified_text_seconds": 6.8504
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_04_offline_1.json",
+      "case": 4,
+      "offline": true,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 4.2879,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0358,
+        "verified_ready_seconds": 4.2483,
+        "first_verified_text_seconds": 4.2879
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_04_offline_2.json",
+      "case": 4,
+      "offline": true,
+      "guard_version": 2,
+      "profile": "research",
+      "seconds": 0.6132,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0361,
+        "verified_ready_seconds": 0.5748,
+        "first_verified_text_seconds": 0.6132
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_04_online_1.json",
+      "case": 4,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 23.0721,
+      "status": "answered",
+      "model_calls": 2,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 23.0203,
+        "first_verified_text_seconds": 23.0721
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_04_online_2.json",
+      "case": 4,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 7.2495,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0387,
+        "verified_ready_seconds": 7.2095,
+        "first_verified_text_seconds": 7.2495
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_04_online_3.json",
+      "case": 4,
+      "offline": false,
+      "guard_version": null,
+      "profile": "cold_after",
+      "seconds": 6.6007,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.034,
+        "verified_ready_seconds": 6.5588,
+        "first_verified_text_seconds": 6.6007
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_04_online_4.json",
+      "case": 4,
+      "offline": false,
+      "guard_version": null,
+      "profile": "free_google",
+      "seconds": 15.881,
+      "status": "unavailable",
+      "model_calls": 2,
+      "http_timing": {
+        "first_progress_seconds": 0.0339,
+        "verified_ready_seconds": 15.8582,
+        "first_verified_text_seconds": 15.881
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_05_offline_1.json",
+      "case": 5,
+      "offline": true,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 2.0061,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0363,
+        "verified_ready_seconds": 1.9685,
+        "first_verified_text_seconds": 2.0061
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_05_offline_2.json",
+      "case": 5,
+      "offline": true,
+      "guard_version": 2,
+      "profile": "research",
+      "seconds": 0.5765,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0363,
+        "verified_ready_seconds": 0.5372,
+        "first_verified_text_seconds": 0.5765
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_05_online_1.json",
+      "case": 5,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 17.2057,
+      "status": "answered",
+      "model_calls": 2,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 17.1756,
+        "first_verified_text_seconds": 17.2057
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_05_online_2.json",
+      "case": 5,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 8.8937,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0398,
+        "verified_ready_seconds": 8.8536,
+        "first_verified_text_seconds": 8.8937
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_05_online_3.json",
+      "case": 5,
+      "offline": false,
+      "guard_version": null,
+      "profile": "cold_after",
+      "seconds": 5.2487,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0353,
+        "verified_ready_seconds": 5.2079,
+        "first_verified_text_seconds": 5.2487
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_05_online_4.json",
+      "case": 5,
+      "offline": false,
+      "guard_version": null,
+      "profile": "free_google",
+      "seconds": 5.4188,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.034,
+        "verified_ready_seconds": 5.3766,
+        "first_verified_text_seconds": 5.4188
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_06_offline_1.json",
+      "case": 6,
+      "offline": true,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 3.6658,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0359,
+        "verified_ready_seconds": 3.5984,
+        "first_verified_text_seconds": 3.6658
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_06_offline_2.json",
+      "case": 6,
+      "offline": true,
+      "guard_version": 2,
+      "profile": "research",
+      "seconds": 0.5639,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0361,
+        "verified_ready_seconds": 0.5254,
+        "first_verified_text_seconds": 0.5639
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_06_online_1.json",
+      "case": 6,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 17.4723,
+      "status": "answered",
+      "model_calls": 2,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 17.4427,
+        "first_verified_text_seconds": 17.4723
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_06_online_2.json",
+      "case": 6,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 8.6138,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0361,
+        "verified_ready_seconds": 8.5764,
+        "first_verified_text_seconds": 8.6138
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_06_online_3.json",
+      "case": 6,
+      "offline": false,
+      "guard_version": null,
+      "profile": "cold_after",
+      "seconds": 8.6927,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.03,
+        "verified_ready_seconds": 8.6521,
+        "first_verified_text_seconds": 8.6927
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_06_online_4.json",
+      "case": 6,
+      "offline": false,
+      "guard_version": null,
+      "profile": "free_google",
+      "seconds": 9.518,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.03,
+        "verified_ready_seconds": 9.4624,
+        "first_verified_text_seconds": 9.518
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_07_offline_1.json",
+      "case": 7,
+      "offline": true,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 2.3492,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0585,
+        "verified_ready_seconds": 2.3093,
+        "first_verified_text_seconds": 2.3491
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_07_offline_2.json",
+      "case": 7,
+      "offline": true,
+      "guard_version": 2,
+      "profile": "research",
+      "seconds": 0.6891,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0371,
+        "verified_ready_seconds": 0.6484,
+        "first_verified_text_seconds": 0.6891
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_07_online_1.json",
+      "case": 7,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 19.6563,
+      "status": "answered",
+      "model_calls": 2,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 19.6127,
+        "first_verified_text_seconds": 19.6563
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_07_online_2.json",
+      "case": 7,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 13.7087,
+      "status": "answered",
+      "model_calls": 2,
+      "http_timing": {
+        "first_progress_seconds": 0.042,
+        "verified_ready_seconds": 13.6791,
+        "first_verified_text_seconds": 13.7087
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_07_online_3.json",
+      "case": 7,
+      "offline": false,
+      "guard_version": null,
+      "profile": "cold_after",
+      "seconds": 1.8451,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.03,
+        "verified_ready_seconds": 1.8003,
+        "first_verified_text_seconds": 1.8451
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_08_online_1.json",
+      "case": 8,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 10.0428,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 10.0176,
+        "first_verified_text_seconds": 10.0428
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_08_online_2.json",
+      "case": 8,
+      "offline": false,
+      "guard_version": null,
+      "profile": "cold_after",
+      "seconds": 4.8278,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0346,
+        "verified_ready_seconds": 4.8078,
+        "first_verified_text_seconds": 4.8278
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_09_offline_1.json",
+      "case": 9,
+      "offline": true,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 0.5778,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0375,
+        "verified_ready_seconds": 0.5397,
+        "first_verified_text_seconds": 0.5778
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_09_offline_2.json",
+      "case": 9,
+      "offline": true,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 0.6964,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0528,
+        "verified_ready_seconds": 0.6491,
+        "first_verified_text_seconds": 0.6964
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_09_offline_3.json",
+      "case": 9,
+      "offline": true,
+      "guard_version": 2,
+      "profile": "research",
+      "seconds": 0.5496,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0362,
+        "verified_ready_seconds": 0.5101,
+        "first_verified_text_seconds": 0.5496
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_09_online_1.json",
+      "case": 9,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 35.0461,
+      "status": "unavailable",
+      "model_calls": 4,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 35.0268,
+        "first_verified_text_seconds": 35.0461
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_09_online_2.json",
+      "case": 9,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 1.6644,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0413,
+        "verified_ready_seconds": 1.6229,
+        "first_verified_text_seconds": 1.6644
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_09_online_3.json",
+      "case": 9,
+      "offline": false,
+      "guard_version": null,
+      "profile": "cold_after",
+      "seconds": 1.5077,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.038,
+        "verified_ready_seconds": 1.4658,
+        "first_verified_text_seconds": 1.5077
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_10_online_1.json",
+      "case": 10,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 1.9525,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 1.9225,
+        "first_verified_text_seconds": 1.9525
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_10_online_2.json",
+      "case": 10,
+      "offline": false,
+      "guard_version": null,
+      "profile": "cold_after",
+      "seconds": 1.518,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0341,
+        "verified_ready_seconds": 1.4868,
+        "first_verified_text_seconds": 1.518
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_11_offline_1.json",
+      "case": 11,
+      "offline": true,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 2.6788,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0365,
+        "verified_ready_seconds": 2.6416,
+        "first_verified_text_seconds": 2.6788
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_11_offline_2.json",
+      "case": 11,
+      "offline": true,
+      "guard_version": 2,
+      "profile": "research",
+      "seconds": 0.5333,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0343,
+        "verified_ready_seconds": 0.4956,
+        "first_verified_text_seconds": 0.5333
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_11_online_1.json",
+      "case": 11,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 11.0863,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 10.9709,
+        "first_verified_text_seconds": 11.0863
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_11_online_2.json",
+      "case": 11,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 6.9178,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.04,
+        "verified_ready_seconds": 6.8797,
+        "first_verified_text_seconds": 6.9178
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_11_online_3.json",
+      "case": 11,
+      "offline": false,
+      "guard_version": null,
+      "profile": "cold_after",
+      "seconds": 5.0738,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0327,
+        "verified_ready_seconds": 5.0348,
+        "first_verified_text_seconds": 5.0738
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_12_offline_1.json",
+      "case": 12,
+      "offline": true,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 1.5905,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0351,
+        "verified_ready_seconds": 1.5532,
+        "first_verified_text_seconds": 1.5905
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_12_offline_2.json",
+      "case": 12,
+      "offline": true,
+      "guard_version": 2,
+      "profile": "research",
+      "seconds": 0.5918,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0362,
+        "verified_ready_seconds": 0.5522,
+        "first_verified_text_seconds": 0.5918
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_12_online_1.json",
+      "case": 12,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 8.8537,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 8.808,
+        "first_verified_text_seconds": 8.8537
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_12_online_2.json",
+      "case": 12,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 9.2979,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.043,
+        "verified_ready_seconds": 9.2611,
+        "first_verified_text_seconds": 9.2979
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_12_online_3.json",
+      "case": 12,
+      "offline": false,
+      "guard_version": null,
+      "profile": "cold_after",
+      "seconds": 6.2419,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.033,
+        "verified_ready_seconds": 6.2025,
+        "first_verified_text_seconds": 6.2419
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_13_offline_1.json",
+      "case": 13,
+      "offline": true,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 1.3222,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0344,
+        "verified_ready_seconds": 1.3052,
+        "first_verified_text_seconds": 1.3222
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_13_offline_2.json",
+      "case": 13,
+      "offline": true,
+      "guard_version": 2,
+      "profile": "research",
+      "seconds": 0.6575,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0459,
+        "verified_ready_seconds": 0.6367,
+        "first_verified_text_seconds": 0.6575
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_13_online_1.json",
+      "case": 13,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 5.853,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 5.8332,
+        "first_verified_text_seconds": 5.853
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_13_online_2.json",
+      "case": 13,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 6.4596,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0381,
+        "verified_ready_seconds": 6.4421,
+        "first_verified_text_seconds": 6.4596
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_13_online_3.json",
+      "case": 13,
+      "offline": false,
+      "guard_version": null,
+      "profile": "cold_after",
+      "seconds": 6.3753,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0317,
+        "verified_ready_seconds": 6.3576,
+        "first_verified_text_seconds": 6.3753
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_13_online_4.json",
+      "case": 13,
+      "offline": false,
+      "guard_version": null,
+      "profile": "free_google",
+      "seconds": 6.5756,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0315,
+        "verified_ready_seconds": 6.5572,
+        "first_verified_text_seconds": 6.5756
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_14_offline_1.json",
+      "case": 14,
+      "offline": true,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 2.6866,
+      "status": "unavailable",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0371,
+        "verified_ready_seconds": 2.6696,
+        "first_verified_text_seconds": 2.6866
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_14_offline_2.json",
+      "case": 14,
+      "offline": true,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 0.7173,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.045,
+        "verified_ready_seconds": 0.6674,
+        "first_verified_text_seconds": 0.7173
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_14_offline_3.json",
+      "case": 14,
+      "offline": true,
+      "guard_version": 2,
+      "profile": "research",
+      "seconds": 0.5873,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0376,
+        "verified_ready_seconds": 0.5486,
+        "first_verified_text_seconds": 0.5873
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_14_online_1.json",
+      "case": 14,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 1.9067,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 1.8878,
+        "first_verified_text_seconds": 1.9067
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_14_online_2.json",
+      "case": 14,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 1.6672,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0371,
+        "verified_ready_seconds": 1.6467,
+        "first_verified_text_seconds": 1.6672
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_14_online_3.json",
+      "case": 14,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 1.9661,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0658,
+        "verified_ready_seconds": 1.9083,
+        "first_verified_text_seconds": 1.9661
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_14_online_4.json",
+      "case": 14,
+      "offline": false,
+      "guard_version": null,
+      "profile": "cold_after",
+      "seconds": 1.8559,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0325,
+        "verified_ready_seconds": 1.8127,
+        "first_verified_text_seconds": 1.8559
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_15_online_1.json",
+      "case": 15,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 2.2407,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 2.219,
+        "first_verified_text_seconds": 2.2407
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_15_online_2.json",
+      "case": 15,
+      "offline": false,
+      "guard_version": null,
+      "profile": "cold_after",
+      "seconds": 4.8629,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0338,
+        "verified_ready_seconds": 4.842,
+        "first_verified_text_seconds": 4.8629
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_16_online_1.json",
+      "case": 16,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 35.0581,
+      "status": "unavailable",
+      "model_calls": 3,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 35.0379,
+        "first_verified_text_seconds": 35.058
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_16_online_2.json",
+      "case": 16,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 9.0779,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0402,
+        "verified_ready_seconds": 9.0362,
+        "first_verified_text_seconds": 9.0779
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_16_online_3.json",
+      "case": 16,
+      "offline": false,
+      "guard_version": null,
+      "profile": "cold_after",
+      "seconds": 8.5683,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0347,
+        "verified_ready_seconds": 8.5266,
+        "first_verified_text_seconds": 8.5683
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_17_online_1.json",
+      "case": 17,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 0.6323,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 0.6101,
+        "first_verified_text_seconds": 0.6323
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_17_online_2.json",
+      "case": 17,
+      "offline": false,
+      "guard_version": null,
+      "profile": "cold_after",
+      "seconds": 0.5961,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.034,
+        "verified_ready_seconds": 0.5752,
+        "first_verified_text_seconds": 0.5961
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_18_online_1.json",
+      "case": 18,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 0.7098,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 0.6794,
+        "first_verified_text_seconds": 0.7098
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_18_online_2.json",
+      "case": 18,
+      "offline": false,
+      "guard_version": null,
+      "profile": "cold_after",
+      "seconds": 0.6681,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0355,
+        "verified_ready_seconds": 0.637,
+        "first_verified_text_seconds": 0.6681
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_19_offline_1.json",
+      "case": 19,
+      "offline": true,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 13.2361,
+      "status": "answered",
+      "model_calls": 2,
+      "http_timing": {
+        "first_progress_seconds": 0.0359,
+        "verified_ready_seconds": 13.2032,
+        "first_verified_text_seconds": 13.2361
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_19_offline_2.json",
+      "case": 19,
+      "offline": true,
+      "guard_version": 2,
+      "profile": "research",
+      "seconds": 14.5364,
+      "status": "answered",
+      "model_calls": 2,
+      "http_timing": {
+        "first_progress_seconds": 0.0341,
+        "verified_ready_seconds": 14.5031,
+        "first_verified_text_seconds": 14.5364
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_19_online_1.json",
+      "case": 19,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 18.7954,
+      "status": "answered",
+      "model_calls": 4,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 18.7587,
+        "first_verified_text_seconds": 18.7954
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_19_online_2.json",
+      "case": 19,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 13.9636,
+      "status": "answered",
+      "model_calls": 2,
+      "http_timing": {
+        "first_progress_seconds": 0.0383,
+        "verified_ready_seconds": 13.9277,
+        "first_verified_text_seconds": 13.9636
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_19_online_3.json",
+      "case": 19,
+      "offline": false,
+      "guard_version": null,
+      "profile": "cold_after",
+      "seconds": 20.8432,
+      "status": "answered",
+      "model_calls": 2,
+      "http_timing": {
+        "first_progress_seconds": 0.0336,
+        "verified_ready_seconds": 20.8069,
+        "first_verified_text_seconds": 20.8432
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_20_online_1.json",
+      "case": 20,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 0.537,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 0.5141,
+        "first_verified_text_seconds": 0.537
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_20_online_2.json",
+      "case": 20,
+      "offline": false,
+      "guard_version": null,
+      "profile": "cold_after",
+      "seconds": 0.5288,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0337,
+        "verified_ready_seconds": 0.5057,
+        "first_verified_text_seconds": 0.5288
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_21_online_1.json",
+      "case": 21,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 0.497,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 0.4691,
+        "first_verified_text_seconds": 0.497
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_21_online_2.json",
+      "case": 21,
+      "offline": false,
+      "guard_version": null,
+      "profile": "cold_after",
+      "seconds": 0.4754,
+      "status": "answered",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0332,
+        "verified_ready_seconds": 0.4475,
+        "first_verified_text_seconds": 0.4754
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_22_online_1.json",
+      "case": 22,
+      "offline": false,
+      "guard_version": null,
+      "profile": "research",
+      "seconds": 8.2002,
+      "status": "clarification",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 8.1798,
+        "first_verified_text_seconds": 8.2002
+      }
+    },
+    {
+      "file": "reports\\conocimiento_20261030\\case_22_online_2.json",
+      "case": 22,
+      "offline": false,
+      "guard_version": null,
+      "profile": "cold_after",
+      "seconds": 7.9601,
+      "status": "clarification",
+      "model_calls": 0,
+      "http_timing": {
+        "first_progress_seconds": 0.0337,
+        "verified_ready_seconds": 7.9399,
+        "first_verified_text_seconds": 7.9601
+      }
+    }
+  ],
+  "limits": [
+    "Small benchmark, not a production SLA or a measured 99% accuracy.",
+    "Live providers and model generations vary between runs.",
+    "Worker times exclude full-backup verification and campaign inventory overhead.",
+    "Nonfiction follow-up batch and explicit public ingestion are separate reports."
+  ]
+}

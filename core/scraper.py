@@ -666,6 +666,10 @@ def obtener_datos_comparador_libro(libro_id=None, titulo="", autor="", google_id
     2. Si no existe o se fuerza actualización, ejecuta el scraper y almacena los resultados.
     3. Construye los KPIs de precios (Mejor precio, Ahorro, Tienda líder) y el historial para Chart.js.
     """
+    from django.conf import settings
+    read_only = getattr(settings, 'LITMATE_DEMO_READ_ONLY', False)
+    if read_only:
+        force_refresh = False
     libro_obj = None
     if libro_id:
         try:
@@ -719,7 +723,7 @@ def obtener_datos_comparador_libro(libro_id=None, titulo="", autor="", google_id
                 })
         # Ordenar tiendas por precio ascendente
         tiendas_data.sort(key=lambda x: x.get('precio_actual', 9999999))
-    else:
+    elif not read_only:
         # Ejecutar scraper y generador de enlaces directos
         tiendas_data = generar_enlaces_completos(
             titulo=titulo,
@@ -808,7 +812,7 @@ def obtener_datos_comparador_libro(libro_id=None, titulo="", autor="", google_id
         t['precio_lista_formateado'] = f"${t['precio_lista']:,.0f} CLP".replace(',', '.')
 
     # Construir datasets para el gráfico ÚNICAMENTE para las tiendas disponibles
-    meses_labels, _ = generar_historial_cronologico(titulo, tiendas_data[0]['precio_actual'], months=6)
+    meses_labels, _ = ([], []) if read_only else generar_historial_cronologico(titulo, tiendas_data[0]['precio_actual'], months=6)
     palette = [
         {'line': '#C9A96E', 'bg': 'rgba(201, 169, 110, 0.15)'},  # Dorado (Buscalibre / Destacado)
         {'line': '#48BB78', 'bg': 'rgba(72, 187, 120, 0.12)'},   # Esmeralda (Feria Chilena)
@@ -820,7 +824,7 @@ def obtener_datos_comparador_libro(libro_id=None, titulo="", autor="", google_id
     ]
 
     chart_datasets = []
-    for idx, t in enumerate(tiendas_data):
+    for idx, t in enumerate([] if read_only else tiendas_data):
         _, serie = generar_historial_cronologico(titulo + t['tienda'], t['precio_actual'], months=6)
         chart_datasets.append({
             'label': t['tienda'],

@@ -1,0 +1,19 @@
+{
+  "checkpoint": "priority switched to bf415ec9 conversational repair; prior code retained",
+  "baseline": "baseline.json",
+  "first_after": "after.json",
+  "final_conversation": "conversation_cierre.json",
+  "holdouts": "holdout_final.json",
+  "test_round": "tests_directed.json",
+  "integrity_hashes": {
+    ".env": "1d8e35effc765d26ecb73f3e2ee26c886a1e3d98b1bc45590c356b8604008e74",
+    "data\\literary_memory.sqlite3": "70c340b8568683342bdc86514b9ddc0eb5b70c4b06c28224762ffb5bc724c87e",
+    "data\\literary_memory_rag.sqlite3": "1d69ede229a1d0fa6ba9e95d197fb78bfa273c9eeae0e4b59e913a243f79e876"
+  },
+  "important_limits": [
+    "Jade Cabinet still produced cortejadora pernicioso and mummies in last holdout; not solved.",
+    "Explicit comparison Emma/Orgullo y prejuicio failed at about 35 seconds.",
+    "Principal lists distinguish one verified primary role from other documented roles; not all declared primary.",
+    "No production RAG rebuild, Docker changes, ingestion, paid API, migration or model switch."
+  ]
+}

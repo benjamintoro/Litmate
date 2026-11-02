@@ -1,0 +1,265 @@
+{
+  "case": {
+    "case": 9,
+    "title": "El invencible verano de Liliana",
+    "author": "Cristina Rivera Garza",
+    "kind": "no_ficcion",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": true
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Explica el contenido de El invencible verano de Liliana de Cristina Rivera Garza",
+      "answer": "El libro se centra en la historia de Liliana Rivera Garza, la hermana menor de la autora, quien fue v\u00edctima de feminicidio en 1990. A trav\u00e9s de esta obra, Cristina Rivera Garza explora la memoria, la justicia y el dolor, tejiendo una narrativa que combina elementos personales, testimoniales y contextuales para abordar un problema social apremiante en M\u00e9xico y en muchos otros lugares del mundo. En Retorno a Tipasa, El Verano (1952)\u200bCristina recuenta que Liliana ten\u00eda muy presente esta frase en su vida, esta cita busca representar al verano dentro del invierno como una esperanza o resiliencia durante momentos adversos.\n\nFuente: https://es.wikipedia.org/wiki/El_invencible_verano_de_Liliana\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+      "status": "answered",
+      "books": [
+        {
+          "id": "/works/OL28767610W",
+          "title": "El invencible verano de Liliana",
+          "author": "Cristina Rivera Garza",
+          "synopsis": "",
+          "image_url": "https://covers.openlibrary.org/b/id/13677622-M.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=El+invencible+verano+de+Liliana+Cristina+Rivera+Garza"
+            },
+            {
+              "label": "Open Library",
+              "url": "https://openlibrary.org/works/OL28767610W"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+invencible+verano+de+Liliana+Cristina+Rivera+Garza&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+invencible+verano+de+Liliana+Cristina+Rivera+Garza"
+            }
+          ]
+        }
+      ],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 1629,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "partial_evidence": true,
+        "work_type": "nonfiction",
+        "progress_metrics": {
+          "elapsed_ms": 1656.313,
+          "first_phase_emitted_ms": 25.602,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 10.184,
+            "cache_lookup": 5.826,
+            "knowledge_lookup": 501.237,
+            "retrieval": 1086.838,
+            "audit": 3.802,
+            "finalization": 27.071
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 3.134,
+              "elapsed_ms": 10.184,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 19.765,
+              "elapsed_ms": 5.826,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 38.721,
+              "elapsed_ms": 304.268,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 113.536,
+              "elapsed_ms": 28.415,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 204.887,
+              "elapsed_ms": 136.986,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 275.045,
+              "elapsed_ms": 29.091,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 411.417,
+              "elapsed_ms": 2.477,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 429.102,
+              "elapsed_ms": 1086.838,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 1589.697,
+              "elapsed_ms": 3.802,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 1629.236,
+              "elapsed_ms": 27.071,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 25.602
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 1589.68
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 1.6644,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.0413,
+        "verified_ready_seconds": 1.6229,
+        "first_verified_text_seconds": 1.6644
+      }
+    }
+  ],
+  "seconds": 3.879,
+  "public_research_trace": [
+    {
+      "stage": "retrieved_public_evidence",
+      "sources": [
+        {
+          "id": 1,
+          "title": "El invencible verano de Liliana",
+          "author": "Cristina Rivera Garza",
+          "description": "Temas del cat\u00e1logo: Romance literature, Women, Crimes against",
+          "source": "Open Library",
+          "year": "2021",
+          "book_id": "/works/OL28767610W",
+          "kind": "book",
+          "url": "https://openlibrary.org/works/OL28767610W",
+          "locator": "",
+          "read_mode": "ficha bibliogr\u00e1fica; materias de cat\u00e1logo, no texto de la ob",
+          "retrieved_at": "",
+          "image_url": "https://covers.openlibrary.org/b/id/13677622-M.jpg",
+          "categories": [
+            "Romance literature",
+            "Women",
+            "Crimes against"
+          ]
+        },
+        {
+          "id": 2,
+          "title": "El invencible verano de Liliana",
+          "author": "Fuente web",
+          "description": "El invencible verano de Liliana es una obra escrita por la autora mexicana Cristina Rivera Garza,\u200b publicada en 2021 por Penguin Random House. El libro se centra en la historia de Liliana Rivera Garza, la hermana menor de la autora, quien fue v\u00edctima de feminicidio en 1990.\u200b\u200b A trav\u00e9s de esta obra, Cristina Rivera Garza explora la memoria, la justicia y el dolor, tejiendo una narrativa que combina elementos personales, testimoniales y contextuales para abordar un problema social apremiante en M\u00e9xico y en muchos otros lugares del mundo.\u200b El libro ha ganado distintas premiaciones, como el Premio Xavier Villaurrutia de Escritores para Escritores 2021,\u200b\u200b\u200b el Premio Rodolfo Walsh 2022\u200b y el Premio Pulitzer 2024, en la categor\u00eda de Memoria o Autobiograf\u00eda.\u200b\u200b == T\u00edtulo == El t\u00edtulo del libro proviene de una cita de Albert Camus, que a la vez es el ep\u00edgrafe del libro:\u200b\"En lo m\u00e1s profundo del invierno aprend\u00ed al fin que hab\u00eda en m\u00ed un invencible verano\". En Retorno a Tipasa, El Verano (1952)\u200bCristina recuenta que Liliana ten\u00eda muy presente esta frase en su vida, esta cita busca representar al verano dentro del invierno como una esperanza o resiliencia durante momentos adversos.\u200b == Contexto == Rivera Garza afirma que la obra fue escrita durante la pandemia de COVID-19, periodo que le permiti\u00f3 consultar el archivo personal que su hermana dej\u00f3.El libro ha tomado el tiempo que necesitaba, el proceso ciertamente dif\u00edcil, tortuoso, relacionado a la p\u00e9rdida... hab\u00eda intentado escribir este libro varias veces y hab\u00eda fracasado, no fue sino hasta que encontr\u00e9 una caja llena de documentos que mi hermana hab\u00eda dejado: cartas, notas, recaditos, planos, que me dije \"ah\u00ed est\u00e1, esta es la parte del libro que me faltaba\".\u200b == Temas == === Feminicidio === El feminicidio se tipific\u00f3 en M",
+          "source": "Wikipedia",
+          "year": "",
+          "book_id": "",
+          "kind": "web",
+          "url": "https://es.wikipedia.org/wiki/El_invencible_verano_de_Liliana",
+          "locator": "",
+          "read_mode": "pasaje de secci\u00f3n de art\u00edculo p\u00fablico",
+          "retrieved_at": "",
+          "work_id": "litmate:da47deea1c17a53890175209",
+          "work_title": "El invencible verano de Liliana",
+          "work_author": "Cristina Rivera Garza",
+          "license": "CC-BY-SA-4.0",
+          "work_binding_verified": true,
+          "permanent_index_allowed": true,
+          "attribution": {
+            "authors": "Wikipedia contributors",
+            "title": "El invencible verano de Liliana",
+            "url": "https://es.wikipedia.org/wiki/El_invencible_verano_de_Liliana",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+            "revision_id": "176026842"
+          },
+          "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+          "literary_facts": [
+            {
+              "subject": "",
+              "relation": "",
+              "value": "",
+              "evidence": "El invencible verano de Liliana es una obra escrita por la autora mexicana Cristina Rivera Garza,\u200b publicada en 2021 por Penguin Random House.",
+              "source_url": "",
+              "fact_kind": "",
+              "topic": "plot",
+              "type": "",
+              "scope": "premise"
+            }
+          ],
+          "identity_text": "El invencible verano de Liliana es una obra escrita por la autora mexicana Cristina Rivera Garza,\u200b publicada en 2021 por Penguin Random House. El libro se centra en la historia de Liliana Rivera Garza, la hermana menor de la autora, quien fue v\u00edctima de feminicidio en 1990.\u200b\u200b A trav\u00e9s de esta obra, Cristina Rivera Garza explora la memoria, la justicia y el dolor, tejiendo una narrativa que combina elementos personales, testimoniales y contextuales para abordar un problema social apremiante en M\u00e9xico y en muchos otros lugares del mundo.\u200b El libro ha ganado distintas premiaciones, como el Premio Xavier Villaurrutia de Escritores para Escritores 2021,\u200b\u200b\u200b el Premio Rodolfo Walsh 2022\u200b y el Premio Pulitzer 2024, en la categor\u00eda de Memoria o Autobiograf\u00eda.\u200b\u200b",
+          "character_facts": []
+        }
+      ]
+    }
+  ],
+  "coverage_before": {
+    "works": 14479,
+    "works_with_explicit_plot": 16,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 19,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 33,
+    "linked_sources": 14652,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14480,
+    "works_with_explicit_plot": 17,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 20,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 34,
+    "linked_sources": 14654,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "persistent_exact_cache",
+  "google_books_enabled": false,
+  "factual_review_pending": true
+}

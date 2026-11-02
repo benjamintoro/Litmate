@@ -1,0 +1,318 @@
+{
+  "case": {
+    "case": 19,
+    "title": "The jade cabinet",
+    "author": "Rikki Ducornet",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": true
+        },
+        {
+          "table": "memory_aliases",
+          "title_match": true,
+          "full_author_match": true
+        },
+        {
+          "table": "memory_entities",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_sources",
+          "title_match": true,
+          "full_author_match": true
+        },
+        {
+          "table": "memory_assertions",
+          "title_match": true,
+          "full_author_match": true
+        },
+        {
+          "table": "memory_fts",
+          "title_match": true,
+          "full_author_match": true
+        },
+        {
+          "table": "memory_fts_content",
+          "title_match": true,
+          "full_author_match": true
+        }
+      ],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [
+          "d0931ac21558c7606cbba8b9cc04fa15f6cdf3a7987faefa56eec2660dcfffcc"
+        ],
+        "direct_records": [
+          {
+            "id": "d0931ac21558c7606cbba8b9cc04fa15f6cdf3a7987faefa56eec2660dcfffcc",
+            "label": "The jade cabinet",
+            "kind": "work"
+          }
+        ],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": false
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de The jade cabinet de Rikki Ducornet",
+      "answer": "En *The Jade Cabinet*, la hermosa Etheria es silenciada por su padre exc\u00e9ntrico y luego intercambiada como moneda de cambio por un precioso trozo de jade. Su hermana, Memory, relata esta historia desde la perspectiva de una infancia marcada por las influencias de Lewis Carroll y un orangut\u00e1n llamado Dr. Johnson, as\u00ed como por el cortejo t\u00f3xico de Radulph Tubbs, conocido como el Drag\u00f3n de la Industria de la reina Victoria. La narrativa viaja desde Oxford hasta Egipto, donde se desarrollan eventos extravagantes como la transformaci\u00f3n de mummies de ibis en fertilizante y las acciones del arquitecto Baconfield que provocan el colapso de una pir\u00e1mide.\n\nFuente: https://openlibrary.org/works/OL104666W",
+      "status": "answered",
+      "books": [
+        {
+          "id": "sqlkb:d0931ac21558c7606cbba8b9cc04fa15f6cdf3a7987faefa56eec2660dcfffcc",
+          "title": "The jade cabinet",
+          "author": "Rikki Ducornet",
+          "synopsis": "No pude preparar una traducci\u00f3n fiable de esta descripci\u00f3n.",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=The+jade+cabinet+Rikki+Ducornet"
+            },
+            {
+              "label": "Open Library",
+              "url": "https://openlibrary.org/works/OL104666W"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=The+jade+cabinet+Rikki+Ducornet&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=The+jade+cabinet+Rikki+Ducornet"
+            }
+          ]
+        }
+      ],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 18767,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 2,
+        "verified_narrative_answer": true,
+        "narrative_synthesized": true,
+        "partial_evidence": false,
+        "work_type": "fiction",
+        "progress_metrics": {
+          "elapsed_ms": 18786.389,
+          "first_phase_emitted_ms": 24.728,
+          "model_calls_started": 4,
+          "stage_totals_ms": {
+            "conversation": 7.489,
+            "cache_lookup": 6.573,
+            "knowledge_lookup": 847.066,
+            "model_inspection": 61.909,
+            "generation": 12513.622,
+            "audit": 5569.115,
+            "finalization": 19.815
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 4.229,
+              "elapsed_ms": 7.489,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 18.144,
+              "elapsed_ms": 6.573,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 37.706,
+              "elapsed_ms": 419.646,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 111.836,
+              "elapsed_ms": 55.185,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 240.488,
+              "elapsed_ms": 215.787,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 310.396,
+              "elapsed_ms": 85.357,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 470.983,
+              "elapsed_ms": 71.091,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 655.422,
+              "elapsed_ms": 8212.872,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 655.434,
+              "elapsed_ms": 39.694,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 8870.485,
+              "elapsed_ms": 4814.467,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 8870.506,
+              "elapsed_ms": 0.007,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 13686.502,
+              "elapsed_ms": 2.592,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 13696.365,
+              "elapsed_ms": 4300.75,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 13696.37,
+              "elapsed_ms": 22.198,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 17997.164,
+              "elapsed_ms": 752.056,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 17997.171,
+              "elapsed_ms": 0.01,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 18766.568,
+              "elapsed_ms": 19.815,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 24.728
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 655.405
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 8870.463
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 13696.346
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 17997.148
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "prompt_eval_ms": 254.762,
+            "total_ms": 4269.831,
+            "eval_ms": 3927.373,
+            "elapsed_ms": 4301,
+            "eval_count": 115,
+            "status": "ok",
+            "prompt_eval_count": 327,
+            "stage": "language_translate",
+            "load_ms": 5.716,
+            "model": "qwen3.5:9b-q4_K_M"
+          },
+          {
+            "prompt_eval_ms": 266.187,
+            "total_ms": 741.465,
+            "eval_ms": 424.123,
+            "elapsed_ms": 752,
+            "eval_count": 10,
+            "status": "ok",
+            "prompt_eval_count": 382,
+            "stage": "language_verify",
+            "load_ms": 7.409,
+            "model": "qwen3.5:9b-q4_K_M"
+          }
+        ],
+        "provider": "ollama-local"
+      },
+      "seconds": 18.7954,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 18.7587,
+        "first_verified_text_seconds": 18.7954
+      }
+    }
+  ],
+  "seconds": 20.999,
+  "coverage_before": {
+    "works": 14475,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14648,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14475,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14648,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "factual_review_pending": true
+}

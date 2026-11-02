@@ -1,0 +1,26 @@
+{
+  "modules": [
+    "core.test_literary_cohesion",
+    "core.test_character_extraction",
+    "core.test_character_depth",
+    "core.test_character_context_resolution",
+    "core.test_character_alias_generalization",
+    "core.test_character_alias_holdout",
+    "core.test_character_memory",
+    "core.test_narrative_answers",
+    "core.test_narrative_coverage",
+    "core.test_narrative_enrichment",
+    "core.test_presentation_language",
+    "core.test_scoped_narrative_evidence",
+    "core.test_subject_attribution_audit",
+    "core.test_fact_audit_contract",
+    "core.test_compact_audit_transport",
+    "core.test_completion_batch"
+  ],
+  "tests_run": 252,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 6.862,
+  "production_databases_used": false
+}

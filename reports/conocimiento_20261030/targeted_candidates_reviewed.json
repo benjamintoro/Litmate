@@ -1,0 +1,403 @@
+[
+  {
+    "author": "Charlotte Bront\u00eb",
+    "categories": [],
+    "confirmed_aliases": [],
+    "isbns": [],
+    "kind": "book",
+    "source": "Wikipedia",
+    "title": "Jane Eyre",
+    "url": "https://es.wikipedia.org/wiki/Jane_Eyre",
+    "work_id": "litmate:1b0767d60ff2304b069012bc"
+  },
+  {
+    "author": "Emily Bront\u00eb",
+    "categories": [
+      "Revenge -- Fiction",
+      "Psychological fiction",
+      "Rejection (Psychology) -- Fiction",
+      "Love stories",
+      "Domestic fiction",
+      "Yorkshire (England) -- Fiction",
+      "Foundlings -- Fiction",
+      "Rural families -- Fiction",
+      "Heathcliff (Fictitious character : Bront\u00eb) -- Fiction",
+      "Triangles (Interpersonal relations) -- Fiction"
+    ],
+    "confirmed_aliases": [],
+    "edition_id": "gutenberg:768",
+    "isbns": [],
+    "kind": "book",
+    "language": "en",
+    "source": "Project Gutenberg",
+    "title": "Wuthering Heights",
+    "url": "https://www.gutenberg.org/ebooks/768",
+    "work_id": "litmate:164c23db85ac5562b21356b0"
+  },
+  {
+    "author": "Tolstoy, Leo, graf",
+    "categories": [
+      "Adultery -- Fiction",
+      "Didactic fiction",
+      "Love stories",
+      "Married women -- Fiction",
+      "Russia -- Fiction"
+    ],
+    "confirmed_aliases": [],
+    "edition_id": "gutenberg:13214",
+    "isbns": [],
+    "kind": "book",
+    "language": "nl",
+    "source": "Project Gutenberg",
+    "title": "Anna Karenina",
+    "url": "https://www.gutenberg.org/ebooks/13214",
+    "work_id": "litmate:04603e7fe6eca462be739fbf"
+  },
+  {
+    "author": "Nathaniel Hawthorne",
+    "categories": [
+      "Adultery -- Fiction",
+      "Historical fiction",
+      "Revenge -- Fiction",
+      "Psychological fiction",
+      "Married women -- Fiction",
+      "Clergy -- Fiction",
+      "Triangles (Interpersonal relations) -- Fiction",
+      "Illegitimate children -- Fiction",
+      "Women immigrants -- Fiction",
+      "Puritans -- Fiction",
+      "Boston (Mass.) -- History -- Colonial period, ca. 1600-1775 -- Fiction"
+    ],
+    "confirmed_aliases": [],
+    "edition_id": "gutenberg:33",
+    "isbns": [],
+    "kind": "book",
+    "language": "en",
+    "source": "Project Gutenberg",
+    "title": "The Scarlet Letter",
+    "url": "https://www.gutenberg.org/ebooks/33",
+    "work_id": "litmate:c0fe6b35ef1561ffa0eebd70"
+  },
+  {
+    "author": "H. G. (Herbert George) Wells",
+    "categories": [
+      "Science fiction",
+      "War stories",
+      "Martians -- Fiction",
+      "Mars (Planet) -- Fiction",
+      "Space warfare -- Fiction",
+      "Imaginary wars and battles -- Fiction",
+      "Life on other planets -- Fiction"
+    ],
+    "confirmed_aliases": [],
+    "edition_id": "gutenberg:36",
+    "isbns": [],
+    "kind": "book",
+    "language": "en",
+    "source": "Project Gutenberg",
+    "title": "The war of the worlds",
+    "url": "https://www.gutenberg.org/ebooks/36",
+    "work_id": "litmate:69a900af75a1a3e6cafbc055"
+  },
+  {
+    "author": "H. G. (Herbert George) Wells",
+    "categories": [
+      "Science fiction",
+      "Shipwreck survival -- Fiction",
+      "Animal experimentation -- Fiction",
+      "Islands -- Fiction",
+      "Science -- Ethics -- Fiction"
+    ],
+    "confirmed_aliases": [],
+    "edition_id": "gutenberg:159",
+    "isbns": [],
+    "kind": "book",
+    "language": "en",
+    "source": "Project Gutenberg",
+    "title": "The island of Doctor Moreau",
+    "url": "https://www.gutenberg.org/ebooks/159",
+    "work_id": "litmate:58dc10951bc9d49b9f406625"
+  },
+  {
+    "author": "Charles Dickens",
+    "categories": [
+      "Historical fiction",
+      "France -- History -- Revolution, 1789-1799 -- Fiction",
+      "London (England) -- History -- 18th century -- Fiction",
+      "War stories",
+      "Executions and executioners -- Fiction",
+      "French -- England -- London -- Fiction",
+      "Lookalikes -- Fiction",
+      "British -- France -- Paris -- Fiction",
+      "Paris (France) -- History -- 1789-1799 -- Fiction"
+    ],
+    "confirmed_aliases": [],
+    "edition_id": "gutenberg:98",
+    "isbns": [],
+    "kind": "book",
+    "language": "en",
+    "source": "Project Gutenberg",
+    "title": "A Tale of Two Cities",
+    "url": "https://www.gutenberg.org/ebooks/98",
+    "work_id": "litmate:b8cd68fdf23e898737956ae8"
+  },
+  {
+    "author": "Charles Dickens",
+    "categories": [
+      "Orphans -- Fiction",
+      "London (England) -- Fiction",
+      "Bildungsromans",
+      "Boys -- Fiction",
+      "Criminals -- Fiction",
+      "Kidnapping victims -- Fiction"
+    ],
+    "confirmed_aliases": [],
+    "edition_id": "gutenberg:730",
+    "isbns": [],
+    "kind": "book",
+    "language": "en",
+    "source": "Project Gutenberg",
+    "title": "Oliver Twist",
+    "url": "https://www.gutenberg.org/ebooks/730",
+    "work_id": "litmate:c647c7fd2cb1e76c99bdc907"
+  },
+  {
+    "author": "Voltaire",
+    "categories": [
+      "Satire",
+      "Optimism -- Fiction"
+    ],
+    "confirmed_aliases": [],
+    "edition_id": "gutenberg:4650",
+    "isbns": [],
+    "kind": "book",
+    "language": "fr",
+    "source": "Project Gutenberg",
+    "title": "Candide, ou l'optimisme",
+    "url": "https://www.gutenberg.org/ebooks/4650",
+    "work_id": "litmate:94bc8655c8a191a273c1c565"
+  },
+  {
+    "author": "Alu\u00edsio Azevedo",
+    "categories": [
+      "Historical fiction",
+      "Man-woman relationships -- Fiction",
+      "Slums -- Fiction",
+      "Landlords -- Fiction",
+      "Brazil -- Social life and customs -- 19th century -- Fiction",
+      "Immigrants -- Brazil -- Fiction"
+    ],
+    "confirmed_aliases": [],
+    "edition_id": "gutenberg:69187",
+    "isbns": [],
+    "kind": "book",
+    "language": "pt",
+    "source": "Project Gutenberg",
+    "title": "O Corti\u00e7o",
+    "url": "https://www.gutenberg.org/ebooks/69187",
+    "work_id": "litmate:f78c4abf0f5374c5f3443a41"
+  },
+  {
+    "author": "Leopoldo Alas",
+    "categories": [
+      "Spain -- Social life and customs -- Fiction",
+      "Married people -- Spain -- Fiction"
+    ],
+    "confirmed_aliases": [],
+    "edition_id": "gutenberg:17073",
+    "isbns": [],
+    "kind": "book",
+    "language": "es",
+    "source": "Project Gutenberg",
+    "title": "La Regenta",
+    "url": "https://www.gutenberg.org/ebooks/17073",
+    "work_id": "litmate:fc93b74a8314ddaaaa3e305c"
+  },
+  {
+    "author": "Juan Valera",
+    "categories": [
+      "Widows -- Fiction",
+      "Man-woman relationships -- Fiction",
+      "Spain -- Social life and customs -- 19th century -- Fiction",
+      "Seminarians -- Fiction"
+    ],
+    "confirmed_aliases": [],
+    "edition_id": "gutenberg:17223",
+    "isbns": [],
+    "kind": "book",
+    "language": "es",
+    "source": "Project Gutenberg",
+    "title": "Pepita Jim\u00e9nez",
+    "url": "https://www.gutenberg.org/ebooks/17223",
+    "work_id": "litmate:286caac2a688996bc543f3ea"
+  },
+  {
+    "author": "Rojas, Fernando de, -1541",
+    "categories": [
+      "Spanish fiction"
+    ],
+    "confirmed_aliases": [],
+    "edition_id": "gutenberg:1619",
+    "isbns": [],
+    "kind": "book",
+    "language": "es",
+    "source": "Project Gutenberg",
+    "title": "La Celestina",
+    "url": "https://www.gutenberg.org/ebooks/1619",
+    "work_id": "litmate:80f341d0d5d96b850f2276b8"
+  },
+  {
+    "author": "Thomas Hobbes",
+    "categories": [
+      "Political science -- Early works to 1800",
+      "State, The -- Early works to 1800"
+    ],
+    "confirmed_aliases": [],
+    "edition_id": "gutenberg:3207",
+    "isbns": [],
+    "kind": "book",
+    "language": "en",
+    "source": "Project Gutenberg",
+    "title": "Leviathan",
+    "url": "https://www.gutenberg.org/ebooks/3207",
+    "work_id": "litmate:37fe2c3a901e650cb80c85c8"
+  },
+  {
+    "author": "Frederick Douglass",
+    "categories": [
+      "Douglass, Frederick, 1818-1895",
+      "African American abolitionists -- Biography",
+      "Abolitionists -- United States -- Biography",
+      "Enslaved persons -- United States -- Biography"
+    ],
+    "confirmed_aliases": [],
+    "edition_id": "gutenberg:23",
+    "isbns": [],
+    "kind": "book",
+    "language": "en",
+    "source": "Project Gutenberg",
+    "title": "Narrative of the Life of Frederick Douglass, an American Slave",
+    "url": "https://www.gutenberg.org/ebooks/23",
+    "work_id": "litmate:5ba1898020c76aa0f71c087a"
+  },
+  {
+    "author": "L. Frank (Lyman Frank) Baum",
+    "categories": [
+      "Oz (Imaginary place) -- Juvenile fiction",
+      "Fantasy literature",
+      "Courage -- Juvenile fiction",
+      "Home -- Juvenile fiction",
+      "Good and evil -- Juvenile fiction",
+      "Dreams -- Juvenile fiction",
+      "Gale, Dorothy (Fictitious character) -- Juvenile fiction",
+      "Cowardly Lion (Fictitious character) -- Juvenile fiction",
+      "Cyclones -- Juvenile fiction",
+      "Scarecrow (Fictitious character from Baum) -- Juvenile fiction",
+      "Toto (Fictitious character) -- Juvenile fiction",
+      "Witches -- Juvenile fiction"
+    ],
+    "confirmed_aliases": [],
+    "edition_id": "gutenberg:55",
+    "isbns": [],
+    "kind": "book",
+    "language": "en",
+    "source": "Project Gutenberg",
+    "title": "The Wonderful Wizard of Oz",
+    "url": "https://www.gutenberg.org/ebooks/55",
+    "work_id": "litmate:cf67efebae22b928eedc86f3"
+  },
+  {
+    "author": "Oscar Wilde",
+    "categories": [
+      "Didactic fiction",
+      "Supernatural -- Fiction",
+      "Conduct of life -- Fiction",
+      "Portraits -- Fiction",
+      "Great Britain -- History -- Victoria, 1837-1901 -- Fiction",
+      "London (England) -- History -- 1800-1950 -- Fiction",
+      "Appearance (Philosophy) -- Fiction",
+      "Paranormal fiction"
+    ],
+    "confirmed_aliases": [],
+    "edition_id": "gutenberg:174",
+    "isbns": [],
+    "kind": "book",
+    "language": "en",
+    "source": "Project Gutenberg",
+    "title": "The Picture of Dorian Gray",
+    "url": "https://www.gutenberg.org/ebooks/174",
+    "work_id": "litmate:69ec12cc20f39b3cf7fd6b58"
+  },
+  {
+    "author": "Rudyard Kipling",
+    "categories": [
+      "Short stories",
+      "Animals -- Fiction",
+      "Jungles -- Fiction",
+      "India -- Fiction",
+      "Jungle animals -- Fiction",
+      "Mowgli (Fictitious character) -- Fiction",
+      "Adventure stories, English",
+      "Feral children -- Fiction",
+      "India -- History -- 19th century -- Fiction"
+    ],
+    "confirmed_aliases": [],
+    "edition_id": "gutenberg:236",
+    "isbns": [],
+    "kind": "book",
+    "language": "en",
+    "source": "Project Gutenberg",
+    "title": "The Jungle Book",
+    "url": "https://www.gutenberg.org/ebooks/236",
+    "work_id": "litmate:a5a67748585592f9aa7fa31a"
+  },
+  {
+    "author": "Jane Austen",
+    "categories": [
+      "England -- Social life and customs -- 19th century -- Fiction",
+      "Psychological fiction",
+      "Young women -- Fiction",
+      "Motherless families -- Fiction",
+      "Rejection (Psychology) -- Fiction",
+      "First loves -- Fiction",
+      "Dysfunctional families -- Fiction",
+      "Ship captains -- Fiction",
+      "Love stories",
+      "Regency fiction"
+    ],
+    "confirmed_aliases": [],
+    "edition_id": "gutenberg:105",
+    "isbns": [],
+    "kind": "book",
+    "language": "en",
+    "source": "Project Gutenberg",
+    "title": "Persuasion",
+    "url": "https://www.gutenberg.org/ebooks/105",
+    "work_id": "litmate:afd76cd0969b6910f4b5aa7f"
+  },
+  {
+    "author": "Jane Austen",
+    "categories": [
+      "England -- Social life and customs -- 19th century -- Fiction",
+      "Inheritance and succession -- Fiction",
+      "England -- Fiction",
+      "Young women -- Fiction",
+      "Love stories",
+      "Sisters -- Fiction",
+      "Domestic fiction",
+      "Mate selection -- Fiction",
+      "Social classes -- Fiction",
+      "Gentry -- England -- Fiction",
+      "Regency fiction"
+    ],
+    "confirmed_aliases": [],
+    "edition_id": "gutenberg:161",
+    "isbns": [],
+    "kind": "book",
+    "language": "en",
+    "source": "Project Gutenberg",
+    "title": "Sense and Sensibility",
+    "url": "https://www.gutenberg.org/ebooks/161",
+    "work_id": "litmate:968a8e5a29ac3a0ef835be40"
+  }
+]

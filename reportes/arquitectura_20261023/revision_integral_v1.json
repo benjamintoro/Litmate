@@ -1,0 +1,23 @@
+{
+  "benchmark_sha256": "58bbccfa67d43776de6d616551a8b9598990674ab37fdd0af1eb30436f637b0c",
+  "review_type": "internal_manual_not_independently_certified",
+  "basis": "Revisión del texto publicado y su pertinencia para la pregunta; no certificación independiente de todas las afirmaciones o páginas externas.",
+  "turns": [
+    {"case": "autoria_simple", "turn": 1, "classification": "adequate_basic_answer", "note": "Responde Jane Austen con ficha bibliográfica."},
+    {"case": "personajes_simple", "turn": 1, "classification": "partial_missing_requested_detail", "note": "Pasaje sobre Los Rougon-Macquart, sin lista de personajes de Nana."},
+    {"case": "sinopsis_simple", "turn": 1, "classification": "partial_missing_requested_detail", "note": "Inicio de sinopsis de El nombre de la rosa cortado después de una conjunción."},
+    {"case": "protagonista_simple", "turn": 1, "classification": "wrong_entity", "note": "Referencia a la banda chilena Los Miserables, no a la novela de Victor Hugo."},
+    {"case": "cache_exacta", "turn": 1, "classification": "adequate_basic_answer", "note": "Autoría de Rayuela: Julio Cortázar."},
+    {"case": "cache_exacta", "turn": 2, "classification": "adequate_basic_answer", "note": "Misma autoría; el proveedor real es evidencia indexada, no caché exacta."},
+    {"case": "conocimiento_indexado", "turn": 1, "classification": "adequate_basic_answer", "note": "Sinopsis breve de El principito desde las fichas incluidas con la aplicación."},
+    {"case": "recomendacion_multiturno", "turn": 1, "classification": "unavailable", "note": "Falló la primera autoría y no se estableció una obra de referencia."},
+    {"case": "recomendacion_multiturno", "turn": 2, "classification": "clarification_without_context", "note": "Pide título porque el turno anterior no se publicó; no es una recomendación completada."},
+    {"case": "identificacion_escena", "turn": 1, "classification": "unavailable", "note": "No identificó la obra recordada."},
+    {"case": "relacion_personajes", "turn": 1, "classification": "irrelevant_reference", "note": "Pasaje general de adulterio; no explica la relación entre Emma y Charles Bovary."},
+    {"case": "fuentes_contradictorias", "turn": 1, "classification": "irrelevant_reference", "note": "Pasaje de Julio Cortázar; no responde a la publicación de El túnel ni contrasta las fechas."},
+    {"case": "cita_exacta", "turn": 1, "classification": "unavailable", "note": "No completa la explicación de la cita."},
+    {"case": "materia_general", "turn": 1, "classification": "unavailable", "note": "No explica el realismo mágico."},
+    {"case": "conversacion_multiturno", "turn": 1, "classification": "adequate_basic_answer", "note": "Autoría de El túnel: Ernesto Sabato."},
+    {"case": "conversacion_multiturno", "turn": 2, "classification": "partial_missing_requested_detail", "note": "Pasaje sobre el narrador/protagonista sin publicar su nombre."}
+  ]
+}

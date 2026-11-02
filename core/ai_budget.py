@@ -1,0 +1,130 @@
+"""Presupuesto compartido entre modelo, búsqueda y embeddings de una consulta."""
+import time
+from contextlib import contextmanager
+from contextvars import ContextVar, copy_context
+from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import TimeoutError as FutureTimeout
+from threading import BoundedSemaphore
+
+_deadline = ContextVar('litmate_ai_deadline', default=None)
+_cancellation = ContextVar('litmate_ai_cancellation', default=None)
+# Sin cola ilimitada: una fuente atascada no permite acumular hilos por visita.
+_chat_pool = ThreadPoolExecutor(max_workers=2, thread_name_prefix='litmate-chat')
+_chat_slots = BoundedSemaphore(2)
+# La respuesta completa incluye persistencia de sesión y envío del stream. El
+# trabajo literario reserva esos segundos finales para no cortar la respuesta
+# cuando el modelo ya terminó pero la sesión aún debe guardarse.
+CHAT_RESPONSE_SECONDS = 42
+CHAT_WORK_SECONDS = 36
+
+
+class BudgetExpired(TimeoutError):
+    pass
+
+
+class WorkerBusy(Exception):
+    pass
+
+
+def chat_timeout(config):
+    """Acota el trabajo literario y reserva segundos para sesión/stream.
+
+    Un valor antiguo de 360 s en .env no puede volver a bloquear el chat: el
+    máximo efectivo es CHAT_WORK_SECONDS. La respuesta puede durar algo más
+    (hasta CHAT_RESPONSE_SECONDS) mientras se persiste la sesión.
+    """
+    try:
+        value = float(getattr(config, 'LITMATE_CHAT_TIMEOUT', CHAT_WORK_SECONDS))
+    except (TypeError, ValueError):
+        value = CHAT_WORK_SECONDS
+    return max(.1, min(value, CHAT_WORK_SECONDS))
+
+
+def current_deadline():
+    return _deadline.get()
+
+
+def submit_before_deadline(function, deadline, *args, cancellation=None):
+    """Somete trabajo sin cola ilimitada y conserva su slot hasta terminar.
+
+    El resultado es un Future, no un hilo por conexión SSE. La cancelación es
+    cooperativa: nunca se libera el slot de un proveedor que sigue activo.
+    """
+    with request_budget(deadline):
+        if not _chat_slots.acquire(blocking=False):
+            raise WorkerBusy()
+
+        def work():
+            token = _cancellation.set(cancellation)
+            try:
+                check_budget()
+                result = function(*args)
+                check_budget()
+                return result
+            finally:
+                _cancellation.reset(token)
+                _chat_slots.release()
+
+        try:
+            return submit_with_budget(_chat_pool, work)
+        except BaseException:
+            _chat_slots.release()
+            raise
+
+
+def run_before_deadline(function, deadline, *args):
+    """Espera acotada incluso si una dependencia ignora su timeout.
+
+    El worker no recibe request/sesión ni consume cuotas. Un resultado tardío
+    se descarta; su slot y lease permanecen ocupados hasta su finalización real.
+    """
+    with request_budget(deadline):
+        future = submit_before_deadline(function, deadline, *args)
+        try:
+            return future.result(timeout=budget_timeout(CHAT_WORK_SECONDS))
+        except FutureTimeout:
+            # No liberar aquí: un proveedor no cooperativo puede seguir activo.
+            raise BudgetExpired('tiempo_total_agotado') from None
+
+
+def budget_timeout(maximum):
+    cancellation = _cancellation.get()
+    if cancellation is not None and cancellation.is_set():
+        raise BudgetExpired('consulta_cancelada')
+    deadline = _deadline.get()
+    if deadline is None:
+        return float(maximum)
+    remaining = deadline - time.monotonic()
+    if remaining <= 0:
+        raise BudgetExpired('tiempo_total_agotado')
+    return max(0.001, min(float(maximum), remaining))
+
+
+def check_budget():
+    budget_timeout(1)
+
+
+@contextmanager
+def request_budget(deadline):
+    previous = _deadline.get()
+    token = _deadline.set(min(previous, deadline) if previous is not None else deadline)
+    try:
+        check_budget()
+        yield
+    finally:
+        _deadline.reset(token)
+
+
+def submit_with_budget(pool, function, *args):
+    # ContextVar no se transmite automáticamente a ThreadPoolExecutor.
+    return pool.submit(copy_context().run, function, *args)
+
+
+@contextmanager
+def pool_in_budget(maximum):
+    """El HTTP que excedió su espera no bloquea el retorno de la petición."""
+    pool = ThreadPoolExecutor(max_workers=maximum)
+    try:
+        yield pool
+    finally:
+        pool.shutdown(wait=False, cancel_futures=True)

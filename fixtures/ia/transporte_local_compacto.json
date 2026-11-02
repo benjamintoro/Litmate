@@ -1,0 +1,349 @@
+{
+  "kind": "controlled transport fixture; no model inference or external request",
+  "stages": {
+    "audit": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "decision": {
+            "type": "string",
+            "enum": [
+              "approve",
+              "repair",
+              "research"
+            ]
+          },
+          "only_books": {
+            "type": "boolean"
+          },
+          "coverage": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "question_id": {
+                  "type": "integer",
+                  "enum": [
+                    1
+                  ]
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "answered",
+                    "uncertain",
+                    "missing"
+                  ]
+                }
+              },
+              "required": [
+                "question_id",
+                "status"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1,
+            "maxItems": 1
+          },
+          "claims": {
+            "type": "object",
+            "properties": {
+              "c1": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "verdict": {
+                        "type": "string",
+                        "const": "supported"
+                      },
+                      "proof_id": {
+                        "type": "string",
+                        "enum": [
+                          "p1"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "verdict",
+                      "proof_id"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "verdict": {
+                        "type": "string",
+                        "enum": [
+                          "inference",
+                          "unverified",
+                          "contradicted"
+                        ]
+                      },
+                      "proof_id": {
+                        "type": "string",
+                        "const": ""
+                      }
+                    },
+                    "required": [
+                      "verdict",
+                      "proof_id"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              }
+            },
+            "required": [
+              "c1"
+            ],
+            "additionalProperties": false
+          },
+          "search_queries": {
+            "type": "array",
+            "maxItems": 2,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 240
+            }
+          },
+          "issues": {
+            "type": "array",
+            "maxItems": 4,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 500
+            }
+          }
+        },
+        "required": [
+          "decision",
+          "only_books",
+          "coverage",
+          "claims",
+          "search_queries",
+          "issues"
+        ],
+        "additionalProperties": false
+      },
+      "input": {
+        "message": "Recomienda un libro",
+        "plan": {
+          "questions": [
+            "Recomienda un libro"
+          ],
+          "search_queries": [],
+          "needs_contents": false,
+          "needs_fresh_sources": false,
+          "spoilers_requested": false
+        },
+        "sources": [
+          {
+            "id": 1,
+            "kind": "book",
+            "title": "Libro del cielo",
+            "author": "Autora celeste",
+            "description": "Este libro describe el cielo y las estrellas."
+          }
+        ],
+        "draft": {
+          "status": "answer",
+          "basis": "sources",
+          "text": "Libro del cielo describe el cielo y las estrellas.",
+          "citations": [
+            1
+          ],
+          "books": [
+            {
+              "title": "Libro del cielo",
+              "author": "Autora celeste",
+              "source_id": 1
+            }
+          ],
+          "needs_web": false
+        },
+        "intent": "recommend",
+        "requested_book_count": 1,
+        "require_book_sources": true,
+        "all_factual_claims_required": true,
+        "audit_required_claims": {
+          "c1": "Libro del cielo describe el cielo y las estrellas."
+        },
+        "audit_evidence_pool": {
+          "p1": {
+            "source_id": 1,
+            "evidence": "Este libro describe el cielo y las estrellas."
+          }
+        }
+      },
+      "wire_output": {
+        "decision": "approve",
+        "only_books": true,
+        "coverage": [
+          {
+            "question_id": 1,
+            "status": "answered"
+          }
+        ],
+        "claims": {
+          "c1": {
+            "verdict": "supported",
+            "proof_id": "p1"
+          }
+        },
+        "issues": [],
+        "search_queries": []
+      },
+      "hydrated_output": {
+        "decision": "approve",
+        "only_books": true,
+        "coverage": [
+          {
+            "question_id": 1,
+            "status": "answered"
+          }
+        ],
+        "claims": [
+          {
+            "statement": "Libro del cielo describe el cielo y las estrellas.",
+            "verdict": "supported",
+            "source_id": 1,
+            "evidence": "Este libro describe el cielo y las estrellas."
+          }
+        ],
+        "issues": [],
+        "search_queries": []
+      }
+    },
+    "answer": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "answer",
+              "clarify",
+              "refuse"
+            ]
+          },
+          "text": {
+            "type": "string"
+          },
+          "basis": {
+            "type": "string",
+            "enum": [
+              "sources",
+              "knowledge",
+              "mixed",
+              "excerpt"
+            ]
+          },
+          "citations": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "enum": [
+                1
+              ]
+            }
+          },
+          "needs_web": {
+            "type": "boolean"
+          },
+          "books": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "enum": [
+                1
+              ]
+            },
+            "maxItems": 1
+          }
+        },
+        "required": [
+          "status",
+          "text",
+          "basis",
+          "citations",
+          "needs_web",
+          "books"
+        ],
+        "additionalProperties": false
+      },
+      "input": {
+        "message": "Recomienda un libro",
+        "plan": {
+          "questions": [
+            "Recomienda un libro"
+          ],
+          "search_queries": [],
+          "needs_contents": false,
+          "needs_fresh_sources": false,
+          "spoilers_requested": false
+        },
+        "sources": [
+          {
+            "id": 1,
+            "kind": "book",
+            "title": "Libro del cielo",
+            "author": "Autora celeste",
+            "description": "Este libro describe el cielo y las estrellas."
+          }
+        ],
+        "draft": {
+          "status": "answer",
+          "basis": "sources",
+          "text": "Libro del cielo describe el cielo y las estrellas.",
+          "citations": [
+            1
+          ],
+          "books": [
+            {
+              "title": "Libro del cielo",
+              "author": "Autora celeste",
+              "source_id": 1
+            }
+          ],
+          "needs_web": false
+        },
+        "intent": "recommend",
+        "requested_book_count": 1,
+        "require_book_sources": true,
+        "all_factual_claims_required": true
+      },
+      "wire_output": {
+        "status": "answer",
+        "basis": "sources",
+        "text": "Libro del cielo describe el cielo y las estrellas.",
+        "citations": [
+          1
+        ],
+        "books": [
+          1
+        ],
+        "needs_web": false
+      },
+      "hydrated_output": {
+        "status": "answer",
+        "basis": "sources",
+        "text": "Libro del cielo describe el cielo y las estrellas.",
+        "citations": [
+          1
+        ],
+        "books": [
+          {
+            "title": "Libro del cielo",
+            "author": "Autora celeste",
+            "source_id": 1
+          }
+        ],
+        "needs_web": false
+      }
+    }
+  }
+}

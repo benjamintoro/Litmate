@@ -1,0 +1,207 @@
+{
+  "case": {
+    "case": 12,
+    "title": "La mucama de Omicunl\u00e9",
+    "author": "Rita Indiana",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": true
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de La mucama de Omicunl\u00e9 de Rita Indiana",
+      "answer": "Hay un problema temporal al consultar las fuentes de este libro. Puedes volver a intentarlo en unos instantes.",
+      "status": "unavailable",
+      "books": [],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 6209,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "work_type": "unknown",
+        "narrative_failure": "retrieval_unavailable",
+        "progress_metrics": {
+          "elapsed_ms": 6234.527,
+          "first_phase_emitted_ms": 17.38,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 7.29,
+            "cache_lookup": 0.619,
+            "knowledge_lookup": 616.256,
+            "retrieval": 2340.692,
+            "web_search": 1419.892,
+            "extraction": 1929.278,
+            "finalization": 25.847
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 3.305,
+              "elapsed_ms": 7.29,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 16.751,
+              "elapsed_ms": 0.619,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 30.287,
+              "elapsed_ms": 345.726,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 106.332,
+              "elapsed_ms": 38.309,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 204.321,
+              "elapsed_ms": 170.656,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 273.557,
+              "elapsed_ms": 59.066,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 445.131,
+              "elapsed_ms": 2.499,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 461.376,
+              "elapsed_ms": 2340.692,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 2805.906,
+              "elapsed_ms": 381.612,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 3187.712,
+              "elapsed_ms": 540.562,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 3728.376,
+              "elapsed_ms": 1388.716,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 5119.666,
+              "elapsed_ms": 1038.28,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 6208.675,
+              "elapsed_ms": 25.847,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 17.38
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 6.2419,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.033,
+        "verified_ready_seconds": 6.2025,
+        "first_verified_text_seconds": 6.2419
+      }
+    }
+  ],
+  "seconds": 8.44,
+  "research_profile": "cold_after",
+  "public_research_trace": [
+    {
+      "stage": "retrieved_public_evidence",
+      "sources": [
+        {
+          "id": 1,
+          "title": "La mucama de Omicunl\u00e9",
+          "author": "Rita Indiana",
+          "description": "Temas del cat\u00e1logo:",
+          "source": "Open Library",
+          "year": "2020",
+          "book_id": "/works/OL22300637W",
+          "kind": "book",
+          "url": "https://openlibrary.org/works/OL22300637W",
+          "locator": "",
+          "read_mode": "ficha bibliogr\u00e1fica; materias de cat\u00e1logo, no texto de la ob",
+          "retrieved_at": "",
+          "image_url": "https://covers.openlibrary.org/b/id/10452742-M.jpg",
+          "categories": []
+        }
+      ]
+    }
+  ],
+  "coverage_before": {
+    "works": 14476,
+    "works_with_explicit_plot": 17,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 20,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 34,
+    "linked_sources": 14651,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14477,
+    "works_with_explicit_plot": 17,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 20,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 34,
+    "linked_sources": 14652,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "persistent_exact_cache",
+  "google_books_enabled": false,
+  "factual_review_pending": true
+}

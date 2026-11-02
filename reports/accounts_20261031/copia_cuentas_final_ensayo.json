@@ -1,0 +1,81 @@
+{
+  "scope": "isolated account migration rehearsal",
+  "source_read_only": true,
+  "originals_modified": false,
+  "tables": {
+    "auth_user": {
+      "source_rows": 179,
+      "copied_rows": 179,
+      "content_sha256_equal": true
+    },
+    "auth_group": {
+      "source_rows": 0,
+      "copied_rows": 0,
+      "content_sha256_equal": true
+    },
+    "suscripciones_plansuscripcion": {
+      "source_rows": 3,
+      "copied_rows": 3,
+      "content_sha256_equal": true
+    },
+    "core_perfilusuario": {
+      "source_rows": 158,
+      "copied_rows": 158,
+      "content_sha256_equal": true
+    },
+    "core_asistenteia": {
+      "source_rows": 1,
+      "copied_rows": 1,
+      "content_sha256_equal": true
+    },
+    "core_conversacionia": {
+      "source_rows": 50,
+      "copied_rows": 50,
+      "content_sha256_equal": true
+    },
+    "core_mensajeia": {
+      "source_rows": 190,
+      "copied_rows": 190,
+      "content_sha256_equal": true
+    },
+    "suscripciones_suscripcionusuario": {
+      "source_rows": 157,
+      "copied_rows": 157,
+      "content_sha256_equal": true
+    },
+    "suscripciones_historialpago": {
+      "source_rows": 42,
+      "copied_rows": 42,
+      "content_sha256_equal": true
+    },
+    "core_historialchatbot": {
+      "source_rows": 5,
+      "copied_rows": 5,
+      "content_sha256_equal": true
+    },
+    "auth_user_groups": {
+      "source_rows": 0,
+      "copied_rows": 0,
+      "permission_ids_reconciled": true
+    },
+    "auth_user_user_permissions": {
+      "source_rows": 0,
+      "copied_rows": 0,
+      "permission_ids_reconciled": true
+    },
+    "auth_group_permissions": {
+      "source_rows": 0,
+      "copied_rows": 0,
+      "permission_ids_reconciled": true
+    }
+  },
+  "sessions_imported": 0,
+  "public_server_changed": false,
+  "real_payments_activated": false,
+  "duplicate_email_groups_needing_review": 1,
+  "quick_check": "ok",
+  "foreign_key_issues": 0,
+  "destination_file_sha256": "0e9df0e54a45f1247f38e5fb8a4b86f8294360548be0d65b4c1cefc119354863",
+  "copy_used_for_http_or_mobile_tests": false,
+  "original_session_data_copied": false
+}

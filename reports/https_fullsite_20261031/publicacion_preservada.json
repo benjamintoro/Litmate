@@ -1,0 +1,42 @@
+{
+  "time_utc": "2026-10-31T11:58:24.731973+00:00",
+  "live_process_restarted": false,
+  "funnel_reconfigured": false,
+  "firewall_modified": false,
+  "funnel": {
+    "Foreground": {
+      "05619147116f0c78": {
+        "TCP": {
+          "443": {
+            "HTTPS": true
+          }
+        },
+        "Web": {
+          "xato.taila70665.ts.net:443": {
+            "Handlers": {
+              "/": {
+                "Proxy": "http://127.0.0.1:8003"
+              }
+            }
+          }
+        },
+        "AllowFunnel": {
+          "xato.taila70665.ts.net:443": true
+        }
+      }
+    }
+  },
+  "live_routes_unauthenticated": {
+    "/": 401,
+    "/chat/": 401,
+    "/about/": 404,
+    "/admin/": 404,
+    "/.env": 404,
+    "/backups/": 404
+  },
+  "original_hashes_unchanged": {
+    ".env": true,
+    "data/literary_memory.sqlite3": true,
+    "data/literary_memory_rag.sqlite3": true
+  }
+}

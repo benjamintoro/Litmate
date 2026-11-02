@@ -1,0 +1,19 @@
+{
+  "local_ports_open": {
+    "3306": true,
+    "11434": true,
+    "8080": true,
+    "8000": false,
+    "8002": false,
+    "8003": false
+  },
+  "funnel": {},
+  "hashes_unchanged": {
+    ".env": true,
+    "data/literary_memory.sqlite3": true,
+    "data/literary_memory_rag.sqlite3": true
+  },
+  "owned_browsers_closed": true,
+  "firewall_applied_by_agent": false,
+  "external_network_tested": false
+}

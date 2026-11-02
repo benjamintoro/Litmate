@@ -1,0 +1,575 @@
+{
+  "scope": "local HTTP",
+  "external_network_tested": false,
+  "checks": {
+    "chat_auth_required": false,
+    "static_auth_required": false,
+    "admin_blocked": true,
+    "unknown_host_blocked": true,
+    "chat_html": true,
+    "frame_denied": true,
+    "csrf_cookie_present": true,
+    "javascript": true,
+    "avatar": true,
+    "csrf_enforced": true
+  },
+  "conversation": [
+    {
+      "question": "Recuerdo un libro donde un ni\u00f1o vive en un planeta peque\u00f1o y cuida una rosa",
+      "status": "answered",
+      "answer": "Por tus pistas, podr\u00edas estar buscando **El principito**, de **Antoine de Saint-Exup\u00e9ry**. \u00bfTe suena?",
+      "books": [
+        {
+          "id": "1",
+          "title": "El principito",
+          "author": "Antoine de Saint-Exup\u00e9ry",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+principito+Antoine+de+Saint-Exup%C3%A9ry&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+principito+Antoine+de+Saint-Exup%C3%A9ry"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 1012,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 1018.122,
+          "first_phase_emitted_ms": 145.34,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 88.588,
+            "cache_lookup": 33.337,
+            "knowledge_lookup": 724.76,
+            "audit": 3.718,
+            "finalization": 6.006
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 5.374,
+              "elapsed_ms": 88.588,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 111.989,
+              "elapsed_ms": 33.337,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 240.334,
+              "elapsed_ms": 360.788,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 326.071,
+              "elapsed_ms": 45.121,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 425.618,
+              "elapsed_ms": 174.397,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 498.847,
+              "elapsed_ms": 65.031,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 686.408,
+              "elapsed_ms": 49.794,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 875.596,
+              "elapsed_ms": 29.629,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 942.329,
+              "elapsed_ms": 3.718,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 1012.109,
+              "elapsed_ms": 6.006,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 145.34
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 942.305
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "local-identification"
+      },
+      "sse_done": true,
+      "seconds": 1.0418,
+      "http_timing": {
+        "first_progress_seconds": 0.1613,
+        "verified_ready_seconds": 1.0014,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "\u00bfQu\u00e9 relaci\u00f3n hay entre el principito y el zorro?",
+      "status": "answered",
+      "answer": "**El zorro**: Amigo que el principito conoce en la Tierra.\n\nFuente: https://www.lepetitprince.com/loeuvre/",
+      "books": [
+        {
+          "id": "1",
+          "title": "El principito",
+          "author": "Antoine de Saint-Exup\u00e9ry",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+principito+Antoine+de+Saint-Exup%C3%A9ry&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+principito+Antoine+de+Saint-Exup%C3%A9ry"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 470,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "verified_character_answer": true,
+        "character_count": 1,
+        "work_type": "nonfiction",
+        "progress_metrics": {
+          "elapsed_ms": 487.157,
+          "first_phase_emitted_ms": 34.47,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 9.947,
+            "cache_lookup": 6.508,
+            "knowledge_lookup": 387.996,
+            "audit": 4.208,
+            "finalization": 17.305
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 11.567,
+              "elapsed_ms": 9.947,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 27.949,
+              "elapsed_ms": 6.508,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 39.958,
+              "elapsed_ms": 381.662,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 114.69,
+              "elapsed_ms": 6.334,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 416.046,
+              "elapsed_ms": 4.208,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 469.845,
+              "elapsed_ms": 17.305,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 34.47
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 416.022
+            }
+          ]
+        },
+        "stage_timings": [],
+        "external_research": {
+          "http_requests_started": 0,
+          "pages_extracted": 0,
+          "page_slots_reserved": 0,
+          "external_seconds": 0.0,
+          "logical_searches": 0
+        },
+        "provider": "verified-character-evidence"
+      },
+      "sse_done": true,
+      "seconds": 0.4974,
+      "http_timing": {
+        "first_progress_seconds": 0.0417,
+        "verified_ready_seconds": 0.4477,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "Recomi\u00e9ndame dos libros similares en espa\u00f1ol",
+      "status": "unavailable",
+      "answer": "Tuve un problema temporal al buscar otras lecturas relacionadas. Puedes intentarlo nuevamente en unos instantes.",
+      "books": [],
+      "diagnostics": {
+        "elapsed_ms": 12386,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 1,
+        "failure_kind": "technical_failure",
+        "evidence_state": "insufficient",
+        "progress_metrics": {
+          "elapsed_ms": 12400.781,
+          "first_phase_emitted_ms": 48.379,
+          "model_calls_started": 1,
+          "stage_totals_ms": {
+            "conversation": 22.237,
+            "cache_lookup": 7.556,
+            "local_search": 227.681,
+            "retrieval": 3147.739,
+            "knowledge_lookup": 733.97,
+            "intent": 2.008,
+            "model_inspection": 28.042,
+            "routing": 5231.045,
+            "extraction": 6010.537,
+            "web_search": 8553.929,
+            "finalization": 15.23
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 11.373,
+              "elapsed_ms": 22.237,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 40.812,
+              "elapsed_ms": 7.556,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 98.708,
+              "elapsed_ms": 1064.799,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 104.632,
+              "elapsed_ms": 76.727,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 2043.288,
+              "elapsed_ms": 1062.927,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 2047.801,
+              "elapsed_ms": 79.756,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 4104.236,
+              "elapsed_ms": 377.106,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 4192.978,
+              "elapsed_ms": 41.717,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 4294.58,
+              "elapsed_ms": 172.733,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 4368.411,
+              "elapsed_ms": 60.0,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 4595.572,
+              "elapsed_ms": 41.134,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 4780.949,
+              "elapsed_ms": 41.28,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 4886.194,
+              "elapsed_ms": 7372.584,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 4906.112,
+              "elapsed_ms": 0.357,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 4906.476,
+              "elapsed_ms": 1.651,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 4908.138,
+              "elapsed_ms": 5231.045,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 4908.143,
+              "elapsed_ms": 28.042,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 6247.54,
+              "elapsed_ms": 6010.537,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 10142.008,
+              "elapsed_ms": 1020.013,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 10149.712,
+              "elapsed_ms": 71.198,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 11164.885,
+              "elapsed_ms": 1181.345,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 12385.543,
+              "elapsed_ms": 15.23,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 48.379
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "total_ms": 5185.839,
+            "eval_count": 88,
+            "prompt_eval_count": 1959,
+            "stage": "route",
+            "model": "qwen3.5:9b-q4_K_M",
+            "load_ms": 6.333,
+            "elapsed_ms": 5231,
+            "prompt_eval_ms": 1222.54,
+            "eval_ms": 3597.34,
+            "status": "ok"
+          }
+        ],
+        "external_research": {
+          "http_requests_started": 10,
+          "pages_extracted": 0,
+          "page_slots_reserved": 3,
+          "external_seconds": 11.451,
+          "logical_searches": 2
+        },
+        "provider": "ollama-local"
+      },
+      "sse_done": true,
+      "seconds": 12.4221,
+      "http_timing": {
+        "first_progress_seconds": 0.0742,
+        "verified_ready_seconds": 12.3761,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "Ya le\u00ed el primero y no me interesa el segundo",
+      "status": "clarification",
+      "answer": "\u00bfQu\u00e9 libro quieres marcar como le\u00eddo o descartar? No tengo una lista anterior que permita resolver esa posici\u00f3n.",
+      "books": [],
+      "diagnostics": {
+        "elapsed_ms": 75,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 101.825,
+          "first_phase_emitted_ms": 54.032,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 28.978,
+            "cache_lookup": 7.038,
+            "finalization": 26.424
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 11.137,
+              "elapsed_ms": 28.978,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 46.983,
+              "elapsed_ms": 7.038,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 75.394,
+              "elapsed_ms": 26.424,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 54.032
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-conversation-evidence"
+      },
+      "sse_done": true,
+      "seconds": 0.1113,
+      "http_timing": {
+        "first_progress_seconds": 0.0568,
+        "verified_ready_seconds": 0.0626,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "Dame otras dos opciones",
+      "status": "clarification",
+      "answer": "No pude confirmar otras lecturas relacionadas que cumplan tus preferencias con las fuentes disponibles. Podemos ampliar los criterios o intentarlo m\u00e1s tarde.",
+      "books": [],
+      "diagnostics": {
+        "elapsed_ms": 215,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "discovery_candidates": 13,
+        "progress_metrics": {
+          "elapsed_ms": 241.73,
+          "first_phase_emitted_ms": 52.794,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 28.643,
+            "cache_lookup": 6.746,
+            "retrieval": 1.12,
+            "finalization": 26.407
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 10.102,
+              "elapsed_ms": 28.643,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 46.036,
+              "elapsed_ms": 6.746,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 105.087,
+              "elapsed_ms": 0.617,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 139.706,
+              "elapsed_ms": 0.503,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 215.316,
+              "elapsed_ms": 26.407,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 52.794
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-related-books"
+      },
+      "sse_done": true,
+      "seconds": 0.2514,
+      "http_timing": {
+        "first_progress_seconds": 0.0735,
+        "verified_ready_seconds": 0.1922,
+        "first_verified_text_seconds": null
+      }
+    }
+  ]
+}

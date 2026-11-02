@@ -1,0 +1,106 @@
+{
+  "experiencia_baseline.json": {
+    "n": 10,
+    "status": {
+      "answered": 6,
+      "rejected": 1,
+      "unavailable": 3
+    },
+    "mean_seconds": 12.9543,
+    "p50_seconds": 6.5251,
+    "p95_nearest_rank_seconds": 35.1938,
+    "max_seconds": 35.1938,
+    "model_calls": 20,
+    "under_5": 3,
+    "under_30": 8
+  },
+  "waitress_local_actual.json": {
+    "n": 10,
+    "status": {
+      "answered": 8,
+      "clarification": 1,
+      "unavailable": 1
+    },
+    "mean_seconds": 11.7405,
+    "p50_seconds": 1.8031,
+    "p95_nearest_rank_seconds": 35.253,
+    "max_seconds": 35.253,
+    "model_calls": 15,
+    "under_5": 6,
+    "under_30": 9
+  },
+  "continuacion_similares_corregida.json": {
+    "n": 5,
+    "status": {
+      "answered": 2,
+      "clarification": 2,
+      "unavailable": 1
+    },
+    "mean_seconds": 2.8648,
+    "p50_seconds": 0.4974,
+    "p95_nearest_rank_seconds": 12.4221,
+    "max_seconds": 12.4221,
+    "model_calls": 1,
+    "under_5": 4,
+    "under_30": 5
+  },
+  "recorrido_cierre.json": {
+    "n": 10,
+    "status": {
+      "answered": 9,
+      "social": 1
+    },
+    "mean_seconds": 0.7465,
+    "p50_seconds": 0.3319,
+    "p95_nearest_rank_seconds": 3.1537,
+    "max_seconds": 3.1537,
+    "model_calls": 0,
+    "under_5": 10,
+    "under_30": 10
+  },
+  "filosofia_cierre.json": {
+    "n": 2,
+    "status": {
+      "answered": 2
+    },
+    "mean_seconds": 12.026,
+    "p50_seconds": 12.026,
+    "p95_nearest_rank_seconds": 16.2833,
+    "max_seconds": 16.2833,
+    "model_calls": 4,
+    "under_5": 0,
+    "under_30": 2
+  },
+  "obra_externa_primera.json": {
+    "n": 1,
+    "status": {
+      "answered": 1
+    },
+    "mean_seconds": 4.4338,
+    "p50_seconds": 4.4338,
+    "p95_nearest_rank_seconds": 4.4338,
+    "max_seconds": 4.4338,
+    "model_calls": 0,
+    "under_5": 1,
+    "under_30": 1
+  },
+  "obra_externa_reutilizacion_sin_red.json": {
+    "n": 1,
+    "status": {
+      "answered": 1
+    },
+    "mean_seconds": 0.6212,
+    "p50_seconds": 0.6212,
+    "p95_nearest_rank_seconds": 0.6212,
+    "max_seconds": 0.6212,
+    "model_calls": 0,
+    "under_5": 1,
+    "under_30": 1
+  },
+  "limitations": [
+    "Small samples; not a production p95 or 99 percent factual accuracy.",
+    "The final genre-recommendation journey is not equivalent to the initial constrained-similarity request.",
+    "Initial baseline used isolated wsgiref; final journey used Waitress.",
+    "Screenshots and a separate probe can share local model resources; these are functional observations, not a controlled load benchmark."
+  ]
+}

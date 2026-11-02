@@ -1,0 +1,621 @@
+{
+  "case": {
+    "case": 17,
+    "title": "Emma",
+    "author": "Jane Austen",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": true
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [
+        {
+          "table": "rag_metadata",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "LITMATE_LIBRARY_DB": [
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": true
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "LITMATE_LIBRARY_RAG_DB": [
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "mysql": {
+        "name_record_ids": [
+          "45e84e23847519776405653f46f39476df0d9bb95c040d56d8461bd4f2fc88bb",
+          "e8d37eb4bed1097596190f71028eba619143c26b0abc30f257d7209eaf13a815",
+          "ad0774a09f1ebfc9373096bd97d659979cd1e08d81547881923d6ba80e1faf1d",
+          "95f3a2e370e8c15261c2d142ed13e68c15d74800bb8eeba401434b28e3071502",
+          "6803cb2e1bb95b195434a7dd0debfa85c94ce35ccc2256d51f837f19855328fc",
+          "cf5beb52c11fde40a8a01901001bc4d31607b23898068b202b4f22ef76478c4e",
+          "a488b7f2e60e556c99ec16dff76a8331c07e8b2cec9962c89da768d7d5190fe1",
+          "7fe89a5c977c700f90b3753af65b4c71e922b1617c7760930dad6b47591d9c5a",
+          "b83414b821c46252f0a85f21193eb1ac2973bd099f84e270dbb09ddca0b1e4c0",
+          "72725783f9ffa782930268eb85c47f591541bf6a17ecbe8b81d01f89e118d9b1"
+        ],
+        "direct_records": [
+          {
+            "id": "45e84e23847519776405653f46f39476df0d9bb95c040d56d8461bd4f2fc88bb",
+            "label": "Memorie di Emma Lyonna, vol. 3/8",
+            "kind": "edition"
+          },
+          {
+            "id": "6803cb2e1bb95b195434a7dd0debfa85c94ce35ccc2256d51f837f19855328fc",
+            "label": "Emmalan Elli",
+            "kind": "edition"
+          },
+          {
+            "id": "6f90fb1ef2ea0c7987cb2581e11f4ccdaebae94197734e6df7865397879edc97",
+            "label": "Memorie di Emma Lyonna, vol. 5/8",
+            "kind": "edition"
+          },
+          {
+            "id": "72725783f9ffa782930268eb85c47f591541bf6a17ecbe8b81d01f89e118d9b1",
+            "label": "Memorie di Emma Lyonna, vol. 7/8",
+            "kind": "edition"
+          },
+          {
+            "id": "7fe89a5c977c700f90b3753af65b4c71e922b1617c7760930dad6b47591d9c5a",
+            "label": "Memorie di Emma Lyonna, vol. 6/8",
+            "kind": "edition"
+          },
+          {
+            "id": "95f3a2e370e8c15261c2d142ed13e68c15d74800bb8eeba401434b28e3071502",
+            "label": "Memorie di Emma Lyonna, vol. 4/8",
+            "kind": "edition"
+          },
+          {
+            "id": "a488b7f2e60e556c99ec16dff76a8331c07e8b2cec9962c89da768d7d5190fe1",
+            "label": "Memorie di Emma Lyonna, vol. 8/8",
+            "kind": "edition"
+          },
+          {
+            "id": "ad0774a09f1ebfc9373096bd97d659979cd1e08d81547881923d6ba80e1faf1d",
+            "label": "La San-Felice, Tome 08, Emma Lyonna, tome 4",
+            "kind": "edition"
+          },
+          {
+            "id": "b83414b821c46252f0a85f21193eb1ac2973bd099f84e270dbb09ddca0b1e4c0",
+            "label": "Memorie di Emma Lyonna, vol. 2/8",
+            "kind": "edition"
+          },
+          {
+            "id": "cf5beb52c11fde40a8a01901001bc4d31607b23898068b202b4f22ef76478c4e",
+            "label": "Memorie di Emma Lyonna, vol. 1/8",
+            "kind": "edition"
+          }
+        ],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": false
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de Emma de Jane Austen",
+      "answer": "Emma Woodhouse es una joven en la Inglaterra de la Regencia. En contra del consejo de Knightley, busca posibles novios para su nueva amiga, Harriet Smith, una joven sencilla y modesta, alejada del estilo de vida de la alta sociedad.\n\nFuente: https://es.wikipedia.org/wiki/Emma\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+      "status": "answered",
+      "books": [
+        {
+          "id": "1",
+          "title": "Emma",
+          "author": "Jane Austen",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=Emma+Jane+Austen"
+            },
+            {
+              "label": "Project Gutenberg",
+              "url": "https://www.gutenberg.org/ebooks/158"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Emma+Jane+Austen&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Emma+Jane+Austen"
+            }
+          ]
+        }
+      ],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 582,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "partial_evidence": false,
+        "work_type": "fiction",
+        "progress_metrics": {
+          "elapsed_ms": 587.717,
+          "first_phase_emitted_ms": 19.261,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 9.654,
+            "cache_lookup": 0.619,
+            "knowledge_lookup": 561.111,
+            "audit": 4.371,
+            "finalization": 5.541
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 2.832,
+              "elapsed_ms": 9.654,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 18.633,
+              "elapsed_ms": 0.619,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 31.439,
+              "elapsed_ms": 289.816,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 102.744,
+              "elapsed_ms": 31.592,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 180.969,
+              "elapsed_ms": 139.327,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 246.794,
+              "elapsed_ms": 45.545,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 389.744,
+              "elapsed_ms": 54.831,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 532.933,
+              "elapsed_ms": 3.192,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 559.602,
+              "elapsed_ms": 1.179,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 582.17,
+              "elapsed_ms": 5.541,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 19.261
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 532.918
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 0.5961,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.034,
+        "verified_ready_seconds": 0.5752,
+        "first_verified_text_seconds": 0.5961
+      }
+    }
+  ],
+  "seconds": 2.791,
+  "research_profile": "cold_after",
+  "public_research_trace": [
+    {
+      "stage": "retrieved_public_evidence",
+      "sources": [
+        {
+          "id": 1,
+          "title": "Emma",
+          "author": "Jane Austen",
+          "description": "Emma, de Jane Austen. Temas del cat\u00e1logo: Humorous stories, England -- Fiction, Young women -- Fiction, Love stories, Fathers and daughters -- Fiction, Bildungsromans, Mate selection -- Fiction, Female friendship -- Fiction",
+          "source": "Project Gutenberg",
+          "year": "",
+          "book_id": "",
+          "kind": "book",
+          "url": "https://www.gutenberg.org/ebooks/158",
+          "locator": "",
+          "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+          "retrieved_at": "1793072074.9906428",
+          "work_id": "litmate:cf86a03659678c1f89a26583",
+          "license": "CC0-1.0",
+          "trust": "untrusted_data",
+          "expires_at": "1795664074.9906428",
+          "evidence_hash": "1cb0e6be77520c3c417c5a3601bc23fe9b21dba62c2a1fdc65d9c5e43ebfa4cf",
+          "memory_source_id": "5e0ddc31ab61ce31b919d99bd4d5e365ba61fbb6354c794756f842e02d982313",
+          "last_verified_at": "1793072074.9906428",
+          "policy": "gutenberg-catalog-public-domain-v1",
+          "memory_verified": true,
+          "confirmed_aliases": [],
+          "language": "en",
+          "isbns": [],
+          "categories": [
+            "Humorous stories",
+            "England -- Fiction",
+            "Young women -- Fiction",
+            "Love stories",
+            "Fathers and daughters -- Fiction"
+          ]
+        },
+        {
+          "id": 2,
+          "title": "Emma",
+          "author": "Fuente web",
+          "description": "== Argumento == Emma Woodhouse es una joven en la Inglaterra de la Regencia. En contra del consejo de Knightley, busca posibles novios para su nueva amiga, Harriet Smith, una joven sencilla y modesta, alejada del estilo de vida de la alta sociedad. musicales, es el orgullo y alegr\u00eda de la se\u00f1orita Bates; a Emma, sin embargo, no le gusta, y envidia su talento. En su deseo de encontrar alg\u00fan defecto en Jane - y tambi\u00e9n para encontrar algo con lo que divertirse en esta villa encantadora pero aburrida - a Emma le da por compartir la fantas\u00eda inventada por Frank de que a Jane le gustaba el marido de la se\u00f1orita Campbell, el se\u00f1or Dixon, y que es por esta raz\u00f3n por la que tuvo que regresar a casa, en vez de irse a Irlanda a visitarlos.",
+          "source": "Wikipedia",
+          "year": "",
+          "book_id": "",
+          "kind": "web",
+          "url": "https://es.wikipedia.org/wiki/Emma",
+          "locator": "",
+          "read_mode": "",
+          "retrieved_at": "1793339353.6706216",
+          "evidence_scope": "summary",
+          "work_id": "litmate:cf86a03659678c1f89a26583",
+          "work_title": "Emma",
+          "work_author": "Jane Austen",
+          "license": "CC-BY-SA-4.0",
+          "trust": "untrusted_data",
+          "expires_at": "1793944153.6706216",
+          "evidence_hash": "b0dc824608bc910a852cf31f565847eba1459ed25ba503676e2ab2f825a01671",
+          "memory_source_id": "1d9725904b2fc3f4aab19e0f51b647ceb59f61427419edd9db30c272bfc5a088",
+          "last_verified_at": "1793339353.6706216",
+          "policy": "wikipedia-cc-by-sa-4.0-v1",
+          "work_binding_verified": true,
+          "memory_verified": true,
+          "attribution": {
+            "authors": "Wikipedia contributors",
+            "title": "Emma",
+            "url": "https://es.wikipedia.org/wiki/Emma",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+            "revision_id": "172946823"
+          },
+          "confirmed_aliases": [],
+          "literary_facts": [
+            {
+              "subject": "",
+              "relation": "",
+              "value": "",
+              "evidence": "Emma Woodhouse es una joven en la Inglaterra de la Regencia.",
+              "source_url": "",
+              "fact_kind": "",
+              "topic": "plot",
+              "type": "",
+              "scope": "development_excerpt"
+            },
+            {
+              "subject": "Emma",
+              "relation": "",
+              "value": "",
+              "evidence": "== Argumento == Emma Woodhouse es una joven en la Inglaterra de la Regencia. En contra del consejo de Knightley, busca posibles novios para su nueva amiga, Harriet Smith, una joven sencilla y modesta, alejada del estilo de vida de la alta sociedad. musicales, es el orgullo y alegr\u00eda de la se\u00f1orita Bates; a Emma, sin embargo, no le gusta, y envidia su talento. En su deseo de encontrar alg\u00fan defecto en Jane - y tambi\u00e9n para encontrar algo con lo que divertirse en esta villa encantadora pero aburrida - a Emma le da por compartir la fantas\u00eda inventada por Frank de que a Jane le gustaba el marido de la se\u00f1orita Campbell, el se\u00f1or Dixon, y que es por esta raz\u00f3n por la que tuvo que regresar a casa,",
+              "source_url": "",
+              "fact_kind": "",
+              "topic": "events",
+              "type": "",
+              "scope": "partial"
+            },
+            {
+              "subject": "",
+              "relation": "",
+              "value": "",
+              "evidence": "Emma Woodhouse es una joven en la Inglaterra de la Regencia. En contra del consejo de Knightley, busca posibles novios para su nueva amiga, Harriet Smith, una joven sencilla y modesta, alejada del estilo de vida de la alta sociedad. musicales, es el orgullo y alegr\u00eda de la se\u00f1orita Bates; a Emma, sin embargo, no le gusta, y envidia su talento. En su deseo de encontrar alg\u00fan defecto en Jane - y tambi\u00e9n para encontrar algo con lo que divertirse en esta villa encantadora pero aburrida - a Emma le da por compartir la fantas\u00eda inventada por Frank de que a Jane le gustaba el marido de la se\u00f1orita Campbell, el se\u00f1or Dixon, y que es por esta raz\u00f3n por la que tuvo que regresar a casa, en vez de irse",
+              "source_url": "",
+              "fact_kind": "",
+              "topic": "plot",
+              "type": "",
+              "scope": "partial"
+            }
+          ],
+          "identity_text": "Emma es una novela c\u00f3mica escrita por Jane Austen, en ingl\u00e9s, publicada por primera vez en 1815 por el editor John Murray, sobre los peligros de malinterpretar el romance. El personaje principal, Emma Woodhouse, es descrito como \"hermosa, lista y rica\" pero tambi\u00e9n es bastante mimada. Antes de comenzar la novela, Austen escribi\u00f3: \"Voy a elegir una hero\u00edna que, excepto a m\u00ed, no gustar\u00e1 mucho\".",
+          "character_facts": [],
+          "isbns": [],
+          "categories": []
+        },
+        {
+          "id": 3,
+          "title": "Emma",
+          "author": "Fuente web",
+          "description": "== Personajes == === Personajes principales === Emma Woodhouse: una joven de 21 a\u00f1os, protagonista de la historia. Jane Fairfax: una hu\u00e9rfana cuya familia se reduce a su t\u00eda, la se\u00f1orita Bates y a su abuela materna, la se\u00f1ora Bates. Harriet Smith: joven amiga de Emma, una chica muy hermosa que se deja manipular f\u00e1cilmente por otros, especialmente por Emma. Philip Elton: es un guapo y ambicioso joven vicario anglicano. Augusta Elton: es la esposa rica del se\u00f1or Elton, de car\u00e1cater mordaz.",
+          "source": "Wikipedia",
+          "year": "",
+          "book_id": "",
+          "kind": "web",
+          "url": "https://es.wikipedia.org/wiki/Emma",
+          "locator": "",
+          "read_mode": "",
+          "retrieved_at": "1793331402.956122",
+          "evidence_scope": "characters",
+          "work_id": "litmate:cf86a03659678c1f89a26583",
+          "work_title": "Emma",
+          "work_author": "Jane Austen",
+          "license": "CC-BY-SA-4.0",
+          "trust": "untrusted_data",
+          "expires_at": "1793936202.956122",
+          "evidence_hash": "0121f1467226c6b638a5b903d3b40646dedbe132674c799c1a2c279f688affdf",
+          "memory_source_id": "e155d6465f2dab06d5cf793dbc3c5e44722d8d2540157aceb6c0ce53bead549d",
+          "last_verified_at": "1793331402.956122",
+          "policy": "wikipedia-cc-by-sa-4.0-v1",
+          "work_binding_verified": true,
+          "memory_verified": true,
+          "attribution": {
+            "authors": "Wikipedia contributors",
+            "title": "Emma",
+            "url": "https://es.wikipedia.org/wiki/Emma",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+            "revision_id": "172946823"
+          },
+          "confirmed_aliases": [],
+          "literary_facts": [],
+          "identity_text": "Emma es una novela c\u00f3mica escrita por Jane Austen, en ingl\u00e9s, publicada por primera vez en 1815 por el editor John Murray, sobre los peligros de malinterpretar el romance. El personaje principal, Emma Woodhouse, es descrito como \"hermosa, lista y rica\" pero tambi\u00e9n es bastante mimada. Antes de comenzar la novela, Austen escribi\u00f3: \"Voy a elegir una hero\u00edna que, excepto a m\u00ed, no gustar\u00e1 mucho\".",
+          "character_facts": [
+            {
+              "name": "Emma Woodhouse",
+              "role": "una joven de 21 a\u00f1os, protagonista de la historia.",
+              "evidence": "Emma Woodhouse: una joven de 21 a\u00f1os, protagonista de la historia.",
+              "classification": "principal",
+              "classification_evidence": "Personajes principales",
+              "aliases": []
+            },
+            {
+              "name": "Jane Fairfax",
+              "role": "una hu\u00e9rfana cuya familia se reduce a su t\u00eda, la se\u00f1orita Bates y a su abuela materna, la se\u00f1ora Bates.",
+              "evidence": "Jane Fairfax: una hu\u00e9rfana cuya familia se reduce a su t\u00eda, la se\u00f1orita Bates y a su abuela materna, la se\u00f1ora Bates.",
+              "classification": "principal",
+              "classification_evidence": "Personajes principales",
+              "aliases": []
+            },
+            {
+              "name": "Harriet Smith",
+              "role": "joven amiga de Emma, una chica muy hermosa que se deja manipular f\u00e1cilmente por otros, especialmente por Emma.",
+              "evidence": "Harriet Smith: joven amiga de Emma, una chica muy hermosa que se deja manipular f\u00e1cilmente por otros, especialmente por Emma.",
+              "classification": "principal",
+              "classification_evidence": "Personajes principales",
+              "aliases": []
+            },
+            {
+              "name": "Philip Elton",
+              "role": "es un guapo y ambicioso joven vicario anglicano.",
+              "evidence": "Philip Elton: es un guapo y ambicioso joven vicario anglicano.",
+              "classification": "principal",
+              "classification_evidence": "Personajes principales",
+              "aliases": []
+            },
+            {
+              "name": "Augusta Elton",
+              "role": "es la esposa rica del se\u00f1or Elton, de car\u00e1cater mordaz.",
+              "evidence": "Augusta Elton: es la esposa rica del se\u00f1or Elton, de car\u00e1cater mordaz.",
+              "classification": "principal",
+              "classification_evidence": "Personajes principales",
+              "aliases": []
+            }
+          ],
+          "isbns": [],
+          "categories": []
+        },
+        {
+          "id": 4,
+          "title": "Emma (novel)",
+          "author": "Fuente web",
+          "description": "Emma is a novel written by English author Jane Austen. It is set in the fictional Surrey village of Highbury and the surrounding estates of Hartfield, Randalls, and Donwell Abbey, and involves the relationships among people from a small number of families. The novel was first published in December 1815, although the title page is dated 1816. As in her other novels, Austen explores the concerns and difficulties of genteel women living in Georgian\u2013Regency England. Emma is a comedy of manners. Before she began the novel, Austen wrote, \"I am going to take a heroine whom no one but myself will much like.\" In the first sentence, she introduces the title character by stating \"Emma Woodhouse, handsome, clever, and rich, with a comfortable home and a happy disposition, seemed to unite some of the best blessings of existence; and had lived nearly twenty-one years in the world with very little to distress or vex her.\" Emma is spoiled, headstrong, and self-satisfied; she greatly overestimates her own matchmaking abilities; she is blind to the dangers of meddling in other people's lives; and her imagination and perceptions often lead her astray. Emma, written after Austen's move to Chawton, was...",
+          "source": "Wikipedia",
+          "year": "",
+          "book_id": "",
+          "kind": "web",
+          "url": "https://en.wikipedia.org/wiki/Emma_(novel)",
+          "locator": "",
+          "read_mode": "",
+          "retrieved_at": "1793268185.7978268",
+          "evidence_scope": "characters",
+          "work_id": "litmate:cf86a03659678c1f89a26583",
+          "work_title": "Emma",
+          "work_author": "Jane Austen",
+          "license": "CC-BY-SA-4.0",
+          "trust": "untrusted_data",
+          "expires_at": "1793872985.7978268",
+          "evidence_hash": "9e1ce3fb756ca8797cd96637e302712969546e4517d02df667d66d6c1a07ddad",
+          "memory_source_id": "6436db701c87213e7d33153b773bdf4ad68f188baf2fcaf267ed8e9aad89c944",
+          "last_verified_at": "1793268185.7978268",
+          "policy": "wikipedia-cc-by-sa-4.0-v1",
+          "work_binding_verified": true,
+          "memory_verified": true,
+          "attribution": {
+            "authors": "Wikipedia contributors",
+            "title": "Emma (novel)",
+            "url": "https://en.wikipedia.org/wiki/Emma_(novel)",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+            "revision_id": "1382473297"
+          },
+          "confirmed_aliases": [],
+          "literary_facts": [],
+          "identity_text": "Emma is a novel written by English author Jane Austen. It is set in the fictional Surrey village of Highbury and the surrounding estates of Hartfield, Randalls, and Donwell Abbey, and involves the relationships among people from a small number of families. The novel was first published in December 1815, although the title page is dated 1816. As in her other novels, Austen explores the concerns and difficulties of genteel women living in Georgian\u2013Regency England. Emma is a comedy of manners. Before she began the novel, Austen wrote, \"I am going to take a heroine whom no one but myself will much like.\" In the first sentence, she introduces the title character by stating \"Emma Woodhouse, handsome, clever, and rich, with a comfortable home and a happy disposition, seemed to unite some of the best blessings of existence; and had lived nearly twenty-one years in the world with very little to distress or vex her.\" Emma is spoiled, headstrong, and self-satisfied; she greatly overestimates her own matchmaking abilities; she is blind to the dangers of meddling in other people's lives; and her imagination and perceptions often lead her astray. Emma, written after Austen's move to Chawton, was",
+          "character_facts": [],
+          "isbns": [],
+          "categories": []
+        }
+      ]
+    }
+  ],
+  "coverage_before": {
+    "works": 14479,
+    "works_with_explicit_plot": 19,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 22,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 36,
+    "linked_sources": 14655,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14479,
+    "works_with_explicit_plot": 19,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 22,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 36,
+    "linked_sources": 14655,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "persistent_exact_cache",
+  "google_books_enabled": false,
+  "factual_review_pending": true
+}

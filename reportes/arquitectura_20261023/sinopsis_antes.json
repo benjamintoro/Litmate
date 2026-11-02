@@ -1,0 +1,439 @@
+{
+  "created_at_utc": "2026-10-23T21:32:46.350674+00:00",
+  "mode": "real_http_sse_isolated_database",
+  "model": "qwen3.5:9b-q4_K_M",
+  "context": 16384,
+  "prewarm": {
+    "requested": false,
+    "seconds": null,
+    "generates_answers": false
+  },
+  "web_enabled": true,
+  "chat_budget_seconds": 36,
+  "response_budget_seconds": 42,
+  "progressive": true,
+  "repeat": 1,
+  "knowledge_setup": "empty_auxiliary_databases_with_bundled_catalogue",
+  "resource_scope": "python_server_process_only_not_ollama_or_gpu",
+  "cache_controls": {
+    "empty_answers_each_turn": false,
+    "empty_retrieval_each_turn": false
+  },
+  "factual_review": "not_independently_certified",
+  "turns": [
+    {
+      "case": "consulta_reportada",
+      "turn": 1,
+      "question": "Dime la trama de The Unfinished Nation de Alan Brinkley",
+      "http_status": 200,
+      "status": "unavailable",
+      "completed_sse": true,
+      "seconds": 5.152,
+      "first_text_seconds": 5.152,
+      "first_useful_seconds": null,
+      "first_progress_seconds": 0.034,
+      "progress_phases": [
+        "search"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 5144,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 5143.984,
+          "first_phase_emitted_ms": 31.705,
+          "stage_totals_ms": {
+            "conversation": 10.165,
+            "cache_lookup": 0.671,
+            "knowledge_lookup": 55.857,
+            "retrieval": 3271.896,
+            "web_search": 1699.233,
+            "finalization": 0.025
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 8.356,
+              "elapsed_ms": 10.165,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 31.022,
+              "elapsed_ms": 0.671,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 33.03,
+              "elapsed_ms": 37.858,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 41.838,
+              "elapsed_ms": 1.124,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 59.089,
+              "elapsed_ms": 10.938,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 59.349,
+              "elapsed_ms": 1.046,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 79.664,
+              "elapsed_ms": 1.121,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 89.783,
+              "elapsed_ms": 2350.658,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 2442.129,
+              "elapsed_ms": 1699.233,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 4192.939,
+              "elapsed_ms": 3.77,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 4208.401,
+              "elapsed_ms": 921.238,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 5143.952,
+              "elapsed_ms": 0.025,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 31.705
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "stage_totals_ms": {
+        "conversation": 10.165,
+        "cache_lookup": 0.671,
+        "knowledge_lookup": 55.857,
+        "retrieval": 3271.896,
+        "web_search": 1699.233,
+        "finalization": 0.025
+      },
+      "delivery_overhead_ms": 7.889,
+      "resources": {
+        "rss_mb": 71.113,
+        "peak_rss_mb": 71.164,
+        "cpu_seconds": 0.421875
+      },
+      "category": "unspecified",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "No pude confirmar una sinopsis fiable de **The Unfinished Nation de Alan Brinkley** con las fuentes disponibles. No quiero mezclarlo con otra obra.",
+      "source_urls": []
+    },
+    {
+      "case": "consulta_reportada",
+      "turn": 2,
+      "question": "Dime la trama de Papelucho y el marciano",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 0.075,
+      "first_text_seconds": 0.075,
+      "first_useful_seconds": 0.075,
+      "first_progress_seconds": 0.012,
+      "progress_phases": [
+        "search",
+        "review"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 66,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 66.42,
+          "first_phase_emitted_ms": 10.055,
+          "stage_totals_ms": {
+            "conversation": 0.145,
+            "cache_lookup": 0.829,
+            "knowledge_lookup": 25.204,
+            "audit": 2.517,
+            "finalization": 0.296
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 3.121,
+              "elapsed_ms": 0.145,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 9.213,
+              "elapsed_ms": 0.829,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 10.131,
+              "elapsed_ms": 23.545,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 10.994,
+              "elapsed_ms": 1.659,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 31.977,
+              "elapsed_ms": 1.678,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 41.189,
+              "elapsed_ms": 0.839,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 66.117,
+              "elapsed_ms": 0.296,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 10.055
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 31.962
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-indexed-evidence"
+      },
+      "stage_totals_ms": {
+        "conversation": 0.145,
+        "cache_lookup": 0.829,
+        "knowledge_lookup": 25.204,
+        "audit": 2.517,
+        "finalization": 0.296
+      },
+      "delivery_overhead_ms": 8.253,
+      "resources": {
+        "rss_mb": 70.363,
+        "peak_rss_mb": 71.512,
+        "cpu_seconds": 0.0625
+      },
+      "category": "unspecified",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "**Diario secreto de Papelucho y el marciano — Marcela Paz**: Papelucho relata su convivencia con Det, un amigo extraterrestre. Su amistad combina dificultades cotidianas con la posibilidad de conocer otros mundos.\n\nFuentes de las fichas:\nhttps://literaturasm.cl/diario-secreto-de-papelucho-y-el-marciano/",
+      "source_urls": [
+        "https://literaturasm.cl/diario-secreto-de-papelucho-y-el-marciano/"
+      ]
+    },
+    {
+      "case": "consulta_reportada",
+      "turn": 3,
+      "question": "Dime la trama de El señor de los anillos",
+      "http_status": 200,
+      "status": "unavailable",
+      "completed_sse": true,
+      "seconds": 6.68,
+      "first_text_seconds": 6.68,
+      "first_useful_seconds": null,
+      "first_progress_seconds": 0.016,
+      "progress_phases": [
+        "search"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 6673,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 6673.185,
+          "first_phase_emitted_ms": 13.439,
+          "stage_totals_ms": {
+            "conversation": 0.513,
+            "cache_lookup": 3.669,
+            "knowledge_lookup": 37.973,
+            "retrieval": 2122.7,
+            "extraction": 7058.418,
+            "web_search": 4450.372,
+            "finalization": 0.021
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 3.417,
+              "elapsed_ms": 0.513,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 9.761,
+              "elapsed_ms": 3.669,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 13.491,
+              "elapsed_ms": 20.63,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 15.295,
+              "elapsed_ms": 1.923,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 26.091,
+              "elapsed_ms": 6.755,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 26.35,
+              "elapsed_ms": 1.805,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 34.994,
+              "elapsed_ms": 1.715,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 41.484,
+              "elapsed_ms": 1326.688,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 1369.061,
+              "elapsed_ms": 4450.372,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 2403.473,
+              "elapsed_ms": 1815.212,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 2403.96,
+              "elapsed_ms": 3415.249,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 2404.432,
+              "elapsed_ms": 1827.957,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 5844.938,
+              "elapsed_ms": 5.145,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 5861.03,
+              "elapsed_ms": 796.012,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 6673.158,
+              "elapsed_ms": 0.021,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 13.439
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "stage_totals_ms": {
+        "conversation": 0.513,
+        "cache_lookup": 3.669,
+        "knowledge_lookup": 37.973,
+        "retrieval": 2122.7,
+        "extraction": 7058.418,
+        "web_search": 4450.372,
+        "finalization": 0.021
+      },
+      "delivery_overhead_ms": 6.926,
+      "resources": {
+        "rss_mb": 89.398,
+        "peak_rss_mb": 119.816,
+        "cpu_seconds": 1.1875
+      },
+      "category": "unspecified",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "No pude confirmar una sinopsis fiable de **El señor de los anillos** con las fuentes disponibles. No quiero mezclarlo con otra obra.",
+      "source_urls": []
+    }
+  ],
+  "source_sha256": "a2fcd89045721ad2f3d651f9d78a0a330ec9b5740beca65127a6faebc6b0c430",
+  "runner_sha256": "fa1955691a757678bcd326237bd8cbfe65c0b32a7120e96538f277a67028e94e",
+  "matrix_sha256": null,
+  "metrics": {
+    "turns": 3,
+    "p50_seconds": 5.152,
+    "mean_seconds": 3.969,
+    "p95_seconds": 6.68,
+    "max_seconds": 6.68,
+    "under_response_budget": 3,
+    "statuses": {
+      "unavailable": 2,
+      "answered": 1
+    },
+    "under_5_seconds": 1,
+    "under_10_seconds": 3,
+    "under_30_seconds": 3,
+    "answered_is_not_factual_certification": true
+  },
+  "source_files_changed_during_run": false
+}

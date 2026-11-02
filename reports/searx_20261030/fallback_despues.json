@@ -1,0 +1,479 @@
+{
+  "mode": "fallback",
+  "started_at": "2026-10-30T11:31:24.346294+00:00",
+  "cases": [
+    {
+      "category": "novela",
+      "query": "El nombre de la rosa",
+      "author_target": "Umberto Eco",
+      "status": "ok",
+      "failures": {},
+      "result_count": 5,
+      "search_seconds": 1.095,
+      "results": [
+        {
+          "title": "El nombre de la rosa",
+          "author": "Fuente web",
+          "description": "novela hist\u00f3rica de Umberto Eco",
+          "url": "https://es.wikipedia.org/wiki/El_nombre_de_la_rosa",
+          "kind": "web",
+          "source": "SearXNG (es.wikipedia.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "wikipedia"
+          ]
+        },
+        {
+          "title": "EL NOMBRE DE LA ROSA",
+          "author": "Fuente web",
+          "description": "",
+          "url": "https://openlibrary.org/works/OL35986141W",
+          "kind": "web",
+          "source": "SearXNG (openlibrary.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "Para leer \"El nombre de la rosa\" de Umberto Eco",
+          "author": "Fuente web",
+          "description": "",
+          "url": "https://openlibrary.org/works/OL18948328W",
+          "kind": "web",
+          "source": "SearXNG (openlibrary.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "Vivaldi en Android: Prep\u00e1rate para cambiar el nombre de tus pila\u2026",
+          "author": "Fuente web",
+          "description": "Compartir art\u00edculo Co-Founder/CEO. Been doing browser development since 1994. When I\u2019m not testing Vivaldi browser or reading Vivaldi forums, I enjoy col\u2026",
+          "url": "https://vivaldi.com/?p=392980",
+          "kind": "web",
+          "source": "SearXNG (vivaldi.com)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "GitHub - Adau/trails: R\u00e9cup\u00e9ration du nombre de places restantes\u2026",
+          "author": "Fuente web",
+          "description": "Saved searches Use saved searches to filter your results more quickly You signed in with another tab or window. Reload to refresh your session.You signed\u2026",
+          "url": "https://github.com/Adau/trails",
+          "kind": "web",
+          "source": "SearXNG (github.com)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "mwmbl"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "url": "https://es.wikipedia.org/wiki/El_nombre_de_la_rosa",
+          "status": "ok",
+          "seconds": 1.369,
+          "chars": 1800,
+          "identity_bound": true,
+          "content_candidate": false,
+          "description": "El nombre de la rosa (t\u00edtulo original Il nome della rosa en italiano) es una novela hist\u00f3rica de misterio escrita por Umberto Eco y publicada en 1980.[2]\nEn un clima mental de gran excitaci\u00f3n le\u00ed, fascinado, la terrible historia de Adso de Melk, y tanto me atrap\u00f3 que casi de un tir\u00f3n la traduje en varios cuadernos de gran formato procedentes de la Papeterie Joseph Gibert, aquellos en los que tan agradable es escribir con una pluma blanda. Mientras tanto llegamos a las cercan\u00edas de Melk, donde, a pico sobre un recodo del r\u00edo, a\u00fan se yergue el bell\u00edsimo Stift, varias veces restaurado a lo largo de los siglos. Como el lector habr\u00e1 imaginado, en la biblioteca del monasterio no encontr\u00e9 huella alguna del manuscrito de Adso.Umberto Eco. El nombre de la rosa. Prefacio: Naturalmente, un manuscrito.\nEn una entrevista incluida en la versi\u00f3n DVD de la pel\u00edcula El nombre de la rosa, su director, Jean-Jacques Annaud, asegura que Umberto Eco le manifestaba que Adso es un \u00abimb\u00e9cil\u00bb, el cual \u00abno entiende a su maestro\u00bb, y que \u00abal final no ha comprendido nada. No ha entendido la lecci\u00f3n de su maestro\u00bb.[9]\nEl que acababa de hablar era un monje encorvado por el peso de los a\u00f1os, blanco como la nieve; no me refiero solo al pelo sino tambi\u00e9n al rostro, y a las pupilas. Comprend\u00ed que era ciego. Aunque el cuerpo se encog\u00eda ya por el peso de la edad, la voz segu\u00eda siendo majestuosa, y los brazos y manos poderosos. Clavaba los ojos en nosotros como si nos estuviese viendo, y siempre, tambi\u00e9n en los d\u00edas que siguieron, lo vi moverse y hablar como si a\u00fan poseyese el don de la vista. Pero el tono de la voz, en cambio, era el de alguien que solo estuviese dotado del don de la profec\u00eda.Umberto Eco. El nombre de la rosa.\nEl 9 de julio de 1981, ocho meses despu\u00e9s de la publicaci\u00f3n del libro, El nombre ",
+          "identity_text": "El nombre de la rosa - Wikipedia, la enciclopedia libre El nombre de la rosa (t\u00edtulo original Il nome della rosa en italiano ) es una novela hist\u00f3rica de misterio escrita por Umberto Eco y publicada en 1980. [ 2 ] Ambientada en el turbulento ambiente religioso del siglo XIV , la novela narra la investigaci\u00f3n que realizan fray Guillermo de Baskerville y su pupilo Adso de Melk alrededor de una misteriosa serie de cr\u00edmenes que suceden en una abad\u00eda del norte de Italia . La gran repercusi\u00f3n de la novela provoc\u00f3 que se editaran miles de p\u00e1ginas de cr\u00edtica de El nombre de la rosa , y se han se\u00f1alado referentes que incluyen a Jorge Luis Borges , Arthur Conan Doyle y el escol\u00e1stico Guillermo de Ockham ."
+        },
+        {
+          "url": "https://openlibrary.org/works/OL35986141W",
+          "status": "not_read",
+          "seconds": 0.0,
+          "chars": 0,
+          "identity_bound": false,
+          "content_candidate": false,
+          "description": "",
+          "identity_text": ""
+        }
+      ],
+      "research": {
+        "logical_searches": 0,
+        "page_slots_reserved": 0,
+        "page_slots_limit": 2,
+        "external_seconds": 0.0,
+        "events": [
+          {
+            "stage": "http_request",
+            "provider": "SearXNG",
+            "status": "started",
+            "count": 0
+          },
+          {
+            "stage": "http_request",
+            "provider": "SearXNG",
+            "status": "ok",
+            "count": 20
+          }
+        ],
+        "http_requests_started": 1,
+        "pages_extracted": 0
+      },
+      "seconds": 2.465,
+      "usable_content_sources": 0
+    },
+    {
+      "category": "manga",
+      "query": "Naruto",
+      "author_target": "Masashi Kishimoto",
+      "status": "ok",
+      "failures": {},
+      "result_count": 5,
+      "search_seconds": 0.282,
+      "results": [
+        {
+          "title": "Naruto - Wikipedia",
+          "author": "Fuente web",
+          "description": "Naruto [ a ] is a Japanese manga series written and illustrated by Masashi Kishimoto . It tells the story of Naruto Uzumaki , a young ninja who seeks reco\u2026",
+          "url": "https://en.wikipedia.org/wiki/Naruto",
+          "kind": "web",
+          "source": "SearXNG (en.wikipedia.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "NARUTO SHIPPUDEN: Ultimate Ninja STORM 3 Full Burst HD on Steam",
+          "author": "Fuente web",
+          "description": "More Naruto Games About This Game The 4th Great Ninja War continues. NARUTO SHIPPUDEN Ultimate Ninja STORM 3 has been given a thorough overhaul for its F\u2026",
+          "url": "https://store.steampowered.com/app/234670",
+          "kind": "web",
+          "source": "SearXNG (store.steampowered.com)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "Naruto: God Level Ninjas, Ranked",
+          "author": "Fuente web",
+          "description": "The Naruto world has seen countless ninjas rise and fall but only a few reach god-level power and leave a mark in history. Characters like Obito Uchiha, M\u2026",
+          "url": "https://gamerant.com/naruto-god-level-ninjas/",
+          "kind": "web",
+          "source": "SearXNG (gamerant.com)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "List of Naruto: Shippuden episodes",
+          "author": "Fuente web",
+          "description": "Naruto: Shippuden is an anime television series mainly adapted from Part II of Masashi Kishimoto's original Naruto manga series, with exactly 500 episodes",
+          "url": "https://en.wikipedia.org/wiki/List_of_Naruto:_Shippuden_episodes",
+          "kind": "web",
+          "source": "SearXNG (en.wikipedia.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "Naruto",
+          "author": "Fuente web",
+          "description": "serie de manga y anime de tem\u00e1tica ninja",
+          "url": "https://es.wikipedia.org/wiki/Naruto",
+          "kind": "web",
+          "source": "SearXNG (es.wikipedia.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "wikipedia"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Naruto",
+          "status": "ok",
+          "seconds": 1.692,
+          "chars": 1800,
+          "identity_bound": true,
+          "content_candidate": true,
+          "description": "Naruto[a] is a Japanese manga series written and illustrated by Masashi Kishimoto. It tells the story of Naruto Uzumaki, a young, socially isolated ninja who seeks recognition from his peers and dreams of becoming the Hokage, the leader of his village. The story is told in two parts: the first is set in Naruto's pre-teen years (volumes 1\u201327), and the second in his teens (volumes 28\u201372). The series is based on two one-shot manga by Kishimoto: Karakuri (1995), which earned Kishimoto an honorable mention in Shueisha's monthly Hop Step Award the following year, and Naruto (1997).\nIn 1995, Shueisha published Karakuri, a one-shot manga by Masashi Kishimoto, which received an honorable mention in the 1996 Hop Step Award. Dissatisfied with subsequent draft proposals, Kishimoto began developing a new project.[2] An early concept featured Naruto as a chef, but this version was never published. Kishimoto then developed a one-shot for the summer 1997 issue of Akamaru Jump, based on an idea of a boy who could transform into a fox.[3][4] Despite positive reader feedback, Kishimoto revised the concept into a ninja-themed story due to dissatisfaction with the art and narrative.[5]\nWritten and illustrated by Masashi Kishimoto, Naruto was serialized for a 15-year run in Shueisha's magazine, Weekly Sh\u014dnen Jump from September 21, 1999,[38][39] to November 10, 2014.[40][41] Shueisha collected its chapters in 72 tank\u014dbon volumes\u201427 for Part I, and the rest for Part II; they were released between March 3, 2000,[42] and February 4, 2015.[43] The first 238 chapters are Part I and constitute the first part of the Naruto storyline. Chapters 239 to 244 include a gaiden (side-story) focusing on Kakashi Hatake's background. The remaining chapters (245 to 700) belong to Part II, which continues the s",
+          "identity_text": "Naruto - Wikipedia  Naruto [ a ] is a Japanese manga series written and illustrated by Masashi Kishimoto . It tells the story of Naruto Uzumaki , a young, socially isolated ninja who seeks recognition from his peers and dreams of becoming the Hokage, the leader of his village. The story is told in two parts: the first is set in Naruto's pre-teen years (volumes 1\u201327), and the second in his teens (volumes 28\u201372). The series is based on two one-shot manga by Kishimoto: Karakuri (1995), which earned Kishimoto an honorable mention in Shueisha 's monthly Hop Step Award the following year, and Naruto (1997). Naruto was serialized in Shueisha's sh\u014dnen manga magazine Weekly Sh\u014dnen Jump from September 1999 to November 2014, with its 700 chapters collected in 72 tank\u014dbon volumes. Viz Media licensed the manga for North American production and serialized Naruto in their digital Weekly Shonen Jump magazine. The manga was adapted into two anime television series by Pierrot and Aniplex , which ran from October 2002 to M"
+        },
+        {
+          "url": "https://store.steampowered.com/app/234670",
+          "status": "ok",
+          "seconds": 0.494,
+          "chars": 853,
+          "identity_bound": false,
+          "content_candidate": false,
+          "description": "Includes 3 items: Naruto Shippuden Ultimate Ninja Storm 3 - NA Version, NARUTO: Ultimate Ninja STORM, NARUTO SHIPPUDEN: Ultimate Ninja STORM 2\nThe developers describe the content like this:\nThis game contains Violence, Blood, and Mild Suggestive Themes.\nFor EMEA:\n\u00a9 2002 MASASHI KISHIMOTO / 2007 SHIPPUDEN All rights reserved.\n\u00a9 2002 MASASHI KISHIMOTO/2007 SHIPPUDEN \u00a9 NMP 2014\n\u00a9 2002 MASASHI KISHIMOTO/2007 SHIPPUDEN \u00a9 BMP 2015\nGame \u00a9 BANDAI NAMCO Entertainement Inc.\nFor the Americas:\n\u00a9 2002 MASASHI KISHIMOTO/2007 SHIPPUDEN \u00a9 NMP 2014\ngame software \u00a92015 BANDAI NAMCO Entertainment Inc.\nNARUTO artwork and elements \u00a9 2002 MASASHI KISHIMOTO / 2007 SHIPPUDEN All Rights Reserved.\nFor Asia (except Korea)\n\u00a92002 MASASHI KISHIMOTO/2007 SHIPPUDEN All Rights Reserved.\n\u00a9NMP 2014\nLicensed by Mighty Delta Investments Limited.\n\u00a9BANDAI NAMCO Entertainment Inc.",
+          "identity_text": "Save 50% on NARUTO SHIPPUDEN: Ultimate Ninja STORM 3 Full Burst HD on Steam Sign in to add this item to your wishlist, follow it, or mark it as ignored SPECIAL PROMOTION! Offer ends 5 November Includes 3 items: Naruto Shippuden Ultimate Ninja Storm 3 - NA Version , NARUTO: Ultimate Ninja STORM , NARUTO SHIPPUDEN: Ultimate Ninja STORM 2"
+        }
+      ],
+      "research": {
+        "logical_searches": 0,
+        "page_slots_reserved": 0,
+        "page_slots_limit": 2,
+        "external_seconds": 0.0,
+        "events": [
+          {
+            "stage": "http_request",
+            "provider": "SearXNG",
+            "status": "started",
+            "count": 0
+          },
+          {
+            "stage": "http_request",
+            "provider": "SearXNG",
+            "status": "ok",
+            "count": 20
+          }
+        ],
+        "http_requests_started": 1,
+        "pages_extracted": 0
+      },
+      "seconds": 2.469,
+      "usable_content_sources": 1
+    },
+    {
+      "category": "historia",
+      "query": "Historia de la rep\u00fablica del Per\u00fa",
+      "author_target": "Jorge Basadre",
+      "status": "ok",
+      "failures": {},
+      "result_count": 5,
+      "search_seconds": 0.663,
+      "results": [
+        {
+          "title": "Historia de la rep\u00fablica del Per\u00fa - Jorge Basadre - Google Books",
+          "author": "Fuente web",
+          "description": "",
+          "url": "https://books.google.com/books?id=gyF6AAAAMAAJ",
+          "kind": "web",
+          "source": "SearXNG (books.google.com)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "Historia de la Repu\u0301blica del Peru\u0301",
+          "author": "Fuente web",
+          "description": "",
+          "url": "https://openlibrary.org/works/OL3167688W",
+          "kind": "web",
+          "source": "SearXNG (openlibrary.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "Historia de la Rep\u00fablica del Per\u00fa, 1822-1933",
+          "author": "Fuente web",
+          "description": "",
+          "url": "https://openlibrary.org/works/OL32010364W",
+          "kind": "web",
+          "source": "SearXNG (openlibrary.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "Carmen Lozada, Asesora at Congreso de la rep\u00fablica del per\u00fa",
+          "author": "Fuente web",
+          "description": "",
+          "url": "https://fr.slideshare.net/CarmenLozada1/following",
+          "kind": "web",
+          "source": "SearXNG (fr.slideshare.net)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "&#39;estefany Mansilla Beltr\u00e1n, Escuela rep\u00fablica del per\u00fa",
+          "author": "Fuente web",
+          "description": "",
+          "url": "https://fr.slideshare.net/pettipettilu",
+          "kind": "web",
+          "source": "SearXNG (fr.slideshare.net)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "mwmbl"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "url": "https://books.google.com/books?id=gyF6AAAAMAAJ",
+          "status": "not_read",
+          "seconds": 0.0,
+          "chars": 0,
+          "identity_bound": false,
+          "content_candidate": false,
+          "description": "",
+          "identity_text": ""
+        },
+        {
+          "url": "https://openlibrary.org/works/OL3167688W",
+          "status": "not_read",
+          "seconds": 0.0,
+          "chars": 0,
+          "identity_bound": false,
+          "content_candidate": false,
+          "description": "",
+          "identity_text": ""
+        }
+      ],
+      "research": {
+        "logical_searches": 0,
+        "page_slots_reserved": 0,
+        "page_slots_limit": 2,
+        "external_seconds": 0.0,
+        "events": [
+          {
+            "stage": "http_request",
+            "provider": "SearXNG",
+            "status": "started",
+            "count": 0
+          },
+          {
+            "stage": "http_request",
+            "provider": "SearXNG",
+            "status": "ok",
+            "count": 16
+          }
+        ],
+        "http_requests_started": 1,
+        "pages_extracted": 0
+      },
+      "seconds": 0.663,
+      "usable_content_sources": 0
+    },
+    {
+      "category": "ensayo",
+      "query": "El infinito en un junco",
+      "author_target": "Irene Vallejo",
+      "status": "ok",
+      "failures": {},
+      "result_count": 5,
+      "search_seconds": 0.881,
+      "results": [
+        {
+          "title": "El infinito en un junco: La invenci\u00f3n de los libros en el mundo \u2026",
+          "author": "Fuente web",
+          "description": "Review There isn't much about papyrus here, nor the invention of books. There is a lot about ancient Egypt, the Library In Alexandria, ancient Greece and\u2026",
+          "url": "https://www.goodreads.com/book/show/51554723-el-infinito-en-un-junco-la-invenci-n-de-los-libros-en-el-mundo-antiguo",
+          "kind": "web",
+          "source": "SearXNG (www.goodreads.com)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "El infinito en un junco [Infinity in a Reed] by Irene Vallejo - \u2026",
+          "author": "Fuente web",
+          "description": "In the spirit of reconciliation, Audible acknowledges the Traditional Custodians of country throughout Australia and their connections to land, sea and c\u2026",
+          "url": "https://www.audible.com.au/pd/El-infinito-en-un-junco-Infinity-in-a-Reed-Audiobook/8412202228",
+          "kind": "web",
+          "source": "SearXNG (www.audible.com.au)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "El infinito en un junco",
+          "author": "Fuente web",
+          "description": "Misteriosos grupos de hombres a caballo recorren los caminos de Gracia.",
+          "url": "https://openlibrary.org/works/OL20770492W",
+          "kind": "web",
+          "source": "SearXNG (openlibrary.org)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "El infinito en un junco, Irene Vallejo - Paperblog",
+          "author": "Fuente web",
+          "description": "",
+          "url": "https://es.paperblog.com/el-infinito-en-un-junco-irene-vallejo-7526312/",
+          "kind": "web",
+          "source": "SearXNG (es.paperblog.com)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "El infinito en un junco Tags - Las2orillas",
+          "author": "Fuente web",
+          "description": "",
+          "url": "https://www.las2orillas.co/tag/el-infinito-en-un-junco/",
+          "kind": "web",
+          "source": "SearXNG (www.las2orillas.co)",
+          "read_mode": "fragmento del buscador",
+          "search_engines": [
+            "mwmbl"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "url": "https://www.goodreads.com/book/show/51554723-el-infinito-en-un-junco-la-invenci-n-de-los-libros-en-el-mundo-antiguo",
+          "status": "ok",
+          "seconds": 2.267,
+          "chars": 1800,
+          "identity_bound": false,
+          "content_candidate": false,
+          "description": "Now, I am in favor of all and any books that divulge the love of reading. And Vallejo may well accomplish that goal. But, as a reading experience, I found El infinito en un junco (\u201cInfinity in a reed\u201d) underwhelming. Both the information and the reflections that make up the bulk of this book have a bland, generic quality that is far from winsome. If you have read your fair share of ancient authors, and know the basics of European history, there will be little to surprise in her narration. And when it comes to rhapsodizing over the value of books, Vallejo hardly breaks new ground: Books widen our perspective, allow us to travel \n#IreneVallejo #Elinfinitoenunjunco #Ensayosmuyespeciales #Librossobrelibros #Trenzasderecuerdos\nEl infinito en un junco es ideal para bibli\u00f3filos porque es una declaraci\u00f3n de amor a los libros y, literalmente, a todo lo que les rodea. Tard\u00e9 seis meses en leerlo debido a mi costumbre de subrayar pasajes importantes en mis libros y hacer anotaciones, y \u00e9ste tiene mucho que destacar. Irene Vallejo nos ofrece una obra apasionada y apasionante en la que, con suma erudici\u00f3n y sensibilidad, y haciendo uso de una bibliograf\u00eda extraordinaria, explora la historia de la literatura. En este recorrido, la autora resalta la importancia de la escritura y de la literatura como un pilar esencial en la construcci\u00f3n de la civilizaci\u00f3n y en nuestra comprensi\u00f3n del mundo, entronc\u00e1ndola con la necesidad innata del ser humano de contar y escuchar historias. Eso s\u00ed, admito que la lectura me result\u00f3 muy densa (lo cual es comprensible por la profundidad de la obra) y, adem\u00e1s, me desagradaron los saltos cronol\u00f3gicos constantes de la narraci\u00f3n. Por eso, para m\u00ed El infinito en un junco es un libro al que se debe volver siempre, pero para disfrutar en un sinf\u00edn de fragmentos.",
+          "identity_text": "El infinito en un junco: La invenci\u00f3n de los libros en \u2026 Este es un libro sobre la historia de los libros. Un recorrido por la vida de ese fascinante artefacto que inventamos para que las palabras pudieran viajar en el espacio y en el tiempo. La historia de su fabricaci\u00f3n, de todos los tipos que hemos ensayado a lo largo de casi treinta siglos: libros de humo, de piedra, de arcilla, de juncos, de seda, de piel, de \u00e1rboles y, los \u00faltimos llegados, de pl\u00e1stico y luz. Es, adem\u00e1s, un libro de viajes. Una ruta con escalas en los campos de batalla de Alejandro y en la Villa de los Papiros bajo la erupci\u00f3n del Vesubio, en los palacios de Cleopatra y en el escenario del crimen de Hipatia, en las primeras librer\u00edas conocidas y en los talleres de copia manuscrita, en las hogueras donde ardieron c\u00f3dices prohibidos, en el gulag, en la biblioteca de Sarajevo y en el laberinto subterr\u00e1neo de Oxford en el a\u00f1o 2000. Un hilo que une a los cl\u00e1sicos con el vertiginoso mundo contempor\u00e1neo, conect\u00e1ndolos con debates actuales: Arist\u00f3fanes y los procesos judiciale"
+        },
+        {
+          "url": "https://www.audible.com.au/pd/El-infinito-en-un-junco-Infinity-in-a-Reed-Audiobook/8412202228",
+          "status": "redirect_blocked",
+          "seconds": 0.925,
+          "chars": 0,
+          "identity_bound": false,
+          "content_candidate": false,
+          "description": "",
+          "identity_text": ""
+        }
+      ],
+      "research": {
+        "logical_searches": 0,
+        "page_slots_reserved": 0,
+        "page_slots_limit": 2,
+        "external_seconds": 0.0,
+        "events": [
+          {
+            "stage": "http_request",
+            "provider": "SearXNG",
+            "status": "started",
+            "count": 0
+          },
+          {
+            "stage": "http_request",
+            "provider": "SearXNG",
+            "status": "ok",
+            "count": 20
+          }
+        ],
+        "http_requests_started": 1,
+        "pages_extracted": 0
+      },
+      "seconds": 4.074,
+      "usable_content_sources": 0
+    }
+  ],
+  "real_services": true,
+  "public_queries_only": true,
+  "knowledge_writes": false,
+  "duckduckgo_pause_simulated": true,
+  "note": "Contenido recuperado no equivale a corroboraci\u00f3n factual independiente."
+}

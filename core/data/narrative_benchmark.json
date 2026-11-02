@@ -1,0 +1,17 @@
+{
+  "cases": [
+    {"id": "sinopsis_brinkley", "mode": "live", "messages": [
+      {"text": "Dime la trama de The Unfinished Nation de Alan Brinkley"},
+      {"text": "¿Qué temas aborda este ensayo?"}
+    ]},
+    {"id": "sinopsis_papelucho", "mode": "live", "messages": [
+      {"text": "Dime la trama de Papelucho y el marciano"},
+      {"text": "Cuéntame la historia de Papelucho y el marciano"}
+    ]},
+    {"id": "sinopsis_tolkien", "mode": "live", "messages": [
+      {"text": "Dime la trama de El señor de los anillos"},
+      {"text": "¿De qué trata el libro que mencionaste anteriormente?"},
+      {"text": "¿Cuál es el conflicto principal de esta novela?"}
+    ]}
+  ]
+}

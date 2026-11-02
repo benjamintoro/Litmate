@@ -1,0 +1,25 @@
+Using existing test database for alias 'default'...
+.F.....................................F.................
+======================================================================
+FAIL: test_explicit_protagonist_role_in_description_is_used (core.test_protagonist_from_description.ProtagonistFromDescriptionTests.test_explicit_protagonist_role_in_description_is_used)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\Proyecto\Litmate\core\test_protagonist_from_description.py", line 22, in test_explicit_protagonist_role_in_description_is_used
+    self.assertIsNotNone(result)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+AssertionError: unexpectedly None
+
+======================================================================
+FAIL: test_same_title_with_a_different_author_does_not_establish_work_identity (core.test_character_quality_regression.CharacterEvidenceRegressionTests.test_same_title_with_a_different_author_does_not_establish_work_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\Proyecto\Litmate\core\test_character_quality_regression.py", line 333, in test_same_title_with_a_different_author_does_not_establish_work_identity
+    self.assertTrue(result is None or result.status != 'answered')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 57 tests in 2.538s
+
+FAILED (failures=2)
+Preserving test database for alias 'default'...

@@ -1,0 +1,384 @@
+{
+  "scope": "loopback backend after TLS termination",
+  "external_network_tested": false,
+  "checks": {
+    "chat_auth_required": true,
+    "chat_auth_required_http_status": 401,
+    "static_auth_required": true,
+    "static_auth_required_http_status": 401,
+    "admin_blocked": true,
+    "unknown_host_blocked": true,
+    "chat_html": true,
+    "frame_denied": true,
+    "csrf_cookie_present": true,
+    "csrf_secure_flag": true,
+    "hsts_present": true,
+    "javascript": true,
+    "avatar": true,
+    "csrf_enforced": true
+  },
+  "conversation": [
+    {
+      "question": "Dime de qu\u00e9 trata El mundo de Sof\u00eda",
+      "status": "answered",
+      "answer": "El mundo de Sof\u00eda es una novela que utiliza una trama novelesca para ofrecer una gu\u00eda b\u00e1sica sobre la historia de la filosof\u00eda occidental. La historia sigue a Sof\u00eda Amundsen, una joven noruega que recibe misteriosas cartas en su buz\u00f3n y se inscribe en un curso de filosof\u00eda por correspondencia dirigido por el profesor Alberto Knox. A trav\u00e9s de sus lecciones, Sof\u00eda no solo explora los grandes pensadores y conceptos filos\u00f3ficos, sino que tambi\u00e9n descubre su propia identidad mientras navega por las complejidades de la vida y las relaciones humanas.\n\nFuente: https://play.google.com/store/books/details?id=FFsj4Lp9c_AC\nhttps://es.wikipedia.org/wiki/El_mundo_de_Sof%C3%ADa\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+      "books": [
+        {
+          "id": "FFsj4Lp9c_AC",
+          "title": "El mundo de Sof\u00eda",
+          "author": "Jostein Gaarder",
+          "synopsis": "EL LIBRO QUE HA ENSE\u00d1ADO A PENSAR A TODA UNA GENERACI\u00d3N Esta extraordinaria obra de divulgaci\u00f3n que se ha convertido ya en una obra de culto aporta una coherente visi\u00f3n de conjunto sobre aquellos aspectos imprescindibles para comprender la historia de la filosof\u00eda occidental. El mundo de Sof\u00eda tiene el m\u00e9rito de haber conjugado, acertadamente, rigor y amenidad en una narraci\u00f3n donde una joven ir\u00e1 conociendo su propia",
+          "image_url": "https://books.google.com/books/content?id=FFsj4Lp9c_AC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://play.google.com/store/books/details?id=FFsj4Lp9c_AC"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+mundo+de+Sof%C3%ADa+Jostein+Gaarder&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+mundo+de+Sof%C3%ADa+Jostein+Gaarder"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 16227,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 2,
+        "verified_narrative_answer": true,
+        "narrative_synthesized": true,
+        "partial_evidence": false,
+        "work_type": "fiction",
+        "progress_metrics": {
+          "elapsed_ms": 16248.108,
+          "first_phase_emitted_ms": 94.322,
+          "model_calls_started": 2,
+          "stage_totals_ms": {
+            "conversation": 74.21,
+            "cache_lookup": 0.511,
+            "knowledge_lookup": 701.563,
+            "retrieval": 1388.15,
+            "model_inspection": 19.1,
+            "generation": 8001.19,
+            "audit": 5957.717,
+            "finalization": 21.163
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 4.984,
+              "elapsed_ms": 74.21,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 93.798,
+              "elapsed_ms": 0.511,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 185.517,
+              "elapsed_ms": 366.978,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 289.205,
+              "elapsed_ms": 44.859,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 389.592,
+              "elapsed_ms": 161.852,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 455.333,
+              "elapsed_ms": 61.354,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 618.588,
+              "elapsed_ms": 66.52,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 736.306,
+              "elapsed_ms": 1388.15,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 2207.5,
+              "elapsed_ms": 8001.19,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 2207.529,
+              "elapsed_ms": 19.092,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 10211.467,
+              "elapsed_ms": 5951.699,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 10211.485,
+              "elapsed_ms": 0.008,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 16166.464,
+              "elapsed_ms": 6.018,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 16226.937,
+              "elapsed_ms": 21.163,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 94.322
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 2207.473
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 10211.449
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 146,
+            "stage": "answer",
+            "total_ms": 7953.235,
+            "load_ms": 6.495,
+            "prompt_eval_count": 3392,
+            "prompt_eval_ms": 2138.318,
+            "elapsed_ms": 8001,
+            "eval_ms": 5691.566,
+            "status": "ok"
+          },
+          {
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 79,
+            "stage": "audit",
+            "total_ms": 5927.823,
+            "load_ms": 6.822,
+            "prompt_eval_count": 4934,
+            "prompt_eval_ms": 2762.341,
+            "elapsed_ms": 5952,
+            "eval_ms": 3035.4,
+            "status": "ok"
+          }
+        ],
+        "provider": "verified-narrative-engine"
+      },
+      "sse_done": true,
+      "seconds": 16.2833,
+      "http_timing": {
+        "first_progress_seconds": 0.121,
+        "verified_ready_seconds": 16.2369,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "Recomi\u00e9ndame otro similar",
+      "status": "answered",
+      "answer": "\u00a1Claro!\n\n1. **Thus Spoke Zarathustra** \u2014 Friedrich Nietzsche\n\nNo puedo confirmar una trama semejante; la afinidad se limita a las materias del cat\u00e1logo.",
+      "books": [
+        {
+          "id": "a9VxKgui0mEC",
+          "title": "Thus Spoke Zarathustra",
+          "author": "Friedrich Nietzsche",
+          "synopsis": "No pude preparar una traducci\u00f3n fiable de esta descripci\u00f3n.",
+          "image_url": "https://books.google.com/books/content?id=a9VxKgui0mEC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://play.google.com/store/books/details?id=a9VxKgui0mEC"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Thus+Spoke+Zarathustra+Friedrich+Nietzsche&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Thus+Spoke+Zarathustra+Friedrich+Nietzsche"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 7742,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 2,
+        "discovery_candidates": 8,
+        "verified_recommendations": 1,
+        "progress_metrics": {
+          "elapsed_ms": 7748.514,
+          "first_phase_emitted_ms": 29.686,
+          "model_calls_started": 2,
+          "stage_totals_ms": {
+            "conversation": 11.39,
+            "cache_lookup": 0.934,
+            "local_search": 76.683,
+            "retrieval": 2110.09,
+            "audit": 761.51,
+            "model_inspection": 38.619,
+            "generation": 4685.796,
+            "finalization": 6.232
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 10.87,
+              "elapsed_ms": 11.39,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 28.736,
+              "elapsed_ms": 0.934,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 69.152,
+              "elapsed_ms": 2110.09,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 73.212,
+              "elapsed_ms": 76.683,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 2251.499,
+              "elapsed_ms": 0.867,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 2252.507,
+              "elapsed_ms": 0.55,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 2254.007,
+              "elapsed_ms": 0.554,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 2273.15,
+              "elapsed_ms": 4685.796,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 2273.154,
+              "elapsed_ms": 38.607,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 6958.996,
+              "elapsed_ms": 759.539,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 6959.002,
+              "elapsed_ms": 0.012,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 7742.275,
+              "elapsed_ms": 6.232,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 29.686
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 2251.477
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 2273.135
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 6958.978
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 108,
+            "stage": "language_translate",
+            "total_ms": 4627.69,
+            "load_ms": 5.962,
+            "prompt_eval_count": 319,
+            "prompt_eval_ms": 416.786,
+            "elapsed_ms": 4686,
+            "eval_ms": 4069.858,
+            "status": "ok"
+          },
+          {
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 10,
+            "stage": "language_verify",
+            "total_ms": 746.131,
+            "load_ms": 7.882,
+            "prompt_eval_count": 367,
+            "prompt_eval_ms": 267.163,
+            "elapsed_ms": 760,
+            "eval_ms": 412.259,
+            "status": "ok"
+          }
+        ],
+        "provider": "ollama-local"
+      },
+      "sse_done": true,
+      "seconds": 7.7688,
+      "http_timing": {
+        "first_progress_seconds": 0.0812,
+        "verified_ready_seconds": 7.7375,
+        "first_verified_text_seconds": null
+      }
+    }
+  ]
+}

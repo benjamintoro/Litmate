@@ -1,0 +1,23 @@
+{
+  "benchmark_sha256": "eeba0b1867d136e086f2ff7342d5fb9f7660a81700fc28ff6c08111544e5ae90",
+  "review_type": "internal_manual_not_independently_certified",
+  "basis": "Revisión interna de pertinencia y cobertura. Los proveedores reales variaron respecto a v2; no aísla causalmente la calidad del modelo.",
+  "turns": [
+    {"case": "autoria_simple", "turn": 1, "classification": "adequate_basic_answer"},
+    {"case": "personajes_simple", "turn": 1, "classification": "partial_missing_requested_detail"},
+    {"case": "sinopsis_simple", "turn": 1, "classification": "partial_missing_requested_detail"},
+    {"case": "protagonista_simple", "turn": 1, "classification": "partial_missing_requested_detail", "note": "Novela correcta, sin nombre del protagonista."},
+    {"case": "cache_exacta", "turn": 1, "classification": "contains_unverified_extra_claims", "note": "La autoría básica es correcta, pero el párrafo generado afirma confirmación y una valoración de ensayo novelado/narrativa experimental que no queda suficientemente respaldada en lo publicado. No debe adoptarse el 4B sólo por rapidez."},
+    {"case": "cache_exacta", "turn": 2, "classification": "adequate_basic_answer", "note": "Fue una nueva investigación estructurada, no un hit de caché de la salida LLM anterior."},
+    {"case": "conocimiento_indexado", "turn": 1, "classification": "adequate_basic_answer"},
+    {"case": "recomendacion_multiturno", "turn": 1, "classification": "unavailable"},
+    {"case": "recomendacion_multiturno", "turn": 2, "classification": "clarification_without_context"},
+    {"case": "identificacion_escena", "turn": 1, "classification": "clarification_missing_evidence"},
+    {"case": "relacion_personajes", "turn": 1, "classification": "unavailable"},
+    {"case": "fuentes_contradictorias", "turn": 1, "classification": "unavailable"},
+    {"case": "cita_exacta", "turn": 1, "classification": "unavailable"},
+    {"case": "materia_general", "turn": 1, "classification": "unavailable"},
+    {"case": "conversacion_multiturno", "turn": 1, "classification": "adequate_basic_answer"},
+    {"case": "conversacion_multiturno", "turn": 2, "classification": "partial_missing_requested_detail"}
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "cases": [
+    {"id": "conversation_reportada", "mode": "live", "messages": [
+      {"text": "Hola, recomiéndame libros sobre la Segunda Guerra Mundial"},
+      {"text": "Háblame más sobre la trama de Se desataron todos los infiernos de Max Hastings"},
+      {"text": "Ahora cambiemos de tema, necesito saber los personajes del señor de los anillos"},
+      {"text": "¿Y cuáles son los antagonistas?"}
+    ]},
+    {"id": "lista_personajes", "mode": "live", "messages": [
+      {"text": "Dime los personajes principales de El Señor de los Anillos"},
+      {"text": "¿Quién es Frodo Bolsón?"},
+      {"text": "¿Qué relación tienen Frodo y Sam?"},
+      {"text": "¿Qué personajes aparecen en el libro que mencionaste anteriormente?"}
+    ]},
+    {"id": "otras_obras", "mode": "live", "messages": [
+      {"text": "¿Quién es el protagonista de Harry Potter y la piedra filosofal?"},
+      {"text": "¿Cuáles son los personajes de Papelucho y el marciano?"},
+      {"text": "Háblame más de Det"},
+      {"text": "Dime los personajes de Cien años de soledad"},
+      {"text": "¿Quiénes aparecen en Orgullo y prejuicio?"},
+      {"text": "¿Quién es el protagonista de Don Quijote de la Mancha?"}
+    ]}
+  ]
+}

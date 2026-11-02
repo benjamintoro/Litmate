@@ -1,0 +1,269 @@
+{
+  "case": {
+    "case": 6,
+    "title": "El tercer para\u00edso",
+    "author": "Cristian Alarc\u00f3n",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": true
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de El tercer para\u00edso de Cristian Alarc\u00f3n",
+      "answer": "El narrador se refugia en una caba\u00f1a a las afueras de Buenos Aires durante la pandemia para cultivar un jard\u00edn, acci\u00f3n que lo lleva a reconstruir la memoria familiar y vincularse con su abuela Alba y su madre Nadia. La historia entrelaza el cuidado de las plantas con los recuerdos del destierro desde Chile, la violencia dom\u00e9stica y la pobreza vivida por la familia durante la dictadura de Pinochet. El libro concluye con una escena funeraria que dialoga con las p\u00e9rdidas personales y colectivas, transformando el jard\u00edn en un espacio de comunidad imperfecto pero solidario.\n\nFuente: https://resumenlibro.net/el-tercer-paraiso-cristian-alarcon/",
+      "status": "answered",
+      "books": [
+        {
+          "id": "/works/OL27700960W",
+          "title": "El tercer para\u00edso",
+          "author": "Cristian Alarc\u00f3n",
+          "synopsis": "",
+          "image_url": "https://covers.openlibrary.org/b/id/12689976-M.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=El+tercer+para%C3%ADso+Cristian+Alarc%C3%B3n"
+            },
+            {
+              "label": "Open Library",
+              "url": "https://openlibrary.org/works/OL27700960W"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+tercer+para%C3%ADso+Cristian+Alarc%C3%B3n&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+tercer+para%C3%ADso+Cristian+Alarc%C3%B3n"
+            }
+          ]
+        }
+      ],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 17450,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 2,
+        "verified_narrative_answer": true,
+        "narrative_synthesized": true,
+        "partial_evidence": false,
+        "work_type": "fiction",
+        "progress_metrics": {
+          "elapsed_ms": 17463.667,
+          "first_phase_emitted_ms": 22.179,
+          "model_calls_started": 2,
+          "stage_totals_ms": {
+            "conversation": 7.442,
+            "cache_lookup": 5.671,
+            "knowledge_lookup": 613.159,
+            "retrieval": 1918.497,
+            "web_search": 847.007,
+            "extraction": 2519.907,
+            "model_inspection": 30.516,
+            "generation": 6991.054,
+            "audit": 4616.496,
+            "finalization": 13.733
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 3.041,
+              "elapsed_ms": 7.442,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 16.497,
+              "elapsed_ms": 5.671,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 34.593,
+              "elapsed_ms": 343.972,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 106.57,
+              "elapsed_ms": 37.498,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 208.17,
+              "elapsed_ms": 169.002,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 275.526,
+              "elapsed_ms": 57.447,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 443.091,
+              "elapsed_ms": 5.24,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 463.815,
+              "elapsed_ms": 1918.497,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 2384.291,
+              "elapsed_ms": 847.007,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 3231.731,
+              "elapsed_ms": 1635.154,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 4869.156,
+              "elapsed_ms": 884.753,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 5805.455,
+              "elapsed_ms": 6991.054,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 5805.468,
+              "elapsed_ms": 30.509,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 12798.236,
+              "elapsed_ms": 4614.537,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 12798.258,
+              "elapsed_ms": 0.007,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 17414.914,
+              "elapsed_ms": 1.959,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 17449.927,
+              "elapsed_ms": 13.733,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 22.179
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 5805.437
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 12798.219
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "prompt_eval_ms": 1268.001,
+            "total_ms": 6940.116,
+            "eval_ms": 5408.784,
+            "elapsed_ms": 6991,
+            "eval_count": 154,
+            "status": "ok",
+            "prompt_eval_count": 2061,
+            "stage": "answer",
+            "load_ms": 5.997,
+            "model": "qwen3.5:9b-q4_K_M"
+          },
+          {
+            "prompt_eval_ms": 1909.211,
+            "total_ms": 4599.965,
+            "eval_ms": 2572.664,
+            "elapsed_ms": 4615,
+            "eval_count": 75,
+            "status": "ok",
+            "prompt_eval_count": 3497,
+            "stage": "audit",
+            "load_ms": 6.795,
+            "model": "qwen3.5:9b-q4_K_M"
+          }
+        ],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 17.4723,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 17.4427,
+        "first_verified_text_seconds": 17.4723
+      }
+    }
+  ],
+  "seconds": 19.672,
+  "coverage_before": {
+    "works": 14470,
+    "works_with_explicit_plot": 14,
+    "works_with_development_excerpt": 10,
+    "works_with_admitted_description": 17,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 31,
+    "linked_sources": 14642,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14471,
+    "works_with_explicit_plot": 14,
+    "works_with_development_excerpt": 10,
+    "works_with_admitted_description": 17,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 31,
+    "linked_sources": 14643,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "factual_review_pending": true
+}

@@ -1,0 +1,299 @@
+[
+  {
+    "query": {
+      "action": [
+        "query"
+      ],
+      "format": [
+        "json"
+      ],
+      "generator": [
+        "search"
+      ],
+      "gsrsearch": [
+        "intitle:\"Little Women\" Louisa May Alcott"
+      ],
+      "gsrlimit": [
+        "10"
+      ],
+      "gsrnamespace": [
+        "0|104"
+      ],
+      "prop": [
+        "extracts|info|revisions|pageprops"
+      ],
+      "ppprop": [
+        "disambiguation"
+      ],
+      "rvprop": [
+        "ids"
+      ],
+      "inprop": [
+        "url"
+      ],
+      "explaintext": [
+        "1"
+      ],
+      "exintro": [
+        "1"
+      ],
+      "exchars": [
+        "1200"
+      ]
+    },
+    "pages": [
+      {
+        "title": "Las hermanas (serie de televisi\u00f3n)",
+        "extract": "Las hermanas (en hangul, \uc791\uc740 \uc544\uc528\ub4e4; RR: Jag-eun Assideul; t\u00edtulo ingl\u00e9s: Little Women) es una"
+      },
+      {
+        "title": "Little Women (pel\u00edcula de 1933)",
+        "extract": "Little Women \u2014conocida en espa\u00f1ol como Mujercitas y como Las cuatro Hermanitas\u2014 es una pel"
+      },
+      {
+        "title": "Little Women (pel\u00edcula de 2018)",
+        "extract": "Little Women, titulada en el doblaje en castellano Mujercitas, es una pel\u00edcula estadounide"
+      },
+      {
+        "title": "Mujercitas",
+        "extract": "Mujercitas (en ingl\u00e9s, Little Women o Little Women or Meg, Jo, Beth and Amy) es una novela"
+      },
+      {
+        "title": "Mujercitas (pel\u00edcula de 1949)",
+        "extract": "Mujercitas (1949) es una pel\u00edcula estadounidense dirigida por Mervyn LeRoy basada en la no"
+      },
+      {
+        "title": "Mujercitas (pel\u00edcula de 1994)",
+        "extract": "Mujercitas (Little Women, en ingl\u00e9s) es una pel\u00edcula estadounidense de coming-of-age y dra"
+      },
+      {
+        "title": "Mujercitas (pel\u00edcula de 2019)",
+        "extract": "Mujercitas\u200b\u200b (conocida originalmente como Little Women) es una pel\u00edcula dram\u00e1tica estadoun"
+      }
+    ]
+  },
+  {
+    "query": {
+      "action": [
+        "query"
+      ],
+      "format": [
+        "json"
+      ],
+      "titles": [
+        "Little Women|Little women"
+      ],
+      "redirects": [
+        "1"
+      ],
+      "prop": [
+        "extracts|info|revisions|pageprops"
+      ],
+      "ppprop": [
+        "disambiguation"
+      ],
+      "rvprop": [
+        "ids"
+      ],
+      "inprop": [
+        "url"
+      ],
+      "explaintext": [
+        "1"
+      ],
+      "exintro": [
+        "1"
+      ],
+      "exchars": [
+        "1200"
+      ]
+    },
+    "pages": [
+      {
+        "title": "Little women",
+        "extract": ""
+      },
+      {
+        "title": "Mujercitas",
+        "extract": "Mujercitas (en ingl\u00e9s, Little Women o Little Women or Meg, Jo, Beth and Amy) es una novela"
+      }
+    ]
+  },
+  {
+    "query": {
+      "action": [
+        "query"
+      ],
+      "format": [
+        "json"
+      ],
+      "pageids": [
+        "152199"
+      ],
+      "prop": [
+        "extracts|info|revisions"
+      ],
+      "rvprop": [
+        "ids"
+      ],
+      "inprop": [
+        "url"
+      ],
+      "explaintext": [
+        "1"
+      ],
+      "exsectionformat": [
+        "wiki"
+      ]
+    },
+    "pages": [
+      {
+        "title": "Mujercitas",
+        "extract": "Mujercitas (en ingl\u00e9s, Little Women o Little Women or Meg, Jo, Beth and Amy) es una novela"
+      }
+    ]
+  },
+  {
+    "query": {
+      "action": [
+        "query"
+      ],
+      "format": [
+        "json"
+      ],
+      "generator": [
+        "search"
+      ],
+      "gsrsearch": [
+        "intitle:\"Little Women\" Louisa May Alcott"
+      ],
+      "gsrlimit": [
+        "10"
+      ],
+      "gsrnamespace": [
+        "0|104"
+      ],
+      "prop": [
+        "extracts|info|revisions|pageprops"
+      ],
+      "ppprop": [
+        "disambiguation"
+      ],
+      "rvprop": [
+        "ids"
+      ],
+      "inprop": [
+        "url"
+      ],
+      "explaintext": [
+        "1"
+      ],
+      "exintro": [
+        "1"
+      ],
+      "exchars": [
+        "1200"
+      ]
+    },
+    "pages": [
+      {
+        "title": "Little Women",
+        "extract": "Little Women is a coming-of-age novel written by American novelist Louisa May Alcott, orig"
+      },
+      {
+        "title": "Little Women (1917 film)",
+        "extract": "Little Women is a 1917 British silent historical drama film directed by Alexander Butler a"
+      },
+      {
+        "title": "Little Women (1918 film)",
+        "extract": "Little Women is a lost 1918 American silent drama film directed by Harley Knoles and writt"
+      },
+      {
+        "title": "Little Women (1950 TV series)",
+        "extract": "Little Women is a British television mini-series broadcast by the BBC from 1950 to 1951 in"
+      },
+      {
+        "title": "Little Women (1958 TV series)",
+        "extract": "Little Women is a 1958 British television serial based on the 1868-69 two-volume novel of "
+      },
+      {
+        "title": "Little Women (1970 TV series)",
+        "extract": "Little Women is a BBC television series in 1970, based on the 1868-69 two-volume novel of "
+      },
+      {
+        "title": "Little Women (2017 TV series)",
+        "extract": "Little Women is a British 2017 BBC television historical drama based on the novel by Louis"
+      },
+      {
+        "title": "Little Women (disambiguation)",
+        "extract": "Little Women is an 1868\u201369 novel by Louisa May Alcott.\nLittle Women may also refer to:"
+      },
+      {
+        "title": "Little Women (opera)",
+        "extract": "Little Women (1998) is the first opera written by American composer Mark Adamo to his own "
+      },
+      {
+        "title": "Little Women (play)",
+        "extract": "Little Women is a play in four acts by Marian de Forest which was adapted from the novel o"
+      }
+    ]
+  },
+  {
+    "logical_searches": 0,
+    "page_slots_reserved": 1,
+    "page_slots_limit": 1,
+    "external_seconds": 0.0,
+    "events": [
+      {
+        "stage": "http_request",
+        "provider": "Wikipedia",
+        "status": "started",
+        "count": 0
+      },
+      {
+        "stage": "http_request",
+        "provider": "Wikipedia",
+        "status": "ok",
+        "count": 0
+      },
+      {
+        "stage": "http_request",
+        "provider": "Wikipedia",
+        "status": "started",
+        "count": 0
+      },
+      {
+        "stage": "http_request",
+        "provider": "Wikipedia",
+        "status": "ok",
+        "count": 0
+      },
+      {
+        "stage": "http_request",
+        "provider": "Wikipedia",
+        "status": "started",
+        "count": 0
+      },
+      {
+        "stage": "http_request",
+        "provider": "Wikipedia",
+        "status": "ok",
+        "count": 0
+      },
+      {
+        "stage": "http_request",
+        "provider": "Wikipedia",
+        "status": "started",
+        "count": 0
+      },
+      {
+        "stage": "http_request",
+        "provider": "Wikipedia",
+        "status": "ok",
+        "count": 0
+      }
+    ],
+    "http_requests_started": 4,
+    "pages_extracted": 0
+  }
+]

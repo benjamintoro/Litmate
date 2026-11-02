@@ -1,0 +1,223 @@
+{
+  "case": {
+    "case": 20,
+    "title": "El Se\u00f1or de los Anillos",
+    "author": "J. R. R. Tolkien",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": true
+        },
+        {
+          "table": "memory_aliases",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_aliases",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_aliases",
+          "title_match": true,
+          "full_author_match": true
+        },
+        {
+          "table": "memory_entities",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_entities",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": [
+          30017,
+          4,
+          30016
+        ]
+      }
+    },
+    "absent_at_start": false
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de El Se\u00f1or de los Anillos de J. R. R. Tolkien",
+      "answer": "Su historia se desarrolla en la Tercera Edad del Sol de la Tierra Media, un lugar ficticio poblado por hombres y otras razas antropomorfas, como los hobbits, los elfos o los enanos, as\u00ed como por muchas otras criaturas reales y fant\u00e1sticas. La novela narra el viaje del protagonista principal, Frodo Bols\u00f3n, hobbit de la Comarca, para destruir el Anillo \u00danico y la consiguiente guerra que provocar\u00e1 el enemigo para recuperarlo, ya que es la principal fuente de poder de su creador, el se\u00f1or oscuro Sauron.\n\nFuente: https://es.wikipedia.org/wiki/El_Se%C3%B1or_de_los_Anillos\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+      "status": "answered",
+      "books": [
+        {
+          "id": "1",
+          "title": "El Se\u00f1or de los Anillos",
+          "author": "J. R. R. Tolkien",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+Se%C3%B1or+de+los+Anillos+J.+R.+R.+Tolkien&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+Se%C3%B1or+de+los+Anillos+J.+R.+R.+Tolkien"
+            }
+          ]
+        }
+      ],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 521,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "partial_evidence": true,
+        "work_type": "fiction",
+        "progress_metrics": {
+          "elapsed_ms": 528.265,
+          "first_phase_emitted_ms": 24.719,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 7.583,
+            "cache_lookup": 5.997,
+            "knowledge_lookup": 439.792,
+            "audit": 5.509,
+            "finalization": 7.236
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 3.929,
+              "elapsed_ms": 7.583,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 18.711,
+              "elapsed_ms": 5.997,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 37.007,
+              "elapsed_ms": 166.413,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 37.738,
+              "elapsed_ms": 164.614,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 107.402,
+              "elapsed_ms": 56.758,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 270.551,
+              "elapsed_ms": 52.007,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 447.993,
+              "elapsed_ms": 3.839,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 498.085,
+              "elapsed_ms": 1.67,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 521.023,
+              "elapsed_ms": 7.236,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 24.719
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 447.977
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 0.537,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 0.5141,
+        "first_verified_text_seconds": 0.537
+      }
+    }
+  ],
+  "seconds": 2.777,
+  "coverage_before": {
+    "works": 14475,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14648,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14475,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14648,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "factual_review_pending": true
+}

@@ -1,0 +1,115 @@
+{
+  "position": 62,
+  "work": {
+    "author": "Sima, Rangju, active 4th century B.C.",
+    "categories": [
+      "Military art and science -- Early works to 1800"
+    ],
+    "confirmed_aliases": [],
+    "edition_id": "gutenberg:25167",
+    "isbns": [],
+    "kind": "book",
+    "language": "zh",
+    "source": "Project Gutenberg",
+    "title": "\u53f8\u99ac\u6cd5",
+    "url": "https://www.gutenberg.org/ebooks/25167",
+    "work_id": "litmate:00f487b06589fd5f40b11e6b"
+  },
+  "kind": "unknown",
+  "requirement": "summary",
+  "before": {
+    "works": 1,
+    "works_with_explicit_plot": 0,
+    "works_with_development_excerpt": 0,
+    "works_with_admitted_description": 0,
+    "characters_with_literal_roles": 0,
+    "works_with_literal_roles": 0,
+    "characters_with_membership_only": 0,
+    "works_with_explicit_protagonist": 0,
+    "explicit_protagonist_mentions": 0,
+    "relationships": 0,
+    "narrative_facts": 0,
+    "linked_sources": 1,
+    "per_work": {
+      "litmate:00f487b06589fd5f40b11e6b": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "batch": {
+    "mode": "continuous_once",
+    "scheduled": 1,
+    "llm_calls": 0,
+    "new_global_corrections": 0,
+    "mysql_references_added": 0,
+    "work_ids": [
+      "litmate:00f487b06589fd5f40b11e6b"
+    ],
+    "batch": {
+      "claimed": 1,
+      "completed": 0,
+      "deferred": 1,
+      "stored": 0,
+      "seconds": 2.609,
+      "jobs": [
+        {
+          "work_id": "litmate:00f487b06589fd5f40b11e6b",
+          "provider": "wikipedia",
+          "requirement": "summary",
+          "status": "no_verified_match",
+          "lease_current": true,
+          "seconds": 2.593,
+          "stored": 0,
+          "reused": false
+        }
+      ],
+      "llm_calls": 0,
+      "reused": 0,
+      "verification_scope": "source_policy_identity_and_requirement_coverage",
+      "independent_factual_corroboration": false
+    },
+    "stopped": null,
+    "seconds": 2.634,
+    "cpu_seconds": 0.109,
+    "process": {
+      "rss_mb": 84.84,
+      "peak_rss_mb": 123.539
+    },
+    "storage_delta_bytes": 0,
+    "revision_before": "14824",
+    "revision_after": "14824"
+  },
+  "after": {
+    "works": 1,
+    "works_with_explicit_plot": 0,
+    "works_with_development_excerpt": 0,
+    "works_with_admitted_description": 0,
+    "characters_with_literal_roles": 0,
+    "works_with_literal_roles": 0,
+    "characters_with_membership_only": 0,
+    "works_with_explicit_protagonist": 0,
+    "explicit_protagonist_mentions": 0,
+    "relationships": 0,
+    "narrative_facts": 0,
+    "linked_sources": 1,
+    "per_work": {
+      "litmate:00f487b06589fd5f40b11e6b": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_changed": false,
+  "sql_projection": "existing evidence pointers; not copied prose"
+}

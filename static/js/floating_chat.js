@@ -14,12 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const ttsIcon = document.getElementById('floating-tts-icon');
     const headerAvatar = document.getElementById('floating-header-avatar');
 
-    if (!triggerBtn || !windowEl) return;
+    if (!triggerBtn || !windowEl || !form || !input || !body || !sendBtn || !window.LitMateSafe) return;
 
-    let ttsEnabled = true;
     let isListening = false;
     let recognition = null;
-    let resetTimer = null;
+    const avatarController = LitMateSafe.createChatAvatar(headerAvatar);
 
     // Apertura y Cierre directo del Widget
     function toggleChatWindow(e) {
@@ -50,79 +49,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Control de avatar
-    function setWidgetAvatar(file) {
-        if (!headerAvatar) return;
-        headerAvatar.src = `/static/assets/img/avatar/${file}?v=${Date.now()}`;
-    }
-
-    function resetWidgetAvatar(delay = 12000) {
-        if (resetTimer) clearTimeout(resetTimer);
-        resetTimer = setTimeout(() => {
-            setWidgetAvatar("cuerpo.jpg");
-            resetTimer = null;
-        }, delay);
-    }
-
-    // TTS
-    function stopSpeaking() {
-        if ('speechSynthesis' in window) {
-            window.speechSynthesis.cancel();
-        }
-        if (ttsBtn && ttsEnabled) {
-            ttsIcon.className = 'fa-solid fa-volume-low';
-            ttsBtn.style.backgroundColor = '#3b2818';
-        }
-    }
-
-    function speakText(text) {
-        if (!ttsEnabled || !('speechSynthesis' in window)) return;
-        stopSpeaking();
-
-        const clean = text.replace(/https?:\/\/\S+/gi, '').replace(/[*#_~`\[\]()<>"]/g, '').trim();
-        if (!clean) return;
-
-        const utterance = new SpeechSynthesisUtterance(clean);
-        utterance.lang = 'es-CL';
-        utterance.pitch = 1.45;
-        utterance.rate = 1.12;
-
-        const voices = window.speechSynthesis.getVoices();
-        const preferredVoice = voices.find(v => v.lang === 'es-CL') ||
-                               voices.find(v => v.lang.startsWith('es-419')) ||
-                               voices.find(v => v.lang.startsWith('es'));
-        if (preferredVoice) utterance.voice = preferredVoice;
-
-        utterance.onstart = () => {
-            if (ttsBtn) {
-                ttsIcon.className = 'fa-solid fa-volume-high';
-                ttsBtn.style.backgroundColor = '#227D8E';
-            }
-            setWidgetAvatar("feliz.png");
-        };
-
-        utterance.onend = () => {
-            stopSpeaking();
-            resetWidgetAvatar(3000);
-        };
-
-        window.speechSynthesis.speak(utterance);
-    }
-
-    if (ttsBtn) {
-        ttsBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            ttsEnabled = !ttsEnabled;
-            if (!ttsEnabled) {
-                stopSpeaking();
-                ttsIcon.className = 'fa-solid fa-volume-xmark';
-                ttsBtn.style.backgroundColor = '#6c757d';
-            } else {
-                ttsIcon.className = 'fa-solid fa-volume-low';
-                ttsBtn.style.backgroundColor = '#3b2818';
-            }
-        });
-    }
+    function setWidgetAvatar(file) { avatarController.show(file); }
+    function resetWidgetAvatar(delay = 12000) { avatarController.resetAfter(delay); }
+    const voice = LitMateSafe.createChatVoice({ useServer: false,
+        onChange: state => {
+            if (!ttsBtn || !ttsIcon) return;
+            ttsIcon.className = state.enabled ? 'fa-solid fa-volume-high' : 'fa-solid fa-volume-xmark';
+            ttsBtn.title = state.error || (state.speaking ? 'Leyendo (clic para silenciar)' : state.enabled ? 'Voz activada (clic para silenciar)' : 'Voz silenciada (clic para activar)');
+            ttsBtn.setAttribute('aria-pressed', String(state.enabled));
+        },
+        onStart: () => avatarController.speaking(true),
+        onStop: () => avatarController.speaking(false),
+        onEnd: () => { avatarController.speaking(false); avatarController.resetAfter(5000); }
+    });
+    function stopSpeaking() { voice.stop(); }
+    function speakText(text) { return voice.speak(text); }
+    if (ttsBtn) ttsBtn.addEventListener('click', event => { event.preventDefault(); voice.toggle(); });
 
     // Micrófono
     const SpeechConstructor = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -150,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
             isListening = true;
             micBtn.classList.add('listening');
             micBtn.innerHTML = '<i class="fa-solid fa-stop"></i>';
-            setWidgetAvatar("pensativa.png");
+            avatarController.stage('search');
         };
 
         recognition.onresult = (e) => {
@@ -166,45 +108,31 @@ document.addEventListener('DOMContentLoaded', () => {
             micBtn.classList.remove('listening');
             micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i>';
         };
+        recognition.onerror = () => recognition.onend();
+    } else if (micBtn) {
+        micBtn.disabled = true;
+        micBtn.title = 'Este navegador no admite dictado de voz.';
     }
 
     // Formateo y CSRF
-    function formatMessageText(text) {
-        return text
-            .replace(/</g, "&lt;").replace(/>/g, "&gt;")
-            .replace(/\*\*(.*?)\*\*/g, '"$1"').replace(/\*(.*?)\*/g, '$1')
-            .replace(/^[ \t]*#+[ \t]*/gm, '').replace(/[\*#]/g, '')
-            .replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color: #227D8E; font-weight: 600; text-decoration: underline;">$1</a>')
-            .replace(/\n/g, '<br>');
-    }
 
-    function getCsrfToken() {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let cookie of cookies) {
-                cookie = cookie.trim();
-                if (cookie.startsWith('csrftoken=')) {
-                    cookieValue = decodeURIComponent(cookie.slice(10));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
+
+    const getCsrfToken = () => LitMateSafe.getCookie('csrftoken');
 
     // Enviar mensaje con streaming SSE
-    if (form) {
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
+    async function sendMessage(e) {
+            if (e) e.preventDefault();
             const text = input.value.trim();
-            if (!text) return;
+            if (!text || sendBtn.disabled) return;
 
             stopSpeaking();
 
             const userDiv = document.createElement('div');
             userDiv.className = 'chat-message user';
-            userDiv.innerHTML = `<p style="background: #227D8E; color: #fff; padding: 8px 12px; border-radius: 14px; margin: 0; align-self: flex-end; max-width: 85%;">${formatMessageText(text)}</p>`;
+            const userP = LitMateSafe.element('p');
+            userP.className = 'lm-chat-message-text';
+            LitMateSafe.renderMessage(userP, text);
+            userDiv.appendChild(userP);
             body.appendChild(userDiv);
 
             input.value = '';
@@ -213,76 +141,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const botDiv = document.createElement('div');
             botDiv.className = 'chat-message bot';
-            const botP = document.createElement('p');
-            botP.style.cssText = "background: #fff; border: 1px solid #e2e8f0; color: #1e293b; padding: 8px 12px; border-radius: 14px; margin: 0; align-self: flex-start; max-width: 85%;";
-            botP.innerHTML = '<span class="spinner-border spinner-border-sm text-secondary"></span>';
+            const botP = LitMateSafe.element('div', 'lm-chat-message-text');
+            botP.hidden = true;
             botDiv.appendChild(botP);
+            const status = LitMateSafe.element('div', 'lm-chat-status');
+            status.setAttribute('role', 'status');
+            status.appendChild(LitMateSafe.element('span', 'lm-chat-status-dot'));
+            const statusText = LitMateSafe.element('span', '', 'Buscando entre libros...');
+            status.appendChild(statusText);
+            botDiv.appendChild(status);
             body.appendChild(botDiv);
             body.scrollTop = body.scrollHeight;
+            const writer = LitMateSafe.createTypewriter(botP, { onPaint: () => { body.scrollTop = body.scrollHeight; } });
 
             let accumulated = '';
-            let firstToken = true;
+            let suggestedBooks = [];
+            let answerMood = '', hasText = false;
 
             try {
-                const res = await fetch('/chatbot_query/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': getCsrfToken()
-                    },
-                    body: JSON.stringify({ message: text })
+                accumulated = await LitMateSafe.queryChat(text, value => {
+                    if (!value.trim()) return;
+                    botP.hidden = false;
+                    if (!hasText) { hasText = true; avatarController.stage('writing'); statusText.textContent = 'Escribiendo...'; }
+                    writer.push(value);
+                }, metadata => {
+                    if (Array.isArray(metadata.books)) suggestedBooks = metadata.books;
+                    if (metadata.mood) answerMood = metadata.mood;
+                    if (metadata.stage) {
+                        statusText.textContent = metadata.message || ({ search: 'Buscando entre libros...', review: 'Revisando mi respuesta...', writing: 'Escribiendo...' })[metadata.stage];
+                        avatarController.stage(metadata.stage);
+                    }
                 });
 
-                if (!res.ok) throw new Error('Error de conexión');
-
-                const reader = res.body.getReader();
-                const decoder = new TextDecoder('utf-8');
-                let buffer = '';
-
-                while (true) {
-                    const { value, done } = await reader.read();
-                    if (done) break;
-
-                    buffer += decoder.decode(value, { stream: true });
-                    const events = buffer.split('\n\n');
-                    buffer = events.pop();
-
-                    for (const ev of events) {
-                        for (const line of ev.split('\n')) {
-                            const trimmed = line.trim();
-                            if (trimmed.startsWith('data: ')) {
-                                const dataStr = trimmed.slice(6).trim();
-                                if (dataStr === '[DONE]') break;
-
-                                try {
-                                    const parsed = JSON.parse(dataStr);
-                                    if (parsed.token) {
-                                        if (firstToken) {
-                                            botP.innerHTML = '';
-                                            firstToken = false;
-                                        }
-                                        accumulated += parsed.token;
-                                        botP.innerHTML = formatMessageText(accumulated);
-                                        body.scrollTop = body.scrollHeight;
-                                    }
-                                } catch (errParse) {}
-                            }
-                        }
+                writer.skip();
+                status.hidden = true;
+                LitMateSafe.renderBookCards(botDiv, suggestedBooks, {
+                    onSelect: book => {
+                        if (!input || sendBtn.disabled) return;
+                        input.value = 'Háblame de ' + book.title + ' del autor ' + book.author;
+                        return sendMessage();
                     }
-                }
-
-                setWidgetAvatar("feliz.png");
-                resetWidgetAvatar(5000);
+                });
+                body.scrollTop = body.scrollHeight;
+                avatarController.emotion(text + ' ' + accumulated, answerMood);
+                resetWidgetAvatar(15000);
                 speakText(accumulated);
 
             } catch (err) {
-                botP.innerHTML = 'Lo siento, ocurrió un error.';
+                writer.cancel();
+                status.hidden = true;
+                botP.hidden = false;
+                LitMateSafe.renderMessage(botP, err.message || 'No se pudo conectar con el asistente. Vuelve a intentar.');
                 setWidgetAvatar("sin conexion.png");
                 resetWidgetAvatar(6000);
             } finally {
                 sendBtn.disabled = false;
                 input.focus();
             }
-        });
     }
+    if (form) form.addEventListener('submit', sendMessage);
 });

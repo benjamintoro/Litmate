@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "purpose": "Alias editoriales revisados para enlazar consultas en español con originales autorizados. Sólo metadatos; no contiene texto de las obras.",
+  "license": "CC0-1.0 (redacción factual original de LitMate; los títulos y nombres no son objeto de derechos de autor)",
+  "reviewed_on": "2026-10-27",
+  "aliases": [
+    {
+      "title": "Pride and Prejudice",
+      "author": "Jane Austen",
+      "aliases": [
+        {
+          "title": "Orgullo y prejuicio",
+          "author": "Jane Austen",
+          "source_url": "https://openlibrary.org/works/OL19651512W",
+          "evidence": "Open Library registra la obra «Pride and Prejudice» de Jane Austen con el título en español «Orgullo y prejuicio» en el registro OL19651512W."
+        }
+      ]
+    },
+    {
+      "title": "Alice's Adventures in Wonderland",
+      "author": "Lewis Carroll",
+      "aliases": [
+        {
+          "title": "Alicia en el país de las maravillas",
+          "author": "Lewis Carroll",
+          "source_url": "https://openlibrary.org/works/OL24531607W",
+          "evidence": "Open Library registra la obra «Alice's Adventures in Wonderland» de Lewis Carroll con el título en español «Alicia en el país de las maravillas» en el registro OL24531607W."
+        }
+      ]
+    },
+    {
+      "title": "The Adventures of Sherlock Holmes",
+      "author": "Arthur Conan Doyle",
+      "aliases": [
+        {
+          "title": "Las aventuras de Sherlock Holmes",
+          "author": "Arthur Conan Doyle",
+          "source_url": "https://openlibrary.org/works/OL24148559W",
+          "evidence": "Open Library registra la obra «The Adventures of Sherlock Holmes» de Arthur Conan Doyle con el título en español «Las aventuras de Sherlock Holmes» en el registro OL24148559W."
+        }
+      ]
+    },
+    {
+      "title": "The Adventures of Tom Sawyer, Complete",
+      "author": "Mark Twain",
+      "aliases": [
+        {
+          "title": "Las aventuras de Tom Sawyer",
+          "author": "Mark Twain",
+          "source_url": "https://openlibrary.org/works/OL34756502W",
+          "evidence": "Open Library registra la obra «The Adventures of Tom Sawyer, Complete» de Mark Twain con el título en español «Las aventuras de Tom Sawyer» en el registro OL34756502W."
+        }
+      ]
+    },
+    {
+      "title": "The Picture of Dorian Gray",
+      "author": "Oscar Wilde",
+      "aliases": [
+        {
+          "title": "El retrato de Dorian Gray",
+          "author": "Oscar Wilde",
+          "source_url": "https://openlibrary.org/works/OL17783251W",
+          "evidence": "Open Library registra la obra «The Picture of Dorian Gray» de Oscar Wilde con el título en español «El retrato de Dorian Gray» en el registro OL17783251W."
+        }
+      ]
+    },
+    {
+      "title": "The Republic",
+      "author": "Plato",
+      "aliases": [
+        {
+          "title": "La República",
+          "author": "Plato",
+          "source_url": "https://openlibrary.org/works/OL38044568W",
+          "evidence": "Open Library registra la obra «The Republic» de Plato con el título en español «La República de Platón» en el registro OL38044568W."
+        }
+      ]
+    },
+    {
+      "title": "Treasure Island",
+      "author": "Robert Louis Stevenson",
+      "aliases": [
+        {
+          "title": "La isla del tesoro",
+          "author": "Robert Louis Stevenson",
+          "source_url": "https://openlibrary.org/works/OL26384450W",
+          "evidence": "Open Library registra la obra «Treasure Island» de Robert Louis Stevenson con el título en español «La isla del tesoro» en el registro OL26384450W."
+        }
+      ]
+    }
+  ]
+}

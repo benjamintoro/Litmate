@@ -1,0 +1,17 @@
+{
+  "tests_run": 16,
+  "failures": 2,
+  "errors": 0,
+  "seconds": 2.88387399999192,
+  "real_databases_used": false,
+  "failed_tests": [
+    {
+      "test": "test_guest_first_response_then_blocked_before_model (reader_accounts.tests.ReaderFlowTests.test_guest_first_response_then_blocked_before_model)",
+      "error": "Traceback (most recent call last):\n  File \"G:\\Proyecto\\Litmate\\reader_accounts\\tests.py\", line 56, in test_guest_first_response_then_blocked_before_model\n    self.assertIn('sin tarjeta', second.json()['response'])\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'sin tarjeta' not found in 'Has utilizado tu consulta gratuita de invitado. Para seguir conversando con LitMate, inicia sesi\u00f3n o crea una cuenta y elige tu plan. El plan gratuito no requiere tarjeta.'\n"
+    },
+    {
+      "test": "test_transport_retry_replays_without_model_or_second_unit (reader_accounts.tests.ReaderFlowTests.test_transport_retry_replays_without_model_or_second_unit)",
+      "error": "Traceback (most recent call last):\n  File \"G:\\Proyecto\\Litmate\\reader_accounts\\tests.py\", line 73, in test_transport_retry_replays_without_model_or_second_unit\n    self.assertEqual(first.collected, repeat.collected)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: b'data: {\"token\":\"Respuesta verificada\"}\\n\\ndata: [DONE]\\n\\n' != b'data: {\"token\": \"Respuesta verificada\"}\\n\\ndata: {\"books[22 chars]\\n\\n'\n"
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "cases": [
+    {
+      "id": "autoria_simple",
+      "category": "simple_autoria",
+      "mode": "live",
+      "messages": [
+        {"text": "¿Quién escribió Orgullo y prejuicio?"}
+      ]
+    },
+    {
+      "id": "personajes_simple",
+      "category": "simple_personajes",
+      "mode": "live",
+      "messages": [
+        {"text": "¿Cuáles son los personajes principales de Nana?"}
+      ]
+    },
+    {
+      "id": "sinopsis_simple",
+      "category": "simple_sinopsis",
+      "mode": "live",
+      "messages": [
+        {"text": "¿De qué trata El nombre de la rosa?"}
+      ]
+    },
+    {
+      "id": "protagonista_simple",
+      "category": "simple_protagonista",
+      "mode": "live",
+      "messages": [
+        {"text": "¿Quién es el protagonista de Los miserables?"}
+      ]
+    },
+    {
+      "id": "cache_exacta",
+      "category": "cache_exacta",
+      "mode": "live",
+      "messages": [
+        {"text": "¿Quién escribió Rayuela?"},
+        {"text": "¿Quién escribió Rayuela?"}
+      ]
+    },
+    {
+      "id": "conocimiento_indexado",
+      "category": "conocimiento_indexado",
+      "mode": "live",
+      "messages": [
+        {"text": "¿De qué trata El principito?"}
+      ]
+    },
+    {
+      "id": "recomendacion_multiturno",
+      "category": "multiturno_recomendacion",
+      "mode": "live",
+      "messages": [
+        {"text": "¿Quién escribió El túnel?"},
+        {"text": "Recomiéndame novelas parecidas."}
+      ]
+    },
+    {
+      "id": "identificacion_escena",
+      "category": "identificacion_por_escena",
+      "mode": "live",
+      "messages": [
+        {"text": "Recuerdo un libro donde una niña atraviesa un armario y encuentra otro mundo. ¿Cuál es?"}
+      ]
+    },
+    {
+      "id": "relacion_personajes",
+      "category": "relacion_personajes",
+      "mode": "live",
+      "messages": [
+        {"text": "Explica la relación entre Emma Bovary y Charles Bovary."}
+      ]
+    },
+    {
+      "id": "fuentes_contradictorias",
+      "category": "fuentes_contradictorias",
+      "mode": "live",
+      "messages": [
+        {"text": "¿En qué año se publicó El túnel? He visto fuentes que dicen 1948 y 1949."}
+      ]
+    },
+    {
+      "id": "cita_exacta",
+      "category": "cita_exacta",
+      "mode": "live",
+      "messages": [
+        {"text": "¿Qué significa «Muchos años después, frente al pelotón de fusilamiento»?"}
+      ]
+    },
+    {
+      "id": "materia_general",
+      "category": "materia_general",
+      "mode": "live",
+      "messages": [
+        {"text": "¿Qué características tiene el realismo mágico?"}
+      ]
+    },
+    {
+      "id": "conversacion_multiturno",
+      "category": "multiturno_memoria",
+      "mode": "live",
+      "messages": [
+        {"text": "¿Quién escribió El túnel?"},
+        {"text": "¿Y quién es su protagonista?"}
+      ]
+    }
+  ]
+}

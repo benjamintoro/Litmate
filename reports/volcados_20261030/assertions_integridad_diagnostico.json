@@ -1,0 +1,119 @@
+[
+  {
+    "before": {
+      "assertion_id": "eda6dffdafb4c61e0ca140c3534ee6d0672d43167c8c226528910b1a62dc00c2",
+      "work_id": "litmate:3cff7f2c2dc9a05e130a4007",
+      "source_id": "6c04e408689bc860c9bbd453e307b8d2b043a050140f9758b9dc51ef809796b6",
+      "subject": "Orgullo y prejuicio",
+      "predicate": "plot",
+      "object_value": "La novela describe poco m\u00e1s de un a\u00f1o en la vida de un peque\u00f1o grupo de j\u00f3venes en el campo cerca de Londres en el cambio de siglo (del XVIII al XIX), durante el reinado de Jorge III.\u200b En el centro de esta sociedad se encuentra la familia Bennet, con sus cinco hijas casaderas, de entre quince y veintitr\u00e9s a\u00f1os (de mayor a menor: Jane, Elizabeth, Mary, Catherine y Lydia). La se\u00f1ora Bennet ve el matrimonio como la \u00fanica esperanza para sus hijas, pues tras la muerte del se\u00f1or Bennet las j\u00f3venes quedar\u00e1n abandonadas a su suerte cuando William Collins, primo de las muchachas, herede todo debido a que la propiedad forma parte de un mayorazgo del que es beneficiario. El mayorazgo solo se transmite por linaje masculino, de manera que, al fallecimiento del padre, la madre y las hijas perder\u00e1n la mayor parte de la fortuna y el derecho a habitar la propiedad.",
+      "topic": "plot",
+      "record": "{\"evidence\":\"La novela describe poco m\u00e1s de un a\u00f1o en la vida de un peque\u00f1o grupo de j\u00f3venes en el campo cerca de Londres en el cambio de siglo (del XVIII al XIX), durante el reinado de Jorge III.\u200b En el centro de esta sociedad se encuentra la familia Bennet, con sus cinco hijas casaderas, de entre quince y veintitr\u00e9s a\u00f1os (de mayor a menor: Jane, Elizabeth, Mary, Catherine y Lydia). La se\u00f1ora Bennet ve el matrimonio como la \u00fanica esperanza para sus hijas, pues tras la muerte del se\u00f1or Bennet las j\u00f3venes quedar\u00e1n abandonadas a su suerte cuando William Collins, primo de las muchachas, herede todo debido a que la propiedad forma parte de un mayorazgo del que es beneficiario. El mayorazgo solo se transmite por linaje masculino, de manera que, al fallecimiento del padre, la madre y las hijas perder\u00e1n la mayor parte de la fortuna y el derecho a habitar la propiedad.\",\"scope\":\"partial\",\"topic\":\"plot\"}"
+    },
+    "after": null
+  },
+  {
+    "before": {
+      "assertion_id": "53361e2224c1903cac377a3bcc0eec5c77c8def30ba9d064be19d18a1dd0452d",
+      "work_id": "litmate:4b6309351b8f4c7f545228a6",
+      "source_id": "0791104615f1f010d6b1193b07d95d2310b17f7afb91e117d5916eb092dc55c9",
+      "subject": "Dune",
+      "predicate": "events",
+      "object_value": "== Argumento == === Contexto === Entre 1963 y 1964 Frank Herbert escribi\u00f3 una novela, Mundo de Dune, primera parte de una planeada tetralog\u00eda, que public\u00f3 en cap\u00edtulos en la revista de ciencia ficci\u00f3n Analog. Aunque a\u00fan no era un autor muy conocido, la novela tuvo una gran acogida entre los lectores y Herbert escribi\u00f3 su continuaci\u00f3n, El Profeta de Dune, public\u00e1ndolo en cinco entregas en la misma revista. Estos dos primeros relatos se reunieron en un solo volumen al publicarse el libro poco despu\u00e9s: Dune redujo la tetralog\u00eda inicial a una trilog\u00eda. La dedicatoria de Herbert era: La historia comienza a m\u00e1s de 10 000 a\u00f1os en el futuro, en nuestra galaxia, en un gran imperio gal\u00e1ctico de estructura feudal. El Imperio se divide en cuasi-feudos o se\u00f1or\u00edos planetarios que son controlados por familias nobles, conocidas como Las Grandes Casas, que se agrupan en un gran consejo, llamado Landsraad, y rinden tributo al Emperador Padishah Shaddam IV, de la Casa Corrino. Otra de las instituciones e",
+      "topic": "events",
+      "record": "{\"evidence\":\"== Argumento == === Contexto === Entre 1963 y 1964 Frank Herbert escribi\u00f3 una novela, Mundo de Dune, primera parte de una planeada tetralog\u00eda, que public\u00f3 en cap\u00edtulos en la revista de ciencia ficci\u00f3n Analog. Aunque a\u00fan no era un autor muy conocido, la novela tuvo una gran acogida entre los lectores y Herbert escribi\u00f3 su continuaci\u00f3n, El Profeta de Dune, public\u00e1ndolo en cinco entregas en la misma revista. Estos dos primeros relatos se reunieron en un solo volumen al publicarse el libro poco despu\u00e9s: Dune redujo la tetralog\u00eda inicial a una trilog\u00eda. La dedicatoria de Herbert era: La historia comienza a m\u00e1s de 10 000 a\u00f1os en el futuro, en nuestra galaxia, en un gran imperio gal\u00e1ctico de estructura feudal. El Imperio se divide en cuasi-feudos o se\u00f1or\u00edos planetarios que son controlados por familias nobles, conocidas como Las Grandes Casas, que se agrupan en un gran consejo, llamado Landsraad, y rinden tributo al Emperador Padishah Shaddam IV, de la Casa Corrino. Otra de las instituciones e\",\"scope\":\"partial\",\"subject\":\"Dune\",\"topic\":\"events\"}"
+    },
+    "after": null
+  },
+  {
+    "before": {
+      "assertion_id": "6f67417e7e5c425dd06671a3e19cd59c6aff4adc5a2581c03a1321ec0d30c302",
+      "work_id": "litmate:4b6309351b8f4c7f545228a6",
+      "source_id": "0791104615f1f010d6b1193b07d95d2310b17f7afb91e117d5916eb092dc55c9",
+      "subject": "Dune",
+      "predicate": "plot",
+      "object_value": "=== Contexto === Entre 1963 y 1964 Frank Herbert escribi\u00f3 una novela, Mundo de Dune, primera parte de una planeada tetralog\u00eda, que public\u00f3 en cap\u00edtulos en la revista de ciencia ficci\u00f3n Analog. Aunque a\u00fan no era un autor muy conocido, la novela tuvo una gran acogida entre los lectores y Herbert escribi\u00f3 su continuaci\u00f3n, El Profeta de Dune, public\u00e1ndolo en cinco entregas en la misma revista. Estos dos primeros relatos se reunieron en un solo volumen al publicarse el libro poco despu\u00e9s: Dune redujo la tetralog\u00eda inicial a una trilog\u00eda. La dedicatoria de Herbert era: La historia comienza a m\u00e1s de 10 000 a\u00f1os en el futuro, en nuestra galaxia, en un gran imperio gal\u00e1ctico de estructura feudal.",
+      "topic": "plot",
+      "record": "{\"evidence\":\"=== Contexto === Entre 1963 y 1964 Frank Herbert escribi\u00f3 una novela, Mundo de Dune, primera parte de una planeada tetralog\u00eda, que public\u00f3 en cap\u00edtulos en la revista de ciencia ficci\u00f3n Analog. Aunque a\u00fan no era un autor muy conocido, la novela tuvo una gran acogida entre los lectores y Herbert escribi\u00f3 su continuaci\u00f3n, El Profeta de Dune, public\u00e1ndolo en cinco entregas en la misma revista. Estos dos primeros relatos se reunieron en un solo volumen al publicarse el libro poco despu\u00e9s: Dune redujo la tetralog\u00eda inicial a una trilog\u00eda. La dedicatoria de Herbert era: La historia comienza a m\u00e1s de 10 000 a\u00f1os en el futuro, en nuestra galaxia, en un gran imperio gal\u00e1ctico de estructura feudal.\",\"scope\":\"partial\",\"topic\":\"plot\"}"
+    },
+    "after": null
+  },
+  {
+    "before": {
+      "assertion_id": "52c70064086c724ef027441d7dda4748566caac79a9ebc65c115070a535e1cff",
+      "work_id": "litmate:eb690907d6b78d319c8d7a26",
+      "source_id": "72fcea10709211cf93855a214ef08264ee6fa84cf4dc5c2dbf18e7f2511e1da7",
+      "subject": "Rayuela",
+      "predicate": "plot",
+      "object_value": "Contar el argumento de Rayuela de una manera lineal es, con toda seguridad, un reduccionismo que aleja al lector del sentido de la obra, pues excluye el vasto universo psicol\u00f3gico de los personajes y las complejas relaciones de estos con temas como el amor, la muerte, los celos y el arte, entre otros. Teniendo esto en consideraci\u00f3n, a continuaci\u00f3n se presenta un resumen del argumento de la obra, el cual se divide en tres partes: === Primera parte: \u00abDel lado de all\u00e1\u00bb === La historia se desarrolla en Par\u00eds (Francia), donde Horacio Oliveira, el protagonista, vaga por los puentes de la ciudad en busca de su amante, una mujer uruguaya de nombre Luc\u00eda (m\u00e1s conocida a lo largo de la novela como la Maga). La relaci\u00f3n de ambos es apasionada pero asim\u00e9trica: la Maga, de temperamento pasional, est\u00e1 enamorada de Horacio, m\u00e1s anal\u00edtico y fr\u00edo, mientras que \u00e9l parece no querer involucrarse emocionalmente con ella.",
+      "topic": "plot",
+      "record": "{\"evidence\":\"Contar el argumento de Rayuela de una manera lineal es, con toda seguridad, un reduccionismo que aleja al lector del sentido de la obra, pues excluye el vasto universo psicol\u00f3gico de los personajes y las complejas relaciones de estos con temas como el amor, la muerte, los celos y el arte, entre otros. Teniendo esto en consideraci\u00f3n, a continuaci\u00f3n se presenta un resumen del argumento de la obra, el cual se divide en tres partes: === Primera parte: \u00abDel lado de all\u00e1\u00bb === La historia se desarrolla en Par\u00eds (Francia), donde Horacio Oliveira, el protagonista, vaga por los puentes de la ciudad en busca de su amante, una mujer uruguaya de nombre Luc\u00eda (m\u00e1s conocida a lo largo de la novela como la Maga). La relaci\u00f3n de ambos es apasionada pero asim\u00e9trica: la Maga, de temperamento pasional, est\u00e1 enamorada de Horacio, m\u00e1s anal\u00edtico y fr\u00edo, mientras que \u00e9l parece no querer involucrarse emocionalmente con ella.\",\"scope\":\"partial\",\"topic\":\"plot\"}"
+    },
+    "after": null
+  },
+  {
+    "before": {
+      "assertion_id": "97bce62299cbc1d1f90c79e22914c1db766a1133c7c090c50f6399ddf1a6ccb7",
+      "work_id": "litmate:cf86a03659678c1f89a26583",
+      "source_id": "1d9725904b2fc3f4aab19e0f51b647ceb59f61427419edd9db30c272bfc5a088",
+      "subject": "Emma",
+      "predicate": "plot",
+      "object_value": "Emma Woodhouse es una joven en la Inglaterra de la Regencia. Vive con su padre, un hipocondr\u00edaco caracterizado principalmente por su excesiva preocupaci\u00f3n por la salud y el bienestar de aquellos a los que ama. La se\u00f1orita Woodhouse est\u00e1 empe\u00f1ada en hacer de casamentera de sus amistades y relaciones. Pero al ocuparse de los asuntos de sus amigas se olvida de atender sus propios sentimientos. El amigo de Emma y la \u00fanica persona que la critica es el caballeroso se\u00f1or Knightley, su \"vecino\" y cu\u00f1ado (hermano del marido de su hermana), diecis\u00e9is a\u00f1os mayor que ella. Cuando su institutriz, la se\u00f1orita Taylor, que era pr\u00e1cticamente su amiga y confidente, decide casarse, Emma se queda sola ante sus propios sentimientos. Emma, pagada de s\u00ed misma, cree que el matrimonio se debe a ella, por haber sido quien present\u00f3 a la se\u00f1orita Taylor su futuro marido, el se\u00f1or Weston.",
+      "topic": "plot",
+      "record": "{\"evidence\":\"Emma Woodhouse es una joven en la Inglaterra de la Regencia. Vive con su padre, un hipocondr\u00edaco caracterizado principalmente por su excesiva preocupaci\u00f3n por la salud y el bienestar de aquellos a los que ama. La se\u00f1orita Woodhouse est\u00e1 empe\u00f1ada en hacer de casamentera de sus amistades y relaciones. Pero al ocuparse de los asuntos de sus amigas se olvida de atender sus propios sentimientos. El amigo de Emma y la \u00fanica persona que la critica es el caballeroso se\u00f1or Knightley, su \\\"vecino\\\" y cu\u00f1ado (hermano del marido de su hermana), diecis\u00e9is a\u00f1os mayor que ella. Cuando su institutriz, la se\u00f1orita Taylor, que era pr\u00e1cticamente su amiga y confidente, decide casarse, Emma se queda sola ante sus propios sentimientos. Emma, pagada de s\u00ed misma, cree que el matrimonio se debe a ella, por haber sido quien present\u00f3 a la se\u00f1orita Taylor su futuro marido, el se\u00f1or Weston.\",\"scope\":\"partial\",\"topic\":\"plot\"}"
+    },
+    "after": null
+  },
+  {
+    "before": {
+      "assertion_id": "d7ecd24f5799f97767cdf49c23eea3b8058bc5ff7a33439138dc05571e9c6ae5",
+      "work_id": "litmate:dbf1b649da3901c4fabe7152",
+      "source_id": "7d869e57bfbd48a78455b8419365e1a34cdd696f03b07995aa8ee39e4df38588",
+      "subject": "Frankenstein",
+      "predicate": "plot",
+      "object_value": "La novela narra la historia de V\u00edctor Frankenstein, un estudiante de filosof\u00eda de la naturaleza de la Universidad de Ingolstadt que consigue dar vida a un ser de apariencia humana pero de dos metros y medio de altura y aspecto repulsivo. V\u00edctor Frankenstein comprende en ese momento el horror que ha creado, rechaza con espanto el resultado de su experimento y huye de su laboratorio. V\u00edctor decide ir a la monta\u00f1a para recuperar su deca\u00eddo \u00e1nimo. Decidido finalmente a terminar con su creaci\u00f3n, V\u00edctor persigue a la criatura hasta el conf\u00edn del mundo, camino al Polo Norte.",
+      "topic": "plot",
+      "record": "{\"evidence\":\"La novela narra la historia de V\u00edctor Frankenstein, un estudiante de filosof\u00eda de la naturaleza de la Universidad de Ingolstadt que consigue dar vida a un ser de apariencia humana pero de dos metros y medio de altura y aspecto repulsivo. V\u00edctor Frankenstein comprende en ese momento el horror que ha creado, rechaza con espanto el resultado de su experimento y huye de su laboratorio. V\u00edctor decide ir a la monta\u00f1a para recuperar su deca\u00eddo \u00e1nimo. Decidido finalmente a terminar con su creaci\u00f3n, V\u00edctor persigue a la criatura hasta el conf\u00edn del mundo, camino al Polo Norte.\",\"scope\":\"partial\",\"topic\":\"plot\"}"
+    },
+    "after": null
+  },
+  {
+    "before": {
+      "assertion_id": "b3042583a65c7bdf3815b8100f4d283b17225bc0a7fbd6d8d1a0825fb381130a",
+      "work_id": "litmate:71db6dd229e48489ec616c73",
+      "source_id": "794d045e4cee6c1ecb0a31cf84b909e02052cccc3b7c5e29d73cb7cf851e0171",
+      "subject": "Siddhartha",
+      "predicate": "plot",
+      "object_value": "La novela relata la vida del hijo de un brahman (sacerdote), Siddharta, un joven hind\u00fa que busca su camino. La extraordinaria maestr\u00eda de Hesse se pone en descubierto en los cap\u00edtulos relacionados con Kamala, a la que jam\u00e1s denomina con un apelativo de connotaci\u00f3n negativa, al que dar\u00eda lugar el oficio liviano y \u00abdesprejuiciado\u00bb al que la mujer vive entregada. Despu\u00e9s, de 20 a\u00f1os pasados con Kamala, en la vida y en su lecho, llega el hast\u00edo; se siente cansado de esa existencia que transcurre en la disipaci\u00f3n y el olvido, comprende que en la unilateralizaci\u00f3n de su experiencia cotidiana y sensual, se ha equivocado. Siddhartha, a partir de ahora, ha reencontrado una vez m\u00e1s, un motivo para vivir y buscar una renovada senda.",
+      "topic": "plot",
+      "record": "{\"evidence\":\"La novela relata la vida del hijo de un brahman (sacerdote), Siddharta, un joven hind\u00fa que busca su camino. La extraordinaria maestr\u00eda de Hesse se pone en descubierto en los cap\u00edtulos relacionados con Kamala, a la que jam\u00e1s denomina con un apelativo de connotaci\u00f3n negativa, al que dar\u00eda lugar el oficio liviano y \u00abdesprejuiciado\u00bb al que la mujer vive entregada. Despu\u00e9s, de 20 a\u00f1os pasados con Kamala, en la vida y en su lecho, llega el hast\u00edo; se siente cansado de esa existencia que transcurre en la disipaci\u00f3n y el olvido, comprende que en la unilateralizaci\u00f3n de su experiencia cotidiana y sensual, se ha equivocado. Siddhartha, a partir de ahora, ha reencontrado una vez m\u00e1s, un motivo para vivir y buscar una renovada senda.\",\"scope\":\"partial\",\"topic\":\"plot\"}"
+    },
+    "after": null
+  },
+  {
+    "before": {
+      "assertion_id": "c73a499b2504b968fee74b9bca68a5c626e52330bfa129853a93b885c2d59449",
+      "work_id": "litmate:46dfb046114b9bb495766e91",
+      "source_id": "e7ca41835acf4972690d9ae08a5826b9c293d82a15fb6970b9d549c8830e6a1e",
+      "subject": "Dr\u00e1cula",
+      "predicate": "events",
+      "object_value": "== Argumento == La novela comienza con Jonathan Harker, un joven abogado londinense comprometido con Wilhemina Murray (Mina), el cual se encuentra en la ciudad de Bistritz como parte de un viaje de negocios, que continuar\u00e1 a trav\u00e9s del desfiladero del Borgo hasta el remoto castillo de su cliente, el conde Dr\u00e1cula, en una de las regiones m\u00e1s lejanas de la Rumania de la \u00e9poca, los montes C\u00e1rpatos de Transilvania, para cerrar unas ventas con \u00e9l. D\u00edas m\u00e1s tarde, unas noticias publicadas en el peri\u00f3dico de la ciudad hablan de una \"hermosa se\u00f1ora de sangre\" que muerde a los ni\u00f1os peque\u00f1os. La novela, publicada en mayo de 1897 (Westminster, Archibald Constable and Company), despliega erudici\u00f3n sobre vampirismo. Lograr obediencia de seres repulsivos, como las ratas, moscas, ara\u00f1as y los murci\u00e9lagos, pero tambi\u00e9n de los lobos, los dingos y los zorros.",
+      "topic": "events",
+      "record": "{\"evidence\":\"== Argumento == La novela comienza con Jonathan Harker, un joven abogado londinense comprometido con Wilhemina Murray (Mina), el cual se encuentra en la ciudad de Bistritz como parte de un viaje de negocios, que continuar\u00e1 a trav\u00e9s del desfiladero del Borgo hasta el remoto castillo de su cliente, el conde Dr\u00e1cula, en una de las regiones m\u00e1s lejanas de la Rumania de la \u00e9poca, los montes C\u00e1rpatos de Transilvania, para cerrar unas ventas con \u00e9l. D\u00edas m\u00e1s tarde, unas noticias publicadas en el peri\u00f3dico de la ciudad hablan de una \\\"hermosa se\u00f1ora de sangre\\\" que muerde a los ni\u00f1os peque\u00f1os. La novela, publicada en mayo de 1897 (Westminster, Archibald Constable and Company), despliega erudici\u00f3n sobre vampirismo. Lograr obediencia de seres repulsivos, como las ratas, moscas, ara\u00f1as y los murci\u00e9lagos, pero tambi\u00e9n de los lobos, los dingos y los zorros.\",\"scope\":\"partial\",\"subject\":\"Dr\u00e1cula\",\"topic\":\"events\"}"
+    },
+    "after": null
+  },
+  {
+    "before": {
+      "assertion_id": "2209a89152fd156e4bde1a502f329f8e63ac762c8830c0f5f0fa5d4d74bf8b9c",
+      "work_id": "litmate:46dfb046114b9bb495766e91",
+      "source_id": "e7ca41835acf4972690d9ae08a5826b9c293d82a15fb6970b9d549c8830e6a1e",
+      "subject": "Dracula",
+      "predicate": "plot",
+      "object_value": "La novela comienza con Jonathan Harker, un joven abogado londinense comprometido con Wilhemina Murray (Mina), el cual se encuentra en la ciudad de Bistritz como parte de un viaje de negocios, que continuar\u00e1 a trav\u00e9s del desfiladero del Borgo hasta el remoto castillo de su cliente, el conde Dr\u00e1cula, en una de las regiones m\u00e1s lejanas de la Rumania de la \u00e9poca, los montes C\u00e1rpatos de Transilvania, para cerrar unas ventas con \u00e9l. D\u00edas m\u00e1s tarde, unas noticias publicadas en el peri\u00f3dico de la ciudad hablan de una \"hermosa se\u00f1ora de sangre\" que muerde a los ni\u00f1os peque\u00f1os. La novela, publicada en mayo de 1897 (Westminster, Archibald Constable and Company), despliega erudici\u00f3n sobre vampirismo. Lograr obediencia de seres repulsivos, como las ratas, moscas, ara\u00f1as y los murci\u00e9lagos, pero tambi\u00e9n de los lobos, los dingos y los zorros.",
+      "topic": "plot",
+      "record": "{\"evidence\":\"La novela comienza con Jonathan Harker, un joven abogado londinense comprometido con Wilhemina Murray (Mina), el cual se encuentra en la ciudad de Bistritz como parte de un viaje de negocios, que continuar\u00e1 a trav\u00e9s del desfiladero del Borgo hasta el remoto castillo de su cliente, el conde Dr\u00e1cula, en una de las regiones m\u00e1s lejanas de la Rumania de la \u00e9poca, los montes C\u00e1rpatos de Transilvania, para cerrar unas ventas con \u00e9l. D\u00edas m\u00e1s tarde, unas noticias publicadas en el peri\u00f3dico de la ciudad hablan de una \\\"hermosa se\u00f1ora de sangre\\\" que muerde a los ni\u00f1os peque\u00f1os. La novela, publicada en mayo de 1897 (Westminster, Archibald Constable and Company), despliega erudici\u00f3n sobre vampirismo. Lograr obediencia de seres repulsivos, como las ratas, moscas, ara\u00f1as y los murci\u00e9lagos, pero tambi\u00e9n de los lobos, los dingos y los zorros.\",\"scope\":\"partial\",\"topic\":\"plot\"}"
+    },
+    "after": null
+  }
+]

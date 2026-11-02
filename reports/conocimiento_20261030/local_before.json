@@ -1,0 +1,534 @@
+[
+  {
+    "passed": false,
+    "question": "Dime los personajes de Little Women de Louisa May Alcott",
+    "answer": "No pude confirmar ese dato sobre los personajes de **Little Women de Louisa May Alcott** con las fuentes disponibles. \u00bfTienes alg\u00fan pasaje o detalle que podamos comprobar?",
+    "status": "unavailable",
+    "not_in_legacy_catalog": null,
+    "sse_done": true,
+    "seconds": 0.4856,
+    "cards": [],
+    "diagnostics": {
+      "elapsed_ms": 456,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 0,
+      "progress_metrics": {
+        "elapsed_ms": 474.511,
+        "first_phase_emitted_ms": 57.577,
+        "model_calls_started": 0,
+        "stage_totals_ms": {
+          "conversation": 22.189,
+          "cache_lookup": 0.621,
+          "knowledge_lookup": 409.151,
+          "finalization": 18.659
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 13.799,
+            "elapsed_ms": 22.189,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 56.943,
+            "elapsed_ms": 0.621,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 77.89,
+            "elapsed_ms": 316.522,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 226.276,
+            "elapsed_ms": 92.629,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 455.845,
+            "elapsed_ms": 18.659,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 57.577
+          }
+        ]
+      },
+      "stage_timings": [],
+      "external_research": {
+        "external_seconds": 0.0,
+        "page_slots_reserved": 0,
+        "http_requests_started": 0,
+        "logical_searches": 0,
+        "pages_extracted": 0
+      },
+      "provider": "verified-character-evidence"
+    },
+    "reader_data_written": false,
+    "sources": [],
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": {
+          "task": "characters",
+          "focus": "all",
+          "title": "Little Women de Louisa May Alcott",
+          "targets": [],
+          "names": [],
+          "ambiguous": false,
+          "object_name": "",
+          "author_hint": ""
+        }
+      },
+      {
+        "stage": "character_binding",
+        "sources": []
+      },
+      {
+        "stage": "character_binding",
+        "sources": []
+      },
+      {
+        "stage": "characters",
+        "diagnostics": {
+          "character_trace": [],
+          "character_failure": "insufficient_specific_evidence",
+          "model_calls": 0,
+          "external_research": {
+            "logical_searches": 0,
+            "page_slots_reserved": 0,
+            "page_slots_limit": 3,
+            "external_seconds": 0.0,
+            "events": [],
+            "http_requests_started": 0,
+            "pages_extracted": 0
+          },
+          "progress_metrics": {
+            "stage_timings": [
+              {
+                "stage": "conversation",
+                "started_ms": 13.799,
+                "elapsed_ms": 22.189,
+                "status": "ok"
+              },
+              {
+                "stage": "cache_lookup",
+                "started_ms": 56.943,
+                "elapsed_ms": 0.621,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 77.89,
+                "elapsed_ms": 316.522,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 226.276,
+                "elapsed_ms": 92.629,
+                "status": "ok"
+              }
+            ],
+            "stage_totals_ms": {
+              "conversation": 22.189,
+              "cache_lookup": 0.621,
+              "knowledge_lookup": 409.151
+            },
+            "model_calls_started": 0,
+            "progress_events": [
+              {
+                "stage": "search",
+                "elapsed_ms": 57.577
+              }
+            ],
+            "elapsed_ms": 439.022,
+            "first_phase_emitted_ms": 57.577
+          },
+          "language_presentation": {
+            "target": "es",
+            "original_text": "No pude confirmar ese dato sobre los personajes de **Little Women de Louisa May Alcott** con las fuentes disponibles. \u00bfTienes alg\u00fan pasaje o detalle que podamos comprobar?",
+            "translated_fields": 0,
+            "cache_hits": 0,
+            "untranslated_fields": [],
+            "card_excerpt_from_audited_response": false,
+            "audit_applies_to_original": true,
+            "cards": []
+          },
+          "stage_timings": [],
+          "elapsed_ms": 439,
+          "chat_budget_seconds": 36.0
+        },
+        "sources": []
+      }
+    ],
+    "duckduckgo_paused_control": false,
+    "content_manually_reviewed": false,
+    "mysql_row_counts": {
+      "auth_group": 0,
+      "auth_group_permissions": 0,
+      "auth_permission": 152,
+      "auth_user": 179,
+      "auth_user_groups": 0,
+      "auth_user_user_permissions": 0,
+      "core_asistenteia": 1,
+      "core_autor": 31,
+      "core_clickconversion": 185,
+      "core_conversacionia": 50,
+      "core_editorial": 34,
+      "core_elementolistalectura": 2,
+      "core_estadolectura": 451,
+      "core_eventoanalitica": 384,
+      "core_genero": 12,
+      "core_historialchatbot": 5,
+      "core_historialpreciolibro": 223,
+      "core_kbname": 14166,
+      "core_kbprojection": 8,
+      "core_kbrecord": 13518,
+      "core_kbrelation": 2598,
+      "core_kbversion": 13518,
+      "core_libro": 55,
+      "core_libro_generos": 54,
+      "core_librofavorito": 231,
+      "core_listalectura": 2,
+      "core_mensajecontacto": 3,
+      "core_mensajeia": 190,
+      "core_perfilusuario": 158,
+      "core_preciolibrotienda": 117,
+      "core_preguntafrecuente": 0,
+      "core_recomendacion": 0,
+      "core_recomendacionialog": 0,
+      "core_resena": 116,
+      "django_admin_log": 0,
+      "django_content_type": 38,
+      "django_migrations": 27,
+      "django_session": 88,
+      "suscripciones_historialpago": 42,
+      "suscripciones_plansuscripcion": 3,
+      "suscripciones_suscripcionusuario": 157
+    },
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  },
+  {
+    "passed": false,
+    "question": "Dime la trama de The Secret Garden de Frances Hodgson Burnett",
+    "answer": "**The Secret Garden**\n\nActualmente no tengo la informaci\u00f3n de este libro :( Si me indicas el autor o la edici\u00f3n, puedo intentar identificarlo mejor.",
+    "status": "unavailable",
+    "not_in_legacy_catalog": null,
+    "sse_done": true,
+    "seconds": 0.7838,
+    "cards": [],
+    "diagnostics": {
+      "elapsed_ms": 730,
+      "chat_budget_seconds": 36.0,
+      "model_calls": 0,
+      "work_type": "fiction",
+      "narrative_failure": "insufficient_content",
+      "progress_metrics": {
+        "elapsed_ms": 773.304,
+        "first_phase_emitted_ms": 29.461,
+        "model_calls_started": 0,
+        "stage_totals_ms": {
+          "conversation": 1.158,
+          "cache_lookup": 1.54,
+          "knowledge_lookup": 879.09,
+          "retrieval": 0.021,
+          "finalization": 43.748
+        },
+        "stage_timings": [
+          {
+            "stage": "conversation",
+            "started_ms": 9.751,
+            "elapsed_ms": 1.158,
+            "status": "ok"
+          },
+          {
+            "stage": "cache_lookup",
+            "started_ms": 27.902,
+            "elapsed_ms": 1.54,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 45.054,
+            "elapsed_ms": 459.689,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 151.66,
+            "elapsed_ms": 54.747,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 285.29,
+            "elapsed_ms": 218.36,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 373.427,
+            "elapsed_ms": 73.657,
+            "status": "ok"
+          },
+          {
+            "stage": "knowledge_lookup",
+            "started_ms": 521.612,
+            "elapsed_ms": 72.637,
+            "status": "ok"
+          },
+          {
+            "stage": "retrieval",
+            "started_ms": 694.381,
+            "elapsed_ms": 0.021,
+            "status": "ok"
+          },
+          {
+            "stage": "finalization",
+            "started_ms": 729.55,
+            "elapsed_ms": 43.748,
+            "status": "ok"
+          }
+        ],
+        "progress_events": [
+          {
+            "stage": "search",
+            "elapsed_ms": 29.461
+          }
+        ]
+      },
+      "stage_timings": [],
+      "provider": "verified-narrative-engine"
+    },
+    "reader_data_written": false,
+    "sources": [],
+    "narrative_observations": [
+      {
+        "stage": "character_request",
+        "request": null
+      },
+      {
+        "stage": "retrieval",
+        "sources": [
+          {
+            "id": 1,
+            "title": "The Secret Garden",
+            "author": "Frances Hodgson Burnett",
+            "description": "The Secret Garden, de Frances Hodgson Burnett. Temas del cat\u00e1logo: Orphans -- Juvenile fiction, People with disabilities -- Juvenile fiction, Gardens -- Juvenile fiction, Yorkshire (England) -- Juvenile fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "sqlkb:08d2b5331d2b89759e69875baeede00bc0bb28b13005f7e399588c90dc79e3fc",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/113",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "",
+            "license": "CC0-1.0",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "synopsis": "",
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Orphans -- Juvenile fiction",
+              "People with disabilities -- Juvenile fiction",
+              "Gardens -- Juvenile fiction",
+              "Yorkshire (England) -- Juvenile fiction"
+            ]
+          }
+        ]
+      },
+      {
+        "request": {
+          "task": "summary",
+          "title": "The Secret Garden",
+          "targets": [],
+          "author_hint": "Frances Hodgson Burnett",
+          "format": "",
+          "ambiguous": false
+        },
+        "diagnostics": {
+          "narrative_failure": "insufficient_content",
+          "model_calls": 0,
+          "work_type": "fiction",
+          "narrative_trace": [
+            {
+              "stage": "bibliographic",
+              "sources": 18,
+              "bound": 1,
+              "content": 0,
+              "providers": [
+                "Open Library",
+                "Project Gutenberg"
+              ]
+            }
+          ],
+          "progress_metrics": {
+            "stage_timings": [
+              {
+                "stage": "conversation",
+                "started_ms": 9.751,
+                "elapsed_ms": 1.158,
+                "status": "ok"
+              },
+              {
+                "stage": "cache_lookup",
+                "started_ms": 27.902,
+                "elapsed_ms": 1.54,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 45.054,
+                "elapsed_ms": 459.689,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 151.66,
+                "elapsed_ms": 54.747,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 285.29,
+                "elapsed_ms": 218.36,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 373.427,
+                "elapsed_ms": 73.657,
+                "status": "ok"
+              },
+              {
+                "stage": "knowledge_lookup",
+                "started_ms": 521.612,
+                "elapsed_ms": 72.637,
+                "status": "ok"
+              },
+              {
+                "stage": "retrieval",
+                "started_ms": 694.381,
+                "elapsed_ms": 0.021,
+                "status": "ok"
+              }
+            ],
+            "stage_totals_ms": {
+              "conversation": 1.158,
+              "cache_lookup": 1.54,
+              "knowledge_lookup": 879.09,
+              "retrieval": 0.021
+            },
+            "model_calls_started": 0,
+            "progress_events": [
+              {
+                "stage": "search",
+                "elapsed_ms": 29.461
+              }
+            ],
+            "elapsed_ms": 709.463,
+            "first_phase_emitted_ms": 29.461
+          },
+          "language_presentation": {
+            "target": "es",
+            "original_text": "**The Secret Garden**\n\nActualmente no tengo la informaci\u00f3n de este libro :( Si me indicas el autor o la edici\u00f3n, puedo intentar identificarlo mejor.",
+            "translated_fields": 0,
+            "cache_hits": 0,
+            "untranslated_fields": [],
+            "card_excerpt_from_audited_response": false,
+            "audit_applies_to_original": true,
+            "cards": []
+          },
+          "stage_timings": [],
+          "elapsed_ms": 710,
+          "chat_budget_seconds": 36.0
+        },
+        "sources": [
+          {
+            "id": 1,
+            "title": "The Secret Garden",
+            "author": "Frances Hodgson Burnett",
+            "description": "The Secret Garden, de Frances Hodgson Burnett. Temas del cat\u00e1logo: Orphans -- Juvenile fiction, People with disabilities -- Juvenile fiction, Gardens -- Juvenile fiction, Yorkshire (England) -- Juvenile fiction",
+            "source": "Project Gutenberg",
+            "year": "",
+            "book_id": "sqlkb:08d2b5331d2b89759e69875baeede00bc0bb28b13005f7e399588c90dc79e3fc",
+            "kind": "book",
+            "url": "https://www.gutenberg.org/ebooks/113",
+            "locator": "",
+            "read_mode": "metadatos del cat\u00e1logo; no sinopsis ni texto de la obra",
+            "retrieved_at": "",
+            "license": "CC0-1.0",
+            "policy": "gutenberg-catalog-public-domain-v1",
+            "memory_verified": true,
+            "synopsis": "",
+            "language": "en",
+            "isbns": [],
+            "categories": [
+              "Orphans -- Juvenile fiction",
+              "People with disabilities -- Juvenile fiction",
+              "Gardens -- Juvenile fiction",
+              "Yorkshire (England) -- Juvenile fiction"
+            ]
+          }
+        ]
+      }
+    ],
+    "duckduckgo_paused_control": false,
+    "content_manually_reviewed": false,
+    "mysql_row_counts": {
+      "auth_group": 0,
+      "auth_group_permissions": 0,
+      "auth_permission": 152,
+      "auth_user": 179,
+      "auth_user_groups": 0,
+      "auth_user_user_permissions": 0,
+      "core_asistenteia": 1,
+      "core_autor": 31,
+      "core_clickconversion": 185,
+      "core_conversacionia": 50,
+      "core_editorial": 34,
+      "core_elementolistalectura": 2,
+      "core_estadolectura": 451,
+      "core_eventoanalitica": 384,
+      "core_genero": 12,
+      "core_historialchatbot": 5,
+      "core_historialpreciolibro": 223,
+      "core_kbname": 14166,
+      "core_kbprojection": 8,
+      "core_kbrecord": 13518,
+      "core_kbrelation": 2598,
+      "core_kbversion": 13518,
+      "core_libro": 55,
+      "core_libro_generos": 54,
+      "core_librofavorito": 231,
+      "core_listalectura": 2,
+      "core_mensajecontacto": 3,
+      "core_mensajeia": 190,
+      "core_perfilusuario": 158,
+      "core_preciolibrotienda": 117,
+      "core_preguntafrecuente": 0,
+      "core_recomendacion": 0,
+      "core_recomendacionialog": 0,
+      "core_resena": 116,
+      "django_admin_log": 0,
+      "django_content_type": 38,
+      "django_migrations": 27,
+      "django_session": 88,
+      "suscripciones_historialpago": 42,
+      "suscripciones_plansuscripcion": 3,
+      "suscripciones_suscripcionusuario": 157
+    },
+    "mysql_counts_unchanged": true,
+    "original_memory_unchanged": true
+  }
+]

@@ -1,0 +1,176 @@
+{
+  "case": {
+    "case": 11,
+    "title": "Ekomo",
+    "author": "Mar\u00eda Nsu\u00e9 Ang\u00fce",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": true
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de Ekomo de Mar\u00eda Nsu\u00e9 Ang\u00fce",
+      "answer": "**Ekomo**\n\nActualmente no tengo la informaci\u00f3n de este libro :( Si me indicas el autor o la edici\u00f3n, puedo intentar identificarlo mejor.",
+      "status": "unavailable",
+      "books": [],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 6887,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "work_type": "unknown",
+        "narrative_failure": "insufficient_content",
+        "progress_metrics": {
+          "elapsed_ms": 6910.333,
+          "first_phase_emitted_ms": 24.512,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 7.638,
+            "cache_lookup": 5.737,
+            "knowledge_lookup": 553.542,
+            "retrieval": 1939.571,
+            "web_search": 2367.46,
+            "finalization": 23.674
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 4.116,
+              "elapsed_ms": 7.638,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 18.765,
+              "elapsed_ms": 5.737,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 37.398,
+              "elapsed_ms": 312.419,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 108.029,
+              "elapsed_ms": 37.867,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 200.536,
+              "elapsed_ms": 148.253,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 269.199,
+              "elapsed_ms": 50.205,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 419.248,
+              "elapsed_ms": 4.798,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 2547.313,
+              "elapsed_ms": 1939.571,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 4487.93,
+              "elapsed_ms": 537.469,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 5025.565,
+              "elapsed_ms": 841.683,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 5868.068,
+              "elapsed_ms": 988.308,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 6886.653,
+              "elapsed_ms": 23.674,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 24.512
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 6.9178,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.04,
+        "verified_ready_seconds": 6.8797,
+        "first_verified_text_seconds": 6.9178
+      }
+    }
+  ],
+  "seconds": 9.076,
+  "coverage_before": {
+    "works": 14477,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14650,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14477,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14650,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "persistent_exact_cache",
+  "google_books_enabled": false,
+  "factual_review_pending": true
+}

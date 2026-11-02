@@ -1,0 +1,272 @@
+{
+  "case": {
+    "case": 8,
+    "title": "Los abismos",
+    "author": "Pilar Quintana",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "LITMATE_LIBRARY_RAG_DB": [
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": false
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de Los abismos de Pilar Quintana",
+      "answer": "Hay un problema temporal al consultar las fuentes de este libro. Puedes volver a intentarlo en unos instantes.",
+      "status": "unavailable",
+      "books": [],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 4814,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "work_type": "unknown",
+        "narrative_failure": "retrieval_unavailable",
+        "progress_metrics": {
+          "elapsed_ms": 4820.209,
+          "first_phase_emitted_ms": 18.892,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 7.544,
+            "cache_lookup": 0.655,
+            "knowledge_lookup": 665.303,
+            "retrieval": 1828.902,
+            "web_search": 1829.092,
+            "extraction": 570.105,
+            "finalization": 6.238
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 4.466,
+              "elapsed_ms": 7.544,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 18.227,
+              "elapsed_ms": 0.655,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 32.017,
+              "elapsed_ms": 342.568,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 106.046,
+              "elapsed_ms": 41.434,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 208.226,
+              "elapsed_ms": 165.283,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 275.984,
+              "elapsed_ms": 57.787,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 441.13,
+              "elapsed_ms": 58.231,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 553.274,
+              "elapsed_ms": 1828.902,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 2387.875,
+              "elapsed_ms": 437.908,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 2825.917,
+              "elapsed_ms": 375.227,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 3201.271,
+              "elapsed_ms": 570.105,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 3774.786,
+              "elapsed_ms": 1015.957,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 4813.965,
+              "elapsed_ms": 6.238,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 18.892
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 4.8278,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.0346,
+        "verified_ready_seconds": 4.8078,
+        "first_verified_text_seconds": 4.8278
+      }
+    }
+  ],
+  "seconds": 7.013,
+  "research_profile": "cold_after",
+  "public_research_trace": [
+    {
+      "stage": "retrieved_public_evidence",
+      "sources": []
+    }
+  ],
+  "coverage_before": {
+    "works": 14473,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 10,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14646,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14473,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 10,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14646,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "persistent_exact_cache",
+  "google_books_enabled": false,
+  "factual_review_pending": true
+}

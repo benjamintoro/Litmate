@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<main class="container py-5"><h1>Mi cuenta</h1><p>{{ user.username }}</p>
+<a href="{% url 'suscripciones:planes' %}">Ver mi plan y continuar</a>
+<h2 class="mt-4">Mis conversaciones</h2>
+<ul>{% for conversacion in conversaciones %}<li>
+<a href="{% url 'reader_conversation' conversacion.pk %}">{{ conversacion.titulo }}</a></li>
+{% empty %}<li>Todavía no tienes conversaciones guardadas.</li>{% endfor %}</ul></main>
+{% endblock %}

@@ -1,0 +1,403 @@
+{
+  "created_at_utc": "2026-10-23T19:36:16.995065+00:00",
+  "mode": "real_http_sse_isolated_database",
+  "model": "qwen3.5:9b-q4_K_M",
+  "context": 16384,
+  "prewarm": {
+    "requested": false,
+    "seconds": null,
+    "generates_answers": false
+  },
+  "web_enabled": true,
+  "chat_budget_seconds": 36,
+  "response_budget_seconds": 42,
+  "progressive": true,
+  "repeat": 3,
+  "knowledge_setup": "empty_auxiliary_databases_with_bundled_catalogue",
+  "resource_scope": "python_server_process_only_not_ollama_or_gpu",
+  "cache_controls": {
+    "empty_answers_each_turn": false,
+    "empty_retrieval_each_turn": false
+  },
+  "factual_review": "not_independently_certified",
+  "turns": [
+    {
+      "case": "cache_exacta",
+      "turn": 1,
+      "question": "¿Quién escribió Rayuela?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 1.183,
+      "first_text_seconds": 1.183,
+      "first_useful_seconds": 1.183,
+      "first_progress_seconds": 0.04,
+      "progress_phases": [
+        "search"
+      ],
+      "diagnostics": {
+        "elapsed_ms": 1166,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 1119.383,
+          "first_phase_emitted_ms": 4.326,
+          "stage_totals_ms": {
+            "cache_lookup": 0.545,
+            "knowledge_lookup": 62.197,
+            "retrieval": 1023.054
+          },
+          "stage_timings": [
+            {
+              "stage": "cache_lookup",
+              "started_ms": 3.766,
+              "elapsed_ms": 0.545,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 28.754,
+              "elapsed_ms": 1.175,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 46.658,
+              "elapsed_ms": 1.184,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 46.306,
+              "elapsed_ms": 9.477,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 8.868,
+              "elapsed_ms": 48.86,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 69.111,
+              "elapsed_ms": 1.501,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 75.955,
+              "elapsed_ms": 1023.054,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 4.326
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-progressive-research"
+      },
+      "stage_totals_ms": {
+        "cache_lookup": 0.545,
+        "knowledge_lookup": 62.197,
+        "retrieval": 1023.054
+      },
+      "delivery_overhead_ms": 63.27,
+      "resources": {
+        "rss_mb": 62.32,
+        "peak_rss_mb": 62.34,
+        "cpu_seconds": 0.21875
+      },
+      "category": "cache_exacta",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "**Rayuela** es una obra de **Julio Cortázar**.\n\nFuente: https://openlibrary.org/works/OL14860424W",
+      "source_urls": [
+        "https://openlibrary.org/works/OL14860424W"
+      ]
+    },
+    {
+      "case": "cache_exacta",
+      "turn": 2,
+      "question": "¿Quién escribió Rayuela?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 0.042,
+      "first_text_seconds": 0.042,
+      "first_useful_seconds": 0.042,
+      "first_progress_seconds": null,
+      "progress_phases": [],
+      "diagnostics": {
+        "elapsed_ms": 27,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "exact_answer_cache_hit": true,
+        "progress_metrics": {
+          "elapsed_ms": 4.398,
+          "stage_totals_ms": {
+            "cache_lookup": 4.155
+          },
+          "stage_timings": [
+            {
+              "stage": "cache_lookup",
+              "started_ms": 0.237,
+              "elapsed_ms": 4.155,
+              "status": "ok"
+            }
+          ],
+          "progress_events": []
+        },
+        "stage_timings": [],
+        "provider": "verified-answer-cache"
+      },
+      "stage_totals_ms": {
+        "cache_lookup": 4.155
+      },
+      "delivery_overhead_ms": 37.207,
+      "resources": {
+        "rss_mb": 62.422,
+        "peak_rss_mb": 62.48,
+        "cpu_seconds": 0.015625
+      },
+      "category": "cache_exacta",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "**Rayuela** es una obra de **Julio Cortázar**.\n\nFuente: https://openlibrary.org/works/OL14860424W",
+      "source_urls": [
+        "https://openlibrary.org/works/OL14860424W"
+      ]
+    },
+    {
+      "case": "cache_exacta",
+      "turn": 3,
+      "question": "¿Quién escribió Rayuela?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 0.042,
+      "first_text_seconds": 0.042,
+      "first_useful_seconds": 0.042,
+      "first_progress_seconds": null,
+      "progress_phases": [],
+      "diagnostics": {
+        "elapsed_ms": 28,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "exact_answer_cache_hit": true,
+        "progress_metrics": {
+          "elapsed_ms": 3.989,
+          "stage_totals_ms": {
+            "cache_lookup": 3.696
+          },
+          "stage_timings": [
+            {
+              "stage": "cache_lookup",
+              "started_ms": 0.287,
+              "elapsed_ms": 3.696,
+              "status": "ok"
+            }
+          ],
+          "progress_events": []
+        },
+        "stage_timings": [],
+        "provider": "verified-answer-cache"
+      },
+      "stage_totals_ms": {
+        "cache_lookup": 3.696
+      },
+      "delivery_overhead_ms": 38.013,
+      "resources": {
+        "rss_mb": 62.43,
+        "peak_rss_mb": 62.492,
+        "cpu_seconds": 0.046875
+      },
+      "category": "cache_exacta",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "**Rayuela** es una obra de **Julio Cortázar**.\n\nFuente: https://openlibrary.org/works/OL14860424W",
+      "source_urls": [
+        "https://openlibrary.org/works/OL14860424W"
+      ]
+    },
+    {
+      "case": "cache_exacta",
+      "turn": 4,
+      "question": "¿Quién escribió Rayuela?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 0.041,
+      "first_text_seconds": 0.041,
+      "first_useful_seconds": 0.041,
+      "first_progress_seconds": null,
+      "progress_phases": [],
+      "diagnostics": {
+        "elapsed_ms": 27,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "exact_answer_cache_hit": true,
+        "progress_metrics": {
+          "elapsed_ms": 4.078,
+          "stage_totals_ms": {
+            "cache_lookup": 3.777
+          },
+          "stage_timings": [
+            {
+              "stage": "cache_lookup",
+              "started_ms": 0.296,
+              "elapsed_ms": 3.777,
+              "status": "ok"
+            }
+          ],
+          "progress_events": []
+        },
+        "stage_timings": [],
+        "provider": "verified-answer-cache"
+      },
+      "stage_totals_ms": {
+        "cache_lookup": 3.777
+      },
+      "delivery_overhead_ms": 37.17,
+      "resources": {
+        "rss_mb": 62.441,
+        "peak_rss_mb": 62.504,
+        "cpu_seconds": 0.015625
+      },
+      "category": "cache_exacta",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "**Rayuela** es una obra de **Julio Cortázar**.\n\nFuente: https://openlibrary.org/works/OL14860424W",
+      "source_urls": [
+        "https://openlibrary.org/works/OL14860424W"
+      ]
+    },
+    {
+      "case": "cache_exacta",
+      "turn": 5,
+      "question": "¿Quién escribió Rayuela?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 0.043,
+      "first_text_seconds": 0.043,
+      "first_useful_seconds": 0.043,
+      "first_progress_seconds": null,
+      "progress_phases": [],
+      "diagnostics": {
+        "elapsed_ms": 29,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "exact_answer_cache_hit": true,
+        "progress_metrics": {
+          "elapsed_ms": 4.228,
+          "stage_totals_ms": {
+            "cache_lookup": 3.803
+          },
+          "stage_timings": [
+            {
+              "stage": "cache_lookup",
+              "started_ms": 0.418,
+              "elapsed_ms": 3.803,
+              "status": "ok"
+            }
+          ],
+          "progress_events": []
+        },
+        "stage_timings": [],
+        "provider": "verified-answer-cache"
+      },
+      "stage_totals_ms": {
+        "cache_lookup": 3.803
+      },
+      "delivery_overhead_ms": 39.261,
+      "resources": {
+        "rss_mb": 62.484,
+        "peak_rss_mb": 62.543,
+        "cpu_seconds": 0.046875
+      },
+      "category": "cache_exacta",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "**Rayuela** es una obra de **Julio Cortázar**.\n\nFuente: https://openlibrary.org/works/OL14860424W",
+      "source_urls": [
+        "https://openlibrary.org/works/OL14860424W"
+      ]
+    },
+    {
+      "case": "cache_exacta",
+      "turn": 6,
+      "question": "¿Quién escribió Rayuela?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 0.053,
+      "first_text_seconds": 0.053,
+      "first_useful_seconds": 0.053,
+      "first_progress_seconds": null,
+      "progress_phases": [],
+      "diagnostics": {
+        "elapsed_ms": 31,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "exact_answer_cache_hit": true,
+        "progress_metrics": {
+          "elapsed_ms": 4.694,
+          "stage_totals_ms": {
+            "cache_lookup": 4.184
+          },
+          "stage_timings": [
+            {
+              "stage": "cache_lookup",
+              "started_ms": 0.502,
+              "elapsed_ms": 4.184,
+              "status": "ok"
+            }
+          ],
+          "progress_events": []
+        },
+        "stage_timings": [],
+        "provider": "verified-answer-cache"
+      },
+      "stage_totals_ms": {
+        "cache_lookup": 4.184
+      },
+      "delivery_overhead_ms": 48.683,
+      "resources": {
+        "rss_mb": 62.742,
+        "peak_rss_mb": 62.801,
+        "cpu_seconds": 0.03125
+      },
+      "category": "cache_exacta",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "**Rayuela** es una obra de **Julio Cortázar**.\n\nFuente: https://openlibrary.org/works/OL14860424W",
+      "source_urls": [
+        "https://openlibrary.org/works/OL14860424W"
+      ]
+    }
+  ],
+  "source_sha256": "15195f16155dc00cc78620e05ea8df7be3c06d96c006816f1fa2168a66fc7e70",
+  "runner_sha256": "fa1955691a757678bcd326237bd8cbfe65c0b32a7120e96538f277a67028e94e",
+  "matrix_sha256": "3e9d7becc0bc653b4d434385213acd00a4985b82ba27a4288c18659451f94786",
+  "metrics": {
+    "turns": 6,
+    "p50_seconds": 0.042499999999999996,
+    "mean_seconds": 0.234,
+    "p95_seconds": 1.183,
+    "max_seconds": 1.183,
+    "under_response_budget": 6,
+    "statuses": {
+      "answered": 6
+    },
+    "under_5_seconds": 6,
+    "under_10_seconds": 6,
+    "under_30_seconds": 6,
+    "answered_is_not_factual_certification": true
+  },
+  "source_files_changed_during_run": false
+}

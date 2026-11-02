@@ -1,0 +1,5930 @@
+{
+  "version": 1,
+  "reviewed_on": "2026-10-22",
+  "license": "CC0-1.0 (metadatos de referencia propios de LitMate; no es licencia de las obras)",
+  "description": "Alias, materias de catálogo y etiquetas para resolver consultas de lectura sin red.",
+  "facets": {
+    "world war i": {
+      "label": "Primera Guerra Mundial",
+      "catalog": "world war, 1914-1918",
+      "terms": [
+        "primera guerra mundial",
+        "world war i",
+        "world war, 1914-1918",
+        "world war 1914-1918",
+        "great war",
+        "gran guerra"
+      ],
+      "article": "la "
+    },
+    "world war ii": {
+      "label": "Segunda Guerra Mundial",
+      "catalog": "world war, 1939-1945",
+      "terms": [
+        "segunda guerra mundial",
+        "world war ii",
+        "world war, 1939-1945",
+        "world war 1939-1945",
+        "second world war"
+      ],
+      "article": "la "
+    },
+    "ancient history": {
+      "label": "historia antigua",
+      "catalog": "ancient",
+      "terms": [
+        "ancient",
+        "antigua",
+        "antiguo",
+        "antiguedad",
+        "antiquity",
+        "antike",
+        "antiquite",
+        "to 146 b.c.",
+        "to 146 b c",
+        "to 146 bc"
+      ],
+      "article": "la "
+    },
+    "history": {
+      "label": "historia",
+      "catalog": "history",
+      "terms": [
+        "historia",
+        "history",
+        "historical",
+        "histoire"
+      ],
+      "article": "la "
+    },
+    "art": {
+      "label": "arte",
+      "catalog": "art",
+      "terms": [
+        "art",
+        "arte",
+        "arts",
+        "pintura",
+        "painting",
+        "sculpture",
+        "escultura",
+        "estampas",
+        "prints",
+        "ukiyo"
+      ],
+      "article": "el "
+    },
+    "philosophy": {
+      "label": "filosofia",
+      "catalog": "philosophy",
+      "terms": [
+        "filosofia",
+        "philosophy",
+        "philosophie"
+      ],
+      "article": "la "
+    },
+    "architecture": {
+      "label": "arquitectura",
+      "catalog": "architecture",
+      "terms": [
+        "arquitectura",
+        "architecture"
+      ],
+      "article": "la "
+    },
+    "poetry": {
+      "label": "poesia",
+      "catalog": "poetry",
+      "terms": [
+        "poesia",
+        "poetry",
+        "poesie"
+      ],
+      "article": "la "
+    },
+    "cooking": {
+      "label": "cocina",
+      "catalog": "cooking",
+      "terms": [
+        "cocina",
+        "cooking",
+        "gastronomia",
+        "cookery"
+      ],
+      "article": "la "
+    },
+    "astronomy": {
+      "label": "astronomia",
+      "catalog": "astronomy",
+      "terms": [
+        "astronomia",
+        "astronomy",
+        "astronomie"
+      ],
+      "article": "la "
+    },
+    "science": {
+      "label": "ciencia",
+      "catalog": "science",
+      "terms": [
+        "ciencia",
+        "ciencias",
+        "science",
+        "sciences"
+      ],
+      "article": "la "
+    },
+    "psychology": {
+      "label": "psicologia",
+      "catalog": "psychology",
+      "terms": [
+        "psicologia",
+        "psychology",
+        "psychologie"
+      ],
+      "article": "la "
+    },
+    "economics": {
+      "label": "economia",
+      "catalog": "economics",
+      "terms": [
+        "economia",
+        "economics",
+        "economy",
+        "economie"
+      ],
+      "article": "la "
+    },
+    "biology": {
+      "label": "biologia",
+      "catalog": "biology",
+      "terms": [
+        "biologia",
+        "biology",
+        "biologie"
+      ],
+      "article": "la "
+    },
+    "space": {
+      "label": "espacio",
+      "catalog": "space",
+      "terms": [
+        "space",
+        "outer space",
+        "spaceflight",
+        "space travel",
+        "space exploration",
+        "space colonies",
+        "space warfare",
+        "space opera",
+        "interplanetary voyages",
+        "extraterrestrial beings",
+        "life on other planets",
+        "nave espacial",
+        "viajes espaciales",
+        "viajes interplanetarios",
+        "tematica espacial",
+        "aventura espacial",
+        "astronomy",
+        "astronomia",
+        "astrophysics",
+        "astrofisica",
+        "cosmology",
+        "cosmologia"
+      ],
+      "article": "el "
+    },
+    "science fiction": {
+      "label": "ciencia ficcion",
+      "catalog": "science fiction",
+      "terms": [
+        "ciencia ficcion",
+        "science fiction",
+        "sci-fi",
+        "sci fi",
+        "space opera",
+        "nave espacial",
+        "viajes en el tiempo",
+        "time travel"
+      ],
+      "article": "la "
+    },
+    "fantasy": {
+      "label": "fantasia",
+      "catalog": "fantasy",
+      "terms": [
+        "fantasia",
+        "fantasy",
+        "magia",
+        "magic"
+      ],
+      "article": "la "
+    },
+    "horror": {
+      "label": "terror",
+      "catalog": "horror",
+      "terms": [
+        "terror",
+        "horror",
+        "sobrenatural",
+        "supernatural"
+      ],
+      "article": "el "
+    },
+    "mystery": {
+      "label": "misterio",
+      "catalog": "mystery",
+      "terms": [
+        "misterio",
+        "mystery",
+        "policiaco",
+        "policiaca",
+        "policiac",
+        "detective",
+        "detectives"
+      ],
+      "article": "el "
+    },
+    "thriller": {
+      "label": "thriller",
+      "catalog": "suspense fiction",
+      "terms": [
+        "thriller",
+        "suspense",
+        "suspense fiction"
+      ],
+      "article": "el "
+    },
+    "romance": {
+      "label": "romance",
+      "catalog": "romance",
+      "terms": [
+        "romance",
+        "romantic",
+        "novela romantica"
+      ],
+      "article": "el "
+    },
+    "fiction": {
+      "label": "ficcion",
+      "catalog": "fiction",
+      "terms": [
+        "ficcion",
+        "fiction"
+      ],
+      "article": "la "
+    },
+    "medieval history": {
+      "label": "historia medieval",
+      "catalog": "medieval",
+      "terms": [
+        "medieval",
+        "middle ages",
+        "edad media",
+        "medieval history",
+        "historia medieval"
+      ],
+      "article": "la "
+    },
+    "renaissance": {
+      "label": "Renacimiento",
+      "catalog": "renaissance",
+      "terms": [
+        "renaissance",
+        "renacimiento"
+      ],
+      "article": "el "
+    },
+    "enlightenment": {
+      "label": "Ilustracion",
+      "catalog": "enlightenment",
+      "terms": [
+        "enlightenment",
+        "ilustracion"
+      ],
+      "article": "la "
+    },
+    "french revolution": {
+      "label": "Revolucion Francesa",
+      "catalog": "french revolution",
+      "terms": [
+        "french revolution",
+        "revolucion francesa",
+        "revolution, 1789",
+        "1789-1799"
+      ],
+      "article": "la "
+    },
+    "industrial revolution": {
+      "label": "Revolucion Industrial",
+      "catalog": "industrial revolution",
+      "terms": [
+        "industrial revolution",
+        "revolucion industrial"
+      ],
+      "article": "la "
+    },
+    "cold war": {
+      "label": "Guerra Fria",
+      "catalog": "cold war",
+      "terms": [
+        "cold war",
+        "guerra fria"
+      ],
+      "article": "la "
+    },
+    "holocaust": {
+      "label": "Holocausto",
+      "catalog": "holocaust",
+      "terms": [
+        "holocaust",
+        "holocausto",
+        "shoah",
+        "genocidio nazi"
+      ],
+      "article": "el "
+    },
+    "spanish civil war": {
+      "label": "Guerra Civil Espanola",
+      "catalog": "spain history civil war, 1936-1939",
+      "terms": [
+        "spanish civil war",
+        "guerra civil espanola",
+        "1936-1939",
+        "guerra civil de espana"
+      ],
+      "article": "la "
+    },
+    "archaeology": {
+      "label": "arqueologia",
+      "catalog": "archaeology",
+      "terms": [
+        "archaeology",
+        "arqueologia"
+      ],
+      "article": "la "
+    },
+    "mythology": {
+      "label": "mitologia",
+      "catalog": "mythology",
+      "terms": [
+        "mythology",
+        "mitologia",
+        "myths",
+        "mitos"
+      ],
+      "article": "la "
+    },
+    "greek mythology": {
+      "label": "mitologia griega",
+      "catalog": "greek mythology",
+      "terms": [
+        "greek mythology",
+        "mitologia griega",
+        "mitos griegos"
+      ],
+      "article": "la "
+    },
+    "norse mythology": {
+      "label": "mitologia nordica",
+      "catalog": "norse mythology",
+      "terms": [
+        "norse mythology",
+        "mitologia nordica",
+        "mitologia escandinava",
+        "nordic mythology"
+      ],
+      "article": "la "
+    },
+    "military history": {
+      "label": "historia militar",
+      "catalog": "military history",
+      "terms": [
+        "military history",
+        "historia militar",
+        "warfare",
+        "conflicto belico"
+      ],
+      "article": "la "
+    },
+    "espionage": {
+      "label": "espionaje",
+      "catalog": "espionage",
+      "terms": [
+        "espionage",
+        "espionaje",
+        "spies",
+        "espias",
+        "servicios secretos"
+      ],
+      "article": "el "
+    },
+    "dictatorship": {
+      "label": "dictadura",
+      "catalog": "dictatorship",
+      "terms": [
+        "dictatorship",
+        "dictadura",
+        "dictaduras",
+        "authoritarianism",
+        "autoritarismo"
+      ],
+      "article": "la "
+    },
+    "colonialism": {
+      "label": "colonialismo",
+      "catalog": "colonialism",
+      "terms": [
+        "colonialism",
+        "colonialismo",
+        "imperialism",
+        "imperialismo"
+      ],
+      "article": "el "
+    },
+    "independence": {
+      "label": "independencia",
+      "catalog": "independence",
+      "terms": [
+        "independence",
+        "independencia",
+        "independencias",
+        "independence movements",
+        "movimientos de independencia"
+      ],
+      "article": "la "
+    },
+    "revolution": {
+      "label": "revoluciones",
+      "catalog": "revolutions",
+      "terms": [
+        "revolution",
+        "revoluciones",
+        "revolucion",
+        "revolutions"
+      ],
+      "article": "las "
+    },
+    "biography": {
+      "label": "biografia",
+      "catalog": "biography",
+      "terms": [
+        "biography",
+        "biografias",
+        "biografia",
+        "biographies"
+      ],
+      "article": "la "
+    },
+    "memoir": {
+      "label": "memorias",
+      "catalog": "memoir",
+      "terms": [
+        "memoir",
+        "memoirs",
+        "memorias",
+        "autobiography",
+        "autobiografia"
+      ],
+      "article": "las "
+    },
+    "politics": {
+      "label": "politica",
+      "catalog": "politics",
+      "terms": [
+        "politics",
+        "politica",
+        "political science",
+        "ciencia politica"
+      ],
+      "article": "la "
+    },
+    "law": {
+      "label": "derecho",
+      "catalog": "law",
+      "terms": [
+        "law",
+        "derecho",
+        "jurisprudence",
+        "jurisprudencia"
+      ],
+      "article": "el "
+    },
+    "international relations": {
+      "label": "relaciones internacionales",
+      "catalog": "international relations",
+      "terms": [
+        "international relations",
+        "relaciones internacionales",
+        "geopolitics",
+        "geopolitica"
+      ],
+      "article": "las "
+    },
+    "ethics": {
+      "label": "etica",
+      "catalog": "ethics",
+      "terms": [
+        "ethics",
+        "etica"
+      ],
+      "article": "la "
+    },
+    "logic": {
+      "label": "logica",
+      "catalog": "logic",
+      "terms": [
+        "logic",
+        "logica"
+      ],
+      "article": "la "
+    },
+    "metaphysics": {
+      "label": "metafisica",
+      "catalog": "metaphysics",
+      "terms": [
+        "metaphysics",
+        "metafisica"
+      ],
+      "article": "la "
+    },
+    "aesthetics": {
+      "label": "estetica",
+      "catalog": "aesthetics",
+      "terms": [
+        "aesthetics",
+        "estetica"
+      ],
+      "article": "la "
+    },
+    "stoicism": {
+      "label": "estoicismo",
+      "catalog": "stoicism",
+      "terms": [
+        "stoicism",
+        "estoicismo"
+      ],
+      "article": "el "
+    },
+    "existentialism": {
+      "label": "existencialismo",
+      "catalog": "existentialism",
+      "terms": [
+        "existentialism",
+        "existencialismo"
+      ],
+      "article": "el "
+    },
+    "religion": {
+      "label": "religion",
+      "catalog": "religion",
+      "terms": [
+        "religion",
+        "religiones",
+        "religion y creencias"
+      ],
+      "article": "la "
+    },
+    "christianity": {
+      "label": "cristianismo",
+      "catalog": "christianity",
+      "terms": [
+        "christianity",
+        "cristianismo"
+      ],
+      "article": "el "
+    },
+    "catholicism": {
+      "label": "catolicismo",
+      "catalog": "catholicism",
+      "terms": [
+        "catholicism",
+        "catolicismo"
+      ],
+      "article": "el "
+    },
+    "islam": {
+      "label": "islam",
+      "catalog": "islam",
+      "terms": [
+        "islam",
+        "islamismo",
+        "islamic"
+      ],
+      "article": "el "
+    },
+    "judaism": {
+      "label": "judaismo",
+      "catalog": "judaism",
+      "terms": [
+        "judaism",
+        "judaismo"
+      ],
+      "article": "el "
+    },
+    "buddhism": {
+      "label": "budismo",
+      "catalog": "buddhism",
+      "terms": [
+        "buddhism",
+        "budismo"
+      ],
+      "article": "el "
+    },
+    "hinduism": {
+      "label": "hinduismo",
+      "catalog": "hinduism",
+      "terms": [
+        "hinduism",
+        "hinduismo"
+      ],
+      "article": "el "
+    },
+    "spirituality": {
+      "label": "espiritualidad",
+      "catalog": "spirituality",
+      "terms": [
+        "spirituality",
+        "espiritualidad"
+      ],
+      "article": "la "
+    },
+    "sociology": {
+      "label": "sociologia",
+      "catalog": "sociology",
+      "terms": [
+        "sociology",
+        "sociologia"
+      ],
+      "article": "la "
+    },
+    "anthropology": {
+      "label": "antropologia",
+      "catalog": "anthropology",
+      "terms": [
+        "anthropology",
+        "antropologia"
+      ],
+      "article": "la "
+    },
+    "education": {
+      "label": "educacion",
+      "catalog": "education",
+      "terms": [
+        "education",
+        "educacion",
+        "pedagogy",
+        "pedagogia"
+      ],
+      "article": "la "
+    },
+    "linguistics": {
+      "label": "linguistica",
+      "catalog": "linguistics",
+      "terms": [
+        "linguistics",
+        "linguistica",
+        "language",
+        "lenguaje"
+      ],
+      "article": "la "
+    },
+    "psychoanalysis": {
+      "label": "psicoanalisis",
+      "catalog": "psychoanalysis",
+      "terms": [
+        "psychoanalysis",
+        "psicoanalisis"
+      ],
+      "article": "el "
+    },
+    "neuroscience": {
+      "label": "neurociencia",
+      "catalog": "neuroscience",
+      "terms": [
+        "neuroscience",
+        "neurociencia",
+        "neurosciences"
+      ],
+      "article": "la "
+    },
+    "finance": {
+      "label": "finanzas",
+      "catalog": "finance",
+      "terms": [
+        "finance",
+        "finanzas",
+        "financial economics",
+        "economia financiera"
+      ],
+      "article": "las "
+    },
+    "business": {
+      "label": "empresa",
+      "catalog": "business",
+      "terms": [
+        "business",
+        "empresa",
+        "empresas",
+        "business enterprises"
+      ],
+      "article": "la "
+    },
+    "management": {
+      "label": "gestion",
+      "catalog": "management",
+      "terms": [
+        "management",
+        "gestion",
+        "administracion de empresas"
+      ],
+      "article": "la "
+    },
+    "marketing": {
+      "label": "marketing",
+      "catalog": "marketing",
+      "terms": [
+        "marketing",
+        "mercadeo"
+      ],
+      "article": "el "
+    },
+    "entrepreneurship": {
+      "label": "emprendimiento",
+      "catalog": "entrepreneurship",
+      "terms": [
+        "entrepreneurship",
+        "emprendimiento",
+        "emprender"
+      ],
+      "article": "el "
+    },
+    "personal finance": {
+      "label": "finanzas personales",
+      "catalog": "finance, personal",
+      "terms": [
+        "personal finance",
+        "finanzas personales",
+        "ahorro",
+        "inversiones personales"
+      ],
+      "article": "las "
+    },
+    "poverty": {
+      "label": "pobreza",
+      "catalog": "poverty",
+      "terms": [
+        "poverty",
+        "pobreza"
+      ],
+      "article": "la "
+    },
+    "inequality": {
+      "label": "desigualdad",
+      "catalog": "social justice",
+      "terms": [
+        "inequality",
+        "desigualdad",
+        "social justice",
+        "justicia social"
+      ],
+      "article": "la "
+    },
+    "globalization": {
+      "label": "globalizacion",
+      "catalog": "globalization",
+      "terms": [
+        "globalization",
+        "globalizacion",
+        "mundializacion"
+      ],
+      "article": "la "
+    },
+    "democracy": {
+      "label": "democracia",
+      "catalog": "democracy",
+      "terms": [
+        "democracy",
+        "democracia"
+      ],
+      "article": "la "
+    },
+    "fascism": {
+      "label": "fascismo",
+      "catalog": "fascism",
+      "terms": [
+        "fascism",
+        "fascismo"
+      ],
+      "article": "el "
+    },
+    "communism": {
+      "label": "comunismo",
+      "catalog": "communism",
+      "terms": [
+        "communism",
+        "comunismo"
+      ],
+      "article": "el "
+    },
+    "socialism": {
+      "label": "socialismo",
+      "catalog": "socialism",
+      "terms": [
+        "socialism",
+        "socialismo"
+      ],
+      "article": "el "
+    },
+    "capitalism": {
+      "label": "capitalismo",
+      "catalog": "capitalism",
+      "terms": [
+        "capitalism",
+        "capitalismo"
+      ],
+      "article": "el "
+    },
+    "anarchism": {
+      "label": "anarquismo",
+      "catalog": "anarchism",
+      "terms": [
+        "anarchism",
+        "anarquismo"
+      ],
+      "article": "el "
+    },
+    "feminism": {
+      "label": "feminismo",
+      "catalog": "feminism",
+      "terms": [
+        "feminism",
+        "feminismo"
+      ],
+      "article": "el "
+    },
+    "gender": {
+      "label": "genero",
+      "catalog": "gender",
+      "terms": [
+        "gender",
+        "genero",
+        "gender studies",
+        "estudios de genero"
+      ],
+      "article": "el "
+    },
+    "lgbt": {
+      "label": "LGBTQ+",
+      "catalog": "sexual minorities",
+      "terms": [
+        "lgbt",
+        "lgbtq",
+        "lgbtq+",
+        "sexual minorities",
+        "minorias sexuales",
+        "homosexualidad"
+      ],
+      "article": "la "
+    },
+    "human rights": {
+      "label": "derechos humanos",
+      "catalog": "human rights",
+      "terms": [
+        "human rights",
+        "derechos humanos"
+      ],
+      "article": "los "
+    },
+    "racism": {
+      "label": "racismo",
+      "catalog": "racism",
+      "terms": [
+        "racism",
+        "racismo",
+        "racial discrimination"
+      ],
+      "article": "el "
+    },
+    "slavery": {
+      "label": "esclavitud",
+      "catalog": "slavery",
+      "terms": [
+        "slavery",
+        "esclavitud",
+        "esclavos",
+        "slaves"
+      ],
+      "article": "la "
+    },
+    "terrorism": {
+      "label": "terrorismo",
+      "catalog": "terrorism",
+      "terms": [
+        "terrorism",
+        "terrorismo"
+      ],
+      "article": "el "
+    },
+    "crime": {
+      "label": "crimen",
+      "catalog": "crime",
+      "terms": [
+        "crime",
+        "crimen",
+        "criminalidad",
+        "criminology",
+        "criminologia"
+      ],
+      "article": "el "
+    },
+    "justice": {
+      "label": "justicia",
+      "catalog": "justice",
+      "terms": [
+        "justice",
+        "justicia"
+      ],
+      "article": "la "
+    },
+    "peace": {
+      "label": "paz",
+      "catalog": "peace",
+      "terms": [
+        "peace",
+        "paz",
+        "peace studies",
+        "estudios de paz"
+      ],
+      "article": "la "
+    },
+    "war": {
+      "label": "guerra",
+      "catalog": "war",
+      "terms": [
+        "war",
+        "warfare",
+        "guerra",
+        "conflicto armado"
+      ],
+      "article": "la "
+    },
+    "art history": {
+      "label": "historia del arte",
+      "catalog": "art history",
+      "terms": [
+        "art history",
+        "historia del arte"
+      ],
+      "article": "la "
+    },
+    "painting": {
+      "label": "pintura",
+      "catalog": "painting",
+      "terms": [
+        "painting",
+        "pintura",
+        "paintings",
+        "pinturas"
+      ],
+      "article": "la "
+    },
+    "sculpture": {
+      "label": "escultura",
+      "catalog": "sculpture",
+      "terms": [
+        "sculpture",
+        "escultura",
+        "sculptures"
+      ],
+      "article": "la "
+    },
+    "photography": {
+      "label": "fotografia",
+      "catalog": "photography",
+      "terms": [
+        "photography",
+        "fotografia",
+        "photographs",
+        "fotografias"
+      ],
+      "article": "la "
+    },
+    "cinema": {
+      "label": "cine",
+      "catalog": "motion pictures",
+      "terms": [
+        "cinema",
+        "cine",
+        "motion pictures",
+        "film",
+        "films",
+        "peliculas"
+      ],
+      "article": "el "
+    },
+    "music": {
+      "label": "musica",
+      "catalog": "music",
+      "terms": [
+        "music",
+        "musica"
+      ],
+      "article": "la "
+    },
+    "theater": {
+      "label": "teatro",
+      "catalog": "drama",
+      "terms": [
+        "drama",
+        "theater",
+        "theatre",
+        "teatro"
+      ],
+      "article": "el "
+    },
+    "dance": {
+      "label": "danza",
+      "catalog": "dance",
+      "terms": [
+        "dance",
+        "danza",
+        "ballet"
+      ],
+      "article": "la "
+    },
+    "design": {
+      "label": "diseno",
+      "catalog": "design",
+      "terms": [
+        "design",
+        "diseno",
+        "industrial design"
+      ],
+      "article": "el "
+    },
+    "fashion": {
+      "label": "moda",
+      "catalog": "fashion",
+      "terms": [
+        "fashion",
+        "moda"
+      ],
+      "article": "la "
+    },
+    "literature": {
+      "label": "literatura",
+      "catalog": "literature",
+      "terms": [
+        "literature",
+        "literatura",
+        "literary",
+        "literaria",
+        "literario"
+      ],
+      "article": "la "
+    },
+    "literary criticism": {
+      "label": "critica literaria",
+      "catalog": "literary criticism",
+      "terms": [
+        "literary criticism",
+        "critica literaria",
+        "literary theory",
+        "teoria literaria"
+      ],
+      "article": "la "
+    },
+    "short stories": {
+      "label": "relatos cortos",
+      "catalog": "short stories",
+      "terms": [
+        "short stories",
+        "cuentos",
+        "relatos",
+        "short story",
+        "cuento"
+      ],
+      "article": "los "
+    },
+    "comics": {
+      "label": "comics",
+      "catalog": "comic books, strips",
+      "terms": [
+        "comics",
+        "comic",
+        "comic books",
+        "novela grafica",
+        "graphic novel",
+        "manga"
+      ],
+      "article": "los "
+    },
+    "adventure": {
+      "label": "aventura",
+      "catalog": "adventure fiction",
+      "terms": [
+        "adventure",
+        "aventura",
+        "aventuras",
+        "adventure fiction"
+      ],
+      "article": "la "
+    },
+    "dystopia": {
+      "label": "distopia",
+      "catalog": "dystopia",
+      "terms": [
+        "dystopia",
+        "distopia",
+        "dystopian",
+        "distopica"
+      ],
+      "article": "la "
+    },
+    "utopia": {
+      "label": "utopia",
+      "catalog": "utopia",
+      "terms": [
+        "utopia",
+        "utopian",
+        "utopica"
+      ],
+      "article": "la "
+    },
+    "magical realism": {
+      "label": "realismo magico",
+      "catalog": "magic realism",
+      "terms": [
+        "magical realism",
+        "magic realism",
+        "realismo magico"
+      ],
+      "article": "el "
+    },
+    "coming of age": {
+      "label": "novela de formacion",
+      "catalog": "coming of age",
+      "terms": [
+        "coming of age",
+        "bildungsroman",
+        "novela de formacion"
+      ],
+      "article": "la "
+    },
+    "epic": {
+      "label": "epopeya",
+      "catalog": "epic literature",
+      "terms": [
+        "epic",
+        "epica",
+        "epopeya",
+        "epic literature"
+      ],
+      "article": "la "
+    },
+    "fairy tales": {
+      "label": "cuentos de hadas",
+      "catalog": "fairy tales",
+      "terms": [
+        "fairy tales",
+        "fairy tale",
+        "cuentos de hadas"
+      ],
+      "article": "los "
+    },
+    "satire": {
+      "label": "satira",
+      "catalog": "satire",
+      "terms": [
+        "satire",
+        "satira"
+      ],
+      "article": "la "
+    },
+    "classics": {
+      "label": "clasicos",
+      "catalog": "classics",
+      "terms": [
+        "classics",
+        "clasicos",
+        "classic literature",
+        "literatura clasica"
+      ],
+      "article": "los "
+    },
+    "contemporary literature": {
+      "label": "literatura contemporanea",
+      "catalog": "contemporary literature",
+      "terms": [
+        "contemporary literature",
+        "literatura contemporanea",
+        "novela contemporanea"
+      ],
+      "article": "la "
+    },
+    "latin american literature": {
+      "label": "literatura latinoamericana",
+      "catalog": "latin american literature",
+      "terms": [
+        "latin american literature",
+        "literatura latinoamericana",
+        "literatura hispanoamericana"
+      ],
+      "article": "la "
+    },
+    "spanish literature": {
+      "label": "literatura espanola",
+      "catalog": "spanish literature",
+      "terms": [
+        "spanish literature",
+        "literatura espanola"
+      ],
+      "article": "la "
+    },
+    "english literature": {
+      "label": "literatura inglesa",
+      "catalog": "english literature",
+      "terms": [
+        "english literature",
+        "literatura inglesa"
+      ],
+      "article": "la "
+    },
+    "russian literature": {
+      "label": "literatura rusa",
+      "catalog": "russian literature",
+      "terms": [
+        "russian literature",
+        "literatura rusa"
+      ],
+      "article": "la "
+    },
+    "japanese literature": {
+      "label": "literatura japonesa",
+      "catalog": "japanese literature",
+      "terms": [
+        "japanese literature",
+        "literatura japonesa"
+      ],
+      "article": "la "
+    },
+    "african literature": {
+      "label": "literatura africana",
+      "catalog": "african literature",
+      "terms": [
+        "african literature",
+        "literatura africana"
+      ],
+      "article": "la "
+    },
+    "physics": {
+      "label": "fisica",
+      "catalog": "physics",
+      "terms": [
+        "physics",
+        "fisica"
+      ],
+      "article": "la "
+    },
+    "chemistry": {
+      "label": "quimica",
+      "catalog": "chemistry",
+      "terms": [
+        "chemistry",
+        "quimica"
+      ],
+      "article": "la "
+    },
+    "astrophysics": {
+      "label": "astrofisica",
+      "catalog": "astrophysics",
+      "terms": [
+        "astrophysics",
+        "astrofisica"
+      ],
+      "article": "la "
+    },
+    "cosmology": {
+      "label": "cosmologia",
+      "catalog": "cosmology",
+      "terms": [
+        "cosmology",
+        "cosmologia"
+      ],
+      "article": "la "
+    },
+    "mathematics": {
+      "label": "matematicas",
+      "catalog": "mathematics",
+      "terms": [
+        "mathematics",
+        "matematicas",
+        "math",
+        "matematica"
+      ],
+      "article": "las "
+    },
+    "statistics": {
+      "label": "estadistica",
+      "catalog": "statistics",
+      "terms": [
+        "statistics",
+        "estadistica"
+      ],
+      "article": "la "
+    },
+    "medicine": {
+      "label": "medicina",
+      "catalog": "medicine",
+      "terms": [
+        "medicine",
+        "medicina",
+        "medical",
+        "medico"
+      ],
+      "article": "la "
+    },
+    "anatomy": {
+      "label": "anatomia",
+      "catalog": "anatomy",
+      "terms": [
+        "anatomy",
+        "anatomia"
+      ],
+      "article": "la "
+    },
+    "genetics": {
+      "label": "genetica",
+      "catalog": "genetics",
+      "terms": [
+        "genetics",
+        "genetica"
+      ],
+      "article": "la "
+    },
+    "evolution": {
+      "label": "evolucion",
+      "catalog": "evolution",
+      "terms": [
+        "evolution",
+        "evolucion",
+        "evolutiva"
+      ],
+      "article": "la "
+    },
+    "ecology": {
+      "label": "ecologia",
+      "catalog": "ecology",
+      "terms": [
+        "ecology",
+        "ecologia"
+      ],
+      "article": "la "
+    },
+    "environment": {
+      "label": "medio ambiente",
+      "catalog": "environmental protection",
+      "terms": [
+        "environment",
+        "medio ambiente",
+        "environmental",
+        "ambiental"
+      ],
+      "article": "el "
+    },
+    "climate change": {
+      "label": "cambio climatico",
+      "catalog": "climate change",
+      "terms": [
+        "climate change",
+        "cambio climatico",
+        "calentamiento global",
+        "global warming"
+      ],
+      "article": "el "
+    },
+    "nature": {
+      "label": "naturaleza",
+      "catalog": "nature",
+      "terms": [
+        "nature",
+        "naturaleza",
+        "natural history",
+        "historia natural"
+      ],
+      "article": "la "
+    },
+    "animals": {
+      "label": "animales",
+      "catalog": "animals",
+      "terms": [
+        "animals",
+        "animales",
+        "animal",
+        "fauna"
+      ],
+      "article": "los "
+    },
+    "plants": {
+      "label": "plantas",
+      "catalog": "botany",
+      "terms": [
+        "botany",
+        "botanica",
+        "plants",
+        "plantas",
+        "flora"
+      ],
+      "article": "las "
+    },
+    "agriculture": {
+      "label": "agricultura",
+      "catalog": "agriculture",
+      "terms": [
+        "agriculture",
+        "agricultura",
+        "farming"
+      ],
+      "article": "la "
+    },
+    "technology": {
+      "label": "tecnologia",
+      "catalog": "technology",
+      "terms": [
+        "technology",
+        "tecnologia"
+      ],
+      "article": "la "
+    },
+    "computing": {
+      "label": "informatica",
+      "catalog": "computers",
+      "terms": [
+        "computers",
+        "informatica",
+        "computing",
+        "computer science",
+        "ciencias de la computacion"
+      ],
+      "article": "la "
+    },
+    "programming": {
+      "label": "programacion",
+      "catalog": "computer programming",
+      "terms": [
+        "programming",
+        "programacion",
+        "software",
+        "codigo",
+        "coding"
+      ],
+      "article": "la "
+    },
+    "artificial intelligence": {
+      "label": "inteligencia artificial",
+      "catalog": "artificial intelligence",
+      "terms": [
+        "artificial intelligence",
+        "inteligencia artificial",
+        "machine learning",
+        "aprendizaje automatico"
+      ],
+      "article": "la "
+    },
+    "internet": {
+      "label": "internet",
+      "catalog": "internet",
+      "terms": [
+        "internet",
+        "web",
+        "world wide web",
+        "redes"
+      ],
+      "article": "el "
+    },
+    "engineering": {
+      "label": "ingenieria",
+      "catalog": "engineering",
+      "terms": [
+        "engineering",
+        "ingenieria"
+      ],
+      "article": "la "
+    },
+    "robotics": {
+      "label": "robotica",
+      "catalog": "robotics",
+      "terms": [
+        "robotics",
+        "robotica",
+        "robots"
+      ],
+      "article": "la "
+    },
+    "nutrition": {
+      "label": "nutricion",
+      "catalog": "nutrition",
+      "terms": [
+        "nutrition",
+        "nutricion",
+        "alimentacion"
+      ],
+      "article": "la "
+    },
+    "health": {
+      "label": "salud",
+      "catalog": "health",
+      "terms": [
+        "health",
+        "salud",
+        "wellness",
+        "bienestar"
+      ],
+      "article": "la "
+    },
+    "fitness": {
+      "label": "fitness",
+      "catalog": "physical fitness",
+      "terms": [
+        "fitness",
+        "physical fitness",
+        "ejercicio fisico",
+        "gimnasio"
+      ],
+      "article": "el "
+    },
+    "sports": {
+      "label": "deporte",
+      "catalog": "sports",
+      "terms": [
+        "sports",
+        "deporte",
+        "deportes"
+      ],
+      "article": "el "
+    },
+    "travel": {
+      "label": "viajes",
+      "catalog": "travel",
+      "terms": [
+        "travel",
+        "viajes",
+        "viajar",
+        "travel literature",
+        "literatura de viajes"
+      ],
+      "article": "los "
+    },
+    "gardening": {
+      "label": "jardineria",
+      "catalog": "gardening",
+      "terms": [
+        "gardening",
+        "jardineria",
+        "jardines"
+      ],
+      "article": "la "
+    },
+    "crafts": {
+      "label": "manualidades",
+      "catalog": "handicraft",
+      "terms": [
+        "crafts",
+        "handicraft",
+        "manualidades",
+        "artesania"
+      ],
+      "article": "las "
+    },
+    "parenting": {
+      "label": "crianza",
+      "catalog": "parenting",
+      "terms": [
+        "parenting",
+        "crianza",
+        "paternidad",
+        "maternidad"
+      ],
+      "article": "la "
+    },
+    "relationships": {
+      "label": "relaciones personales",
+      "catalog": "interpersonal relations",
+      "terms": [
+        "relationships",
+        "relaciones",
+        "relaciones personales",
+        "interpersonal relations"
+      ],
+      "article": "las "
+    },
+    "self-help": {
+      "label": "autoayuda",
+      "catalog": "self-help",
+      "terms": [
+        "self-help",
+        "self help",
+        "autoayuda",
+        "desarrollo personal",
+        "personal development"
+      ],
+      "article": "la "
+    },
+    "productivity": {
+      "label": "productividad",
+      "catalog": "productivity",
+      "terms": [
+        "productivity",
+        "productividad",
+        "gestion del tiempo",
+        "time management"
+      ],
+      "article": "la "
+    },
+    "happiness": {
+      "label": "felicidad",
+      "catalog": "happiness",
+      "terms": [
+        "happiness",
+        "felicidad"
+      ],
+      "article": "la "
+    },
+    "mindfulness": {
+      "label": "atencion plena",
+      "catalog": "mindfulness",
+      "terms": [
+        "mindfulness",
+        "atencion plena",
+        "conciencia plena"
+      ],
+      "article": "la "
+    },
+    "meditation": {
+      "label": "meditacion",
+      "catalog": "meditation",
+      "terms": [
+        "meditation",
+        "meditacion"
+      ],
+      "article": "la "
+    },
+    "yoga": {
+      "label": "yoga",
+      "catalog": "yoga",
+      "terms": [
+        "yoga"
+      ],
+      "article": "el "
+    },
+    "astrology": {
+      "label": "astrologia",
+      "catalog": "astrology",
+      "terms": [
+        "astrology",
+        "astrologia",
+        "horoscopo"
+      ],
+      "article": "la "
+    },
+    "esotericism": {
+      "label": "esoterismo",
+      "catalog": "esotericism",
+      "terms": [
+        "esotericism",
+        "esoterismo",
+        "ocultism",
+        "ocultismo"
+      ],
+      "article": "el "
+    },
+    "love": {
+      "label": "amor",
+      "catalog": "love",
+      "terms": [
+        "love",
+        "amor",
+        "romantic love",
+        "amor romantico"
+      ],
+      "article": "el "
+    },
+    "friendship": {
+      "label": "amistad",
+      "catalog": "friendship",
+      "terms": [
+        "friendship",
+        "amistad",
+        "amigos"
+      ],
+      "article": "la "
+    },
+    "family": {
+      "label": "familia",
+      "catalog": "family",
+      "terms": [
+        "family",
+        "familia",
+        "familias",
+        "family relationships"
+      ],
+      "article": "la "
+    },
+    "childhood": {
+      "label": "infancia",
+      "catalog": "childhood",
+      "terms": [
+        "childhood",
+        "infancia",
+        "ninos",
+        "children"
+      ],
+      "article": "la "
+    },
+    "adolescence": {
+      "label": "adolescencia",
+      "catalog": "adolescence",
+      "terms": [
+        "adolescence",
+        "adolescencia",
+        "adolescentes",
+        "adolescents"
+      ],
+      "article": "la "
+    },
+    "death": {
+      "label": "muerte",
+      "catalog": "death",
+      "terms": [
+        "death",
+        "muerte",
+        "mourning",
+        "duelo"
+      ],
+      "article": "la "
+    },
+    "grief": {
+      "label": "duelo",
+      "catalog": "grief",
+      "terms": [
+        "grief",
+        "duelo",
+        "luto",
+        "bereavement"
+      ],
+      "article": "el "
+    },
+    "loneliness": {
+      "label": "soledad",
+      "catalog": "loneliness",
+      "terms": [
+        "loneliness",
+        "soledad"
+      ],
+      "article": "la "
+    },
+    "identity": {
+      "label": "identidad",
+      "catalog": "identity",
+      "terms": [
+        "identity",
+        "identidad"
+      ],
+      "article": "la "
+    },
+    "memory": {
+      "label": "memoria",
+      "catalog": "memory",
+      "terms": [
+        "memory",
+        "memoria",
+        "memoria historica"
+      ],
+      "article": "la "
+    },
+    "dreams": {
+      "label": "suenos",
+      "catalog": "dreams",
+      "terms": [
+        "dreams",
+        "suenos",
+        "dream",
+        "sueno"
+      ],
+      "article": "los "
+    },
+    "madness": {
+      "label": "locura",
+      "catalog": "mental illness",
+      "terms": [
+        "madness",
+        "locura",
+        "mental illness",
+        "salud mental"
+      ],
+      "article": "la "
+    },
+    "exile": {
+      "label": "exilio",
+      "catalog": "exile",
+      "terms": [
+        "exile",
+        "exilio",
+        "exiliados"
+      ],
+      "article": "el "
+    },
+    "migration": {
+      "label": "migracion",
+      "catalog": "emigration and immigration",
+      "terms": [
+        "migration",
+        "migracion",
+        "immigration",
+        "inmigracion",
+        "emigration",
+        "emigracion"
+      ],
+      "article": "la "
+    },
+    "freedom": {
+      "label": "libertad",
+      "catalog": "liberty",
+      "terms": [
+        "freedom",
+        "libertad",
+        "liberty"
+      ],
+      "article": "la "
+    },
+    "power": {
+      "label": "poder",
+      "catalog": "power social sciences",
+      "terms": [
+        "power",
+        "poder",
+        "power social sciences"
+      ],
+      "article": "el "
+    },
+    "hope": {
+      "label": "esperanza",
+      "catalog": "hope",
+      "terms": [
+        "hope",
+        "esperanza"
+      ],
+      "article": "la "
+    },
+    "fear": {
+      "label": "miedo",
+      "catalog": "fear",
+      "terms": [
+        "fear",
+        "miedo"
+      ],
+      "article": "el "
+    },
+    "courage": {
+      "label": "coraje",
+      "catalog": "courage",
+      "terms": [
+        "courage",
+        "coraje",
+        "valor"
+      ],
+      "article": "el "
+    },
+    "betrayal": {
+      "label": "traicion",
+      "catalog": "betrayal",
+      "terms": [
+        "betrayal",
+        "traicion"
+      ],
+      "article": "la "
+    },
+    "secrets": {
+      "label": "secretos",
+      "catalog": "secrets",
+      "terms": [
+        "secrets",
+        "secretos",
+        "secret"
+      ],
+      "article": "los "
+    },
+    "magic": {
+      "label": "magia",
+      "catalog": "magic",
+      "terms": [
+        "magic",
+        "magia",
+        "magical",
+        "magico"
+      ],
+      "article": "la "
+    },
+    "school": {
+      "label": "escuela",
+      "catalog": "schools",
+      "terms": [
+        "school",
+        "escuela",
+        "colegio",
+        "schools"
+      ],
+      "article": "la "
+    },
+    "work": {
+      "label": "trabajo",
+      "catalog": "work",
+      "terms": [
+        "work",
+        "trabajo",
+        "labor",
+        "labour"
+      ],
+      "article": "el "
+    },
+    "city": {
+      "label": "ciudad",
+      "catalog": "cities",
+      "terms": [
+        "city",
+        "ciudad",
+        "ciudades",
+        "cities",
+        "urban"
+      ],
+      "article": "la "
+    },
+    "countryside": {
+      "label": "vida rural",
+      "catalog": "country life",
+      "terms": [
+        "countryside",
+        "vida rural",
+        "campo",
+        "country life",
+        "rural life"
+      ],
+      "article": "la "
+    },
+    "sea": {
+      "label": "mar",
+      "catalog": "ocean",
+      "terms": [
+        "sea",
+        "mar",
+        "ocean",
+        "oceano",
+        "maritimo"
+      ],
+      "article": "el "
+    },
+    "mountains": {
+      "label": "montanas",
+      "catalog": "mountains",
+      "terms": [
+        "mountains",
+        "montanas",
+        "montana"
+      ],
+      "article": "las "
+    },
+    "forests": {
+      "label": "bosques",
+      "catalog": "forests",
+      "terms": [
+        "forests",
+        "bosques",
+        "bosque",
+        "forest"
+      ],
+      "article": "los "
+    },
+    "islands": {
+      "label": "islas",
+      "catalog": "islands",
+      "terms": [
+        "islands",
+        "islas",
+        "isla",
+        "island"
+      ],
+      "article": "las "
+    },
+    "deserts": {
+      "label": "desiertos",
+      "catalog": "deserts",
+      "terms": [
+        "deserts",
+        "desiertos",
+        "desierto",
+        "desert"
+      ],
+      "article": "los "
+    },
+    "spain": {
+      "label": "Espana",
+      "catalog": "spain",
+      "terms": [
+        "espana",
+        "spain",
+        "spanish"
+      ],
+      "article": ""
+    },
+    "france": {
+      "label": "Francia",
+      "catalog": "france",
+      "terms": [
+        "francia",
+        "france",
+        "french",
+        "francais"
+      ],
+      "article": ""
+    },
+    "italy": {
+      "label": "Italia",
+      "catalog": "italy",
+      "terms": [
+        "italia",
+        "italy",
+        "italian",
+        "italiano"
+      ],
+      "article": ""
+    },
+    "germany": {
+      "label": "Alemania",
+      "catalog": "germany",
+      "terms": [
+        "alemania",
+        "germany",
+        "german",
+        "aleman"
+      ],
+      "article": ""
+    },
+    "portugal": {
+      "label": "Portugal",
+      "catalog": "portugal",
+      "terms": [
+        "portugal",
+        "portuguese",
+        "portugues"
+      ],
+      "article": ""
+    },
+    "united kingdom": {
+      "label": "Reino Unido",
+      "catalog": "great britain",
+      "terms": [
+        "united kingdom",
+        "great britain",
+        "britain",
+        "british",
+        "england",
+        "inglaterra"
+      ],
+      "article": ""
+    },
+    "ireland": {
+      "label": "Irlanda",
+      "catalog": "ireland",
+      "terms": [
+        "ireland",
+        "irish",
+        "irlanda"
+      ],
+      "article": ""
+    },
+    "russia": {
+      "label": "Rusia",
+      "catalog": "russia",
+      "terms": [
+        "russia",
+        "russian",
+        "rusia",
+        "ruso"
+      ],
+      "article": ""
+    },
+    "soviet union": {
+      "label": "Union Sovietica",
+      "catalog": "soviet union",
+      "terms": [
+        "soviet union",
+        "soviet",
+        "urss",
+        "union sovietica"
+      ],
+      "article": ""
+    },
+    "united states": {
+      "label": "Estados Unidos",
+      "catalog": "united states",
+      "terms": [
+        "united states",
+        "american",
+        "usa",
+        "estados unidos",
+        "norteamerica"
+      ],
+      "article": ""
+    },
+    "canada": {
+      "label": "Canada",
+      "catalog": "canada",
+      "terms": [
+        "canada",
+        "canadian"
+      ],
+      "article": ""
+    },
+    "mexico": {
+      "label": "Mexico",
+      "catalog": "mexico",
+      "terms": [
+        "mexico",
+        "mexican",
+        "mexicano",
+        "mexicana"
+      ],
+      "article": ""
+    },
+    "argentina": {
+      "label": "Argentina",
+      "catalog": "argentina",
+      "terms": [
+        "argentina",
+        "argentine",
+        "argentino"
+      ],
+      "article": ""
+    },
+    "chile": {
+      "label": "Chile",
+      "catalog": "chile",
+      "terms": [
+        "chile",
+        "chilean",
+        "chileno",
+        "chilena"
+      ],
+      "article": ""
+    },
+    "peru": {
+      "label": "Peru",
+      "catalog": "peru",
+      "terms": [
+        "peru",
+        "peruvian",
+        "peruano",
+        "peruana"
+      ],
+      "article": ""
+    },
+    "colombia": {
+      "label": "Colombia",
+      "catalog": "colombia",
+      "terms": [
+        "colombia",
+        "colombian",
+        "colombiano",
+        "colombiana"
+      ],
+      "article": ""
+    },
+    "cuba": {
+      "label": "Cuba",
+      "catalog": "cuba",
+      "terms": [
+        "cuba",
+        "cuban",
+        "cubano",
+        "cubana"
+      ],
+      "article": ""
+    },
+    "brazil": {
+      "label": "Brasil",
+      "catalog": "brazil",
+      "terms": [
+        "brazil",
+        "brazilian",
+        "brasil",
+        "brasileno"
+      ],
+      "article": ""
+    },
+    "latin america": {
+      "label": "America Latina",
+      "catalog": "latin america",
+      "terms": [
+        "latin america",
+        "latin american",
+        "america latina",
+        "latinoamerica"
+      ],
+      "article": ""
+    },
+    "china": {
+      "label": "China",
+      "catalog": "china",
+      "terms": [
+        "china",
+        "chinese",
+        "chino"
+      ],
+      "article": ""
+    },
+    "japan": {
+      "label": "Japon",
+      "catalog": "japan",
+      "terms": [
+        "japan",
+        "japanese",
+        "japon",
+        "japones"
+      ],
+      "article": ""
+    },
+    "south korea": {
+      "label": "Corea del Sur",
+      "catalog": "korea (south)",
+      "terms": [
+        "south korea",
+        "korea south",
+        "corea del sur",
+        "surcoreano"
+      ],
+      "article": ""
+    },
+    "north korea": {
+      "label": "Corea del Norte",
+      "catalog": "korea (north)",
+      "terms": [
+        "north korea",
+        "korea north",
+        "corea del norte",
+        "norcoreano"
+      ],
+      "article": ""
+    },
+    "korea": {
+      "label": "Corea",
+      "catalog": "korea",
+      "terms": [
+        "korea",
+        "korean",
+        "corea",
+        "coreano",
+        "coreana"
+      ],
+      "article": ""
+    },
+    "india": {
+      "label": "India",
+      "catalog": "india",
+      "terms": [
+        "india",
+        "indian",
+        "indio"
+      ],
+      "article": ""
+    },
+    "middle east": {
+      "label": "Oriente Medio",
+      "catalog": "middle east",
+      "terms": [
+        "middle east",
+        "oriente medio",
+        "medio oriente"
+      ],
+      "article": ""
+    },
+    "israel": {
+      "label": "Israel",
+      "catalog": "israel",
+      "terms": [
+        "israel",
+        "israeli"
+      ],
+      "article": ""
+    },
+    "palestine": {
+      "label": "Palestina",
+      "catalog": "palestine",
+      "terms": [
+        "palestine",
+        "palestinian",
+        "palestina"
+      ],
+      "article": ""
+    },
+    "iran": {
+      "label": "Iran",
+      "catalog": "iran",
+      "terms": [
+        "iran",
+        "iranian",
+        "irani"
+      ],
+      "article": ""
+    },
+    "turkey": {
+      "label": "Turquia",
+      "catalog": "turkey",
+      "terms": [
+        "turkey",
+        "turkish",
+        "turquia",
+        "turco"
+      ],
+      "article": ""
+    },
+    "egypt": {
+      "label": "Egipto",
+      "catalog": "egypt",
+      "terms": [
+        "egypt",
+        "egyptian",
+        "egipto",
+        "egipcio"
+      ],
+      "article": ""
+    },
+    "greece": {
+      "label": "Grecia",
+      "catalog": "greece",
+      "terms": [
+        "greece",
+        "greek",
+        "grecia",
+        "griego",
+        "griega"
+      ],
+      "article": ""
+    },
+    "rome": {
+      "label": "Roma",
+      "catalog": "rome",
+      "terms": [
+        "rome",
+        "roman",
+        "roma",
+        "romano",
+        "romana"
+      ],
+      "article": ""
+    },
+    "europe": {
+      "label": "Europa",
+      "catalog": "europe",
+      "terms": [
+        "europe",
+        "european",
+        "europa",
+        "europeo"
+      ],
+      "article": ""
+    },
+    "asia": {
+      "label": "Asia",
+      "catalog": "asia",
+      "terms": [
+        "asia",
+        "asian",
+        "asiatico",
+        "asiatica"
+      ],
+      "article": ""
+    },
+    "africa": {
+      "label": "Africa",
+      "catalog": "africa",
+      "terms": [
+        "africa",
+        "african",
+        "africano",
+        "africana"
+      ],
+      "article": ""
+    },
+    "mediterranean": {
+      "label": "Mediterraneo",
+      "catalog": "mediterranean",
+      "terms": [
+        "mediterranean",
+        "mediterraneo",
+        "mediterranea"
+      ],
+      "article": ""
+    }
+  },
+  "topics": [
+    {
+      "id": "world_war_i",
+      "label": "Primera Guerra Mundial",
+      "aliases": [
+        "primera guerra mundial",
+        "i guerra mundial",
+        "1 guerra mundial",
+        "1a guerra mundial",
+        "1ª guerra mundial",
+        "primera gran guerra",
+        "gran guerra",
+        "guerra de 1914",
+        "1914 1918",
+        "wwi",
+        "ww1",
+        "pgm",
+        "primera guerra",
+        "first world war",
+        "world war i",
+        "world war 1"
+      ],
+      "subjects": [
+        "world war i"
+      ],
+      "places": []
+    },
+    {
+      "id": "world_war_ii",
+      "label": "Segunda Guerra Mundial",
+      "aliases": [
+        "segunda guerra mundial",
+        "ii guerra mundial",
+        "2 guerra mundial",
+        "2a guerra mundial",
+        "2ª guerra mundial",
+        "guerra de 1939",
+        "1939 1945",
+        "wwii",
+        "ww2",
+        "sgm",
+        "segunda guerra",
+        "second world war",
+        "world war ii",
+        "world war 2"
+      ],
+      "subjects": [
+        "world war ii"
+      ],
+      "places": []
+    },
+    {
+      "id": "cold_war",
+      "label": "Guerra Fria",
+      "aliases": [
+        "guerra fria",
+        "cold war",
+        "posguerra fria"
+      ],
+      "subjects": [
+        "cold war"
+      ],
+      "places": []
+    },
+    {
+      "id": "spanish_civil_war",
+      "label": "Guerra Civil Espanola",
+      "aliases": [
+        "guerra civil espanola",
+        "guerra civil de espana",
+        "spanish civil war",
+        "1936 1939"
+      ],
+      "subjects": [
+        "spanish civil war"
+      ],
+      "places": []
+    },
+    {
+      "id": "holocaust",
+      "label": "Holocausto",
+      "aliases": [
+        "holocausto",
+        "holocaust",
+        "shoah",
+        "genocidio nazi"
+      ],
+      "subjects": [
+        "holocaust"
+      ],
+      "places": []
+    },
+    {
+      "id": "ancient_greece",
+      "label": "Antigua Grecia",
+      "aliases": [
+        "antigua grecia",
+        "grecia antigua",
+        "grecia clasica",
+        "grecia helenistica",
+        "ancient greece",
+        "classical greece"
+      ],
+      "subjects": [
+        "ancient history"
+      ],
+      "places": [
+        "greece"
+      ]
+    },
+    {
+      "id": "ancient_rome",
+      "label": "Antigua Roma",
+      "aliases": [
+        "antigua roma",
+        "roma antigua",
+        "imperio romano",
+        "roman empire",
+        "ancient rome"
+      ],
+      "subjects": [
+        "ancient history"
+      ],
+      "places": [
+        "rome"
+      ]
+    },
+    {
+      "id": "ancient_egypt",
+      "label": "Antiguo Egipto",
+      "aliases": [
+        "antiguo egipto",
+        "egipto antiguo",
+        "civilizacion egipcia",
+        "ancient egypt"
+      ],
+      "subjects": [
+        "ancient history"
+      ],
+      "places": [
+        "egypt"
+      ]
+    },
+    {
+      "id": "ancient_history",
+      "label": "Historia antigua",
+      "aliases": [
+        "historia antigua",
+        "edad antigua",
+        "antiguedad",
+        "ancient history",
+        "antiquity"
+      ],
+      "subjects": [
+        "ancient history"
+      ],
+      "places": []
+    },
+    {
+      "id": "medieval_history",
+      "label": "Historia medieval",
+      "aliases": [
+        "edad media",
+        "historia medieval",
+        "medieval history",
+        "middle ages",
+        "medieval"
+      ],
+      "subjects": [
+        "medieval history"
+      ],
+      "places": []
+    },
+    {
+      "id": "renaissance",
+      "label": "Renacimiento",
+      "aliases": [
+        "renacimiento",
+        "renaissance"
+      ],
+      "subjects": [
+        "renaissance"
+      ],
+      "places": []
+    },
+    {
+      "id": "enlightenment",
+      "label": "Ilustracion",
+      "aliases": [
+        "ilustracion",
+        "siglo de las luces",
+        "enlightenment"
+      ],
+      "subjects": [
+        "enlightenment"
+      ],
+      "places": []
+    },
+    {
+      "id": "french_revolution",
+      "label": "Revolucion Francesa",
+      "aliases": [
+        "revolucion francesa",
+        "french revolution",
+        "revolucion de 1789"
+      ],
+      "subjects": [
+        "french revolution"
+      ],
+      "places": []
+    },
+    {
+      "id": "industrial_revolution",
+      "label": "Revolucion Industrial",
+      "aliases": [
+        "revolucion industrial",
+        "industrial revolution"
+      ],
+      "subjects": [
+        "industrial revolution"
+      ],
+      "places": []
+    },
+    {
+      "id": "history_of_spain",
+      "label": "Historia de Espana",
+      "aliases": [
+        "historia de espana",
+        "historia espanola",
+        "spanish history",
+        "history of spain"
+      ],
+      "subjects": [
+        "history"
+      ],
+      "places": [
+        "spain"
+      ]
+    },
+    {
+      "id": "history_of_mexico",
+      "label": "Historia de Mexico",
+      "aliases": [
+        "historia de mexico",
+        "historia mexicana",
+        "mexican history",
+        "history of mexico"
+      ],
+      "subjects": [
+        "history"
+      ],
+      "places": [
+        "mexico"
+      ]
+    },
+    {
+      "id": "history_of_argentina",
+      "label": "Historia de Argentina",
+      "aliases": [
+        "historia de argentina",
+        "historia argentina",
+        "argentine history",
+        "history of argentina"
+      ],
+      "subjects": [
+        "history"
+      ],
+      "places": [
+        "argentina"
+      ]
+    },
+    {
+      "id": "history_of_chile",
+      "label": "Historia de Chile",
+      "aliases": [
+        "historia de chile",
+        "historia chilena",
+        "chilean history",
+        "history of chile"
+      ],
+      "subjects": [
+        "history"
+      ],
+      "places": [
+        "chile"
+      ]
+    },
+    {
+      "id": "history_of_peru",
+      "label": "Historia de Peru",
+      "aliases": [
+        "historia de peru",
+        "historia peruana",
+        "peruvian history",
+        "history of peru"
+      ],
+      "subjects": [
+        "history"
+      ],
+      "places": [
+        "peru"
+      ]
+    },
+    {
+      "id": "history_of_colombia",
+      "label": "Historia de Colombia",
+      "aliases": [
+        "historia de colombia",
+        "historia colombiana",
+        "colombian history",
+        "history of colombia"
+      ],
+      "subjects": [
+        "history"
+      ],
+      "places": [
+        "colombia"
+      ]
+    },
+    {
+      "id": "history_of_cuba",
+      "label": "Historia de Cuba",
+      "aliases": [
+        "historia de cuba",
+        "historia cubana",
+        "cuban history",
+        "history of cuba"
+      ],
+      "subjects": [
+        "history"
+      ],
+      "places": [
+        "cuba"
+      ]
+    },
+    {
+      "id": "history_of_brazil",
+      "label": "Historia de Brasil",
+      "aliases": [
+        "historia de brasil",
+        "historia brasilena",
+        "brazilian history",
+        "history of brazil"
+      ],
+      "subjects": [
+        "history"
+      ],
+      "places": [
+        "brazil"
+      ]
+    },
+    {
+      "id": "history_of_korea",
+      "label": "Historia de Corea",
+      "aliases": [
+        "historia de corea",
+        "historia coreana",
+        "korean history",
+        "history of korea"
+      ],
+      "subjects": [
+        "history"
+      ],
+      "places": [
+        "korea"
+      ]
+    },
+    {
+      "id": "history_of_japan",
+      "label": "Historia de Japon",
+      "aliases": [
+        "historia de japon",
+        "historia japonesa",
+        "japanese history",
+        "history of japan"
+      ],
+      "subjects": [
+        "history"
+      ],
+      "places": [
+        "japan"
+      ]
+    },
+    {
+      "id": "history_of_china",
+      "label": "Historia de China",
+      "aliases": [
+        "historia de china",
+        "historia china",
+        "chinese history",
+        "history of china"
+      ],
+      "subjects": [
+        "history"
+      ],
+      "places": [
+        "china"
+      ]
+    },
+    {
+      "id": "history_of_india",
+      "label": "Historia de la India",
+      "aliases": [
+        "historia de la india",
+        "historia india",
+        "indian history",
+        "history of india"
+      ],
+      "subjects": [
+        "history"
+      ],
+      "places": [
+        "india"
+      ]
+    },
+    {
+      "id": "history_of_russia",
+      "label": "Historia de Rusia",
+      "aliases": [
+        "historia de rusia",
+        "historia rusa",
+        "russian history",
+        "history of russia"
+      ],
+      "subjects": [
+        "history"
+      ],
+      "places": [
+        "russia"
+      ]
+    },
+    {
+      "id": "history_of_europe",
+      "label": "Historia de Europa",
+      "aliases": [
+        "historia de europa",
+        "historia europea",
+        "european history",
+        "history of europe"
+      ],
+      "subjects": [
+        "history"
+      ],
+      "places": [
+        "europe"
+      ]
+    },
+    {
+      "id": "history_of_latin_america",
+      "label": "Historia de America Latina",
+      "aliases": [
+        "historia de america latina",
+        "historia latinoamericana",
+        "latin american history",
+        "history of latin america"
+      ],
+      "subjects": [
+        "history"
+      ],
+      "places": [
+        "latin america"
+      ]
+    },
+    {
+      "id": "history_of_middle_east",
+      "label": "Historia de Oriente Medio",
+      "aliases": [
+        "historia de oriente medio",
+        "historia del medio oriente",
+        "middle east history",
+        "history of the middle east"
+      ],
+      "subjects": [
+        "history"
+      ],
+      "places": [
+        "middle east"
+      ]
+    },
+    {
+      "id": "archaeology",
+      "label": "Arqueologia",
+      "aliases": [
+        "arqueologia",
+        "archaeology"
+      ],
+      "subjects": [
+        "archaeology"
+      ],
+      "places": []
+    },
+    {
+      "id": "mythology",
+      "label": "Mitologia",
+      "aliases": [
+        "mitologia",
+        "mythology"
+      ],
+      "subjects": [
+        "mythology"
+      ],
+      "places": []
+    },
+    {
+      "id": "greek_mythology",
+      "label": "Mitologia griega",
+      "aliases": [
+        "mitologia griega",
+        "mitos griegos",
+        "greek mythology"
+      ],
+      "subjects": [
+        "greek mythology"
+      ],
+      "places": []
+    },
+    {
+      "id": "norse_mythology",
+      "label": "Mitologia nordica",
+      "aliases": [
+        "mitologia nordica",
+        "mitologia escandinava",
+        "norse mythology"
+      ],
+      "subjects": [
+        "norse mythology"
+      ],
+      "places": []
+    },
+    {
+      "id": "military_history",
+      "label": "Historia militar",
+      "aliases": [
+        "historia militar",
+        "military history",
+        "conflicto belico"
+      ],
+      "subjects": [
+        "military history"
+      ],
+      "places": []
+    },
+    {
+      "id": "espionage",
+      "label": "Espionaje",
+      "aliases": [
+        "espionaje",
+        "espionage",
+        "servicios secretos",
+        "spies"
+      ],
+      "subjects": [
+        "espionage"
+      ],
+      "places": []
+    },
+    {
+      "id": "dictatorship",
+      "label": "Dictadura",
+      "aliases": [
+        "dictadura",
+        "dictaduras",
+        "autoritarismo",
+        "authoritarianism",
+        "dictatorship"
+      ],
+      "subjects": [
+        "dictatorship"
+      ],
+      "places": []
+    },
+    {
+      "id": "colonialism",
+      "label": "Colonialismo",
+      "aliases": [
+        "colonialismo",
+        "colonialism",
+        "imperialismo",
+        "imperialism"
+      ],
+      "subjects": [
+        "colonialism"
+      ],
+      "places": []
+    },
+    {
+      "id": "independence",
+      "label": "Independencia",
+      "aliases": [
+        "independencia",
+        "independencias",
+        "independence movements",
+        "movimientos de independencia"
+      ],
+      "subjects": [
+        "independence"
+      ],
+      "places": []
+    },
+    {
+      "id": "revolution",
+      "label": "Revoluciones",
+      "aliases": [
+        "revolucion",
+        "revoluciones",
+        "revolution",
+        "revolutions"
+      ],
+      "subjects": [
+        "revolution"
+      ],
+      "places": []
+    },
+    {
+      "id": "biography",
+      "label": "Biografia",
+      "aliases": [
+        "biografia",
+        "biografias",
+        "biography",
+        "biographies"
+      ],
+      "subjects": [
+        "biography"
+      ],
+      "places": []
+    },
+    {
+      "id": "memoir",
+      "label": "Memorias",
+      "aliases": [
+        "memorias",
+        "memoir",
+        "memoirs",
+        "autobiografia",
+        "autobiography"
+      ],
+      "subjects": [
+        "memoir"
+      ],
+      "places": []
+    },
+    {
+      "id": "politics",
+      "label": "Politica",
+      "aliases": [
+        "politica",
+        "politics",
+        "ciencia politica",
+        "political science"
+      ],
+      "subjects": [
+        "politics"
+      ],
+      "places": []
+    },
+    {
+      "id": "law",
+      "label": "Derecho",
+      "aliases": [
+        "derecho",
+        "law",
+        "jurisprudencia",
+        "jurisprudence"
+      ],
+      "subjects": [
+        "law"
+      ],
+      "places": []
+    },
+    {
+      "id": "international_relations",
+      "label": "Relaciones internacionales",
+      "aliases": [
+        "relaciones internacionales",
+        "international relations",
+        "geopolitica",
+        "geopolitics"
+      ],
+      "subjects": [
+        "international relations"
+      ],
+      "places": []
+    },
+    {
+      "id": "philosophy",
+      "label": "Filosofia",
+      "aliases": [
+        "filosofia",
+        "philosophy"
+      ],
+      "subjects": [
+        "philosophy"
+      ],
+      "places": []
+    },
+    {
+      "id": "ethics",
+      "label": "Etica",
+      "aliases": [
+        "etica",
+        "ethics"
+      ],
+      "subjects": [
+        "ethics"
+      ],
+      "places": []
+    },
+    {
+      "id": "logic",
+      "label": "Logica",
+      "aliases": [
+        "logica",
+        "logic"
+      ],
+      "subjects": [
+        "logic"
+      ],
+      "places": []
+    },
+    {
+      "id": "metaphysics",
+      "label": "Metafisica",
+      "aliases": [
+        "metafisica",
+        "metaphysics"
+      ],
+      "subjects": [
+        "metaphysics"
+      ],
+      "places": []
+    },
+    {
+      "id": "aesthetics",
+      "label": "Estetica",
+      "aliases": [
+        "estetica",
+        "aesthetics"
+      ],
+      "subjects": [
+        "aesthetics"
+      ],
+      "places": []
+    },
+    {
+      "id": "stoicism",
+      "label": "Estoicismo",
+      "aliases": [
+        "estoicismo",
+        "stoicism"
+      ],
+      "subjects": [
+        "stoicism"
+      ],
+      "places": []
+    },
+    {
+      "id": "existentialism",
+      "label": "Existencialismo",
+      "aliases": [
+        "existencialismo",
+        "existentialism"
+      ],
+      "subjects": [
+        "existentialism"
+      ],
+      "places": []
+    },
+    {
+      "id": "religion",
+      "label": "Religion",
+      "aliases": [
+        "religion",
+        "religiones",
+        "religion y creencias"
+      ],
+      "subjects": [
+        "religion"
+      ],
+      "places": []
+    },
+    {
+      "id": "christianity",
+      "label": "Cristianismo",
+      "aliases": [
+        "cristianismo",
+        "christianity"
+      ],
+      "subjects": [
+        "christianity"
+      ],
+      "places": []
+    },
+    {
+      "id": "catholicism",
+      "label": "Catolicismo",
+      "aliases": [
+        "catolicismo",
+        "catholicism"
+      ],
+      "subjects": [
+        "catholicism"
+      ],
+      "places": []
+    },
+    {
+      "id": "islam",
+      "label": "Islam",
+      "aliases": [
+        "islam",
+        "islamismo",
+        "islamic"
+      ],
+      "subjects": [
+        "islam"
+      ],
+      "places": []
+    },
+    {
+      "id": "judaism",
+      "label": "Judaismo",
+      "aliases": [
+        "judaismo",
+        "judaism"
+      ],
+      "subjects": [
+        "judaism"
+      ],
+      "places": []
+    },
+    {
+      "id": "buddhism",
+      "label": "Budismo",
+      "aliases": [
+        "budismo",
+        "buddhism"
+      ],
+      "subjects": [
+        "buddhism"
+      ],
+      "places": []
+    },
+    {
+      "id": "hinduism",
+      "label": "Hinduismo",
+      "aliases": [
+        "hinduismo",
+        "hinduism"
+      ],
+      "subjects": [
+        "hinduism"
+      ],
+      "places": []
+    },
+    {
+      "id": "spirituality",
+      "label": "Espiritualidad",
+      "aliases": [
+        "espiritualidad",
+        "spirituality"
+      ],
+      "subjects": [
+        "spirituality"
+      ],
+      "places": []
+    },
+    {
+      "id": "psychology",
+      "label": "Psicologia",
+      "aliases": [
+        "psicologia",
+        "psychology"
+      ],
+      "subjects": [
+        "psychology"
+      ],
+      "places": []
+    },
+    {
+      "id": "psychoanalysis",
+      "label": "Psicoanalisis",
+      "aliases": [
+        "psicoanalisis",
+        "psychoanalysis"
+      ],
+      "subjects": [
+        "psychoanalysis"
+      ],
+      "places": []
+    },
+    {
+      "id": "neuroscience",
+      "label": "Neurociencia",
+      "aliases": [
+        "neurociencia",
+        "neuroscience"
+      ],
+      "subjects": [
+        "neuroscience"
+      ],
+      "places": []
+    },
+    {
+      "id": "sociology",
+      "label": "Sociologia",
+      "aliases": [
+        "sociologia",
+        "sociology"
+      ],
+      "subjects": [
+        "sociology"
+      ],
+      "places": []
+    },
+    {
+      "id": "anthropology",
+      "label": "Antropologia",
+      "aliases": [
+        "antropologia",
+        "anthropology"
+      ],
+      "subjects": [
+        "anthropology"
+      ],
+      "places": []
+    },
+    {
+      "id": "education",
+      "label": "Educacion",
+      "aliases": [
+        "educacion",
+        "education",
+        "pedagogia",
+        "pedagogy"
+      ],
+      "subjects": [
+        "education"
+      ],
+      "places": []
+    },
+    {
+      "id": "linguistics",
+      "label": "Linguistica",
+      "aliases": [
+        "linguistica",
+        "linguistics",
+        "lenguaje",
+        "language"
+      ],
+      "subjects": [
+        "linguistics"
+      ],
+      "places": []
+    },
+    {
+      "id": "economics",
+      "label": "Economia",
+      "aliases": [
+        "economia",
+        "economics",
+        "economy"
+      ],
+      "subjects": [
+        "economics"
+      ],
+      "places": []
+    },
+    {
+      "id": "finance",
+      "label": "Finanzas",
+      "aliases": [
+        "finanzas",
+        "finance"
+      ],
+      "subjects": [
+        "finance"
+      ],
+      "places": []
+    },
+    {
+      "id": "business",
+      "label": "Empresa",
+      "aliases": [
+        "empresa",
+        "empresas",
+        "business",
+        "business enterprises"
+      ],
+      "subjects": [
+        "business"
+      ],
+      "places": []
+    },
+    {
+      "id": "management",
+      "label": "Gestion",
+      "aliases": [
+        "gestion",
+        "management",
+        "administracion de empresas"
+      ],
+      "subjects": [
+        "management"
+      ],
+      "places": []
+    },
+    {
+      "id": "marketing",
+      "label": "Marketing",
+      "aliases": [
+        "marketing",
+        "mercadeo"
+      ],
+      "subjects": [
+        "marketing"
+      ],
+      "places": []
+    },
+    {
+      "id": "entrepreneurship",
+      "label": "Emprendimiento",
+      "aliases": [
+        "emprendimiento",
+        "entrepreneurship",
+        "emprender"
+      ],
+      "subjects": [
+        "entrepreneurship"
+      ],
+      "places": []
+    },
+    {
+      "id": "personal_finance",
+      "label": "Finanzas personales",
+      "aliases": [
+        "finanzas personales",
+        "personal finance",
+        "ahorro",
+        "inversiones personales"
+      ],
+      "subjects": [
+        "personal finance"
+      ],
+      "places": []
+    },
+    {
+      "id": "poverty",
+      "label": "Pobreza",
+      "aliases": [
+        "pobreza",
+        "poverty"
+      ],
+      "subjects": [
+        "poverty"
+      ],
+      "places": []
+    },
+    {
+      "id": "inequality",
+      "label": "Desigualdad",
+      "aliases": [
+        "desigualdad",
+        "inequality",
+        "justicia social",
+        "social justice"
+      ],
+      "subjects": [
+        "inequality"
+      ],
+      "places": []
+    },
+    {
+      "id": "globalization",
+      "label": "Globalizacion",
+      "aliases": [
+        "globalizacion",
+        "globalization",
+        "mundializacion"
+      ],
+      "subjects": [
+        "globalization"
+      ],
+      "places": []
+    },
+    {
+      "id": "democracy",
+      "label": "Democracia",
+      "aliases": [
+        "democracia",
+        "democracy"
+      ],
+      "subjects": [
+        "democracy"
+      ],
+      "places": []
+    },
+    {
+      "id": "fascism",
+      "label": "Fascismo",
+      "aliases": [
+        "fascismo",
+        "fascism"
+      ],
+      "subjects": [
+        "fascism"
+      ],
+      "places": []
+    },
+    {
+      "id": "communism",
+      "label": "Comunismo",
+      "aliases": [
+        "comunismo",
+        "communism"
+      ],
+      "subjects": [
+        "communism"
+      ],
+      "places": []
+    },
+    {
+      "id": "socialism",
+      "label": "Socialismo",
+      "aliases": [
+        "socialismo",
+        "socialism"
+      ],
+      "subjects": [
+        "socialism"
+      ],
+      "places": []
+    },
+    {
+      "id": "capitalism",
+      "label": "Capitalismo",
+      "aliases": [
+        "capitalismo",
+        "capitalism"
+      ],
+      "subjects": [
+        "capitalism"
+      ],
+      "places": []
+    },
+    {
+      "id": "anarchism",
+      "label": "Anarquismo",
+      "aliases": [
+        "anarquismo",
+        "anarchism"
+      ],
+      "subjects": [
+        "anarchism"
+      ],
+      "places": []
+    },
+    {
+      "id": "feminism",
+      "label": "Feminismo",
+      "aliases": [
+        "feminismo",
+        "feminism"
+      ],
+      "subjects": [
+        "feminism"
+      ],
+      "places": []
+    },
+    {
+      "id": "gender",
+      "label": "Genero",
+      "aliases": [
+        "genero",
+        "gender",
+        "estudios de genero",
+        "gender studies"
+      ],
+      "subjects": [
+        "gender"
+      ],
+      "places": []
+    },
+    {
+      "id": "lgbt",
+      "label": "LGBTQ+",
+      "aliases": [
+        "lgbt",
+        "lgbtq",
+        "lgbtq+",
+        "homosexualidad",
+        "minorias sexuales"
+      ],
+      "subjects": [
+        "lgbt"
+      ],
+      "places": []
+    },
+    {
+      "id": "human_rights",
+      "label": "Derechos humanos",
+      "aliases": [
+        "derechos humanos",
+        "human rights"
+      ],
+      "subjects": [
+        "human rights"
+      ],
+      "places": []
+    },
+    {
+      "id": "racism",
+      "label": "Racismo",
+      "aliases": [
+        "racismo",
+        "racism",
+        "discriminacion racial"
+      ],
+      "subjects": [
+        "racism"
+      ],
+      "places": []
+    },
+    {
+      "id": "slavery",
+      "label": "Esclavitud",
+      "aliases": [
+        "esclavitud",
+        "slavery",
+        "esclavos",
+        "slaves"
+      ],
+      "subjects": [
+        "slavery"
+      ],
+      "places": []
+    },
+    {
+      "id": "terrorism",
+      "label": "Terrorismo",
+      "aliases": [
+        "terrorismo",
+        "terrorism"
+      ],
+      "subjects": [
+        "terrorism"
+      ],
+      "places": []
+    },
+    {
+      "id": "crime",
+      "label": "Crimen",
+      "aliases": [
+        "crimen",
+        "crime",
+        "criminalidad",
+        "criminologia",
+        "criminology"
+      ],
+      "subjects": [
+        "crime"
+      ],
+      "places": []
+    },
+    {
+      "id": "justice",
+      "label": "Justicia",
+      "aliases": [
+        "justicia",
+        "justice"
+      ],
+      "subjects": [
+        "justice"
+      ],
+      "places": []
+    },
+    {
+      "id": "peace",
+      "label": "Paz",
+      "aliases": [
+        "paz",
+        "peace",
+        "estudios de paz"
+      ],
+      "subjects": [
+        "peace"
+      ],
+      "places": []
+    },
+    {
+      "id": "war",
+      "label": "Guerra",
+      "aliases": [
+        "guerras",
+        "warfare",
+        "guerra",
+        "war",
+        "conflicto armado"
+      ],
+      "subjects": [
+        "war"
+      ],
+      "places": []
+    },
+    {
+      "id": "art",
+      "label": "Arte",
+      "aliases": [
+        "arte",
+        "artes",
+        "art",
+        "arts"
+      ],
+      "subjects": [
+        "art"
+      ],
+      "places": []
+    },
+    {
+      "id": "art_history",
+      "label": "Historia del arte",
+      "aliases": [
+        "historia del arte",
+        "art history"
+      ],
+      "subjects": [
+        "art history"
+      ],
+      "places": []
+    },
+    {
+      "id": "painting",
+      "label": "Pintura",
+      "aliases": [
+        "pintura",
+        "pinturas",
+        "painting",
+        "paintings"
+      ],
+      "subjects": [
+        "painting"
+      ],
+      "places": []
+    },
+    {
+      "id": "sculpture",
+      "label": "Escultura",
+      "aliases": [
+        "escultura",
+        "esculturas",
+        "sculpture"
+      ],
+      "subjects": [
+        "sculpture"
+      ],
+      "places": []
+    },
+    {
+      "id": "photography",
+      "label": "Fotografia",
+      "aliases": [
+        "fotografia",
+        "fotografias",
+        "photography",
+        "photographs"
+      ],
+      "subjects": [
+        "photography"
+      ],
+      "places": []
+    },
+    {
+      "id": "cinema",
+      "label": "Cine",
+      "aliases": [
+        "cine",
+        "cinema",
+        "peliculas",
+        "pelicula",
+        "film",
+        "films"
+      ],
+      "subjects": [
+        "cinema"
+      ],
+      "places": []
+    },
+    {
+      "id": "music",
+      "label": "Musica",
+      "aliases": [
+        "musica",
+        "music"
+      ],
+      "subjects": [
+        "music"
+      ],
+      "places": []
+    },
+    {
+      "id": "theater",
+      "label": "Teatro",
+      "aliases": [
+        "teatro",
+        "theater",
+        "theatre",
+        "drama"
+      ],
+      "subjects": [
+        "theater"
+      ],
+      "places": []
+    },
+    {
+      "id": "dance",
+      "label": "Danza",
+      "aliases": [
+        "danza",
+        "dance",
+        "ballet"
+      ],
+      "subjects": [
+        "dance"
+      ],
+      "places": []
+    },
+    {
+      "id": "architecture",
+      "label": "Arquitectura",
+      "aliases": [
+        "arquitectura",
+        "architecture"
+      ],
+      "subjects": [
+        "architecture"
+      ],
+      "places": []
+    },
+    {
+      "id": "design",
+      "label": "Diseno",
+      "aliases": [
+        "diseno",
+        "design"
+      ],
+      "subjects": [
+        "design"
+      ],
+      "places": []
+    },
+    {
+      "id": "fashion",
+      "label": "Moda",
+      "aliases": [
+        "moda",
+        "fashion"
+      ],
+      "subjects": [
+        "fashion"
+      ],
+      "places": []
+    },
+    {
+      "id": "literature",
+      "label": "Literatura",
+      "aliases": [
+        "literatura",
+        "literature"
+      ],
+      "subjects": [
+        "literature"
+      ],
+      "places": []
+    },
+    {
+      "id": "literary_criticism",
+      "label": "Critica literaria",
+      "aliases": [
+        "critica literaria",
+        "literary criticism",
+        "teoria literaria",
+        "literary theory"
+      ],
+      "subjects": [
+        "literary criticism"
+      ],
+      "places": []
+    },
+    {
+      "id": "poetry",
+      "label": "Poesia",
+      "aliases": [
+        "poesia",
+        "poetry"
+      ],
+      "subjects": [
+        "poetry"
+      ],
+      "places": []
+    },
+    {
+      "id": "short_stories",
+      "label": "Relatos cortos",
+      "aliases": [
+        "relatos cortos",
+        "cuentos",
+        "relatos",
+        "short stories",
+        "short story"
+      ],
+      "subjects": [
+        "short stories"
+      ],
+      "places": []
+    },
+    {
+      "id": "comics",
+      "label": "Comics",
+      "aliases": [
+        "comics",
+        "comic",
+        "comic books",
+        "novela grafica",
+        "graphic novel",
+        "manga"
+      ],
+      "subjects": [
+        "comics"
+      ],
+      "places": []
+    },
+    {
+      "id": "science_fiction",
+      "label": "Ciencia ficcion",
+      "aliases": [
+        "ciencia ficcion",
+        "science fiction",
+        "sci fi",
+        "sci-fi",
+        "space opera"
+      ],
+      "subjects": [
+        "science fiction"
+      ],
+      "places": []
+    },
+    {
+      "id": "fantasy",
+      "label": "Fantasia",
+      "aliases": [
+        "fantasia",
+        "fantasy"
+      ],
+      "subjects": [
+        "fantasy"
+      ],
+      "places": []
+    },
+    {
+      "id": "horror",
+      "label": "Terror",
+      "aliases": [
+        "terror",
+        "horror"
+      ],
+      "subjects": [
+        "horror"
+      ],
+      "places": []
+    },
+    {
+      "id": "mystery",
+      "label": "Misterio",
+      "aliases": [
+        "misterio",
+        "mystery",
+        "policiaco",
+        "policiaca",
+        "policiac",
+        "detective",
+        "detectives"
+      ],
+      "subjects": [
+        "mystery"
+      ],
+      "places": []
+    },
+    {
+      "id": "thriller",
+      "label": "Thriller",
+      "aliases": [
+        "thriller",
+        "suspense"
+      ],
+      "subjects": [
+        "thriller"
+      ],
+      "places": []
+    },
+    {
+      "id": "romance",
+      "label": "Romance",
+      "aliases": [
+        "romance",
+        "novela romantica",
+        "novelas romanticas",
+        "novelas de amor",
+        "romance novels"
+      ],
+      "subjects": [
+        "romance"
+      ],
+      "places": []
+    },
+    {
+      "id": "adventure",
+      "label": "Aventura",
+      "aliases": [
+        "aventura",
+        "aventuras",
+        "adventure",
+        "adventure fiction"
+      ],
+      "subjects": [
+        "adventure"
+      ],
+      "places": []
+    },
+    {
+      "id": "dystopia",
+      "label": "Distopia",
+      "aliases": [
+        "distopia",
+        "dystopia",
+        "distopian"
+      ],
+      "subjects": [
+        "dystopia"
+      ],
+      "places": []
+    },
+    {
+      "id": "utopia",
+      "label": "Utopia",
+      "aliases": [
+        "utopia",
+        "utopian"
+      ],
+      "subjects": [
+        "utopia"
+      ],
+      "places": []
+    },
+    {
+      "id": "magical_realism",
+      "label": "Realismo magico",
+      "aliases": [
+        "realismo magico",
+        "magical realism",
+        "magic realism"
+      ],
+      "subjects": [
+        "magical realism"
+      ],
+      "places": []
+    },
+    {
+      "id": "coming_of_age",
+      "label": "Novela de formacion",
+      "aliases": [
+        "novela de formacion",
+        "coming of age",
+        "bildungsroman"
+      ],
+      "subjects": [
+        "coming of age"
+      ],
+      "places": []
+    },
+    {
+      "id": "epic",
+      "label": "Epopeya",
+      "aliases": [
+        "epopeya",
+        "epica",
+        "epic",
+        "epic literature"
+      ],
+      "subjects": [
+        "epic"
+      ],
+      "places": []
+    },
+    {
+      "id": "fairy_tales",
+      "label": "Cuentos de hadas",
+      "aliases": [
+        "cuentos de hadas",
+        "fairy tales",
+        "fairy tale"
+      ],
+      "subjects": [
+        "fairy tales"
+      ],
+      "places": []
+    },
+    {
+      "id": "satire",
+      "label": "Satira",
+      "aliases": [
+        "satira",
+        "satire"
+      ],
+      "subjects": [
+        "satire"
+      ],
+      "places": []
+    },
+    {
+      "id": "classics",
+      "label": "Clasicos",
+      "aliases": [
+        "clasicos",
+        "classics",
+        "literatura clasica",
+        "classic literature"
+      ],
+      "subjects": [
+        "classics"
+      ],
+      "places": []
+    },
+    {
+      "id": "contemporary_literature",
+      "label": "Literatura contemporanea",
+      "aliases": [
+        "literatura contemporanea",
+        "contemporary literature",
+        "novela contemporanea"
+      ],
+      "subjects": [
+        "contemporary literature"
+      ],
+      "places": []
+    },
+    {
+      "id": "latin_american_literature",
+      "label": "Literatura latinoamericana",
+      "aliases": [
+        "literatura latinoamericana",
+        "literatura hispanoamericana",
+        "latin american literature"
+      ],
+      "subjects": [
+        "latin american literature"
+      ],
+      "places": []
+    },
+    {
+      "id": "spanish_literature",
+      "label": "Literatura espanola",
+      "aliases": [
+        "literatura espanola",
+        "spanish literature"
+      ],
+      "subjects": [
+        "spanish literature"
+      ],
+      "places": []
+    },
+    {
+      "id": "english_literature",
+      "label": "Literatura inglesa",
+      "aliases": [
+        "literatura inglesa",
+        "english literature"
+      ],
+      "subjects": [
+        "english literature"
+      ],
+      "places": []
+    },
+    {
+      "id": "russian_literature",
+      "label": "Literatura rusa",
+      "aliases": [
+        "literatura rusa",
+        "russian literature"
+      ],
+      "subjects": [
+        "russian literature"
+      ],
+      "places": []
+    },
+    {
+      "id": "japanese_literature",
+      "label": "Literatura japonesa",
+      "aliases": [
+        "literatura japonesa",
+        "japanese literature"
+      ],
+      "subjects": [
+        "japanese literature"
+      ],
+      "places": []
+    },
+    {
+      "id": "african_literature",
+      "label": "Literatura africana",
+      "aliases": [
+        "literatura africana",
+        "african literature"
+      ],
+      "subjects": [
+        "african literature"
+      ],
+      "places": []
+    },
+    {
+      "id": "science",
+      "label": "Ciencia",
+      "aliases": [
+        "ciencia",
+        "ciencias",
+        "science"
+      ],
+      "subjects": [
+        "science"
+      ],
+      "places": []
+    },
+    {
+      "id": "physics",
+      "label": "Fisica",
+      "aliases": [
+        "fisica",
+        "physics"
+      ],
+      "subjects": [
+        "physics"
+      ],
+      "places": []
+    },
+    {
+      "id": "chemistry",
+      "label": "Quimica",
+      "aliases": [
+        "quimica",
+        "chemistry"
+      ],
+      "subjects": [
+        "chemistry"
+      ],
+      "places": []
+    },
+    {
+      "id": "biology",
+      "label": "Biologia",
+      "aliases": [
+        "biologia",
+        "biology"
+      ],
+      "subjects": [
+        "biology"
+      ],
+      "places": []
+    },
+    {
+      "id": "astronomy",
+      "label": "Astronomia",
+      "aliases": [
+        "astronomia",
+        "astronomy"
+      ],
+      "subjects": [
+        "astronomy"
+      ],
+      "places": []
+    },
+    {
+      "id": "astrophysics",
+      "label": "Astrofisica",
+      "aliases": [
+        "astrofisica",
+        "astrophysics"
+      ],
+      "subjects": [
+        "astrophysics"
+      ],
+      "places": []
+    },
+    {
+      "id": "cosmology",
+      "label": "Cosmologia",
+      "aliases": [
+        "cosmologia",
+        "cosmology"
+      ],
+      "subjects": [
+        "cosmology"
+      ],
+      "places": []
+    },
+    {
+      "id": "mathematics",
+      "label": "Matematicas",
+      "aliases": [
+        "matematicas",
+        "matematica",
+        "mathematics",
+        "math"
+      ],
+      "subjects": [
+        "mathematics"
+      ],
+      "places": []
+    },
+    {
+      "id": "statistics",
+      "label": "Estadistica",
+      "aliases": [
+        "estadistica",
+        "statistics"
+      ],
+      "subjects": [
+        "statistics"
+      ],
+      "places": []
+    },
+    {
+      "id": "medicine",
+      "label": "Medicina",
+      "aliases": [
+        "medicina",
+        "medicine",
+        "medico"
+      ],
+      "subjects": [
+        "medicine"
+      ],
+      "places": []
+    },
+    {
+      "id": "anatomy",
+      "label": "Anatomia",
+      "aliases": [
+        "anatomia",
+        "anatomy"
+      ],
+      "subjects": [
+        "anatomy"
+      ],
+      "places": []
+    },
+    {
+      "id": "genetics",
+      "label": "Genetica",
+      "aliases": [
+        "genetica",
+        "genetics"
+      ],
+      "subjects": [
+        "genetics"
+      ],
+      "places": []
+    },
+    {
+      "id": "evolution",
+      "label": "Evolucion",
+      "aliases": [
+        "evolucion",
+        "evolution"
+      ],
+      "subjects": [
+        "evolution"
+      ],
+      "places": []
+    },
+    {
+      "id": "ecology",
+      "label": "Ecologia",
+      "aliases": [
+        "ecologia",
+        "ecology"
+      ],
+      "subjects": [
+        "ecology"
+      ],
+      "places": []
+    },
+    {
+      "id": "environment",
+      "label": "Medio ambiente",
+      "aliases": [
+        "medio ambiente",
+        "environment",
+        "ambiental"
+      ],
+      "subjects": [
+        "environment"
+      ],
+      "places": []
+    },
+    {
+      "id": "climate_change",
+      "label": "Cambio climatico",
+      "aliases": [
+        "cambio climatico",
+        "climate change",
+        "calentamiento global",
+        "global warming"
+      ],
+      "subjects": [
+        "climate change"
+      ],
+      "places": []
+    },
+    {
+      "id": "nature",
+      "label": "Naturaleza",
+      "aliases": [
+        "naturaleza",
+        "nature"
+      ],
+      "subjects": [
+        "nature"
+      ],
+      "places": []
+    },
+    {
+      "id": "animals",
+      "label": "Animales",
+      "aliases": [
+        "animales",
+        "animal",
+        "animals",
+        "fauna"
+      ],
+      "subjects": [
+        "animals"
+      ],
+      "places": []
+    },
+    {
+      "id": "plants",
+      "label": "Plantas",
+      "aliases": [
+        "plantas",
+        "botanica",
+        "botany",
+        "flora"
+      ],
+      "subjects": [
+        "plants"
+      ],
+      "places": []
+    },
+    {
+      "id": "agriculture",
+      "label": "Agricultura",
+      "aliases": [
+        "agricultura",
+        "agriculture",
+        "farming"
+      ],
+      "subjects": [
+        "agriculture"
+      ],
+      "places": []
+    },
+    {
+      "id": "technology",
+      "label": "Tecnologia",
+      "aliases": [
+        "tecnologia",
+        "technology"
+      ],
+      "subjects": [
+        "technology"
+      ],
+      "places": []
+    },
+    {
+      "id": "computing",
+      "label": "Informatica",
+      "aliases": [
+        "informatica",
+        "computacion",
+        "computing",
+        "computers",
+        "computer science"
+      ],
+      "subjects": [
+        "computing"
+      ],
+      "places": []
+    },
+    {
+      "id": "programming",
+      "label": "Programacion",
+      "aliases": [
+        "programacion",
+        "programming",
+        "software",
+        "codigo",
+        "coding"
+      ],
+      "subjects": [
+        "programming"
+      ],
+      "places": []
+    },
+    {
+      "id": "artificial_intelligence",
+      "label": "Inteligencia artificial",
+      "aliases": [
+        "inteligencia artificial",
+        "artificial intelligence",
+        "machine learning",
+        "aprendizaje automatico"
+      ],
+      "subjects": [
+        "artificial intelligence"
+      ],
+      "places": []
+    },
+    {
+      "id": "internet",
+      "label": "Internet",
+      "aliases": [
+        "internet",
+        "web",
+        "world wide web"
+      ],
+      "subjects": [
+        "internet"
+      ],
+      "places": []
+    },
+    {
+      "id": "engineering",
+      "label": "Ingenieria",
+      "aliases": [
+        "ingenieria",
+        "engineering"
+      ],
+      "subjects": [
+        "engineering"
+      ],
+      "places": []
+    },
+    {
+      "id": "robotics",
+      "label": "Robotica",
+      "aliases": [
+        "robotica",
+        "robotics",
+        "robots"
+      ],
+      "subjects": [
+        "robotics"
+      ],
+      "places": []
+    },
+    {
+      "id": "space",
+      "label": "Espacio",
+      "aliases": [
+        "espacio exterior",
+        "espacio",
+        "exploracion espacial",
+        "space",
+        "outer space",
+        "aventuras espaciales",
+        "aventura espacial",
+        "viajes interplanetarios",
+        "viajes espaciales",
+        "ambientacion espacial",
+        "tematica espacial"
+      ],
+      "subjects": [
+        "space"
+      ],
+      "places": []
+    },
+    {
+      "id": "cooking",
+      "label": "Cocina",
+      "aliases": [
+        "cocina",
+        "gastronomia",
+        "recetas",
+        "cooking",
+        "cookery"
+      ],
+      "subjects": [
+        "cooking"
+      ],
+      "places": []
+    },
+    {
+      "id": "nutrition",
+      "label": "Nutricion",
+      "aliases": [
+        "nutricion",
+        "nutrition",
+        "alimentacion"
+      ],
+      "subjects": [
+        "nutrition"
+      ],
+      "places": []
+    },
+    {
+      "id": "health",
+      "label": "Salud",
+      "aliases": [
+        "salud",
+        "health",
+        "bienestar",
+        "wellness"
+      ],
+      "subjects": [
+        "health"
+      ],
+      "places": []
+    },
+    {
+      "id": "fitness",
+      "label": "Fitness",
+      "aliases": [
+        "fitness",
+        "gimnasio",
+        "ejercicio fisico",
+        "physical fitness"
+      ],
+      "subjects": [
+        "fitness"
+      ],
+      "places": []
+    },
+    {
+      "id": "sports",
+      "label": "Deporte",
+      "aliases": [
+        "deporte",
+        "deportes",
+        "sports"
+      ],
+      "subjects": [
+        "sports"
+      ],
+      "places": []
+    },
+    {
+      "id": "travel",
+      "label": "Viajes",
+      "aliases": [
+        "viajes",
+        "viajar",
+        "travel",
+        "literatura de viajes"
+      ],
+      "subjects": [
+        "travel"
+      ],
+      "places": []
+    },
+    {
+      "id": "gardening",
+      "label": "Jardineria",
+      "aliases": [
+        "jardineria",
+        "jardines",
+        "gardening"
+      ],
+      "subjects": [
+        "gardening"
+      ],
+      "places": []
+    },
+    {
+      "id": "crafts",
+      "label": "Manualidades",
+      "aliases": [
+        "manualidades",
+        "artesania",
+        "crafts",
+        "handicraft"
+      ],
+      "subjects": [
+        "crafts"
+      ],
+      "places": []
+    },
+    {
+      "id": "parenting",
+      "label": "Crianza",
+      "aliases": [
+        "crianza",
+        "paternidad",
+        "maternidad",
+        "parenting"
+      ],
+      "subjects": [
+        "parenting"
+      ],
+      "places": []
+    },
+    {
+      "id": "relationships",
+      "label": "Relaciones personales",
+      "aliases": [
+        "relaciones personales",
+        "relaciones",
+        "relationships",
+        "interpersonal relations"
+      ],
+      "subjects": [
+        "relationships"
+      ],
+      "places": []
+    },
+    {
+      "id": "self_help",
+      "label": "Autoayuda",
+      "aliases": [
+        "autoayuda",
+        "self help",
+        "self-help",
+        "desarrollo personal",
+        "personal development"
+      ],
+      "subjects": [
+        "self-help"
+      ],
+      "places": []
+    },
+    {
+      "id": "productivity",
+      "label": "Productividad",
+      "aliases": [
+        "productividad",
+        "productivity",
+        "gestion del tiempo",
+        "time management"
+      ],
+      "subjects": [
+        "productivity"
+      ],
+      "places": []
+    },
+    {
+      "id": "happiness",
+      "label": "Felicidad",
+      "aliases": [
+        "felicidad",
+        "happiness"
+      ],
+      "subjects": [
+        "happiness"
+      ],
+      "places": []
+    },
+    {
+      "id": "mindfulness",
+      "label": "Atencion plena",
+      "aliases": [
+        "atencion plena",
+        "mindfulness",
+        "conciencia plena"
+      ],
+      "subjects": [
+        "mindfulness"
+      ],
+      "places": []
+    },
+    {
+      "id": "meditation",
+      "label": "Meditacion",
+      "aliases": [
+        "meditacion",
+        "meditation"
+      ],
+      "subjects": [
+        "meditation"
+      ],
+      "places": []
+    },
+    {
+      "id": "yoga",
+      "label": "Yoga",
+      "aliases": [
+        "yoga"
+      ],
+      "subjects": [
+        "yoga"
+      ],
+      "places": []
+    },
+    {
+      "id": "astrology",
+      "label": "Astrologia",
+      "aliases": [
+        "astrologia",
+        "astrology",
+        "horoscopo"
+      ],
+      "subjects": [
+        "astrology"
+      ],
+      "places": []
+    },
+    {
+      "id": "esotericism",
+      "label": "Esoterismo",
+      "aliases": [
+        "esoterismo",
+        "ocultismo",
+        "esotericism",
+        "occultism"
+      ],
+      "subjects": [
+        "esotericism"
+      ],
+      "places": []
+    },
+    {
+      "id": "love",
+      "label": "Amor",
+      "aliases": [
+        "amor",
+        "amor romantico",
+        "love",
+        "romantic love"
+      ],
+      "subjects": [
+        "love"
+      ],
+      "places": []
+    },
+    {
+      "id": "friendship",
+      "label": "Amistad",
+      "aliases": [
+        "amistad",
+        "friendship",
+        "amigos"
+      ],
+      "subjects": [
+        "friendship"
+      ],
+      "places": []
+    },
+    {
+      "id": "family",
+      "label": "Familia",
+      "aliases": [
+        "familia",
+        "familias",
+        "family",
+        "family relationships"
+      ],
+      "subjects": [
+        "family"
+      ],
+      "places": []
+    },
+    {
+      "id": "childhood",
+      "label": "Infancia",
+      "aliases": [
+        "infancia",
+        "childhood",
+        "ninos",
+        "children"
+      ],
+      "subjects": [
+        "childhood"
+      ],
+      "places": []
+    },
+    {
+      "id": "adolescence",
+      "label": "Adolescencia",
+      "aliases": [
+        "adolescencia",
+        "adolescence",
+        "adolescentes",
+        "adolescents"
+      ],
+      "subjects": [
+        "adolescence"
+      ],
+      "places": []
+    },
+    {
+      "id": "death",
+      "label": "Muerte",
+      "aliases": [
+        "muerte",
+        "death",
+        "mourning"
+      ],
+      "subjects": [
+        "death"
+      ],
+      "places": []
+    },
+    {
+      "id": "grief",
+      "label": "Duelo",
+      "aliases": [
+        "duelo",
+        "grief",
+        "luto",
+        "bereavement"
+      ],
+      "subjects": [
+        "grief"
+      ],
+      "places": []
+    },
+    {
+      "id": "loneliness",
+      "label": "Soledad",
+      "aliases": [
+        "soledad",
+        "loneliness"
+      ],
+      "subjects": [
+        "loneliness"
+      ],
+      "places": []
+    },
+    {
+      "id": "identity",
+      "label": "Identidad",
+      "aliases": [
+        "identidad",
+        "identity"
+      ],
+      "subjects": [
+        "identity"
+      ],
+      "places": []
+    },
+    {
+      "id": "memory",
+      "label": "Memoria",
+      "aliases": [
+        "memoria",
+        "memoria historica",
+        "memory"
+      ],
+      "subjects": [
+        "memory"
+      ],
+      "places": []
+    },
+    {
+      "id": "dreams",
+      "label": "Suenos",
+      "aliases": [
+        "suenos",
+        "sueno",
+        "dreams",
+        "dream"
+      ],
+      "subjects": [
+        "dreams"
+      ],
+      "places": []
+    },
+    {
+      "id": "madness",
+      "label": "Locura",
+      "aliases": [
+        "locura",
+        "salud mental",
+        "madness",
+        "mental illness"
+      ],
+      "subjects": [
+        "madness"
+      ],
+      "places": []
+    },
+    {
+      "id": "exile",
+      "label": "Exilio",
+      "aliases": [
+        "exilio",
+        "exiliados",
+        "exile"
+      ],
+      "subjects": [
+        "exile"
+      ],
+      "places": []
+    },
+    {
+      "id": "migration",
+      "label": "Migracion",
+      "aliases": [
+        "migracion",
+        "migraciones",
+        "inmigracion",
+        "emigracion",
+        "migration",
+        "immigration"
+      ],
+      "subjects": [
+        "migration"
+      ],
+      "places": []
+    },
+    {
+      "id": "freedom",
+      "label": "Libertad",
+      "aliases": [
+        "libertad",
+        "freedom",
+        "liberty"
+      ],
+      "subjects": [
+        "freedom"
+      ],
+      "places": []
+    },
+    {
+      "id": "power",
+      "label": "Poder",
+      "aliases": [
+        "poder",
+        "power"
+      ],
+      "subjects": [
+        "power"
+      ],
+      "places": []
+    },
+    {
+      "id": "hope",
+      "label": "Esperanza",
+      "aliases": [
+        "esperanza",
+        "hope"
+      ],
+      "subjects": [
+        "hope"
+      ],
+      "places": []
+    },
+    {
+      "id": "fear",
+      "label": "Miedo",
+      "aliases": [
+        "miedo",
+        "fear"
+      ],
+      "subjects": [
+        "fear"
+      ],
+      "places": []
+    },
+    {
+      "id": "courage",
+      "label": "Coraje",
+      "aliases": [
+        "coraje",
+        "valor",
+        "courage"
+      ],
+      "subjects": [
+        "courage"
+      ],
+      "places": []
+    },
+    {
+      "id": "betrayal",
+      "label": "Traicion",
+      "aliases": [
+        "traicion",
+        "betrayal"
+      ],
+      "subjects": [
+        "betrayal"
+      ],
+      "places": []
+    },
+    {
+      "id": "secrets",
+      "label": "Secretos",
+      "aliases": [
+        "secretos",
+        "secret",
+        "secrets"
+      ],
+      "subjects": [
+        "secrets"
+      ],
+      "places": []
+    },
+    {
+      "id": "magic",
+      "label": "Magia",
+      "aliases": [
+        "magia",
+        "magic",
+        "magico",
+        "magical"
+      ],
+      "subjects": [
+        "magic"
+      ],
+      "places": []
+    },
+    {
+      "id": "school",
+      "label": "Escuela",
+      "aliases": [
+        "escuela",
+        "colegio",
+        "school",
+        "schools"
+      ],
+      "subjects": [
+        "school"
+      ],
+      "places": []
+    },
+    {
+      "id": "work",
+      "label": "Trabajo",
+      "aliases": [
+        "trabajo",
+        "work",
+        "labor",
+        "labour"
+      ],
+      "subjects": [
+        "work"
+      ],
+      "places": []
+    },
+    {
+      "id": "city",
+      "label": "Ciudad",
+      "aliases": [
+        "ciudad",
+        "ciudades",
+        "city",
+        "cities"
+      ],
+      "subjects": [
+        "city"
+      ],
+      "places": []
+    },
+    {
+      "id": "countryside",
+      "label": "Vida rural",
+      "aliases": [
+        "vida rural",
+        "campo",
+        "countryside",
+        "country life",
+        "rural life"
+      ],
+      "subjects": [
+        "countryside"
+      ],
+      "places": []
+    },
+    {
+      "id": "sea",
+      "label": "Mar",
+      "aliases": [
+        "mar",
+        "oceano",
+        "sea",
+        "ocean"
+      ],
+      "subjects": [
+        "sea"
+      ],
+      "places": []
+    },
+    {
+      "id": "mountains",
+      "label": "Montanas",
+      "aliases": [
+        "montanas",
+        "montana",
+        "mountains"
+      ],
+      "subjects": [
+        "mountains"
+      ],
+      "places": []
+    },
+    {
+      "id": "forests",
+      "label": "Bosques",
+      "aliases": [
+        "bosques",
+        "bosque",
+        "forests",
+        "forest"
+      ],
+      "subjects": [
+        "forests"
+      ],
+      "places": []
+    },
+    {
+      "id": "islands",
+      "label": "Islas",
+      "aliases": [
+        "islas",
+        "isla",
+        "islands",
+        "island"
+      ],
+      "subjects": [
+        "islands"
+      ],
+      "places": []
+    },
+    {
+      "id": "deserts",
+      "label": "Desiertos",
+      "aliases": [
+        "desiertos",
+        "desierto",
+        "deserts",
+        "desert"
+      ],
+      "subjects": [
+        "deserts"
+      ],
+      "places": []
+    },
+    {
+      "id": "place_spain",
+      "label": "Espana",
+      "aliases": [
+        "espana",
+        "spain",
+        "espanola",
+        "espanolas",
+        "spanish"
+      ],
+      "subjects": [],
+      "places": [
+        "spain"
+      ]
+    },
+    {
+      "id": "place_france",
+      "label": "Francia",
+      "aliases": [
+        "francia",
+        "france",
+        "francesa",
+        "francesas",
+        "french"
+      ],
+      "subjects": [],
+      "places": [
+        "france"
+      ]
+    },
+    {
+      "id": "place_italy",
+      "label": "Italia",
+      "aliases": [
+        "italia",
+        "italy",
+        "italiana",
+        "italianas",
+        "italian"
+      ],
+      "subjects": [],
+      "places": [
+        "italy"
+      ]
+    },
+    {
+      "id": "place_germany",
+      "label": "Alemania",
+      "aliases": [
+        "alemania",
+        "germany",
+        "alemana",
+        "alemanas",
+        "german"
+      ],
+      "subjects": [],
+      "places": [
+        "germany"
+      ]
+    },
+    {
+      "id": "place_portugal",
+      "label": "Portugal",
+      "aliases": [
+        "portugal",
+        "portuguesa",
+        "portuguesas",
+        "portuguese"
+      ],
+      "subjects": [],
+      "places": [
+        "portugal"
+      ]
+    },
+    {
+      "id": "place_united_kingdom",
+      "label": "Reino Unido",
+      "aliases": [
+        "reino unido",
+        "gran bretana",
+        "inglaterra",
+        "united kingdom",
+        "great britain",
+        "britain",
+        "british",
+        "england"
+      ],
+      "subjects": [],
+      "places": [
+        "united kingdom"
+      ]
+    },
+    {
+      "id": "place_ireland",
+      "label": "Irlanda",
+      "aliases": [
+        "irlanda",
+        "ireland",
+        "irlandesa",
+        "irish"
+      ],
+      "subjects": [],
+      "places": [
+        "ireland"
+      ]
+    },
+    {
+      "id": "place_russia",
+      "label": "Rusia",
+      "aliases": [
+        "rusia",
+        "russia",
+        "rusa",
+        "rusas",
+        "russian"
+      ],
+      "subjects": [],
+      "places": [
+        "russia"
+      ]
+    },
+    {
+      "id": "place_soviet_union",
+      "label": "Union Sovietica",
+      "aliases": [
+        "union sovietica",
+        "urss",
+        "soviet union",
+        "sovietico",
+        "sovietica"
+      ],
+      "subjects": [],
+      "places": [
+        "soviet union"
+      ]
+    },
+    {
+      "id": "place_united_states",
+      "label": "Estados Unidos",
+      "aliases": [
+        "estados unidos",
+        "ee uu",
+        "eeuu",
+        "usa",
+        "united states",
+        "estadounidense",
+        "norteamerica",
+        "norteamericano",
+        "norteamericana"
+      ],
+      "subjects": [],
+      "places": [
+        "united states"
+      ]
+    },
+    {
+      "id": "place_canada",
+      "label": "Canada",
+      "aliases": [
+        "canada",
+        "canadiense",
+        "canadian"
+      ],
+      "subjects": [],
+      "places": [
+        "canada"
+      ]
+    },
+    {
+      "id": "place_mexico",
+      "label": "Mexico",
+      "aliases": [
+        "mexico",
+        "mexicana",
+        "mexicanas",
+        "mexicano",
+        "mexicanos",
+        "mexican"
+      ],
+      "subjects": [],
+      "places": [
+        "mexico"
+      ]
+    },
+    {
+      "id": "place_argentina",
+      "label": "Argentina",
+      "aliases": [
+        "argentina",
+        "argentino",
+        "argentinos",
+        "argentinas",
+        "argentine"
+      ],
+      "subjects": [],
+      "places": [
+        "argentina"
+      ]
+    },
+    {
+      "id": "place_chile",
+      "label": "Chile",
+      "aliases": [
+        "chile",
+        "chilena",
+        "chilenas",
+        "chileno",
+        "chilenos",
+        "chilean"
+      ],
+      "subjects": [],
+      "places": [
+        "chile"
+      ]
+    },
+    {
+      "id": "place_peru",
+      "label": "Peru",
+      "aliases": [
+        "peru",
+        "peruana",
+        "peruanas",
+        "peruano",
+        "peruanos",
+        "peruvian"
+      ],
+      "subjects": [],
+      "places": [
+        "peru"
+      ]
+    },
+    {
+      "id": "place_colombia",
+      "label": "Colombia",
+      "aliases": [
+        "colombia",
+        "colombiana",
+        "colombianas",
+        "colombiano",
+        "colombianos",
+        "colombian"
+      ],
+      "subjects": [],
+      "places": [
+        "colombia"
+      ]
+    },
+    {
+      "id": "place_cuba",
+      "label": "Cuba",
+      "aliases": [
+        "cuba",
+        "cubana",
+        "cubanas",
+        "cubano",
+        "cubanos",
+        "cuban"
+      ],
+      "subjects": [],
+      "places": [
+        "cuba"
+      ]
+    },
+    {
+      "id": "place_brazil",
+      "label": "Brasil",
+      "aliases": [
+        "brasil",
+        "brazil",
+        "brasilena",
+        "brasilenas",
+        "brasileno",
+        "brasilenos",
+        "brazilian"
+      ],
+      "subjects": [],
+      "places": [
+        "brazil"
+      ]
+    },
+    {
+      "id": "place_latin_america",
+      "label": "America Latina",
+      "aliases": [
+        "america latina",
+        "latinoamerica",
+        "latinoamericana",
+        "latinoamericano",
+        "latin america",
+        "latin american"
+      ],
+      "subjects": [],
+      "places": [
+        "latin america"
+      ]
+    },
+    {
+      "id": "place_china",
+      "label": "China",
+      "aliases": [
+        "china",
+        "chino",
+        "chinos",
+        "chinese"
+      ],
+      "subjects": [],
+      "places": [
+        "china"
+      ]
+    },
+    {
+      "id": "place_japan",
+      "label": "Japon",
+      "aliases": [
+        "japon",
+        "japones",
+        "japonesa",
+        "japoneses",
+        "japonesas",
+        "japan",
+        "japanese"
+      ],
+      "subjects": [],
+      "places": [
+        "japan"
+      ]
+    },
+    {
+      "id": "place_south_korea",
+      "label": "Corea del Sur",
+      "aliases": [
+        "corea del sur",
+        "surcoreana",
+        "surcoreanas",
+        "surcoreano",
+        "surcoreanos",
+        "south korea",
+        "korean south"
+      ],
+      "subjects": [],
+      "places": [
+        "south korea"
+      ]
+    },
+    {
+      "id": "place_north_korea",
+      "label": "Corea del Norte",
+      "aliases": [
+        "corea del norte",
+        "norcoreana",
+        "norcoreanas",
+        "norcoreano",
+        "norcoreanos",
+        "north korea",
+        "korean north"
+      ],
+      "subjects": [],
+      "places": [
+        "north korea"
+      ]
+    },
+    {
+      "id": "place_korea",
+      "label": "Corea",
+      "aliases": [
+        "corea",
+        "coreana",
+        "coreanas",
+        "coreano",
+        "coreanos",
+        "korea",
+        "korean"
+      ],
+      "subjects": [],
+      "places": [
+        "korea"
+      ]
+    },
+    {
+      "id": "place_india",
+      "label": "India",
+      "aliases": [
+        "india",
+        "indio",
+        "indian"
+      ],
+      "subjects": [],
+      "places": [
+        "india"
+      ]
+    },
+    {
+      "id": "place_middle_east",
+      "label": "Oriente Medio",
+      "aliases": [
+        "oriente medio",
+        "medio oriente",
+        "middle east"
+      ],
+      "subjects": [],
+      "places": [
+        "middle east"
+      ]
+    },
+    {
+      "id": "place_israel",
+      "label": "Israel",
+      "aliases": [
+        "israel",
+        "israeli",
+        "israelies"
+      ],
+      "subjects": [],
+      "places": [
+        "israel"
+      ]
+    },
+    {
+      "id": "place_palestine",
+      "label": "Palestina",
+      "aliases": [
+        "palestina",
+        "palestine",
+        "palestino",
+        "palestinian"
+      ],
+      "subjects": [],
+      "places": [
+        "palestine"
+      ]
+    },
+    {
+      "id": "place_iran",
+      "label": "Iran",
+      "aliases": [
+        "iran",
+        "irani",
+        "iranies",
+        "iranian"
+      ],
+      "subjects": [],
+      "places": [
+        "iran"
+      ]
+    },
+    {
+      "id": "place_turkey",
+      "label": "Turquia",
+      "aliases": [
+        "turquia",
+        "turca",
+        "turcas",
+        "turco",
+        "turcos",
+        "turkey",
+        "turkish"
+      ],
+      "subjects": [],
+      "places": [
+        "turkey"
+      ]
+    },
+    {
+      "id": "place_egypt",
+      "label": "Egipto",
+      "aliases": [
+        "egipto",
+        "egipcia",
+        "egipcias",
+        "egipcio",
+        "egipcios",
+        "egypt",
+        "egyptian"
+      ],
+      "subjects": [],
+      "places": [
+        "egypt"
+      ]
+    },
+    {
+      "id": "place_greece",
+      "label": "Grecia",
+      "aliases": [
+        "grecia",
+        "griega",
+        "griegas",
+        "griego",
+        "griegos",
+        "greece",
+        "greek"
+      ],
+      "subjects": [],
+      "places": [
+        "greece"
+      ]
+    },
+    {
+      "id": "place_rome",
+      "label": "Roma",
+      "aliases": [
+        "roma",
+        "rome",
+        "romana",
+        "romanas",
+        "romano",
+        "romanos",
+        "roman"
+      ],
+      "subjects": [],
+      "places": [
+        "rome"
+      ]
+    },
+    {
+      "id": "place_europe",
+      "label": "Europa",
+      "aliases": [
+        "europa",
+        "europea",
+        "europeas",
+        "europeo",
+        "europeos",
+        "europe",
+        "european"
+      ],
+      "subjects": [],
+      "places": [
+        "europe"
+      ]
+    },
+    {
+      "id": "place_asia",
+      "label": "Asia",
+      "aliases": [
+        "asia",
+        "asiatica",
+        "asiaticas",
+        "asiatico",
+        "asiaticos",
+        "asian"
+      ],
+      "subjects": [],
+      "places": [
+        "asia"
+      ]
+    },
+    {
+      "id": "place_africa",
+      "label": "Africa",
+      "aliases": [
+        "africa",
+        "africana",
+        "africanas",
+        "africano",
+        "africanos",
+        "african"
+      ],
+      "subjects": [],
+      "places": [
+        "africa"
+      ]
+    },
+    {
+      "id": "place_mediterranean",
+      "label": "Mediterraneo",
+      "aliases": [
+        "mediterraneo",
+        "mediterranea",
+        "mediterranean"
+      ],
+      "subjects": [],
+      "places": [
+        "mediterranean"
+      ]
+    },
+    {
+      "id": "greek_history",
+      "label": "Historia de Grecia",
+      "aliases": [
+        "historia de grecia",
+        "historia griega",
+        "greek history",
+        "history of greece"
+      ],
+      "subjects": [
+        "history"
+      ],
+      "places": [
+        "greece"
+      ]
+    },
+    {
+      "id": "roman_history",
+      "label": "Historia de Roma",
+      "aliases": [
+        "historia de roma",
+        "historia romana",
+        "roman history",
+        "history of rome"
+      ],
+      "subjects": [
+        "history"
+      ],
+      "places": [
+        "rome"
+      ]
+    },
+    {
+      "id": "egyptian_history",
+      "label": "Historia de Egipto",
+      "aliases": [
+        "historia de egipto",
+        "historia egipcia",
+        "egyptian history",
+        "history of egypt"
+      ],
+      "subjects": [
+        "history"
+      ],
+      "places": [
+        "egypt"
+      ]
+    },
+    {
+      "id": "history_of_south_korea",
+      "label": "Historia de Corea del Sur",
+      "aliases": [
+        "historia de corea del sur",
+        "historia surcoreana",
+        "south korean history",
+        "history of south korea"
+      ],
+      "subjects": [
+        "history"
+      ],
+      "places": [
+        "south korea"
+      ]
+    },
+    {
+      "id": "history_of_north_korea",
+      "label": "Historia de Corea del Norte",
+      "aliases": [
+        "historia de corea del norte",
+        "historia norcoreana",
+        "north korean history",
+        "history of north korea"
+      ],
+      "subjects": [
+        "history"
+      ],
+      "places": [
+        "north korea"
+      ]
+    }
+  ]
+}

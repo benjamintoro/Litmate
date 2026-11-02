@@ -1,0 +1,58 @@
+use_default_settings:
+  engines:
+    keep_only:
+      - wikipedia
+      - openlibrary
+      - mwmbl
+      - duckduckgo
+      - qwant
+
+general:
+  instance_name: "LitMate búsqueda local"
+
+server:
+  bind_address: "0.0.0.0"
+  port: 8080
+  limiter: false
+  public_instance: false
+  image_proxy: false
+
+search:
+  safe_search: 1
+  autocomplete: ""
+  formats:
+    - html
+    - json
+
+engines:
+  # Sólo motores sin claves ni facturación, con interfaces públicas de consulta.
+  # No añadir Google/HTML ni proveedores comerciales para resolver bloqueos.
+  - name: wikipedia
+    disabled: false
+    timeout: 3.0
+    # Django consume la lista JSON ``results``; una infobox sola se pierde.
+    display_type: [list, infobox]
+  - name: openlibrary
+    engine: litmate_openlibrary
+    categories: [general, books]
+    disabled: false
+    # Upstream defaults to 10s; Django waits 6s for the whole metasearch.
+    timeout: 3.0
+  - name: mwmbl
+    disabled: false
+    timeout: 3.0
+  # Piloto acotado de búsqueda general, sin API comercial ni claves.
+  # CAPTCHA/403/429 quedan suspendidos por SearXNG; no se eluden.
+  - name: duckduckgo
+    disabled: false
+    timeout: 3.0
+  - name: qwant
+    # Evaluado en el piloto: acceso denegado reiterado. No forma parte de
+    # las consultas normales; no se eluden sus restricciones.
+    disabled: true
+    timeout: 3.0
+
+outgoing:
+  request_timeout: 4.0
+  max_request_timeout: 6.0
+  retries: 0

@@ -1,0 +1,296 @@
+{
+  "case": {
+    "case": 16,
+    "title": "Sapiens",
+    "author": "Yuval Noah Harari",
+    "kind": "no_ficcion",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": [
+          7
+        ]
+      }
+    },
+    "absent_at_start": false
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Explica el contenido de Sapiens de Yuval Noah Harari",
+      "answer": "**Sapiens \u2014 Yuval Noah Harari**. Subt\u00edtulo: \u00abA Brief History of Humankind\u00bb.\n\nEse es el alcance indicado en el subt\u00edtulo; todav\u00eda no tengo una descripci\u00f3n m\u00e1s detallada.\n\nFuente: https://openlibrary.org/works/OL17075811W",
+      "status": "answered",
+      "books": [
+        {
+          "id": "/works/OL17075811W",
+          "title": "Sapiens",
+          "author": "Yuval Noah Harari",
+          "synopsis": "",
+          "image_url": "https://covers.openlibrary.org/b/id/8634250-M.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=Sapiens+Yuval+Noah+Harari"
+            },
+            {
+              "label": "Open Library",
+              "url": "https://openlibrary.org/works/OL17075811W"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Sapiens+Yuval+Noah+Harari&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Sapiens+Yuval+Noah+Harari"
+            }
+          ]
+        }
+      ],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 9042,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "partial_evidence": true,
+        "work_type": "fiction",
+        "progress_metrics": {
+          "elapsed_ms": 9068.973,
+          "first_phase_emitted_ms": 24.095,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 7.87,
+            "cache_lookup": 5.696,
+            "knowledge_lookup": 336.216,
+            "retrieval": 2919.822,
+            "web_search": 2466.516,
+            "extraction": 3196.317,
+            "audit": 3.775,
+            "finalization": 26.691
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 3.962,
+              "elapsed_ms": 7.87,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 18.388,
+              "elapsed_ms": 5.696,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 36.919,
+              "elapsed_ms": 212.222,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 108.221,
+              "elapsed_ms": 12.484,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 151.353,
+              "elapsed_ms": 96.817,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 217.914,
+              "elapsed_ms": 12.279,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 313.183,
+              "elapsed_ms": 2.414,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 325.612,
+              "elapsed_ms": 2919.822,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 3255.824,
+              "elapsed_ms": 465.815,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 3721.876,
+              "elapsed_ms": 3196.317,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 6918.236,
+              "elapsed_ms": 955.746,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 7879.786,
+              "elapsed_ms": 1044.955,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 9001.413,
+              "elapsed_ms": 3.775,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 9042.276,
+              "elapsed_ms": 26.691,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 24.095
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 9001.397
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 9.0779,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.0402,
+        "verified_ready_seconds": 9.0362,
+        "first_verified_text_seconds": 9.0779
+      }
+    }
+  ],
+  "seconds": 11.255,
+  "public_research_trace": [
+    {
+      "stage": "retrieved_public_evidence",
+      "sources": [
+        {
+          "id": 1,
+          "title": "Sapiens",
+          "author": "Yuval Noah Harari",
+          "description": "Temas del cat\u00e1logo: Technology and civilization, Human beings, Historical Chronology, Historia universal, Historia, Civilization, Hombre, World history, History, Non-Fiction, Science, SCIENCE / Life Sciences / General Subt\u00edtulo del registro bibliogr\u00e1fico: A Brief History of Humankind",
+          "source": "Open Library",
+          "year": "2011",
+          "book_id": "/works/OL17075811W",
+          "kind": "book",
+          "url": "https://openlibrary.org/works/OL17075811W",
+          "locator": "",
+          "read_mode": "ficha bibliogr\u00e1fica; materias de cat\u00e1logo, no texto de la ob",
+          "retrieved_at": "",
+          "image_url": "https://covers.openlibrary.org/b/id/8634250-M.jpg",
+          "subtitle": "A Brief History of Humankind",
+          "categories": [
+            "Technology and civilization",
+            "Human beings",
+            "Historical Chronology",
+            "Historia universal",
+            "Historia"
+          ]
+        },
+        {
+          "id": 2,
+          "title": "Sapiens: A Brief History of Humankind",
+          "author": "Fuente web",
+          "description": "article titled \"The Dangerous Populist Science of Yuval Noah Harari\" for Current Affairs, neuroscientist Darshana Narayanan said: \"We have been seduced by Harari because of the power not of his truth or scholarship but of his storytelling... Yuval Harari is what I call a \u201cscience populist.\u201d ...Science populists are gifted storytellers who weave sensationalist yarns around scientific \u201cfacts\u201d in simple, emotionally persuasive language. ...They understand the seduction of a story well told\u2014relentlessly seeking to expand their audience\u2014never mind that the underlying science is warped in the pursuit of fame and influence.\" == Bibliographic details and legacy == The original Hebrew publication was first issued in 2011 as \u05e7\u05d9\u05e6\u05d5\u05e8 \u05ea\u05d5\u05dc\u05d3\u05d5\u05ea \u05d4\u05d0\u05e0\u05d5\u05e9\u05d5\u05ea (\u1e32itsur toldot ha-enoshut), which translates into A Brief History of Humankind. A 2012 English translation was self-published with the title From Animals Into Gods. The English translation was published in 2015 as Sapiens: A Brief History of Humankind, \"translated by the author with the help of John Purcell and Haim Watzman\", simultaneously in London by Harvill Secker ISBN 978-1846558238 (hardback), ISBN 978-1846558245 (trade paperback) and in Canada by Signal (ISBN 978-0-7710-3850-1 (bound), ISBN 978-0-7710-3852-5 (html)). It was then republished in London by Vintage Books in 2015 (ISBN 978-0099590088 (paperback)). In 2020 the first volume of the graphic novel version of the book was published simultaneously in several languages, with the title Sapiens: A Graphic History, Volume 1: The Birth of Humankind. It is credited as coauthored by Harari and David Vandermeulen, with adaptation and illustrations by Daniel Casanave. The second volume Sapiens: A Graphic History, Volume 2: The Pillars of Civilization was published in October 2021.",
+          "source": "Wikipedia",
+          "year": "",
+          "book_id": "",
+          "kind": "web",
+          "url": "https://en.wikipedia.org/wiki/Sapiens:_A_Brief_History_of_Humankind",
+          "locator": "",
+          "read_mode": "pasaje de secci\u00f3n de art\u00edculo p\u00fablico",
+          "retrieved_at": "",
+          "work_id": "litmate:e2ab43b805535c198b5613dd",
+          "work_title": "Sapiens",
+          "work_author": "Yuval Noah Harari",
+          "license": "CC-BY-SA-4.0",
+          "work_binding_verified": true,
+          "permanent_index_allowed": true,
+          "attribution": {
+            "authors": "Wikipedia contributors",
+            "title": "Sapiens: A Brief History of Humankind",
+            "url": "https://en.wikipedia.org/wiki/Sapiens:_A_Brief_History_of_Humankind",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+            "revision_id": "1380972645"
+          },
+          "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+          "literary_facts": [
+            {
+              "subject": "",
+              "relation": "",
+              "value": "",
+              "evidence": "article titled \"The Dangerous Populist Science of Yuval Noah Harari\" for Current Affairs, neuroscientist Darshana Narayanan said: \"We have been seduced by Harari because of the power not of his truth or scholarship but of his storytelling...",
+              "source_url": "",
+              "fact_kind": "",
+              "topic": "plot",
+              "type": "",
+              "scope": "premise"
+            }
+          ],
+          "identity_text": "Sapiens: A Brief History of Humankind (Hebrew: \u05e7\u05d9\u05e6\u05d5\u05e8 \u05ea\u05d5\u05dc\u05d3\u05d5\u05ea \u05d4\u05d0\u05e0\u05d5\u05e9\u05d5\u05ea, Qitzur Toldot ha-Enoshut) is a 2011 book by the Israeli military historian Yuval Noah Harari, based on a series of lectures he gave at the Hebrew University of Jerusalem. It was first published in Hebrew in Israel in 2011, and in English in 2014. The book surveys the history of humankind, beginning in the Stone Age and ending in the 21st century. The account relies on a fusion of the natural sciences with the social sciences.",
+          "character_facts": []
+        }
+      ]
+    }
+  ],
+  "coverage_before": {
+    "works": 14480,
+    "works_with_explicit_plot": 17,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 20,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 34,
+    "linked_sources": 14654,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14481,
+    "works_with_explicit_plot": 18,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 21,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 35,
+    "linked_sources": 14656,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "persistent_exact_cache",
+  "google_books_enabled": false,
+  "factual_review_pending": true
+}

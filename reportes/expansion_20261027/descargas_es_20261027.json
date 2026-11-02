@@ -1,0 +1,39 @@
+{
+  "mode": "manual_fixed_official_mirror_TLS_verified_no_redirects",
+  "reviewed_on": "2026-10-27",
+  "scope": "Dos originales en español incorporados a la biblioteca local tras revisión de derechos de esta edición. No se descargaron textos protegidos.",
+  "items": [
+    {
+      "id": "17073",
+      "title": "La Regenta",
+      "author": "Leopoldo Alas",
+      "url": "https://gutenberg.pglaf.org/cache/epub/17073/pg17073.txt",
+      "file": "data/corpus_autorizado/17073.txt",
+      "bytes": 1889429,
+      "sha256": "29cd4c40b2a89cf643f7b3f3a53f8bbef1e67b9be204333bcb9a4dd50b61e86f",
+      "status": "imported_after_rights_review",
+      "rights_basis": "Dominio público en Chile; autora fallecida en 1901; edición sin traducción ni introducción contemporánea declarada.",
+      "evidence_urls": [
+        "https://www.gutenberg.org/ebooks/17073",
+        "https://www.bcn.cl/leychile/navegar?idNorma=28933",
+        "https://es.wikipedia.org/wiki/Leopoldo_Alas"
+      ]
+    },
+    {
+      "id": "17340",
+      "title": "Marianela",
+      "author": "Benito Pérez Galdós",
+      "url": "https://gutenberg.pglaf.org/cache/epub/17340/pg17340.txt",
+      "file": "data/corpus_autorizado/17340.txt",
+      "bytes": 327474,
+      "sha256": "ec6e5dbd4260583360ab7bd29738505ad5f0dfdf58db3dcbbc401c5ce4fea03f",
+      "status": "imported_after_rights_review",
+      "rights_basis": "Dominio público en Chile; autor fallecido en 1920; edición sin traducción ni introducción contemporánea declarada.",
+      "evidence_urls": [
+        "https://www.gutenberg.org/ebooks/17340",
+        "https://www.bcn.cl/leychile/navegar?idNorma=28933",
+        "https://es.wikipedia.org/wiki/Benito_P%C3%A9rez_Gald%C3%B3s"
+      ]
+    }
+  ]
+}

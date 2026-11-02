@@ -1,0 +1,45 @@
+Using existing test database for alias 'default'...
+........................FF.....F.......F.................
+======================================================================
+FAIL: test_an_adaptation_and_a_different_volume_cannot_supply_the_answer (core.test_character_quality_regression.CharacterEvidenceRegressionTests.test_an_adaptation_and_a_different_volume_cannot_supply_the_answer) (title='El Señor de los Anillos II')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\Proyecto\Litmate\core\test_character_quality_regression.py", line 313, in test_an_adaptation_and_a_different_volume_cannot_supply_the_answer
+    self.assertTrue(result is None or result.status != 'answered')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_an_appendix_for_a_sequel_does_not_bind_to_the_requested_work (core.test_character_quality_regression.CharacterEvidenceRegressionTests.test_an_appendix_for_a_sequel_does_not_bind_to_the_requested_work)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\Proyecto\Litmate\core\test_character_quality_regression.py", line 422, in test_an_appendix_for_a_sequel_does_not_bind_to_the_requested_work
+    self.assertTrue(result is None or result.status != 'answered')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_conflicting_kinship_sources_are_not_silently_selected_by_order (core.test_character_quality_regression.CharacterEvidenceRegressionTests.test_conflicting_kinship_sources_are_not_silently_selected_by_order)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\Proyecto\Litmate\core\test_character_quality_regression.py", line 370, in test_conflicting_kinship_sources_are_not_silently_selected_by_order
+    self.assertTrue(result is None or result.status != 'answered',
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    'Una contradicción explícita de parentesco exige investigar o reconocer incertidumbre.')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : Una contradicción explícita de parentesco exige investigar o reconocer incertidumbre.
+
+======================================================================
+FAIL: test_same_title_with_a_different_author_does_not_establish_work_identity (core.test_character_quality_regression.CharacterEvidenceRegressionTests.test_same_title_with_a_different_author_does_not_establish_work_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\Proyecto\Litmate\core\test_character_quality_regression.py", line 333, in test_same_title_with_a_different_author_does_not_establish_work_identity
+    self.assertTrue(result is None or result.status != 'answered')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 57 tests in 2.301s
+
+FAILED (failures=4)
+Preserving test database for alias 'default'...

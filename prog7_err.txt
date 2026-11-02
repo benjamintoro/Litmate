@@ -1,0 +1,16 @@
+Using existing test database for alias 'default'...
+.F.......................................................
+======================================================================
+FAIL: test_explicit_protagonist_role_in_description_is_used (core.test_protagonist_from_description.ProtagonistFromDescriptionTests.test_explicit_protagonist_role_in_description_is_used)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\Proyecto\Litmate\core\test_protagonist_from_description.py", line 22, in test_explicit_protagonist_role_in_description_is_used
+    self.assertIsNotNone(result)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+AssertionError: unexpectedly None
+
+----------------------------------------------------------------------
+Ran 57 tests in 2.372s
+
+FAILED (failures=1)
+Preserving test database for alias 'default'...

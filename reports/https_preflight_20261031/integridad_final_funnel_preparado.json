@@ -1,0 +1,5 @@
+{
+  ".env": true,
+  "data/literary_memory.sqlite3": true,
+  "data/literary_memory_rag.sqlite3": true
+}

@@ -1,0 +1,47 @@
+[
+  {
+    "work_id": "litmate:cd01a12f9f01f2eb764bc33a",
+    "title": "The Time Machine",
+    "status": "ok",
+    "results": [
+      {
+        "title": "The Time Machine",
+        "bound": true,
+        "read_mode": "pasaje de secci\u00f3n de art\u00edculo p\u00fablico",
+        "description": "== Argumento == In 1895, a Victorian Englishman, identified only as the Time Traveller, tells his weekly dinner guests that he has an experimental ver"
+      }
+    ]
+  },
+  {
+    "work_id": "litmate:62f6b717c0fc6a444106f1fd",
+    "title": "Little Women",
+    "status": "ok",
+    "results": [
+      {
+        "title": "Little Women",
+        "bound": true,
+        "read_mode": "pasaje de secci\u00f3n de art\u00edculo p\u00fablico",
+        "description": "== Argumento == Meg, Jo, Beth, and Amy, and their mother, whom they call Marmee, live in a new neighborhood (loosely based on Concord) in Massachusett"
+      }
+    ]
+  },
+  {
+    "work_id": "litmate:d8fec8c040722f1627acb945",
+    "title": "Nana",
+    "status": "ok",
+    "results": [
+      {
+        "title": "Nana (Manet)",
+        "bound": false,
+        "read_mode": "pasaje de secci\u00f3n de art\u00edculo p\u00fablico",
+        "description": "zontales del papel pintado y el mobiliario de la habitaci\u00f3n, combinadas con la vertical del soporte del espejo y la figura femenina. Al contrario que "
+      },
+      {
+        "title": "Nana (Zola)",
+        "bound": false,
+        "read_mode": "extracto de introducci\u00f3n",
+        "description": "Nana es una de las obras m\u00e1s representativas del escritor \u00c9mile Zola, autor franc\u00e9s del siglo XIX, padre del movimiento naturalista y mayor exponente "
+      }
+    ]
+  }
+]

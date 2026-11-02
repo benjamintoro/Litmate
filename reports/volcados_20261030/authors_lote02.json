@@ -1,0 +1,596 @@
+{
+  "stage": "authors",
+  "before": {
+    "free_disk_bytes": 103235260416,
+    "process": {
+      "rss_mb": 78.801,
+      "peak_rss_mb": 110.707
+    },
+    "mysql_estimates": [
+      {
+        "table": "core_kbname",
+        "data": 4734976,
+        "index": 5308416
+      },
+      {
+        "table": "core_kbprojection",
+        "data": 16384,
+        "index": 16384
+      },
+      {
+        "table": "core_kbrecord",
+        "data": 23740416,
+        "index": 2637824
+      },
+      {
+        "table": "core_kbrelation",
+        "data": 458752,
+        "index": 458752
+      },
+      {
+        "table": "core_kbversion",
+        "data": 20594688,
+        "index": 2670592
+      }
+    ],
+    "memory_db_bytes": 62373888
+  },
+  "memory_before": {
+    "works_catalogued": 13466,
+    "normalized_title_author_pairs": 13466,
+    "authors": 5983,
+    "current_sources": 13637,
+    "works_with_current_sources": 13466,
+    "works_with_admitted_descriptions": 18,
+    "works_with_narrative_facts": 13,
+    "works_with_characters": 10,
+    "character_entities": 104,
+    "structured_relations": 2,
+    "open_conflicts": 0,
+    "full_text_coverage": "measured_separately_in_literary_library"
+  },
+  "ledger_before": {
+    "exists": true,
+    "records": 1407,
+    "datasets": 2,
+    "pending": 1000,
+    "staged": 0,
+    "by_provider": {
+      "openlibrary": 1407
+    }
+  },
+  "full_texts_imported": 0,
+  "llm_calls": 0,
+  "import": {
+    "provider": "openlibrary",
+    "dry_run": false,
+    "sha256": "d374d84a48ddbec3d717c78e5f0b39705fdad728fbc66371a454fc87f23f7044",
+    "dataset_id": "cfc3255ea043196272ac17d0ec2c7a2ee0d32f69e41e6e2e5e074d4a77541ec0",
+    "scanned": 15446415,
+    "accepted": 1214,
+    "inserted": 1007,
+    "duplicates": 207,
+    "rejected": 0,
+    "filtered": 15445201,
+    "offset_before": 0,
+    "offset_after": 5958402890,
+    "complete": true,
+    "status": "complete",
+    "seconds": 220.3179,
+    "network_requests": 0,
+    "llm_calls": 0,
+    "verification_scope": "metadata_policy_shape_checksum_not_independent_fact_verification",
+    "admission": {
+      "released": 1007,
+      "authors": 1007,
+      "sha256": "d374d84a48ddbec3d717c78e5f0b39705fdad728fbc66371a454fc87f23f7044"
+    },
+    "projection": {
+      "projected": 1000,
+      "deferred": 0,
+      "sources": 1000
+    }
+  },
+  "seconds": 222.128,
+  "after": {
+    "free_disk_bytes": 103229100032,
+    "process": {
+      "rss_mb": 82.836,
+      "peak_rss_mb": 110.707
+    },
+    "mysql_estimates": [
+      {
+        "table": "core_kbname",
+        "data": 4734976,
+        "index": 5308416
+      },
+      {
+        "table": "core_kbprojection",
+        "data": 16384,
+        "index": 16384
+      },
+      {
+        "table": "core_kbrecord",
+        "data": 23740416,
+        "index": 2637824
+      },
+      {
+        "table": "core_kbrelation",
+        "data": 458752,
+        "index": 458752
+      },
+      {
+        "table": "core_kbversion",
+        "data": 20594688,
+        "index": 2670592
+      }
+    ],
+    "memory_db_bytes": 67047424
+  },
+  "memory_after": {
+    "works_catalogued": 14466,
+    "normalized_title_author_pairs": 14466,
+    "authors": 6959,
+    "current_sources": 14637,
+    "works_with_current_sources": 14466,
+    "works_with_admitted_descriptions": 18,
+    "works_with_narrative_facts": 13,
+    "works_with_characters": 10,
+    "character_entities": 104,
+    "structured_relations": 2,
+    "open_conflicts": 0,
+    "full_text_coverage": "measured_separately_in_literary_library"
+  },
+  "ledger_after": {
+    "exists": true,
+    "records": 2414,
+    "datasets": 3,
+    "pending": 0,
+    "staged": 0,
+    "by_provider": {
+      "openlibrary": 2414
+    }
+  },
+  "integrity": {
+    "auth_group": {
+      "original_rows": 0,
+      "preserved": true,
+      "added": 0
+    },
+    "auth_group_permissions": {
+      "original_rows": 0,
+      "preserved": true,
+      "added": 0
+    },
+    "auth_permission": {
+      "original_rows": 152,
+      "preserved": true,
+      "added": 0
+    },
+    "auth_user": {
+      "original_rows": 179,
+      "preserved": true,
+      "added": 0
+    },
+    "auth_user_groups": {
+      "original_rows": 0,
+      "preserved": true,
+      "added": 0
+    },
+    "auth_user_user_permissions": {
+      "original_rows": 0,
+      "preserved": true,
+      "added": 0
+    },
+    "core_asistenteia": {
+      "original_rows": 1,
+      "preserved": true,
+      "added": 0
+    },
+    "core_autor": {
+      "original_rows": 31,
+      "preserved": true,
+      "added": 0
+    },
+    "core_clickconversion": {
+      "original_rows": 185,
+      "preserved": true,
+      "added": 0
+    },
+    "core_conversacionia": {
+      "original_rows": 50,
+      "preserved": true,
+      "added": 0
+    },
+    "core_editorial": {
+      "original_rows": 34,
+      "preserved": true,
+      "added": 0
+    },
+    "core_elementolistalectura": {
+      "original_rows": 2,
+      "preserved": true,
+      "added": 0
+    },
+    "core_estadolectura": {
+      "original_rows": 451,
+      "preserved": true,
+      "added": 0
+    },
+    "core_eventoanalitica": {
+      "original_rows": 384,
+      "preserved": true,
+      "added": 0
+    },
+    "core_genero": {
+      "original_rows": 12,
+      "preserved": true,
+      "added": 0
+    },
+    "core_historialchatbot": {
+      "original_rows": 5,
+      "preserved": true,
+      "added": 0
+    },
+    "core_historialpreciolibro": {
+      "original_rows": 223,
+      "preserved": true,
+      "added": 0
+    },
+    "core_kbname": {
+      "original_rows": 11104,
+      "preserved": true,
+      "added": 492
+    },
+    "core_kbprojection": {
+      "original_rows": 7,
+      "preserved": true,
+      "added": 1
+    },
+    "core_kbrecord": {
+      "original_rows": 11104,
+      "preserved": true,
+      "added": 407
+    },
+    "core_kbrelation": {
+      "original_rows": 1108,
+      "preserved": true,
+      "added": 246
+    },
+    "core_kbversion": {
+      "original_rows": 11104,
+      "preserved": true,
+      "added": 407
+    },
+    "core_libro": {
+      "original_rows": 55,
+      "preserved": true,
+      "added": 0
+    },
+    "core_libro_generos": {
+      "original_rows": 54,
+      "preserved": true,
+      "added": 0
+    },
+    "core_librofavorito": {
+      "original_rows": 231,
+      "preserved": true,
+      "added": 0
+    },
+    "core_listalectura": {
+      "original_rows": 2,
+      "preserved": true,
+      "added": 0
+    },
+    "core_mensajecontacto": {
+      "original_rows": 3,
+      "preserved": true,
+      "added": 0
+    },
+    "core_mensajeia": {
+      "original_rows": 190,
+      "preserved": true,
+      "added": 0
+    },
+    "core_perfilusuario": {
+      "original_rows": 158,
+      "preserved": true,
+      "added": 0
+    },
+    "core_preciolibrotienda": {
+      "original_rows": 117,
+      "preserved": true,
+      "added": 0
+    },
+    "core_preguntafrecuente": {
+      "original_rows": 0,
+      "preserved": true,
+      "added": 0
+    },
+    "core_recomendacion": {
+      "original_rows": 0,
+      "preserved": true,
+      "added": 0
+    },
+    "core_recomendacionialog": {
+      "original_rows": 0,
+      "preserved": true,
+      "added": 0
+    },
+    "core_resena": {
+      "original_rows": 116,
+      "preserved": true,
+      "added": 0
+    },
+    "django_admin_log": {
+      "original_rows": 0,
+      "preserved": true,
+      "added": 0
+    },
+    "django_content_type": {
+      "original_rows": 38,
+      "preserved": true,
+      "added": 0
+    },
+    "django_migrations": {
+      "original_rows": 27,
+      "preserved": true,
+      "added": 0
+    },
+    "django_session": {
+      "original_rows": 88,
+      "preserved": true,
+      "added": 0
+    },
+    "suscripciones_historialpago": {
+      "original_rows": 42,
+      "preserved": true,
+      "added": 0
+    },
+    "suscripciones_plansuscripcion": {
+      "original_rows": 3,
+      "preserved": true,
+      "added": 0
+    },
+    "suscripciones_suscripcionusuario": {
+      "original_rows": 157,
+      "preserved": true,
+      "added": 0
+    }
+  },
+  "works_with_description_in_dump": 92,
+  "descriptions_persisted": 0,
+  "sample_retrieval": [
+    {
+      "title": "The emancipist",
+      "sources": [
+        {
+          "title": "The emancipist",
+          "author": "Veronica Geoghegan Sweeney",
+          "kind": "book",
+          "book_id": "sqlkb:43a89adc8ad5283068b92472a581e33d7dd62bf6845dfb0f3fbe7c704a1ffeaf",
+          "source": "Open Library",
+          "url": "https://openlibrary.org/works/OL1000106W",
+          "description": "",
+          "synopsis": "",
+          "categories": [
+            "Fiction, general"
+          ],
+          "isbns": [],
+          "language": "",
+          "edition_id": "",
+          "policy": "openlibrary-minimal-metadata-v1",
+          "storage_policy": "openlibrary-minimal-metadata-v1",
+          "license": "Open Library bibliographic facts; rights vary",
+          "read_mode": "metadatos de fuente; sin trama ni texto completo",
+          "memory_verified": true
+        }
+      ]
+    },
+    {
+      "title": "A Perfect Performance",
+      "sources": [
+        {
+          "title": "A Perfect Performance",
+          "author": "Emily Hendrickson",
+          "kind": "book",
+          "book_id": "sqlkb:9c56efff3db5c8a865af931a408f2a605213875d556b9e2d13491085eda3c668",
+          "source": "Open Library",
+          "url": "https://openlibrary.org/works/OL1000274W",
+          "description": "",
+          "synopsis": "",
+          "categories": [
+            "Fiction, Romance, Historical, Regency"
+          ],
+          "isbns": [],
+          "language": "",
+          "edition_id": "",
+          "policy": "openlibrary-minimal-metadata-v1",
+          "storage_policy": "openlibrary-minimal-metadata-v1",
+          "license": "Open Library bibliographic facts; rights vary",
+          "read_mode": "metadatos de fuente; sin trama ni texto completo",
+          "memory_verified": true
+        }
+      ]
+    },
+    {
+      "title": "Le Dictionnaire du P\u00e8re Lachaise",
+      "sources": [
+        {
+          "title": "Le Dictionnaire du P\u00e8re Lachaise",
+          "author": "Domenico Gabrielli",
+          "kind": "book",
+          "book_id": "sqlkb:e93de0b876566da842e8003f318da8c717c38af673596c0c3efd428cb5245225",
+          "source": "Open Library",
+          "url": "https://openlibrary.org/works/OL10004069W",
+          "description": "",
+          "synopsis": "",
+          "categories": [
+            "Cemeteries",
+            "Dictionaries",
+            "French",
+            "P\u00e8re-Lachaise (Cemetery : Paris, France)",
+            "History"
+          ],
+          "isbns": [],
+          "language": "",
+          "edition_id": "",
+          "policy": "openlibrary-minimal-metadata-v1",
+          "storage_policy": "openlibrary-minimal-metadata-v1",
+          "license": "Open Library bibliographic facts; rights vary",
+          "read_mode": "metadatos de fuente; sin trama ni texto completo",
+          "memory_verified": true
+        }
+      ]
+    },
+    {
+      "title": "Ravenous",
+      "sources": [
+        {
+          "title": "Ravenous",
+          "author": "Ray Garton",
+          "kind": "book",
+          "book_id": "sqlkb:1bd67c8cfaa8f9c53b329ee2926d74cbb12b1c410d5b7facc5b99191d5d0cfd9",
+          "source": "Open Library",
+          "url": "https://openlibrary.org/works/OL1000409W",
+          "description": "",
+          "synopsis": "",
+          "categories": [
+            "Sheriffs",
+            "Werewolves",
+            "Fiction"
+          ],
+          "isbns": [],
+          "language": "",
+          "edition_id": "",
+          "policy": "openlibrary-minimal-metadata-v1",
+          "storage_policy": "openlibrary-minimal-metadata-v1",
+          "license": "Open Library bibliographic facts; rights vary",
+          "read_mode": "metadatos de fuente; sin trama ni texto completo",
+          "memory_verified": true
+        }
+      ]
+    },
+    {
+      "title": "Elle",
+      "sources": [
+        {
+          "title": "Elle",
+          "author": "Martine Roffinella",
+          "kind": "book",
+          "book_id": "sqlkb:96f9de243a922526dd9d7d68b808802b5098dafaad7b8629c1292af36ab4e7e5",
+          "source": "Open Library",
+          "url": "https://openlibrary.org/works/OL10004190W",
+          "description": "",
+          "synopsis": "",
+          "categories": [
+            "Fiction",
+            "Lesbians",
+            "Sexuality",
+            "Lesbian students",
+            "Lesbian teachers",
+            "Identity"
+          ],
+          "isbns": [],
+          "language": "",
+          "edition_id": "",
+          "policy": "openlibrary-minimal-metadata-v1",
+          "storage_policy": "openlibrary-minimal-metadata-v1",
+          "license": "Open Library bibliographic facts; rights vary",
+          "read_mode": "metadatos de fuente; sin trama ni texto completo",
+          "memory_verified": true
+        }
+      ]
+    },
+    {
+      "title": "L'id\u00e9ologie plantagenet",
+      "sources": [
+        {
+          "title": "L'id\u00e9ologie plantagenet",
+          "author": "a. Chauou",
+          "kind": "book",
+          "book_id": "sqlkb:b648fcd505856e7fc8ada89a86ba71d73abec44115e69454f0fcfc661f1a58ff",
+          "source": "Open Library",
+          "url": "https://openlibrary.org/works/OL10005826W",
+          "description": "",
+          "synopsis": "",
+          "categories": [
+            "History",
+            "Politics and government",
+            "Legends"
+          ],
+          "isbns": [],
+          "language": "",
+          "edition_id": "",
+          "policy": "openlibrary-minimal-metadata-v1",
+          "storage_policy": "openlibrary-minimal-metadata-v1",
+          "license": "Open Library bibliographic facts; rights vary",
+          "read_mode": "metadatos de fuente; sin trama ni texto completo",
+          "memory_verified": true
+        }
+      ]
+    },
+    {
+      "title": "Spooksville - The Thing in the Closet",
+      "sources": [
+        {
+          "title": "Spooksville - The Thing in the Closet",
+          "author": "Christopher Pike",
+          "kind": "book",
+          "book_id": "sqlkb:2cf3ea75534918608e17e6412efff0802ccc5f15ba5f9811234f4f457c7d1a06",
+          "source": "Open Library",
+          "url": "https://openlibrary.org/works/OL1000755W",
+          "description": "",
+          "synopsis": "",
+          "categories": [
+            "Horror tales",
+            "Spooksville (Imaginary place)",
+            "series:Spooksville",
+            "Children's fiction",
+            "Monsters, fiction",
+            "Horror stories"
+          ],
+          "isbns": [],
+          "language": "",
+          "edition_id": "",
+          "policy": "openlibrary-minimal-metadata-v1",
+          "storage_policy": "openlibrary-minimal-metadata-v1",
+          "license": "Open Library bibliographic facts; rights vary",
+          "read_mode": "metadatos de fuente; sin trama ni texto completo",
+          "memory_verified": true
+        }
+      ]
+    },
+    {
+      "title": "Gary Payton",
+      "sources": [
+        {
+          "title": "Gary Payton",
+          "author": "Howard Blatt",
+          "kind": "book",
+          "book_id": "sqlkb:1c85341fe2056a3fbdf48807b30a9d1a2f9e33689d302f03749b611631c84920",
+          "source": "Open Library",
+          "url": "https://openlibrary.org/works/OL1000835W",
+          "description": "",
+          "synopsis": "",
+          "categories": [
+            "Juvenile literature",
+            "Biography",
+            "Basketball players",
+            "African Americans",
+            "African American basketball players",
+            "Seattle SuperSonics (Basketball team)"
+          ],
+          "isbns": [],
+          "language": "",
+          "edition_id": "",
+          "policy": "openlibrary-minimal-metadata-v1",
+          "storage_policy": "openlibrary-minimal-metadata-v1",
+          "license": "Open Library bibliographic facts; rights vary",
+          "read_mode": "metadatos de fuente; sin trama ni texto completo",
+          "memory_verified": true
+        }
+      ]
+    }
+  ]
+}

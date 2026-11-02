@@ -1,0 +1,317 @@
+{
+  "case": {
+    "case": 15,
+    "title": "Pluto",
+    "author": "Naoki Urasawa",
+    "kind": "manga",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [
+        {
+          "table": "memory_works",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_aliases",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_entities",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_entities",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_sources",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_assertions",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_fts",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "memory_fts_content",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "library_chapters",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks_content",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks_content",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "LITMATE_LIBRARY_RAG_DB": [
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks_content",
+          "title_match": true,
+          "full_author_match": false
+        },
+        {
+          "table": "chunks_content",
+          "title_match": true,
+          "full_author_match": false
+        }
+      ],
+      "mysql": {
+        "name_record_ids": [
+          "cb141b9aa92a1b5be3e149b94c2a6368450b9ad0a9cf1eaa0454c492446bf6e2"
+        ],
+        "direct_records": [
+          {
+            "id": "cb141b9aa92a1b5be3e149b94c2a6368450b9ad0a9cf1eaa0454c492446bf6e2",
+            "label": "Escape From Pluto",
+            "kind": "edition"
+          }
+        ],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": false
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de Pluto de Naoki Urasawa",
+      "answer": "Pluto narra la historia de Gesicht (en alem\u00e1n: \u00abcara\u00bb), un robot detective que trabaja para la Europol, cuando investiga un caso que gira en torno a los asesinatos de robots y humanos que est\u00e1n teniendo lugar. El caso se complica cuando las pruebas empiezan a sugerir que quien est\u00e1 detr\u00e1s de todo es un robot. La acci\u00f3n se sit\u00faa en un futuro donde los robots han ganado derechos similares a los que tienen los humanos, y en el que tuvo lugar una guerra que asol\u00f3 el Imperio Persa, situado en el Medio Oriente, la cual marc\u00f3 el pasado de muchos de sus personajes.\n\nFuente: https://es.wikipedia.org/wiki/Pluto_(manga)\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+      "status": "answered",
+      "books": [],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 4849,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "partial_evidence": true,
+        "work_type": "nonfiction",
+        "progress_metrics": {
+          "elapsed_ms": 4855.018,
+          "first_phase_emitted_ms": 18.851,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 7.251,
+            "cache_lookup": 0.631,
+            "knowledge_lookup": 551.2,
+            "retrieval": 4379.645,
+            "audit": 3.17,
+            "finalization": 6.058
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 4.509,
+              "elapsed_ms": 7.251,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 18.21,
+              "elapsed_ms": 0.631,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 31.177,
+              "elapsed_ms": 317.582,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 105.725,
+              "elapsed_ms": 40.665,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 205.28,
+              "elapsed_ms": 142.481,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 270.157,
+              "elapsed_ms": 45.937,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 415.204,
+              "elapsed_ms": 4.535,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 429.29,
+              "elapsed_ms": 4379.645,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 4825.566,
+              "elapsed_ms": 3.17,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 4848.954,
+              "elapsed_ms": 6.058,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 18.851
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 4825.551
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 4.8629,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.0338,
+        "verified_ready_seconds": 4.842,
+        "first_verified_text_seconds": 4.8629
+      }
+    }
+  ],
+  "seconds": 7.018,
+  "research_profile": "cold_after",
+  "public_research_trace": [
+    {
+      "stage": "retrieved_public_evidence",
+      "sources": [
+        {
+          "id": 1,
+          "title": "Pluto (manga)",
+          "author": "Fuente web",
+          "description": "== Sinopsis == Pluto narra la historia de Gesicht (en alem\u00e1n: \u00abcara\u00bb), un robot detective que trabaja para la Europol, cuando investiga un caso que gira en torno a los asesinatos de robots y humanos que est\u00e1n teniendo lugar. El caso se complica cuando las pruebas empiezan a sugerir que quien est\u00e1 detr\u00e1s de todo es un robot. La acci\u00f3n se sit\u00faa en un futuro donde los robots han ganado derechos similares a los que tienen los humanos, y en el que tuvo lugar una guerra que asol\u00f3 el Imperio Persa, situado en el Medio Oriente, la cual marc\u00f3 el pasado de muchos de sus personajes.",
+          "source": "Wikipedia",
+          "year": "",
+          "book_id": "",
+          "kind": "web",
+          "url": "https://es.wikipedia.org/wiki/Pluto_(manga)",
+          "locator": "",
+          "read_mode": "pasaje de secci\u00f3n de art\u00edculo p\u00fablico",
+          "retrieved_at": "",
+          "license": "CC-BY-SA-4.0",
+          "permanent_index_allowed": true,
+          "attribution": {
+            "authors": "Wikipedia contributors",
+            "title": "Pluto (manga)",
+            "url": "https://es.wikipedia.org/wiki/Pluto_(manga)",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+            "revision_id": "174699062"
+          },
+          "storage_policy": "wikipedia-cc-by-sa-4.0-v1",
+          "literary_facts": [
+            {
+              "subject": "",
+              "relation": "",
+              "value": "",
+              "evidence": "Pluto narra la historia de Gesicht (en alem\u00e1n: \u00abcara\u00bb), un robot detective que trabaja para la Europol, cuando investiga un caso que gira en torno a los asesinatos de robots y humanos que est\u00e1n teniendo lugar.",
+              "source_url": "",
+              "fact_kind": "",
+              "topic": "plot",
+              "type": "",
+              "scope": "premise"
+            }
+          ],
+          "identity_text": "Pluto (\u30d7\u30eb\u30fc\u30c8\u30a6, Pur\u016bt\u014d?) es un manga de Naoki Urasawa publicado por la editorial Sh\u014dgakukan en la revista Big Comic Original entre 2003 y 2009. Takashi Nagasaki aparece como coautor de la serie, que fue supervisada por Makoto Tezuka, hijo de Osamu Tezuka. Cuenta con 65 cap\u00edtulos, recogidos en 8 tomos. La serie est\u00e1 basada en la obra de Tezuka Astro Boy, espec\u00edficamente en el arco argumental \"El mayor robot en la Tierra\" (\u5730\u4e0a\u6700\u5927\u306e\u30ed\u30dc\u30c3\u30c8, Chijou saidai no robotto?), y nombrada con base en el principal villano de este. Urasawa lo reinterpreta como una historia de suspenso protagonizada por Gesicht, un robot detective de la Europol que intenta resolver una serie de asesinatos tanto de robots como de humanos que est\u00e1n relacionados entre s\u00ed. Hay numerosas referencias a otras obras y personajes de Tezuka. Una adaptaci\u00f3n teatral dirigida por Sidi Larbi Cherkaoui se estren\u00f3 en enero de 2015 y se ha presentado internacionalmente. Una adaptaci\u00f3n al anime en formato ONA, producida por Genco con servicios de producci\u00f3n de animaci\u00f3n de Studio M2, se estren\u00f3 en su totalidad en Netflix en octubre de 2023. Pluto fue un \u00e9xito comercial y de cr\u00edtica, gan\u00f3 varios premios, incluido el noveno Premio Cultural T",
+          "character_facts": []
+        }
+      ]
+    }
+  ],
+  "coverage_before": {
+    "works": 14478,
+    "works_with_explicit_plot": 18,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 21,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 35,
+    "linked_sources": 14653,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14478,
+    "works_with_explicit_plot": 18,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 21,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 35,
+    "linked_sources": 14653,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "persistent_exact_cache",
+  "google_books_enabled": false,
+  "factual_review_pending": true
+}

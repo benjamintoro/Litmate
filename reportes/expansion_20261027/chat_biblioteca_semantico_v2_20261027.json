@@ -1,0 +1,183 @@
+{
+  "created_at_utc": "2026-10-27T04:25:06.667641+00:00",
+  "mode": "real_http_sse_isolated_database",
+  "model": "qwen3.5:4b",
+  "context": 16384,
+  "prewarm": {
+    "requested": false,
+    "seconds": null,
+    "generates_answers": false
+  },
+  "web_enabled": false,
+  "chat_budget_seconds": 75.0,
+  "response_budget_seconds": 90.0,
+  "progressive": false,
+  "repeat": 1,
+  "knowledge_setup": "empty_auxiliary_databases_with_bundled_catalogue_and_readonly_library",
+  "library": "G:\\Proyecto\\Litmate\\data\\biblioteca\\biblioteca.sqlite3",
+  "library_semantic": true,
+  "resource_scope": "python_server_process_only_not_ollama_or_gpu",
+  "cache_controls": {
+    "empty_answers_each_turn": false,
+    "empty_retrieval_each_turn": false
+  },
+  "factual_review": "not_independently_certified",
+  "turns": [
+    {
+      "case": "frankenstein_carta_william",
+      "turn": 1,
+      "question": "¿Qué noticia sobre William comunica la carta dirigida a Victor en Frankenstein?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 30.857,
+      "first_text_seconds": 30.855,
+      "first_useful_seconds": 30.855,
+      "first_progress_seconds": null,
+      "progress_phases": [],
+      "diagnostics": {},
+      "stage_totals_ms": {},
+      "delivery_overhead_ms": null,
+      "resources": {
+        "rss_mb": 107.516,
+        "peak_rss_mb": 152.633,
+        "cpu_seconds": 0.59375
+      },
+      "category": "contenido_local",
+      "under_response_budget": true,
+      "model_calls": 5,
+      "answer": "En la carta que Elizabeth Lavenza escribe a Victor Frankenstein, le comunica la noticia de que **William Frankenstein ha sido asesinado**.\n\nLa carta detalla los hechos ocurridos el jueves 7 de mayo: mientras todos caminaban en Plainpalais, William y Ernest se perdieron. Al regresar Ernest solo, Elizabeth menciona un detalle crucial para entender el crimen: ese mismo día, William había pedido a su tía que le dejara llevar una **miniatura muy valiosa** que ella poseía del padre de Victor (el Dr. Frankenstein). Elizabeth señala que esa miniatura desapareció y fue probablemente la tentación que impulsó al asesino a cometer el delito.\n\nLa carta no revela quién es el matador ni los detalles exactos del crimen, pero sí deja claro que William murió en circunstancias sospechosas y que su muerte ha dejado a Victor y Elizabeth en un profundo dolor y acusación mutua.\n\n[1] Frankenstein · capítulo/sección 33: Chapter 7; fragmento del índice derivado\nhttps://www.gutenberg.org/ebooks/84",
+      "source_urls": [
+        "https://www.gutenberg.org/ebooks/84"
+      ]
+    },
+    {
+      "case": "quijote_resumen",
+      "turn": 1,
+      "question": "¿De qué trata Don Quijote?",
+      "http_status": 200,
+      "status": "unavailable",
+      "completed_sse": true,
+      "seconds": 8.042,
+      "first_text_seconds": 8.042,
+      "first_useful_seconds": null,
+      "first_progress_seconds": null,
+      "progress_phases": [],
+      "diagnostics": {},
+      "stage_totals_ms": {},
+      "delivery_overhead_ms": null,
+      "resources": {
+        "rss_mb": 110.246,
+        "peak_rss_mb": 152.633,
+        "cpu_seconds": 0.234375
+      },
+      "category": "resumen_local_es",
+      "under_response_budget": true,
+      "model_calls": 2,
+      "answer": "No pude confirmar una sinopsis fiable de **Don Quijote** con las fuentes disponibles. No quiero mezclarlo con otra obra.",
+      "source_urls": []
+    },
+    {
+      "case": "orgullo_resumen_alias",
+      "turn": 1,
+      "question": "¿De qué trata Orgullo y prejuicio?",
+      "http_status": 200,
+      "status": "unavailable",
+      "completed_sse": true,
+      "seconds": 8.104,
+      "first_text_seconds": 8.103,
+      "first_useful_seconds": null,
+      "first_progress_seconds": null,
+      "progress_phases": [],
+      "diagnostics": {},
+      "stage_totals_ms": {},
+      "delivery_overhead_ms": null,
+      "resources": {
+        "rss_mb": 111.492,
+        "peak_rss_mb": 152.633,
+        "cpu_seconds": 0.234375
+      },
+      "category": "resumen_alias_es",
+      "under_response_budget": true,
+      "model_calls": 2,
+      "answer": "No pude confirmar una sinopsis fiable de **Orgullo y prejuicio** con las fuentes disponibles. No quiero mezclarlo con otra obra.",
+      "source_urls": []
+    },
+    {
+      "case": "marianela_resumen",
+      "turn": 1,
+      "question": "¿De qué trata Marianela?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 9.273,
+      "first_text_seconds": 9.273,
+      "first_useful_seconds": 9.273,
+      "first_progress_seconds": null,
+      "progress_phases": [],
+      "diagnostics": {},
+      "stage_totals_ms": {},
+      "delivery_overhead_ms": null,
+      "resources": {
+        "rss_mb": 115.812,
+        "peak_rss_mb": 152.633,
+        "cpu_seconds": 0.296875
+      },
+      "category": "resumen_local_es",
+      "under_response_budget": true,
+      "model_calls": 2,
+      "answer": "La obra explora sus sentimientos secretos y su idealización de la belleza humana a través de fragmentos que muestran interacciones con personajes como D. Francisco y Golfín, quienes discuten sobre operaciones médicas y el estado del paciente Teodoro.\n\nFuente: https://www.gutenberg.org/ebooks/17340\n\nEs lo que pude respaldar con la descripción consultada.",
+      "source_urls": [
+        "https://www.gutenberg.org/ebooks/17340"
+      ]
+    },
+    {
+      "case": "dracula_autor",
+      "turn": 1,
+      "question": "¿Quién escribió Drácula?",
+      "http_status": 200,
+      "status": "answered",
+      "completed_sse": true,
+      "seconds": 0.051,
+      "first_text_seconds": 0.051,
+      "first_useful_seconds": 0.051,
+      "first_progress_seconds": null,
+      "progress_phases": [],
+      "diagnostics": {},
+      "stage_totals_ms": {},
+      "delivery_overhead_ms": null,
+      "resources": {
+        "rss_mb": 115.949,
+        "peak_rss_mb": 152.633,
+        "cpu_seconds": 0.046875
+      },
+      "category": "autoridad_local",
+      "under_response_budget": true,
+      "model_calls": 0,
+      "answer": "**Dracula** es una obra de **Bram Stoker**.\n\nFuente de la ficha: https://www.gutenberg.org/ebooks/345",
+      "source_urls": [
+        "https://www.gutenberg.org/ebooks/345"
+      ]
+    }
+  ],
+  "source_sha256": "f72251f164d308fe68c319fc1ea4a7d342838fa28eae1d9de6f020edeccfdfd8",
+  "runner_sha256": "20ff389e7f67f4a071847fa17a124c380fa19c121fba26195b7d288b47afe5b0",
+  "matrix_sha256": "fd0038e78386dccfd76f262895f06f3ce6d6397c8f11ce34b14ec5db3b67bc1c",
+  "metrics": {
+    "turns": 5,
+    "p50_seconds": 8.104,
+    "mean_seconds": 11.265,
+    "p95_seconds": 30.857,
+    "max_seconds": 30.857,
+    "under_response_budget": 5,
+    "statuses": {
+      "answered": 3,
+      "unavailable": 2
+    },
+    "under_5_seconds": 1,
+    "under_10_seconds": 4,
+    "under_30_seconds": 4,
+    "answered_is_not_factual_certification": true
+  },
+  "source_files_changed_during_run": false
+}

@@ -1,0 +1,10 @@
+{
+  "url": "https://gutenberg.pglaf.org/cache/epub/feeds/pg_catalog.csv.gz",
+  "file": "data\\adquisicion\\pg_catalog_20261027.csv.gz",
+  "bytes": 5597116,
+  "sha256": "ebf4f6e54a34dddbcd26ca8a5ef593c9cf3e0ab8b331628ea7a49170a196a07e",
+  "seconds": 91.3146,
+  "transport": "manual_fixed_official_url_TLS_verified_system_proxy_NoRedirects",
+  "application_secure_downloader": "timeout_before_manual_import",
+  "license_scope": "catalog_metadata_only"
+}

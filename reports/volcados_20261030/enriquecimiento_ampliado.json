@@ -1,0 +1,1124 @@
+{
+  "mode": "continuous_once",
+  "scheduled": 13,
+  "llm_calls": 0,
+  "new_global_corrections": 0,
+  "mysql_references_added": 0,
+  "work_ids": [
+    "litmate:3cff7f2c2dc9a05e130a4007",
+    "litmate:16161e50bcd8f96c0243a7b0",
+    "litmate:4b6309351b8f4c7f545228a6",
+    "litmate:612813c24f5478b4b3abd50f",
+    "litmate:68319f2cca92a21a05ed626d",
+    "litmate:cf67efebae22b928eedc86f3",
+    "litmate:cf86a03659678c1f89a26583",
+    "litmate:46dfb046114b9bb495766e91",
+    "litmate:d078997cc9d2175b8e27e594",
+    "litmate:71db6dd229e48489ec616c73",
+    "litmate:eb690907d6b78d319c8d7a26",
+    "litmate:dbf1b649da3901c4fabe7152",
+    "litmate:88b9c8812b635801a19ac0f2"
+  ],
+  "batch": {
+    "claimed": 11,
+    "completed": 7,
+    "deferred": 4,
+    "stored": 7,
+    "seconds": 41.121,
+    "jobs": [
+      {
+        "work_id": "litmate:16161e50bcd8f96c0243a7b0",
+        "provider": "wikipedia",
+        "requirement": "plot_development",
+        "status": "empty",
+        "lease_current": true,
+        "seconds": 1.617,
+        "stored": 0,
+        "reused": false
+      },
+      {
+        "work_id": "litmate:dbf1b649da3901c4fabe7152",
+        "provider": "wikipedia",
+        "requirement": "plot_development",
+        "status": "ok",
+        "lease_current": true,
+        "seconds": 1.25,
+        "stored": 1,
+        "reused": false
+      },
+      {
+        "work_id": "litmate:71db6dd229e48489ec616c73",
+        "provider": "wikipedia",
+        "requirement": "plot_development",
+        "status": "ok",
+        "lease_current": true,
+        "seconds": 1.103,
+        "stored": 1,
+        "reused": false
+      },
+      {
+        "work_id": "litmate:46dfb046114b9bb495766e91",
+        "provider": "wikipedia",
+        "requirement": "plot_development",
+        "status": "ok",
+        "lease_current": true,
+        "seconds": 1.702,
+        "stored": 1,
+        "reused": false
+      },
+      {
+        "work_id": "litmate:3cff7f2c2dc9a05e130a4007",
+        "provider": "wikipedia",
+        "requirement": "plot_development",
+        "status": "ok",
+        "lease_current": true,
+        "seconds": 1.483,
+        "stored": 1,
+        "reused": false
+      },
+      {
+        "work_id": "litmate:4b6309351b8f4c7f545228a6",
+        "provider": "wikipedia",
+        "requirement": "plot_development",
+        "status": "ok",
+        "lease_current": true,
+        "seconds": 1.936,
+        "stored": 1,
+        "reused": false
+      },
+      {
+        "work_id": "litmate:68319f2cca92a21a05ed626d",
+        "provider": "wikipedia",
+        "requirement": "plot_development",
+        "status": "no_verified_match",
+        "lease_current": true,
+        "seconds": 2.697,
+        "stored": 0,
+        "reused": false
+      },
+      {
+        "work_id": "litmate:cf86a03659678c1f89a26583",
+        "provider": "wikipedia",
+        "requirement": "plot_development",
+        "status": "ok",
+        "lease_current": true,
+        "seconds": 1.201,
+        "stored": 1,
+        "reused": false
+      },
+      {
+        "work_id": "litmate:d078997cc9d2175b8e27e594",
+        "provider": "wikipedia",
+        "requirement": "plot_development",
+        "status": "no_verified_match",
+        "lease_current": true,
+        "seconds": 2.586,
+        "stored": 0,
+        "reused": false
+      },
+      {
+        "work_id": "litmate:eb690907d6b78d319c8d7a26",
+        "provider": "wikipedia",
+        "requirement": "plot_development",
+        "status": "ok",
+        "lease_current": true,
+        "seconds": 1.727,
+        "stored": 1,
+        "reused": false
+      },
+      {
+        "work_id": "litmate:88b9c8812b635801a19ac0f2",
+        "provider": "wikipedia",
+        "requirement": "plot_development",
+        "status": "empty",
+        "lease_current": true,
+        "seconds": 1.519,
+        "stored": 0,
+        "reused": false
+      }
+    ],
+    "llm_calls": 0,
+    "reused": 0,
+    "verification_scope": "source_policy_identity_and_requirement_coverage",
+    "independent_factual_corroboration": false
+  },
+  "index": {
+    "sources": 494,
+    "documents": 490,
+    "chunks": 506,
+    "semantic": false,
+    "index_updated": true,
+    "index": "G:\\Proyecto\\Litmate\\data\\literary_memory_rag.sqlite3",
+    "short_sources_skipped": 1
+  },
+  "projected_work_ids": [
+    "litmate:16161e50bcd8f96c0243a7b0",
+    "litmate:dbf1b649da3901c4fabe7152",
+    "litmate:71db6dd229e48489ec616c73",
+    "litmate:46dfb046114b9bb495766e91",
+    "litmate:3cff7f2c2dc9a05e130a4007",
+    "litmate:4b6309351b8f4c7f545228a6",
+    "litmate:68319f2cca92a21a05ed626d",
+    "litmate:cf86a03659678c1f89a26583",
+    "litmate:d078997cc9d2175b8e27e594",
+    "litmate:eb690907d6b78d319c8d7a26",
+    "litmate:88b9c8812b635801a19ac0f2",
+    "litmate:612813c24f5478b4b3abd50f",
+    "litmate:cf67efebae22b928eedc86f3"
+  ],
+  "stopped": null,
+  "seconds": 43.575,
+  "cpu_seconds": 3.094,
+  "process": {
+    "rss_mb": 76.918,
+    "peak_rss_mb": 108.168
+  },
+  "storage_delta_bytes": 61440,
+  "revision_before": "13606",
+  "revision_after": "13613",
+  "coverage_before": {
+    "works": 13,
+    "works_with_explicit_plot": 8,
+    "works_with_development_excerpt": 0,
+    "works_with_admitted_description": 8,
+    "characters_with_literal_roles": 68,
+    "works_with_literal_roles": 8,
+    "characters_with_membership_only": 11,
+    "works_with_explicit_protagonist": 6,
+    "explicit_protagonist_mentions": 11,
+    "relationships": 2,
+    "narrative_facts": 12,
+    "linked_sources": 46,
+    "per_work": {
+      "litmate:3cff7f2c2dc9a05e130a4007": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 12,
+        "relationships": 1,
+        "facts": 2
+      },
+      "litmate:16161e50bcd8f96c0243a7b0": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 12,
+        "relationships": 0,
+        "facts": 1
+      },
+      "litmate:4b6309351b8f4c7f545228a6": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 12,
+        "relationships": 0,
+        "facts": 2
+      },
+      "litmate:612813c24f5478b4b3abd50f": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:68319f2cca92a21a05ed626d": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:cf67efebae22b928eedc86f3": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:cf86a03659678c1f89a26583": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 5,
+        "relationships": 0,
+        "facts": 1
+      },
+      "litmate:46dfb046114b9bb495766e91": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 9,
+        "relationships": 0,
+        "facts": 2
+      },
+      "litmate:d078997cc9d2175b8e27e594": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:71db6dd229e48489ec616c73": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 5,
+        "relationships": 0,
+        "facts": 1
+      },
+      "litmate:eb690907d6b78d319c8d7a26": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 12,
+        "relationships": 0,
+        "facts": 1
+      },
+      "litmate:dbf1b649da3901c4fabe7152": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 1,
+        "relationships": 1,
+        "facts": 2
+      },
+      "litmate:88b9c8812b635801a19ac0f2": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 13,
+    "works_with_explicit_plot": 8,
+    "works_with_development_excerpt": 7,
+    "works_with_admitted_description": 8,
+    "characters_with_literal_roles": 68,
+    "works_with_literal_roles": 8,
+    "characters_with_membership_only": 11,
+    "works_with_explicit_protagonist": 6,
+    "explicit_protagonist_mentions": 11,
+    "relationships": 2,
+    "narrative_facts": 20,
+    "linked_sources": 46,
+    "per_work": {
+      "litmate:3cff7f2c2dc9a05e130a4007": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 12,
+        "relationships": 1,
+        "facts": 3
+      },
+      "litmate:16161e50bcd8f96c0243a7b0": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 12,
+        "relationships": 0,
+        "facts": 1
+      },
+      "litmate:4b6309351b8f4c7f545228a6": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 12,
+        "relationships": 0,
+        "facts": 3
+      },
+      "litmate:612813c24f5478b4b3abd50f": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:68319f2cca92a21a05ed626d": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:cf67efebae22b928eedc86f3": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:cf86a03659678c1f89a26583": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 5,
+        "relationships": 0,
+        "facts": 3
+      },
+      "litmate:46dfb046114b9bb495766e91": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 9,
+        "relationships": 0,
+        "facts": 3
+      },
+      "litmate:d078997cc9d2175b8e27e594": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      },
+      "litmate:71db6dd229e48489ec616c73": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 5,
+        "relationships": 0,
+        "facts": 2
+      },
+      "litmate:eb690907d6b78d319c8d7a26": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 12,
+        "relationships": 0,
+        "facts": 2
+      },
+      "litmate:dbf1b649da3901c4fabe7152": {
+        "synopsis": true,
+        "description": true,
+        "development_excerpt": true,
+        "roles": 1,
+        "relationships": 1,
+        "facts": 3
+      },
+      "litmate:88b9c8812b635801a19ac0f2": {
+        "synopsis": false,
+        "description": false,
+        "development_excerpt": false,
+        "roles": 0,
+        "relationships": 0,
+        "facts": 0
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "database": {
+    "vendor": "mysql",
+    "name": "litmate_db"
+  },
+  "jobs": [
+    {
+      "work_id": "litmate:16161e50bcd8f96c0243a7b0",
+      "requirement": "characters",
+      "provider": "wikidata",
+      "status": "pending",
+      "attempts": 2,
+      "last_error": "no_evidence",
+      "not_before": 1793295977.5912123,
+      "payload": "{\"author\":\"Antoine de Saint-Exupéry\",\"last_attempt_at\":1793295075.068781,\"title\":\"El principito\"}"
+    },
+    {
+      "work_id": "litmate:16161e50bcd8f96c0243a7b0",
+      "requirement": "characters",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 2,
+      "last_error": "no_verified_match",
+      "not_before": 1793295968.8491325,
+      "payload": "{\"author\":\"Antoine de Saint-Exupéry\",\"last_attempt_at\":1793295065.4042938,\"title\":\"El principito\"}"
+    },
+    {
+      "work_id": "litmate:16161e50bcd8f96c0243a7b0",
+      "requirement": "main_characters",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "",
+      "not_before": 1793381583.4382796,
+      "payload": "{\"author\":\"Antoine de Saint-Exupéry\",\"gap_count\":4,\"last_attempt_at\":1793295180.7265794,\"last_completed_at\":1793295183.4382796,\"last_gap_reason\":\"insufficient_evidence\",\"last_verification\":\"source_identity_license_and_coverage\",\"title\":\"El principito\"}"
+    },
+    {
+      "work_id": "litmate:16161e50bcd8f96c0243a7b0",
+      "requirement": "plot_development",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "empty",
+      "not_before": 1793340228.1226704,
+      "payload": "{\"author\":\"Antoine de Saint-Exupéry\",\"gap_count\":2,\"last_attempt_at\":1793339326.4994473,\"last_gap_reason\":\"insufficient_evidence\",\"title\":\"El principito\"}"
+    },
+    {
+      "work_id": "litmate:16161e50bcd8f96c0243a7b0",
+      "requirement": "summary",
+      "provider": "wikipedia",
+      "status": "done",
+      "attempts": 1,
+      "last_error": "",
+      "not_before": 1793230626.1689453,
+      "payload": "{\"author\":\"Antoine de Saint-Exupéry\",\"title\":\"El principito\"}"
+    },
+    {
+      "work_id": "litmate:3cff7f2c2dc9a05e130a4007",
+      "requirement": "characters",
+      "provider": "wikipedia",
+      "status": "done",
+      "attempts": 1,
+      "last_error": "",
+      "not_before": 1793230889.7038264,
+      "payload": "{\"author\":\"Jane Austen\",\"title\":\"Orgullo y prejuicio\"}"
+    },
+    {
+      "work_id": "litmate:3cff7f2c2dc9a05e130a4007",
+      "requirement": "plot_development",
+      "provider": "wikipedia",
+      "status": "done",
+      "attempts": 1,
+      "last_error": "",
+      "not_before": 1793339325.9080863,
+      "payload": "{\"author\":\"Jane Austen\",\"gap_count\":1,\"last_attempt_at\":1793339340.309558,\"last_completed_at\":1793339341.797919,\"last_gap_reason\":\"insufficient_evidence\",\"last_verification\":\"source_identity_license_and_coverage\",\"title\":\"Orgullo y prejuicio\"}"
+    },
+    {
+      "work_id": "litmate:3cff7f2c2dc9a05e130a4007",
+      "requirement": "summary",
+      "provider": "wikipedia",
+      "status": "done",
+      "attempts": 1,
+      "last_error": "",
+      "not_before": 1793230626.1473892,
+      "payload": "{\"author\":\"Jane Austen\",\"title\":\"Orgullo y prejuicio\"}"
+    },
+    {
+      "work_id": "litmate:46dfb046114b9bb495766e91",
+      "requirement": "character_roster",
+      "provider": "wikipedia",
+      "status": "done",
+      "attempts": 1,
+      "last_error": "",
+      "not_before": 1793298694.7179027,
+      "payload": "{\"author\":\"Bram Stoker\",\"gap_count\":1,\"last_attempt_at\":1793298716.4131355,\"last_completed_at\":1793298716.5075583,\"last_gap_reason\":\"insufficient_evidence\",\"last_verification\":\"source_identity_license_and_coverage\",\"title\":\"Dracula\"}"
+    },
+    {
+      "work_id": "litmate:46dfb046114b9bb495766e91",
+      "requirement": "characters",
+      "provider": "wikidata",
+      "status": "done",
+      "attempts": 2,
+      "last_error": "",
+      "not_before": 1793231125.0840678,
+      "payload": "{\"author\":\"Bram Stoker\",\"last_attempt_at\":1793268212.0432572,\"last_completed_at\":1793268212.0978715,\"last_verification\":\"source_identity_license_and_coverage\",\"title\":\"Dracula\"}"
+    },
+    {
+      "work_id": "litmate:46dfb046114b9bb495766e91",
+      "requirement": "characters",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 2,
+      "last_error": "",
+      "not_before": 1793354590.6819096,
+      "payload": "{\"author\":\"Bram Stoker\",\"gap_count\":2,\"last_attempt_at\":1793268187.8582304,\"last_completed_at\":1793268190.6819096,\"last_gap_reason\":\"insufficient_evidence\",\"last_verification\":\"source_identity_license_and_coverage\",\"title\":\"Dracula\"}"
+    },
+    {
+      "work_id": "litmate:46dfb046114b9bb495766e91",
+      "requirement": "main_characters",
+      "provider": "wikipedia",
+      "status": "done",
+      "attempts": 2,
+      "last_error": "",
+      "not_before": 1793296078.7148855,
+      "payload": "{\"author\":\"Bram Stoker\",\"gap_count\":3,\"last_attempt_at\":1793298704.9454138,\"last_completed_at\":1793298708.1733222,\"last_gap_reason\":\"insufficient_evidence\",\"last_verification\":\"source_identity_license_and_coverage\",\"title\":\"Dracula\"}"
+    },
+    {
+      "work_id": "litmate:46dfb046114b9bb495766e91",
+      "requirement": "plot_development",
+      "provider": "wikipedia",
+      "status": "done",
+      "attempts": 2,
+      "last_error": "",
+      "not_before": 1793299626.867937,
+      "payload": "{\"author\":\"Bram Stoker\",\"gap_count\":2,\"last_attempt_at\":1793339336.5912263,\"last_completed_at\":1793339338.2983527,\"last_gap_reason\":\"insufficient_evidence\",\"last_verification\":\"source_identity_license_and_coverage\",\"title\":\"Dracula\"}"
+    },
+    {
+      "work_id": "litmate:46dfb046114b9bb495766e91",
+      "requirement": "relationships",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 0,
+      "last_error": "",
+      "not_before": 1793298694.8301044,
+      "payload": "{\"author\":\"Bram Stoker\",\"gap_count\":1,\"last_gap_reason\":\"insufficient_evidence\",\"title\":\"Dracula\"}"
+    },
+    {
+      "work_id": "litmate:46dfb046114b9bb495766e91",
+      "requirement": "summary",
+      "provider": "wikipedia",
+      "status": "done",
+      "attempts": 1,
+      "last_error": "",
+      "not_before": 1793230626.2369785,
+      "payload": "{\"author\":\"Bram Stoker\",\"title\":\"Dracula\"}"
+    },
+    {
+      "work_id": "litmate:4b6309351b8f4c7f545228a6",
+      "requirement": "characters",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "",
+      "not_before": 1793269817.1127715,
+      "payload": "{\"author\":\"Frank Herbert\",\"gap_count\":4,\"last_gap_reason\":\"insufficient_evidence\",\"title\":\"Dune\"}"
+    },
+    {
+      "work_id": "litmate:4b6309351b8f4c7f545228a6",
+      "requirement": "plot_development",
+      "provider": "wikipedia",
+      "status": "done",
+      "attempts": 1,
+      "last_error": "",
+      "not_before": 1793339326.1345618,
+      "payload": "{\"author\":\"Frank Herbert\",\"gap_count\":1,\"last_attempt_at\":1793339343.817055,\"last_completed_at\":1793339345.7578208,\"last_gap_reason\":\"insufficient_evidence\",\"last_verification\":\"source_identity_license_and_coverage\",\"title\":\"Dune\"}"
+    },
+    {
+      "work_id": "litmate:4b6309351b8f4c7f545228a6",
+      "requirement": "summary",
+      "provider": "wikipedia",
+      "status": "done",
+      "attempts": 1,
+      "last_error": "",
+      "not_before": 1793230626.1529014,
+      "payload": "{\"author\":\"Frank Herbert\",\"title\":\"Dune\"}"
+    },
+    {
+      "work_id": "litmate:612813c24f5478b4b3abd50f",
+      "requirement": "plot_development",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "empty",
+      "not_before": 1793340121.2107606,
+      "payload": "{\"author\":\"Alan Brinkley\",\"gap_count\":2,\"last_attempt_at\":1793339219.304338,\"last_gap_reason\":\"insufficient_evidence\",\"title\":\"The Unfinished Nation\"}"
+    },
+    {
+      "work_id": "litmate:68319f2cca92a21a05ed626d",
+      "requirement": "characters",
+      "provider": "wikidata",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "rate_limited",
+      "not_before": 1793231139.4951222,
+      "payload": "{\"author\":\"Herman Melville\",\"title\":\"Moby-Dick; or, The Whale\"}"
+    },
+    {
+      "work_id": "litmate:68319f2cca92a21a05ed626d",
+      "requirement": "characters",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 2,
+      "last_error": "no_verified_match",
+      "not_before": 1793332292.4866936,
+      "payload": "{\"author\":\"Herman Melville\",\"gap_count\":1,\"last_attempt_at\":1793331388.781148,\"last_gap_reason\":\"insufficient_evidence\",\"title\":\"Moby-Dick; or, The Whale\"}"
+    },
+    {
+      "work_id": "litmate:68319f2cca92a21a05ed626d",
+      "requirement": "plot_development",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "no_verified_match",
+      "not_before": 1793340250.4730165,
+      "payload": "{\"author\":\"Herman Melville\",\"gap_count\":1,\"last_attempt_at\":1793339347.7681513,\"last_gap_reason\":\"insufficient_evidence\",\"title\":\"Moby-Dick; or, The Whale\"}"
+    },
+    {
+      "work_id": "litmate:68319f2cca92a21a05ed626d",
+      "requirement": "summary",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 2,
+      "last_error": "no_verified_match",
+      "not_before": 1793332286.7684112,
+      "payload": "{\"author\":\"Herman Melville\",\"gap_count\":1,\"last_attempt_at\":1793331383.9076169,\"last_gap_reason\":\"insufficient_evidence\",\"title\":\"Moby-Dick; or, The Whale\"}"
+    },
+    {
+      "work_id": "litmate:71db6dd229e48489ec616c73",
+      "requirement": "characters",
+      "provider": "wikidata",
+      "status": "done",
+      "attempts": 2,
+      "last_error": "",
+      "not_before": 1793231129.9040153,
+      "payload": "{\"author\":\"Hermann Hesse\",\"last_attempt_at\":1793269045.0621576,\"last_completed_at\":1793269045.1315703,\"last_verification\":\"source_identity_license_and_coverage\",\"title\":\"Siddhartha\"}"
+    },
+    {
+      "work_id": "litmate:71db6dd229e48489ec616c73",
+      "requirement": "characters",
+      "provider": "wikipedia",
+      "status": "done",
+      "attempts": 2,
+      "last_error": "",
+      "not_before": 1793231584.2296119,
+      "payload": "{\"author\":\"Hermann Hesse\",\"gap_count\":1,\"last_attempt_at\":1793268201.4444208,\"last_completed_at\":1793268202.9616497,\"last_gap_reason\":\"insufficient_evidence\",\"last_verification\":\"source_identity_license_and_coverage\",\"title\":\"Siddhartha\"}"
+    },
+    {
+      "work_id": "litmate:71db6dd229e48489ec616c73",
+      "requirement": "main_characters",
+      "provider": "wikipedia",
+      "status": "done",
+      "attempts": 2,
+      "last_error": "",
+      "not_before": 1793296073.866584,
+      "payload": "{\"author\":\"Hermann Hesse\",\"gap_count\":3,\"last_attempt_at\":1793298700.9545496,\"last_completed_at\":1793298702.9345753,\"last_gap_reason\":\"insufficient_evidence\",\"last_verification\":\"source_identity_license_and_coverage\",\"title\":\"Siddhartha\"}"
+    },
+    {
+      "work_id": "litmate:71db6dd229e48489ec616c73",
+      "requirement": "plot_development",
+      "provider": "wikipedia",
+      "status": "done",
+      "attempts": 2,
+      "last_error": "",
+      "not_before": 1793299623.423854,
+      "payload": "{\"author\":\"Hermann Hesse\",\"gap_count\":2,\"last_attempt_at\":1793339333.472076,\"last_completed_at\":1793339334.5801165,\"last_gap_reason\":\"insufficient_evidence\",\"last_verification\":\"source_identity_license_and_coverage\",\"title\":\"Siddhartha\"}"
+    },
+    {
+      "work_id": "litmate:71db6dd229e48489ec616c73",
+      "requirement": "summary",
+      "provider": "wikipedia",
+      "status": "done",
+      "attempts": 1,
+      "last_error": "",
+      "not_before": 1793230626.257771,
+      "payload": "{\"author\":\"Hermann Hesse\",\"title\":\"Siddhartha\"}"
+    },
+    {
+      "work_id": "litmate:88b9c8812b635801a19ac0f2",
+      "requirement": "characters",
+      "provider": "wikidata",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "rate_limited",
+      "not_before": 1793231117.8747027,
+      "payload": "{\"author\":\"Armando De Ramón\",\"title\":\"Historia de Chile\"}"
+    },
+    {
+      "work_id": "litmate:88b9c8812b635801a19ac0f2",
+      "requirement": "characters",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "no_verified_match",
+      "not_before": 1793231558.7657712,
+      "payload": "{\"author\":\"Armando De Ramón\",\"title\":\"Historia de Chile\"}"
+    },
+    {
+      "work_id": "litmate:88b9c8812b635801a19ac0f2",
+      "requirement": "plot_development",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "empty",
+      "not_before": 1793340265.6051486,
+      "payload": "{\"author\":\"Armando De Ramón\",\"gap_count\":1,\"last_attempt_at\":1793339364.0807343,\"last_gap_reason\":\"insufficient_evidence\",\"title\":\"Historia de Chile\"}"
+    },
+    {
+      "work_id": "litmate:88b9c8812b635801a19ac0f2",
+      "requirement": "summary",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "no_verified_match",
+      "not_before": 1793231556.1222537,
+      "payload": "{\"author\":\"Armando De Ramón\",\"title\":\"Historia de Chile\"}"
+    },
+    {
+      "work_id": "litmate:cf67efebae22b928eedc86f3",
+      "requirement": "characters",
+      "provider": "wikidata",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "rate_limited",
+      "not_before": 1793231137.0895815,
+      "payload": "{\"author\":\"L. Frank (Lyman Frank) Baum\",\"title\":\"The Wonderful Wizard of Oz\"}"
+    },
+    {
+      "work_id": "litmate:cf67efebae22b928eedc86f3",
+      "requirement": "characters",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "no_verified_match",
+      "not_before": 1793231600.999873,
+      "payload": "{\"author\":\"L. Frank (Lyman Frank) Baum\",\"title\":\"The Wonderful Wizard of Oz\"}"
+    },
+    {
+      "work_id": "litmate:cf67efebae22b928eedc86f3",
+      "requirement": "plot_development",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "empty",
+      "not_before": 1793340117.2932508,
+      "payload": "{\"author\":\"L. Frank (Lyman Frank) Baum\",\"gap_count\":2,\"last_attempt_at\":1793339216.2304738,\"last_gap_reason\":\"insufficient_evidence\",\"title\":\"The Wonderful Wizard of Oz\"}"
+    },
+    {
+      "work_id": "litmate:cf67efebae22b928eedc86f3",
+      "requirement": "summary",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "no_verified_match",
+      "not_before": 1793231597.795874,
+      "payload": "{\"author\":\"L. Frank (Lyman Frank) Baum\",\"title\":\"The Wonderful Wizard of Oz\"}"
+    },
+    {
+      "work_id": "litmate:cf86a03659678c1f89a26583",
+      "requirement": "characters",
+      "provider": "wikidata",
+      "status": "pending",
+      "attempts": 2,
+      "last_error": "empty",
+      "not_before": 1793269110.0322483,
+      "payload": "{\"author\":\"Jane Austen\",\"last_attempt_at\":1793268208.4398332,\"title\":\"Emma\"}"
+    },
+    {
+      "work_id": "litmate:cf86a03659678c1f89a26583",
+      "requirement": "characters",
+      "provider": "wikipedia",
+      "status": "done",
+      "attempts": 3,
+      "last_error": "",
+      "not_before": 1793269085.8471038,
+      "payload": "{\"author\":\"Jane Austen\",\"gap_count\":3,\"last_attempt_at\":1793331401.476154,\"last_completed_at\":1793331403.02004,\"last_gap_reason\":\"insufficient_evidence\",\"last_verification\":\"source_identity_license_and_coverage\",\"title\":\"Emma\"}"
+    },
+    {
+      "work_id": "litmate:cf86a03659678c1f89a26583",
+      "requirement": "plot_development",
+      "provider": "wikipedia",
+      "status": "done",
+      "attempts": 1,
+      "last_error": "",
+      "not_before": 1793339326.2414727,
+      "payload": "{\"author\":\"Jane Austen\",\"gap_count\":1,\"last_attempt_at\":1793339352.5184,\"last_completed_at\":1793339353.7236617,\"last_gap_reason\":\"insufficient_evidence\",\"last_verification\":\"source_identity_license_and_coverage\",\"title\":\"Emma\"}"
+    },
+    {
+      "work_id": "litmate:cf86a03659678c1f89a26583",
+      "requirement": "summary",
+      "provider": "wikipedia",
+      "status": "done",
+      "attempts": 1,
+      "last_error": "",
+      "not_before": 1793230626.2257175,
+      "payload": "{\"author\":\"Jane Austen\",\"title\":\"Emma\"}"
+    },
+    {
+      "work_id": "litmate:d078997cc9d2175b8e27e594",
+      "requirement": "characters",
+      "provider": "wikidata",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "no_verified_match",
+      "not_before": 1793231884.35847,
+      "payload": "{\"author\":\"Miguel de Cervantes Saavedra\",\"title\":\"Don Quijote\"}"
+    },
+    {
+      "work_id": "litmate:d078997cc9d2175b8e27e594",
+      "requirement": "characters",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "no_verified_match",
+      "not_before": 1793231536.9386935,
+      "payload": "{\"author\":\"Miguel de Cervantes Saavedra\",\"title\":\"Don Quijote\"}"
+    },
+    {
+      "work_id": "litmate:d078997cc9d2175b8e27e594",
+      "requirement": "plot_development",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "no_verified_match",
+      "not_before": 1793340258.3253202,
+      "payload": "{\"author\":\"Miguel de Cervantes Saavedra\",\"gap_count\":1,\"last_attempt_at\":1793339355.7345538,\"last_gap_reason\":\"insufficient_evidence\",\"title\":\"Don Quijote\"}"
+    },
+    {
+      "work_id": "litmate:d078997cc9d2175b8e27e594",
+      "requirement": "summary",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "no_verified_match",
+      "not_before": 1793231533.753646,
+      "payload": "{\"author\":\"Miguel de Cervantes Saavedra\",\"title\":\"Don Quijote\"}"
+    },
+    {
+      "work_id": "litmate:dbf1b649da3901c4fabe7152",
+      "requirement": "character_roster",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 1,
+      "last_error": "no_evidence",
+      "not_before": 1793299614.4018588,
+      "payload": "{\"author\":\"Mary Shelley\",\"gap_count\":1,\"last_attempt_at\":1793298712.2938063,\"last_gap_reason\":\"insufficient_evidence\",\"title\":\"Frankenstein\"}"
+    },
+    {
+      "work_id": "litmate:dbf1b649da3901c4fabe7152",
+      "requirement": "characters",
+      "provider": "wikidata",
+      "status": "pending",
+      "attempts": 3,
+      "last_error": "empty",
+      "not_before": 1793295981.3514812,
+      "payload": "{\"author\":\"Mary Shelley\",\"last_attempt_at\":1793295079.6030324,\"title\":\"Frankenstein\"}"
+    },
+    {
+      "work_id": "litmate:dbf1b649da3901c4fabe7152",
+      "requirement": "characters",
+      "provider": "wikipedia",
+      "status": "pending",
+      "attempts": 3,
+      "last_error": "no_evidence",
+      "not_before": 1793295973.0577326,
+      "payload": "{\"author\":\"Mary Shelley\",\"gap_count\":3,\"last_attempt_at\":1793295070.8608093,\"last_gap_reason\":\"insufficient_evidence\",\"title\":\"Frankenstein\"}"
+    },
+    {
+      "work_id": "litmate:dbf1b649da3901c4fabe7152",
+      "requirement": "main_characters",
+      "provider": "wikipedia",
+      "status": "done",
+      "attempts": 1,
+      "last_error": "",
+      "not_before": 1793295065.1943374,
+      "payload": "{\"author\":\"Mary Shelley\",\"gap_count\":1,\"last_attempt_at\":1793295083.363633,\"last_completed_at\":1793295084.0779507,\"last_gap_reason\":\"insufficient_evidence\",\"last_verification\":\"source_identity_license_and_coverage\",\"title\":\"Frankenstein\"}"
+    },
+    {
+      "work_id": "litmate:dbf1b649da3901c4fabe7152",
+      "requirement": "plot_development",
+      "provider": "wikipedia",
+      "status": "done",
+      "attempts": 2,
+      "last_error": "",
+      "not_before": 1793299620.2715166,
+      "payload": "{\"author\":\"Mary Shelley\",\"gap_count\":2,\"last_attempt_at\":1793339330.1353018,\"last_completed_at\":1793339331.3909512,\"last_gap_reason\":\"insufficient_evidence\",\"last_verification\":\"source_identity_license_and_coverage\",\"title\":\"Frankenstein\"}"
+    },
+    {
+      "work_id": "litmate:dbf1b649da3901c4fabe7152",
+      "requirement": "relationships",
+      "provider": "wikipedia",
+      "status": "done",
+      "attempts": 2,
+      "last_error": "",
+      "not_before": 1793296764.368955,
+      "payload": "{\"author\":\"Mary Shelley\",\"gap_count\":1,\"last_attempt_at\":1793298710.1852765,\"last_completed_at\":1793298710.280872,\"last_gap_reason\":\"insufficient_evidence\",\"last_verification\":\"source_identity_license_and_coverage\",\"title\":\"Frankenstein\"}"
+    },
+    {
+      "work_id": "litmate:dbf1b649da3901c4fabe7152",
+      "requirement": "summary",
+      "provider": "wikipedia",
+      "status": "done",
+      "attempts": 1,
+      "last_error": "",
+      "not_before": 1793230626.1952724,
+      "payload": "{\"author\":\"Mary Shelley\",\"title\":\"Frankenstein\"}"
+    },
+    {
+      "work_id": "litmate:eb690907d6b78d319c8d7a26",
+      "requirement": "plot_development",
+      "provider": "wikipedia",
+      "status": "done",
+      "attempts": 1,
+      "last_error": "",
+      "not_before": 1793339326.4022033,
+      "payload": "{\"author\":\"Julio Cortázar\",\"gap_count\":1,\"last_attempt_at\":1793339360.3362312,\"last_completed_at\":1793339362.0683599,\"last_gap_reason\":\"insufficient_evidence\",\"last_verification\":\"source_identity_license_and_coverage\",\"title\":\"Rayuela\"}"
+    },
+    {
+      "work_id": "litmate:eb690907d6b78d319c8d7a26",
+      "requirement": "summary",
+      "provider": "wikipedia",
+      "status": "done",
+      "attempts": 1,
+      "last_error": "",
+      "not_before": 1793230626.1901839,
+      "payload": "{\"author\":\"Julio Cortázar\",\"title\":\"Rayuela\"}"
+    }
+  ],
+  "original_sql_rows": {
+    "auth_group": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "auth_group_permissions": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "auth_permission": {
+      "original_rows_preserved": 152,
+      "added": 0
+    },
+    "auth_user": {
+      "original_rows_preserved": 179,
+      "added": 0
+    },
+    "auth_user_groups": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "auth_user_user_permissions": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_asistenteia": {
+      "original_rows_preserved": 1,
+      "added": 0
+    },
+    "core_autor": {
+      "original_rows_preserved": 31,
+      "added": 0
+    },
+    "core_clickconversion": {
+      "original_rows_preserved": 185,
+      "added": 0
+    },
+    "core_conversacionia": {
+      "original_rows_preserved": 50,
+      "added": 0
+    },
+    "core_editorial": {
+      "original_rows_preserved": 34,
+      "added": 0
+    },
+    "core_elementolistalectura": {
+      "original_rows_preserved": 2,
+      "added": 0
+    },
+    "core_estadolectura": {
+      "original_rows_preserved": 451,
+      "added": 0
+    },
+    "core_eventoanalitica": {
+      "original_rows_preserved": 384,
+      "added": 0
+    },
+    "core_genero": {
+      "original_rows_preserved": 12,
+      "added": 0
+    },
+    "core_historialchatbot": {
+      "original_rows_preserved": 5,
+      "added": 0
+    },
+    "core_historialpreciolibro": {
+      "original_rows_preserved": 223,
+      "added": 0
+    },
+    "core_kbname": {
+      "original_rows_preserved": 11104,
+      "added": 0
+    },
+    "core_kbprojection": {
+      "original_rows_preserved": 7,
+      "added": 0,
+      "derived_worker_checkpoint_updated": true
+    },
+    "core_kbrecord": {
+      "original_rows_preserved": 11104,
+      "added": 0
+    },
+    "core_kbrelation": {
+      "original_rows_preserved": 1108,
+      "added": 0
+    },
+    "core_kbversion": {
+      "original_rows_preserved": 11104,
+      "added": 0
+    },
+    "core_libro": {
+      "original_rows_preserved": 55,
+      "added": 0
+    },
+    "core_libro_generos": {
+      "original_rows_preserved": 54,
+      "added": 0
+    },
+    "core_librofavorito": {
+      "original_rows_preserved": 231,
+      "added": 0
+    },
+    "core_listalectura": {
+      "original_rows_preserved": 2,
+      "added": 0
+    },
+    "core_mensajecontacto": {
+      "original_rows_preserved": 3,
+      "added": 0
+    },
+    "core_mensajeia": {
+      "original_rows_preserved": 190,
+      "added": 0
+    },
+    "core_perfilusuario": {
+      "original_rows_preserved": 158,
+      "added": 0
+    },
+    "core_preciolibrotienda": {
+      "original_rows_preserved": 117,
+      "added": 0
+    },
+    "core_preguntafrecuente": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_recomendacion": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_recomendacionialog": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_resena": {
+      "original_rows_preserved": 116,
+      "added": 0
+    },
+    "django_admin_log": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "django_content_type": {
+      "original_rows_preserved": 38,
+      "added": 0
+    },
+    "django_migrations": {
+      "original_rows_preserved": 27,
+      "added": 0
+    },
+    "django_session": {
+      "original_rows_preserved": 88,
+      "added": 0
+    },
+    "suscripciones_historialpago": {
+      "original_rows_preserved": 42,
+      "added": 0
+    },
+    "suscripciones_plansuscripcion": {
+      "original_rows_preserved": 3,
+      "added": 0
+    },
+    "suscripciones_suscripcionusuario": {
+      "original_rows_preserved": 157,
+      "added": 0
+    }
+  }
+}

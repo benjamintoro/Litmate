@@ -1,0 +1,264 @@
+{
+  "authenticBrowserCapture": true,
+  "externalNetworkTested": false,
+  "origin": "http://127.0.0.1:8002",
+  "frames": [
+    {
+      "file": "frame-000.png",
+      "seconds": 2.6278613
+    },
+    {
+      "file": "frame-001.png",
+      "seconds": 4.348601700000001
+    },
+    {
+      "file": "frame-002.png",
+      "seconds": 4.7691475
+    },
+    {
+      "file": "frame-003.png",
+      "seconds": 6.788038800000001
+    },
+    {
+      "file": "frame-004.png",
+      "seconds": 8.7969874
+    },
+    {
+      "file": "frame-005.png",
+      "seconds": 10.8259848
+    },
+    {
+      "file": "frame-006.png",
+      "seconds": 13.3913578
+    },
+    {
+      "file": "frame-007.png",
+      "seconds": 17.952445
+    },
+    {
+      "file": "frame-008.png",
+      "seconds": 22.32848
+    },
+    {
+      "file": "frame-009.png",
+      "seconds": 26.428879300000002
+    },
+    {
+      "file": "frame-010.png",
+      "seconds": 30.499036
+    },
+    {
+      "file": "frame-011.png",
+      "seconds": 34.465902799999995
+    },
+    {
+      "file": "frame-012.png",
+      "seconds": 38.576709199999996
+    },
+    {
+      "file": "frame-013.png",
+      "seconds": 42.673719999999996
+    },
+    {
+      "file": "frame-014.png",
+      "seconds": 46.7166369
+    },
+    {
+      "file": "frame-015.png",
+      "seconds": 50.71128219999999
+    },
+    {
+      "file": "frame-016.png",
+      "seconds": 54.8194393
+    },
+    {
+      "file": "frame-017.png",
+      "seconds": 60.9488051
+    },
+    {
+      "file": "frame-018.png",
+      "seconds": 66.04460340000001
+    },
+    {
+      "file": "frame-019.png",
+      "seconds": 70.16504619999999
+    },
+    {
+      "file": "frame-020.png",
+      "seconds": 74.1885683
+    },
+    {
+      "file": "frame-021.png",
+      "seconds": 78.17467660000001
+    },
+    {
+      "file": "frame-022.png",
+      "seconds": 82.3134666
+    },
+    {
+      "file": "frame-023.png",
+      "seconds": 86.3760304
+    },
+    {
+      "file": "frame-024.png",
+      "seconds": 90.41318740000001
+    },
+    {
+      "file": "frame-025.png",
+      "seconds": 94.4456842
+    },
+    {
+      "file": "frame-026.png",
+      "seconds": 98.4991992
+    }
+  ],
+  "conversation": [
+    {
+      "question": "Recuerdo un libro donde un niño vive en un planeta pequeño y cuida una rosa",
+      "answer": "Por tus pistas, podrías estar buscando El principito, de Antoine de Saint-Exupéry. ¿Te suena?\nPARA SEGUIR LEYENDO\nSin portada\nEl principito\nAntoine de Saint-Exupéry\nBuscar en Amazon\nBuscar en Buscalibre",
+      "completed": true,
+      "seconds": 1.539873500000001
+    },
+    {
+      "question": "¿Qué pistas te hicieron pensar en ese libro?",
+      "answer": "Coincidencias con tu recuerdo\n\nEl principito — Antoine de Saint-Exupéry: Un niño procede de un planeta diminuto, cuida una rosa y viaja por otros mundos.\n\nSi quieres profundizar, puedes consultar esta lectura complementaria.\n\nPARA SEGUIR LEYENDO\nSin portada\nEl principito\nAntoine de Saint-Exupéry\nBuscar en Amazon\nBuscar en Buscalibre",
+      "completed": true,
+      "seconds": 0.5221274000000005
+    },
+    {
+      "question": "¿Qué relación hay entre el principito y el zorro?",
+      "answer": "El zorro: Amigo que el principito conoce en la Tierra.\n\nSi quieres profundizar, puedes consultar esta lectura complementaria.\n\nPARA SEGUIR LEYENDO\nSin portada\nEl principito\nAntoine de Saint-Exupéry\nBuscar en Amazon\nBuscar en Buscalibre",
+      "completed": true,
+      "seconds": 0.5214539000000009
+    },
+    {
+      "question": "Recomiéndame dos novelas de fantasía en español",
+      "answer": "¡Claro!\n\n\nHarry Potter y el misterio del príncipe — J.K. Rowling.\n\n\nChoque de Reyes (Canción de Hielo y Fuego 2) — George R.R. Martin.\n\n¿Cuál te interesa más?\nPARA SEGUIR LEYENDO\nHarry Potter y el misterio del príncipe\nJ.K. Rowling\nHarry descubre un viejo libro de pociones perteneciente al misterioso 'Príncipe Mestizo' y junto a Dumbledore desentraña los secretos del pasado de Voldemort.\nBuscar en Google Books\nBuscar en Amazon\nBuscar en Buscalibre\nChoque de Reyes (Canción de Hielo y Fuego 2)\nGeorge R.R. Martin\nLa Guerra de los Cinco Reyes desgarra los Siete Reinos, mientras un cometa rojo cruza los cielos anunciando sangre y fuego.\nBuscar en Google Books\nBuscar en Amazon\nBuscar en Buscalibre",
+      "completed": true,
+      "seconds": 0.5165760999999947
+    },
+    {
+      "question": "Ya leí el primero y no me interesa el segundo",
+      "answer": "Lo tendré en cuenta: excluiré esas lecturas de las próximas recomendaciones de esta conversación.",
+      "completed": true,
+      "seconds": 0.5162079999999989
+    },
+    {
+      "question": "Dame otros dos libros de fantasía en español",
+      "answer": "¡Claro!\n\n\nEl Camino de los Reyes (El Archivo de las Tormentas 1) — Brandon Sanderson.\n\n\nEl Hobbit — J.R.R. Tolkien.\n\n¿Cuál te interesa más?\nPARA SEGUIR LEYENDO\nEl Camino de los Reyes (El Archivo de las Tormentas 1)\nBrandon Sanderson\nEn el azotado mundo de Roshar, Kaladin un esclavo quebrado, Dalinar un noble atormentado por visiones y Shallan una erudita buscan salvar el mundo del regreso de los Desoladores.\nBuscar en Google Books\nBuscar en Amazon\nBuscar en Buscalibre\nEl Hobbit\nJ.R.R. Tolkien\nBilbo Bolsón es un hobbit pacífico que es reclutado por el mago Gandalf y trece enanos para recuperar el tesoro custodiado por el dragón Smaug.\nBuscar en Google Books\nBuscar en Amazon\nBuscar en Buscalibre",
+      "completed": true,
+      "seconds": 0.5182914000000025
+    },
+    {
+      "question": "Cuéntame más del segundo",
+      "answer": "El Hobbit — J.R.R. Tolkien: Bilbo Bolsón es un hobbit pacífico que es reclutado por el mago Gandalf y trece enanos para recuperar el tesoro custodiado por el dragón Smaug.\nPARA SEGUIR LEYENDO\nEl Hobbit\nJ.R.R. Tolkien\nBilbo Bolsón es un hobbit pacífico que es reclutado por el mago Gandalf y trece enanos para recuperar el tesoro custodiado por el dragón Smaug.\nBuscar en Google Books\nBuscar en Amazon\nBuscar en Buscalibre",
+      "completed": true,
+      "seconds": 0.5170626999999968
+    },
+    {
+      "question": "¿Dónde puedo encontrarlo?",
+      "answer": "El Hobbit — J.R.R. Tolkien.\n\nPuedes usar los enlaces de la tarjeta para buscarlo; no puedo confirmar disponibilidad ni precio.\nPARA SEGUIR LEYENDO\nEl Hobbit\nJ.R.R. Tolkien\nBilbo Bolsón es un hobbit pacífico que es reclutado por el mago Gandalf y trece enanos para recuperar el tesoro custodiado por el dragón Smaug.\nBuscar en Google Books\nBuscar en Amazon\nBuscar en Buscalibre",
+      "completed": true,
+      "seconds": 0.5127001000000035
+    }
+  ],
+  "errors": [],
+  "http": [
+    {
+      "path": "/chatbot_query/",
+      "status": 200,
+      "mimeType": "text/event-stream",
+      "seconds": 2.9254868999999997
+    },
+    {
+      "path": "/chatbot_finalize/",
+      "status": 200,
+      "mimeType": "application/json",
+      "seconds": 3.8976084
+    },
+    {
+      "path": "/chatbot_query/",
+      "status": 200,
+      "mimeType": "text/event-stream",
+      "seconds": 15.414333500000001
+    },
+    {
+      "path": "/chatbot_finalize/",
+      "status": 200,
+      "mimeType": "application/json",
+      "seconds": 15.4644156
+    },
+    {
+      "path": "/chatbot_query/",
+      "status": 200,
+      "mimeType": "text/event-stream",
+      "seconds": 26.9495717
+    },
+    {
+      "path": "/chatbot_finalize/",
+      "status": 200,
+      "mimeType": "application/json",
+      "seconds": 27.392431000000002
+    },
+    {
+      "path": "/chatbot_query/",
+      "status": 200,
+      "mimeType": "text/event-stream",
+      "seconds": 38.576989999999995
+    },
+    {
+      "path": "/chatbot_finalize/",
+      "status": 200,
+      "mimeType": "application/json",
+      "seconds": 38.61983229999999
+    },
+    {
+      "path": "/chatbot_query/",
+      "status": 200,
+      "mimeType": "text/event-stream",
+      "seconds": 50.01264139999999
+    },
+    {
+      "path": "/chatbot_finalize/",
+      "status": 200,
+      "mimeType": "application/json",
+      "seconds": 50.073375399999996
+    },
+    {
+      "path": "/chatbot_query/",
+      "status": 200,
+      "mimeType": "text/event-stream",
+      "seconds": 61.543322
+    },
+    {
+      "path": "/chatbot_finalize/",
+      "status": 200,
+      "mimeType": "application/json",
+      "seconds": 61.687782
+    },
+    {
+      "path": "/chatbot_query/",
+      "status": 200,
+      "mimeType": "text/event-stream",
+      "seconds": 77.13175770000001
+    },
+    {
+      "path": "/chatbot_finalize/",
+      "status": 200,
+      "mimeType": "application/json",
+      "seconds": 77.2311487
+    },
+    {
+      "path": "/chatbot_query/",
+      "status": 200,
+      "mimeType": "text/event-stream",
+      "seconds": 88.63963350000002
+    },
+    {
+      "path": "/chatbot_finalize/",
+      "status": 200,
+      "mimeType": "application/json",
+      "seconds": 88.72275590000001
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "external_publication_activated": false,
+  "network_changed": false,
+  "mysql": {
+    "database": "litmate_db",
+    "session_read_only": true,
+    "bind_address": "*",
+    "port": 3306,
+    "mysqlx_bind_address": "*",
+    "books": 55
+  },
+  "deploy_check": {
+    "output": "",
+    "warnings_output": "System check identified some issues:\n\nWARNINGS:\n?: (security.W005) You have not set the SECURE_HSTS_INCLUDE_SUBDOMAINS setting to True. Without this, your site is potentially vulnerable to attack via an insecure connection to a subdomain. Only set this to True if you are certain that all subdomains of your domain should be served exclusively via SSL.\n?: (security.W021) You have not set the SECURE_HSTS_PRELOAD setting to True. Without this, your site cannot be submitted to the browser preload list.\n\nSystem check identified 2 issues (0 silenced).\n",
+    "checks": [
+      {
+        "id": "security.W005",
+        "message": "You have not set the SECURE_HSTS_INCLUDE_SUBDOMAINS setting to True. Without this, your site is potentially vulnerable to attack via an insecure connection to a subdomain. Only set this to True if you are certain that all subdomains of your domain should be served exclusively via SSL.",
+        "level": 30
+      },
+      {
+        "id": "security.W021",
+        "message": "You have not set the SECURE_HSTS_PRELOAD setting to True. Without this, your site cannot be submitted to the browser preload list.",
+        "level": 30
+      }
+    ]
+  },
+  "settings": {
+    "DEBUG": false,
+    "ALLOWED_HOSTS": [
+      "xato.taila70665.ts.net"
+    ],
+    "CSRF_TRUSTED_ORIGINS": [
+      "https://xato.taila70665.ts.net"
+    ],
+    "SESSION_COOKIE_SECURE": true,
+    "CSRF_COOKIE_SECURE": true,
+    "SESSION_COOKIE_HTTPONLY": true,
+    "SESSION_COOKIE_SAMESITE": "Lax",
+    "SESSION_ENGINE": "django.contrib.sessions.backends.file",
+    "SECURE_PROXY_SSL_HEADER": null,
+    "SECURE_SSL_REDIRECT": true
+  },
+  "rag": {
+    "quick_check": "ok",
+    "documents": 498,
+    "chunks": 526,
+    "keyword_matches": 9
+  },
+  "ollama": {
+    "status": "ok",
+    "seconds": 0.1879,
+    "configured_model": "qwen3.5:9b-q4_K_M",
+    "model_installed": true
+  },
+  "ollama_inference": {
+    "status": "ok",
+    "seconds": 9.0119,
+    "text": "listo",
+    "done": true,
+    "eval_count": 3
+  },
+  "searxng": {
+    "status": "ok",
+    "seconds": 1.0859,
+    "results": [
+      {
+        "title": "El principito. \u00bfD\u00f3nde est\u00e1s, Zorro?",
+        "url": "https://openlibrary.org/works/OL35166335W",
+        "engine": "openlibrary"
+      },
+      {
+        "title": "El principito. \u00bfD\u00f3nde est\u00e1s, Zorro?",
+        "url": "https://openlibrary.org/works/OL35166336W",
+        "engine": "openlibrary"
+      },
+      {
+        "title": "El principito. \u00bfD\u00f3nde est\u00e1s, Zorro?",
+        "url": "https://openlibrary.org/works/OL35166337W",
+        "engine": "openlibrary"
+      },
+      {
+        "title": "\u200eEl principito on Apple Books",
+        "url": "https://books.apple.com/ca/book/el-principito/id776801724",
+        "engine": "mwmbl"
+      },
+      {
+        "title": "GitHub - jseabold/zorro: How to use IPython.parallel on AU's HPC\u2026",
+        "url": "https://github.com/jseabold/zorro",
+        "engine": "mwmbl"
+      }
+    ],
+    "result_count": 59,
+    "unresponsive_engines": []
+  },
+  "original_hashes": {
+    ".env": "1d8e35effc765d26ecb73f3e2ee26c886a1e3d98b1bc45590c356b8604008e74",
+    "data/literary_memory.sqlite3": "70c340b8568683342bdc86514b9ddc0eb5b70c4b06c28224762ffb5bc724c87e",
+    "data/literary_memory_rag.sqlite3": "1d69ede229a1d0fa6ba9e95d197fb78bfa273c9eeae0e4b59e913a243f79e876"
+  }
+}

@@ -1,0 +1,269 @@
+{
+  "case": {
+    "case": 5,
+    "title": "Un verdor terrible",
+    "author": "Benjam\u00edn Labatut",
+    "kind": "narrativa_hibrida",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": true
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de Un verdor terrible de Benjam\u00edn Labatut",
+      "answer": "Un verdor terrible es una colecci\u00f3n de narraciones que entrelazan la ciencia con la literatura, explorando descubrimientos reales y sus consecuencias perturbadoras. El libro sigue hilos conductores como el origen del cianuro a trav\u00e9s del azul de Prusia, las exploraciones matem\u00e1ticas de Alexander Grothendieck que derivan en locura, la carta de un amigo moribundo con soluciones de relatividad y la rivalidad entre Schr\u00f6dinger y Heisenberg. A trav\u00e9s de estos relatos, Labatut muestra c\u00f3mo la b\u00fasqueda del conocimiento puede alterar el mundo y nuestra visi\u00f3n de \u00e9l.\n\nFuente: https://www.lecturalia.com/libro/101095/un-verdor-terrible",
+      "status": "answered",
+      "books": [
+        {
+          "id": "/works/OL22681620W",
+          "title": "Un verdor terrible",
+          "author": "Benjam\u00edn Labatut",
+          "synopsis": "",
+          "image_url": "https://covers.openlibrary.org/b/id/10485756-M.jpg",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books?q=Un+verdor+terrible+Benjam%C3%ADn+Labatut"
+            },
+            {
+              "label": "Open Library",
+              "url": "https://openlibrary.org/works/OL22681620W"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Un+verdor+terrible+Benjam%C3%ADn+Labatut&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Un+verdor+terrible+Benjam%C3%ADn+Labatut"
+            }
+          ]
+        }
+      ],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 17183,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 2,
+        "verified_narrative_answer": true,
+        "narrative_synthesized": true,
+        "partial_evidence": false,
+        "work_type": "unknown",
+        "progress_metrics": {
+          "elapsed_ms": 17197.131,
+          "first_phase_emitted_ms": 23.607,
+          "model_calls_started": 2,
+          "stage_totals_ms": {
+            "conversation": 8.156,
+            "cache_lookup": 5.814,
+            "knowledge_lookup": 628.864,
+            "retrieval": 1912.464,
+            "web_search": 874.693,
+            "extraction": 2583.756,
+            "model_inspection": 34.764,
+            "generation": 6709.101,
+            "audit": 4532.429,
+            "finalization": 14.267
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 3.335,
+              "elapsed_ms": 8.156,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 17.782,
+              "elapsed_ms": 5.814,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 36.522,
+              "elapsed_ms": 349.79,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 110.682,
+              "elapsed_ms": 37.333,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 212.23,
+              "elapsed_ms": 173.025,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 279.753,
+              "elapsed_ms": 59.899,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 454.585,
+              "elapsed_ms": 8.817,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 484.371,
+              "elapsed_ms": 1912.464,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 2399.961,
+              "elapsed_ms": 874.693,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 3275.382,
+              "elapsed_ms": 1739.27,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 5016.078,
+              "elapsed_ms": 844.486,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 5904.235,
+              "elapsed_ms": 6709.101,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 5904.248,
+              "elapsed_ms": 34.758,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 12615.544,
+              "elapsed_ms": 4527.527,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 12615.565,
+              "elapsed_ms": 0.006,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 17144.926,
+              "elapsed_ms": 4.902,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 17182.858,
+              "elapsed_ms": 14.267,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 23.607
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 5904.22
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 12615.521
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "prompt_eval_ms": 1079.351,
+            "total_ms": 6639.384,
+            "eval_ms": 5322.624,
+            "elapsed_ms": 6709,
+            "eval_count": 149,
+            "status": "ok",
+            "prompt_eval_count": 1880,
+            "stage": "answer",
+            "load_ms": 6.184,
+            "model": "qwen3.5:9b-q4_K_M"
+          },
+          {
+            "prompt_eval_ms": 1857.222,
+            "total_ms": 4504.655,
+            "eval_ms": 2518.785,
+            "elapsed_ms": 4528,
+            "eval_count": 75,
+            "status": "ok",
+            "prompt_eval_count": 3343,
+            "stage": "audit",
+            "load_ms": 7.527,
+            "model": "qwen3.5:9b-q4_K_M"
+          }
+        ],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 17.2057,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": null,
+        "verified_ready_seconds": 17.1756,
+        "first_verified_text_seconds": 17.2057
+      }
+    }
+  ],
+  "seconds": 19.404,
+  "coverage_before": {
+    "works": 14469,
+    "works_with_explicit_plot": 14,
+    "works_with_development_excerpt": 10,
+    "works_with_admitted_description": 17,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 31,
+    "linked_sources": 14641,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14470,
+    "works_with_explicit_plot": 14,
+    "works_with_development_excerpt": 10,
+    "works_with_admitted_description": 17,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 31,
+    "linked_sources": 14642,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "factual_review_pending": true
+}

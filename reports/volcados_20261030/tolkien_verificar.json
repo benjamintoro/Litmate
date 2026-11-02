@@ -1,0 +1,415 @@
+{
+  "read_only": true,
+  "network": false,
+  "coverage": {
+    "works": 1,
+    "works_with_explicit_plot": 0,
+    "works_with_development_excerpt": 0,
+    "works_with_admitted_description": 1,
+    "characters_with_literal_roles": 13,
+    "works_with_literal_roles": 1,
+    "characters_with_membership_only": 0,
+    "works_with_explicit_protagonist": 1,
+    "explicit_protagonist_mentions": 1,
+    "relationships": 0,
+    "narrative_facts": 0,
+    "linked_sources": 3,
+    "per_work": {
+      "litmate:82570f33a9af6d7fd1ad92ef": {
+        "synopsis": false,
+        "description": true,
+        "development_excerpt": false,
+        "roles": 13,
+        "relationships": 0,
+        "facts": 0
+      }
+    },
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "retrieval": [
+    {
+      "work_id": "litmate:82570f33a9af6d7fd1ad92ef",
+      "sources": 3,
+      "verified_sources": 3,
+      "rag_rehydrated_sources": 3,
+      "facts": [
+        {
+          "source_url": "https://es.wikipedia.org/wiki/Elanor_Gamyi",
+          "source_id": "ab63254e8715a2887e67c24b43245b7406879e524042e3374d691f0ac75cc4bf",
+          "license": "CC-BY-SA-4.0",
+          "attribution": {
+            "authors": "Wikipedia contributors",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+            "revision_id": "162134220",
+            "title": "Elanor Gamyi",
+            "url": "https://es.wikipedia.org/wiki/Elanor_Gamyi"
+          },
+          "roles": [
+            {
+              "aliases": [],
+              "evidence": "Elanor Gamyi es un personaje de la mitología literaria del escritor británico J. R. R. Tolkien, que aparece en su novela El Señor de los Anillos, así como en algún otro de sus escritos.",
+              "membership_only": false,
+              "name": "Elanor Gamyi",
+              "role": "es un personaje de la mitología literaria del escritor británico J. R. R. Tolkien, que aparece en su novela El Señor de los Anillos, así como en algún otro de sus escritos."
+            }
+          ]
+        },
+        {
+          "source_url": "https://es.wikipedia.org/wiki/Samsagaz_Gamyi",
+          "source_id": "6d0c3ff9b8ad7ed8bb005ab656739c978084a099e6dba6b5e9e5304f427078f1",
+          "license": "CC-BY-SA-4.0",
+          "attribution": {
+            "authors": "Wikipedia contributors",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+            "revision_id": "171654075",
+            "title": "Samsagaz Gamyi",
+            "url": "https://es.wikipedia.org/wiki/Samsagaz_Gamyi"
+          },
+          "roles": [
+            {
+              "aliases": [
+                "Sam"
+              ],
+              "evidence": "Samsagaz \"Sam\" Gamyi (llamado originalmente en inglés, Samwise Gamgee) es uno de los personajes principales de la novela El Señor de los Anillos, del escritor británico J. R. R. Tolkien.",
+              "membership_only": false,
+              "name": "Samsagaz Gamyi",
+              "role": "es uno de los personajes principales de la novela El Señor de los Anillos, del escritor británico J. R. R. Tolkien."
+            }
+          ]
+        },
+        {
+          "source_url": "https://es.wikipedia.org/wiki/El_Se%C3%B1or_de_los_Anillos",
+          "source_id": "6f8640a981adcf54c2ec31639c58080b696543593ff23c49b3d2a61b17f01940",
+          "license": "CC-BY-SA-4.0",
+          "attribution": {
+            "authors": "Wikipedia contributors",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+            "revision_id": "176013982",
+            "title": "El Señor de los Anillos",
+            "url": "https://es.wikipedia.org/wiki/El_Se%C3%B1or_de_los_Anillos"
+          },
+          "roles": [
+            {
+              "aliases": [
+                "Frodo"
+              ],
+              "evidence": "Frodo Bolsón (Frodo): Protagonista de la novela, hijo de Drogo Bolsón y Prímula Brandigamo.",
+              "membership_only": false,
+              "name": "Frodo Bolsón",
+              "role": "Protagonista de la novela, hijo de Drogo Bolsón y Prímula Brandigamo."
+            },
+            {
+              "aliases": [],
+              "evidence": "Sauron: Sauron es un ainu, uno de los maiar , contado entre el séquito de Aulë , el herrero.",
+              "membership_only": false,
+              "name": "Sauron",
+              "role": "Sauron es un ainu, uno de los maiar , contado entre el séquito de Aulë , el herrero."
+            },
+            {
+              "aliases": [],
+              "evidence": "Gimli: Vivía en Erebor y acompañó a su padre hasta Rivendel para acabar así formando parte de la Compañía del Anillo.",
+              "membership_only": false,
+              "name": "Gimli",
+              "role": "Vivía en Erebor y acompañó a su padre hasta Rivendel para acabar así formando parte de la Compañía del Anillo."
+            },
+            {
+              "aliases": [
+                "Bilbo"
+              ],
+              "evidence": "Bilbo Bolsón (Bilbo): Hijo de Bungo Bolsón y Belladonna Tuk , es el protagonista de la novela El hobbit .",
+              "membership_only": false,
+              "name": "Bilbo Bolsón",
+              "role": "Hijo de Bungo Bolsón y Belladonna Tuk , es el protagonista de la novela El hobbit ."
+            },
+            {
+              "aliases": [],
+              "evidence": "Aragorn: En uno de los numerosos viajes que realizó como montaraz , conoció a Gandalf y se hizo amigo suyo, ayudándole en varias ocasiones.",
+              "membership_only": false,
+              "name": "Aragorn",
+              "role": "En uno de los numerosos viajes que realizó como montaraz , conoció a Gandalf y se hizo amigo suyo, ayudándole en varias ocasiones."
+            },
+            {
+              "aliases": [],
+              "evidence": "Meriadoc Brandigamo: Primo y amigo de Frodo.",
+              "membership_only": false,
+              "name": "Meriadoc Brandigamo",
+              "role": "Primo y amigo de Frodo."
+            },
+            {
+              "aliases": [],
+              "evidence": "Peregrin Tuk: Primo y amigo de Frodo.",
+              "membership_only": false,
+              "name": "Peregrin Tuk",
+              "role": "Primo y amigo de Frodo."
+            },
+            {
+              "aliases": [],
+              "evidence": "Samsagaz Gamyi: Jardinero de Bolsón Cerrado , fiel amigo y protector de su amo Frodo.",
+              "membership_only": false,
+              "name": "Samsagaz Gamyi",
+              "role": "Jardinero de Bolsón Cerrado , fiel amigo y protector de su amo Frodo."
+            },
+            {
+              "aliases": [],
+              "evidence": "Boromir: Tuvo un sueño profético sobre el Anillo Único que le llevó hasta Rivendel y a participar así en el Concilio de Elrond .",
+              "membership_only": false,
+              "name": "Boromir",
+              "role": "Tuvo un sueño profético sobre el Anillo Único que le llevó hasta Rivendel y a participar así en el Concilio de Elrond ."
+            },
+            {
+              "aliases": [],
+              "evidence": "Gandalf: Llamado Olórin en Aman , fue enviado a la Tierra Media en la Tercera Edad del Sol junto con otros cuatro maiar, formando así la Orden de los Istari , cuyo objetivo era combatir a Sauron y proteger de él a los habitantes de la Tierra Media.",
+              "membership_only": false,
+              "name": "Gandalf",
+              "role": "Llamado Olórin en Aman , fue enviado a la Tierra Media en la Tercera Edad del Sol junto con otros cuatro maiar, formando así la Orden de los Istari , cuyo objetivo era combatir a Sauron y proteger de él a los habitantes de la Tierra Media."
+            },
+            {
+              "aliases": [],
+              "evidence": "Légolas: Acabó participando así en el Concilio de Elrond y formando parte de la Compañía del Anillo.",
+              "membership_only": false,
+              "name": "Légolas",
+              "role": "Acabó participando así en el Concilio de Elrond y formando parte de la Compañía del Anillo."
+            },
+            {
+              "aliases": [],
+              "evidence": "Saruman: Sin embargo, se desvió de su misión y trató de encontrar el Anillo Único para él, aliándose con Sauron al usar la palantír de Orthanc .",
+              "membership_only": false,
+              "name": "Saruman",
+              "role": "Sin embargo, se desvió de su misión y trató de encontrar el Anillo Único para él, aliándose con Sauron al usar la palantír de Orthanc ."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "sqlite_integrity": "ok",
+  "sqlite_foreign_key_errors": 0,
+  "queue_counts": {
+    "done": 28,
+    "pending": 50
+  },
+  "quarantined_disambiguation_snapshots": [
+    "b6b6ae782881770538eec082544be5cc511699edc3b047cf3416b4f1d309bb66",
+    "35eee0365b7021a13c08038d9d35e7c08bce254bce66fdb348115d779a24b6d7",
+    "f50c3dd96c6855f15383fc194278e4480171ca049d6b4dd948cf00ebb4e42021",
+    "83a5bc2be3c7ebb349c1df26f2b016900ecdc45f36545f11127cbba0b839fce0",
+    "431e665360d4afd1e142edffb6c93b5279aa00fbb8f9cbef144a4aa21a54499f",
+    "c1c76a53a51634feae8e71143069eebb996f0d22516f6efad053124af9c9c93a"
+  ],
+  "quarantine_enforced": true,
+  "mysql_row_counts": {
+    "auth_group": 0,
+    "auth_group_permissions": 0,
+    "auth_permission": 152,
+    "auth_user": 179,
+    "auth_user_groups": 0,
+    "auth_user_user_permissions": 0,
+    "core_asistenteia": 1,
+    "core_autor": 31,
+    "core_clickconversion": 185,
+    "core_conversacionia": 50,
+    "core_editorial": 34,
+    "core_elementolistalectura": 2,
+    "core_estadolectura": 451,
+    "core_eventoanalitica": 384,
+    "core_genero": 12,
+    "core_historialchatbot": 5,
+    "core_historialpreciolibro": 223,
+    "core_kbname": 14166,
+    "core_kbprojection": 8,
+    "core_kbrecord": 13518,
+    "core_kbrelation": 2598,
+    "core_kbversion": 13518,
+    "core_libro": 55,
+    "core_libro_generos": 54,
+    "core_librofavorito": 231,
+    "core_listalectura": 2,
+    "core_mensajecontacto": 3,
+    "core_mensajeia": 190,
+    "core_perfilusuario": 158,
+    "core_preciolibrotienda": 117,
+    "core_preguntafrecuente": 0,
+    "core_recomendacion": 0,
+    "core_recomendacionialog": 0,
+    "core_resena": 116,
+    "django_admin_log": 0,
+    "django_content_type": 38,
+    "django_migrations": 27,
+    "django_session": 88,
+    "suscripciones_historialpago": 42,
+    "suscripciones_plansuscripcion": 3,
+    "suscripciones_suscripcionusuario": 157
+  },
+  "database": {
+    "vendor": "mysql",
+    "name": "litmate_db"
+  },
+  "jobs": [],
+  "original_sql_rows": {
+    "auth_group": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "auth_group_permissions": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "auth_permission": {
+      "original_rows_preserved": 152,
+      "added": 0
+    },
+    "auth_user": {
+      "original_rows_preserved": 179,
+      "added": 0
+    },
+    "auth_user_groups": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "auth_user_user_permissions": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_asistenteia": {
+      "original_rows_preserved": 1,
+      "added": 0
+    },
+    "core_autor": {
+      "original_rows_preserved": 31,
+      "added": 0
+    },
+    "core_clickconversion": {
+      "original_rows_preserved": 185,
+      "added": 0
+    },
+    "core_conversacionia": {
+      "original_rows_preserved": 50,
+      "added": 0
+    },
+    "core_editorial": {
+      "original_rows_preserved": 34,
+      "added": 0
+    },
+    "core_elementolistalectura": {
+      "original_rows_preserved": 2,
+      "added": 0
+    },
+    "core_estadolectura": {
+      "original_rows_preserved": 451,
+      "added": 0
+    },
+    "core_eventoanalitica": {
+      "original_rows_preserved": 384,
+      "added": 0
+    },
+    "core_genero": {
+      "original_rows_preserved": 12,
+      "added": 0
+    },
+    "core_historialchatbot": {
+      "original_rows_preserved": 5,
+      "added": 0
+    },
+    "core_historialpreciolibro": {
+      "original_rows_preserved": 223,
+      "added": 0
+    },
+    "core_kbname": {
+      "original_rows_preserved": 14166,
+      "added": 0
+    },
+    "core_kbprojection": {
+      "original_rows_preserved": 8,
+      "added": 0,
+      "derived_worker_checkpoint_updated": true
+    },
+    "core_kbrecord": {
+      "original_rows_preserved": 13518,
+      "added": 0
+    },
+    "core_kbrelation": {
+      "original_rows_preserved": 2598,
+      "added": 0
+    },
+    "core_kbversion": {
+      "original_rows_preserved": 13518,
+      "added": 0
+    },
+    "core_libro": {
+      "original_rows_preserved": 55,
+      "added": 0
+    },
+    "core_libro_generos": {
+      "original_rows_preserved": 54,
+      "added": 0
+    },
+    "core_librofavorito": {
+      "original_rows_preserved": 231,
+      "added": 0
+    },
+    "core_listalectura": {
+      "original_rows_preserved": 2,
+      "added": 0
+    },
+    "core_mensajecontacto": {
+      "original_rows_preserved": 3,
+      "added": 0
+    },
+    "core_mensajeia": {
+      "original_rows_preserved": 190,
+      "added": 0
+    },
+    "core_perfilusuario": {
+      "original_rows_preserved": 158,
+      "added": 0
+    },
+    "core_preciolibrotienda": {
+      "original_rows_preserved": 117,
+      "added": 0
+    },
+    "core_preguntafrecuente": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_recomendacion": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_recomendacionialog": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "core_resena": {
+      "original_rows_preserved": 116,
+      "added": 0
+    },
+    "django_admin_log": {
+      "original_rows_preserved": 0,
+      "added": 0
+    },
+    "django_content_type": {
+      "original_rows_preserved": 38,
+      "added": 0
+    },
+    "django_migrations": {
+      "original_rows_preserved": 27,
+      "added": 0
+    },
+    "django_session": {
+      "original_rows_preserved": 88,
+      "added": 0
+    },
+    "suscripciones_historialpago": {
+      "original_rows_preserved": 42,
+      "added": 0
+    },
+    "suscripciones_plansuscripcion": {
+      "original_rows_preserved": 3,
+      "added": 0
+    },
+    "suscripciones_suscripcionusuario": {
+      "original_rows_preserved": 157,
+      "added": 0
+    }
+  }
+}

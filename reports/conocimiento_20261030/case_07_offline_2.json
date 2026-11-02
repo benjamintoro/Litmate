@@ -1,0 +1,199 @@
+{
+  "case": {
+    "case": 7,
+    "title": "Nuestra parte de noche",
+    "author": "Mariana Enr\u00edquez",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": true
+  },
+  "offline": true,
+  "turns": [
+    {
+      "question": "Dime la trama de Nuestra parte de noche de Mariana Enr\u00edquez",
+      "answer": "**Nuestra parte de noche**\n\nActualmente no tengo la informaci\u00f3n de este libro :( Si me indicas el autor o la edici\u00f3n, puedo intentar identificarlo mejor.",
+      "status": "unavailable",
+      "books": [],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 655,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "work_type": "fiction",
+        "narrative_failure": "insufficient_content",
+        "progress_metrics": {
+          "elapsed_ms": 681.547,
+          "first_phase_emitted_ms": 21.016,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 8.771,
+            "cache_lookup": 0.661,
+            "knowledge_lookup": 738.38,
+            "retrieval": 0.016,
+            "finalization": 26.521
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 4.717,
+              "elapsed_ms": 8.771,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 20.345,
+              "elapsed_ms": 0.661,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 34.189,
+              "elapsed_ms": 393.531,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 123.305,
+              "elapsed_ms": 53.631,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 251.712,
+              "elapsed_ms": 174.922,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 323.548,
+              "elapsed_ms": 60.062,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 496.442,
+              "elapsed_ms": 56.234,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 622.183,
+              "elapsed_ms": 0.016,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 655.017,
+              "elapsed_ms": 26.521,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 21.016
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 0.6891,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.0371,
+        "verified_ready_seconds": 0.6484,
+        "first_verified_text_seconds": 0.6891
+      }
+    }
+  ],
+  "seconds": 3.321,
+  "research_profile": "research",
+  "offline_guard_version": 2,
+  "public_research_trace": [
+    {
+      "stage": "retrieved_public_evidence",
+      "sources": [
+        {
+          "id": 1,
+          "title": "Nuestra parte de noche",
+          "author": "Mariana Enr\u00edquez",
+          "description": "Nuestra parte de noche, de Mariana Enr\u00edquez. Temas del cat\u00e1logo: Horror, Fiction, Fantasy, Historical Fiction, Queer",
+          "source": "Open Library",
+          "year": "2019",
+          "book_id": "",
+          "kind": "book",
+          "url": "https://openlibrary.org/works/OL20901051W",
+          "locator": "",
+          "read_mode": "metadatos bibliogr\u00e1ficos; no sinopsis ni texto de la obra",
+          "retrieved_at": "1793361978.449815",
+          "work_id": "litmate:c140fbbdbfc7dc5bbd0593e3",
+          "license": "Open Library bibliographic facts; rights vary",
+          "trust": "untrusted_data",
+          "expires_at": "1795953978.449815",
+          "evidence_hash": "5f79e6afeb26883a685fb75d829392646a9df5b314e1590d2ee3cdadc88fc468",
+          "memory_source_id": "787c3ce71213011e6ebe404d4dc4cde29b46e9a99945eb2ab49c122557025a7e",
+          "last_verified_at": "1793361978.449815",
+          "policy": "openlibrary-minimal-metadata-v1",
+          "memory_verified": true,
+          "confirmed_aliases": [],
+          "literary_facts": [],
+          "isbns": [],
+          "categories": [
+            "Horror",
+            "Fiction",
+            "Fantasy",
+            "Historical Fiction",
+            "Queer"
+          ]
+        }
+      ]
+    }
+  ],
+  "coverage_before": {
+    "works": 14481,
+    "works_with_explicit_plot": 16,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 21,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 33,
+    "linked_sources": 14656,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14481,
+    "works_with_explicit_plot": 16,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 21,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 33,
+    "linked_sources": 14656,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "new_empty_store",
+  "google_books_enabled": false,
+  "factual_review_pending": true
+}

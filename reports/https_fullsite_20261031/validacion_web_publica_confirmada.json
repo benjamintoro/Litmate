@@ -1,0 +1,29 @@
+{
+  "recorded_at_utc": "2026-10-31T12:10:51.907072+00:00",
+  "evidence_source": "explicit user confirmation in this conversation",
+  "user_confirmed_waitress_restarted": true,
+  "user_reported_actual_listener": "127.0.0.1:8003",
+  "user_confirmed_public_https_frontend": true,
+  "user_confirmed_navigation_between_sections": true,
+  "user_confirmed_funnel_and_remote_access_working": true,
+  "url": "https://xato.taila70665.ts.net/",
+  "device": "user phone",
+  "network_type_for_this_latest_test": "not specified; do not infer mobile data or VPN state",
+  "authenticated_public_browser_automation_by_agent": false,
+  "new_individual_sse_voice_or_factual_tests_claimed": false,
+  "agent_readonly_backend_checks_unauthenticated": {
+    "/": 401,
+    "/about/": 401,
+    "/post/": 401,
+    "/libros/": 401,
+    "/suscripciones/planes/": 401,
+    "/contact/": 401,
+    "/login/": 401,
+    "/chat/": 401,
+    "/admin/": 404,
+    "/.env": 404,
+    "/backups/": 404
+  },
+  "stable_version_preserved": true,
+  "services_restarted_by_agent_this_turn": false
+}

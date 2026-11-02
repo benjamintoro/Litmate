@@ -1,0 +1,228 @@
+{
+  "case": {
+    "case": 1,
+    "title": "La pen\u00ednsula de las casas vac\u00edas",
+    "author": "David Ucl\u00e9s",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": true
+  },
+  "offline": true,
+  "turns": [
+    {
+      "question": "Dime la trama de La pen\u00ednsula de las casas vac\u00edas de David Ucl\u00e9s",
+      "answer": "Hay un problema temporal al consultar las fuentes de este libro. Puedes volver a intentarlo en unos instantes.",
+      "status": "unavailable",
+      "books": [],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 4098,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "work_type": "fiction",
+        "narrative_failure": "retrieval_unavailable",
+        "progress_metrics": {
+          "elapsed_ms": 4133.057,
+          "first_phase_emitted_ms": 45.244,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 27.131,
+            "cache_lookup": 0.48,
+            "knowledge_lookup": 669.113,
+            "retrieval": 2.816,
+            "web_search": 3352.028,
+            "extraction": 0.359,
+            "finalization": 34.609
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 4.988,
+              "elapsed_ms": 27.131,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 44.752,
+              "elapsed_ms": 0.48,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 125.03,
+              "elapsed_ms": 359.351,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 220.931,
+              "elapsed_ms": 40.156,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 323.625,
+              "elapsed_ms": 159.695,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 391.299,
+              "elapsed_ms": 55.062,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 550.583,
+              "elapsed_ms": 54.849,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 690.201,
+              "elapsed_ms": 2.816,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 699.659,
+              "elapsed_ms": 1751.192,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 2450.987,
+              "elapsed_ms": 902.504,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 3353.686,
+              "elapsed_ms": 0.226,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 3357.878,
+              "elapsed_ms": 698.332,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 4055.827,
+              "elapsed_ms": 0.133,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 4098.443,
+              "elapsed_ms": 34.609,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 45.244
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 4.1418,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.0472,
+        "verified_ready_seconds": 4.092,
+        "first_verified_text_seconds": 4.1418
+      }
+    }
+  ],
+  "seconds": 6.748,
+  "public_research_trace": [
+    {
+      "stage": "retrieved_public_evidence",
+      "sources": [
+        {
+          "id": 1,
+          "title": "La pen\u00ednsula de las casas vac\u00edas",
+          "author": "David Ucl\u00e9s",
+          "description": "La pen\u00ednsula de las casas vac\u00edas, de David Ucl\u00e9s. Temas del cat\u00e1logo: Fiction, Spanish Literature, Historical Fiction, Historical, Novels",
+          "source": "Open Library",
+          "year": "2024",
+          "book_id": "",
+          "kind": "book",
+          "url": "https://openlibrary.org/works/OL43994375W",
+          "locator": "",
+          "read_mode": "metadatos bibliogr\u00e1ficos; no sinopsis ni texto de la obra",
+          "retrieved_at": "1793362400.079364",
+          "work_id": "litmate:952b7e2706398f1c2dc5703f",
+          "license": "Open Library bibliographic facts; rights vary",
+          "trust": "untrusted_data",
+          "expires_at": "1795954400.079364",
+          "evidence_hash": "b1ea03ac54f35830f458cb1f2b99aa863996118c5d56d5dc9763996992d63727",
+          "memory_source_id": "3298bcb2afc80c8663f5647425e0172bae5cc096b364cd38661b88c7a72fe373",
+          "last_verified_at": "1793362400.079364",
+          "policy": "openlibrary-minimal-metadata-v1",
+          "memory_verified": true,
+          "confirmed_aliases": [],
+          "isbns": [],
+          "categories": [
+            "Fiction",
+            "Spanish Literature",
+            "Historical Fiction",
+            "Historical",
+            "Novels"
+          ]
+        }
+      ]
+    }
+  ],
+  "coverage_before": {
+    "works": 14477,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14650,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14477,
+    "works_with_explicit_plot": 15,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 18,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 32,
+    "linked_sources": 14650,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "new_empty_store",
+  "google_books_enabled": false,
+  "factual_review_pending": true
+}

@@ -1,0 +1,380 @@
+{
+  "case": {
+    "case": 2,
+    "title": "Mugre rosa",
+    "author": "Fernanda Tr\u00edas",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": true
+  },
+  "offline": false,
+  "turns": [
+    {
+      "question": "Dime la trama de Mugre rosa de Fernanda Tr\u00edas",
+      "answer": "En una ciudad portuaria devastada por una plaga misteriosa y un cataclismo ecol\u00f3gico, una mujer intenta comprender el colapso de su mundo mientras enfrenta la muerte, el hambre y la soledad radical. La novela explora c\u00f3mo la enfermedad, las algas t\u00f3xicas y los amasijos ros\u00e1ceos que sirven de alimento transforman no solo el entorno f\u00edsico sino tambi\u00e9n los v\u00ednculos afectivos, revelando la fragilidad de la vida humana frente a la incertidumbre y el dolor.\n\nFuente: https://play.google.com/store/books/details?id=5SInEAAAQBAJ",
+      "status": "answered",
+      "books": [
+        {
+          "id": "5SInEAAAQBAJ",
+          "title": "Mugre rosa",
+          "author": "Fernanda Tr\u00edas",
+          "synopsis": "Novela ganadora de los premios Sor Juana In\u00e9s de la Cruz y Bartolom\u00e9 Hidalgo \u00abLa lectura de esta novela singular resulta a la vez estimulante y perturbadora, y despu\u00e9s de cerrarla sus im\u00e1genes seguir\u00e1n persigui\u00e9ndonos por mucho tiempo, con su carga de belleza y melancol\u00eda. Realmente extraordinaria\u00bb. Piedad Bonnett En una ciudad portuaria asolada por una plaga misteriosa, una mujer intenta descifrar por qu\u00e9 su mundo s",
+          "image_url": "https://books.google.com/books/content?id=5SInEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://play.google.com/store/books/details?id=5SInEAAAQBAJ"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Mugre+rosa+Fernanda+Tr%C3%ADas&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Mugre+rosa+Fernanda+Tr%C3%ADas"
+            }
+          ]
+        }
+      ],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 14383,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 2,
+        "verified_narrative_answer": true,
+        "narrative_synthesized": true,
+        "partial_evidence": false,
+        "work_type": "fiction",
+        "progress_metrics": {
+          "elapsed_ms": 14390.934,
+          "first_phase_emitted_ms": 19.479,
+          "model_calls_started": 2,
+          "stage_totals_ms": {
+            "conversation": 9.338,
+            "cache_lookup": 0.639,
+            "knowledge_lookup": 622.968,
+            "retrieval": 1904.51,
+            "audit": 4979.401,
+            "model_inspection": 32.793,
+            "generation": 6910.474,
+            "finalization": 8.28
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 3.015,
+              "elapsed_ms": 9.338,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 18.828,
+              "elapsed_ms": 0.639,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 32.309,
+              "elapsed_ms": 330.265,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 106.081,
+              "elapsed_ms": 39.902,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 201.465,
+              "elapsed_ms": 160.051,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 267.753,
+              "elapsed_ms": 56.909,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 426.862,
+              "elapsed_ms": 35.841,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 524.094,
+              "elapsed_ms": 1904.51,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 2464.806,
+              "elapsed_ms": 2.695,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 2472.261,
+              "elapsed_ms": 6910.474,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 2472.277,
+              "elapsed_ms": 32.786,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 9382.908,
+              "elapsed_ms": 4974.468,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 9382.928,
+              "elapsed_ms": 0.007,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 14357.583,
+              "elapsed_ms": 2.238,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 14382.647,
+              "elapsed_ms": 8.28,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 19.479
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 2464.788
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 2472.253
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 9382.89
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "prompt_eval_ms": 1814.652,
+            "load_ms": 5.317,
+            "status": "ok",
+            "eval_ms": 4740.462,
+            "stage": "answer",
+            "prompt_eval_count": 3304,
+            "model": "qwen3.5:9b-q4_K_M",
+            "total_ms": 6856.713,
+            "eval_count": 134,
+            "elapsed_ms": 6910
+          },
+          {
+            "prompt_eval_ms": 2734.094,
+            "load_ms": 7.427,
+            "status": "ok",
+            "eval_ms": 2082.38,
+            "stage": "audit",
+            "prompt_eval_count": 5115,
+            "model": "qwen3.5:9b-q4_K_M",
+            "total_ms": 4957.023,
+            "eval_count": 61,
+            "elapsed_ms": 4975
+          }
+        ],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 14.4015,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.0348,
+        "verified_ready_seconds": 14.3743,
+        "first_verified_text_seconds": 14.4015
+      }
+    }
+  ],
+  "seconds": 16.651,
+  "research_profile": "free_google",
+  "public_research_trace": [
+    {
+      "stage": "retrieved_public_evidence",
+      "sources": [
+        {
+          "id": 1,
+          "title": "Mugre rosa",
+          "author": "Fernanda Tr\u00edas",
+          "description": "Editorial: RANDOM HOUSE Publicaci\u00f3n: 2021-04-01 P\u00e1ginas: 171 Idioma: es ISBN: 9789585581463, 9585581469 Sinopsis editorial: Novela ganadora de los premios Sor Juana In\u00e9s de la Cruz y Bartolom\u00e9 Hidalgo \u00abLa lectura de esta novela singular resulta a la vez estimulante y perturbadora, y despu\u00e9s de cerrarla sus im\u00e1genes seguir\u00e1n persigui\u00e9ndonos por mucho tiempo, con su carga de belleza y melancol\u00eda. Realmente extraordinaria\u00bb. Piedad Bonnett En una ciudad portuaria asolada por una plaga misteriosa, una mujer intenta descifrar por qu\u00e9 su mundo se desmorona. No es s\u00f3lo el acecho de la enfermedad y la muerte, las algas y los vientos pest\u00edferos, los amasijos ros\u00e1ceos que son ya lo \u00fanico que se puede comer, sino el colapso de todos sus v\u00ednculos afectivos,la incertidumbre, la eclosi\u00f3n de una soledad radical. Con una prosa inquietante y rica en hallazgos po\u00e9ticos, Fernanda Tr\u00edas construye un universo extraordinario que descubre la inmensa belleza y el inmenso dolor que hay en la fragilidad de la vida y de las relaciones humanas. La cr\u00edtica ha dicho... \"A mitad de camino entre una distop\u00eda cl\u00e1sica, como 1984 o Fahrenheit 451, y una de las magn\u00edficas novelas de cat\u00e1strofe de J.G. Ballard, como El mundo sumergido o La sequ\u00eda, Mugre rosa cuenta la historia de una mujer y su soledad, de un cataclismo ecol\u00f3gico y un mundo arruinado, de la maternidad, el hambre y el silencio. Con una sutil ingenier\u00eda de capas y mecanismos, pero siempre intensa y evocativa, esta obra atraviesa los g\u00e9neros (ciencia ficci\u00f3n, distop\u00eda, eco-cat\u00e1strofe) y se instala en un territorio \u00fanico, al borde del horror pero sin sumergirse en ese abismo: un espacio desolador pero no del todo libre de esperanza. Fernanda Tr\u00edas ha creado un espejo en",
+          "source": "Google Books API",
+          "year": "2021",
+          "book_id": "5SInEAAAQBAJ",
+          "kind": "book",
+          "url": "https://play.google.com/store/books/details?id=5SInEAAAQBAJ",
+          "locator": "",
+          "read_mode": "ficha y sinopsis; vista previa externa",
+          "retrieved_at": "",
+          "synopsis": "Novela ganadora de los premios Sor Juana In\u00e9s de la Cruz y Bartolom\u00e9 Hidalgo \u00abLa lectura de esta novela singular resulta a la vez estimulante y perturbadora, y despu\u00e9s de cerrarla sus im\u00e1genes seguir\u00e1n persigui\u00e9ndonos por mucho tiempo, con su carga de belleza y melancol\u00eda. Realmente extraordinaria\u00bb. Piedad Bonnett En una ciudad portuaria asolada por una plaga misteriosa, una mujer intenta descifrar por qu\u00e9 su mundo se desmorona. No es s\u00f3lo el acecho de la enfermedad y la muerte, las algas y los vientos pest\u00edferos, los amasijos ros\u00e1ceos que son ya lo \u00fanico que se puede comer, sino el colapso de todos sus v\u00ednculos afectivos,la incertidumbre, la eclosi\u00f3n de una soledad radical. Con una prosa inquietante y rica en hallazgos po\u00e9ticos, Fernanda Tr\u00edas construye un universo extraordinario que descubre la inmensa belleza y el inmenso dolor que hay en la fragilidad de la vida y de las relaciones humanas. La cr\u00edtica ha dicho... \"A mitad de camino entre una distop\u00eda cl\u00e1sica, como 1984 o Fahrenheit 451, y una de las magn\u00edficas novelas de cat\u00e1strofe de J.G. Ballard, como El mundo sumergido o La sequ\u00eda, Mugre rosa cuenta la historia de una mujer y su soledad, de un cataclismo ecol\u00f3gico y un mundo arruinado, de la maternidad, el hambre y el silencio. Con una sutil ingenier\u00eda de capas y mecanismos, pero siempre intensa y evocativa, esta obra atraviesa los g\u00e9neros (ciencia ficci\u00f3n, distop\u00eda, eco-cat\u00e1strofe) y se instala en un territorio \u00fanico, al borde del horror pero sin sumergirse en ese abismo: un espacio desolador pero no del todo libre de esperanza. Fernanda Tr\u00edas ha creado un espejo en",
+          "synopsis_source_url": "https://play.google.com/store/books/details?id=5SInEAAAQBAJ",
+          "description_source": "Google Books API, descripci\u00f3n editorial",
+          "image_url": "https://books.google.com/books/content?id=5SInEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+          "subtitle": "",
+          "publisher": "RANDOM HOUSE",
+          "published_date": "2021-04-01",
+          "language": "es",
+          "page_count": 171,
+          "isbns": [
+            "9789585581463",
+            "9585581469"
+          ],
+          "categories": [
+            "Fiction"
+          ],
+          "preview_url": "https://books.google.cl/books?id=5SInEAAAQBAJ&printsec=frontcover&dq=intitle:%22Mugre+rosa%22+inauthor:%22Fernanda+Tr%C3%ADas%22&hl=&as_pt=BOOKS&cd=1&source=gbs_api",
+          "read_url": "https://play.google.com/books/reader?id=5SInEAAAQBAJ&hl=&as_pt=BOOKS&source=gbs_api",
+          "viewability": "PARTIAL",
+          "public_domain": false
+        }
+      ]
+    },
+    {
+      "stage": "generation_sources",
+      "sources": [
+        {
+          "id": 1,
+          "title": "Mugre rosa",
+          "author": "Fernanda Tr\u00edas",
+          "description": "Editorial: RANDOM HOUSE Publicaci\u00f3n: 2021-04-01 P\u00e1ginas: 171 Idioma: es ISBN: 9789585581463, 9585581469 Sinopsis editorial: Novela ganadora de los premios Sor Juana In\u00e9s de la Cruz y Bartolom\u00e9 Hidalgo \u00abLa lectura de esta novela singular resulta a la vez estimulante y perturbadora, y despu\u00e9s de cerrarla sus im\u00e1genes seguir\u00e1n persigui\u00e9ndonos por mucho tiempo, con su carga de belleza y melancol\u00eda. Realmente extraordinaria\u00bb. Piedad Bonnett En una ciudad portuaria asolada por una plaga misteriosa, una mujer intenta descifrar por qu\u00e9 su mundo se desmorona. No es s\u00f3lo el acecho de la enfermedad y la muerte, las algas y los vientos pest\u00edferos, los amasijos ros\u00e1ceos que son ya lo \u00fanico que se puede comer, sino el colapso de todos sus v\u00ednculos afectivos,la incertidumbre, la eclosi\u00f3n de una soledad radical. Con una prosa inquietante y rica en hallazgos po\u00e9ticos, Fernanda Tr\u00edas construye un universo extraordinario que descubre la inmensa belleza y el inmenso dolor que hay en la fragilidad de la vida y de las relaciones humanas. La cr\u00edtica ha dicho... \"A mitad de camino entre una distop\u00eda cl\u00e1sica, como 1984 o Fahrenheit 451, y una de las magn\u00edficas novelas de cat\u00e1strofe de J.G. Ballard, como El mundo sumergido o La sequ\u00eda, Mugre rosa cuenta la historia de una mujer y su soledad, de un cataclismo ecol\u00f3gico y un mundo arruinado, de la maternidad, el hambre y el silencio. Con una sutil ingenier\u00eda de capas y mecanismos, pero siempre intensa y evocativa, esta obra atraviesa los g\u00e9neros (ciencia ficci\u00f3n, distop\u00eda, eco-cat\u00e1strofe) y se instala en un territorio \u00fanico, al borde del horror pero sin sumergirse en ese abismo: un espacio desolador pero no del todo libre de esperanza. Fernanda Tr\u00edas ha creado un espejo en",
+          "source": "Google Books API",
+          "year": "2021",
+          "book_id": "5SInEAAAQBAJ",
+          "kind": "book",
+          "url": "https://play.google.com/store/books/details?id=5SInEAAAQBAJ",
+          "locator": "",
+          "read_mode": "ficha y sinopsis; vista previa externa",
+          "retrieved_at": "",
+          "synopsis": "Novela ganadora de los premios Sor Juana In\u00e9s de la Cruz y Bartolom\u00e9 Hidalgo \u00abLa lectura de esta novela singular resulta a la vez estimulante y perturbadora, y despu\u00e9s de cerrarla sus im\u00e1genes seguir\u00e1n persigui\u00e9ndonos por mucho tiempo, con su carga de belleza y melancol\u00eda. Realmente extraordinaria\u00bb. Piedad Bonnett En una ciudad portuaria asolada por una plaga misteriosa, una mujer intenta descifrar por qu\u00e9 su mundo se desmorona. No es s\u00f3lo el acecho de la enfermedad y la muerte, las algas y los vientos pest\u00edferos, los amasijos ros\u00e1ceos que son ya lo \u00fanico que se puede comer, sino el colapso de todos sus v\u00ednculos afectivos,la incertidumbre, la eclosi\u00f3n de una soledad radical. Con una prosa inquietante y rica en hallazgos po\u00e9ticos, Fernanda Tr\u00edas construye un universo extraordinario que descubre la inmensa belleza y el inmenso dolor que hay en la fragilidad de la vida y de las relaciones humanas. La cr\u00edtica ha dicho... \"A mitad de camino entre una distop\u00eda cl\u00e1sica, como 1984 o Fahrenheit 451, y una de las magn\u00edficas novelas de cat\u00e1strofe de J.G. Ballard, como El mundo sumergido o La sequ\u00eda, Mugre rosa cuenta la historia de una mujer y su soledad, de un cataclismo ecol\u00f3gico y un mundo arruinado, de la maternidad, el hambre y el silencio. Con una sutil ingenier\u00eda de capas y mecanismos, pero siempre intensa y evocativa, esta obra atraviesa los g\u00e9neros (ciencia ficci\u00f3n, distop\u00eda, eco-cat\u00e1strofe) y se instala en un territorio \u00fanico, al borde del horror pero sin sumergirse en ese abismo: un espacio desolador pero no del todo libre de esperanza. Fernanda Tr\u00edas ha creado un espejo en",
+          "synopsis_source_url": "https://play.google.com/store/books/details?id=5SInEAAAQBAJ",
+          "description_source": "Google Books API, descripci\u00f3n editorial",
+          "image_url": "https://books.google.com/books/content?id=5SInEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+          "subtitle": "",
+          "publisher": "RANDOM HOUSE",
+          "published_date": "2021-04-01",
+          "language": "es",
+          "page_count": 171,
+          "isbns": [
+            "9789585581463",
+            "9585581469"
+          ],
+          "categories": [
+            "Fiction"
+          ],
+          "preview_url": "https://books.google.cl/books?id=5SInEAAAQBAJ&printsec=frontcover&dq=intitle:%22Mugre+rosa%22+inauthor:%22Fernanda+Tr%C3%ADas%22&hl=&as_pt=BOOKS&cd=1&source=gbs_api",
+          "read_url": "https://play.google.com/books/reader?id=5SInEAAAQBAJ&hl=&as_pt=BOOKS&source=gbs_api",
+          "viewability": "PARTIAL",
+          "public_domain": false
+        }
+      ]
+    },
+    {
+      "stage": "draft",
+      "output": {
+        "status": "answer",
+        "text": "En una ciudad portuaria devastada por una plaga misteriosa y un cataclismo ecol\u00f3gico, una mujer intenta comprender el colapso de su mundo mientras enfrenta la muerte, el hambre y la soledad radical. La novela explora c\u00f3mo la enfermedad, las algas t\u00f3xicas y los amasijos ros\u00e1ceos que sirven de alimento transforman no solo el entorno f\u00edsico sino tambi\u00e9n los v\u00ednculos afectivos, revelando la fragilidad de la vida humana frente a la incertidumbre y el dolor.",
+        "basis": "sources",
+        "citations": [
+          1
+        ],
+        "needs_web": false,
+        "books": []
+      }
+    },
+    {
+      "stage": "audit",
+      "output": {
+        "decision": "approve",
+        "only_books": true,
+        "coverage": [
+          {
+            "question_id": 1,
+            "status": "answered"
+          }
+        ],
+        "claims": [
+          {
+            "statement": "En una ciudad portuaria devastada por una plaga misteriosa y un cataclismo ecol\u00f3gico, una mujer intenta comprender el colapso de su mundo mientras enfrenta la muerte, el hambre y la soledad radical.",
+            "verdict": "supported",
+            "source_id": 1,
+            "evidence": "a mujer intenta descifrar por qu\u00e9 su mundo se desmorona. No es s\u00f3lo el acecho de la enfermedad y la muerte, las algas y los vientos pest\u00edferos, los amasijos ros\u00e1ceos que son ya lo \u00fanico que se puede comer, sino el colapso de todos sus v\u00ednculos afectivos,la incertidumbre, la eclosi\u00f3n de una soledad r"
+          },
+          {
+            "statement": "La novela explora c\u00f3mo la enfermedad, las algas t\u00f3xicas y los amasijos ros\u00e1ceos que sirven de alimento transforman no solo el entorno f\u00edsico sino tambi\u00e9n los v\u00ednculos afectivos, revelando la fragilidad de la vida humana frente a la incertidumbre y el dolor.",
+            "verdict": "supported",
+            "source_id": 1,
+            "evidence": "a mujer intenta descifrar por qu\u00e9 su mundo se desmorona. No es s\u00f3lo el acecho de la enfermedad y la muerte, las algas y los vientos pest\u00edferos, los amasijos ros\u00e1ceos que son ya lo \u00fanico que se puede comer, sino el colapso de todos sus v\u00ednculos afectivos,la incertidumbre, la eclosi\u00f3n de una soledad r"
+          }
+        ],
+        "search_queries": [],
+        "issues": []
+      }
+    }
+  ],
+  "coverage_before": {
+    "works": 14467,
+    "works_with_explicit_plot": 14,
+    "works_with_development_excerpt": 10,
+    "works_with_admitted_description": 17,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 31,
+    "linked_sources": 14639,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14467,
+    "works_with_explicit_plot": 14,
+    "works_with_development_excerpt": 10,
+    "works_with_admitted_description": 17,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 31,
+    "linked_sources": 14639,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "persistent_exact_cache",
+  "google_books_enabled": true,
+  "factual_review_pending": true
+}

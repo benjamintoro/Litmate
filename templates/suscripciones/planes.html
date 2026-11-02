@@ -100,6 +100,23 @@
                     </ul>
 
                     <div class="mt-auto pt-3">
+                        {% if reader_accounts_enabled %}
+                        <p class="small text-muted">En este perfil están habilitados el chat y su cuota. Favoritos, listas y beneficios avanzados aún no están disponibles.</p>
+                        {% endif %}
+                        {% if reader_accounts_enabled and user.is_authenticated %}
+                            {% if suscripcion_actual.es_valida and suscripcion_actual.plan_id == plan.id %}
+                                {% if paid_verification_pending %}<button class="btn btn-outline-secondary w-100" disabled>Pago pendiente de verificación</button>{% else %}
+                                <a class="btn btn-outline-primary w-100" href="{% url 'chatbot_page' %}">Plan actual · Ir al chat</a>
+                                {% endif %}
+                            {% elif plan.precio == 0 %}
+                                <form method="post" action="{% url 'reader_activate_free' %}">
+                                    {% csrf_token %}<input type="hidden" name="plan" value="{{ plan.slug }}">
+                                    <button type="submit" class="btn btn-primary w-100">Activar gratis sin tarjeta</button>
+                                </form>
+                            {% else %}
+                                <button class="btn btn-outline-secondary w-100" disabled>Contratación no disponible</button>
+                            {% endif %}
+                        {% else %}
                         {% if user.is_authenticated %}
                             {% if suscripcion_actual and suscripcion_actual.plan.id == plan.id and suscripcion_actual.es_valida %}
                                 <button class="btn btn-outline-secondary w-100 disabled" disabled>
@@ -114,6 +131,7 @@
                             <a href="{% url 'login' %}?next={% url 'suscripciones:checkout' plan.slug %}" class="btn btn-outline-primary w-100 fw-semibold">
                                 Iniciar Sesión para Elegir
                             </a>
+                        {% endif %}
                         {% endif %}
                     </div>
                 </div>

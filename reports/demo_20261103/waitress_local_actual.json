@@ -1,0 +1,1746 @@
+{
+  "scope": "local HTTP",
+  "external_network_tested": false,
+  "checks": {
+    "chat_auth_required": true,
+    "static_auth_required": true,
+    "admin_blocked": true,
+    "unknown_host_blocked": true,
+    "chat_html": true,
+    "frame_denied": true,
+    "csrf_cookie_present": true,
+    "javascript": true,
+    "avatar": true,
+    "csrf_enforced": true
+  },
+  "conversation": [
+    {
+      "question": "Recuerdo un libro donde un ni\u00f1o vive en un planeta peque\u00f1o y cuida una rosa",
+      "status": "answered",
+      "answer": "Por tus pistas, podr\u00edas estar buscando **El principito**, de **Antoine de Saint-Exup\u00e9ry**. \u00bfTe suena?",
+      "books": [
+        {
+          "id": "1",
+          "title": "El principito",
+          "author": "Antoine de Saint-Exup\u00e9ry",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+principito+Antoine+de+Saint-Exup%C3%A9ry&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+principito+Antoine+de+Saint-Exup%C3%A9ry"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 1128,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 1133.543,
+          "first_phase_emitted_ms": 105.18,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 83.603,
+            "cache_lookup": 0.526,
+            "knowledge_lookup": 884.488,
+            "audit": 3.118,
+            "finalization": 5.446
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 4.733,
+              "elapsed_ms": 83.603,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 104.64,
+              "elapsed_ms": 0.526,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 199.902,
+              "elapsed_ms": 485.406,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 387.852,
+              "elapsed_ms": 47.052,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 492.166,
+              "elapsed_ms": 191.997,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 579.922,
+              "elapsed_ms": 65.145,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 789.603,
+              "elapsed_ms": 68.048,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 996.993,
+              "elapsed_ms": 26.84,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 1064.688,
+              "elapsed_ms": 3.118,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 1128.09,
+              "elapsed_ms": 5.446,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 105.18
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 1064.662
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "local-identification"
+      },
+      "sse_done": true,
+      "seconds": 1.1564,
+      "http_timing": {
+        "first_progress_seconds": 0.1202,
+        "verified_ready_seconds": 1.1245,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "\u00bfQu\u00e9 pistas te hicieron pensar en ese libro?",
+      "status": "answered",
+      "answer": "**Coincidencias con tu recuerdo**\n\n**El principito \u2014 Antoine de Saint-Exup\u00e9ry**: Un ni\u00f1o procede de un planeta diminuto, cuida una rosa y viaja por otros mundos.\n\nFuentes:\nhttps://es.literaturasm.com/personaje/principito",
+      "books": [
+        {
+          "id": "1",
+          "title": "El principito",
+          "author": "Antoine de Saint-Exup\u00e9ry",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+principito+Antoine+de+Saint-Exup%C3%A9ry&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+principito+Antoine+de+Saint-Exup%C3%A9ry"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 54,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 58.552,
+          "first_phase_emitted_ms": 24.428,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 6.898,
+            "cache_lookup": 0.838,
+            "audit": 1.476,
+            "finalization": 4.354
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 10.096,
+              "elapsed_ms": 6.898,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 23.579,
+              "elapsed_ms": 0.838,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 26.93,
+              "elapsed_ms": 0.912,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 29.139,
+              "elapsed_ms": 0.564,
+              "status": "failed"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 54.191,
+              "elapsed_ms": 4.354,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 24.428
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 26.921
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-conversation-evidence"
+      },
+      "sse_done": true,
+      "seconds": 0.0687,
+      "http_timing": {
+        "first_progress_seconds": 0.0331,
+        "verified_ready_seconds": 0.0402,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "\u00bfDe qu\u00e9 trata?",
+      "status": "answered",
+      "answer": "El principito es un cuento po\u00e9tico que viene acompa\u00f1ado de ilustraciones hechas con acuarelas por el mismo Saint-Exup\u00e9ry. En \u00e9l, un piloto se encuentra perdido en el desierto del Sahara despu\u00e9s de que su avi\u00f3n sufriera una aver\u00eda, pero para su sorpresa, es all\u00ed donde conoce a un peque\u00f1o pr\u00edncipe proveniente de otro planeta. La historia tiene una tem\u00e1tica filos\u00f3fica, donde se incluyen cr\u00edticas sociales dirigidas a la \u00abextra\u00f1eza\u00bb con la que los adultos ven las cosas. Estas cr\u00edticas a las cosas \u00abimportantes\u00bb y al mundo de los adultos van apareciendo en el libro a lo largo de la narraci\u00f3n. A pesar de que es considerado un libro infantil por la forma en la que se encuentra escrito, tambi\u00e9n posee observaciones profundas sobre la vida y la naturaleza humana.\n\nFuente: https://es.wikipedia.org/wiki/El_principito\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+      "books": [
+        {
+          "id": "1",
+          "title": "El principito",
+          "author": "Antoine de Saint-Exup\u00e9ry",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+principito+Antoine+de+Saint-Exup%C3%A9ry&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+principito+Antoine+de+Saint-Exup%C3%A9ry"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 2391,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "partial_evidence": true,
+        "work_type": "nonfiction",
+        "progress_metrics": {
+          "elapsed_ms": 2438.805,
+          "first_phase_emitted_ms": 23.93,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 6.945,
+            "cache_lookup": 0.772,
+            "knowledge_lookup": 637.441,
+            "audit": 14.214,
+            "retrieval": 1635.489,
+            "finalization": 47.352
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 9.716,
+              "elapsed_ms": 6.945,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 23.146,
+              "elapsed_ms": 0.772,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 26.916,
+              "elapsed_ms": 350.302,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 99.96,
+              "elapsed_ms": 42.921,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 204.481,
+              "elapsed_ms": 170.425,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 272.733,
+              "elapsed_ms": 67.272,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 451.128,
+              "elapsed_ms": 6.521,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 590.969,
+              "elapsed_ms": 8.65,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 627.965,
+              "elapsed_ms": 1635.489,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 2334.642,
+              "elapsed_ms": 5.564,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 2391.445,
+              "elapsed_ms": 47.352,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 23.93
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 590.945
+            },
+            {
+              "stage": "search",
+              "elapsed_ms": 627.948
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 2334.626
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "sse_done": true,
+      "seconds": 2.4498,
+      "http_timing": {
+        "first_progress_seconds": 0.0315,
+        "verified_ready_seconds": 2.3691,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "\u00bfQui\u00e9nes son sus protagonistas?",
+      "status": "answered",
+      "answer": "**El principito**: personaje principal del libro, toda la historia est\u00e1 basada en \u00e9l.\n\nLista parcial.\n\nOtros personajes documentados:\n\n**El zorro**: Amigo que el principito conoce en la Tierra.\n\n**El aviador**: Encuentra al principito en el Sahara.\n\n**El cordero**: Es un amigo que lo ayudar\u00e1 a librarse de los problemas que pueda tener o surgirle, pero como todos los amigos sin querer, alg\u00fan d\u00eda, pueden volverse en tu contra y hacernos da\u00f1o.\n\n**El farolero**: son los trabajadores que incansablemente se dedican a servir.\n\n**La rosa**: se trata del ego, nos pone de manifiesto el amor del principito.\n\n**Los baobabs**: son los malos h\u00e1bitos, pensamientos y problemas, hay que solucionarlos antes que sean demasiado complicados, es la moraleja que nos deja el autor, cuando nos alerta: \u00ab\u00a1Ni\u00f1os, atenci\u00f3n a los baobabs!\u00bb.\n\n**El fanal o globo**: la protecci\u00f3n, los celos o los mimos y cuidados que hay que tener para que la \u00abRosa\u00bb se sienta protegida y querida, aunque realmente no los necesita.\n\n**El rey**: habitante del primer planeta, quien representa a los jefes y reyes que quieren ser obedecidos.\n\nFuente: https://www.lepetitprince.com/loeuvre/\nhttps://es.wikipedia.org/wiki/El_principito\nWikipedia contributors \u00b7 CC BY-SA 4.0.",
+      "books": [
+        {
+          "id": "1",
+          "title": "El principito",
+          "author": "Antoine de Saint-Exup\u00e9ry",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+principito+Antoine+de+Saint-Exup%C3%A9ry&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+principito+Antoine+de+Saint-Exup%C3%A9ry"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 558,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "partial_evidence": true,
+        "verified_character_answer": true,
+        "character_count": 9,
+        "work_type": "nonfiction",
+        "progress_metrics": {
+          "elapsed_ms": 615.233,
+          "first_phase_emitted_ms": 65.972,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 46.986,
+            "cache_lookup": 0.864,
+            "knowledge_lookup": 401.375,
+            "audit": 11.798,
+            "finalization": 57.663
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 9.984,
+              "elapsed_ms": 46.986,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 65.097,
+              "elapsed_ms": 0.864,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 108.923,
+              "elapsed_ms": 390.527,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 197.722,
+              "elapsed_ms": 10.848,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 486.135,
+              "elapsed_ms": 11.798,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 557.561,
+              "elapsed_ms": 57.663,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 65.972
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 486.114
+            }
+          ]
+        },
+        "stage_timings": [],
+        "external_research": {
+          "external_seconds": 0.0,
+          "logical_searches": 0,
+          "page_slots_reserved": 0,
+          "http_requests_started": 0,
+          "pages_extracted": 0
+        },
+        "provider": "verified-character-evidence"
+      },
+      "sse_done": true,
+      "seconds": 0.6281,
+      "http_timing": {
+        "first_progress_seconds": 0.1109,
+        "verified_ready_seconds": 0.5324,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "\u00bfQu\u00e9 relaci\u00f3n hay entre el principito y el zorro?",
+      "status": "answered",
+      "answer": "**El zorro**: Amigo que el principito conoce en la Tierra.\n\nFuente: https://www.lepetitprince.com/loeuvre/",
+      "books": [
+        {
+          "id": "1",
+          "title": "El principito",
+          "author": "Antoine de Saint-Exup\u00e9ry",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+principito+Antoine+de+Saint-Exup%C3%A9ry&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+principito+Antoine+de+Saint-Exup%C3%A9ry"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 657,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "verified_narrative_answer": true,
+        "verified_character_answer": true,
+        "character_count": 1,
+        "work_type": "nonfiction",
+        "progress_metrics": {
+          "elapsed_ms": 723.44,
+          "first_phase_emitted_ms": 103.595,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 82.195,
+            "cache_lookup": 0.859,
+            "knowledge_lookup": 441.638,
+            "audit": 4.198,
+            "finalization": 66.095
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 12.601,
+              "elapsed_ms": 82.195,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 102.725,
+              "elapsed_ms": 0.859,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 165.023,
+              "elapsed_ms": 434.751,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 245.194,
+              "elapsed_ms": 6.887,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 593.927,
+              "elapsed_ms": 4.198,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 657.337,
+              "elapsed_ms": 66.095,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 103.595
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 593.886
+            }
+          ]
+        },
+        "stage_timings": [],
+        "external_research": {
+          "external_seconds": 0.0,
+          "logical_searches": 0,
+          "page_slots_reserved": 0,
+          "http_requests_started": 0,
+          "pages_extracted": 0
+        },
+        "provider": "verified-character-evidence"
+      },
+      "sse_done": true,
+      "seconds": 0.7538,
+      "http_timing": {
+        "first_progress_seconds": 0.1862,
+        "verified_ready_seconds": 0.6463,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "Recomi\u00e9ndame dos libros similares en espa\u00f1ol",
+      "status": "answered",
+      "answer": "\u00a1Claro!\n\n1. **El Chico de Al Lado** \u2014 Laura Dower\n\nNo puedo confirmar una trama semejante; la afinidad se limita a las materias del cat\u00e1logo.\n\nNo pude confirmar todas las opciones solicitadas.",
+      "books": [
+        {
+          "id": "MTYsSkCuQDMC",
+          "title": "El Chico de Al Lado",
+          "author": "Laura Dower",
+          "synopsis": "Taryn y Jeff han sido vecinos del lado de enfrente para siempre. Nunca import\u00f3 que ella fuera una chica y \u00e9l un chico: solo eran amigos. Pero cuando llegan al sexto grado, todo cambia...",
+          "image_url": "https://books.google.com/books/content?id=MTYsSkCuQDMC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://books.google.com/books/about/El_Chico_de_Al_Lado.html?hl=&id=MTYsSkCuQDMC"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+Chico+de+Al+Lado+Laura+Dower&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+Chico+de+Al+Lado+Laura+Dower"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 18491,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 2,
+        "discovery_candidates": 16,
+        "verified_recommendations": 1,
+        "progress_metrics": {
+          "elapsed_ms": 18548.714,
+          "first_phase_emitted_ms": 67.26,
+          "model_calls_started": 2,
+          "stage_totals_ms": {
+            "conversation": 46.566,
+            "cache_lookup": 0.942,
+            "local_search": 156.77,
+            "retrieval": 3098.157,
+            "audit": 807.148,
+            "model_inspection": 202.791,
+            "generation": 13338.531,
+            "finalization": 57.268
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 10.994,
+              "elapsed_ms": 46.566,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 66.306,
+              "elapsed_ms": 0.942,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 149.756,
+              "elapsed_ms": 1592.258,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 155.243,
+              "elapsed_ms": 77.591,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 2719.888,
+              "elapsed_ms": 1505.899,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 2724.394,
+              "elapsed_ms": 79.179,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 4298.247,
+              "elapsed_ms": 0.797,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 4299.193,
+              "elapsed_ms": 0.523,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 4300.534,
+              "elapsed_ms": 0.529,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 4318.745,
+              "elapsed_ms": 13338.531,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 4318.75,
+              "elapsed_ms": 202.778,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 17657.333,
+              "elapsed_ms": 805.299,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 17657.341,
+              "elapsed_ms": 0.013,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 18491.434,
+              "elapsed_ms": 57.268,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 67.26
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 4298.224
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 4318.728
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 17657.312
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "eval_ms": 2560.058,
+            "total_ms": 13108.625,
+            "status": "ok",
+            "load_ms": 10091.598,
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 63,
+            "prompt_eval_ms": 451.751,
+            "prompt_eval_count": 273,
+            "stage": "language_translate",
+            "elapsed_ms": 13339
+          },
+          {
+            "eval_ms": 479.459,
+            "total_ms": 791.897,
+            "status": "ok",
+            "load_ms": 6.38,
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 10,
+            "prompt_eval_ms": 255.886,
+            "prompt_eval_count": 264,
+            "stage": "language_verify",
+            "elapsed_ms": 805
+          }
+        ],
+        "provider": "ollama-local"
+      },
+      "sse_done": true,
+      "seconds": 18.5801,
+      "http_timing": {
+        "first_progress_seconds": 0.1528,
+        "verified_ready_seconds": 18.4891,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "Ya le\u00ed el primero y no me interesa el segundo",
+      "status": "clarification",
+      "answer": "\u00bfQu\u00e9 libro quieres marcar como le\u00eddo o descartar? No tengo una lista anterior que permita resolver esa posici\u00f3n.",
+      "books": [],
+      "diagnostics": {
+        "elapsed_ms": 160,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "progress_metrics": {
+          "elapsed_ms": 237.722,
+          "first_phase_emitted_ms": 114.314,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 90.365,
+            "cache_lookup": 6.151,
+            "finalization": 78.062
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 9.646,
+              "elapsed_ms": 90.365,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 108.152,
+              "elapsed_ms": 6.151,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 159.651,
+              "elapsed_ms": 78.062,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 114.314
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-conversation-evidence"
+      },
+      "sse_done": true,
+      "seconds": 0.2501,
+      "http_timing": {
+        "first_progress_seconds": 0.1179,
+        "verified_ready_seconds": 0.1235,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "Dame otras dos opciones",
+      "status": "answered",
+      "answer": "Encontr\u00e9 dos opciones en Google Books. Te cuento de qu\u00e9 trata cada una seg\u00fan sus sinopsis:\n\n1. **Dame mi nombre \u2014 Adela Casta\u00f1\u00f3n Baquera**\nTrama: Pablo descubre que su padre es de adopci\u00f3n y ese secreto le impide seguir mirando con los mismos ojos a su familia. Sus intentos de saber m\u00e1s chocan con la cortina de humo que extiende su madre, atrapada en una situaci\u00f3n imposible entre su hijo y su marido. A partir de ese momento se desarrolla una cadena de acontecimientos que pondr\u00e1 en jaque a su familia y se extender\u00e1 m\u00e1s all\u00e1.\n\n2. **199 Prompts de IA: Tu Soluci\u00f3n con IA para Crear Contenido \u2014 Creadores / 199 AI Prompts: Your AI Solution for Creating Content \u2014 Creators \u2014 Oscar Manuel Chiguita Gonzalez**\nTrama: DOMINA LA IA / MASTER AI \u2014 Gu\u00eda biling\u00fce (espa\u00f1ol + ingl\u00e9s) / Bilingual guide (Spanish + English). Promoci\u00f3n especial 2x1: pagas uno y recibes los dos idiomas / Special 2x1 promotion: pay for one, get both languages. Dise\u00f1ado en Canad\u00e1 / Designed in Canada.\n\nEsta vez te comparto las sinopsis del cat\u00e1logo; si quieres, podemos seguir por una de estas historias.",
+      "books": [
+        {
+          "id": "_-YsEAAAQBAJ",
+          "title": "Dame mi nombre",
+          "author": "Adela Casta\u00f1\u00f3n Baquera",
+          "synopsis": "Pablo descubre que su padre es de adopci\u00f3n y ese secreto le impide seguir mirando con los mismos ojos a su familia. Sus intentos de saber m\u00e1s chocan con la cortina de humo que extiende su madre, atrapada en una situaci\u00f3n imposible entre su hijo y su marido. A partir de ese momento se desarrolla una cadena de acontecimientos que pondr\u00e1 en jaque a su familia y se extender\u00e1 m\u00e1s all\u00e1. Porque en el otro extremo del hilo s",
+          "image_url": "https://books.google.com/books/content?id=_-YsEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://play.google.com/store/books/details?id=_-YsEAAAQBAJ"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=Dame+mi+nombre+Adela+Casta%C3%B1%C3%B3n+Baquera&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=Dame+mi+nombre+Adela+Casta%C3%B1%C3%B3n+Baquera"
+            }
+          ]
+        },
+        {
+          "id": "yE0VEgAAQBAJ",
+          "title": "199 Prompts de IA: Tu Soluci\u00f3n con IA para Crear Contenido \u2014 Creadores / 199 AI Prompts: Your AI Solution for Creating Content \u2014 Creators",
+          "author": "Oscar Manuel Chiguita Gonzalez",
+          "synopsis": "DOMINA LA IA / MASTER AI \u2014 Gu\u00eda biling\u00fce (espa\u00f1ol + ingl\u00e9s) / Bilingual guide (Spanish + English). Promoci\u00f3n especial 2x1: pagas uno y recibes los dos idiomas / Special 2x1 promotion: pay for one, get both languages. Dise\u00f1ado en Canad\u00e1 / Designed in Canada.",
+          "image_url": "https://books.google.com/books/content?id=yE0VEgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+          "links": [
+            {
+              "label": "Google Books",
+              "url": "https://play.google.com/store/books/details?id=yE0VEgAAQBAJ"
+            },
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=199+Prompts+de+IA%3A+Tu+Soluci%C3%B3n+con+IA+para+Crear+Contenido+%E2%80%94+Creadores+%2F+199+AI+Prompts%3A+Your+AI+Solution+for+Creating+Content+%E2%80%94+Creators+Oscar+Manuel+Chiguita+Gonzalez&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=199+Prompts+de+IA%3A+Tu+Soluci%C3%B3n+con+IA+para+Crear+Contenido+%E2%80%94+Creadores+%2F+199+AI+Prompts%3A+Your+AI+Solution+for+Creating+Content+%E2%80%94+Creators+Oscar+Manuel+Chiguita+Gonzalez"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 28878,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 4,
+        "progress_metrics": {
+          "elapsed_ms": 28956.681,
+          "first_phase_emitted_ms": 102.345,
+          "model_calls_started": 4,
+          "stage_totals_ms": {
+            "conversation": 74.514,
+            "cache_lookup": 8.007,
+            "retrieval": 2332.667,
+            "knowledge_lookup": 767.903,
+            "intent": 1.968,
+            "model_inspection": 31.518,
+            "extraction": 4330.879,
+            "web_search": 4207.027,
+            "routing": 4515.172,
+            "local_search": 148.006,
+            "generation": 13089.205,
+            "repair": 4698.508,
+            "finalization": 78.895
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 10.314,
+              "elapsed_ms": 74.514,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 94.327,
+              "elapsed_ms": 8.007,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 195.461,
+              "elapsed_ms": 0.62,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 251.209,
+              "elapsed_ms": 0.529,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 307.21,
+              "elapsed_ms": 437.612,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 417.011,
+              "elapsed_ms": 45.905,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 528.3,
+              "elapsed_ms": 175.085,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 600.906,
+              "elapsed_ms": 63.537,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 897.58,
+              "elapsed_ms": 45.764,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 1049.504,
+              "elapsed_ms": 3049.47,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 1098.487,
+              "elapsed_ms": 0.114,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 1098.608,
+              "elapsed_ms": 1.854,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 1100.472,
+              "elapsed_ms": 4515.172,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 1100.475,
+              "elapsed_ms": 31.49,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 2577.708,
+              "elapsed_ms": 1520.458,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 2578.181,
+              "elapsed_ms": 1477.284,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 2578.552,
+              "elapsed_ms": 1333.137,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 5616.273,
+              "elapsed_ms": 1186.237,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 5623.448,
+              "elapsed_ms": 80.773,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 6802.562,
+              "elapsed_ms": 1145.281,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 6805.727,
+              "elapsed_ms": 67.233,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 7959.99,
+              "elapsed_ms": 8683.101,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 7960.005,
+              "elapsed_ms": 0.007,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 16643.977,
+              "elapsed_ms": 1157.557,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 17808.478,
+              "elapsed_ms": 4406.104,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 17808.491,
+              "elapsed_ms": 0.009,
+              "status": "ok"
+            },
+            {
+              "stage": "repair",
+              "started_ms": 22216.512,
+              "elapsed_ms": 4698.508,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 22216.541,
+              "elapsed_ms": 0.012,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 28877.776,
+              "elapsed_ms": 78.895,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 102.345
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 7959.971
+            },
+            {
+              "stage": "search",
+              "elapsed_ms": 16643.958
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 17808.462
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "eval_ms": 2442.577,
+            "total_ms": 4452.048,
+            "status": "ok",
+            "load_ms": 5.973,
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 59,
+            "prompt_eval_ms": 1946.383,
+            "prompt_eval_count": 3241,
+            "stage": "route",
+            "elapsed_ms": 4515
+          },
+          {
+            "eval_ms": 6340.341,
+            "total_ms": 8663.998,
+            "status": "ok",
+            "load_ms": 6.825,
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 155,
+            "prompt_eval_ms": 2208.93,
+            "prompt_eval_count": 3493,
+            "stage": "answer",
+            "elapsed_ms": 8683
+          },
+          {
+            "eval_ms": 3374.456,
+            "total_ms": 4383.912,
+            "status": "ok",
+            "load_ms": 7.805,
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 83,
+            "prompt_eval_ms": 973.288,
+            "prompt_eval_count": 4461,
+            "stage": "answer_web",
+            "elapsed_ms": 4406
+          },
+          {
+            "eval_ms": 4111.97,
+            "total_ms": 4684.335,
+            "status": "ok",
+            "load_ms": 8.137,
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 93,
+            "prompt_eval_ms": 527.92,
+            "prompt_eval_count": 4486,
+            "stage": "repair",
+            "elapsed_ms": 4699
+          }
+        ],
+        "provider": "ollama-local"
+      },
+      "sse_done": true,
+      "seconds": 28.9906,
+      "http_timing": {
+        "first_progress_seconds": 0.1419,
+        "verified_ready_seconds": 28.8627,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "Cu\u00e9ntame m\u00e1s del segundo",
+      "status": "unavailable",
+      "answer": "No pude completar esta consulta dentro del tiempo disponible. Prueba con una pregunta m\u00e1s concreta sobre la obra.",
+      "books": [],
+      "diagnostics": {
+        "elapsed_ms": 35130,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 5,
+        "failure_kind": "technical_failure",
+        "progress_metrics": {
+          "elapsed_ms": 35217.057,
+          "first_phase_emitted_ms": 106.414,
+          "model_calls_started": 5,
+          "stage_totals_ms": {
+            "conversation": 79.843,
+            "cache_lookup": 7.532,
+            "knowledge_lookup": 798.856,
+            "intent": 0.177,
+            "model_inspection": 26.46,
+            "extraction": 2096.098,
+            "web_search": 2809.974,
+            "routing": 4287.027,
+            "generation": 13234.157,
+            "audit": 6076.472,
+            "repair": 10446.766,
+            "finalization": 87.188
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 10.905,
+              "elapsed_ms": 79.843,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 98.871,
+              "elapsed_ms": 7.532,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 159.576,
+              "elapsed_ms": 442.953,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 273.144,
+              "elapsed_ms": 49.758,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 381.795,
+              "elapsed_ms": 181.021,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 452.684,
+              "elapsed_ms": 71.772,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 750.582,
+              "elapsed_ms": 53.352,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 910.191,
+              "elapsed_ms": 2809.974,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 964.104,
+              "elapsed_ms": 0.155,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 964.287,
+              "elapsed_ms": 0.022,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 964.322,
+              "elapsed_ms": 4287.027,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 964.328,
+              "elapsed_ms": 26.432,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 1992.642,
+              "elapsed_ms": 111.316,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 1993.103,
+              "elapsed_ms": 258.473,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 1993.537,
+              "elapsed_ms": 1726.309,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 5253.992,
+              "elapsed_ms": 13234.157,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 5254.007,
+              "elapsed_ms": 0.009,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 18490.054,
+              "elapsed_ms": 6049.25,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 18490.06,
+              "elapsed_ms": 0.005,
+              "status": "ok"
+            },
+            {
+              "stage": "repair",
+              "started_ms": 24539.36,
+              "elapsed_ms": 10446.766,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 24539.379,
+              "elapsed_ms": 0.009,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 34986.38,
+              "elapsed_ms": 27.222,
+              "status": "failed"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 34986.385,
+              "elapsed_ms": 0.005,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 35129.861,
+              "elapsed_ms": 87.188,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 106.414
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 5253.972
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 18490.035
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 24539.344
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 34986.363
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "eval_ms": 1706.502,
+            "total_ms": 4250.528,
+            "status": "ok",
+            "load_ms": 5.851,
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 47,
+            "prompt_eval_ms": 2334.644,
+            "prompt_eval_count": 3767,
+            "stage": "route",
+            "elapsed_ms": 4287
+          },
+          {
+            "eval_ms": 9514.444,
+            "total_ms": 13203.575,
+            "status": "ok",
+            "load_ms": 8.109,
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 255,
+            "prompt_eval_ms": 3565.346,
+            "prompt_eval_count": 6351,
+            "stage": "answer",
+            "elapsed_ms": 13234
+          },
+          {
+            "eval_ms": 3471.943,
+            "total_ms": 6039.165,
+            "status": "ok",
+            "load_ms": 6.949,
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 92,
+            "prompt_eval_ms": 2418.595,
+            "prompt_eval_count": 4229,
+            "stage": "review",
+            "elapsed_ms": 6049
+          },
+          {
+            "eval_ms": 9633.633,
+            "total_ms": 10437.123,
+            "status": "ok",
+            "load_ms": 7.969,
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 256,
+            "prompt_eval_ms": 587.061,
+            "prompt_eval_count": 6707,
+            "stage": "repair",
+            "elapsed_ms": 10447
+          },
+          {
+            "status": "failed",
+            "model": "qwen3.5:9b-q4_K_M",
+            "stage": "review",
+            "elapsed_ms": 27
+          }
+        ],
+        "external_research": {
+          "external_seconds": 2.809,
+          "logical_searches": 1,
+          "page_slots_reserved": 3,
+          "http_requests_started": 2,
+          "pages_extracted": 1
+        },
+        "provider": "ollama-local"
+      },
+      "sse_done": true,
+      "seconds": 35.253,
+      "http_timing": {
+        "first_progress_seconds": 0.1407,
+        "verified_ready_seconds": 35.1152,
+        "first_verified_text_seconds": null
+      }
+    },
+    {
+      "question": "\u00bfD\u00f3nde puedo encontrarlo?",
+      "status": "answered",
+      "answer": "Basado en tus recuerdos de un ni\u00f1o en un planeta peque\u00f1o que cuida una rosa, la obra es **El principito**, escrita por **Antoine de Saint-Exup\u00e9ry**. Las fuentes confirman que el protagonista vive en el asteroide B 612 y se siente responsable de su rosa favorita. Puedes encontrarlo en ediciones ilustradas con acuarelas del propio autor.\n\n[2] El principito\nhttps://www.lepetitprince.com/loeuvre/",
+      "books": [
+        {
+          "id": "1",
+          "title": "El principito",
+          "author": "Antoine de Saint-Exup\u00e9ry",
+          "synopsis": "",
+          "image_url": "",
+          "links": [
+            {
+              "label": "Amazon",
+              "url": "https://www.amazon.com/s?k=El+principito+Antoine+de+Saint-Exup%C3%A9ry&i=stripbooks"
+            },
+            {
+              "label": "Buscalibre",
+              "url": "https://www.buscalibre.cl/libros/search?q=El+principito+Antoine+de+Saint-Exup%C3%A9ry"
+            }
+          ]
+        }
+      ],
+      "diagnostics": {
+        "elapsed_ms": 29113,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 4,
+        "progress_metrics": {
+          "elapsed_ms": 29234.619,
+          "first_phase_emitted_ms": 108.634,
+          "model_calls_started": 4,
+          "stage_totals_ms": {
+            "conversation": 81.939,
+            "cache_lookup": 7.363,
+            "knowledge_lookup": 466.298,
+            "intent": 0.168,
+            "model_inspection": 18.415,
+            "extraction": 317.197,
+            "web_search": 2401.013,
+            "routing": 8855.645,
+            "local_search": 204.493,
+            "retrieval": 2933.815,
+            "generation": 7773.075,
+            "audit": 7626.005,
+            "finalization": 121.61
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 11.137,
+              "elapsed_ms": 81.939,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 101.261,
+              "elapsed_ms": 7.363,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 205.881,
+              "elapsed_ms": 310.632,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 314.167,
+              "elapsed_ms": 18.001,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 373.052,
+              "elapsed_ms": 103.241,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 439.236,
+              "elapsed_ms": 17.27,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 662.666,
+              "elapsed_ms": 17.154,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 766.206,
+              "elapsed_ms": 1417.144,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 816.928,
+              "elapsed_ms": 0.114,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 817.048,
+              "elapsed_ms": 0.009,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 817.063,
+              "elapsed_ms": 4856.236,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 817.066,
+              "elapsed_ms": 18.4,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 2027.702,
+              "elapsed_ms": 151.999,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 2028.217,
+              "elapsed_ms": 154.911,
+              "status": "ok"
+            },
+            {
+              "stage": "extraction",
+              "started_ms": 2028.813,
+              "elapsed_ms": 10.287,
+              "status": "ok"
+            },
+            {
+              "stage": "intent",
+              "started_ms": 5674.64,
+              "elapsed_ms": 0.045,
+              "status": "ok"
+            },
+            {
+              "stage": "routing",
+              "started_ms": 5674.699,
+              "elapsed_ms": 3999.409,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 5674.703,
+              "elapsed_ms": 0.004,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 9693.014,
+              "elapsed_ms": 1723.074,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 9695.948,
+              "elapsed_ms": 74.686,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 11416.155,
+              "elapsed_ms": 1140.403,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 11422.454,
+              "elapsed_ms": 65.024,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 12556.606,
+              "elapsed_ms": 70.338,
+              "status": "ok"
+            },
+            {
+              "stage": "local_search",
+              "started_ms": 12561.394,
+              "elapsed_ms": 64.783,
+              "status": "ok"
+            },
+            {
+              "stage": "web_search",
+              "started_ms": 12647.038,
+              "elapsed_ms": 983.869,
+              "status": "ok"
+            },
+            {
+              "stage": "generation",
+              "started_ms": 13651.571,
+              "elapsed_ms": 7773.075,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 13651.585,
+              "elapsed_ms": 0.005,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 21426.493,
+              "elapsed_ms": 7619.364,
+              "status": "ok"
+            },
+            {
+              "stage": "model_inspection",
+              "started_ms": 21426.511,
+              "elapsed_ms": 0.006,
+              "status": "ok"
+            },
+            {
+              "stage": "audit",
+              "started_ms": 29045.88,
+              "elapsed_ms": 6.641,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 29112.999,
+              "elapsed_ms": 121.61,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 108.634
+            },
+            {
+              "stage": "writing",
+              "elapsed_ms": 13651.56
+            },
+            {
+              "stage": "review",
+              "elapsed_ms": 21426.473
+            }
+          ]
+        },
+        "stage_timings": [
+          {
+            "eval_ms": 2473.624,
+            "total_ms": 4817.205,
+            "status": "ok",
+            "load_ms": 8.088,
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 67,
+            "prompt_eval_ms": 2160.032,
+            "prompt_eval_count": 3768,
+            "stage": "route",
+            "elapsed_ms": 4856
+          },
+          {
+            "eval_ms": 2242.599,
+            "total_ms": 3989.347,
+            "status": "ok",
+            "load_ms": 8.165,
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 61,
+            "prompt_eval_ms": 1654.359,
+            "prompt_eval_count": 2861,
+            "stage": "plan",
+            "elapsed_ms": 3999
+          },
+          {
+            "eval_ms": 4032.57,
+            "total_ms": 7746.473,
+            "status": "ok",
+            "load_ms": 6.146,
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 109,
+            "prompt_eval_ms": 3506.617,
+            "prompt_eval_count": 6033,
+            "stage": "answer",
+            "elapsed_ms": 7773
+          },
+          {
+            "eval_ms": 3202.714,
+            "total_ms": 7573.447,
+            "status": "ok",
+            "load_ms": 8.005,
+            "model": "qwen3.5:9b-q4_K_M",
+            "eval_count": 76,
+            "prompt_eval_ms": 4185.398,
+            "prompt_eval_count": 7368,
+            "stage": "audit",
+            "elapsed_ms": 7619
+          }
+        ],
+        "external_research": {
+          "external_seconds": 3.568,
+          "logical_searches": 2,
+          "page_slots_reserved": 3,
+          "http_requests_started": 6,
+          "pages_extracted": 0
+        },
+        "provider": "ollama-local"
+      },
+      "sse_done": true,
+      "seconds": 29.2746,
+      "http_timing": {
+        "first_progress_seconds": 0.1657,
+        "verified_ready_seconds": 29.102,
+        "first_verified_text_seconds": null
+      }
+    }
+  ]
+}

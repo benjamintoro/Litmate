@@ -30,6 +30,7 @@
     <link href="{% static 'css/subscriptions.css' %}?v=4.0" rel="stylesheet" />
     <link href="{% static 'css/pages.css' %}?v=4.0" rel="stylesheet" />
     <link href="{% static 'css/dark-mode.css' %}?v=4.0" rel="stylesheet" />
+    <link href="{% static 'css/chat-books.css' %}?v=chat-v6" rel="stylesheet" />
     <script>
         // Anti-flash: aplica el tema guardado antes de que se pinte la página
         (function(){
@@ -231,6 +232,9 @@
         </div>
     </nav>
 
+    {% if demo_notice %}
+    <div class="container mt-4"><div class="alert alert-info" role="status">{{ demo_notice }}</div></div>
+    {% endif %}
     {% block content %}{% endblock %}
 
     <!-- WIDGET FLOTANTE GLOBAL LITMATE AI (UNA SOLA INSTANCIA) -->
@@ -257,9 +261,9 @@
                 </div>
             </div>
 
-            <div id="floating-chat-body">
+            <div id="floating-chat-body" role="log" aria-label="Conversación con LitMate">
                 <div class="chat-message bot">
-                    <p>¡Hola! Soy tu asistente LitMate. ¿Te ayudo a buscar o comparar algún libro de esta página?</p>
+                    <p>¡Hola! Soy LitMate. Cuéntame qué te apetece leer o qué libro tienes en mente; lo exploramos juntos.</p>
                 </div>
             </div>
 
@@ -346,10 +350,18 @@
                     <a href="{% url 'terminos' %}" class="footer-link">Términos y condiciones</a>
                     <a href="{% url 'cookies' %}" class="footer-link">Política de cookies</a>
                     <a href="{% url 'privacidad' %}" class="footer-link">Política de privacidad</a>
+                    <a href="#lm-attributions-dialog" id="lm-attributions-link" class="footer-link" aria-haspopup="dialog">Atribuciones</a>
                 </div>
             </div>
         </div>
     </footer>
+
+    <dialog id="lm-attributions-dialog" aria-labelledby="lm-attributions-title"
+            class="bg-dark text-light border rounded p-4" style="max-width: min(90vw, 48rem); max-height: 80vh; overflow: auto;">
+        <h2 id="lm-attributions-title" class="h5">Atribuciones de las lecturas</h2>
+        <div id="lm-attributions-content"></div>
+        <form method="dialog"><button class="btn btn-outline-secondary" type="submit">Cerrar</button></form>
+    </dialog>
 
     <!-- BANNER DE COOKIES -->
     <div id="cookieConsentBanner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Consentimiento de cookies" style="display: none;">
@@ -736,8 +748,10 @@
     </script>
 
     <!-- CARGA CONDICIONAL DEL SCRIPT DEL WIDGET FLOTANTE -->
+    <script src="{% static 'js/litmate_safe.js' %}?v=chat-v9"></script>
+    {% if reader_accounts_enabled %}<script src="{% static 'js/reader-transport.js' %}"></script>{% endif %}
     {% if request.path != '/chat/' and request.path != '/chatbot/' %}
-    <script src="{% static 'js/floating_chat.js' %}"></script>
+    <script src="{% static 'js/floating_chat.js' %}?v=chat-v6"></script>
     {% endif %}
 
     {% block scripts %}{% endblock %}

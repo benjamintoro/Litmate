@@ -1,0 +1,8 @@
+{
+  "failures": 0,
+  "modules": [
+    "core"
+  ],
+  "seconds": 75.01,
+  "isolated_sqlite_and_auxiliary_stores": true
+}

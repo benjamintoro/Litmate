@@ -1,0 +1,199 @@
+{
+  "case": {
+    "case": 1,
+    "title": "La pen\u00ednsula de las casas vac\u00edas",
+    "author": "David Ucl\u00e9s",
+    "kind": "novela",
+    "presence": {
+      "LITMATE_LITERARY_MEMORY_DB": [],
+      "LITMATE_KNOWLEDGE_DB": [],
+      "LITMATE_KNOWLEDGE_RAG_DB": [],
+      "LITMATE_LIBRARY_DB": [],
+      "LITMATE_LIBRARY_RAG_DB": [],
+      "mysql": {
+        "name_record_ids": [],
+        "direct_records": [],
+        "legacy_ids": []
+      }
+    },
+    "absent_at_start": true
+  },
+  "offline": true,
+  "turns": [
+    {
+      "question": "Dime la trama de La pen\u00ednsula de las casas vac\u00edas de David Ucl\u00e9s",
+      "answer": "**La pen\u00ednsula de las casas vac\u00edas**\n\nActualmente no tengo la informaci\u00f3n de este libro :( Si me indicas el autor o la edici\u00f3n, puedo intentar identificarlo mejor.",
+      "status": "unavailable",
+      "books": [],
+      "sources": [],
+      "diagnostics": {
+        "elapsed_ms": 974,
+        "chat_budget_seconds": 36.0,
+        "model_calls": 0,
+        "work_type": "fiction",
+        "narrative_failure": "insufficient_content",
+        "progress_metrics": {
+          "elapsed_ms": 1012.458,
+          "first_phase_emitted_ms": 45.245,
+          "model_calls_started": 0,
+          "stage_totals_ms": {
+            "conversation": 26.265,
+            "cache_lookup": 0.474,
+            "knowledge_lookup": 747.836,
+            "retrieval": 0.013,
+            "finalization": 38.654
+          },
+          "stage_timings": [
+            {
+              "stage": "conversation",
+              "started_ms": 5.008,
+              "elapsed_ms": 26.265,
+              "status": "ok"
+            },
+            {
+              "stage": "cache_lookup",
+              "started_ms": 44.759,
+              "elapsed_ms": 0.474,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 128.253,
+              "elapsed_ms": 398.152,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 224.9,
+              "elapsed_ms": 71.267,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 360.15,
+              "elapsed_ms": 165.191,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 428.439,
+              "elapsed_ms": 58.423,
+              "status": "ok"
+            },
+            {
+              "stage": "knowledge_lookup",
+              "started_ms": 592.85,
+              "elapsed_ms": 54.803,
+              "status": "ok"
+            },
+            {
+              "stage": "retrieval",
+              "started_ms": 927.619,
+              "elapsed_ms": 0.013,
+              "status": "ok"
+            },
+            {
+              "stage": "finalization",
+              "started_ms": 973.798,
+              "elapsed_ms": 38.654,
+              "status": "ok"
+            }
+          ],
+          "progress_events": [
+            {
+              "stage": "search",
+              "elapsed_ms": 45.245
+            }
+          ]
+        },
+        "stage_timings": [],
+        "provider": "verified-narrative-engine"
+      },
+      "seconds": 1.0207,
+      "sse_done": true,
+      "http_timing": {
+        "first_progress_seconds": 0.0472,
+        "verified_ready_seconds": 0.9677,
+        "first_verified_text_seconds": 1.0207
+      }
+    }
+  ],
+  "seconds": 3.946,
+  "research_profile": "research",
+  "offline_guard_version": 2,
+  "public_research_trace": [
+    {
+      "stage": "retrieved_public_evidence",
+      "sources": [
+        {
+          "id": 1,
+          "title": "La pen\u00ednsula de las casas vac\u00edas",
+          "author": "David Ucl\u00e9s",
+          "description": "La pen\u00ednsula de las casas vac\u00edas, de David Ucl\u00e9s. Temas del cat\u00e1logo: Fiction, Spanish Literature, Historical Fiction, Historical, Novels",
+          "source": "Open Library",
+          "year": "2024",
+          "book_id": "",
+          "kind": "book",
+          "url": "https://openlibrary.org/works/OL43994375W",
+          "locator": "",
+          "read_mode": "metadatos bibliogr\u00e1ficos; no sinopsis ni texto de la obra",
+          "retrieved_at": "1793362400.079364",
+          "work_id": "litmate:952b7e2706398f1c2dc5703f",
+          "license": "Open Library bibliographic facts; rights vary",
+          "trust": "untrusted_data",
+          "expires_at": "1795954400.079364",
+          "evidence_hash": "b1ea03ac54f35830f458cb1f2b99aa863996118c5d56d5dc9763996992d63727",
+          "memory_source_id": "3298bcb2afc80c8663f5647425e0172bae5cc096b364cd38661b88c7a72fe373",
+          "last_verified_at": "1793362400.079364",
+          "policy": "openlibrary-minimal-metadata-v1",
+          "memory_verified": true,
+          "confirmed_aliases": [],
+          "literary_facts": [],
+          "isbns": [],
+          "categories": [
+            "Fiction",
+            "Spanish Literature",
+            "Historical Fiction",
+            "Historical",
+            "Novels"
+          ]
+        }
+      ]
+    }
+  ],
+  "coverage_before": {
+    "works": 14481,
+    "works_with_explicit_plot": 16,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 21,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 33,
+    "linked_sources": 14656,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "coverage_after": {
+    "works": 14481,
+    "works_with_explicit_plot": 16,
+    "works_with_development_excerpt": 11,
+    "works_with_admitted_description": 21,
+    "characters_with_literal_roles": 81,
+    "works_with_literal_roles": 9,
+    "characters_with_membership_only": 23,
+    "works_with_explicit_protagonist": 7,
+    "explicit_protagonist_mentions": 12,
+    "relationships": 2,
+    "narrative_facts": 33,
+    "linked_sources": 14656,
+    "verification": "source_identity_license_literal_evidence_not_independent_corroboration"
+  },
+  "mysql_counts_unchanged": true,
+  "knowledge_scope": "isolated persistent research copy; not global ingestion",
+  "answer_cache_mode": "new_empty_store",
+  "google_books_enabled": false,
+  "factual_review_pending": true
+}

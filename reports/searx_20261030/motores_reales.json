@@ -1,0 +1,673 @@
+{
+  "mode": "engines",
+  "started_at": "2026-10-30T11:26:20.163618+00:00",
+  "cases": [
+    {
+      "category": "novela",
+      "query": "El nombre de la rosa",
+      "engine": "wikipedia",
+      "result_count": 1,
+      "failures": [],
+      "results": [
+        {
+          "title": "El nombre de la rosa",
+          "url": "https://es.wikipedia.org/wiki/El_nombre_de_la_rosa",
+          "content": "novela hist\u00f3rica de Umberto Eco",
+          "authors": null,
+          "engines": [
+            "wikipedia"
+          ]
+        }
+      ],
+      "title_matches": 1,
+      "descriptive_snippets": 0,
+      "seconds": 0.368
+    },
+    {
+      "category": "novela",
+      "query": "El nombre de la rosa",
+      "engine": "openlibrary",
+      "result_count": 5,
+      "failures": [],
+      "results": [
+        {
+          "title": "Il nome della rosa",
+          "url": "https://openlibrary.org/works/OL8996439W",
+          "content": "ON AUGUST 16, 1968, I WAS HANDED A BOOK WRITTEN BY A CERTAIN Abbe Vallet, Le Manuscrit de Dom Adson de Melk, traduit en francais d'apres l'edition de Dom J. Mabillon (Aux Presses de l'Abbaye de la Source, Paris, 1842). / Am 16. August 1968 fiel mir ein Buch as der Feder eines gewissen Abb\u00e9 Vallet in die H\u00e4nde: Le manuscript de Dom Adson de Melk, traduit en fran\u00e7ais d'apr\u00e8s P'\u00e9dition de Dom J. Mabillon (Aux Presses de l'Abbaye de la Source Paris 1842). / In principio era il Verbo e il Verbo era presso Dio, e il Verbo era Dio.",
+          "authors": [
+            "Umberto Eco"
+          ],
+          "engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "EL NOMBRE DE LA ROSA",
+          "url": "https://openlibrary.org/works/OL35986141W",
+          "content": "",
+          "authors": [],
+          "engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "Para leer \"El nombre de la rosa\" de Umberto Eco",
+          "url": "https://openlibrary.org/works/OL18948328W",
+          "content": "",
+          "authors": [
+            "Francisco Bertelloni"
+          ],
+          "engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "Postille a Il nome della rosa",
+          "url": "https://openlibrary.org/works/OL14852855W",
+          "content": "",
+          "authors": [
+            "Umberto Eco"
+          ],
+          "engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "El Nombre de la Rosa",
+          "url": "https://openlibrary.org/works/OL38059713W",
+          "content": "",
+          "authors": [
+            "Umberto Eco"
+          ],
+          "engines": [
+            "openlibrary"
+          ]
+        }
+      ],
+      "title_matches": 3,
+      "descriptive_snippets": 1,
+      "seconds": 1.087
+    },
+    {
+      "category": "novela",
+      "query": "El nombre de la rosa",
+      "engine": "mwmbl",
+      "result_count": 127,
+      "failures": [],
+      "results": [
+        {
+          "title": "Nombre de encabezado prohibido - Glosario de MDN Web Docs: Defin\u2026",
+          "url": "http://developer.mozilla.org/es/docs/Glossary/Forbidden_header_name",
+          "content": "",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "Cambiar el nombre | Apple Developer Forums",
+          "url": "http://developer.apple.com/forums/thread/84386",
+          "content": "Cambiar el nombre You\u2019re now watching this thread. If you\u2019ve opted in to email or web notifications, you\u2019ll be notified when there\u2019s activity. Click agai\u2026",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "Nombre de dominio - Glosario de MDN Web Docs: Definiciones de t\u00e9\u2026",
+          "url": "https://developer.mozilla.org/es/docs/Glossary/Domain_name",
+          "content": "",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "Vivaldi en Android: Prep\u00e1rate para cambiar el nombre de tus pila\u2026",
+          "url": "https://vivaldi.com/?p=392980",
+          "content": "Compartir art\u00edculo Co-Founder/CEO. Been doing browser development since 1994. When I\u2019m not testing Vivaldi browser or reading Vivaldi forums, I enjoy col\u2026",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "GitHub - Adau/trails: R\u00e9cup\u00e9ration du nombre de places restantes\u2026",
+          "url": "https://github.com/Adau/trails",
+          "content": "Saved searches Use saved searches to filter your results more quickly You signed in with another tab or window. Reload to refresh your session.You signed\u2026",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "El Salvador",
+          "url": "https://en.wikipedia.org/wiki/El_Salvador",
+          "content": "Pineda; \u00d3scar Mel\u00e9ndez (9 June 2015). El nombre oficial de la Rep\u00fablica de El Salvador (1st\u00a0ed.). San Salvador: Direcci\u00f3n de Publicaciones e Impresos. Archived",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "The Institute for Justice",
+          "url": "https://ij.org/",
+          "content": "EL PASO, Texas\u2014Today, an El Paso federal court put a temporary halt to financial surveillance rules that threatened two local small businesses and intrude\u2026",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "Cambiar el nombre de las direcciones de usuario en bloque despu\u00e9\u2026",
+          "url": "https://support.google.com/a/answer/7068037?hl=es&ref_topic=6302293",
+          "content": "",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        }
+      ],
+      "title_matches": 0,
+      "descriptive_snippets": 76,
+      "seconds": 0.743
+    },
+    {
+      "category": "manga",
+      "query": "Naruto",
+      "engine": "wikipedia",
+      "result_count": 1,
+      "failures": [],
+      "results": [
+        {
+          "title": "Naruto",
+          "url": "https://es.wikipedia.org/wiki/Naruto",
+          "content": "serie de manga y anime de tem\u00e1tica ninja",
+          "authors": null,
+          "engines": [
+            "wikipedia"
+          ]
+        }
+      ],
+      "title_matches": 1,
+      "descriptive_snippets": 0,
+      "seconds": 0.216
+    },
+    {
+      "category": "manga",
+      "query": "Naruto",
+      "engine": "openlibrary",
+      "result_count": 5,
+      "failures": [],
+      "results": [
+        {
+          "title": "Naruto 33",
+          "url": "https://openlibrary.org/works/OL13268171W",
+          "content": "",
+          "authors": [
+            "Masashi Kishimoto"
+          ],
+          "engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "Naruto 25",
+          "url": "https://openlibrary.org/works/OL8756045W",
+          "content": "",
+          "authors": [
+            "Masashi Kishimoto"
+          ],
+          "engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "Naruto 09",
+          "url": "https://openlibrary.org/works/OL8756013W",
+          "content": "",
+          "authors": [
+            "Masashi Kishimoto"
+          ],
+          "engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "Naruto 58",
+          "url": "https://openlibrary.org/works/OL16800486W",
+          "content": "",
+          "authors": [
+            "Masashi Kishimoto"
+          ],
+          "engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "Boruto",
+          "url": "https://openlibrary.org/works/OL20051651W",
+          "content": "",
+          "authors": [
+            "Uky\u014d Kodachi",
+            "Mikio Ikemoto",
+            "Masashi Kishimoto"
+          ],
+          "engines": [
+            "openlibrary"
+          ]
+        }
+      ],
+      "title_matches": 4,
+      "descriptive_snippets": 0,
+      "seconds": 0.372
+    },
+    {
+      "category": "manga",
+      "query": "Naruto",
+      "engine": "mwmbl",
+      "result_count": 53,
+      "failures": [],
+      "results": [
+        {
+          "title": "Naruto - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Naruto",
+          "content": "Naruto [ a ] is a Japanese manga series written and illustrated by Masashi Kishimoto . It tells the story of Naruto Uzumaki , a young ninja who seeks reco\u2026",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "Naruto - Everything2.com",
+          "url": "http://everything2.com/title/Naruto",
+          "content": "The world of Naruto is extremely dense and detailed in just that way that breeds rabid fans. The audience is treated to long, involved discourses on ninj\u2026",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "Naruto - iFixit",
+          "url": "http://www.ifixit.com/User/4541651/Naruto",
+          "content": "",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "gprem09/naruto",
+          "url": "https://github.com/gprem09/naruto",
+          "content": "",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "NARUTO SHIPPUDEN: Ultimate Ninja STORM 3 Full Burst HD on Steam",
+          "url": "https://store.steampowered.com/app/234670",
+          "content": "More Naruto Games About This Game The 4th Great Ninja War continues. NARUTO SHIPPUDEN Ultimate Ninja STORM 3 has been given a thorough overhaul for its F\u2026",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "Geography | Narutopedia | Fandom",
+          "url": "https://naruto.fandom.com/wiki/Geography",
+          "content": "Geography The Naruto series is set on a fictional terrestrial blue planet called Earth. Most of the series takes place on a large continent that is divid\u2026",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "Template:Narutopedia \u2013 WikiIndex \u2013 the index of all wiki",
+          "url": "https://wikiindex.org/Template:Narutopedia",
+          "content": "Narutopedia , a series of Fandom anime community wiki sites from Wikia , are a group of community encyclopedias about the anime , manga , movies , games ,\u2026",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "Naruto Uz393 Favorites",
+          "url": "https://archive.org/details/fav-naruto_uz393",
+          "content": "",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        }
+      ],
+      "title_matches": 52,
+      "descriptive_snippets": 34,
+      "seconds": 0.258
+    },
+    {
+      "category": "historia",
+      "query": "Historia de la rep\u00fablica del Per\u00fa",
+      "engine": "wikipedia",
+      "result_count": 0,
+      "failures": [],
+      "results": [],
+      "title_matches": 0,
+      "descriptive_snippets": 0,
+      "seconds": 0.411
+    },
+    {
+      "category": "historia",
+      "query": "Historia de la rep\u00fablica del Per\u00fa",
+      "engine": "openlibrary",
+      "result_count": 5,
+      "failures": [],
+      "results": [
+        {
+          "title": "Historia de la Repu\u0301blica del Peru\u0301",
+          "url": "https://openlibrary.org/works/OL3167688W",
+          "content": "",
+          "authors": [
+            "Jorge Basadre"
+          ],
+          "engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "Historia de la Rep\u00fablica del Per\u00fa, 1822-1933",
+          "url": "https://openlibrary.org/works/OL32010364W",
+          "content": "",
+          "authors": [
+            "Jorge Basadre"
+          ],
+          "engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "Historia de la rep\u00fablica del Per\u00fa",
+          "url": "https://openlibrary.org/works/OL37468545W",
+          "content": "",
+          "authors": [
+            "Jorge Basadre"
+          ],
+          "engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "Historia de la Repu\u0301blica del Peru\u0301, 1822-1933",
+          "url": "https://openlibrary.org/works/OL3167664W",
+          "content": "",
+          "authors": [
+            "Jorge Basadre"
+          ],
+          "engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "Introduccio\u0301n a las bases documentales para la historia de la Repu\u0301blica del Peru\u0301 con algunas reflexiones",
+          "url": "https://openlibrary.org/works/OL3167668W",
+          "content": "",
+          "authors": [
+            "Jorge Basadre"
+          ],
+          "engines": [
+            "openlibrary"
+          ]
+        }
+      ],
+      "title_matches": 5,
+      "descriptive_snippets": 0,
+      "seconds": 2.308
+    },
+    {
+      "category": "historia",
+      "query": "Historia de la rep\u00fablica del Per\u00fa",
+      "engine": "mwmbl",
+      "result_count": 9,
+      "failures": [],
+      "results": [
+        {
+          "title": "Historia de la rep\u00fablica del Per\u00fa - Jorge Basadre - Google Books",
+          "url": "https://books.google.com/books?id=gyF6AAAAMAAJ",
+          "content": "",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "Presidencia de la Rep\u00fablica del Per\u00fa - Presidencia - Plataforma \u2026",
+          "url": "http://www.gob.pe/presidencia",
+          "content": "Nos dedicamos a la difusi\u00f3n de actividades e informaci\u00f3n del Presidente de la Rep\u00fablica del Per\u00fa. #gobpe",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "Carmen Lozada, Asesora at Congreso de la rep\u00fablica del per\u00fa",
+          "url": "https://fr.slideshare.net/CarmenLozada1/following",
+          "content": "",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "Contralor\u00eda General de la Rep\u00fablica del Per\u00fa | SlideShare",
+          "url": "http://slideshare.net/zamora27",
+          "content": "",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "Grupo Escolar Rep\u00fablica del Per\u00fa Map - School - Valencia Municip\u2026",
+          "url": "http://mapcarta.com/36426036",
+          "content": "",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "&#39;estefany Mansilla Beltr\u00e1n, Escuela rep\u00fablica del per\u00fa",
+          "url": "https://fr.slideshare.net/pettipettilu",
+          "content": "",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "Congreso de la Rep\u00fablica del Per\u00fa | Flickr",
+          "url": "https://flic.kr/photos/congresoperu/",
+          "content": "",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "INDC de la Rep\u00fablica del Per\u00fa: compromisos clim\u00e1ticos construido\u2026",
+          "url": "https://cdkn.org/es/resource/indc",
+          "content": "",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        }
+      ],
+      "title_matches": 1,
+      "descriptive_snippets": 1,
+      "seconds": 0.289
+    },
+    {
+      "category": "ensayo",
+      "query": "El infinito en un junco",
+      "engine": "wikipedia",
+      "result_count": 0,
+      "failures": [],
+      "results": [],
+      "title_matches": 0,
+      "descriptive_snippets": 0,
+      "seconds": 0.419
+    },
+    {
+      "category": "ensayo",
+      "query": "El infinito en un junco",
+      "engine": "openlibrary",
+      "result_count": 5,
+      "failures": [],
+      "results": [
+        {
+          "title": "El infinito en un junco",
+          "url": "https://openlibrary.org/works/OL20770492W",
+          "content": "Misteriosos grupos de hombres a caballo recorren los caminos de Gracia.",
+          "authors": [
+            "Irene Vallejo"
+          ],
+          "engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "El infinito en un junco. Adaptaci\u00f3n gr\u00e1fica",
+          "url": "https://openlibrary.org/works/OL36753580W",
+          "content": "",
+          "authors": [
+            "Tyto Alba"
+          ],
+          "engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "El infinito en un junco; adaptaci\u00f3n gr\u00e1fica",
+          "url": "https://openlibrary.org/works/OL38057902W",
+          "content": "",
+          "authors": [],
+          "engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "Puritanos",
+          "url": "https://openlibrary.org/works/OL17360422W",
+          "content": "",
+          "authors": [],
+          "engines": [
+            "openlibrary"
+          ]
+        },
+        {
+          "title": "G\u00eanesis",
+          "url": "https://openlibrary.org/works/OL17360235W",
+          "content": "",
+          "authors": [],
+          "engines": [
+            "openlibrary"
+          ]
+        }
+      ],
+      "title_matches": 3,
+      "descriptive_snippets": 1,
+      "seconds": 0.723
+    },
+    {
+      "category": "ensayo",
+      "query": "El infinito en un junco",
+      "engine": "mwmbl",
+      "result_count": 64,
+      "failures": [],
+      "results": [
+        {
+          "title": "El infinito en un junco: La invenci\u00f3n de los libros en el mundo \u2026",
+          "url": "https://www.goodreads.com/book/show/51554723-el-infinito-en-un-junco-la-invenci-n-de-los-libros-en-el-mundo-antiguo",
+          "content": "Review There isn't much about papyrus here, nor the invention of books. There is a lot about ancient Egypt, the Library In Alexandria, ancient Greece and\u2026",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "Dark-Eyed Junco | National Geographic",
+          "url": "https://www.nationalgeographic.com/animals/birds/facts/dark-eyed-junco",
+          "content": "Dark-Eyed Junco Dark-eyed juncos are unique sparrows that nest on or near the ground in forests. In winter, they typically form flocks and often associat\u2026",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "El infinito en un junco [Infinity in a Reed] by Irene Vallejo - \u2026",
+          "url": "https://www.audible.com.au/pd/El-infinito-en-un-junco-Infinity-in-a-Reed-Audiobook/8412202228",
+          "content": "In the spirit of reconciliation, Audible acknowledges the Traditional Custodians of country throughout Australia and their connections to land, sea and c\u2026",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "Junco (1JUNCG)[Overview]| EPPO Global Database",
+          "url": "https://gd.eppo.int/taxon/1JUNCG",
+          "content": "European Union funding: EPPO has been awarded EU grant agreements for the further development of the EPPO Code system (agreement nb: SANTE/2018/G5/EPPO/S\u2026",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "El infinito en un junco, Irene Vallejo - Paperblog",
+          "url": "https://es.paperblog.com/el-infinito-en-un-junco-irene-vallejo-7526312/",
+          "content": "",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "[va-bird] Albino junco - va-bird - FreeLists",
+          "url": "https://www.freelists.org/post/va-bird/Albino-junco",
+          "content": "[va-bird] Albino junco You are subscribed to VA-BIRD. To post to this mailing list, simply send email to va- bird@xxxxxxxxxxxxx. To unsubscribe, send ema\u2026",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "El infinito en un junco. La invenci\u00f3n de los libros en el mundo \u2026",
+          "url": "http://www.saber.ula.ve/handle/123456789/48315",
+          "content": "",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        },
+        {
+          "title": "Infinito Sur from $121. El Chalt\u00e9n Hotel Deals & Reviews - KAYAK",
+          "url": "https://www.kayak.com/El-Chalten-Hotels-Infinito-Sur.398975.ksp",
+          "content": "Photos of Infinito Sur About Infinito Sur Cosy accommodation with wooden flooring, free Wi-Fi and spectacular views of imposing mountains and glaciers ar\u2026",
+          "authors": null,
+          "engines": [
+            "mwmbl"
+          ]
+        }
+      ],
+      "title_matches": 8,
+      "descriptive_snippets": 31,
+      "seconds": 0.292
+    }
+  ],
+  "real_services": true,
+  "public_queries_only": true,
+  "knowledge_writes": false,
+  "duckduckgo_pause_simulated": false,
+  "note": "Contenido recuperado no equivale a corroboraci\u00f3n factual independiente."
+}

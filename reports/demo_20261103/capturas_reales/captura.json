@@ -1,0 +1,94 @@
+{
+  "authenticBrowserCapture": true,
+  "externalNetworkTested": false,
+  "origin": "http://127.0.0.1:8002",
+  "frames": [
+    {
+      "file": "frame-000.png",
+      "seconds": 2.5999667
+    },
+    {
+      "file": "frame-001.png",
+      "seconds": 3.2629121
+    },
+    {
+      "file": "frame-002.png",
+      "seconds": 4.7295955
+    },
+    {
+      "file": "frame-003.png",
+      "seconds": 5.090728100000001
+    },
+    {
+      "file": "frame-004.png",
+      "seconds": 6.7260141
+    },
+    {
+      "file": "frame-005.png",
+      "seconds": 6.9260886
+    },
+    {
+      "file": "frame-006.png",
+      "seconds": 8.7332908
+    },
+    {
+      "file": "frame-007.png",
+      "seconds": 10.4773188
+    },
+    {
+      "file": "frame-008.png",
+      "seconds": 10.741991200000001
+    },
+    {
+      "file": "frame-009.png",
+      "seconds": 12.328101700000001
+    },
+    {
+      "file": "frame-010.png",
+      "seconds": 12.8208125
+    },
+    {
+      "file": "frame-011.png",
+      "seconds": 16.589401900000002
+    }
+  ],
+  "conversation": [
+    {
+      "question": "Recuerdo un libro donde un niño vive en un planeta pequeño y cuida una rosa",
+      "answer": "Has enviado demasiadas solicitudes. Espera y vuelve a intentar.",
+      "completed": true,
+      "seconds": 0.5274621999999995
+    },
+    {
+      "question": "¿Qué pistas te hicieron pensar en ese libro?",
+      "answer": "Has enviado demasiadas solicitudes. Espera y vuelve a intentar.",
+      "completed": true,
+      "seconds": 0.5149330000000001
+    },
+    {
+      "question": "¿Qué relación hay entre el principito y el zorro?",
+      "answer": "Has enviado demasiadas solicitudes. Espera y vuelve a intentar.",
+      "completed": true,
+      "seconds": 0.5106516000000001
+    },
+    {
+      "question": "Recomiéndame dos novelas de fantasía en español",
+      "answer": "Has enviado demasiadas solicitudes. Espera y vuelve a intentar.",
+      "completed": true,
+      "seconds": 0.5097835000000028
+    },
+    {
+      "question": "Cuéntame más del segundo",
+      "answer": "Has enviado demasiadas solicitudes. Espera y vuelve a intentar.",
+      "completed": true,
+      "seconds": 0.5150366000000002
+    },
+    {
+      "question": "¿Dónde puedo encontrarlo?",
+      "answer": "Has enviado demasiadas solicitudes. Espera y vuelve a intentar.",
+      "completed": true,
+      "seconds": 0.5206205000000015
+    }
+  ],
+  "errors": []
+}

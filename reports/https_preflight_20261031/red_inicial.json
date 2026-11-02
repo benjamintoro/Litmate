@@ -1,0 +1,81 @@
+{
+    "ReadOnly":  true,
+    "Tailscale":  {
+                      "State":  "Running",
+                      "DNS":  "xato.taila70665.ts.net.",
+                      "MagicDNS":  true,
+                      "CertificateDomains":  null,
+                      "FunnelCapabilityAdvertised":  false,
+                      "Serve":  {
+
+                                },
+                      "Funnel":  {
+
+                                 }
+                  },
+    "FirewallProfiles":  [
+                             {
+                                 "Name":  "Domain",
+                                 "Enabled":  true
+                             },
+                             {
+                                 "Name":  "Private",
+                                 "Enabled":  true
+                             },
+                             {
+                                 "Name":  "Public",
+                                 "Enabled":  true
+                             }
+                         ],
+    "FirewallPolicy":  [
+                           "Directiva de firewall                 BlockInbound,AllowOutbound",
+                           "Directiva de firewall                 BlockInbound,AllowOutbound",
+                           "Directiva de firewall                 BlockInbound,AllowOutbound"
+                       ],
+    "RelevantRules":  [
+                          {
+                              "Nombre de regla":  "Tailscale-In",
+                              "Habilitada":  "Sí",
+                              "Perfiles":  "Dominio,Privada",
+                              "Protocolo":  "Cualquiera"
+                          },
+                          {
+                              "Nombre de regla":  "Tailscale-In",
+                              "Habilitada":  "Sí",
+                              "Perfiles":  "Dominio,Privada",
+                              "Protocolo":  "Cualquiera"
+                          },
+                          {
+                              "Nombre de regla":  "Chrome Remote Desktop Host",
+                              "Habilitada":  "Sí",
+                              "Perfiles":  "Dominio,Privada,Pública",
+                              "Protocolo":  "Cualquiera"
+                          },
+                          {
+                              "Nombre de regla":  "Tailscale-Process",
+                              "Habilitada":  "Sí",
+                              "Perfiles":  "Dominio,Privada,Pública",
+                              "Protocolo":  "UDP",
+                              "LocalPort":  "Cualquiera",
+                              "RemotePort":  "Cualquiera"
+                          }
+                      ],
+    "Listeners":  [
+                      {
+                          "Address":  "127.0.0.1",
+                          "Port":  11434,
+                          "PID":  15736
+                      }
+                  ],
+    "RemoteProcesses":  [
+                            "remoting_desktop",
+                            "remoting_host",
+                            "tailscaled",
+                            "tailscale-ipn"
+                        ],
+    "DockerPorts":  [
+                        "8080/tcp -\u003e 127.0.0.1:8080"
+                    ],
+    "ChangedFirewall":  false,
+    "ChangedTailscale":  false
+}
