@@ -79,3 +79,6 @@ reports/integral_*/*.json
 reports/integral_*/*.jsonl
 reports/integral_*/*.txt
 /data/
+/reports/
+/backups/
+/logs/
