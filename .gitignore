@@ -78,3 +78,4 @@ reports/continuous_runs/
 reports/integral_*/*.json
 reports/integral_*/*.jsonl
 reports/integral_*/*.txt
+/data/

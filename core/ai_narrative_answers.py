@@ -42,6 +42,12 @@ def request_for(message, history=(), pending_clarification=None):
     raw = re.sub(r'(?i)^ahora\s+(?=(?:h[aá]blame|habla|hablemos|cu[eé]ntame)\b)', '', raw)
     raw = re.sub(r'(?i)^(?:dime|expl[ií]came)\s+(?=de qu[eé] trata\b|qu[eé] temas aborda\b)', '', raw)
     patterns = [
+        # Resolve the task before the broad "cuéntame sobre X" title grammar.
+        # Otherwise "sus personajes" becomes a new work in the focus state.
+        ('characters', r'(?:(?:y|dime|dame|describe|enumera|necesito)|'
+         r'(?:cu[eé]ntame|h[aá]blame)(?: m[aá]s)? (?:de|sobre))?\s*'
+         r'(?:los |sus |los principales )?personajes(?: principales)?'
+         r'(?:\s+(?:de|del)\s+(.+))?'),
         ('summary', r'(?:(?:cu[aá]l es|necesito|quiero|dame|dime|cu[eé]ntame|expl[ií]ca(?:me)?)\s+)?'
          r'(?:sobre\s+)?(?:(?:el|la|un|una)\s+)?'
          r'(?:trama|argumento|sinopsis|resumen|contenido|acontecimientos(?: principales)?)'
@@ -72,6 +78,11 @@ def request_for(message, history=(), pending_clarification=None):
         if match:
             break
     pending_request = None
+    if not match:
+        from .literary_research import is_plot_description
+        if (is_plot_description(message) or re.match(
+                r'^(?:recuerdo|recordaba|no recuerdo|no me acuerdo)\s+.+',value)):
+            return None  # A new remembered scene is not a missing book title.
     if isinstance(pending_clarification, dict) and pending_clarification.get('status') == 'unavailable':
         # Sólo recuerda la petición anterior, nunca el borrador rechazado como
         # evidencia. La identidad y el contenido se recuperan de nuevo.
@@ -1467,18 +1478,23 @@ def _supported_summary(draft, audit, plan, sources, message):
         return None
     if any(claim['verdict'] == 'contradicted' for claim in audit['claims']):
         return None
-    supported = {claim['statement']: claim for claim in audit['claims'] if claim['verdict'] == 'supported'}
-    statements = [statement for statement in required_fact_statements(draft['text']) if statement in supported]
+    # The audit contract permits a literal sentence with or without its final
+    # full stop. Normalize only that boundary; keep all words, accents and
+    # internal punctuation intact, and never rewrite the supporting evidence.
+    def statement_key(value):
+        return value.strip().removesuffix('.').rstrip()
+    supported = {statement_key(claim['statement']): claim for claim in audit['claims'] if claim['verdict'] == 'supported'}
+    statements = [statement for statement in required_fact_statements(draft['text']) if statement_key(statement) in supported]
     if not statements or len(statements) == len(required_fact_statements(draft['text'])):
         return None
     first = normalized(statements[0])
-    if not (re.match(r'^(?:la obra|el libro|el texto|la novela|este libro|se trata|entre los temas que aborda)\b', first)
+    if not (re.match(r'^(?:la obra|el libro|el texto|la novela|este libro|se trata|los temas|entre los temas que aborda)\b', first)
             or any(normalized(re.split(r'[:：]', source['title'], maxsplit=1)[0]) in first
                    for source in sources)):
         return None
     revised = {**draft, 'text': ' '.join(statements)}
     checked = {**audit, 'decision': 'approve', 'issues': [], 'search_queries': [],
-        'claims': [supported[statement] for statement in statements],
+        'claims': [{**supported[statement_key(statement)],'statement':statement} for statement in statements],
         'coverage': [{'question_id': row['question_id'], 'status': 'uncertain'} for row in audit['coverage']]}
     try:
         validate_draft(revised, sources)

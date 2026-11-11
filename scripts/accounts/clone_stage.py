@@ -49,7 +49,8 @@ def main():
         from django.db import connections, transaction
         from django.contrib.auth.models import User, Group, Permission
         from django.contrib.contenttypes.models import ContentType
-        from core.models import PerfilUsuario, AsistenteIA, ConversacionIA, MensajeIA, HistorialChatbot
+        from core.models import (PerfilUsuario, AsistenteIA, ConversacionIA, MensajeIA,
+                                 HistorialChatbot, ListaLectura, ElementoListaLectura, LibroFavorito)
         from suscripciones.models import PlanSuscripcion, SuscripcionUsuario, HistorialPago
         from reader_accounts.models import AccountEmail
         source, target = connections['default'], connections['accounts']
@@ -63,7 +64,8 @@ def main():
                   'originals_modified':False, 'tables':{}, 'sessions_imported':0,
                   'public_server_changed':False, 'real_payments_activated':False}
         models = [User, Group, PlanSuscripcion, PerfilUsuario, AsistenteIA, ConversacionIA, MensajeIA,
-                  SuscripcionUsuario, HistorialPago, HistorialChatbot]
+                  SuscripcionUsuario, HistorialPago, HistorialChatbot,
+                  ListaLectura, ElementoListaLectura, LibroFavorito]
         with transaction.atomic(using='default'), transaction.atomic(using='accounts'):
             if User.objects.using('accounts').exists() or PlanSuscripcion.objects.using('accounts').exists():
                 raise ValueError('El destino ya contiene cuentas o planes. No se reemplazará.')

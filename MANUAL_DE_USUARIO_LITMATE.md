@@ -1,6 +1,22 @@
 # Manual de usuario de LitMate
 
-Edición: 31 de octubre de 2026. Idioma: español.
+Edición: 8 de noviembre de 2026. Idioma: español.
+
+**Revisión posterior publicada, con aceptación móvil general del propietario:** incorpora cambio de
+contraseña desde Mi cuenta (solicita la contraseña actual, conserva esa sesión
+y obliga a iniciar sesión en las demás), opción para retirar la foto de perfil,
+validación de nombres repetidos de listas e historial paginado. La retirada de
+foto desvincula la imagen y muestra el avatar predeterminado; no elimina archivos
+de respaldos. El propietario autorizó e inició esta revisión el8/11/2026. No
+se activaron correo ni pagos reales. La prueba móvil citada abajo corresponde
+a la publicación anterior, no a esta revisión. La última comprobación de esta
+ejecución de desarrollo encontró Waitress/Funnel inactivos porque el propietario
+había cerrado las consolas o reiniciado el PC. Después se inició Waitress y se
+comprobó Funnel/HTTPS; el responsable debe mantener la consola del servidor
+abierta. El propietario respondió «todo bien» a la lista móvil de esta revisión.
+El cambio efectivo de contraseña, la operación sobre fotografía y los casos de
+paginación/listas duplicadas no quedaron confirmados individualmente en teléfono;
+sí tienen pruebas automatizadas aisladas aprobadas.
 
 ## 1. Qué es LitMate
 
@@ -17,16 +33,18 @@ no siempre contiene detalles sobre escenas o personajes.
 
 Este manual distingue dos estados para evitar confusiones:
 
-**Demostración publicada:** la web y su navegación están disponibles bajo el
+**Demostración anterior, sólo como alternativa de reversión:** la web y su navegación están disponibles bajo el
 acceso privado facilitado por su responsable. El chat, el catálogo y las tarjetas
 funcionan. Registro, inicio de sesión personal, recuperación y contacto se
 muestran como vistas previas. Los pagos están desactivados.
 
-**Perfil de cuentas preparado y probado, pendiente de autorización de despliegue:**
+**Perfil de cuentas publicado y validado desde datos móviles el8/11/2026:**
 permite registro personal, inicio de sesión, selección del plan gratuito,
-consulta única de invitado y cuotas persistentes. Todavía no sustituye a la
-demostración publicada. Las instrucciones de cuentas y cuotas de este manual se
-refieren a ese perfil cuando sea habilitado expresamente.
+consulta única de invitado, cuotas persistentes, favoritos, listas privadas y edición del perfil.
+Es el perfil publicado actualmente. El propietario confirmó estos flujos desde
+un teléfono con Wi-Fi y VPN apagados, incluida la persistencia al volver a entrar.
+El acceso público depende de que su responsable mantenga el servicio activo;
+preparar o probar esta versión no activa su publicación automáticamente.
 
 No introduzcas datos personales en una pantalla que indique «vista previa»
 esperando que cree una cuenta. La contraseña general de acceso a la demostración
@@ -229,7 +247,7 @@ encuentras un problema con el teclado real.
 
 ## 19. Consulta gratuita de invitado
 
-**Disponible en el perfil de cuentas, pendiente de despliegue.** Un visitante sin
+**Disponible en el perfil de cuentas publicado.** Un visitante sin
 cuenta puede utilizar una consulta total con su identidad anónima reconocida.
 No se renueva cada día.
 
@@ -256,9 +274,9 @@ El usuario y el correo deben ser únicos en el almacén de cuentas habilitado.
 Las contraseñas demasiado comunes, sólo numéricas o demasiado parecidas a los
 datos de la cuenta pueden rechazarse. Utiliza una contraseña larga y exclusiva.
 
-Las cuentas anteriores todavía no se han habilitado en la versión pública de
-este perfil. Su conservación se ha ensayado en una copia aislada; el cambio de
-servicio necesita autorización y comprobaciones posteriores.
+Las 179 cuentas anteriores se conservan en el almacén definitivo privado con sus
+identificadores e historiales. El servicio está publicado con acceso protegido;
+los datos personales no se muestran como demostración ni en un listado público.
 
 ## 21. Iniciar y cerrar sesión
 
@@ -276,9 +294,10 @@ guardar credenciales en un dispositivo ajeno.
 
 ## 22. Recuperar una cuenta
 
-La recuperación por correo no está habilitada en los perfiles preparados para
-esta entrega. La pantalla disponible es una vista previa y no envía enlaces.
-No repitas solicitudes esperando mensajes inexistentes.
+La recuperación utiliza tokens oficiales de Django, de un solo uso y con
+vencimiento de 24 horas. Está probada con un buzón de memoria aislado, sin envíos
+reales. En esta entrega el proveedor de correo sigue deshabilitado y la pantalla
+lo indica expresamente. No repitas solicitudes esperando mensajes inexistentes.
 
 Si olvidaste tu contraseña, contacta con el responsable mediante un canal
 realmente habilitado. No envíes tu contraseña anterior ni datos bancarios.
@@ -300,9 +319,28 @@ Los planes Pro y VIP incluyen en su configuración beneficios de IA avanzada.
 Esto no significa que su contratación o un modelo distinto por plan estén
 operativos en este piloto. Los pagos permanecen desactivados.
 
-Las funciones personales de favoritos y listas tampoco se habilitan en el nuevo
-almacén hasta resolver y probar su separación respecto del catálogo. No se
-anuncian como disponibles sólo porque exista un valor configurado en el plan.
+Favoritos y listas privadas están integrados en el almacén de cuentas. El plan
+Gratuito admite 20 favoritos; los beneficios pagados requieren un pago verificable,
+no un parámetro enviado desde el navegador.
+
+### Mi biblioteca y perfil
+
+Desde **Mi cuenta → Mis favoritos y listas**, consulta y quita favoritos. Para
+añadirlos, busca una obra en el catálogo y pulsa su corazón. Se conservan al
+cerrar sesión y al reiniciar el proceso.
+
+En **Mi biblioteca** puedes crear listas privadas, cambiar su nombre y descripción,
+quitar obras y eliminarlas marcando la confirmación. Añade libros desde **Explorar
+libro → Agregar a lista** en el catálogo. El selector de lectura guarda Planeo,
+Leyendo o Completado. Cada lista admite hasta 500 elementos y cada cuenta hasta
+100 listas. Guardar el mismo libro de nuevo no lo duplica.
+
+**Editar perfil** permite actualizar nombre, apellido, país, biografía, género
+preferido y meta anual. El correo de acceso no se cambia desde ese formulario.
+Puedes subir una foto JPEG o PNG de hasta 2 MiB y 4 megapíxeles. LitMate guarda
+una copia de hasta 256×256 píxeles sin metadatos, accesible sólo desde tu sesión.
+Reduce previamente las imágenes mayores. Las fotos históricas y sus nombres se
+conservan sin publicarse; puedes reemplazar la foto desde este formulario.
 
 ## 24. Activar Gratuito sin tarjeta
 
@@ -337,6 +375,8 @@ que se perdió.
 ## 26. Consumo y renovación diaria
 
 En el perfil de cuentas se muestran plan, consultas utilizadas y disponibles.
+La página de planes y Mi cuenta muestran también la próxima renovación. El chat
+la indica en hora de Chile, aunque tu teléfono esté configurado con otra zona.
 Las reservas en curso pueden aparecer como consumo mientras la respuesta se
 prepara, para impedir que solicitudes simultáneas excedan el límite.
 
@@ -383,6 +423,8 @@ incorporan a la memoria no necesariamente generan una conversación guardada.
 
 Mi perfil permite consultar los hilos propios disponibles. Nadie debe poder
 leer el historial de otro usuario cambiando un identificador.
+Pulsa el título de una conversación para abrir su lectura en una página. Volver
+al chat conserva el hilo activo; abrir el historial no lo sustituye automáticamente.
 
 Cerrar sesión conserva los registros, pero no garantiza reabrir automáticamente
 el mismo hilo al entrar de nuevo. Guarda tus notas importantes. La opción de
@@ -476,10 +518,11 @@ La plataforma no garantiza tiempos idénticos para todas las preguntas. Una
 fuente desconectada puede limitar la respuesta. Tampoco se ha acreditado una
 tasa de error inferior al 1 % para todas las conversaciones.
 
-La demostración publicada y el perfil nuevo tienen funciones distintas. La
-habilitación pública de cuentas, cuotas y mejoras móviles necesita autorización
-y comprobaciones posteriores. No se han trasladado cuentas originales a la base
-de ensayo ni se han activado pagos reales.
+La demostración anterior y el perfil actual tienen funciones distintas. La
+publicación de cuentas, cuotas y mejoras móviles fue autorizada y aceptada
+desde datos móviles el8/11/2026. El almacén definitivo conserva los usuarios,
+favoritos e historiales originales sin modificar MySQL. Los usuarios sintéticos
+permanecen separados. No se han activado pagos reales ni entregas de correo.
 
 Si reportas un problema, indica sección, navegador, dispositivo, pregunta y
 mensaje observado. No adjuntes contraseñas, tokens o datos privados de terceros.

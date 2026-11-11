@@ -1,0 +1,4 @@
+<div class="lm-field{% if field.field.widget.input_type == 'checkbox' %} lm-check{% endif %}">
+{% if field.field.widget.input_type == 'checkbox' %}{{ field }} {{ field.label_tag }}{% else %}{{ field.label_tag }} {{ field }}{% endif %}
+{{ field.errors }}{% if field.help_text %}<p class="lm-muted lm-small">{{ field.help_text }}</p>{% endif %}
+</div>

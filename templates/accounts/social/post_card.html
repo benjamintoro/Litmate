@@ -1,0 +1,32 @@
+{% load static %}
+<article class="lm-panel lm-post" aria-label="Publicación de {{ post.author.name }}">
+    <header class="lm-post-head">
+        <span class="lm-mini-avatar">
+            <img src="{% static 'assets/img/avatar/feliz.png' %}" alt="">
+            {% if post.can_link_author and post.author.share_avatar %}
+                <img src="{% url 'social_image' post.author.public_id 'avatar' %}" alt="" data-cover-image>
+            {% endif %}
+        </span>
+        <div>
+            <strong>{% if post.can_link_author %}<a href="{% url 'social_public_profile' post.author.public_id %}">{{ post.author.name }}</a>{% else %}{{ post.author.name }}{% endif %}</strong>
+            <div class="lm-post-date"><time datetime="{{ post.created_at|date:'c' }}">{{ post.created_at|date:'j M Y · H:i' }}</time>
+            <span class="lm-tag">{{ post.get_visibility_display }}</span>
+            {% if post.moderated %}<span class="lm-tag">Retirada por moderación</span>{% endif %}</div>
+        </div>
+    </header>
+    {% if post.spoiler %}<details class="lm-spoiler"><summary>Contiene spoilers. Mostrar texto</summary><p class="lm-post-text">{{ post.body }}</p></details>
+    {% else %}<p class="lm-post-text">{{ post.body }}</p>{% endif %}
+    {% if post.linked_book %}{% include 'accounts/social/book_card.html' with book=post.linked_book %}{% endif %}
+    <footer class="lm-post-footer">
+        {% if post.visibility != 'private' %}
+            {% if user.is_authenticated %}
+            <form method="post" action="{% url 'social_like' post.pk %}" data-like-form title="{{ post.like_count }} Me gusta">{% csrf_token %}
+                <button class="lm-btn lm-heart" type="submit" aria-label="{% if post.viewer_likes %}Quitar Me gusta{% else %}Me gusta{% endif %}" aria-pressed="{% if post.viewer_likes %}true{% else %}false{% endif %}" name="action" value="{% if post.viewer_likes %}remove{% else %}add{% endif %}"><span data-heart aria-hidden="true">{% if post.viewer_likes %}♥{% else %}♡{% endif %}</span><span data-like-count>{{ post.like_count }}</span></button>
+            </form>
+            {% else %}<span class="lm-heart-total">♡ {{ post.like_count }}</span>{% endif %}
+        {% endif %}
+        {% if post.allow_comments and post.visibility != 'private' %}<a class="lm-btn lm-small" href="{% url 'social_post' post.pk %}#comentarios">{{ post.comment_count }} comentarios · Responder</a>{% endif %}
+        {% if not post.moderated and not post_detail %}<a class="lm-btn lm-small" href="{% url 'social_post' post.pk %}">Ver publicación</a>{% endif %}
+        {% if user.pk == post.author.user_id %}<a class="lm-btn lm-small" href="{% url 'social_edit_post' post.pk %}">Editar</a>{% endif %}
+    </footer>
+</article>

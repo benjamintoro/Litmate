@@ -14,7 +14,12 @@ def main():
     parser.add_argument('--puerto', type=int, default=8002)
     parser.add_argument('--navegacion', action='store_true', help='Recorre el frontend y prueba dos turnos con navegación intermedia.')
     parser.add_argument('--movil-cuentas', action='store_true', help='Matriz móvil del perfil de cuentas aislado, con datos sintéticos.')
+    parser.add_argument('--solo-biblioteca', action='store_true', help='Repite sólo los flujos personales, sin inferencia literaria.')
     args = parser.parse_args()
+    if args.solo_biblioteca and not args.movil_cuentas:
+        parser.error('--solo-biblioteca requiere --movil-cuentas.')
+    if args.movil_cuentas and args.puerto == 8003:
+        parser.error('El piloto móvil crea cuentas sintéticas: no se permite apuntarlo a la publicación8003.')
     if not 1024 <= args.puerto <= 65535:
         parser.error('Puerto local inválido.')
     folder = args.carpeta.resolve()
@@ -23,7 +28,8 @@ def main():
     password = getpass.getpass('Contraseña de acceso demo local (oculta): ')
     result = subprocess.run(['node', str(Path(__file__).with_suffix('.mjs'))],
         input=json.dumps({'folder': str(folder), 'password': password, 'port': args.puerto,
-                          'navigation': args.navegacion, 'readerMobile': args.movil_cuentas}), text=True,
+                          'navigation': args.navegacion, 'readerMobile': args.movil_cuentas,
+                          'readerLibrary': args.solo_biblioteca}), text=True,
         encoding='utf-8', cwd=ROOT, check=False)
     password = None
     if result.returncode:

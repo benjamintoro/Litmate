@@ -39,6 +39,9 @@ def entitlement(user):
         raise UsageError('plan_configuration', 'El plan necesita revisión. Inténtalo más tarde.', 503)
     local = now.astimezone(ZONE)
     reset = datetime.datetime.combine(local.date() + datetime.timedelta(days=1), datetime.time(), tzinfo=ZONE)
+    # En el adelanto de hora chileno puede no existir la medianoche local.
+    # Normalizar por UTC conserva el instante y muestra la primera hora real.
+    reset = reset.astimezone(datetime.timezone.utc).astimezone(ZONE)
     return sub.plan.nombre, limit, local.date().isoformat(), reset
 
 
@@ -49,6 +52,8 @@ def _expire(actor):
         op.status = 'failed'
         op.result = {'error': 'operation_expired', 'response': 'La operación caducó sin confirmarse. Puedes enviar una consulta nueva.'}
         op.save(update_fields=['status', 'result'])
+        from .chat_history import mark_input
+        mark_input(op)
 
 
 def reserve(actor, user, request_id, message):
@@ -90,6 +95,8 @@ def finish(op_id, result, *, failed=False):
             UsageBucket.objects.filter(pk=op.bucket_id, used__gt=0).update(used=F('used') - 1)
         op.status, op.result = ('failed' if failed else 'completed'), result
         op.save(update_fields=['status', 'result'])
+        from .chat_history import mark_input
+        mark_input(op)
         return True
 
 

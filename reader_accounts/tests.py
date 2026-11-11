@@ -20,6 +20,8 @@ from .identity import COOKIE
 from .models import UsageBucket, QueryOperation
 from .usage import reserve, finish, info, UsageError
 
+CONCURRENCY_METRICS = {}
+
 
 def verified_fixture(sub):
     """Recibo sintético exclusivamente de pruebas; no consulta ni simula un cobro real."""
@@ -58,6 +60,69 @@ class ReaderFlowTests(TestCase):
         from django.core.cache import cache
         cache.clear()
         self.client.get('/chat/')
+
+    def test_exact_free_and_verified_pro_limits_reject_next_request(self):
+        for plan, limit in ((self.free, 15), (self.pro, 100)):
+            with self.subTest(plan=plan.slug):
+                sub, _ = SuscripcionUsuario.objects.update_or_create(usuario=self.user,
+                    defaults={'plan': plan, 'estado': 'activa', 'fecha_fin': None})
+                if plan.precio:
+                    verified_fixture(sub)
+                actor = 'u:limit-' + plan.slug
+                for number in range(limit):
+                    op, _ = reserve(actor, self.user, f'limit-{plan.slug}-{number:016d}', 'consulta')
+                    finish(op.pk, {'response': 'respuesta de prueba'})
+                self.assertEqual(info(actor, self.user)['usadas'], limit)
+                with self.assertRaises(UsageError) as error:
+                    reserve(actor, self.user, f'limit-{plan.slug}-overflow', 'consulta siguiente')
+                self.assertEqual(error.exception.code, 'quota_exceeded')
+
+    def test_santiago_dst_reset_is_a_real_local_time_and_preserves_fall_back_day(self):
+        from zoneinfo import ZoneInfo
+        zone = ZoneInfo('America/Santiago')
+        SuscripcionUsuario.objects.create(usuario=self.user, plan=self.free)
+        spring = datetime.datetime(2026, 9, 6, 3, 59, tzinfo=datetime.timezone.utc)
+        with patch('reader_accounts.usage.timezone.now', return_value=spring):
+            data = info('u:dst-spring', self.user)
+            reset = datetime.datetime.fromisoformat(data['renovacion'])
+            self.assertEqual(reset.isoformat(), reset.astimezone(zone).isoformat())
+        fall = datetime.datetime(2026, 4, 5, 2, 59, tzinfo=datetime.timezone.utc)
+        with patch('reader_accounts.usage.timezone.now', return_value=fall):
+            op, _ = reserve('u:dst-fall', self.user, 'dst-fall-operation1', 'consulta')
+            finish(op.pk, {'response': 'aceptada'})
+        with patch('reader_accounts.usage.timezone.now', return_value=fall + datetime.timedelta(minutes=2)):
+            self.assertEqual(info('u:dst-fall', self.user)['usadas'], 1)
+        with patch('reader_accounts.usage.timezone.now', return_value=fall + datetime.timedelta(minutes=62)):
+            self.assertEqual(info('u:dst-fall', self.user)['usadas'], 0)
+
+    def test_active_plan_page_shows_consumption_and_next_reset(self):
+        SuscripcionUsuario.objects.create(usuario=self.user, plan=self.free)
+        op, _ = reserve('u:' + str(self.user.pk), self.user, 'plans-consumption-0001', 'consulta')
+        finish(op.pk, {'response': 'respuesta'})
+        self.client.force_login(self.user)
+        response = self.client.get('/suscripciones/planes/')
+        self.assertContains(response, '1 utilizadas')
+        self.assertContains(response, '14 disponibles')
+        self.assertContains(response, 'Próxima renovación')
+
+    def test_history_page_is_readable_and_does_not_expose_other_accounts(self):
+        conv = ConversacionIA.objects.create(usuario=self.user, titulo='Mi conversación')
+        MensajeIA.objects.create(conversacion=conv, rol='assistant', contenido='<script>alert(1)</script>')
+        self.client.force_login(self.user)
+        response = self.client.get(f'/cuenta/conversaciones/{conv.pk}/ver/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, '&lt;script&gt;')
+        self.assertNotContains(response, '<script>alert(1)</script>')
+        self.client.force_login(self.other)
+        self.assertEqual(self.client.get(f'/cuenta/conversaciones/{conv.pk}/ver/').status_code, 404)
+
+    def test_finalize_ledger_failure_is_a_safe_json_error(self):
+        from django.db import DatabaseError
+        with patch('reader_accounts.chat.QueryOperation.objects.filter', side_effect=DatabaseError):
+            response = self.client.post('/chatbot_finalize/', json.dumps({'ready': 'x' * 43}),
+                                        content_type='application/json')
+        self.assertEqual(response.status_code, 503)
+        self.assertEqual(response.json()['error'], 'storage_unavailable')
 
     def query(self, request_id='operation-fixture-0001', message='Dime una trama', client=None):
         response = (client or self.client).post('/chatbot_query/',
@@ -238,6 +303,20 @@ class ReaderFlowTests(TestCase):
         finish(op.pk, {'response': 'aceptada'})
         self.assertEqual(info('u:' + str(self.user.pk), self.user)['usadas'], 1)
 
+    @override_settings(LITMATE_AI_REQUESTS_PER_MINUTE=1)
+    def test_verified_vip_still_has_resource_abuse_limits(self):
+        # El limitador SQLite sobrevive a rollback/cache.clear; identidad propia
+        # evita reutilizar los contadores de otros casos con el usuario fixture.
+        vip = User.objects.create_user(pk=908971, username='vip-resource-fixture')
+        verified_fixture(SuscripcionUsuario.objects.create(usuario=vip, plan=self.vip))
+        self.client.force_login(vip)
+        with patch('reader_accounts.chat.literary_ai_views.chatbot_query', side_effect=fixture_stream) as engine:
+            self.assertEqual(self.query('vip-resource-first01').status_code, 200)
+            response = self.query('vip-resource-second1')
+        self.assertEqual(response.status_code, 429)
+        self.assertEqual(response.json()['error'], 'resource_limit')
+        self.assertEqual(engine.call_count, 1)
+
     def test_browser_cannot_access_another_identity_ready_token(self):
         op, _ = reserve('u:' + str(self.other.pk), AnonymousUser(), 'operation-other-owner1', 'consulta')
         QueryOperation.objects.filter(pk=op.pk).update(stream_token='private-ready-token-fixture')
@@ -287,6 +366,25 @@ class ReaderFlowTests(TestCase):
         self.assertEqual(first.json(), repeat.json())
         self.assertEqual(finalize.call_count, 1)
         self.assertEqual(UsageBucket.objects.get().used, 1)
+
+    def test_disconnect_before_ready_refunds_and_cannot_rerun_same_operation(self):
+        def progressive(request):
+            return StreamingHttpResponse(['data: {"stage":"search"}\n\n',
+                'data: {"ready":"not-delivered-ready"}\n\n'], content_type='text/event-stream')
+        with patch('reader_accounts.chat.literary_ai_views.chatbot_query', side_effect=progressive) as engine:
+            response = self.client.post('/chatbot_query/', json.dumps({'message': 'Una pregunta literaria',
+                'request_id': 'disconnect-operation-fixture'}), content_type='application/json')
+            iterator = iter(response.streaming_content)
+            next(iterator)
+            # Cerrar el adaptador WSGI del Client, que aísla request_finished de
+            # la transacción del TestCase igual que al agotar el streaming.
+            response._iterator.close()
+            self.assertEqual(QueryOperation.objects.get().status, 'failed')
+            self.assertEqual(UsageBucket.objects.get().used, 0)
+            repeat = self.client.post('/chatbot_query/', json.dumps({'message': 'Una pregunta literaria',
+                'request_id': 'disconnect-operation-fixture'}), content_type='application/json')
+            self.assertEqual(repeat.status_code, 503)
+            self.assertEqual(engine.call_count, 1)
 
     def test_bad_visitor_signature_does_not_reuse_or_disclose_another_identity(self):
         self.client.cookies[COOKIE] = 'forged-cookie-signature'
@@ -413,7 +511,8 @@ class ReaderFlowTests(TestCase):
                 'reader_accounts.chat.finish',side_effect=OperationalError('fixture storage failure')):
             response=self.client.post('/chatbot_finalize/',payload,content_type='application/json')
         self.assertEqual(response.status_code,409)
-        self.assertEqual(MensajeIA.objects.count(),0)
+        self.assertEqual(MensajeIA.objects.filter(rol='user').count(),1)
+        self.assertEqual(MensajeIA.objects.filter(rol='assistant').count(),0)
         self.assertEqual(UsageBucket.objects.get().used,1)
         recovered_job={'result':{'result':asdict(answer),'client':vars(client)},'payload':{'message':'Dime una trama'}}
         with patch('reader_accounts.chat.literary_ai_views.chatbot_finalize',side_effect=cached), patch(
@@ -471,6 +570,77 @@ class ReaderFlowTests(TestCase):
 
 class ConcurrentUsageTests(TransactionTestCase):
     databases = {'accounts'}
+
+    def test_private_backup_roundtrip_and_tampering_are_checked(self):
+        import sqlite3
+        from scripts.accounts import backup_store
+        from scripts.knowledge.knowledge_campaign import sqlite_snapshot
+        from reader_accounts.signing_key import load_key
+        with TemporaryDirectory(dir=Path.cwd() / '.testtmp') as temporary:
+            root = Path(temporary)
+            source = root / '.testtmp' / 'source.sqlite3'
+            source.parent.mkdir()
+            sqlite_snapshot(Path(connections['accounts'].settings_dict['NAME']), source)
+            load_key(source)
+            with closing(sqlite3.connect(source)) as db:
+                db.execute('INSERT INTO reader_accounts_usagebucket(actor,period,used) VALUES (?,?,?)',
+                           ('g:backup', 'lifetime', 1))
+                # Usuario y avatar sintéticos vinculados al snapshot, no a producción.
+                from django.contrib.auth.hashers import make_password
+                db.execute('INSERT INTO auth_user(password,is_superuser,username,first_name,last_name,email,is_staff,is_active,date_joined) VALUES (?,?,?,?,?,?,?,?,?)',
+                           (make_password(None), 0, 'backup-avatar-fixture', '', '', '', 0, 1, timezone.now().isoformat()))
+                user_id = db.execute('SELECT id FROM auth_user').fetchone()[0]
+                db.execute('INSERT INTO core_perfilusuario(usuario_id,nombre,apellido,correo,telefono,pais,genero_lector_preferido,fecha_nacimiento,imagen,biografia,meta_anual_libros,tiendas_favoritas,alertas_precio_activas,fecha_registro,ultima_conexion) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+                           (user_id,'Lector',None,None,None,'Chile',None,None,'avatars/'+'a'*32+'.jpg',None,12,'',1,timezone.now().isoformat(),timezone.now().isoformat()))
+                db.commit()
+            (source.parent/'avatars').mkdir()
+            from PIL import Image
+            Image.new('RGB', (8, 8), 'white').save(source.parent/'avatars'/('a'*32+'.jpg'), 'JPEG')
+            with patch.object(backup_store, 'ROOT', root):
+                folder = root / 'backups' / 'snapshot'
+                manifest = backup_store.create(source, folder)
+                restored = root / '.testtmp' / 'restored' / 'accounts.sqlite3'
+                self.assertEqual(backup_store.restore_new(folder, restored), manifest)
+                self.assertEqual(load_key(source), load_key(restored))
+                self.assertEqual((folder/'avatars'/('a'*32+'.jpg')).read_bytes(),
+                                 (restored.parent/'avatars'/('a'*32+'.jpg')).read_bytes())
+                with closing(sqlite3.connect(restored)) as db:
+                    self.assertEqual(db.execute('SELECT used FROM reader_accounts_usagebucket').fetchone()[0], 1)
+                with self.assertRaises(FileExistsError):
+                    backup_store.restore_new(folder, restored)
+                with self.assertRaises(PermissionError):
+                    backup_store.restore_new(folder, root / 'data/accounts/users.sqlite3')
+                incomplete = {**manifest, 'avatars': {}}
+                (folder/'manifest.json').write_text(json.dumps(incomplete), encoding='utf-8')
+                with self.assertRaises(ValueError):
+                    backup_store.restore_new(folder, root / '.testtmp' / 'incomplete-avatar.sqlite3')
+                (folder/'manifest.json').write_text(json.dumps(manifest), encoding='utf-8')
+                (folder/'avatars'/('a'*32+'.jpg')).write_bytes(b'alterado')
+                with self.assertRaises(ValueError):
+                    backup_store.restore_new(folder, root / '.testtmp' / 'invalid-avatar.sqlite3')
+                (folder / 'signing.dpapi').write_bytes(b'alterado')
+                with self.assertRaises(ValueError):
+                    backup_store.restore_new(folder, root / '.testtmp' / 'invalid.sqlite3')
+                self.assertFalse((root / '.testtmp' / 'invalid.sqlite3').exists())
+
+    def test_small_concurrent_workload_has_no_lock_errors_or_lost_units(self):
+        import time
+        def work(index):
+            start = time.monotonic()
+            try:
+                op, _ = reserve('g:load-' + str(index), AnonymousUser(),
+                                f'operation-load-{index:016d}', 'consulta')
+                finish(op.pk, {'response': 'aceptada'})
+                return time.monotonic() - start
+            finally:
+                connections.close_all()
+        started = time.monotonic()
+        with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
+            values = sorted(pool.map(work, range(32)))
+        self.assertEqual(QueryOperation.objects.filter(status='completed').count(), 32)
+        self.assertEqual(sum(UsageBucket.objects.values_list('used', flat=True)), 32)
+        CONCURRENCY_METRICS.update(operations=32, workers=4, seconds=round(time.monotonic()-started,4),
+            p95_seconds=round(values[30],4), max_seconds=round(values[-1],4), lock_errors=0)
 
     def test_two_simultaneous_guest_queries_only_reserve_one(self):
         def work(index):

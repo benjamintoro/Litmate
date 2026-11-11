@@ -86,7 +86,7 @@ def _explicit_subject(message):
         # espacial en un pedido ambiguo de manuales sobre el espacio.
         value = value[:themed.start()] + 'libros sobre ' + themed.group(1) + ' ' + themed.group(2)
     match = re.search(r'\b(?:libros?|lecturas?|novelas?|ensayos?|bibliograf[ií]a|'
-                      r'obras?)\s+(?:sobre|acerca de|de|del)\s+(.+)', value, re.I)
+                      r'obras?)\s+(?:sobre|acerca de|de|del|con)\s+(.+)', value, re.I)
     if not match:
         match = re.search(r'\b(?:recomi[eé]nda(?:me)?|recomendar|busc(?:o|ando)|'
                           r'quiero|necesito)\b.*?\b(?:sobre|acerca de)\s+(.+)', value, re.I)

@@ -125,7 +125,7 @@ El sitio completo ha sido probado desde un navegador móvil mediante acceso HTTP
 | Integración con fuentes externas | Implementada parcialmente según el proveedor |
 | Publicación HTTPS mediante Tailscale Funnel | Probada desde datos móviles |
 | Últimas 99 pruebas focalizadas | Aprobadas en una versión de trabajo separada |
-| Sistema ampliado de cuentas y cuotas | Implementado y probado en versión separada; despliegue público pendiente de confirmar |
+| Sistema de cuentas y cuotas | Integrado, publicado y aceptado desde teléfono con datos móviles el8/11/2026 |
 | Mejoras adicionales del chat móvil | Desarrolladas en versión separada |
 | Cobros reales de suscripciones | No habilitados |
 
@@ -375,9 +375,24 @@ El desarrollo incluye funciones para:
 - Control de consumo diario.
 - Restricciones de uso según el plan.
 
-Una versión separada incorpora mejoras en persistencia de cuentas, cuotas y control de solicitudes concurrentes.
+El perfil de aplicación `litmate_project.reader_settings` integra cuentas,
+sesiones persistentes, cuotas atómicas y control de solicitudes concurrentes.
+Se selecciona con `iniciar_demo.py --cuentas-db`; el lanzamiento sin esa opción
+conserva la demostración anterior de sólo lectura.
 
-**Estado actual:** las funcionalidades ampliadas han sido desarrolladas y probadas, pero su incorporación a la versión HTTPS pública requiere confirmación de despliegue.
+**Estado actual (8 de noviembre de 2026):** registro, login → Planes, Gratuito sin
+tarjeta, invitado una consulta y cuotas 15/100/ilimitadas están integrados y
+validados localmente. Favoritos, listas privadas y edición del perfil están
+integrados. El almacén definitivo `data/accounts/users.sqlite3` ya fue creado
+con autorización: conserva 179 usuarios, 231 favoritos, listas e historiales,
+con respaldo/restauración y reapertura verificados. MySQL permanece de sólo lectura.
+Este perfil está publicado y fue aceptado desde datos móviles el8/11/2026.
+No se han habilitado pagos ni entregas de correo.
+No ejecutar migraciones sobre el catálogo para activar este perfil.
+
+Procedimiento, respaldo/restauración y verificaciones actuales:
+[Avance funcional y estado de despliegue](reports/avance_20261108/README.md).
+Los datos de prueba nunca deben promoverse al almacén definitivo.
 
 ### Pagos
 
@@ -467,7 +482,7 @@ Entre sus limitaciones actuales se encuentran:
 - Dependencia de Internet para investigaciones externas.
 - Disponibilidad limitada por la infraestructura utilizada en la demostración.
 - Integraciones comerciales y cobros reales todavía no habilitados.
-- Funcionalidades ampliadas de cuentas y cuotas pendientes de confirmar en la versión pública.
+- Cobros y correo reales pendientes de proveedores autorizados; cuentas y cuotas ya validadas públicamente.
 
 Las respuestas generadas mediante inteligencia artificial deben interpretarse como asistencia informativa y no como una fuente infalible.
 

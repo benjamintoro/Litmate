@@ -338,6 +338,7 @@ def identification_recall_answer(message, *, history=None, search=None):
     _, used_context = contextual_query(message, history)
     memory = bool(re.search(
         r'\b(?:recuerdo|recordaba|no recuerdo|no me acuerdo|busco un libro|'
+        r'(?:busco|estoy buscando) (?:un|una|el|la) (?:historia|relato|cuento)|'
         r'estoy buscando un libro|en que libro|a que obra|como se llama el libro|'
         r'identifica (?:el|este|un) libro)\b', value))
     correction = bool(re.match(r'^(?:no|ya no)\s+(?:es|era|se trata de)\b', value))

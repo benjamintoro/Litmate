@@ -1,0 +1,14 @@
+{% if stats %}
+<section class="lm-panel">
+    <h2>Lecturas</h2>
+    <dl class="lm-metrics">
+        <div><dt>Terminados</dt><dd>{{ stats.finished }}</dd></div>
+        <div><dt>Leyendo</dt><dd>{{ stats.reading }}</dd></div>
+        <div><dt>Pendientes</dt><dd>{{ stats.pending }}</dd></div>
+        <div><dt>Listas</dt><dd>{{ stats.lists }}</dd></div>
+    </dl>
+    <label class="lm-goal-label" for="lm-reading-goal">Meta anual <strong>{{ stats.annual }} de {{ stats.goal }}</strong></label>
+    <progress id="lm-reading-goal" value="{{ stats.progress }}" max="100"></progress>
+    <p class="lm-muted lm-small">La meta cuenta las lecturas marcadas como terminadas con el registro anual activo.</p>
+</section>
+{% endif %}

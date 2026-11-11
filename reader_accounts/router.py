@@ -1,5 +1,6 @@
 """Ninguna escritura de cuentas llega al catálogo MySQL protegido."""
-ACCOUNT_CORE = {'perfilusuario', 'asistenteia', 'conversacionia', 'mensajeia', 'historialchatbot'}
+ACCOUNT_CORE = {'perfilusuario', 'asistenteia', 'conversacionia', 'mensajeia', 'historialchatbot',
+                'librofavorito', 'listalectura', 'elementolistalectura', 'mensajecontacto'}
 
 
 def is_account(app, model):

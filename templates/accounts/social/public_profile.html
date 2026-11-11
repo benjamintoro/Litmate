@@ -1,0 +1,30 @@
+{% extends 'accounts/social/frame.html' %}
+{% block social_content %}
+{% include 'accounts/social/profile_header.html' %}
+{% include 'accounts/social/tabs.html' %}
+<div class="lm-columns">
+    <div class="lm-stack">
+        {% if social_tab == 'biblioteca' %}
+            <section class="lm-panel"><h2>Lecturas compartidas</h2>
+                <div class="lm-stack">{% for book in shared_books %}{% include 'accounts/social/book_card.html' with show_state=True %}{% empty %}<p class="lm-muted">No hay lecturas compartidas.</p>{% endfor %}</div>
+                {% include 'accounts/social/page_links.html' with page_obj=shared_books query_prefix='seccion=biblioteca&' %}
+            </section>
+        {% elif social_tab == 'listas' %}
+            <section class="lm-panel"><h2>Listas compartidas</h2>
+                <ul>{% for list in shared_lists %}<li><a href="{% url 'social_shared_list' social.public_id list.pk %}">{{ list.nombre }}</a></li>{% empty %}<li>No hay listas compartidas.</li>{% endfor %}</ul>
+                {% include 'accounts/social/page_links.html' with page_obj=shared_lists query_prefix='seccion=listas&' %}
+            </section>
+        {% elif social_tab == 'informacion' %}{% include 'accounts/social/about.html' %}
+        {% else %}
+            <h2>{% if social_tab == 'actividad' %}Actividad literaria{% else %}Publicaciones{% endif %}</h2>
+            {% for post in posts %}{% include 'accounts/social/post_card.html' %}{% empty %}<p class="lm-panel">No hay publicaciones visibles.</p>{% endfor %}
+            {% if social_tab == 'actividad' %}{% include 'accounts/social/page_links.html' with page_obj=posts query_prefix='seccion=actividad&' %}{% else %}{% include 'accounts/social/page_links.html' with page_obj=posts query_prefix='seccion=publicaciones&' %}{% endif %}
+        {% endif %}
+    </div>
+    <aside class="lm-stack" aria-label="Información compartida">
+        {% include 'accounts/social/stats.html' %}
+        {% if social_tab != 'informacion' %}{% if social.favorite_book or social.favorite_author %}{% include 'accounts/social/about.html' %}{% endif %}{% endif %}
+        <section class="lm-panel"><h2>Comunidad LitMate</h2><a href="{% url 'social_feed' %}">Descubrir publicaciones</a></section>
+    </aside>
+</div>
+{% endblock %}

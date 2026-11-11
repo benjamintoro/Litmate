@@ -23,6 +23,8 @@ from .literary_knowledge import prepare_seed_knowledge
 from .literary_research import is_plot_description, is_topic_recommendation
 from .models import Autor, Libro
 
+RECALL_FIXTURES = Path(__file__).parent / 'data' / 'recall_validation_fixtures.json'
+
 
 Q1 = 'Un niño que vivía en un planeta diminuto, cuidaba una rosa y conoció a un zorro'
 Q2 = 'Alguien despierta convertido en un insecto horrible y su familia lo rechaza'
@@ -70,9 +72,8 @@ class CandidateBoundaryTests(SimpleTestCase):
         route = {'decision': 'allow', 'intent': 'recommend', 'queries': [message],
                  'candidates': [], 'followup': False, 'clarification': ''}
         llm = Mock(side_effect=[route])
-        recorded = json.loads((Path(__file__).parents[1] / 'reports' /
-            'recuerdos_opencode_20261031' / 'http_final_10.json').read_text(encoding='utf8'))
-        source = recorded['rows'][-1]['evidence'][0]
+        recorded = json.loads(RECALL_FIXTURES.read_text(encoding='utf8'))
+        source = recorded['abstract_source']
         search = Mock(return_value=[source])
         web = Mock(return_value=[])
         assistant = LiteraryAssistant(llm, search, web_search=web, quality_checks=True,
@@ -133,8 +134,7 @@ class CandidateBoundaryTests(SimpleTestCase):
         self.assertNotIn('Cien años', result.text)
 
     def test_six_real_queries_replayed_with_recorded_evidence(self):
-        evidence = json.loads((Path(__file__).parents[1] / 'reports' /
-            'recuerdos_opencode_20261031' / 'real_readonly.json').read_text(encoding='utf8'))
+        evidence = json.loads(RECALL_FIXTURES.read_text(encoding='utf8'))
         for row in evidence['rows']:
             message = row['query']
             with self.subTest(expected=row['expected']), \

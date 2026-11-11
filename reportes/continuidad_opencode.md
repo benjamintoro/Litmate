@@ -1583,3 +1583,347 @@ Se revisaron git status/diff y se conservaron todos los cambios previos. Detalle
 - CIERRE POSTERIOR: movil_08/captura.json14/14criteriosTrue,ceroexcepcionesJS,2portadascargadas,nueveanchosOK,lecturaanteriortop0 y teclado simulado campo inferior351.97<=360. Causa carrera escritura scrollTop SSE anterior a evento de gesto; proteccion SOLO instancia nuevo perfil, sin cambiar Element.prototype/chatbot.js compartido. scripts/accounts/test_reader_scroll.cjs4regresionesOK. CSS root/inner auto evita demora del scroll al enfocar teclado. Chromium captura/render tras resize; no equivale a teclado fisico/Safari.
 - EnsayoPROPIO34477/8006 detenido al terminar. cierre_ensayo.json:8006sin escucha,8003activo y401conHostvalido. NO cerrar75209Funnel ni servidor publico. Pendiente autorizacion final del usuario para crear NUEVO data/accounts y desplegar; no tomar continuar/recargarcreditos como permiso de reinicio.
 - Aceptacion_cierre41/41OK otra vez, JS246+4reintentos+4scrollOK,29PythonASTOK,gitdiffcheckOK. preservacion_cierre.json confirma hashes.env/memoria/RAGiguales,conteos/planesMySQLiguales,FunnelForeground05619147116f0c78igual,puerta401paginas/404privados. Consulta loopback requiere Hostxato.taila70665.ts.net (otroHost400porproteccion), no interpretar400inicial como caida. README actualizado. Pendiente solo detener ensayo PROPIO34477/8006 y solicitar autorizacionfinal para almacenamiento real/reinicio8003; servicios publicos permanecen intactos.
+
+## 2026-11-08 - Integración funcional de cuentas; activación pendiente
+
+- Adjunto vigente60f0baee-d3ae-4f12-8b46-70cae0e3950a. Trabajo iniciado7nov y cerrado8nov. Rama feature/cuotas-ia-chatbot base23cd547; core literario ya confirmado por usuario en605e468. Conservados informes/scripts de recuerdos no confirmados. NO commits/push/instalaciones/.env/firewall/UAC.
+- Estado real INICIAL y FINAL:8003sin escucha y Serve/Funnel{}. Las antiguas advertencias de no detener sesión75209 pertenecen a octubre; hoy no se reactivó nada. MySQL80/Ollama/Docker/Tailscale/ChromeRemoteDesktop preservados. Se usaron y detuvieron únicamente ensayos propios8006/8007.
+- Reutilizada reader_accounts/reader_settings y alias SQLite accounts. Correcciones: consumo/renovación en Planes/Mi cuenta/chat; medianoche inexistente DST normalizada porUTC(sin alterar instante/saldos); historial propio en HTML escapado con API JSON preservada; lectura inicial fallida de finalize ahora503JSON. Precios/moneda/periodo del modelo y aviso claro de beneficios no habilitados.
+- Nuevo scripts/accounts/backup_store.py reutiliza sqlite_snapshot/inventory, respaldo consistente+claveDPAPI+manifiesto y restore sólo a destino nuevo. Rechaza sobrescritura/clavealterada/realrestore sin permiso. Probado roundtrip y copia real de ensayo179usuarios; NO se creó data/accounts. Dataset de regresión literaria ahora autocontenido en core/data/recall_validation_fixtures.json, sin dependencia de informes locales ni reseñas extensas.
+- Pruebas finales:49cuentas,42compatibilidad y68literarias aprobadas(sin sumar repetidas como únicas). JS246chat+4finalize+4scroll. HTTP real local17criterios+52frontend; perfil HTTPS backend13criterios(cookiesSecure,CSRF,registro,gratis,SSE,reinicio/contexto). Edge móvil14/14,2portadascargadas,0erroresJS. FísicoAndroid/Safari y Windowsreboot NO probados. makemigrations--check--dry-run sin cambios, red bloqueada/SQLiteaislado. Testtools rechazan8003.
+- SQLite:32reservas/confirmaciones4workers0bloqueos0perdidas,0.348stotal,p950.283s; muestra pequeña no benchmarkQwen. Gratuitocompleto15/16yPro100/101probados; VIPinfinito con limitadorrecursos yrecibo sintético SOLOfixtures. Pagos comerciales siguen apagados; correo dummy, favoritos/listas/fotos originales conservados pero no expuestos en perfil nuevo.
+- MySQLSELECT antes/despuésidéntico:179usuarios158perfiles157suscripciones42pagos50conversaciones190mensajes. Copia PRISTINA .testtmp/reader-release-20261107/accounts.sqlite3 y recibo reports/cuentas_integracion_20261107/copia_cuentas_verificada.json,hashintacto0sesiones0consumo,FK0. Incluye5historialeslegados,3planes1asistente. NO promover reader-web-20261107: contiene usuarios sintéticos. Respaldo nuevo backups/cuentas_20261107_01 verificado y restaurado en .testtmp/reader-restore-20261107; fuente MySQL intacta.
+- Entrega: reports/cuentas_integracion_20261107/README.md y DESPLIEGUE.md; manual edición8nov; inventario referencias475archivos, cache5.6MB sólo candidatos NO borrados. preservacion_final.json confirma fuente/copia/.env y servicios sin activar.
+- PENDIENTE AUTORIZACION EXPRESA: crear almacén definitivo data/accounts/users.sqlite3 y activar únicamenteWaitress127.0.0.1:8003+Funnel443. Preparar snapshot fresco si hubo actividad posterior; nunca migrateMySQL. Propietario introduce MISMA claveBasic privada en consola, nunca usar la del ensayo ni enviarla al chat. Después de aprobar se requiere prueba HTTPS del perfil nuevo desde teléfono; no declarar publicado antes. Procedimiento de reversión sin borrar bases en DESPLIEGUE.md. No activar servicios automáticamente si usuario sólo pide continuar.
+# 2026-11-08 — Avance funcional masivo y cuentas definitivas
+
+Encargo autorizado: attachment c1b29762-76c7-496d-afd2-d627d8ed4157. Se conservó
+todo el trabajo anterior y se creó data/accounts/users.sqlite3 desde una copia
+NUEVA .testtmp/reader-definitivo-20261108-01, con respaldo y restauración previos.
+NO volver a promover ni sobrescribir ese destino. MySQL sólo lectura, contenido
+personal comparado íntegramente antes/después. 179usuarios,158perfiles,50hilos,
+190mensajes,157suscripciones,42pagos históricos,231favoritos,2listas/2elementos.
+175hashesPBKDF2 y4passwords inutilizables preservados; ninguna cuenta sintética
+se creó en el almacén definitivo. Se verificaron 24 tablas y 663552 bytes.
+
+Se reutilizan modelos core de favoritos/listas/perfil; router ampliado y
+migraciones reader0002/0003 sólo en SQLite nuevo/aislado. Biblioteca privada,
+CRUD por propietario, cuota de favoritos, formularios seguros, estados de lectura,
+recuperación con tokens oficiales/locmem y ciclo interno de pagos firmado sin
+pasarela pública. Fotos completadas: JPEG/PNG2MiB/4MP, normalización256px sin EXIF,
+almacenamiento junto al SQLite y ruta autenticada propia. SMTP real sigue
+deshabilitado; pagos públicos404. Respaldo v2 incluye fotos referenciadas y acepta v1.
+
+Pruebas finales:81 cuentas/personales/fotos/pagos;110 regresiones con red bloqueada;
+28criterios HTTP/SSE +51frontend;24backendHTTPS;25navegador,0erroresJS,2portadas
+cargadas; concurrenciaHTTP200/429con1unidad. Migración del perfil antiguo sintético
+probada, dos procesos Django abrieron la base definitiva en lectura sin cambios.
+Se corrigieron overflow móvil, interpolación HTML de nombres y llamada al cargador
+inexistente cargarListasUsuarioModal. Se conservaron informes fallidos y se
+inspeccionaron capturas. No confundir emulación con teléfono físico/Safari.
+
+Respaldo definitivo backups/cuentas_definitivas_20261108_03 (v2 con fotos)
+restaurado y validado; se conservan _01/_02 y se probó compatibilidad v1.
+Informe consolidado y comandos actuales:
+reports/avance_20261108/README.md. Manual/README actualizados.
+
+No .env, credenciales, commits/push, firewall/UAC ni servicios del propietario
+modificados. No se activó publicación:8003sin listener,Funnelvacío. Sólo se
+iniciaron/reiniciaron instancias propias de ensayo8006/8007. La siguiente
+publicación requiere autorización específica para el perfil con datos originales
+y contraseña Basic privada introducida por el propietario. No reutilizar la clave
+sintética ni volver a importar datos. Pendientes reales:SMTP/pasarela autorizados,
+teléfono físico y reinicio Windows autorizado. Fotos históricas conservadas sin
+publicación; las nuevas subidas se validan en almacenamiento privado.
+
+## 2026-11-08 — Comprobación final de despliegue, permiso único pendiente
+
+Se reutilizaron las pruebas aprobadas. Copia definitiva intacta frente al snapshot;
+respaldo nuevo backups/cuentas_predeploy_20261108_01 restaurado y verificado.
+Lanzador HTTPS real en modo --comprobar: DEBUGfalse,MySQLreadonly,cookies/CSRF
+seguros, sesiones accounts persistentes, emaildummy y pagos apagados. Sólo W005/W021.
+Runtime definitivo preparado sin listener. Tailscale1.104.4Running con DNS esperado,
+Serve/Funnelvacíos,8003libre; acceso remoto sin cambios. No publicar todavía.
+Evidencias predeploy_{integridad,configuracion,final}.json en reports/avance_20261108.
+Tras autorización final, el propietario debe introducir su Basic privada habitual
+en su consola al iniciar Waitress; la clave efímera del check no se conserva ni
+se publica. Verificar socket127.0.0.1:8003 antes del Funnel443 en foreground.
+
+## 2026-11-08 — Funnel autorizado y activo; prueba del teléfono pendiente
+
+El propietario autorizó explícitamente publicación y arrancó el lanzador con
+data/accounts/users.sqlite3, confirmando actual_listener127.0.0.1:8003 y consola
+abierta. Sin extraer su Basic ni reiniciar procesos ajenos, se comprobaron rutas
+locales401/404 y hostajeno400. Luego se ejecutó el Funnel en primer plano, sin--bg,
+únicamente443HTTPS→http://127.0.0.1:8003. Proceso de herramienta activo sesión19660;
+no terminarlo al cerrar el turno si las pruebas siguen siendo satisfactorias.
+
+JSONServe/Funnel contiene sólo ese Foreground. TLS1.3/certificado verificado;
+chat/login/perfil/biblioteca401sin credenciales,admin/.env/backups/SQLite/clave404,
+SSE sin autenticación401. Conexión HTTPS probada desde anfitrión, no equivale a
+datos móviles externos. publicacion_estado.json mantiene phone_acceptance=false.
+Todos los registros originales comparados por sus IDs siguen intactos,integridadOK,
+FK0,.envigual. MySQL/Windows/firewall/remoto sin cambios. El propietario recibió
+la lista de aceptación desde teléfono y la pregunta asíncrona sigue pendiente.
+
+Si hay fallo de privacidad/autenticación/integridad, detener únicamente esta
+publicación con Ctrl+C de19660 o tailscale funnel --https=443 off; conservar todos
+los datos y no apagar Tailscale. No restaurar el respaldo sobre cuentas nuevas.
+
+## 2026-11-08 — Aceptación pública real confirmada; integración cerrada
+
+El propietario respondió «Todos los pasos funcionaron desde datos móviles» a la
+lista de acceso Basic, invitado1/2, registro/login, Gratuito15sin tarjeta,
+contador,SSE,recomendaciones/seguimiento,portadas/tarjetas,teclado móvil,
+favoritos,listas,perfil y persistencia tras volver a entrar. Es confirmación de
+usuario en teléfono físico con Wi-Fi/VPN apagados, no una emulación del agente.
+No se identificó SO/navegador ni se confirmó individualmente la foto opcional.
+
+aceptacion_telefono.json y publicacion_estado.json registran aceptación completa.
+Respaldo posterior backups/cuentas_postdeploy_20261108_01 restaurado y validado;
+IDs originales conservados,quick_checkOK,FK0,.envigual y Funnel sigue exclusivo
+443→127.0.0.1:8003. No se reiniciaron servicios ni se alteraron MySQL/firewall/remoto.
+Mantener funcionando Waitress del propietario y Funnelforeground sesión19660.
+Manual/README/informe actualizados. No nuevos cambios funcionales, commits ni push.
+
+## 2026-11-08 — Continuación posterior: mejoras probadas, sin publicar
+
+Adjunto3a125b6e autoriza continuar desarrollo, conservando publicación/datos.
+Se verificó aceptación móvil y se restauró de nuevo el respaldo posterior
+backups/cuentas_postdeploy_20261108_01 en un destino temporal nuevo:24tablas,
+manifiesto/DPAPI/FKválidos. NO repetir importación/promoción de cuentas.
+
+Estado real al comenzar y terminar:8003conexiónrechazada,HTTPSinaccesible,
+FunnelJSON{},Tailscale/chromotingRunning. No se inició/detuvo/reinició ningún
+servicio. La sesión19660del informe histórico ya no representa Funnel activo.
+Se consultó al propietario por el cierre; no asumir su causa ni reactivar.
+No hubo ERROR/CRITICALdel8/11en las1000líneas finales del logger compartido;
+no equivale a inspeccionar una consola Waitress cerrada.
+
+Revisión preparada en reader_accounts/{forms,library,recovery,views,urls,gateway},
+templates/accounts/{account,edit},test_personal y scripts/accounts/test_accounts:
+cambio autenticado de contraseña oficial Django sin SMTP,retirar foto sin borrar
+archivos,validación de listas repetidas propia/IMMEDIATE,errores HTMLconcampos,
+fallos de guardado503sin detalles,GETperfilsin escritura e historial paginado20.
+No se cambió esquema,modelo,RAG,tarjetas,voz,precios ni límites de producción.
+Tests personales ahora aíslan runtime por caso:se corrigió fuga de contadores
+entre tests,sin debilitar el rate limit real. No nuevos paquetes/migraciones.
+
+continuacion_consolidada_final.json:93/93,0fallos/errores. Incluye13criterios
+HTTPloopbackpuertoefímero/SQLiteSINTÉTICO y SSEreplay con un generador SIMULADO,
+una unidad de cuota;1,4128srecorrido,NOlatenciaOllama/HTTPSpublico. Ledger32ops,
+4workers,0locks,0,3154stotal,p950,2186s. JSfinalize4/scroll4aprobados.
+Se conservan resultados intermedios fallidos; no sumar repeticiones.
+
+continuacion_resultado.json guarda estado/hashes; .envintacto. MySQL/cuentas
+reales no usados en ensayos. Parche de reversión selectiva de10archivos en
+reports/avance_20261108/continuacion_reversion.patch,inspeccionado/checkaprobado,
+NOaplicado. Instrucciones exactas de respaldo,arranque,publicación y reversión
+en READMEdelmismoinforme. Necesita autorización NUEVA para publicar esta revisión
+y credenciales ocultas del propietario al arrancar. No cambiar cuentas activas
+por respaldos antiguos ni usar instrucciones históricas de clone/promote.
+Correo/pasarela reales pendientes de proveedor/aprobación; no SDK nuevo.
+
+## 2026-11-08 — Nueva revisión autorizada; arranque del propietario pendiente
+
+El propietario confirmó el cierre de consolas/reinicio del PC y AUTORIZÓ iniciar
+la revisión probada en127.0.0.1:8003 con Funnel443foregroundexclusivo. No pedir
+permiso otra vez. Hashes10archivoscoinciden con continuacion_resultado.json,
+8003libre,Serve/Funnel{},Tailscale/chromotingRunning. Respaldo NUEVO
+backups/cuentas_preactualizacion_20261108_01 creado/restaurado a destino nuevo,
+24tablasverificadas,almacénactualigualalsnapshot,claveDPAPIpreservada,.envigual.
+actualizacion_autorizada_20261108.json registra estado, sin publicación todavía.
+El propietario debe iniciar el comando HTTPS ya documentado en su consola,
+introduciendo MySQL/Basicprivada en prompts ocultos. Luego comprobar loopback
+y publicar únicamente Funnel443→8003,sin--bg. No iniciar una instancia duplicada,
+no alterarfirewall/remoto,ni migrar/copiar cuentas. TrasTLS,se requiere nueva
+aceptación de esta revisión desde teléfono; no reutilizar aceptación anterior.
+
+## 2026-11-08 — Revisión nueva PUBLICADA; aceptación móvil pendiente
+
+El propietario confirmó arranque/consolaabierta. Socketnetstat127.0.0.1:8003,
+PID9932; se comprobaron sólo booleanos del commandline: iniciar_demo.py,
+modohttps,--cuentas-dbdata/accounts/users.sqlite3,--puerto8003, sin extraer
+secretos. Hashes10archivosigualesalarevisiónprobada.17checksloopbackaprobados.
+
+Se ejecutó FunnelAUTORIZADO en primer plano,sin--bg: sesión de herramienta51997
+ACTIVA, no terminarla. JSONServe/Funnel único443→http://127.0.0.1:8003. HTTPS
+TLS1.3certificado/hostnameverificados;16checks públicos: páginas/nuevarutapassword
+401sinBasic,admin/.env/backups/DB/DPAPI/media/pago404,SSEsinBasic401. No son
+pruebas autenticadas ni de datos móviles. Se requiere aceptación NUEVA del dueño.
+
+actualizacion_{http_local,https}.json y actualizacion_autorizada_20261108.json
+registran publicación. Cuentas integridadOK,FK0,IDsdel snapshot previo todos
+presentes. .envigual,MySQLsinmodificar,no cuotas/cuentas sintéticas públicas.
+OllamaGETtags200modeloactualinstalado,SearXNGhealth200. Tailscale/chromotingRunning,
+sin firewall/UAC/migraciones,ni extracción de claves. No habilitar correo/pagos.
+El propietario mantiene Waitress; el agente mantiene Funnel51997. Si hay fallo
+de privacidad/integridad/autenticación, detener sólo este Funnel como autoriza
+el plan, sin apagar Tailscale/remoto. En otro caso dejarlos funcionando.
+
+## 2026-11-08 — Revisión nueva: aceptación móvil general registrada
+
+El propietario respondió «todo bien» a la lista de prueba desde datos móviles.
+actualizacion_aceptacion_telefono.json guarda aceptación GENERAL satisfactoria;
+no afirmar ejecución individual de cambio real de contraseña, foto, paginación
+>20o renombre duplicado, porque eran opcionales/condicionales y no se especificó.
+actualizacion_autorizada_20261108.json marca nuevaaceptacióntrue/pendientefalse.
+
+Respaldo NUEVO backups/cuentas_postactualizacion_20261108_01 creado mediante
+SQLitebackup y restaurado en .testtmp/cuentas_postactualizacion_restaurada_20261108_01:
+24tablasverificadas,DPAPIpreservada,.envigual. No reemplazar cuentas por backups
+anteriores; la actividad legítima del propietario se conserva. Último GETlocal
+y HTTPS401sinBasic confirma servidor activo; Funnel443exclusivo→8003. Sigue
+activa la sesión51997: no terminarla. Waitress permanece en consola del dueño.
+Sin reinicios,pruebas nuevas,modificaciones de código/MySQL/firewall/credenciales,
+commits ni push. Informe/manual actualizados; integración de revisión cerrada
+con alcance de aceptación general, manteniendo los límites ya documentados.
+
+## 2026-11-08 — Gran salto:29archivos preparados en worktree aislado, NO publicados
+
+Adjuntoa3b85650autoriza desarrollo amplio sin interrumpir versión pública. Se creó
+G:\Proyecto\Litmate-desarrollo-20261108,worktreedetachedHEAD23cd547,sincommits.
+Se incorporaron cambios pendientes y25fuentesnuevasanteriores, más la plantilla
+reset_email.txt; NO .env,credenciales,bases,cuentas,sesiones,avatares ni índices.
+Todos los cambios funcionales NUEVOS están en ese worktree, no en la raíz pública.
+baseline.json y resultado.json verifican hashes de las fuentes públicas intactas.
+
+Completado:organizadorQuieroleer/Leyendo/Terminado sin duplicarobraentrelíneas,
+fichaprivada/enlacesdesde favoritos/listas,notas255propietario/CSRF,favoritos en
+tarjetas/catálogo conestadosincronizado,GETtardíonodeshacePOSTconfirmado,
+consultasSSEpersonalesdeterministas con cuota/replay/historial privado y0LLM,
+panelconconteosreales,historialcomercialprivado,resetHTML/texto,sinenvíoreal,
+checkoutpendienteidempotenteconkey(sóloadaptadorautorizado),adminmetadatosreadonly
+sinconversacionesprivadas,comandoestado_cuentas/healthmode=ro. Noadminpúblico.
+SelectorlistasCOUNT/EXISTS2consultas,sinfichas/notascompletas. No cambió esquema:
+makemigrationscheckdryrunaprobado. No nuevasdependencias,nilímites/precios/modeloRAG.
+
+117/117Djangoenregresion_final_03.json,258checksJS(246chat+4finalize+4scroll+4library),
+10/10Edge/viewport320/390/768,ceroerroresJS. Última evidencia navegador-ccd30a5a,
+SSEpersonalsintético0,512s,nop95/inferencia.13HTTPpreviospreservados;32ledgerops,
+4workers,0lockerrors. Pruebas sóloSQLiteSINTÉTICO del worktree/puertoefímero.
+Los fallosintermediosybrokenpipe de cierres de navegador se documentan, noocultan.
+
+Paquete SELECCIONADO: G:\Proyecto\Litmate\backups\gran_salto_codigo_20261108_04
+conmanifest/hashes,changes.patch,before/after(29archivos). Forward/reversecheck y
+--verify-only PASARON. NOaplicado.01/02fallaronformatoparche;03supersedidopor04;
+seconservanperono usar. Scriptpackage_release.pypermite verificarpreimágenes
+antesdedecidir;cambiosconcurrentesdebenabortar,no forzarparches.
+RespaldoSQLitepreparado backups/cuentas_pregransalto_20261108_01 restaurado en
+.testtmp/cuentas_pregransalto_restaurada_20261108_01,24tablasverificadas.
+
+InformeÚNICOyprocedimientoexacto en
+G:\Proyecto\Litmate-desarrollo-20261108\reports\gran_salto_20261108\README.md.
+Para actualizar: pedir autorización NUEVA, verificarpaquete,snapshotfresco si
+huboactividad,elpropietariodetienesóloWaitress8003,gitapplydeldeltayarranca con
+el mismo comando/almacénDPAPI/claveBasicoculta. Funnel51997SIGUEACTIVOyexclusivo
+443→8003;NOreiniciarlo/nopublicarotro. Habráposible502enventanaautorizada;remoto
+nocambia. Reversióngitapply--reverse concheck,conservandofuentesbefore/after y
+TODOSlosdatosactuales,sinrestorecuentas. Noaplicarnadaantesdelaaprobación.
+
+ÚltimosGETpublico/local401sinBasic:versiónestableoperativa,fuentespúblicasiguales.
+No se tocaronMySQL/.env/firewall/Windows,cuotasreales niusuarios179. NoSMTP/pagos
+ni proveedorseleccionado; documentadaevaluaciónoficial,tarifasporconfirmarcontrato.
+No commits,push ni reinicios. Guardar este punto para siguiente turno.
+
+## 2026-11-08 — Gran salto AUTORIZADO; esperando detener sólo Waitress
+
+El propietario AUTORIZÓ aplicar paquete04 y reiniciar sólo Waitress8003 mediante
+su consola. Mantener Funnel51997, Tailscale y control remoto; no pedir permiso
+otra vez. --verify-only comprobó29archivos/preimágenes y gitapplycheck:sin cambios
+concurrentes. Se creó/restauró respaldo FRESCO
+backups/cuentas_gransalto_activacion_20261108_01 en destino nuevo aislado,24tablas.
+GETlocalhost401confirma servidor anterior activo. NO se aplicó código aún porque
+Django puede leer plantillas/estáticos vivos. El propietario debe pulsarCtrl+C
+sólo en la consola de Waitress y confirmar; NO relanzarlo antes de aplicar.
+
+Estado persistido en reports/gran_salto_20261108/despliegue_autorizado.json,
+incluye hashes de paquete/.env. Luego: comprobar8003realmente libre, verificar
+paquete/preimágenes otra vez, gitapply --check y aplicar sólo
+backups/gran_salto_codigo_20261108_04/changes.patch. No migrar/importar ni tocar
+cuentas. Verificar hashes29postimágenes y pedir al dueño arranque HTTPS conocido
+con la misma base data/accounts/users.sqlite3 y runtime; claves sólo prompts
+ocultos. No activar otro Funnel. Posteriormente TLS/401/404 y aceptación móvil
+nueva; todavía no declararla publicada. Reversión sólo si fallo comprobado.
+
+## 2026-11-08 — Gran salto aplicado; falta arranque del propietario
+
+El propietario confirmóCtrl+C/prompt. Hubo unos instantes de cierre residual;
+primera conexión aún abierta, después HTTPinaccesible y sin procesoiniciar_demo.
+Se comprobóconnect_exfallido ybind8003libre antes de mutar código. No se mató
+ningún proceso ajeno. Paquete04/preimágenes verificados otra vez y gitapplydel
+delta autorizado ejecutado.29archivoscoinciden NORMALIZANDO CRLF/LF(13hashesraw
+exactos;GitconviertefinallíneaenWindowsenlosotros16),PythonASTválido.
+
+Hashes de .env,SQLitecuentas yclaveDPAPIidénticos antes/después de aplicar.
+Saludmode=ro:integridadOK/FKválidas. Reversión --reverse--check y JSbiblioteca4
+casos/sintaxis/diffcheckaprobados. No migrate,cuentasnuevas,cuotasreales,MySQL
+ni cambiosdefirewall. Funnel51997permanece443→8003; no iniciarlo otra vez.
+reports/gran_salto_20261108/despliegue_autorizado.json marca code_applied=true,
+owner_restart_pending=true. El dueño debe ejecutar el MISMO comando HTTPS desde
+G:\Proyecto\Litmate con .\venv\Scripts\python.exe -B iniciar_demo.py --modo https
+--host xato.taila70665.ts.net --puerto8003 --cuentas-dbdata/accounts/users.sqlite3
+--carpetadata/accounts/runtime --comprobar-despliegue --google-books-sin-facturacion
+(usar separación correcta de flags según informe). Claves sólo prompts ocultos.
+Después verificar socket/TLS/accesos y pedir nueva aceptación móvil. No declarar
+publicado mientras falte listener. No pedir autorización nuevamente.
+
+## 2026-11-08 — Gran salto publicado en HTTPS; prueba móvil pendiente
+
+El propietario confirmó arranque/consolaabierta. Socket127.0.0.1:8003LISTENING,
+PID24360y argumentos de iniciar_demo/https/cuentasdefinitivas/8003 comprobados
+sólo como booleanos, sin claves.43checks locales/HTTPS aprobados: rutas nuevas
+de biblioteca/fichas/historial/estado y JS401sinBasic;admin/.env/backups/DB/key/
+media/pagos404; POSTmutación/SSEsinBasic401;hostajeno400. TLS1.3/certificado y
+hostname verificados. Funnel51997originalexclusivo443→8003 sigueactivo, no tocar.
+
+HTTPS_posterior.json(enminúsculas:https_posterior.json) y despliegue_autorizado.json
+en reports/gran_salto_20261108 registran publicación, owner_restart_pending=false,
+new_revision_publicly_verified=true y nuevaaceptaciónmóvilpendiente. No equivale
+a probar flujos autenticados en producción. Saludcuentasmode=roOK/FKválidas,
+DPAPIigualalbackup,.envigual,29archivosigualesalpaquetealnormalizarCRLF/LF.
+No datos sintéticos ni cuota consumida en producción, sin migrate/SMTP/pagos.
+Se pedirá al dueño validar desde teléfono biblioteca/estado/notas/favoritostarjetas,
+SSEpersonal y persistencia. Mantener Waitress/Funnel/remoto; no declarar aceptación
+antes de la respuesta. Informe consolidado actualizado/copiadocon evidencias a
+reports/gran_salto_20261108 de la raíz pública para no depender del worktree.
+
+## 2026-11-08 — Gran salto: aceptación general y respaldo posterior, entrega cerrada
+
+El propietario respondió «todo bien» a la lista móvil de login/cuentas,
+recomendación/seguimiento,SSE/tarjetas,corazónfavoritos,fichaprivada,nota/estados,
+consultas personales y persistencia. Se registra aceptación GENERAL, no
+telemetría individual ni SO/navegador; historialcomercial era opcional y no se
+confirmó por separado. aceptacion_telefono.json y despliegue_autorizado.json en
+reports/gran_salto_20261108 marcan aceptacióntrue/pendientefalse.
+
+Respaldo NUEVO backups/cuentas_postgransalto_20261108_01creado conSQLitebackup y
+restaurado a .testtmp/cuentas_postgransalto_restaurada_20261108_01:24tablasverificadas,
+DPAPIpreservada,.envigual. No reemplazar cuentas actuales por un snapshot antiguo.
+ÚltimosGETlocal/HTTPS401sinBasic,Funnel51997exclusivo443→8003activo: no detenerlo.
+Waitress está en consola del propietario; no reiniciar servicios. En este cierre
+sólo documentación/evidencia y respaldo, sin cambios de código/MySQL/firewall,
+pruebas adicionales,cuotasreales,commits ni push. SMTP/cobros siguen apagados.
+Trabajo aislado permanece en G:\Proyecto\Litmate-desarrollo-20261108; paquete04
+YAaplicado a raíz pública, no aplicarlo otra vez. Informe consolidado en ambas
+raíces, referencia de despliegue final autoritativa en la raíz pública.
+
+
+## 2026-11-09 - Cuotas: fallo del verificador resuelto, IA pendiente
+
+- Causa de free_daily_15: campos leidos en raiz; contrato correcto es status + cuota.
+- Informe original 02: Gratuito limite15, usadas0, restantes15. No fue agotamiento.
+- 13 pruebas focalizadas pasan en DEV con SQLite sintetico: 15 HTTP/SSE unicos,
+  15 replays sin cargo extra, operacion16 ->429 quota_exceeded, carreras y finalize.
+- Backend publico NO modificado; Waitress/Funnel no reiniciados; .env conservado.
+- Continuacion reutilizo solamente validacion_20261108_c7083c, id300002. Su clave
+  sintetica quedo protegida DPAPI; Basic/MySQL no se almacenan. No otra cuenta.
+- Primera continuacion aprobo biblioteca, notas, permisos, persistencia y Edge7/7.
+- IA: una llamada real Qwen, route34379ms, corte35058ms, unavailable, reserva devuelta.
+- Reintento de ese mismo ID devuelve JSON503 cacheado, no otro SSE/generacion/cargo.
+  Verificador corregido para clasificar error y consultar auditoria de la operacion.
+- Estado propio: 3 operaciones completed +1failed; consumo3, restantes12.
+- Integridad: 24 tablas comparadas; ninguna fila original modificada o eliminada.
+- Informe: reports/cuota_verificador_20261109/README.md. No sumar ejecuciones repetidas.
+- Pendiente real: reproducir/optimizar timeout de enrutamiento en desarrollo;
+  no declarar respuesta literaria validada ni aceptacion telefonica de esta revision.

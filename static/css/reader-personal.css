@@ -1,0 +1,18 @@
+/* Sólo las páginas personales; no cambia el chat ni sus tarjetas. */
+.reader-personal { padding-top: 5.5rem !important; overflow-wrap: anywhere; }
+.reader-personal textarea,
+.reader-personal input:not([type="checkbox"]):not([type="radio"]),
+.reader-personal select {
+    display: block; box-sizing: border-box; width: 100%; max-width: 100%;
+    padding: .5rem; border: 1px solid #aaa; border-radius: .35rem;
+}
+.reader-personal .errorlist { color: #a02828; }
+.reader-personal form, .reader-personal .card { min-width: 0; }
+.reader-personal button { white-space: normal; }
+.reader-personal :is(a,button,input,select,textarea):focus-visible {
+    outline: 3px solid #227d8e; outline-offset: 3px;
+}
+.reader-personal .errorlist { font-weight: 600; }
+/* El pie compartido contiene email y enlaces largos en columnas móviles. */
+footer a { white-space: normal; overflow-wrap: anywhere; }
+footer .footer-bottom-links { flex-wrap: wrap; max-width: 100%; justify-content: center; }

@@ -160,7 +160,7 @@
                             <div class="d-flex align-items-center justify-content-between pt-1">
                                 <span class="book-card-price">{{ libro.precio_desde }}</span>
                                 <div class="d-flex gap-2">
-                                    {% if user.is_authenticated and not reader_accounts_enabled %}
+                                    {% if user.is_authenticated %}
                                     <button type="button" class="btn btn-outline-danger btn-sm rounded-circle btn-fav" 
                                             title="Guardar en Favoritos"
                                             data-google-id="{{ libro.id }}"
@@ -294,7 +294,7 @@
 
 
                         <!-- Acceso limpio a Biblioteca / Listas -->
-                        {% if user.is_authenticated and not reader_accounts_enabled %}
+                        {% if user.is_authenticated %}
                         <div class="mt-4 pt-3 border-top d-flex justify-content-between align-items-center flex-wrap gap-2">
                             <span class="text-muted small"><i class="iconoir-book-stack me-1 text-teal"></i> Guarda este libro en tu colección personal:</span>
                             <button type="button" class="btn btn-outline-dark rounded-pill px-4 btn-sm fw-bold" onclick="abrirModalAgregarListaDirecto()">
@@ -459,12 +459,12 @@
                         <label class="form-label fw-bold small">Descripción</label>
                         <textarea class="form-control" id="descNuevaListaLibro" rows="3" placeholder="Una breve descripción de tu lista"></textarea>
                     </div>
-                    <div class="form-check">
+                    {% if reader_accounts_enabled %}<p class="small text-muted">Esta lista será privada y solo tú podrás consultarla.</p>{% else %}<div class="form-check">
                         <input class="form-check-input" type="checkbox" id="publicaNuevaListaLibro">
                         <label class="form-check-label small text-muted" for="publicaNuevaListaLibro">
                             ¿Es pública?
                         </label>
-                    </div>
+                    </div>{% endif %}
                 </div>
                 <div class="modal-footer border-0 pt-0 d-flex justify-content-end gap-2">
                     <button type="button" class="btn btn-outline-secondary rounded-pill px-3" data-bs-dismiss="modal">Cancelar</button>
@@ -539,8 +539,8 @@ document.addEventListener('DOMContentLoaded', function () {
             // Iniciar carga en vivo de precios escrapeados y enlaces directos
             cargarPreciosYGraficoModal(currentBookData);
 
-            // Cargar estado de listas del usuario para este libro
-            cargarListasUsuarioModal(currentBookData.id);
+            // El selector carga las listas al abrirse; no duplicar consultas ni
+            // invocar el cargador antiguo que ya no existe.
         });
     }
 
@@ -935,6 +935,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // 4. Botón de Favoritos
+    {% if not reader_accounts_enabled %}
     const btnsFav = document.querySelectorAll('.btn-fav');
     btnsFav.forEach(btn => {
         btn.addEventListener('click', function () {
@@ -980,6 +981,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    {% endif %}
     // 5. Gestión del Modal Dedicado "Agregar a lista" (Foto 2) y "Nueva Lista" (Foto 1)
     let currentReadingState = 'por_leer';
 
@@ -1033,10 +1035,10 @@ document.addEventListener('DOMContentLoaded', function () {
                             <div class="select-list-row ${activeClass}" id="listRow-${l.id}" onclick="toggleLibroEnListaRow(${l.id})">
                                 <div class="d-flex align-items-center gap-2">
                                     <div class="custom-radio-circle ${checkClass}" id="listCircle-${l.id}"></div>
-                                    <span class="select-list-name fw-semibold">${l.nombre}</span>
+                                    <span class="select-list-name fw-semibold">${String(l.nombre).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}</span>
                                 </div>
                                 <span class="select-list-count text-muted small" id="listCount-${l.id}">
-                                    ${l.total_libros}/50
+                                    ${l.total_libros} libros
                                 </span>
                             </div>
                         `;
@@ -1139,7 +1141,7 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
             const nombre = document.getElementById('nombreNuevaListaLibro').value.trim();
             const desc = document.getElementById('descNuevaListaLibro').value.trim();
-            const publica = document.getElementById('publicaNuevaListaLibro').checked;
+            const publica = document.getElementById('publicaNuevaListaLibro')?.checked || false;
             const submitBtn = document.getElementById('btnCrearListaLibroSubmit');
 
             if (!nombre) return;

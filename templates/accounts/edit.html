@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/reader-personal.css' %}">
+<main class="container py-5 reader-personal" style="max-width: 720px">
+<h1>{{ heading }}</h1>
+<form method="post" enctype="multipart/form-data">{% csrf_token %}{{ form.as_p }}
+<button class="btn btn-primary" type="submit">Guardar cambios</button>
+{% if return_to_library %}<a href="{% url 'reader_library' %}">Volver a mi biblioteca</a>
+{% else %}<a href="{% url 'perfil' %}">Volver a mi cuenta</a>{% endif %}</form>
+</main>
+{% endblock %}

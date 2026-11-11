@@ -1,0 +1,23 @@
+body { min-height: 100vh; display: flex; flex-direction: column; }
+.footer-main { margin-top: auto; --text-secondary: #bdb7aa; --text-primary: #eee8dc; }
+#mainNav .navbar-toggler { color: #e3dccd; border-color: #827353; }
+.footer-main .footer-brand-desc, .footer-main .footer-link, .footer-main .footer-copyright { color: #bdb7aa; }
+.footer-main .footer-heading { color: #e7e1d4; }
+.lm-online { display: flex; justify-content: center; align-items: center; gap: .5rem; padding: .85rem 1rem; border-top: 1px solid #655a3c; color: #d9d4c7; font: .8rem Inter, sans-serif; background: #141617; }
+.lm-online-dot { width: .5rem; height: .5rem; border-radius: 50%; background: #8dac91; }
+.lm-team-member { padding: 1.5rem; border: 1px solid var(--lm-border, #655a3c); border-radius: 1rem; height: 100%; background: var(--lm-parchment-soft, #1d2021); }
+.lm-team-member h3 { font-size: 1.3rem; }
+.lm-team-member p { margin-bottom: 0; font-size: 1rem; line-height: 1.6; }
+.lm-chat-toolbar { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: space-between; align-items: center; padding: .65rem 1rem; border-bottom: 1px solid #454037; font: .85rem Inter, sans-serif; }
+.lm-chat-toolbar button { padding: .5rem .75rem; border: 1px solid #8b7760; border-radius: .5rem; background: transparent; color: #e2d6bd; }
+.lm-chat-toolbar button:hover { background: #373029; }
+.lm-chat-toolbar button:disabled { opacity: .5; cursor: wait; }
+.lm-chat-restore { padding: .3rem 1rem; font-size: .85rem; margin: 0; }
+.lm-clear-dialog { width: min(92vw, 520px); border: 1px solid #998158; border-radius: 1rem; background: #1e2123; color: #eee8dc; padding: 1.7rem; }
+.lm-clear-dialog::backdrop { background: #000a; }
+.lm-clear-dialog h2 { font-size: 1.45rem; }
+.lm-clear-dialog p { font-size: 1rem; line-height: 1.6; }
+.lm-dialog-actions { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: flex-end; }
+.lm-dialog-actions button { padding: .7rem 1rem; border: 1px solid #8b7760; border-radius: .5rem; color: #eee8dc; background: #333537; }
+.lm-dialog-actions .lm-delete { background: #813f44; }
+.lm-chat-toolbar button:focus-visible, .lm-dialog-actions button:focus-visible { outline: 3px solid #c8ad74; outline-offset: 3px; }

@@ -1,0 +1,6 @@
+{% extends 'accounts/checkout/frame.html' %}
+{% block checkout_content %}<h1>Cancelar suscripción simulada</h1>
+<section class="lm-panel lm-stack"><p>Conservarás los beneficios de {{ subscription.plan.nombre }} hasta {{ subscription.fecha_fin|date:'d/m/Y H:i' }}. La renovación mensual de pruebas omitirá esta suscripción después de confirmar.</p>
+<form class="lm-form" method="post">{% csrf_token %}<label class="lm-check"><input type="checkbox" name="confirm" value="yes" required> Confirmo la cancelación al vencimiento.</label>
+<div class="lm-actions"><button class="lm-btn lm-danger">Confirmar cancelación</button><a class="lm-btn" href="{% url 'sim_subscription' %}">Volver</a></div></form>
+</section>{% endblock %}

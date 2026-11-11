@@ -1,0 +1,10 @@
+{% extends 'base.html' %}{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/reader-social.css' %}">
+<link rel="stylesheet" href="{% static 'css/reader-checkout.css' %}">
+<main class="lm-social lm-checkout"><div class="lm-shell lm-narrow lm-stack">
+<p class="lm-notice" role="note">ENTORNO DE DEMOSTRACIÓN: ESTA OPERACIÓN ES SIMULADA Y NO SE REALIZARÁ NINGÚN COBRO REAL.</p>
+{% block checkout_content %}{% endblock %}
+</div></main>
+<script defer src="{% static 'js/reader-checkout.js' %}"></script>
+{% endblock %}

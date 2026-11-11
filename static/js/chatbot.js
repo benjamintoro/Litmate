@@ -17,6 +17,77 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!chatForm || !chatInput || !chatBody || !window.LitMateSafe) return;
 
+    const clearBtn = document.getElementById('clear-chat-btn');
+    const clearDialog = document.getElementById('clear-chat-dialog');
+    const restoreStatus = document.getElementById('chat-restore-status');
+    const greeting = chatBody.firstElementChild.cloneNode(true);
+    let conversationId = null;
+    let restoring = true;
+    sendBtn.disabled = true;
+
+    async function currentChat() {
+        const response = await fetch('/api/chat/actual/', { cache: 'no-store' });
+        if (!response.ok) throw Error('No pudimos recuperar el chat. Recarga la página para volver a intentarlo.');
+        return response.json();
+    }
+
+    async function restoreChat() {
+        restoring = true;
+        sendBtn.disabled = true;
+        if (clearBtn) clearBtn.disabled = true;
+        try {
+            const data = await currentChat();
+            conversationId = data.conversation_id;
+            chatBody.replaceChildren(greeting.cloneNode(true));
+            for (const message of data.messages) {
+                const node = appendMessage(message.text, message.role === 'user' ? 'user' : 'bot');
+                if (message.role === 'assistant') {
+                    LitMateSafe.renderBookCards(node, message.books || []);
+                } else if (message.status === 'failed' || message.status === 'pending') {
+                    node.appendChild(LitMateSafe.element('small', '', message.status === 'failed'
+                        ? 'La respuesta no se completó. Puedes volver a preguntar.' : 'Consulta recibida. Respuesta pendiente.'));
+                }
+            }
+            if (restoreStatus) {
+                restoreStatus.hidden = !data.truncated;
+                restoreStatus.textContent = 'Se muestran los últimos 200 mensajes. El historial completo está en Mi perfil → Configuración.';
+            }
+            restoring = false;
+            sendBtn.disabled = false;
+            if (clearBtn) clearBtn.disabled = false;
+            scrollToBottom();
+        } catch (error) {
+            if (restoreStatus) restoreStatus.textContent = error.message;
+        }
+    }
+
+    clearBtn?.addEventListener('click', () => {
+        if (restoring || sendBtn.disabled) return;
+        document.getElementById('clear-chat-error').textContent = '';
+        clearDialog.showModal();
+    });
+    document.getElementById('cancel-clear-chat')?.addEventListener('click', () => clearDialog.close());
+    document.getElementById('confirm-clear-chat')?.addEventListener('click', async event => {
+        const button = event.currentTarget;
+        button.disabled = true;
+        try {
+            const response = await fetch('/api/chat/borrar/', {
+                method: 'POST', headers: { 'X-CSRFToken': LitMateSafe.getCookie('csrftoken') },
+                body: new URLSearchParams({ confirm: 'delete-current-conversation',
+                    conversation_id: conversationId === null ? '' : String(conversationId) })
+            });
+            const data = await response.json();
+            if (!response.ok) throw Error(data.response || 'No pudimos borrar el chat.');
+            stopSpeaking();
+            conversationId = null;
+            chatInput.value = '';
+            chatBody.replaceChildren(greeting.cloneNode(true));
+            clearDialog.close();
+            chatInput.focus();
+        } catch (error) { document.getElementById('clear-chat-error').textContent = error.message; }
+        finally { button.disabled = false; }
+    });
+
     const avatarController = LitMateSafe.createChatAvatar(avatar);
 
     function scrollToBottom() {
@@ -146,13 +217,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const userMessage = chatInput ? chatInput.value.trim() : '';
-        if (!userMessage || (sendBtn && sendBtn.disabled)) return false;
+        if (!userMessage || restoring || (sendBtn && sendBtn.disabled)) return false;
 
         stopSpeaking();
 
         appendMessage(userMessage, 'user');
         chatInput.value = '';
         if (sendBtn) sendBtn.disabled = true;
+        if (clearBtn) clearBtn.disabled = true;
 
         beforeSend();
 
@@ -214,7 +286,10 @@ document.addEventListener('DOMContentLoaded', () => {
             LitMateSafe.renderMessage(botParagraph, error.message || 'No se pudo conectar con el asistente. Vuelve a intentar.');
             onError();
         } finally {
+            try { conversationId = (await currentChat()).conversation_id; }
+            catch (_) { /* El servidor conserva el control de pertenencia al borrar. */ }
             if (sendBtn) sendBtn.disabled = false;
+            if (clearBtn) clearBtn.disabled = false;
             if (chatInput) chatInput.focus();
             scrollToBottom();
         }
@@ -234,7 +309,11 @@ document.addEventListener('DOMContentLoaded', () => {
         messageDiv.appendChild(p);
         chatBody.appendChild(messageDiv);
         scrollToBottom();
+        return messageDiv;
     }
+
+    void restoreChat();
+    window.addEventListener('pageshow', event => { if (event.persisted) void restoreChat(); });
 
     // =====================================================================
     // 5. PARALLAX 2.5D (SEGUIMIENTO DEL CURSOR)

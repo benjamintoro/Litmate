@@ -1,0 +1,15 @@
+{% extends 'accounts/checkout/frame.html' %}
+{% block checkout_content %}
+<nav class="lm-tabs" aria-label="Etapas del checkout"><span>Resumen</span><span>Método</span><span aria-current="step">Confirmación</span></nav>
+<h1>Confirmar contratación simulada</h1>
+<section class="lm-panel lm-stack">
+<dl class="lm-order-summary"><dt>Pedido</dt><dd>{{ order.pk }}</dd><dt>Cuenta</dt><dd>{{ user.username }}</dd>
+<dt>Plan</dt><dd>{{ order.plan_name }}</dd><dt>Total simulado</dt><dd>{{ order.payment.monto }} {{ order.payment.moneda }}</dd>
+<dt>Medio ficticio</dt><dd>{{ order.get_method_display }}</dd><dt>Periodicidad</dt><dd>Mensual</dd>
+<dt>Operación</dt><dd>{{ order.get_kind_display }}</dd></dl>
+{% if order.state == 'temporary_error' %}<p class="lm-notice" role="alert">El procesador simulado tuvo un error temporal. Tu plan sigue conservado. Puedes reintentar este mismo pedido.</p>{% endif %}
+<form method="post" action="{% url 'sim_confirm' order.pk %}" data-submit-once>{% csrf_token %}
+<button class="lm-btn lm-primary" type="submit">{% if order.state == 'temporary_error' %}Reintentar el mismo pedido{% else %}Confirmar contratación simulada{% endif %}</button></form>
+<form method="post" action="{% url 'sim_cancel_order' order.pk %}">{% csrf_token %}
+<button class="lm-btn" name="confirm" value="yes" type="submit">Cancelar pedido</button></form>
+</section>{% endblock %}

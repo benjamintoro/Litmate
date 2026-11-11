@@ -1,0 +1,11 @@
+{% extends 'accounts/checkout/frame.html' %}
+{% block checkout_content %}
+<nav class="lm-tabs" aria-label="Etapas del checkout"><a href="{% url 'sim_checkout' plan.slug %}">Resumen</a><span aria-current="step">Método</span><span>Confirmación</span></nav>
+<h1>Elegir método ficticio</h1><p>{{ plan.nombre }} · {{ plan.precio }} {{ plan.moneda }} al mes</p>
+<form method="post" class="lm-panel lm-form" data-submit-once>{% csrf_token %}{{ form.submission_id }}{{ form.submission_id.errors }}{{ form.non_field_errors }}
+<fieldset><legend>Medio de prueba</legend>{{ form.method }}{{ form.method.errors }}</fieldset>
+<p class="lm-muted">Los tres medios registran operaciones ficticias dentro de LitMate.</p>
+{% if same_plan %}<label class="lm-check">{{ form.renew }} {{ form.renew.label }}</label>{{ form.renew.errors }}{% endif %}
+{% if form.scenario %}{% include 'accounts/social/field.html' with field=form.scenario %}{% endif %}
+<div class="lm-actions"><button class="lm-btn lm-primary" type="submit">Revisar confirmación</button><a class="lm-btn" href="{% url 'sim_checkout' plan.slug %}">Volver</a></div>
+</form>{% endblock %}

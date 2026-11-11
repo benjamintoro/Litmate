@@ -48,6 +48,9 @@ def query(request):
             raise ValueError()
     except (ValueError, UnicodeDecodeError):
         return JsonResponse({'response': 'No pude leer el mensaje.'}, status=400)
+    from .chat_history import contains_secret, record_input
+    if contains_secret(message):
+        return JsonResponse({'response': 'Retira contraseñas o tokens del mensaje antes de enviarlo.'}, status=400)
     if not request.user.is_authenticated and not request.reader_identity_established:
         return error_response(UsageError('visitor_identity_required', 'Abre el chat para establecer tu identidad de visitante.', 409))
     request_id = data.get('request_id')
@@ -67,11 +70,36 @@ def query(request):
         return JsonResponse({'error': 'storage_unavailable', 'response': 'No fue posible comprobar tu cuota. Inténtalo más tarde.'}, status=503)
     if reused:
         return replay(op)
+    try:
+        record_input(request, op, message)
+        request.reader_operation_id = op.pk
+    except DatabaseError:
+        try:
+            finish(op.pk, {'error': 'storage_unavailable', 'response': 'No pudimos guardar tu consulta.'}, failed=True)
+        except DatabaseError:
+            pass  # La reserva conserva su caducidad y se recupera al volver el almacén.
+        return JsonResponse({'response': 'No pudimos guardar tu consulta. Vuelve a intentarlo.'}, status=503)
     # Una petición API no puede esquivar la confirmación de cuota/historial
     # desactivando progress. Los saludos/rechazos locales siguen siendo inmediatos.
     request.reader_force_progress = True
     try:
-        response = literary_ai_views.chatbot_query(request)
+        from .personal_chat import answer, remember_private_turn
+        personal = answer(message, request.user)
+        if personal is None:
+            response = literary_ai_views.chatbot_query(request)
+        else:
+            remember_private_turn(request, op, message, personal)
+            response = StreamingHttpResponse([
+                'data: ' + json.dumps({'token': personal['response']}, ensure_ascii=False) + '\n\n',
+                'data: ' + json.dumps({'books': personal['books']}, ensure_ascii=False) + '\n\n',
+                'data: [DONE]\n\n'], content_type='text/event-stream; charset=utf-8')
+    except DatabaseError:
+        try:
+            finish(op.pk, {'error': 'storage_unavailable', 'response': 'No pudimos consultar tu biblioteca.'}, failed=True)
+        except DatabaseError:
+            pass  # La reserva pendiente se recupera mediante su expiración existente.
+        return JsonResponse({'error': 'storage_unavailable',
+            'response': 'No pudimos consultar tus datos. Inténtalo más tarde.'}, status=503)
     except Exception:
         finish(op.pk, {'error': 'technical_failure', 'response': 'No fue posible iniciar la consulta.'}, failed=True)
         raise
@@ -126,7 +154,11 @@ def finalize(request):
             raise ValueError()
     except (ValueError, UnicodeDecodeError):
         return JsonResponse({'response': 'Solicitud inválida.'}, status=400)
-    op = QueryOperation.objects.filter(actor=request.reader_actor, stream_token=token).first()
+    try:
+        op = QueryOperation.objects.filter(actor=request.reader_actor, stream_token=token).first()
+    except DatabaseError:
+        return JsonResponse({'error': 'storage_unavailable',
+            'response': 'No fue posible comprobar la respuesta pendiente. Inténtalo más tarde.'}, status=503)
     if op is None:
         return JsonResponse({'response': 'Esta respuesta no pertenece a tu identidad.'}, status=404)
     if op.status == 'completed':
@@ -148,7 +180,7 @@ def finalize(request):
             result = json.loads(response.content)
             if request.user.is_authenticated:
                 from core.models import MensajeIA
-                if not MensajeIA.objects.filter(conversacion__usuario=request.user,
+                if not MensajeIA.objects.filter(conversacion__usuario=request.user, rol='assistant',
                                                  metadata_json__reader_operation=op.pk).exists():
                     # Si el cache de transporte se confirmó pero la transacción
                     # privada anterior se revirtió, reutilizar el resultado ya
@@ -159,7 +191,7 @@ def finalize(request):
                     except (JobUnavailable, JobBusy, JobStale):
                         raise AbortPublication(JsonResponse({'response':'La respuesta pendiente ya no está disponible.'},status=409))
                     recovered = literary_ai_views.ChatResult(**job['result']['result'])
-                    if recovered.remember:
+                    if recovered.status != 'unavailable':
                         state = request.session.get(literary_ai_views.HISTORY_KEY, {})
                         literary_ai_views.persist_turn_records(request, state, job['payload']['message'],
                             recovered, int(recovered.diagnostics.get('elapsed_ms', 0)),

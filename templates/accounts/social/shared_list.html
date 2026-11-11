@@ -1,0 +1,9 @@
+{% extends 'accounts/social/frame.html' %}
+{% block social_content %}
+<div class="lm-narrow lm-stack">
+    <a href="{% url 'social_public_profile' social.public_id %}?seccion=listas">Listas de {{ social.name }}</a>
+    <h1>{{ shared_list.nombre }}</h1>
+    <div class="lm-panel lm-stack">{% for book in books %}{% include 'accounts/social/book_card.html' %}{% empty %}<p>Esta lista todavía no tiene libros.</p>{% endfor %}</div>
+    {% include 'accounts/social/page_links.html' with page_obj=books %}
+</div>
+{% endblock %}

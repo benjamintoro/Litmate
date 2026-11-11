@@ -1,0 +1,24 @@
+{% extends 'accounts/checkout/frame.html' %}
+{% block checkout_content %}
+<h1>Mi suscripción</h1>
+<section class="lm-panel lm-stack">
+{% if subscription %}<h2>{{ subscription.plan.nombre }}</h2>
+<dl class="lm-order-summary"><dt>Estado</dt><dd>{% if subscription.es_valida %}{% if subscription.fecha_cancelacion %}Cancelación registrada · acceso hasta el vencimiento{% else %}Activa{% endif %}{% else %}Vencida o inactiva{% endif %}</dd>
+<dt>Precio mensual</dt><dd>{{ subscription.plan.precio }} {{ subscription.plan.moneda }}</dd>
+<dt>Inicio del período</dt><dd>{{ subscription.fecha_inicio|date:'d/m/Y H:i' }}</dd>
+<dt>Fin del período</dt><dd>{{ subscription.fecha_fin|date:'d/m/Y H:i'|default:'Sin vencimiento' }}</dd>
+<dt>Consultas diarias</dt><dd>{% if subscription.plan.limite_consultas_ia_diarias == 0 %}Ilimitadas{% else %}{{ subscription.plan.limite_consultas_ia_diarias }}{% endif %}</dd>
+<dt>Libros favoritos</dt><dd>{% if subscription.plan.limite_favoritos == 0 %}Sin límite configurado{% else %}{{ subscription.plan.limite_favoritos }}{% endif %}</dd>
+{% if active_order %}<dt>Medio ficticio</dt><dd>{{ active_order.get_method_display }}</dd>{% endif %}</dl>
+{% include 'accounts/usage.html' %}
+{% if simulated_subscription %}<p>La renovación mensual se ejecuta únicamente mediante el mecanismo de pruebas controlado. Puedes renovar voluntariamente desde Planes.</p>
+<div class="lm-actions">{% if not subscription.fecha_cancelacion and subscription.es_valida %}<a class="lm-btn" href="{% url 'sim_cancel_subscription' %}">Cancelar suscripción simulada</a>{% endif %}
+{% if active_order %}<a class="lm-btn" href="{% url 'sim_receipt' active_order.pk %}">Consultar comprobante actual</a>{% endif %}</div>
+<details><summary>Cambiar inmediatamente a Gratuito</summary>
+<form method="post" action="{% url 'sim_switch_free' %}" class="lm-form">{% csrf_token %}
+<label class="lm-check"><input type="checkbox" name="confirm" value="yes" required> Confirmo que el cambio es inmediato y conserva el consumo diario y mis libros.</label>
+<div><button class="lm-btn">Activar Gratuito</button></div></form></details>{% endif %}
+{% else %}<p>Elige un plan para comenzar.</p>{% endif %}
+<div class="lm-actions"><a class="lm-btn lm-primary" href="{% url 'suscripciones:planes' %}">Cambiar o renovar plan</a>
+<a class="lm-btn" href="{% url 'sim_history' %}">Historial de operaciones</a><a class="lm-btn" href="{% url 'perfil' %}">Mi cuenta</a></div>
+</section>{% endblock %}

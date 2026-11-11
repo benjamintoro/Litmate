@@ -1,0 +1,9 @@
+{% extends 'admin/base_site.html' %}
+{% block content %}
+<h1>Estado operativo</h1><p>Versión {{ version }} · {{ environment }}</p>
+<p>Espacio libre: {{ free_gib }} GiB. Sin comprobaciones de red adicionales al abrir esta página.</p>
+<h2>Almacén de cuentas</h2><pre>{{ health }}</pre>
+{% for name, report in reports.items %}<h2>{{ name }}</h2><pre>{{ report }}</pre>{% endfor %}
+<p>Los proveedores reflejan la última comprobación de arranque, no monitorización continua.</p>
+<p>La configuración se cambia mediante arranque validado; esta consola no modifica planes ni credenciales.</p>
+{% endblock %}

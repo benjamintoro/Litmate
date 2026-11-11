@@ -1,0 +1,18 @@
+{% extends 'accounts/social/frame.html' %}
+{% block social_content %}
+<div class="lm-columns">
+    <div class="lm-stack">
+        <header class="lm-feed-heading"><div><p class="lm-kicker">Lecturas compartidas</p><h1>Comunidad LitMate</h1><p class="lm-muted">Un espacio para conversar sobre los libros que nos acompañan.</p></div></header>
+        <nav class="lm-tabs" aria-label="Filtrar publicaciones">
+            <a href="?ver=recientes" {% if feed_scope == 'recientes' %}aria-current="page"{% endif %}>Recientes</a>
+            {% if user.is_authenticated %}<a href="?ver=seguidos" {% if feed_scope == 'seguidos' %}aria-current="page"{% endif %}>Seguidos</a>{% endif %}
+        </nav>
+        {% for post in posts %}{% include 'accounts/social/post_card.html' %}{% empty %}<section class="lm-panel lm-empty"><h2>La conversación empieza aquí</h2><p class="lm-muted">{% if feed_scope == 'seguidos' %}Las publicaciones compartidas por los lectores que sigues aparecerán aquí.{% else %}Las opiniones públicas de la comunidad aparecerán aquí.{% endif %}</p>{% if user.is_authenticated %}<a class="lm-btn lm-primary" href="{% url 'social_new_post' %}">Escribir una publicación</a>{% endif %}</section>{% endfor %}
+        {% if feed_scope == 'seguidos' %}{% include 'accounts/social/page_links.html' with page_obj=posts query_prefix='ver=seguidos&' %}{% else %}{% include 'accounts/social/page_links.html' with page_obj=posts query_prefix='ver=recientes&' %}{% endif %}
+    </div>
+    <aside class="lm-stack lm-feed-side">{% if user.is_authenticated %}<section class="lm-panel">
+        <h2>Mis publicaciones</h2><p><a href="{% url 'perfil' %}">Abrir mi perfil</a></p>
+        <a class="lm-btn lm-primary" href="{% url 'social_new_post' %}">Nueva publicación</a>
+    </section>{% endif %}</aside>
+</div>
+{% endblock %}

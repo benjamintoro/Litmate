@@ -1,0 +1,33 @@
+{% extends 'accounts/social/frame.html' %}
+{% block social_content %}
+<div class="lm-narrow lm-stack">
+    <div><a href="{% url 'perfil' %}">Volver a mi cuenta</a><h1>{% if entry %}Editar publicación{% else %}Nueva publicación{% endif %}</h1></div>
+    <section class="lm-panel">
+        <form class="lm-form" method="get">
+            <div class="lm-field"><label for="book-search">Buscar un libro para adjuntar</label>
+                <div class="lm-search-row"><input id="book-search" name="q" value="{{ search_term }}" minlength="2" maxlength="80" required>
+                    <button class="lm-btn">Buscar</button></div>
+            </div>
+        </form>
+        {% if search_term %}<ul class="lm-book-options">
+            {% for book in search_books %}<li><a class="lm-btn" href="?libro={{ book.pk }}&amp;q={{ search_term|urlencode }}" data-choose-book="{{ book.pk }}" data-book-label="{{ book.titulo }} · {{ book.autor.nombre }}">{{ book.titulo }} · {{ book.autor.nombre }}</a></li>
+            {% empty %}<li>No encontramos obras. Prueba con otro título, autor o ISBN.</li>{% endfor %}
+        </ul>{% endif %}
+    </section>
+    <form class="lm-panel lm-form" method="post" data-submit-once>
+        {% csrf_token %}{{ form.non_field_errors }}{{ form.submission_id }}{{ form.catalogue_id }}{{ form.catalogue_id.errors }}
+        <p data-book-selected role="status">{% if selected %}Libro vinculado · {{ selected.titulo }} · {{ selected.autor.nombre }}{% else %}Sin libro vinculado{% endif %}</p>
+        <a class="lm-btn lm-small" href="?libro=ninguno{% if search_term %}&amp;q={{ search_term|urlencode }}{% endif %}" data-choose-book="" data-book-label="">Quitar libro</a>
+        {% include 'accounts/social/field.html' with field=form.body %}
+        {% include 'accounts/social/field.html' with field=form.visibility %}
+        {% include 'accounts/social/field.html' with field=form.spoiler %}
+        {% include 'accounts/social/field.html' with field=form.allow_comments %}
+        <div><button class="lm-btn lm-primary">{% if entry %}Guardar cambios{% else %}Publicar{% endif %}</button></div>
+    </form>
+    {% if entry %}<form class="lm-panel lm-form" method="post" action="{% url 'social_delete_post' entry.pk %}">{% csrf_token %}
+        <h2>Eliminar publicación</h2>
+        <label class="lm-check"><input type="checkbox" name="confirm" value="yes" required> Confirmo que quiero eliminarla.</label>
+        <div><button class="lm-btn lm-danger">Eliminar publicación</button></div>
+    </form>{% endif %}
+</div>
+{% endblock %}

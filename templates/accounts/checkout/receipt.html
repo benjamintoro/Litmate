@@ -1,0 +1,19 @@
+{% extends 'accounts/checkout/frame.html' %}
+{% block checkout_content %}
+<h1>{% if order.state == 'approved' %}COMPROBANTE DE OPERACIÓN SIMULADA{% else %}Resultado de la operación simulada{% endif %}</h1>
+<p role="status" class="lm-result">{{ order.get_state_display }}</p>
+<section class="lm-panel lm-stack">
+<p>Este comprobante corresponde a una demostración académica. No acredita un pago real ni constituye un documento tributario.</p>
+<dl class="lm-order-summary"><dt>Identificador</dt><dd>{{ order.pk }}</dd><dt>Referencia</dt><dd>{{ order.payment.referencia_transaccion }}</dd>
+<dt>Fecha y hora</dt><dd>{{ order.created_at|date:'d/m/Y H:i:s' }}</dd><dt>Cuenta</dt><dd>{{ user.username }}</dd>
+<dt>Plan</dt><dd>{{ order.plan_name }}</dd><dt>Importe</dt><dd>{{ order.payment.monto }} {{ order.payment.moneda }}</dd>
+<dt>Método ficticio</dt><dd>{{ order.get_method_display }}</dd><dt>Operación</dt><dd>{{ order.get_kind_display }}</dd>
+<dt>Estado</dt><dd>{{ order.get_state_display }}</dd>
+{% if order.activated_at %}<dt>Activación</dt><dd>{{ order.activated_at|date:'d/m/Y H:i:s' }}</dd>
+<dt>Fin del período simulado</dt><dd><time data-access-until datetime="{{ order.access_until|date:'c' }}">{{ order.access_until|date:'d/m/Y H:i:s' }}</time></dd>{% endif %}</dl>
+{% if order.state == 'rejected' %}<p>El pago ficticio fue rechazado. Se conservó la suscripción anterior.</p>
+<a class="lm-btn" href="{% url 'sim_checkout' order.payment.plan.slug %}">Iniciar un nuevo intento</a>{% endif %}
+{% if order.state == 'cancelled' %}<p>El pedido fue cancelado. Se conservó la suscripción anterior.</p>{% endif %}
+<div class="lm-actions lm-print-controls"><button class="lm-btn" type="button" data-print hidden>Imprimir o guardar PDF</button>
+<a class="lm-btn lm-primary" href="{% url 'sim_subscription' %}">Mi suscripción</a><a class="lm-btn" href="{% url 'sim_history' %}">Historial de operaciones</a></div>
+</section>{% endblock %}

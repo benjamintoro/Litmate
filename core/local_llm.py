@@ -85,11 +85,12 @@ class OllamaJSON:
     provider = 'ollama-local'
 
     def __init__(self, base_url='http://127.0.0.1:11434', *, timeout=240,
-                 context=16384, thinking=False, answer_tokens=2048, total_timeout=300):
+                 context=16384, thinking=False, answer_tokens=2048, total_timeout=300,streaming=False):
         self.base_url = base_url
         self.timeout = max(.1, min(float(timeout), 600))
         self.context = max(8192, min(int(context), 32768))
         self.thinking = thinking is True
+        self.streaming = streaming is True
         self.answer_tokens = max(1024, min(int(answer_tokens), 4096))
         self.deadline = time.monotonic() + max(.1, min(float(total_timeout), 600))
         if current_deadline() is not None:
@@ -529,12 +530,24 @@ class OllamaJSON:
             raw = ''
             for request_attempt in range(2):
                 content = self._fit_context(prompt, transport_data, request_tokens)
+                # Mantiene ÍNTEGROS prompt, evidencias y personalidad. Sólo reduce
+                # la reserva de contexto si cabe el mismo contenido, con el
+                # margen conservador que ya usa el adaptador.
+                required=(len(prompt)+len(content))/2.5+request_tokens+700
+                request_context=self.context
+                if self.interactive:
+                    # Keep complete input and choose the smallest safe tier.
+                    # Current GPU measurements show a severe CPU-offload cost
+                    # at 12K; do not reserve it when the same input fits 8K.
+                    request_context=next((size for size in (8192,12288,self.context)
+                                          if size<=self.context and required<=size),self.context)
+                streaming=self.streaming and self.interactive
                 payload = {
-                    'model': model, 'stream': False, 'format': schema, 'keep_alive': '10m',
+                    'model': model, 'stream': streaming, 'format': schema, 'keep_alive': '10m',
                     'messages': [{'role': 'system', 'content': prompt},
                                  {'role': 'user', 'content': content}],
                     'options': {'temperature': 0.1 if answer_stage else 0,
-                                'num_ctx': self.context,
+                                'num_ctx': request_context,
                                 'num_predict': request_tokens},
                 }
                 if 'thinking' in (info.get('capabilities') or []):
@@ -542,9 +555,15 @@ class OllamaJSON:
                 self.calls += 1
                 from .ai_progress import record_model_call
                 record_model_call()
-                result = read_json_url(local_origin(self.base_url) + '/api/chat',
-                    payload=payload, headers={'Content-Type': 'application/json'},
-                    timeout=self._remaining(), local=True)
+                self._inference_metrics.update(request_context=request_context,prompt_chars=len(prompt),
+                    input_json_chars=len(content),output_token_limit=request_tokens)
+                if streaming:
+                    from .ollama_stream import read_chat_stream
+                    result=read_chat_stream(self.base_url,payload,timeout=self._remaining(),metrics=self._inference_metrics)
+                else:
+                    result = read_json_url(local_origin(self.base_url) + '/api/chat',
+                        payload=payload, headers={'Content-Type': 'application/json'},
+                        timeout=self._remaining(), local=True)
                 # Métricas numéricas del proveedor local, sin mensajes ni fuentes.
                 # Distinguen carga, evaluación de entrada y generación; el tiempo
                 # de pared sigue incluyendo HTTP, validación y transporte.
@@ -631,6 +650,7 @@ class OllamaJSON:
             raise
         except BudgetExpired:
             self.last_error = 'tiempo_total_agotado'
+            self.last_error_detail='global_budget_or_cancellation'
             raise ProviderUnavailable(self.last_error) from None
         except HTTPError as exc:
             self.last_error = {404: 'modelo_no_descargado', 503: 'ollama_ocupado',
@@ -639,7 +659,9 @@ class OllamaJSON:
         except (URLError, OSError, TimeoutError) as exc:
             reason = getattr(exc, 'reason', exc)
             timeout = isinstance(reason, TimeoutError)
-            self.last_error_detail = 'transport_timeout' if timeout else 'transport_unavailable'
+            phase=getattr(exc,'phase',None)
+            self.last_error_detail = ('transport_'+phase+'_timeout' if timeout and phase in {'connect','headers','body'}
+                                     else 'transport_timeout' if timeout else 'transport_unavailable')
             self.last_error = ('tiempo_total_agotado' if time.monotonic() >= self.deadline else
                                'ollama_timeout' if timeout else 'ollama_no_disponible')
             raise ProviderUnavailable(self.last_error) from None

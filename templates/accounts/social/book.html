@@ -1,0 +1,11 @@
+{% extends 'accounts/social/frame.html' %}
+{% block social_content %}
+<div class="lm-narrow lm-stack">
+    <a href="{% url 'buscar_libros' %}">Explorar el catálogo</a><h1>Ficha del libro</h1>
+    <section class="lm-panel lm-stack">
+        {% include 'accounts/social/book_card.html' %}
+        {% if synopsis %}<p class="lm-prewrap">{{ synopsis }}</p>{% endif %}
+        {% if user.is_authenticated %}<div><a class="lm-btn lm-primary" href="{% url 'social_new_post' %}?libro={{ book.catalogue_id }}">Publicar sobre este libro</a></div>{% endif %}
+    </section>
+</div>
+{% endblock %}

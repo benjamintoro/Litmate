@@ -1,0 +1,8 @@
+<nav class="lm-tabs" aria-label="Secciones del perfil">
+    <a href="?seccion=publicaciones" {% if social_tab == 'publicaciones' %}aria-current="page"{% endif %}>Publicaciones</a>
+    <a href="?seccion=biblioteca" {% if social_tab == 'biblioteca' %}aria-current="page"{% endif %}>Biblioteca</a>
+    <a href="?seccion=listas" {% if social_tab == 'listas' %}aria-current="page"{% endif %}>Listas</a>
+    <a href="?seccion=actividad" {% if social_tab == 'actividad' %}aria-current="page"{% endif %}>Actividad</a>
+    <a href="?seccion=informacion" {% if social_tab == 'informacion' %}aria-current="page"{% endif %}>Información</a>
+    {% if profile_owner %}<a href="?seccion=configuracion" {% if social_tab == 'configuracion' %}aria-current="page"{% endif %}>Configuración</a>{% endif %}
+</nav>

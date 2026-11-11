@@ -1,0 +1,15 @@
+{% extends 'base.html' %}{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/reader-personal.css' %}">
+<main class="container py-5 reader-personal"><h1>Mi historial de operaciones</h1>
+<p>Solo tú puedes consultar estas operaciones. Un registro histórico no confirma por sí solo una suscripción vigente.</p>
+<p>La contratación de planes pagados no está disponible. No se realizarán cobros.</p>
+{% for payment in payments %}<article class="card p-3 mb-3"><h2 class="h5">{{ payment.plan.nombre|default:'Plan histórico' }}</h2>
+<p>{{ payment.fecha_pago }} · {{ payment.monto }} {{ payment.moneda }} · {{ payment.get_estado_display }}</p></article>
+{% empty %}<p>No tienes operaciones registradas.</p>{% endfor %}
+{% if payments.has_other_pages %}<nav aria-label="Páginas de operaciones">
+{% if payments.has_previous %}<a href="?page={{ payments.previous_page_number }}">Anteriores</a>{% endif %}
+<span>Página {{ payments.number }} de {{ payments.paginator.num_pages }}</span>
+{% if payments.has_next %}<a href="?page={{ payments.next_page_number }}">Siguientes</a>{% endif %}</nav>{% endif %}
+<a href="{% url 'perfil' %}">Volver a mi cuenta</a></main>
+{% endblock %}

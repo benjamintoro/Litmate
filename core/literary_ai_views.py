@@ -170,7 +170,7 @@ def remember(request, state, message, result, elapsed_ms, client, *, topic_conte
     from .genre_recommendations import remember_recommendations
     remember_recommendations(state,message,topic_context or {},result)
     topic_changed = remember_topic(state, message, topic_context)
-    if not result.remember:
+    if not result.remember or result.status != 'answered':
         # The requested work is reader intent, not a rejected answer/fact.
         request.session[HISTORY_KEY] = state
         request.session.modified = True
@@ -231,6 +231,8 @@ def remember(request, state, message, result, elapsed_ms, client, *, topic_conte
         try:
             persist_turn_records(request, state, message, result, elapsed_ms, client)
         except Exception as exc:
+            if getattr(request, 'reader_operation_id', None) is not None:
+                raise
             logger.warning('IA: historial persistente no disponible (%s)', type(exc).__name__)
     # El middleware guarda los cambios antes de empezar el streaming.
     request.session[HISTORY_KEY] = state
@@ -248,15 +250,21 @@ def persist_turn_records(request, state, message, result, elapsed_ms, client):
     with transaction.atomic(using=router.db_for_write(ConversacionIA)):
         operation = getattr(request, 'reader_operation_id', None)
         marker = {'reader_operation': operation} if operation is not None else {}
-        if marker and MensajeIA.objects.filter(conversacion__usuario=request.user,
+        if marker and MensajeIA.objects.filter(conversacion__usuario=request.user, rol='assistant',
                                                metadata_json__reader_operation=operation).exists():
             return
-        conv = ConversacionIA.objects.filter(pk=state.get('conversation_id'), usuario=request.user).first()
+        existing_user = (MensajeIA.objects.filter(conversacion__usuario=request.user, rol='user',
+                            metadata_json__reader_operation=operation).first() if marker else None)
+        conv = (existing_user.conversacion if existing_user else
+                ConversacionIA.objects.filter(pk=state.get('conversation_id'), usuario=request.user).first())
         if conv is None:
-            conv = ConversacionIA.objects.create(usuario=request.user, session_key=request.session.session_key,
+            conv = ConversacionIA.objects.create(usuario=request.user,
                                                   titulo=message[:120])
-            state['conversation_id'] = conv.pk
-        MensajeIA.objects.create(conversacion=conv, rol='user', contenido=message, metadata_json=marker)
+        state['conversation_id'] = conv.pk
+        increment = 1
+        if existing_user is None:
+            MensajeIA.objects.create(conversacion=conv, rol='user', contenido=message, metadata_json=marker)
+            increment = 2
         MensajeIA.objects.create(conversacion=conv, rol='assistant', contenido=result.text,
             tokens_prompt=client.usage.get('prompt_tokens', 0), tokens_completion=client.usage.get('completion_tokens', 0),
             tokens_utilizados=client.usage.get('total_tokens', 0), latencia_ms=elapsed_ms,
@@ -265,7 +273,7 @@ def persist_turn_records(request, state, message, result, elapsed_ms, client):
             'books':result.books,'basis':result.basis,'provider':client.provider,'provider_calls':client.calls,
             'diagnostics':result.diagnostics,'usage_includes_guards':True})
         ConversacionIA.objects.filter(pk=conv.pk, usuario=request.user).update(
-            total_mensajes=F('total_mensajes')+2, ultima_actividad=timezone.now())
+            total_mensajes=F('total_mensajes')+increment, ultima_actividad=timezone.now())
 
 
 def _model_answer(message, history, topic_context, retrieval_message):
@@ -291,6 +299,11 @@ def _model_answer(message, history, topic_context, retrieval_message):
                 and not reference['ambiguous']
                 and (looks_literary(message, history) or route is not None))
     queries = public_research_queries(retrieval_message, reference['books']) if eligible else []
+    if route and route['intent'] in {'analysis','summary'}:
+        # Let the explicit-work route resolve identity and request its exact
+        # article first. Speculative broad results used to exhaust the shared
+        # page budget before that lookup, leaving only irrelevant local text.
+        queries=[]
     with pool_in_budget(1) as pool:
         pending = None
         if queries:
@@ -341,6 +354,7 @@ def _model_answer(message, history, topic_context, retrieval_message):
                 backup.diagnostics.update(original_failure=result.diagnostics, web_backup=True)
                 result = backup
         if (result.status == 'unavailable' and getattr(settings, 'LITMATE_AI_CATALOG_FALLBACK', True)
+                and (route or {}).get('intent') not in {'analysis','summary','author'}
                 and reference.get('reason') not in {'similar', 'same_author'}):
             from .ai_catalog_fallback import catalog_fallback
             from .literary_search import search_google
@@ -475,6 +489,10 @@ def _compute_answer_impl(message, history, topic_context, *, pending_clarificati
     """
     from django.db import close_old_connections
     try:
+        from .ai_conversation_repair import conversation_repair
+        repair = conversation_repair(message, history, topic_context)
+        if repair is not None:
+            return repair, SimpleNamespace(usage={}, provider='conversation-repair', calls=0)
         retrieval_message = (topic_context['query'] if topic_context.get('followup')
                              and topic_context.get('intent') == 'recommend' else message)
         from .literary_ai import requires_exact_text, has_excerpt, EXACT_TEXT_NEEDED
@@ -776,7 +794,7 @@ def _progressive_response(request, state, message, topic_context, start, deadlin
     # copy_context captura progress_scope y bounded_research ANTES de que la
     # vista termine. Crear el Future dentro del iterador perdería esos ámbitos.
     try:
-        with progress_scope(publish):
+        with progress_scope(publish) as shared_progress:
             pending = submit_before_deadline(_answer_with_cache, deadline, message,
                 copy.deepcopy(state['turns']), copy.deepcopy(topic_context),
                 copy.deepcopy(state), owner, request_metrics, start,
@@ -820,11 +838,18 @@ def _progressive_response(request, state, message, topic_context, start, deadlin
                         diagnostics={'provider_error': 'tiempo_total_agotado'})
                     client = SimpleNamespace(usage={}, provider='deadline', calls=None)
                     break
+            # A discarded synthesis may return a different client with zero
+            # calls. Preserve actual attempts measured across all clients.
+            with shared_progress['lock']:
+                started_calls=shared_progress.get('model_calls_started',0)
+            call_counts = (getattr(client, 'calls', None), result.diagnostics.get('model_calls'),
+                           result.diagnostics.get('progress_metrics', {}).get('model_calls_started'),started_calls)
+            actual_calls = max((value for value in call_counts if type(value) is int), default=0)
             result.diagnostics.update(elapsed_ms=round((time.monotonic() - start) * 1000),
-                chat_budget_seconds=chat_timeout(settings), model_calls=getattr(client, 'calls', None))
+                chat_budget_seconds=chat_timeout(settings), model_calls=actual_calls)
             receipt = {'result': asdict(result), 'client': {
                 'provider': str(getattr(client, 'provider', 'local'))[:64],
-                'calls': getattr(client, 'calls', None),
+                'calls': actual_calls,
                 'usage': {key: value for key, value in getattr(client, 'usage', {}).items()
                           if key in {'prompt_tokens', 'completion_tokens', 'total_tokens'}
                           and type(value) is int and value >= 0}}}
@@ -993,12 +1018,18 @@ def chatbot_query(request):
         from .literary_presentation_language import prepare_presentation
         result = ChatResult(REFUSAL, 'rejected')
         prepare_presentation(result, message, SimpleNamespace(usage={}, provider='local', calls=0))
+        if request.user.is_authenticated and getattr(request, 'reader_operation_id', None):
+            persist_turn_records(request, request.session.get(HISTORY_KEY, {}), message, result, 0,
+                                 SimpleNamespace(usage={}, provider='local', calls=0))
         return stream_result(result)
     social = local_social(message)
     if social:
         from .literary_presentation_language import prepare_presentation
         result = ChatResult(social, 'social')
         prepare_presentation(result, message, SimpleNamespace(usage={}, provider='local', calls=0))
+        if request.user.is_authenticated and getattr(request, 'reader_operation_id', None):
+            persist_turn_records(request, request.session.get(HISTORY_KEY, {}), message, result, 0,
+                                 SimpleNamespace(usage={}, provider='local', calls=0))
         return stream_result(result)
     if getattr(settings, 'LITMATE_USE_EXISTING_QUOTAS', False):
         quota_ok, quota_info = cuota_disponible(request)
@@ -1116,7 +1147,7 @@ def voice_query(request):
         return JsonResponse({'error': 'Envía entre 1 y 3500 caracteres.'}, status=400)
     if not getattr(settings, 'LITMATE_TTS_ENABLED', False):
         return JsonResponse({'error': 'La voz externa está desactivada en este servidor.'}, status=503)
-    identity = ('u:' + str(request.user.pk) if request.user.is_authenticated
+    identity = getattr(request, 'reader_actor', None) or ('u:' + str(request.user.pk) if request.user.is_authenticated
                 else 'ip:' + request.META.get('REMOTE_ADDR', ''))
     key = 'ai_voice_rate:' + hashlib.sha256(identity.encode()).hexdigest() + ':' + str(int(time.time()) // 60)
     try:

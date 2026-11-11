@@ -423,6 +423,7 @@
                 }
                 card.appendChild(links);
             }
+            if (typeof window !== 'undefined' && window.LitmateLibrary) window.LitmateLibrary.decorate(card, book);
             grid.appendChild(card);
         }
         group.appendChild(grid);

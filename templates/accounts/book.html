@@ -1,0 +1,29 @@
+{% extends 'accounts/social/frame.html' %}{% load static %}
+{% block title %}{{ book.titulo }} - Mi biblioteca - LitMate{% endblock %}
+{% block social_content %}
+<div class="lm-narrow lm-stack reader-book">
+<a href="{% url 'reader_library' %}">← Volver a mi biblioteca</a>
+<section class="lm-panel lm-book-detail">
+<div class="lm-book-cover">
+    <span aria-hidden="true">Sin portada disponible</span>
+    {% if book.display_cover %}<img src="{{ book.display_cover }}" alt="Portada de {{ book.titulo }}" referrerpolicy="no-referrer" data-cover-image>{% endif %}
+</div>
+<div class="lm-stack"><div><h1>{{ book.titulo }}</h1><p class="lm-muted">{{ book.autores }}</p></div>
+<p>Tu ficha privada de lectura.</p>
+<div><button type="button" class="lm-btn lm-favorite btn-fav" data-google-id="{{ book.google_id }}" data-titulo="{{ book.titulo }}" data-autores="{{ book.autores }}" data-imagen="{{ book.display_cover }}" aria-pressed="false"><span aria-hidden="true">♡</span> <span data-favorite-label>Guardar en favoritos</span></button></div>
+<form class="lm-form" method="post" action="{% url 'actualizar_estado_lectura' %}">{% csrf_token %}
+<input type="hidden" name="google_id" value="{{ book.google_id }}"><input type="hidden" name="titulo" value="{{ book.titulo }}">
+<input type="hidden" name="autores" value="{{ book.autores }}"><input type="hidden" name="imagen_url" value="{{ book.display_cover }}">
+<label for="reading-state-detail">Estado de lectura</label><select id="reading-state-detail" name="estado">
+{% for state,label in reading_labels.items %}<option value="{{ state }}" {% if state == current_state %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+<div><button type="submit" class="lm-btn lm-primary">Guardar estado</button></div></form>
+</div></section>
+{% for item in items %}<section class="lm-panel lm-stack"><h2>{{ item.lista.nombre }}</h2>
+<p>{{ item.get_estado_lectura_display }}</p>
+<form class="lm-form" method="post" action="{% url 'reader_reading_note' item.pk %}">{% csrf_token %}
+<label for="note-{{ item.pk }}">Mi nota privada (máximo 255 caracteres)</label>
+<textarea id="note-{{ item.pk }}" name="nota_personal" maxlength="255" rows="2">{{ item.nota_personal }}</textarea>
+<div><button type="submit" class="lm-btn">Guardar nota</button></div></form></section>{% endfor %}
+<section class="lm-panel"><h2>Buscar una edición</h2><div class="lm-actions">{% for label,url in book_links %}<a class="lm-btn" href="{{ url }}" target="_blank" rel="noopener noreferrer">{{ label }} ↗</a>{% endfor %}</div></section>
+</div>
+{% endblock %}

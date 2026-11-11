@@ -64,7 +64,7 @@ def main(argv=None):
     parser.add_argument('--comprobar-despliegue', action='store_true',
                         help='Ejecuta check --deploy con este perfil; combinar con --comprobar para salir.')
     parser.add_argument('--google-books-sin-facturacion', action='store_true')
-    parser.add_argument('--cuentas-db', type=Path, help='Perfil optativo con base privada ya preparada; no migra ni importa.')
+    parser.add_argument('--cuentas-db', type=Path, help='Aplicación con cuentas/cuotas persistentes en base privada preparada; no migra ni importa.')
     args = parser.parse_args(argv)
     if args.carpeta is None:
         args.carpeta = (ROOT / 'data' / 'accounts' / 'runtime' if args.cuentas_db
@@ -122,7 +122,9 @@ def main(argv=None):
             server = create_server(application, host='127.0.0.1', port=args.puerto, threads=8,
                 url_scheme='https' if args.modo == 'https' else 'http',
                 clear_untrusted_proxy_headers=True, channel_timeout=90,
-                max_request_body_size=65536, ident='LitMate demo')
+                # La única subida habilitada es el avatar autenticado (2 MiB).
+                # Query/finalize mantienen sus límites propios de 48/2 KiB.
+                max_request_body_size=(2 * 1024 * 1024 + 65536 if args.cuentas_db else 65536), ident='LitMate demo')
             # Comprobar el socket real, además de la configuración solicitada.
             actual_address, actual_port = server.socket.getsockname()[:2]
             if actual_address != '127.0.0.1' or actual_port != args.puerto:

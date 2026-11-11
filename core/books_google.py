@@ -216,12 +216,12 @@ _SPACE_TOPIC = (_SPACE_NARRATIVE + r'|\bespacio exterior\b|'
 
 
 GENRES = (
-    ('science_fiction', r'\bciencia ficcion\b|\bscience fiction\b|\bsci[ -]?fi\b|'
+    ('science_fiction', r'\balien(?:s)?\b|\bextraterrestres?\b|\bciencia\s*ficcion\b|\bscience fiction\b|\bsci[ -]?fi\b|'
                        + _SPACE_NARRATIVE,
      'Science Fiction', ('ciencia ficcion', 'science fiction', 'sci-fi', 'nave espacial',
                         'viaje en el tiempo', 'viajes en el tiempo', 'extraterrestre',
                         'interplanetari', 'distopi', 'space opera')),
-    ('fantasy', r'\bfantasia\b|\bfantasy\b', 'Fantasy',
+    ('fantasy', r'\bfantasia\b|\bfantasy\b|\bdrag[oó]n(?:es)?\b', 'Fantasy',
      ('fantasia', 'fantasy', 'magia', 'hechicer', 'dragon', 'reino magico')),
     ('horror', r'\bterror\b|\bhorror\b', 'Horror',
      ('terror', 'horror', 'sobrenatural', 'fantasma')),
@@ -279,6 +279,15 @@ def book_search_profile(query):
 # búsqueda que incluya Japón no demuestra por sí sola que un resultado trate
 # sobre arte japonés.
 _TOPIC_SUBJECTS = (
+    ('dragons', r'\bdrag[oó]n(?:es)?\b',
+     ('dragon', 'dragons', 'dragón', 'dragones')),
+    ('aliens', r'\balien(?:s)?\b|\bextraterrestres?\b',
+     ('alien', 'aliens', 'extraterrestre', 'extraterrestres',
+      'extraterrestrial', 'extraterrestrial beings', 'life on other planets')),
+    ('monarchy', r'\brey(?:es)?\b|\breinas?\b|\bmonarqu[ií]a\b',
+     ('rey', 'reyes', 'reina', 'reinas', 'king', 'kings', 'queen', 'queens',
+      'monarchy', 'monarchs', 'monarquía', 'monarquias', 'royalty')),
+
     ('world war i', r'\b(?:primera|1[ªa]?|i) guerra mundial\b|\b(?:wwi|ww1|pgm|gran guerra)\b|'
                     r'\bworld war (?:i|1)\b',
      ('primera guerra mundial', 'world war i', 'world war, 1914-1918',

@@ -1,3 +1,4 @@
+from .runtime_policy import catalogue_read_only
 from django.shortcuts import render, redirect, get_object_or_404
 from .services_voice import obtener_audio_miku
 from django.http import JsonResponse, StreamingHttpResponse
@@ -1157,7 +1158,7 @@ def get_featured_books():
 
     for cb in curated_books:
         precios_bd = list(PrecioLibroTienda.objects.filter(titulo_referencia__iexact=cb['titulo'], es_enlace_directo=True))
-        if not precios_bd and not getattr(settings, 'LITMATE_DEMO_READ_ONLY', False):
+        if not precios_bd and not catalogue_read_only():
             try:
                 res_scraper = obtener_datos_comparador_libro(
                     titulo=cb['titulo'],
@@ -1325,7 +1326,7 @@ def buscar_libros(request):
     )
 
     # Registrar evento de analítica si hubo búsqueda activa
-    if busqueda_activa and not getattr(settings, 'LITMATE_DEMO_READ_ONLY', False):
+    if busqueda_activa and not catalogue_read_only():
         try:
             EventoAnalitica.objects.create(
                 usuario=request.user if hasattr(request, 'user') and request.user.is_authenticated else None,
@@ -1361,7 +1362,7 @@ def buscar_libros(request):
 
     # Obtener listas creadas por el usuario autenticado
     listas_usuario = []
-    if request.user.is_authenticated and not getattr(settings, 'LITMATE_ACCOUNTS_ENABLED', False):
+    if request.user.is_authenticated:
         listas_usuario = ListaLectura.objects.filter(usuario=request.user).order_by('-fecha_creacion')
 
     # Obtener géneros consolidados de la base de datos
@@ -1462,7 +1463,7 @@ def api_precios_libro(request):
     except Exception as e:
         logger.error(f"Error en api_precios_libro: {e}")
         error_message = ('No fue posible consultar los precios almacenados.'
-                         if getattr(settings, 'LITMATE_DEMO_READ_ONLY', False) else str(e))
+                         if catalogue_read_only() else str(e))
         return JsonResponse({'status': 'error', 'msg': error_message}, status=500)
 
 

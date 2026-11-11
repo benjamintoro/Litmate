@@ -1,0 +1,57 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/reader-social.css' %}">
+<main class="lm-social"><div class="lm-shell">
+    {% include 'accounts/social/profile_header.html' %}
+    {% include 'accounts/social/tabs.html' %}
+    <div class="lm-columns">
+        <div class="lm-stack">
+            {% if social_tab == 'publicaciones' or social_tab == 'actividad' %}
+                <section class="lm-panel lm-row"><div><h2>{% if social_tab == 'actividad' %}Actividad literaria{% else %}Publicaciones{% endif %}</h2>
+                    <p class="lm-muted">Comparte una opinión y elige quién puede verla.</p></div>
+                    <a class="lm-btn lm-primary" href="{% url 'social_new_post' %}">Nueva publicación</a></section>
+                {% for post in posts %}{% include 'accounts/social/post_card.html' %}{% empty %}<section class="lm-panel lm-empty"><h2>Tu próxima lectura merece una conversación</h2><p class="lm-muted">Escribe una opinión y elige quién puede verla antes de publicarla.</p><a class="lm-btn" href="{% url 'social_new_post' %}">Crear mi primera publicación</a></section>{% endfor %}
+                {% if social_tab == 'actividad' %}{% include 'accounts/social/page_links.html' with page_obj=posts query_prefix='seccion=actividad&' page_param='publicaciones' %}{% else %}{% include 'accounts/social/page_links.html' with page_obj=posts query_prefix='seccion=publicaciones&' page_param='publicaciones' %}{% endif %}
+            {% elif social_tab == 'biblioteca' %}
+                <section class="lm-panel"><h2>Leyendo actualmente</h2>
+                    <div class="lm-stack">{% for book in currently_reading %}{% include 'accounts/social/book_card.html' with private_book=True %}{% empty %}<p class="lm-muted">Todavía no tienes lecturas en curso.</p>{% endfor %}</div>
+                    <a class="lm-btn lm-primary lm-spaced" href="{% url 'reader_library' %}">Abrir mi biblioteca privada</a>
+                </section>
+            {% elif social_tab == 'listas' %}
+                <section class="lm-panel"><h2>Mis listas</h2>
+                    {% for list in featured_lists %}<p>{{ list.nombre }}</p>{% empty %}<p class="lm-muted">Todavía no tienes listas.</p>{% endfor %}
+                    <a class="lm-btn lm-primary" href="{% url 'reader_library' %}#lm-lists">Administrar listas</a>
+                </section>
+            {% elif social_tab == 'informacion' %}
+                {% include 'accounts/social/about.html' %}
+            {% else %}
+                <section class="lm-panel"><h2>Configuración privada</h2>
+                    <p>{{ user.username }}{% if user.email %} · {{ user.email }}{% endif %}</p>
+                    <div class="lm-actions">
+                        <a class="lm-btn" href="{% url 'editar_perfil' %}">Datos personales</a>
+                        <a class="lm-btn" href="{% url 'reader_password_change' %}">Cambiar contraseña</a>
+                        <a class="lm-btn" href="{% url 'social_edit_profile' %}#privacidad">Preferencias de privacidad</a>
+                        <a class="lm-btn" href="{% url 'reader_payment_history' %}">Historial de operaciones</a>
+                        {% url 'reader_export_data' as export_url %}{% if export_url %}<a class="lm-btn" href="{{ export_url }}">Descargar mis datos</a>{% endif %}
+                    </div>
+                </section>
+                <section class="lm-panel"><h2>Conversaciones privadas</h2>
+                    <ul>{% for conversation in conversaciones %}<li><a href="{% url 'reader_conversation_page' conversation.pk %}">{{ conversation.titulo }}</a></li>
+                    {% empty %}<li>No hay conversaciones guardadas.</li>{% endfor %}</ul>
+                    {% include 'accounts/social/page_links.html' with page_obj=history_page query_prefix='seccion=configuracion&' %}
+                </section>
+            {% endif %}
+        </div>
+        <aside class="lm-stack" aria-label="Resumen privado">
+            <section class="lm-panel"><h2>Plan y cuota</h2>
+                {% if simulated_checkout_enabled %}<a class="lm-btn" href="{% url 'sim_subscription' %}">Mi suscripción</a>{% endif %}
+                {% include 'accounts/usage.html' %}
+                <a href="{% url 'suscripciones:planes' %}">Ver planes y suscripción</a>
+            </section>
+            {% include 'accounts/social/stats.html' %}
+            <section class="lm-panel"><h2>Mi biblioteca</h2><p>{{ favorite_count }} favoritos · {{ reading_list_count }} listas</p>
+                <a href="{% url 'reader_library' %}">Ir a la biblioteca</a>
+            </section>
+        </aside>
+    </div>
+</div></main>
+<script defer src="{% static 'js/reader-social.js' %}"></script>

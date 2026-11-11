@@ -592,6 +592,53 @@ def sentence_check_text(message):
     return re.sub(r';\s*(?:or|o|ou)\s*,\s+',': ',value,flags=re.I)
 
 
+def excerpt_analysis_route(message):
+    """Análisis explícito del pasaje recibido, sin clasificar ni buscar su autor.
+
+    No autoriza tareas mixtas, creación, identificación o instrucciones ajenas.
+    La generación y la auditoría siguen siendo obligatorias.
+    """
+    if not isinstance(message,str):return None
+    passage=user_excerpt(message)
+    if len(passage)<20:return None
+    instruction=normalized(message.replace(passage,'',1))
+    if (not re.search(r'\b(?:analiza|analizar|interpreta|comenta|explica)\b',instruction)
+            or not re.search(r'\b(?:fragmento|pasaje|extracto|texto)\b',instruction)
+            or re.search(r'\b(?:contrasena|password|secretos|sql|python|javascript|codigo|programa|'
+                         r'ignora|revela|receta|recomienda|identifica|busca|compara|relaciona|'
+                         r'inventa|continua|crea)\b',instruction)
+            or re.search(r'\b(?:quien escribio|quien es el autor|de que libro|a que obra)\b',instruction)):
+        return None
+    return {'decision':'allow','intent':'analysis','queries':[],'candidates':[],
+            'followup':False,'clarification':''}
+
+
+def grounded_theme_audit(audit, sources):
+    """Reject lexically unrelated same-language thematic proofs conservatively.
+
+    This is not semantic entailment. It prevents a title/publication sentence
+    from proving unrelated themes; translated proofs retain their normal audit.
+    A failed check never promotes a claim or changes its evidence.
+    """
+    if not isinstance(audit,dict) or not isinstance(audit.get('claims'),list):return audit
+    from .literary_language import narrative_language
+    from .literary_research import _clues,VAGUE,_matches,_words
+    lookup={source['id']:source for source in sources}
+    checked=[];rejected=False
+    for claim in audit['claims']:
+        if not isinstance(claim,dict):checked.append(claim);continue
+        row=dict(claim);statement=row.get('statement','');proof=row.get('evidence','')
+        if row.get('verdict')=='supported' and narrative_language(statement)=='es' and narrative_language(proof)=='es':
+            source=lookup.get(row.get('source_id'),{})
+            identity=set(_words(source.get('title','')+' '+source.get('author','')))
+            clues={word for word in _clues(statement) if word not in VAGUE and word not in identity}
+            matches=sum(_matches(word,set(_words(proof))) for word in clues)
+            if len(clues)>=4 and (matches<2 or matches/len(clues)<.35):
+                row.update(verdict='unverified',source_id=0,evidence='');rejected=True
+        checked.append(row)
+    return {**audit,'claims':checked,**({'decision':'repair','search_queries':[]} if rejected else {})}
+
+
 def simple_literary_route(message):
     """Clasifica sólo preguntas factuales simples y literarias inequívocas.
 
@@ -639,8 +686,10 @@ def simple_literary_route(message):
         r'^(?:cual es\s+)?(?:el\s+)?(?:tema principal|conflicto central)\s+(?:de|del)\s+(.+)$',
         value
     )
+    themes = re.fullmatch(r'(?:(?:explicame|dime|analiza|cuales son) )?(?:los )?'
+                          r'temas(?: principales)? (?:de|del) (.+)', value)
     characters = re.search(r'\b(?:personajes?|protagonistas?|personaje principal)\b', value)
-    if summary or characters:
+    if summary or characters or themes:
         if characters:
             detail = re.search(
                 r'\b(?:personajes?|protagonistas?|personaje principal)(?: principales)?\s+'
@@ -649,7 +698,7 @@ def simple_literary_route(message):
                 return None
             title = detail.group(1)
         else:
-            title = next(g for g in summary.groups() if g)
+            title = themes.group(1) if themes else next(g for g in summary.groups() if g)
         title = re.sub(r'^(?:el|la)\s+(?:libro|novela|obra)\s+', '', title).strip(' ¿?¡!.,')
         if (len(title) < 2 or len(title.split()) > 12
                 or re.fullmatch(r'(?:el|la|los|las|un|una)?\s*(?:libro|novela|obra|cuento|'
@@ -693,6 +742,10 @@ def simple_research_plan(message, intent, *, followup=False, selected_books=()):
     literal sobre un personaje documentado puede usar la clasificación local;
     pedidos compuestos, fragmentos y conceptos conservan su plan completo.
     """
+    if excerpt_analysis_route(message) is not None:
+        instruction=message.replace(user_excerpt(message),'',1)
+        return {'questions':[clean_text(instruction,400)],'search_queries':[],
+                'needs_contents':False,'needs_fresh_sources':False,'spoilers_requested':False}
     if (not isinstance(message, str) or has_excerpt(message) or requires_exact_text(message)
             or message.count('?') > 1 or re.search(r'[;\n\r]', message)
             or re.search(r'[.!?]\s+\S', message)):
@@ -727,7 +780,9 @@ def simple_research_plan(message, intent, *, followup=False, selected_books=()):
         r'^(?:quien(?:es)?|cual(?:es)?|dime|dame|describe|enumera|busca(?:me|r)?|'
         r'averigua|hablame|cuentame)\b', value)
         and re.search(r'\b(?:personajes?|protagonistas?|personaje principal)\b', value))
-    if not (identifying or detail or bibliographic or summary or characters):
+    themes = (intent == 'analysis' and len(message) <= 240 and re.fullmatch(
+        r'(?:(?:explicame|dime|analiza|cuales son) )?(?:los )?temas(?: principales)? (?:de|del) .+', value))
+    if not (identifying or detail or bibliographic or summary or characters or themes):
         return None
     return {'questions': [message], 'search_queries': [], 'needs_contents': bool(detail),
             'needs_fresh_sources': False,
@@ -1153,6 +1208,9 @@ def canonical_sources(items, maximum=8):
         if isinstance(item.get('attribution'), dict):
             source['attribution'] = {key: clean_text(item['attribution'].get(key), 500)
                 for key in ('authors', 'title', 'url', 'license_url', 'revision_id')}
+        if isinstance(item.get('identity_authority'),dict):
+            source['identity_authority']={key:clean_text(item['identity_authority'].get(key),500)
+                for key in ('url','title','revision_id','subject','license')}
         if item.get('storage_policy') == 'wikipedia-cc-by-sa-4.0-v1':
             source['storage_policy'] = item['storage_policy']
         for name in ('headings', 'character_mentions', 'fact_ids', 'fact_topics', 'conflicts_with'):
@@ -1503,7 +1561,8 @@ class LiteraryAssistant:
                  content_search=None, search_budget=4, quality_checks=False,
                  require_book_sources=False, allow_web_only=False,
                  fast_recommendations=False,
-                 research_enabled=False, research_timeout=15, research_max_searches=2):
+                 research_enabled=False, research_timeout=15, research_max_searches=2,
+                 knowledge_recommendations=False):
         self.llm, self.search, self.web_search = llm, search, web_search
         self.answer_model, self.guard_model = answer_model, guard_model
         self.content_search = content_search
@@ -1513,6 +1572,7 @@ class LiteraryAssistant:
         self.allow_web_only = allow_web_only is True
         self.fast_recommendations = fast_recommendations is True
         self.research_enabled = research_enabled is True
+        self.knowledge_recommendations = knowledge_recommendations is True
         self.research_timeout = max(1, min(float(research_timeout), 30))
         self.research_max_searches = max(0, min(int(research_max_searches), 2))
 
@@ -1576,6 +1636,10 @@ class LiteraryAssistant:
         message = message.strip()
         if obvious_rejection(message):
             return ChatResult(REFUSAL, 'rejected')
+        from .ai_conversation_repair import conversation_repair
+        repair = conversation_repair(message, history or [], topic_context)
+        if repair is not None:
+            return repair
         social = local_social(message)
         if social:
             return ChatResult(social, 'social')
@@ -1662,7 +1726,11 @@ class LiteraryAssistant:
             # modelo. Así sabemos si la ruta rápida realmente ahorra tiempo y
             # no atribuimos su coste a la generación o a la auditoría.
             with measure_stage('intent'):
-                if self.research_enabled and not verified['books']:
+                route=excerpt_analysis_route(message)
+                if route is not None:
+                    route=validate_route(route)
+                    diagnostics['literal_excerpt_route']=True
+                elif self.research_enabled:
                     route = simple_literary_route(message)
                     if route is not None:
                         route = validate_route(route)
@@ -1745,11 +1813,11 @@ class LiteraryAssistant:
                          'candidates': verified['books'], 'followup': False,
                          'queries': [book['title'] + ' ' + book['author'] for book in verified['books']]}
                 diagnostics['verified_identity_override'] = True
-            if followup['books'] and not relation and not verified['books'] and route['decision'] != 'reject':
+            if followup['books'] and not relation and not verified['books'] and route['decision'] != 'reject' and not has_excerpt(message):
                 route = {**route, 'decision': 'allow', 'followup': True,
                          'candidates': followup['books'],
                          'intent': 'analysis' if route['intent'] in {'conversation', 'identify'} else route['intent']}
-            if route['intent'] in {'analysis', 'summary', 'author'}:
+            if route['intent'] in {'analysis', 'summary', 'author'} and not has_excerpt(message):
                 # Si el lector nombra una obra local, su identidad revisada
                 # precede a una ficha externa con subtítulo o autor abreviado.
                 # No se añade ninguna obra que no aparezca en la consulta.
@@ -1978,6 +2046,10 @@ class LiteraryAssistant:
                         and not evidence_state.get('sufficient') and sources
                         and all(source['kind'] == 'book' and looks_like_catalogue_metadata(source)
                                 for source in sources)):
+                    from .ai_knowledge_recommendations import knowledge_recommendation
+                    suggestion = knowledge_recommendation(self, message, retrieval_message, diagnostics)
+                    if suggestion is not None:
+                        return suggestion
                     diagnostics['insufficient_topic_metadata'] = True
                     return ChatResult('Las fichas disponibles no bastan para recomendarte una obra '
                         'que cubra esos matices. ¿Prefieres ficción o ensayo y qué aspecto te interesa más?',
@@ -2137,6 +2209,11 @@ class LiteraryAssistant:
                 or context.get('specific_factual_question', False) or grounded_recommendation
                 or context.get('allow_web_only_recommendations', False))
             if context['require_book_sources'] and not any(s['kind'] in {'book', 'excerpt'} for s in sources):
+                if route['intent'] == 'recommend' and not relation:
+                    from .ai_knowledge_recommendations import knowledge_recommendation
+                    suggestion = knowledge_recommendation(self, message, retrieval_message, diagnostics)
+                    if suggestion is not None:
+                        return suggestion
                 if route['intent'] == 'recommend' and topic_context.get('subject'):
                     return ChatResult('No pude confirmar todavía títulos que encajen con lo que buscas. '
                         '¿Prefieres una introducción o un libro más especializado sobre '
@@ -2172,6 +2249,26 @@ class LiteraryAssistant:
                 answer_prompt = IDENTIFICATION_PROMPT
             if context.get('specific_factual_question'):
                 answer_prompt = SHORT_FACTUAL_PROMPT
+            elif route['intent']=='analysis' and re.fullmatch(
+                    r'(?:(?:explicame|dime|analiza|cuales son) )?(?:los )?'
+                    r'temas(?: principales)? (?:de|del) .+', normalized(message).strip(' ¿?¡!.,')):
+                # Every theme asserted as documented must be checked. This
+                # also selects the existing compact proof-ID audit protocol,
+                # rather than asking Qwen to copy long passages repeatedly.
+                context['all_factual_claims_required']=True
+                context['documented_themes']=True
+                # Reuse the focused evidence-grounded contract, rather than
+                # sending recommendation, identification and catalogue rules
+                # for one thematic question. The full factual audit remains.
+                answer_prompt=SHORT_FACTUAL_PROMPT.replace(
+                    'sobre el personaje o acontecimiento\npreguntado',
+                    'sobre los temas de la obra consultada')
+                answer_prompt+=('\nExplica los temas documentados y por qué importan en la obra, '
+                    'con una respuesta proporcionada de dos párrafos como máximo. '
+                    'No uses comillas ni citas literales: parafrasea la información recibida. '
+                    'No añadas temas de memoria: usa sólo los nombrados o descritos en las fuentes. '
+                    'Distingue lecturas posibles de acontecimientos comprobados. '
+                    'No añadas una lista de recomendaciones ni amplíes la trama.')
             if context.get('all_factual_claims_required'):
                 answer_prompt += ('\nEn reparación rejected_claims son advertencias, nunca evidencia: '
                     'retira esas frases o declara qué no está confirmado. Usa sources y '
@@ -2339,6 +2436,8 @@ class LiteraryAssistant:
                             audit_output = self.llm('audit', AUDIT_PROMPT,
                                 {**context, 'draft': draft, 'research_remaining': research_remaining},
                                 self.guard_model)
+                            if context.get('documented_themes'):
+                                audit_output=grounded_theme_audit(audit_output,sources)
                             # El auditor puede señalar correctamente la frase
                             # problemática y aun devolver decision=approve.
                             # Conserva esa señal para reparar; jamás la convierte
@@ -2354,6 +2453,12 @@ class LiteraryAssistant:
                                         'verdict': claim['verdict'], 'action': 'remove_or_qualify'})
                             audit = validate_audit(audit_output, plan, draft, sources, message,
                                 strict_facts=context.get('all_factual_claims_required', False))
+                            if context.get('documented_themes'):
+                                from .ai_narrative_answers import _supported_summary
+                                pruned=_supported_summary(draft,audit,plan,sources,message)
+                                if pruned is not None:
+                                    draft,audit=pruned
+                                    diagnostics.update(partial_evidence=True,unsupported_sentences_removed=True)
                             diagnostics['coverage'] = audit['coverage']
                             diagnostics['claim_checks'] = len(audit['claims'])
                             # Una interpretación general sin fuentes no es una
@@ -2530,6 +2635,22 @@ class LiteraryAssistant:
                     seen=None, prefer_new=False):
         if self.research_enabled and diagnostics['web_searches'] >= self.research_max_searches:
             return sources
+        if (self.research_enabled and route['intent'] in {'analysis','summary'}
+                and not diagnostics.get('verified_article_attempted') and route['candidates']):
+            from .literary_identity import same_work
+            references=[source for source in sources if source.get('kind')=='book'
+                        and any(same_work(source,book) for book in route['candidates'])]
+            if references:
+                diagnostics['verified_article_attempted']=True
+                diagnostics['verified_article_target']={'title':references[0]['title'],'author':references[0]['author']}
+                from .literary_authority import verified_work_article
+                pages=verified_work_article(references[0])
+                diagnostics['verified_article_sources']=len(pages)
+                if pages:
+                    sources=canonical_sources([*pages,*sources])
+                    from .literary_research import assess_evidence
+                    if assess_evidence(message,sources,route['candidates'],route['intent']).get('sufficient'):
+                        return sources
         targeted = []
         if route['candidates'] and route['intent'] in {'analysis', 'summary', 'author'}:
             detail = ('personajes protagonista' if re.search(r'\b(?:personajes?|protagonistas?)\b', normalized(message))
@@ -2586,6 +2707,12 @@ class LiteraryAssistant:
                         diagnostics.setdefault('research_lookups', []).append({
                             'status': provider_status, 'providers': getattr(result, 'providers', {})})
                     from .literary_identity import bind_source, same_work
+                    if self.research_enabled and not diagnostics.get('author_authority_checked'):
+                        from .literary_authority import reconcile_web_authors
+                        references=[source for source in sources if source.get('kind')=='book'
+                                    and any(same_work(source,book) for book in route['candidates'])]
+                        result=reconcile_web_authors(result,references)
+                        diagnostics['author_authority_checked']=any(source.get('identity_authority') for source in result)
                     if route['candidates']:
                         result = [source for source in result if not source.get('work_binding_verified')
                                   or any(same_work(source, book) for book in route['candidates'])]
@@ -2671,6 +2798,7 @@ def build_assistant(settings, *, search=None, web_search=None,
         context=getattr(settings, 'LITMATE_LOCAL_CONTEXT', 16384),
         thinking=getattr(settings, 'LITMATE_LOCAL_THINKING', False),
         answer_tokens=getattr(settings, 'LITMATE_LOCAL_ANSWER_TOKENS', 2048),
+        streaming=True,
         total_timeout=getattr(settings, 'LITMATE_AI_TOTAL_TIMEOUT', 300))
     from .literary_search import retrieve_book_content
     selected_web = web_search if web_search is not None else (
@@ -2687,6 +2815,7 @@ def build_assistant(settings, *, search=None, web_search=None,
         allow_web_only=(selected_web is not None if allow_web_only is None else allow_web_only is True),
         fast_recommendations=getattr(settings, 'LITMATE_AI_FAST_RECOMMENDATIONS', True),
         research_enabled=getattr(settings, 'LITMATE_RESEARCH_ENABLED', True),
+        knowledge_recommendations=getattr(settings, 'LITMATE_AI_KNOWLEDGE_RECOMMENDATIONS', True),
         research_timeout=getattr(settings, 'LITMATE_RESEARCH_TIMEOUT', 15),
         research_max_searches=getattr(settings, 'LITMATE_RESEARCH_MAX_SEARCHES', 2),
         web_search=selected_web)

@@ -221,7 +221,8 @@ def is_topic_recommendation(message):
     if not request:
         # Peticiones elípticas habituales: «libros de historia», «novelas
         # sobre viajes». No basta con que una charla mencione un libro.
-        request = re.search(r'^' + book + r'\s+(?:sobre|acerca de|de|para)\s+\S', value)
+        request = re.search(r'^(?:(?:un|una|otro|otra)\s+)?' + book
+                            + r'\s+(?:sobre|acerca de|de|para|con)\s+\S', value)
     if not request:
         return False
     # «Busco un libro donde un niño...» describe una obra existente. En
@@ -256,7 +257,7 @@ def is_plot_description(message):
                  r'que me recomiendas|me gustaria leer)\b', value):
         return False
     work_start = re.match(
-        r'^(?:(?:una?|el|la|los|las)\s+)?(?:historia|novela|libro|cuento|relato|'
+        r'^(?:(?:busco|estoy buscando)\s+)?(?:(?:una?|el|la|los|las)\s+)?(?:historia|novela|libro|cuento|relato|'
         r'trama|argumento|obra)\s+(?:sobre|de|donde|que|acerca de|en (?:el|la) que)\b',
         value)
     if work_start:
@@ -458,6 +459,8 @@ def evidence_requirements(message, intent=''):
     memory = bool(re.search(
         r'\b(?:recuerdo|no recuerdo|busco un libro|en que libro|a que obra|como se llama el libro)\b', value)) and not topic_recommendation
     explicit_characters = bool(re.search(r'\b(?:personajes|protagonistas)\b', detail_value)) and not memory
+    if intent=='analysis' and re.search(r'\btemas?\b',detail_value):
+        requirements.append('themes')
     identifying = (memory or is_plot_description(message)
                    or (intent == 'identify' and not explicit_characters and not topic_recommendation))
     if identifying:
@@ -723,6 +726,16 @@ def assess_evidence(message, sources, selected_books=None, intent=''):
             enough = any(normalize_identity(fact.get('topic') or fact.get('type')) in
                          {'ending', 'desenlace', 'final'}
                          for source in relevant for fact in _grounded_facts(source))
+        elif requirement=='themes':
+            for source in relevant:
+                if (source.get('injection_detected') or source.get('conflicts_with')
+                        or looks_like_front_matter(source) or looks_like_catalogue_metadata(source)):
+                    continue
+                text=normalize_identity(source.get('description',''))
+                enough=enough or bool(re.search(r'\b(?:temas?|themes?)\s+(?:tales\s+como|como|son|'
+                    r'incluyen|incluye|de|of|include|such\s+as)\b',text))
+                enough=enough or any(normalize_identity(fact.get('topic') or fact.get('type'))
+                    in {'themes','theme','temas'} for fact in _grounded_facts(source))
         elif requirement in {'events', 'scenes', 'content'}:
             for source in relevant:
                 facts = _grounded_facts(source)

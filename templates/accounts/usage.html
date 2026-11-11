@@ -1,0 +1,6 @@
+{% if usage %}
+<div class="my-3" role="status">
+  <p>{{ usage.plan }}: {{ usage.usadas }} utilizadas · {% if usage.es_ilimitado %}Sin límite diario{% else %}{{ usage.restantes }} disponibles{% endif %}.</p>
+  {% if next_reset %}<p>Próxima renovación: <time datetime="{{ next_reset|date:'c' }}">{{ next_reset|date:'d/m/Y H:i' }}</time> (America/Santiago).</p>{% endif %}
+</div>
+{% elif usage_error %}<p role="status">{{ usage_error }}</p>{% endif %}

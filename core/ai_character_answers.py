@@ -153,7 +153,7 @@ def request_for(message, history=(), pending_clarification=None):
                                r'(protagonista|personaje principal|antagonista|villano|villana)'
                                r'(?: (?:de|del) (.+))?', value)
         listing = re.fullmatch(r'(?:y )?(?:(?:dime|dame|describe|enumera|busca|'
-                              r'cuales son|quienes son) )?(?:(?:los|las|sus) )?'
+                              r'cuales son|quienes son|(?:cuentame|hablame)(?: mas)? (?:de|sobre)) )?(?:(?:los|las|sus) )?'
                               r'(personajes|protagonistas|antagonistas|villanos)'
                               r'(?: (principales|secundarios|femeninos))?'
                               r'(?: (?:de|del) (.+))?', value)
@@ -197,7 +197,7 @@ def request_for(message, history=(), pending_clarification=None):
         tail = _unquote_title(' '.join(original.split()[-len(title.split()):]))
         if normalize_identity(tail) == normalize_identity(title):
             title = tail
-    if normalize_identity(title) in _DEICTIC or (not title and task in {'character', 'relationship'}):
+    if normalize_identity(title) in _DEICTIC or (not title and task in {'character', 'relationship', 'characters', 'protagonist'}):
         from .ai_narrative_answers import request_for as narrative_request
         context = narrative_request('Dime la trama de ese libro', history, pending_clarification)
         if context and context.get('title') and not context.get('ambiguous'):
@@ -483,6 +483,12 @@ def _proof(source, fact):
 
 
 def _role_for_other_work(fact, source):
+    if (fact.get('profile') and not source.get('work_title') and not source.get('work_binding_verified')
+            and normalize_identity(source.get('title'))==normalize_identity(fact.get('name'))
+            and _profile_match(source,[fact['name']])):
+        # An independent person's profile is not a work named after that
+        # person. Scoped profiles still undergo the volume check below.
+        return False
     raw_role = fact['role']
     role = normalize_identity(raw_role)
     name = normalize_identity(fact['name'])
@@ -1069,6 +1075,25 @@ def character_answer(message, history=(), config=None, *, pending_clarification=
     return _with_research_diagnostics(result)
 
 
+def named_profile_answer(message, request, pages):
+    """An explicit full name can identify a literary profile independently.
+
+    This does not merge the profile's author with a catalogue name or claim
+    membership in the active work. Short names and conflicting profiles still
+    require their original work context. All facts pass the existing auditor.
+    """
+    names=request.get('names',[])
+    if request.get('task')!='character' or len(names)!=1 or len(names[0].split())<2:
+        return None
+    matching={page.get('url'):page for page in pages
+              if normalize_identity(page.get('title'))==normalize_identity(names[0])
+              and _profile_match(page,names)}
+    if len(matching)!=1:
+        return None
+    independent={**request,'title':'','targets':[]}
+    return answer_from_sources(message,independent,list(matching.values()))
+
+
 def _character_profiles(request, known):
     """Two bounded API lookups for names already supported by this work.
 
@@ -1079,7 +1104,8 @@ def _character_profiles(request, known):
         return [], request
     bound = _bound(request, known)
     facts = _facts(request, bound)
-    if not facts or request.get('focus') not in {'main','antagonist'}:
+    individual = request.get('task') == 'character' and bool(request.get('names'))
+    if not individual and (not facts or request.get('focus') not in {'main','antagonist'}):
         return [], request
     from .literary_identity import _verified_web_work
     references = [source for source in bound if source['kind']=='book']
@@ -1093,11 +1119,13 @@ def _character_profiles(request, known):
                                                else fact['classification']=='antagonist')]
     words = set(normalize_identity(request['title']).split())-{'el','la','los','las','de','del','the'}
     unresolved.sort(key=lambda fact:not bool(words & set(normalize_identity(fact['name']).split())))
-    names = list(dict.fromkeys(fact['name'] for fact in unresolved))[:2]
+    names = (request['names'][:1] if individual else
+             list(dict.fromkeys(fact['name'] for fact in unresolved))[:2])
     from .literary_search import search_wikipedia
     from .ai_budget import pool_in_budget, submit_with_budget, request_budget, budget_timeout
     from concurrent.futures import wait
     pages = []
+    independent_pages = []
     with request_budget(time.monotonic()+budget_timeout(4)):
         with pool_in_budget(2) as pool:
             jobs = [submit_with_budget(pool, search_wikipedia, name) for name in names]
@@ -1105,6 +1133,8 @@ def _character_profiles(request, known):
             for job in done:
                 try:
                     for page in job.result():
+                        if individual:
+                            independent_pages.append(page)
                         for work in references:
                             profile = bind_character_profile(page, work)
                             if profile is not None:
@@ -1116,7 +1146,12 @@ def _character_profiles(request, known):
     # A verified public work can scope a profile without inventing a catalogue
     # card. The existing target, when present, retains precedence.
     scoped = {**request, '_profiles_attempted':True,
-              'targets': request.get('targets') or references[:1]}
+              'targets': request.get('targets') or references[:1],
+              '_named_profiles':independent_pages}
+    if individual and independent_pages:
+        from .literary_authority import reconcile_web_authors
+        reconciled=reconcile_web_authors(independent_pages,references)
+        pages.extend(page for page in reconciled if page.get('identity_authority'))
     return pages, scoped
 
 
@@ -1135,12 +1170,14 @@ def _character_answer(message, history=(), config=None, *, pending_clarification
     from .ai_persistent_router import persist_sources
     trace = []
     with measure_stage('knowledge_lookup'):
+        named = []
         if request['task'] == 'character':
             named = quick_knowledge_sources(request['names'][0], maximum=8) if request['names'] else []
             if any(source.get('kind') == 'book' and (_query_title(request['names'][0], source)
                    or same_author_name(request['names'][0], source.get('author', ''))) for source in named):
                 return None
         known = quick_knowledge_sources(request['title'] or ' '.join(request['names']), maximum=20)
+        known.extend(named)
         known.extend(source for turn in sanitized_history(list(history)) for source in turn['sources'])
         targets = request['targets'] or [source for source in known if source.get('kind') == 'book'
                                         and request['title'] and _query_title(request['title'], source)]
@@ -1155,8 +1192,23 @@ def _character_answer(message, history=(), config=None, *, pending_clarification
     if result is not None and (best_partial is None or result.diagnostics.get('supplementary_character_count')):
         result.diagnostics['character_trace'] = [{'stage': 'stored_content', 'facts': result.diagnostics['character_count']}]
         return result
+    if request['task'] == 'character' and getattr(settings, 'LITMATE_AI_USE_WEB', True):
+        # Prefer a definition bound to the known work over two LLM calls on
+        # arbitrary passages merely containing the person's name.
+        profiles, request = _character_profiles(request, known)
+        known.extend(profiles)
+        result = answer_from_sources(message, request, known)
+        if result is not None and not result.diagnostics.get('partial_evidence'):
+            persist_sources(result.sources)
+            result.diagnostics['character_trace'] = [{'stage':'verified_profiles','sources':len(profiles)}]
+            return result
+        independent=named_profile_answer(message,request,request.get('_named_profiles',[]))
+        if independent is not None:
+            independent.diagnostics['character_trace']=[{'stage':'independent_verified_profile','sources':len(independent.sources)}]
+            return independent
     from .ai_library_router import character_answer_from_library
-    local = (None if best_partial is not None and getattr(settings,'LITMATE_AI_USE_WEB',True)
+    local = (None if getattr(settings,'LITMATE_AI_USE_WEB',True) and (
+                    best_partial is not None or request['task']=='characters')
              else character_answer_from_library(message, request, config))
     if local is not None and local.status == 'answered':
         return local
@@ -1185,6 +1237,10 @@ def _character_answer(message, history=(), config=None, *, pending_clarification
                         pass
                 for future in pending:
                     future.cancel()
+        from .literary_authority import reconcile_web_authors
+        authority_books=[source for source in known if source.get('kind')=='book'
+                         and any(same_work(source,target) for target in targets)]
+        known=reconcile_web_authors(known,authority_books)
         bound = _bound(request, known)
         trace.append({'stage': 'bibliographic', 'sources': len(bound), 'facts': len(_facts(request, bound))})
         result = answer_from_sources(message, request, known)
@@ -1238,6 +1294,9 @@ def _character_answer(message, history=(), config=None, *, pending_clarification
                     persist_sources(result.sources)
                     result.diagnostics['character_trace'] = trace
                     return result
+    if local is None and request['task']=='characters':
+        local=character_answer_from_library(message,request,config)
+        if local is not None and local.status=='answered':return local
     if best_partial is not None:
         best_partial.diagnostics['character_trace'] = trace
         return best_partial

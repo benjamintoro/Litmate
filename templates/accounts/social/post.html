@@ -1,0 +1,55 @@
+{% extends 'accounts/social/frame.html' %}
+{% block social_content %}
+<div class="lm-narrow lm-stack">
+    <a href="{% url 'social_feed' %}">Volver a Comunidad LitMate</a>
+    <h1>Publicación literaria</h1>
+    {% include 'accounts/social/post_card.html' with post=entry post_detail=True %}
+    {% if user.is_authenticated and entry.visibility != 'private' %}
+        <div class="lm-panel lm-actions">
+            {% if user.pk != entry.author.user_id %}<details><summary>Reportar publicación</summary>
+                <form method="post" class="lm-form" action="{% url 'social_report_post' entry.pk %}">{% csrf_token %}
+                    <label>Motivo <textarea name="reason" rows="3" maxlength="400" required></textarea></label>
+                    <button class="lm-btn">Enviar reporte</button>
+                </form>
+            </details>{% endif %}
+        </div>
+    {% endif %}
+    {% if entry.allow_comments and entry.visibility != 'private' %}
+        <section class="lm-panel lm-stack" id="comentarios"><h2>Conversación</h2>
+            {% for comment in comments %}
+                <article class="lm-comment">
+                    <p><strong>{% if comment.author.published %}<a href="{% url 'social_public_profile' comment.author.public_id %}">{{ comment.author.name }}</a>{% else %}{{ comment.author.name }}{% endif %}</strong>
+                    <time datetime="{{ comment.created_at|date:'c' }}">{{ comment.created_at|date:'j M Y · H:i' }}</time></p>
+                    <p class="lm-prewrap">{{ comment.body }}</p>
+                    {% if user.is_authenticated %}<a class="lm-reply" href="#comment-form" data-reply-to="{{ comment.author.name }}">Responder a {{ comment.author.name }}</a>{% endif %}
+                    {% if user.is_authenticated %}
+                        {% if user.pk == comment.author.user_id or user.pk == entry.author.user_id %}
+                            <details><summary>Eliminar comentario</summary>
+                                <form method="post" action="{% url 'social_delete_comment' entry.pk comment.pk %}">{% csrf_token %}
+                                    <button class="lm-btn lm-danger" name="confirm" value="yes">Confirmar eliminación</button>
+                                </form>
+                            </details>
+                        {% endif %}
+                        {% if user.pk != comment.author.user_id %}
+                            <details><summary>Reportar comentario</summary>
+                                <form method="post" class="lm-form" action="{% url 'social_report_comment' entry.pk comment.pk %}">{% csrf_token %}
+                                    <label>Motivo <textarea name="reason" rows="3" maxlength="400" required></textarea></label>
+                                    <button class="lm-btn">Enviar reporte</button>
+                                </form>
+                            </details>
+                        {% endif %}
+                    {% endif %}
+                </article>
+            {% empty %}<p class="lm-muted">Todavía no hay comentarios.</p>{% endfor %}
+            {% include 'accounts/social/page_links.html' with page_obj=comments %}
+            {% if user.is_authenticated %}
+                <form id="comment-form" class="lm-form" method="post" action="{% url 'social_comment' entry.pk %}" data-submit-once>{% csrf_token %}
+                    {{ comment_form.submission_id }}{{ comment_form.submission_id.errors }}
+                    {% include 'accounts/social/field.html' with field=comment_form.body %}
+                    <div><button class="lm-btn lm-primary">Comentar</button></div>
+                </form>
+            {% else %}<a href="{% url 'login' %}?next={{ request.path|urlencode }}">Inicia sesión para comentar</a>{% endif %}
+        </section>
+    {% endif %}
+</div>
+{% endblock %}

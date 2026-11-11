@@ -31,4 +31,11 @@ def user_excerpt(message):
     match = excerpt_marker(message)
     if not match:
         return ''
-    return str(message)[match.end():].strip().rstrip('»”"')
+    tail=str(message)[match.end():].strip()
+    # Una instrucción después del cierre no forma parte de la prueba literal.
+    # Los pasajes sin delimitador conservan el comportamiento anterior.
+    pairs={'«':'»','“':'”','"':'"'}
+    if tail[:1] in pairs:
+        end=tail.find(pairs[tail[0]],1)
+        if end>1:return tail[1:end].strip()
+    return tail.rstrip('»”"')
