@@ -96,6 +96,8 @@ def matches_categories(source,codes):
                'javascript_programming':'javascript','sql_programming':'sql'}
     requested={languages[code] for code in codes if code in languages}
     title=normalize_identity(source.get('title'))
+    if 'javascript' in requested and re.search(r'\b(?:jscript net|vbscript|actionscript)\b',title):
+        return False  # Un dialecto o tecnología distinta no es JavaScript por una materia mezclada.
     named={name for name in languages.values() if re.search(r'(?<!\w)'+name+r'(?!\w)',title)}
     # Algunas fichas colaborativas mezclan materias de varios lenguajes. Un
     # título explícito de otro lenguaje es una contradicción, no una afinidad.

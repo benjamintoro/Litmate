@@ -493,6 +493,9 @@ def book_search_queries(query):
 
 def source_synopsis(source):
     """Separa la sinopsis editorial de ISBN, fechas y otros datos de la edición."""
+    if any(_normalized(source.get(field) or '').startswith('informacion catalografica; sin sinopsis ni texto completo')
+           for field in ('synopsis', 'description')):
+        return ''
     synopsis = source.get('synopsis')
     if isinstance(synopsis, str) and synopsis.strip():
         return _text(synopsis, 1600)

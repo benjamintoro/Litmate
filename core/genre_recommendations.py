@@ -184,6 +184,11 @@ def genre_answer(message,history,context,*,candidates=None):
     if not chosen:
         return ChatResult('No encontré otras obras con una clasificación comprobada que cumpla lo que buscas. '
             '¿Quieres probar con un género cercano?','unavailable',False,intent='recommend')
+    # La normalización limita las materias de cada ficha. Anteponer las que
+    # justifican esta selección evita perder SQL/JavaScript tras cinco materias
+    # genéricas ordenadas alfabéticamente. Se conservan los textos de fuente.
+    chosen=[{**source,'categories':sorted(source.get('categories',[]),
+        key=lambda category:not bool(set(classify_categories([category])) & set(codes)))} for source in chosen]
     sources=canonical_sources(chosen,5)
     lines=[f'{index}. **{s["title"]}** — {s["author"]}.' for index,s in enumerate(sources,1)]
     cards=[{'title':s['title'],'author':s['author'],'source_id':s['id']} for s in sources]
@@ -191,7 +196,8 @@ def genre_answer(message,history,context,*,candidates=None):
           'Dispongo de sus metadatos bibliográficos; no del texto completo.\n\n' if technical else '¡Claro!\n\n')+'\n\n'.join(lines)
     if technical:
         text+='\n\nEl lote incluye ediciones de distintos años; comprueba la edición y la versión de la tecnología antes de elegir.'
-    if len(chosen)<count:text+='\n\nPude verificar '+str(len(chosen))+' opciones que cumplen esos criterios.'
+    if len(chosen)<count:
+        text+='\n\nPude verificar '+str(len(chosen))+(' opción que cumple' if len(chosen)==1 else ' opciones que cumplen')+' esos criterios.'
     text+='\n\n¿Cuál te interesa más?'
     draft={'status':'answer','basis':'sources','text':'\n\n'.join(lines),'citations':[s['id'] for s in sources],
         'books':cards,'needs_web':False}

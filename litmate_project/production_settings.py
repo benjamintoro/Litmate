@@ -33,6 +33,8 @@ CACHES = {'default': {'BACKEND':'django.core.cache.backends.locmem.LocMemCache',
 LITMATE_AI_LOCK_BACKEND = 'sqlite'
 LITMATE_SIGNUP_GLOBAL_PER_HOUR = 30
 LITMATE_SIGNUP_VISITOR_PER_DAY = 3
+# Presupuesto común para el único proceso local, independiente de la cookie.
+LITMATE_OPEN_GUEST_CHAT_PER_MINUTE = 6
 EMAIL_SUBJECT_PREFIX = '[LitMate] '
 LOGGING = {**LOGGING, 'handlers': {**LOGGING['handlers'], 'file':{
     **LOGGING['handlers']['file'], 'filename':PRODUCTION.runtime/'logs/production.log'}}}

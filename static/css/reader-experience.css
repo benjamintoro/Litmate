@@ -3,6 +3,10 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
 #mainNav .navbar-toggler { color: #e3dccd; border-color: #827353; }
 .footer-main .footer-brand-desc, .footer-main .footer-link, .footer-main .footer-copyright { color: #bdb7aa; }
 .footer-main .footer-heading { color: #e7e1d4; }
+.footer-main .footer-link { overflow-wrap: anywhere; white-space: normal; max-width: 100%; }
+@media (max-width: 575px) {
+    .coverflow-section { overflow-x: clip; }
+}
 .lm-online { display: flex; justify-content: center; align-items: center; gap: .5rem; padding: .85rem 1rem; border-top: 1px solid #655a3c; color: #d9d4c7; font: .8rem Inter, sans-serif; background: #141617; }
 .lm-online-dot { width: .5rem; height: .5rem; border-radius: 50%; background: #8dac91; }
 .lm-team-member { padding: 1.5rem; border: 1px solid var(--lm-border, #655a3c); border-radius: 1rem; height: 100%; background: var(--lm-parchment-soft, #1d2021); }

@@ -1,7 +1,7 @@
 $ErrorActionPreference = 'Stop'
 Set-Location -LiteralPath $PSScriptRoot
 $litmatePython = Join-Path $PSScriptRoot 'venv\Scripts\python.exe'
-$litmateLauncher = Join-Path $PSScriptRoot 'reports\restauracion_publicada_20261111\arrancar_protegido.py'
+$litmateLauncher = Join-Path $PSScriptRoot 'scripts\accounts\arrancar_protegido.py'
 $litmateStop = Join-Path $PSScriptRoot 'data\production\runtime\stop.request'
 
 $litmateSocket = [System.Net.Sockets.TcpClient]::new()

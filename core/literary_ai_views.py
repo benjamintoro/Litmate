@@ -493,6 +493,16 @@ def _compute_answer_impl(message, history, topic_context, *, pending_clarificati
         repair = conversation_repair(message, history, topic_context)
         if repair is not None:
             return repair, SimpleNamespace(usage={}, provider='conversation-repair', calls=0)
+        from .literary_identity import normalize_identity
+        navigation=re.fullmatch(r'(?:no[, ]+)?(?:volvamos|retomemos|regresemos) a(?:l| la)? (.{2,100})',
+                                normalize_identity(message))
+        if navigation:
+            from .literary_genres import TAXONOMY
+            subject=navigation[1]
+            if any(subject==alias for row in TAXONOMY.values() for alias in row['aliases']):
+                return (ChatResult('Volvamos a **'+subject+'**. ¿Quieres recomendaciones o información sobre un libro concreto?',
+                    'clarification',intent='conversation',diagnostics={'model_calls':0}),
+                    SimpleNamespace(usage={},provider='topic-navigation',calls=0))
         from .literary_identity import resolve_followup_context
         reference=resolve_followup_context(message,history)
         if reference.get('reason')=='missing_ordinal':
@@ -520,6 +530,11 @@ def _compute_answer_impl(message, history, topic_context, *, pending_clarificati
             except BudgetExpired:
                 pass
         if getattr(settings, 'LITMATE_AI_QUICK_ANSWERS', True):
+            if topic_context.get('preference_replacement'):
+                from .ai_quick_answers import quick_answer
+                revised = quick_answer(retrieval_message)
+                if revised is not None:
+                    return revised, SimpleNamespace(usage={},provider='verified-replacement-topic',calls=0)
             from .ai_quick_answers import book_links_answer
             from .ai_identification_details import identification_explanation_answer
             from .genre_recommendations import reading_feedback_answer

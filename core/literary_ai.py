@@ -2296,9 +2296,10 @@ class LiteraryAssistant:
                 # enciclopédico que el modelo suele añadir. Recortar a la
                 # primera frase elimina fechas, colecciones y adjetivos no
                 # pedidos que la auditoría no podría respaldar.
-                sentences = re.split(r'(?<=[.!?])\s+', draft['text'].strip(), maxsplit=1)
-                if len(sentences) > 1 and sentences[0].strip():
-                    draft = {**draft, 'text': sentences[0].strip()}
+                from .literary_quality import factual_statements
+                sentences = factual_statements(draft['text'], strip_markers=False)
+                if len(sentences) > 1:
+                    draft = {**draft, 'text': sentences[0]}
                     diagnostics['short_factual_trim'] = True
             research_used = False
             for attempt in range(3 if self.quality_checks else 2):

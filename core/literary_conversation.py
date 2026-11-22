@@ -204,6 +204,16 @@ def resolve_topic_context(message, state, *, now=None):
     previous = _current_topic(state, now)
     from .literary_genres import requested_categories
     normalized_message=_normalized(message).strip('¿?¡!., ')
+    replacement = re.fullmatch(r'(?:no (?:quiero|busco) [^,.;!?]{2,100},\s*)?prefiero ([^,.;!?]{2,140})',
+                               message.strip('¿?¡!., '), flags=re.I)
+    if previous and replacement:
+        subject = _safe_subject(_without_language_preference(replacement[1]))
+        from .books_google import book_topic_profile
+        if subject and (requested_categories(subject) or book_topic_profile(_topic_query(subject))['structured']):
+            language = requested_language(replacement[1])
+            return {'subject': subject, 'intent': 'recommend', 'query': _topic_query(subject, language),
+                    'followup': True, 'explicit_change': True, 'reset_work_context': True,
+                    'preference_replacement': True, **_language_field(language)}
     # Cambios y rechazos elípticos siguen dentro de la conversación literaria.
     change=re.fullmatch(r'ahora (?:de |sobre )?(.+)',message.strip('¿?¡!., '),re.I)
     if change and requested_categories(change[1]):

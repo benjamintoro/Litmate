@@ -4,7 +4,7 @@
 #reader-quota { color: #3b2818; }
 html.dark-mode #reader-quota { color: #f0e7d7; }
 .lm-reader-chat #chat-body-page { scroll-behavior: auto !important; overflow-anchor: none; }
-@media (max-width: 767px), (max-height: 500px) and (max-width: 1023px) {
+@media (max-width: 991px), (max-height: 500px) and (max-width: 1023px) {
     .lm-reader-chat body { overflow-x: clip; }
     .lm-reader-chat .masthead { padding: 5.5rem 0 1rem; margin-bottom: 0; }
     .lm-reader-chat .masthead .page-heading { padding: 0; }
@@ -31,7 +31,7 @@ html.dark-mode #reader-quota { color: #f0e7d7; }
     .lm-reader-chat #chat-footer-page { padding: 8px; padding-bottom: max(8px, env(safe-area-inset-bottom)); flex-shrink: 0; }
     .lm-reader-chat #chat-form { display: flex; gap: 5px; min-width: 0; padding: 0; }
     .lm-reader-chat #chat-input { width: 0; min-width: 0; flex: 1; font-size: 16px; padding: 10px; }
-    .lm-reader-chat #chat-form button { width: 40px; height: 40px; min-width: 40px; flex-shrink: 0; margin: 0; }
+    .lm-reader-chat #chat-form button { width: 44px; height: 44px; min-width: 44px; flex-shrink: 0; margin: 0; }
     .lm-reader-chat .tts-volume-wrapper { flex-shrink: 0; margin-right: 0 !important; }
     .lm-reader-chat .lm-chat-books-grid { grid-template-columns: minmax(0, 1fr); }
     .lm-reader-chat .lm-chat-book-card { min-width: 0; padding: 10px; }
@@ -43,4 +43,11 @@ html.dark-mode #reader-quota { color: #f0e7d7; }
     .lm-reader-chat #cookieConsentBanner { max-width: calc(100vw - 16px); }
     .lm-reader-chat .cookie-banner-actions { flex-wrap: wrap; min-width: 0; }
     .lm-reader-chat .cookie-banner-actions button { min-width: 0; flex: 1 1 100px; white-space: normal; }
+}
+/* En horizontal, la ilustración no debe ocupar el espacio de los mensajes. */
+@media (max-height: 500px) and (max-width: 1023px) {
+    .lm-reader-chat #chat-container { height: calc(var(--lm-viewport-height, 100dvh) - 80px); min-height: 230px; }
+    .lm-reader-chat #chat-character-page { display: none; }
+    .lm-reader-chat .lm-chat-toolbar { gap: .3rem; padding: .3rem .5rem; }
+    .lm-reader-chat #chat-footer-page { padding: 5px 8px; }
 }

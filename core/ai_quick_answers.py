@@ -50,7 +50,7 @@ def quick_knowledge_sources(query, maximum=8):
     Superposición de solo lectura: no importa fichas automáticamente a SQLite
     ni sustituye una ficha propia con una versión incluida en el programa.
     """
-    from .literary_knowledge import search_knowledge, _score, knowledge_sources
+    from .literary_knowledge import search_knowledge
     from .literary_identity import same_work
     local = search_knowledge(query, maximum=maximum)
     from .bibliographic_repository import lookup_sources
@@ -85,9 +85,19 @@ def quick_knowledge_sources(query, maximum=8):
             local.extend(extra)
     except (OSError, ValueError):
         pass
+    return bundled_knowledge_sources(query, maximum=maximum, existing=local)
+
+
+def bundled_knowledge_sources(query, maximum=8, *, existing=()):
+    """Prioriza las fichas revisadas cuando falta evidencia local del contenido."""
+    from .books_google import source_synopsis
+    from .literary_identity import same_work
+    from .literary_knowledge import _score, knowledge_sources
+    local = list(existing)
     ranked = []
     for work in _bundled():
-        if any(source.get('kind') == 'book' and same_work(source, work) for source in local):
+        if any(source.get('kind') == 'book' and same_work(source, work) and source_synopsis(source)
+               for source in local):
             continue
         facts = work.get('facts') or [{'topic': 'identification', 'source_url': work['url'],
             'text': work['description'], 'character_facts': work.get('character_facts', [])}]
@@ -98,6 +108,10 @@ def quick_knowledge_sources(query, maximum=8):
             ranked.append((score, work, facts))
     ranked.sort(key=lambda item: -item[0])
     for _, work, facts in ranked[:3]:
+        # Una identidad sin descripción puede anclar otras evidencias, pero no
+        # debe ocupar el lugar de una ficha revisada que sí contiene las pistas.
+        local = [source for source in local if not (source.get('kind') == 'book'
+                 and same_work(source, work) and not source_synopsis(source))]
         local.extend(knowledge_sources(work, facts))
     return canonical_sources(local, maximum)
 
@@ -302,6 +316,17 @@ def quick_answer(message, history=None, *, topic_context=None, search=None):
     query = topic_context.get('query') or message
     value = request_text(message).strip('¿?¡!., ')
     bundled = _bundled()
+    spoiler_free = re.fullmatch(r'(?:resume|resumen de|de que trata)\s+(?:(?:el argumento|la trama) (?:de|del) )?(.{2,150}) sin spoilers?',value)
+    if spoiler_free:
+        from .literary_identity import normalize_identity, title_matches
+        title = re.sub(r'^(?:el|la)\s+', '', spoiler_free[1], flags=re.I)
+        candidates = [source for source in bundled if source.get('spoiler_free_summary') is True
+            and (title_matches(spoiler_free[1], source) or title_matches(title, source)
+                or normalize_identity(title) in {
+                    normalize_identity(source['title']+' de '+source['author']),
+                    normalize_identity(source['title']+' de '+source['author'].split()[0])})]
+        if len(candidates) == 1:
+            return _validated_result(message, candidates)
     if _simple_topic_request(message, query):
         from .books_google import rank_book_sources
         from .literary_constraints import recommendation_constraints, constraints_match
@@ -513,6 +538,7 @@ def catalogue_lookup_answer(message, history, search):
     No elige el primer resultado de una búsqueda vaga ni usa la descripción de
     una edición como prueba de páginas, citas textuales, finales o publicación.
     """
+    message = re.sub(r'(?i)^(\s*¿?\s*)y\s+',r'\1',message)
     if (has_excerpt(message) or obvious_rejection(message) or requires_exact_text(message)
             or re.search(r'\b(?:ademas|tambien|despues|premio|ano|fecha|'
                          r'capitulo|pagina|isbn|compara|analiza|interpreta)\b|[;\n]', request_text(message))):
@@ -522,14 +548,36 @@ def catalogue_lookup_answer(message, history, search):
                  r'personajes|argumento|trama|final)\b', request_text(message)):
         return None
     value = request_text(message).strip('¿?¡!., ')
+    value = re.sub(r'^(?:y\s+|(?:dime|cuentame)\s+(?=quien\b))', '', value)
     author = re.fullmatch(r'(?:quien (?:escribio|es (?:el autor|la autora)))(?: de)?\s+(.+)', value)
+    if not author:
+        # Una atribución propuesta se contrasta con la misma ficha exacta;
+        # el nombre sugerido por el lector nunca se vuelve evidencia.
+        author = re.fullmatch(r'(.+?)\s+(?:fue|esta|es)\s+escrit[oa]\s+por\s+.{2,100}', value)
     summary = re.fullmatch(r'(?:de que trata|hablame de|cuentame (?:sobre|de)|'
                            r'resume|resumen de|sinopsis de)\s+(.+)', value)
     genre = re.fullmatch(r'(?:de que genero es|que genero tiene|cual es el genero de)\s+(.+)', value)
     from .literary_identity import resolve_followup_context, title_matches, same_work
     reference = resolve_followup_context(message, sanitized_history(history))
+    implicit_author = bool(re.fullmatch(r'quien (?:es (?:su|el|la) autor(?:a)?|(?:lo|la) escribio)', value))
+    recent=next((turn for turn in reversed(history) if turn.get('accepted') is True and not turn.get('context_only')),None)
+    if implicit_author and recent and recent.get('intent')=='recommend':
+        from .literary_identity import _history_works
+        latest=_history_works({key:value for key,value in recent.items() if key!='context_work'})
+        if len(latest)==1:
+            reference={**reference,'ambiguous':False,'books':latest}
+        else:
+            return ChatResult('¿De cuál de las recomendaciones quieres conocer el autor? Indícame el título o su posición.',
+                              'clarification',intent='author')
     if reference['ambiguous']:
         return None
+    ordinal_author = (bool(re.fullmatch(r'(?:el|la) (?:primer[oa]?|segund[oa]|tercer[oa]?)', value))
+        and any(turn.get('accepted') is True and turn.get('intent')=='author' for turn in history[-1:]))
+    if implicit_author and not reference['books']:
+        return ChatResult('¿De qué libro quieres conocer el autor? Indícame el título para comprobarlo.',
+                          'clarification',intent='author')
+    if reference['books'] and (implicit_author or ordinal_author):
+        author = True
     if reference['books']:
         book = reference['books'][0]
         title, query = book['title'], book['title'] + ' ' + book['author']
@@ -617,7 +665,7 @@ def catalogue_lookup_answer(message, history, search):
                  'citations': [source['id']], 'needs_web': False,
                  'books': [{'title': source['title'], 'author': source['author'], 'source_id': source['id']}]}
         validate_draft(draft, [source])
-        return ChatResult(draft['text'] + '\n\nFuente: ' + source['url'], 'answered', True,
+        return ChatResult(draft['text'] + '\n\nFuente: ' + (source['url'] or source.get('source') or 'Catálogo LitMate'), 'answered', True,
                           [source], draft['books'], 'sources', 'author', {'catalogue_quick_lookup': True})
     from .books_google import source_synopsis
     if (source.get('policy') in {'openlibrary-minimal-metadata-v1',

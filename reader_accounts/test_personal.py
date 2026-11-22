@@ -244,9 +244,15 @@ class PersonalTests(TestCase):
         self.assertEqual(len(mail.outbox), 0)
 
     @override_settings(EMAIL_BACKEND='django.core.mail.backends.locmem.EmailBackend', LITMATE_READER_EMAIL_ENABLED=True)
-    def test_mail_provider_failure_is_not_reported_as_sent(self):
+    def test_mail_provider_failure_is_neutral_and_does_not_claim_delivery(self):
         with patch('django.core.mail.EmailMultiAlternatives.send', side_effect=OSError):
-            self.assertEqual(self.client.post('/password-reset/', {'email': self.user.email}).status_code, 503)
+            response=self.client.post('/password-reset/', {'email': self.user.email})
+        # El estado no debe revelar si el correo existe. Se confirma recepción
+        # de la petición, no que haya sido entregado un mensaje.
+        self.assertRedirects(response,'/password-reset/done/')
+        page=self.client.get(response.url)
+        self.assertContains(page,'solicit')
+        self.assertNotContains(page,'correo enviado')
 
     def test_gateway_exposes_only_personal_routes_not_storage(self):
         from reader_accounts.gateway import reader_methods

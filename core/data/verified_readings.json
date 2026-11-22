@@ -53,10 +53,28 @@
     {
       "title": "La metamorfosis",
       "author": "Franz Kafka",
-      "url": "https://es.wikipedia.org/wiki/La_metamorfosis",
+      "url": "https://www.gutenberg.org/files/5200/5200-h/5200-h.htm",
       "categories": ["Novela corta", "Fiction"],
       "language": "es",
-      "description": "Gregor Samsa despierta transformado en un insecto monstruoso y se ve incapacitado para trabajar y mantener a su familia."
+      "description": "Gregor Samsa, un hombre que trabaja como viajante, despierta convertido en una criatura de aspecto semejante a un insecto. La transformación altera su relación con el trabajo y con su familia.",
+      "character_facts": [{"name": "Gregor Samsa", "role": "Viajante que despierta convertido en una criatura de aspecto semejante a un insecto."}]
+    },
+    {
+      "title": "Infierno",
+      "author": "Dante Alighieri",
+      "url": "https://www.gutenberg.org/cache/epub/1009/pg1009-images.html",
+      "categories": ["Poesía", "Poema narrativo"],
+      "description": "Dante se pierde en una selva oscura y se encuentra con Virgilio, quien se ofrece a guiarlo por el Infierno. El recorrido lo enfrenta con distintas formas de castigo y con las decisiones de quienes las padecen.",
+      "character_facts": [{"name": "Virgilio", "role": "Poeta romano que guía a Dante en su viaje por el Infierno."}],
+      "spoiler_free_summary": true
+    },
+    {
+      "title": "La guerra de los mundos",
+      "author": "H. G. Wells",
+      "url": "https://www.gutenberg.org/ebooks/36",
+      "categories": ["Science fiction", "Martians -- Fiction"],
+      "description": "Una invasión marciana irrumpe en Inglaterra. Un narrador que presencia los primeros ataques cuenta cómo la llegada de los invasores desorganiza la vida cotidiana y obliga a la población a huir.",
+      "spoiler_free_summary": true
     },
     {
       "title": "Platero y yo",

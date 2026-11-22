@@ -152,7 +152,10 @@ def search_catalog(query, *, limit=6, expand=False):
     books = Libro.objects.select_related('autor').filter(condition).annotate(
         literary_rank=score).order_by('-literary_rank', 'id')[:limit]
     return structured + [{'title': book.titulo, 'author': book.autor.nombre, 'description': book.sinopsis,
-             'synopsis': book.sinopsis, 'image_url': safe_source_url(book.portada_url),
+             'synopsis': source_synopsis({'description':book.sinopsis, 'synopsis':book.sinopsis}),
+             'read_mode': ('metadatos bibliográficos; sin trama ni texto completo'
+                 if normalized(book.sinopsis).startswith('informacion catalografica; sin sinopsis ni texto completo') else ''),
+             'image_url': safe_source_url(book.portada_url),
              'categories': [book.genero] if book.genero else [], 'language': book.idioma,
              'year': str(book.fecha_publicacion.year) if book.fecha_publicacion else '',
              'source': 'Catálogo LitMate', 'book_id': 'db_' + str(book.pk), 'kind': 'book'} for book in books]

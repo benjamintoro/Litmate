@@ -184,6 +184,21 @@ class ConfigGatewayTests(SimpleTestCase):
 class OpenProductionTests(TestCase):
     databases={'accounts'}
 
+    @override_settings(LITMATE_OPEN_GUEST_CHAT_PER_MINUTE=1)
+    def test_guest_capacity_is_shared_across_new_visitor_cookies(self):
+        import json
+        from reader_accounts.usage import UsageError
+        with patch('reader_accounts.chat.reserve',side_effect=UsageError('isolated','Prueba aislada',403)) as reserve:
+            for index in range(2):
+                self.client.cookies.clear()
+                self.get('/chat/')
+                result=self.client.post('/chatbot_query/',json.dumps({
+                    'request_id':f'synthetic_test_{index:04}', 'message':'¿Quién escribió Frankenstein?'}),
+                    content_type='application/json',secure=True)
+                self.assertEqual(result.status_code,403 if index==0 else 429)
+            self.assertEqual(result.json()['error'],'guest_capacity')
+            reserve.assert_called_once()
+
     def setUp(self):
         temporary=self.enterContext(TemporaryDirectory(dir=Path(settings.BASE_DIR)/'.testtmp'))
         self.enterContext(override_settings(LITMATE_AI_RUNTIME_DB=Path(temporary)/'runtime.sqlite3'))

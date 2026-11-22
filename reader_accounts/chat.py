@@ -2,7 +2,10 @@
 import json
 import copy
 import re
+import sqlite3
+import time
 from types import SimpleNamespace
+from django.conf import settings
 from django.utils import timezone
 from django.db import DatabaseError, transaction
 from django.http import JsonResponse, StreamingHttpResponse
@@ -63,6 +66,17 @@ def query(request):
                 response['Retry-After']='60'
                 return response
             request.reader_rate_approved=True
+            if not request.user.is_authenticated and getattr(settings, 'LITMATE_PRODUCTION_OPEN', False):
+                from core.ai_concurrency import rate_increment
+                limit = getattr(settings, 'LITMATE_OPEN_GUEST_CHAT_PER_MINUTE', 6)
+                try:
+                    attempts = rate_increment(f'litmate-open-guest-chat:{int(time.time()) // 60}', 120)
+                except (OSError, RuntimeError, ValueError, sqlite3.Error):
+                    return error_response(UsageError('resource_unavailable', 'El chat para invitados no está disponible temporalmente.', 503))
+                if attempts > limit:
+                    response = error_response(UsageError('guest_capacity', 'El chat para invitados está ocupado. Espera un minuto o inicia sesión.'))
+                    response['Retry-After'] = '60'
+                    return response
         op, reused = reserve(request.reader_actor, request.user, data.get('request_id'), message)
     except UsageError as error:
         return error_response(error)

@@ -141,6 +141,16 @@ class OllamaJSON:
                         source['description'] = str(source.get('description', ''))[:maximum]
                 if size() <= limit:
                     break
+        if size() > limit and isinstance(history, list):
+            # La última respuesta puede ser extensa incluso después de retirar
+            # turnos antiguos. Se conserva su identidad y la pregunta original;
+            # el relato generado anterior no sustituye la evidencia actual.
+            for maximum in (1200, 600, 240):
+                for turn in history:
+                    if isinstance(turn, dict) and isinstance(turn.get('answer'), str):
+                        turn['answer'] = turn['answer'][:maximum]
+                if size() <= limit:
+                    break
         # Nunca corta el mensaje, las citas originales ni el borrador que será revisado.
         if size() > limit:
             raise ProviderUnavailable('contexto_demasiado_extenso')

@@ -277,7 +277,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <span class="book-section-label">Sinopsis</span>
+                                    <span class="book-section-label" id="modalSynopsisLabel">Sinopsis</span>
                                     <p class="mt-1 book-synopsis-full" id="modalSinopsis"></p>
                                 </div>
                             </div>
@@ -521,7 +521,10 @@ document.addEventListener('DOMContentLoaded', function () {
             const rating = Number(String(currentBookData.calificacion || '').replace(',', '.'));
             const reviews = Number(currentBookData.resenas);
             document.getElementById('modalRating').textContent = rating > 0 && reviews > 0 ? rating + '★ (' + reviews + ' reseñas)' : 'Sin valoraciones';
-            document.getElementById('modalSinopsis').textContent = currentBookData.sinopsis || 'Sin sinopsis disponible.';
+            const synopsis = currentBookData.sinopsis || '';
+            const metadataOnly = synopsis.startsWith('Información catalográfica; sin sinopsis ni texto completo.');
+            document.getElementById('modalSynopsisLabel').textContent = metadataOnly ? 'Datos del catálogo' : 'Sinopsis';
+            document.getElementById('modalSinopsis').textContent = synopsis || 'Sin sinopsis disponible.';
             document.getElementById('modalDemoTexto').textContent = currentBookData.demo || 'No hay fragmento de lectura disponible.';
 
             const modalImg = document.getElementById('modalImg');
