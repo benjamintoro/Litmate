@@ -23,7 +23,7 @@ def community(view):
         try:
             return view(request, *args, **kwargs)
         except DatabaseError:
-            return HttpResponse('No pudimos acceder a la comunidad. Inténtalo más tarde.', status=503)
+            return HttpResponse('No pudimos acceder a las reseñas. Inténtalo más tarde.', status=503)
     return guarded
 
 
@@ -54,7 +54,8 @@ def visible_posts(viewer):
     public = public_author & Q(visibility=SocialPost.Visibility.PUBLIC)
     posts = SocialPost.objects.filter(moderated=False)
     if not viewer.is_authenticated:
-        return posts.filter(public)
+        return posts.filter(public, is_review=True)
+    posts = posts.filter(Q(is_review=True) | Q(author__user=viewer))
     followed = Follow.objects.filter(follower__user=viewer, follower__published=True, target=OuterRef('author_id'))
     return posts.alias(viewer_follows=Exists(followed)).filter(
         public | Q(author__user=viewer) |

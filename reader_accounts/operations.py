@@ -5,6 +5,19 @@ import sqlite3
 
 
 def account_health(database):
+    from django.conf import settings
+    from django.db import connections, DatabaseError
+    if settings.configured and settings.DATABASES.get('accounts', {}).get('ENGINE') == 'django.db.backends.mysql':
+        try:
+            connection = connections['accounts']
+            required = ['auth_user', 'django_session', 'core_conversacionia', 'core_librofavorito',
+                        'reader_accounts_usagebucket', 'suscripciones_historialpago']
+            with connection.cursor() as cursor:
+                cursor.execute('SELECT 1')
+                present = set(connection.introspection.table_names(cursor))
+            return {'status': 'ok' if set(required) <= present else 'degraded', 'backend': 'mysql'}
+        except DatabaseError:
+            return {'status': 'unavailable', 'backend': 'mysql'}
     path = Path(database).resolve()
     if not path.is_file():
         return {'status': 'unavailable'}

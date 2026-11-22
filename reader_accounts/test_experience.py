@@ -99,7 +99,7 @@ class CurrentChatTests(TestCase):
         from .models import SocialPost, SocialProfile
         author = SocialProfile.objects.create(user=self.other, published=True)
         SocialProfile.objects.create(user=self.user, published=True)
-        post = SocialPost.objects.create(author=author, submission_id=uuid4(), body='Lectura sintética', visibility='public')
+        post = SocialPost.objects.create(author=author, submission_id=uuid4(), body='Lectura sintética', visibility='public', is_review=True, rating=4, catalogue_id=123)
         route = f'/comunidad/publicacion/{post.pk}/me-gusta/'
         for _ in range(2):
             response = self.client.post(route, {'action': 'add'}, HTTP_ACCEPT='application/json')

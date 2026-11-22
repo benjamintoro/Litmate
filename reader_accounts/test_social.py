@@ -53,12 +53,16 @@ class CommunityTests(TestCase):
         cls.conv = ConversacionIA.objects.create(usuario=cls.a, titulo='CHAT PRIVADO')
         cls.plan = PlanSuscripcion.objects.create(nombre='Gratuito', slug='gratis', precio=0, limite_consultas_ia_diarias=15)
         SuscripcionUsuario.objects.create(usuario=cls.a, plan=cls.plan, estado='activa')
-        cls.public = SocialPost.objects.create(author=cls.pa, submission_id=uuid4(), body='Una opinión literaria.', visibility='public')
-        cls.private = SocialPost.objects.create(author=cls.pa, submission_id=uuid4(), body='PUBLICACION PRIVADA')
-        cls.followers = SocialPost.objects.create(author=cls.pa, submission_id=uuid4(), body='PARA SEGUIDORES', visibility='followers')
+        cls.public = SocialPost.objects.create(author=cls.pa, submission_id=uuid4(), body='Una opinión literaria.', visibility='public', is_review=True, rating=4, catalogue_id=123)
+        cls.private = SocialPost.objects.create(author=cls.pa, submission_id=uuid4(), body='PUBLICACION PRIVADA', is_review=True, rating=4, catalogue_id=123)
+        cls.followers = SocialPost.objects.create(author=cls.pa, submission_id=uuid4(), body='PARA SEGUIDORES', visibility='followers', is_review=True, rating=4, catalogue_id=123)
 
     def setUp(self):
         cache.clear()
+        catalogue = self.enterContext(patch('core.models.Libro.objects'))
+        catalogue.select_related.return_value.in_bulk.return_value = {}
+        catalogue.select_related.return_value.filter.return_value.first.return_value = SimpleNamespace(
+            pk=123, titulo='Frankenstein', autor=SimpleNamespace(nombre='Mary Shelley'))
         self.temp = TemporaryDirectory(dir=Path(__file__).resolve().parents[1] / '.testtmp')
         self.images = override_settings(LITMATE_AVATAR_ROOT=Path(self.temp.name) / 'avatars')
         self.images.enable()
@@ -75,7 +79,7 @@ class CommunityTests(TestCase):
                 'annual_goal': 24, 'published': 'on', **extra}
 
     def post_data(self, **extra):
-        return {'submission_id': str(uuid4()), 'body': 'Acabo de leer una novela.', 'visibility': 'private',
+        return {'submission_id': str(uuid4()), 'body': 'Acabo de leer una novela.', 'visibility': 'private', 'rating': 4, 'catalogue_id': 123,
                 'allow_comments': 'on', **extra}
 
     def test_profile_edit_and_safe_images(self):
@@ -161,7 +165,7 @@ class CommunityTests(TestCase):
         self.assertTrue(saved.spoiler)
         self.assertEqual(SocialPost.objects.filter(submission_id=data['submission_id']).count(), 1)
         response = self.client.post(self.route('social_edit_post', saved.pk),
-                                    {'body': 'Texto actualizado', 'visibility': 'private'})
+                                    {'body': 'Texto actualizado', 'visibility': 'private', 'rating': 4, 'catalogue_id': 123})
         self.assertEqual(response.status_code, 302)
         saved.refresh_from_db()
         self.assertEqual(saved.body, 'Texto actualizado')
@@ -335,7 +339,7 @@ class CommunityTests(TestCase):
             self.assertEqual(self.client.get('/comunidad/').status_code, 404)
             self.assertContains(self.client.get('/perfil/'), 'Mis conversaciones')
             self.assertNotContains(self.client.get('/perfil/'), 'Nueva publicación')
-        SocialPost.objects.bulk_create([SocialPost(author=self.pa, submission_id=uuid4(), body=f'Opinion {n}', visibility='public')
+        SocialPost.objects.bulk_create([SocialPost(author=self.pa, submission_id=uuid4(), body=f'Opinion {n}', visibility='public', is_review=True, rating=4, catalogue_id=123)
                                         for n in range(12)])
         response = self.client.get('/comunidad/')
         self.assertContains(response, 'Siguiente')

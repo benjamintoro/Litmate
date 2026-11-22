@@ -122,9 +122,9 @@
                              data-calificacion="{{ libro.calificacion }}"
                              data-resenas="{{ libro.total_resenas }}">
                             {% if libro.imagen %}
-                                <img src="{{ libro.imagen }}" alt="{{ libro.titulo }}" class="book-cover-img" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=400';">
+                                <img src="{{ libro.imagen }}" alt="{{ libro.titulo }}" class="book-cover-img" onerror="this.onerror=null;this.style.display='none';this.parentElement.insertAdjacentText('beforeend','Sin portada');">
                             {% else %}
-                                <div class="text-muted p-4"><i class="iconoir-book fa-3x mb-2 text-primary"></i><br><small>Portada</small></div>
+                                <div class="text-muted p-4"><i class="iconoir-book fa-3x mb-2 text-primary"></i><br><small>Sin portada</small></div>
                             {% endif %}
                         </div>
 
@@ -154,7 +154,7 @@
                             
                             <div class="book-card-meta-row">
                                 <span class="book-card-genre-text">{{ libro.genero|truncatechars:20 }}</span>
-                                <span class="book-card-rating"><i class="iconoir-star-solid text-warning me-1"></i>{{ libro.calificacion }}</span>
+                                <span class="book-card-rating">{% if libro.calificacion and libro.total_resenas %}<i class="iconoir-star-solid text-warning me-1"></i>{{ libro.calificacion }}{% else %}Sin valoraciones{% endif %}</span>
                             </div>
 
                             <div class="d-flex align-items-center justify-content-between pt-1">
@@ -232,7 +232,7 @@
                 <ul class="nav modal-tabs-nav" id="modalTab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active px-3 py-2 position-relative" id="demo-tab" data-bs-toggle="tab" data-bs-target="#tab-demo" type="button" role="tab">
-                            Resumen & Demo
+                            Ficha del libro
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
@@ -255,7 +255,7 @@
                     <div class="tab-pane fade show active" id="tab-demo" role="tabpanel">
                         <div class="row g-4 mb-4">
                             <div class="col-sm-3 text-center">
-                                <img src="" id="modalImg" class="img-fluid book-modal-img" alt="Portada">
+                                <img src="" id="modalImg" class="img-fluid book-modal-img" alt="Portada" onerror="this.style.display='none'">
                             </div>
                             <div class="col-sm-9">
                                 <div class="row g-3 mb-3 book-meta-grid">
@@ -273,7 +273,7 @@
                                     </div>
                                     <div class="col-6">
                                         <span class="book-meta-label">Valoración</span>
-                                        <span class="book-meta-rating" id="modalRating">4.8★</span>
+                                        <span class="book-meta-rating" id="modalRating">Sin valoraciones</span>
                                     </div>
                                 </div>
                                 <div>
@@ -287,7 +287,7 @@
                         <div class="p-4 book-demo-box">
                             <div class="d-flex align-items-center mb-3">
                                 <i class="iconoir-quote me-2 book-demo-quote-icon"></i>
-                                <span class="book-section-label">Fragmento de Muestra</span>
+                                <span class="book-section-label">Información disponible</span>
                             </div>
                             <p class="mb-0 fst-italic book-demo-text" id="modalDemoTexto"></p>
                         </div>
@@ -514,12 +514,15 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('modalTitulo').textContent = currentBookData.titulo;
             document.getElementById('modalAutor').textContent = currentBookData.autor;
             document.getElementById('modalGenero').textContent = currentBookData.genero;
-            document.getElementById('modalEditorial').textContent = currentBookData.editorial || 'Editorial Internacional';
+            document.getElementById('modalEditorial').textContent = currentBookData.editorial || 'Editorial no informada';
             document.getElementById('modalAno').textContent = currentBookData.ano || 'N/A';
-            document.getElementById('modalPaginas').textContent = (currentBookData.paginas || '300') + ' págs.';
-            document.getElementById('modalRating').textContent = (currentBookData.calificacion || '4.8') + '★ (' + (currentBookData.resenas || '10') + ' reseñas)';
-            document.getElementById('modalSinopsis').textContent = currentBookData.sinopsis || 'Sinopsis disponible al consultar el libro.';
-            document.getElementById('modalDemoTexto').textContent = currentBookData.demo || 'Fragmento de lectura disponible.';
+            const pages = Number(currentBookData.paginas);
+            document.getElementById('modalPaginas').textContent = Number.isFinite(pages) && pages > 0 ? pages + ' págs.' : 'Páginas no informadas';
+            const rating = Number(String(currentBookData.calificacion || '').replace(',', '.'));
+            const reviews = Number(currentBookData.resenas);
+            document.getElementById('modalRating').textContent = rating > 0 && reviews > 0 ? rating + '★ (' + reviews + ' reseñas)' : 'Sin valoraciones';
+            document.getElementById('modalSinopsis').textContent = currentBookData.sinopsis || 'Sin sinopsis disponible.';
+            document.getElementById('modalDemoTexto').textContent = currentBookData.demo || 'No hay fragmento de lectura disponible.';
 
             const modalImg = document.getElementById('modalImg');
             if (currentBookData.imagen) {
@@ -887,7 +890,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 titulo: titulo,
                 proveedor: provider,
                 url: url,
-                precio: 14990,
+                precio: 0,
                 google_id: currentBookData.id
             })
         }).catch(err => console.error('Tracking error:', err));

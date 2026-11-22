@@ -51,7 +51,8 @@ def generar_enlaces_tiendas(titulo, autor, google_id=None, precio_base=None, isb
                 'badge': meta['badge'],
                 'badge_class': meta['badge_class'],
                 'icono': meta['icono'],
-                'es_directo': True
+                'es_directo': True,
+                'precio_verificado': True
             })
         return tiendas
 
@@ -155,17 +156,29 @@ def generar_enlaces_tiendas(titulo, autor, google_id=None, precio_base=None, isb
 
 
 def generar_demo_extracto(libro_obj=None, sinopsis="", titulo="", autor=""):
-    """Genera un fragmento o resumen demo para lectura preliminar."""
-    if sinopsis and len(sinopsis) > 120:
-        return (
-            f"Adelanto de lectura — '{titulo or (libro_obj.titulo if libro_obj else 'Obra')}' de {autor or (libro_obj.autor.nombre if libro_obj else 'Autor')}:\n\n"
-            f"{sinopsis}\n\n"
-            "«...El universo narrativo de esta obra invita al lector a sumergirse en una trama envolvente, explorando sus temas centrales con notable maestría y profundidad de personajes.»"
-        )
-    return (
-        f"Muestra previa de '{titulo}': Esta destacada obra combina una cuidada construcción narrativa "
-        "con reflexiones profundas. Explora el comparador de precios inferior para adquirir tu copia física o digital."
-    )
+    """La información de una ficha nunca se presenta como un fragmento del libro."""
+    if sinopsis:
+        return 'Información de la ficha; no es un extracto del libro.\n\n' + sinopsis
+    return 'No hay un fragmento de lectura ni una sinopsis disponibles para esta ficha.'
+
+
+def catalogue_offers(book):
+    """Un enlace de búsqueda no acredita un precio ni disponibilidad."""
+    verified=[]
+    stores=[]
+    for original in book.get('tiendas',[]):
+        store=dict(original)
+        amount=store.get('precio_clp')
+        if store.get('precio_verificado') and isinstance(amount,(int,float,Decimal)) and amount>0:
+            verified.append(store)
+        else:
+            store.update(precio_clp=None,precio_formateado='Consultar en tienda',
+                         disponibilidad='Consultar en tienda',precio_verificado=False)
+        stores.append(store)
+    book['tiendas']=stores
+    book['precio_desde']=(min(verified,key=lambda store:store['precio_clp'])['precio_formateado']
+                          if verified else 'Precio por consultar')
+    return book
 
 
 def buscar_libros_hibrido(query="", author="", genre="", year="", order="", max_results=36):
@@ -247,15 +260,15 @@ def buscar_libros_hibrido(query="", author="", genre="", year="", order="", max_
             'titulo': l.titulo,
             'autores': [l.autor.nombre],
             'autor_str': l.autor.nombre,
-            'editorial': l.editorial.nombre if l.editorial else 'Editorial Internacional',
+            'editorial': l.editorial.nombre if l.editorial else 'Editorial no informada',
             'genero': l.genero or 'Literatura',
-            'paginas': l.paginas or 320,
+            'paginas': l.paginas or None,
             'año': año_pub,
             'sinopsis': l.sinopsis or "Sinopsis disponible en el visor.",
             'demo_extracto': generar_demo_extracto(libro_obj=l, sinopsis=l.sinopsis, titulo=l.titulo, autor=l.autor.nombre),
             'imagen': l.portada_url or '',
-            'calificacion': l.calificacion_promedio or 4.8,
-            'total_resenas': l.total_resenas or 12,
+            'calificacion': l.calificacion_promedio if l.total_resenas and l.calificacion_promedio>0 else None,
+            'total_resenas': l.total_resenas or 0,
             'tiendas': tiendas,
             'precio_desde': precio_desde,
             'link_principal': link_principal,
@@ -316,10 +329,10 @@ def buscar_libros_hibrido(query="", author="", genre="", year="", order="", max_
                         if portada.startswith('http://'):
                             portada = portada.replace('http://', 'https://')
 
-                        desc = info.get('description', '') or f"Una destacada obra literaria de {autor_str}."
-                        cats = info.get('categories', ['Ficción'])
-                        gen_str = cats[0] if cats else 'Ficción'
-                        pags = info.get('pageCount', 280)
+                        desc = info.get('description', '') or 'Sin sinopsis disponible.'
+                        cats = info.get('categories', [])
+                        gen_str = cats[0] if cats else 'Sin clasificar'
+                        pags = info.get('pageCount') or None
 
                         identifiers = info.get('industryIdentifiers', [])
                         isbn_val = ""
@@ -338,15 +351,15 @@ def buscar_libros_hibrido(query="", author="", genre="", year="", order="", max_
                             'titulo': titulo,
                             'autores': autores,
                             'autor_str': autor_str,
-                            'editorial': info.get('publisher', 'Editorial Internacional'),
+                            'editorial': info.get('publisher') or 'Editorial no informada',
                             'genero': gen_str,
                             'paginas': pags,
                             'año': año_api,
                             'sinopsis': desc,
                             'demo_extracto': generar_demo_extracto(sinopsis=desc, titulo=titulo, autor=autor_str),
                             'imagen': portada,
-                            'calificacion': info.get('averageRating', 4.5),
-                            'total_resenas': info.get('ratingsCount', 8),
+                            'calificacion': info.get('averageRating') if info.get('ratingsCount') else None,
+                            'total_resenas': info.get('ratingsCount') or 0,
                             'tiendas': tiendas,
                             'precio_desde': tiendas[0]['precio_formateado'] if tiendas else '$14.990 CLP',
                             'link_principal': tiendas[0]['url'] if tiendas else '#',
@@ -407,13 +420,13 @@ def buscar_libros_hibrido(query="", author="", genre="", year="", order="", max_
                         portada = ''
 
                     publishers = doc.get('publisher', [])
-                    editorial_str = publishers[0] if publishers else 'Editorial Internacional'
+                    editorial_str = publishers[0] if publishers else 'Editorial no informada'
                     
                     subjects = doc.get('subject', [])
-                    gen_str = subjects[0] if subjects else (genre or 'Fantasía / Ficción')
-                    pags = doc.get('number_of_pages_median') or 320
+                    gen_str = subjects[0] if subjects else 'Sin clasificar'
+                    pags = doc.get('number_of_pages_median') or None
 
-                    sinopsis = f"Obra literaria destacada '{titulo}' de {autor_str}. Publicada originalmente en {año_api}."
+                    sinopsis = 'Metadatos de Open Library; no hay sinopsis disponible en esta ficha.'
                     tiendas = generar_enlaces_tiendas(titulo, autor_str, google_id=ol_key)
 
                     resultados.append({
@@ -429,8 +442,8 @@ def buscar_libros_hibrido(query="", author="", genre="", year="", order="", max_
                         'sinopsis': sinopsis,
                         'demo_extracto': generar_demo_extracto(sinopsis=sinopsis, titulo=titulo, autor=autor_str),
                         'imagen': portada,
-                        'calificacion': 4.7,
-                        'total_resenas': random.randint(15, 60),
+                        'calificacion': None,
+                        'total_resenas': 0,
                         'tiendas': tiendas,
                         'precio_desde': tiendas[0]['precio_formateado'],
                         'link_principal': tiendas[0]['url'],
@@ -443,4 +456,4 @@ def buscar_libros_hibrido(query="", author="", genre="", year="", order="", max_
         except Exception as ol_err:
             logger.warning(f"Error consultando Open Library: {ol_err}")
 
-    return resultados
+    return [catalogue_offers(book) for book in resultados]

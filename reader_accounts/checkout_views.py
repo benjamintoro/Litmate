@@ -50,6 +50,9 @@ class MethodForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        from .webpay import enabled
+        self.fields['method'].choices = ([('webpay', 'Webpay Plus · tarjetas oficiales de prueba')]
+                                         if enabled() else [choice for choice in SimulatedOrder.METHODS if choice[0] != 'webpay'])
         if not service.scenarios_allowed():
             self.fields.pop('scenario')
 
@@ -118,7 +121,10 @@ def order(request, order_id):
 @action_limit('checkout', 30)
 def confirm(request, order_id):
     validate_fields(request, [])
-    own_order(request, order_id)
+    entry = own_order(request, order_id)
+    if entry.method == 'webpay':
+        from .webpay_views import start
+        return start(request, order_id)
     entry = service.process_order(request.user, order_id)
     return redirect('sim_order' if entry.state == 'temporary_error' else 'sim_receipt', order_id=entry.pk)
 
@@ -134,7 +140,16 @@ def cancel_order(request, order_id):
         raise service.CheckoutError('Confirma que quieres cancelar este pedido.')
     if entry.state == 'approved':
         raise service.CheckoutError('La operación ya fue aprobada. Gestiona el plan desde Mi suscripción.')
-    service.process_order(request.user, order_id, cancel=True)
+    if entry.method == 'webpay':
+        from .checkout_models import WebpayTransaction
+        from . import webpay
+        payment = WebpayTransaction.objects.filter(order=entry).first()
+        if payment:
+            webpay.complete(payment.token, aborted=True)
+        else:
+            service.process_order(request.user, order_id, cancel=True)
+    else:
+        service.process_order(request.user, order_id, cancel=True)
     return redirect('sim_receipt', order_id=order_id)
 
 
@@ -156,6 +171,8 @@ def subscription(request):
         from .views import account
         return account(request)
     current = service.subscription(request.user)
+    from .payments import verified_payment
+    payment_verified = bool(current and (current.plan.precio == 0 or verified_payment(current)))
     recent = SimulatedOrder.objects.filter(user=request.user).select_related('payment').first()
     active_order = None
     if current and service.is_simulated(current):
@@ -163,6 +180,7 @@ def subscription(request):
             payment__referencia_transaccion=current.id_suscripcion_externa, state='approved').first()
     return render(request, 'accounts/checkout/subscription.html', {
         'subscription': current, 'active_order': active_order, 'latest_order': recent,
+        'payment_verified': payment_verified,
         'simulated_subscription': service.is_simulated(current), **usage_context(request)})
 
 

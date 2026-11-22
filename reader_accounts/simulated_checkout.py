@@ -14,6 +14,7 @@ from suscripciones.models import PlanSuscripcion, SuscripcionUsuario
 from .checkout_models import SimulatedOrder
 from .payment_lifecycle import prepare_checkout, apply_provider_event, cancel_local_renewal
 from .payments import SALT, verified_payment
+from .locking import reader_lock
 
 PROVIDER = 'litmate-simulation'
 SIMULATION_SALT = SALT + '.simulation'
@@ -29,9 +30,11 @@ def enabled():
 
 
 def scenarios_allowed():
-    path = Path(settings.DATABASES['accounts']['NAME']).resolve()
+    name = str(settings.DATABASES['accounts']['NAME'])
+    path = Path(name).resolve()
+    memory_test = settings.DATABASES['accounts']['ENGINE'] == 'django.db.backends.sqlite3' and name.startswith('file:memorydb_')
     return (enabled() and getattr(settings, 'LITMATE_CHECKOUT_TEST_SCENARIOS', False)
-            and path.is_relative_to(Path(settings.BASE_DIR) / '.testtmp'))
+            and (memory_test or path.is_relative_to(Path(settings.BASE_DIR) / '.testtmp')))
 
 
 def paid_plan(slug):
@@ -55,7 +58,11 @@ def create_order(user, plan, *, method, submission_id, scenario='approved', rene
     if scenario != 'approved' and not scenarios_allowed():
         raise CheckoutError('El escenario requiere el entorno de pruebas protegido.')
     submission_id = UUID(str(submission_id))
-    with transaction.atomic(using='accounts'):
+    if method == 'webpay':
+        from .webpay import enabled as webpay_enabled
+        if not webpay_enabled() or scenario != 'approved':
+            raise CheckoutError('El pago Webpay requiere el modo de integración autorizado.')
+    with reader_lock('u:' + str(user.pk)), transaction.atomic(using='accounts'):
         previous = SimulatedOrder.objects.select_related('payment').filter(user=user, submission_id=submission_id).first()
         if previous:
             if previous.payment.plan_id != plan.pk or previous.method != method or previous.scenario != scenario:
@@ -69,7 +76,7 @@ def create_order(user, plan, *, method, submission_id, scenario='approved', rene
             raise CheckoutError('Ya tienes este plan. Confirma expresamente una renovación voluntaria.')
         if not paid_plan(plan.slug):
             raise CheckoutError('Selecciona un plan mensual disponible.')
-        payment = prepare_checkout(user, plan, provider=PROVIDER, adapter_authorized=True,
+        payment = prepare_checkout(user, plan, provider='webpay-integration' if method == 'webpay' else PROVIDER, adapter_authorized=True,
                                    idempotency_key='sim-' + submission_id.hex)
         return SimulatedOrder.objects.create(user=user, payment=payment, submission_id=submission_id,
             method=method, scenario=scenario, plan_name=plan.nombre, period=plan.periodo,
@@ -81,8 +88,10 @@ def process_order(user, order_id, *, cancel=False, at=None):
     if not enabled():
         raise CheckoutError('La contratación simulada está desactivada.')
     now = at or timezone.now()
-    with transaction.atomic(using='accounts'):
+    with reader_lock('u:' + str(user.pk)), transaction.atomic(using='accounts'):
         order = SimulatedOrder.objects.select_related('payment__plan').get(pk=order_id, user=user)
+        if order.method == 'webpay' and not cancel:
+            raise CheckoutError('Completa la verificación en Webpay para conocer el resultado.')
         if order.state in ('approved', 'rejected', 'cancelled'):
             return order
         payment = order.payment
@@ -124,7 +133,7 @@ def process_order(user, order_id, *, cancel=False, at=None):
 
 
 def cancel_subscription(user):
-    with transaction.atomic(using='accounts'):
+    with reader_lock('u:' + str(user.pk)), transaction.atomic(using='accounts'):
         sub = subscription(user)
         if not enabled() or not is_simulated(sub) or not verified_payment(sub):
             raise CheckoutError('No se encontró una suscripción simulada verificable.')
@@ -132,7 +141,7 @@ def cancel_subscription(user):
 
 
 def switch_to_free(user):
-    with transaction.atomic(using='accounts'):
+    with reader_lock('u:' + str(user.pk)), transaction.atomic(using='accounts'):
         sub = subscription(user)
         if not enabled() or not is_simulated(sub) or not verified_payment(sub):
             raise CheckoutError('El cambio requiere una suscripción simulada verificable.')

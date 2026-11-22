@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-from .checkout_models import SimulatedOrder
+from .checkout_models import SimulatedOrder, WebpayTransaction
 from .social_models import (
     AnnualReading, Follow, PostLike, ProfileCover, SharedList, SharedReading, SocialComment,
     SocialPost, SocialProfile, SocialReport,

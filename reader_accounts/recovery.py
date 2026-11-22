@@ -5,6 +5,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import DatabaseError
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
+import logging
 from django.urls import reverse_lazy
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_http_methods
@@ -19,6 +21,13 @@ class RecoveryView(auth_views.PasswordResetView):
     subject_template_name = 'registration/password_reset_subject.txt'
     form_class = ReaderPasswordResetForm
     success_url = reverse_lazy('password_reset_done')
+
+    def form_valid(self, form):
+        try:
+            return super().form_valid(form)
+        except (OSError, TimeoutError):
+            logging.getLogger(__name__).warning('password_reset_delivery_failed')
+            return HttpResponseRedirect(self.get_success_url())
 
 
 class ChangePasswordView(auth_views.PasswordChangeView):

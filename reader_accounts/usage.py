@@ -8,6 +8,7 @@ from django.db.models import F
 from django.utils import timezone
 from suscripciones.models import SuscripcionUsuario
 from .models import QueryOperation, UsageBucket
+from .locking import reader_lock
 
 DB = 'accounts'
 ZONE = ZoneInfo('America/Santiago')
@@ -60,7 +61,7 @@ def reserve(actor, user, request_id, message):
     if not isinstance(request_id, str) or not re.fullmatch(r'[A-Za-z0-9_-]{16,64}', request_id):
         raise UsageError('request_id_required', 'La solicitud necesita un identificador de operación válido.', 400)
     fingerprint = hashlib.sha256(message.strip().encode()).hexdigest()
-    with transaction.atomic(using=DB):
+    with reader_lock(actor), transaction.atomic(using=DB):
         # BEGIN IMMEDIATE en SQLite; bloqueo de escritura antes de leer contadores.
         _expire(actor)
         previous = QueryOperation.objects.filter(actor=actor, request_id=request_id).first()
@@ -84,7 +85,8 @@ def reserve(actor, user, request_id, message):
 
 
 def finish(op_id, result, *, failed=False):
-    with transaction.atomic(using=DB):
+    actor = QueryOperation.objects.values_list('actor', flat=True).get(pk=op_id)
+    with reader_lock(actor), transaction.atomic(using=DB):
         op = QueryOperation.objects.select_for_update().get(pk=op_id)
         if op.status != 'pending':
             return False
@@ -101,7 +103,7 @@ def finish(op_id, result, *, failed=False):
 
 
 def info(actor, user):
-    with transaction.atomic(using=DB):
+    with reader_lock(actor), transaction.atomic(using=DB):
         _expire(actor)
         name, limit, period, reset = entitlement(user)
         bucket = UsageBucket.objects.filter(actor=actor, period=period).first()

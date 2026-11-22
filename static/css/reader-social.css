@@ -247,6 +247,7 @@
 
 body:has(.lm-social) { --bg-body: #121416; --bg-body-gradient: none; background-color: #121416; }
 /* Controles de lectura y conversación compartidos con las fichas privadas. */
+.lm-social .lm-review-rating { color: #d9bc7b; font: 600 1.1rem Inter, sans-serif; letter-spacing: .05em; }
 .lm-social .lm-btn.lm-primary { color: #171a1c !important; background: #c9ae77; }
 .lm-social .lm-post-footer form { margin: 0; }
 .lm-social .lm-heart { gap: .4rem; min-width: 3.5rem; }

@@ -1,12 +1,12 @@
 {% extends 'accounts/social/frame.html' %}
 {% block social_content %}
 <div class="lm-narrow lm-stack">
-    <a href="{% url 'social_feed' %}">Volver a Comunidad LitMate</a>
-    <h1>Publicación literaria</h1>
+    <a href="{% url 'social_feed' %}">Volver a Reseñas LitMate</a>
+    <h1>{% if entry.is_review %}Reseña literaria{% else %}Archivo de publicaciones{% endif %}</h1>
     {% include 'accounts/social/post_card.html' with post=entry post_detail=True %}
     {% if user.is_authenticated and entry.visibility != 'private' %}
         <div class="lm-panel lm-actions">
-            {% if user.pk != entry.author.user_id %}<details><summary>Reportar publicación</summary>
+            {% if user.pk != entry.author.user_id %}<details><summary>Reportar reseña</summary>
                 <form method="post" class="lm-form" action="{% url 'social_report_post' entry.pk %}">{% csrf_token %}
                     <label>Motivo <textarea name="reason" rows="3" maxlength="400" required></textarea></label>
                     <button class="lm-btn">Enviar reporte</button>

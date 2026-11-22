@@ -220,10 +220,16 @@ def genre_sources(codes,maximum=160,*,exclude_records=()):
     if len(exclude_records)>200:raise ValueError('Hasta 200 exclusiones bibliográficas por consulta.')
     edges=KBRelation.objects.filter(target_id__in=targets,current=True,record__status='source_metadata',
         ).exclude(record_id__in=list(exclude_records)).filter(
-        predicate__in=['genre','format','audience']).select_related('record').order_by('record_id')[:min(500,maximum*3)]
+        predicate__in=['genre','format','audience','subject']).select_related('record').order_by('record_id')[:min(500,maximum*3)]
     edges=list(edges)
     parent_ids={digest(edge.record.provider,key) for edge in edges for key in edge.record.payload.get('work_keys',[])}
     blocked=set(KBRecord.objects.filter(id__in=parent_ids,status='conflict').values_list('id',flat=True)) if parent_ids else set()
+    # Los volcados de obras guardan claves de autor, no necesariamente su nombre.
+    # Resolverlas en un lote evita descartar las obras importadas o hacer N+1.
+    author_ids={digest(edge.record.provider,key) for edge in edges
+                for key in edge.record.payload.get('author_keys',[])}
+    authors=dict(KBRecord.objects.filter(id__in=author_ids,kind='author',status='source_metadata')
+                 .values_list('id','label')) if author_ids else {}
     result=[];seen=set()
     for edge in edges:
         record=edge.record
@@ -231,8 +237,12 @@ def genre_sources(codes,maximum=160,*,exclude_records=()):
         seen.add(record.id)
         data=record.payload
         if any(digest(record.provider,key) in blocked for key in data.get('work_keys',[])):continue
-        if not data.get('author') or normalize_identity(data['author']) in {'unknown','various','anonymous'}:continue
-        source={'kind':'book','title':record.label,'author':data['author'],'book_id':'sqlkb:'+record.id,
+        author=data.get('author') or ', '.join(authors.get(digest(record.provider,key),'')
+                                               for key in data.get('author_keys',[]))
+        if (not author or any(digest(record.provider,key) not in authors for key in
+                data.get('author_keys',[]) if not data.get('author'))
+                or normalize_identity(author) in {'unknown','various','anonymous'}):continue
+        source={'kind':'book','title':record.label,'author':author,'book_id':'sqlkb:'+record.id,
             'source':{'gutenberg':'Project Gutenberg','openlibrary':'Open Library','wikidata':'Wikidata','bne':'BNE'}[record.provider],
             'url':record.source_url,'categories':data.get('categories',[]),'isbns':data.get('isbns',[]),
             'language':data.get('languages',[''])[0] if data.get('languages') else '',

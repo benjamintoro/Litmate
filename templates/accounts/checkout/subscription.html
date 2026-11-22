@@ -3,7 +3,7 @@
 <h1>Mi suscripción</h1>
 <section class="lm-panel lm-stack">
 {% if subscription %}<h2>{{ subscription.plan.nombre }}</h2>
-<dl class="lm-order-summary"><dt>Estado</dt><dd>{% if subscription.es_valida %}{% if subscription.fecha_cancelacion %}Cancelación registrada · acceso hasta el vencimiento{% else %}Activa{% endif %}{% else %}Vencida o inactiva{% endif %}</dd>
+<dl class="lm-order-summary"><dt>Estado</dt><dd>{% if subscription.es_valida %}{% if not payment_verified %}Pendiente de verificación del pago{% elif subscription.fecha_cancelacion %}Cancelación registrada · acceso hasta el vencimiento{% else %}Activa{% endif %}{% else %}Vencida o inactiva{% endif %}</dd>
 <dt>Precio mensual</dt><dd>{{ subscription.plan.precio }} {{ subscription.plan.moneda }}</dd>
 <dt>Inicio del período</dt><dd>{{ subscription.fecha_inicio|date:'d/m/Y H:i' }}</dd>
 <dt>Fin del período</dt><dd>{{ subscription.fecha_fin|date:'d/m/Y H:i'|default:'Sin vencimiento' }}</dd>

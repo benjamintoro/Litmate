@@ -9,7 +9,7 @@ from django.db.models import F, Q
 class SocialProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='social_profile')
     public_id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
-    alias = models.CharField(max_length=32, blank=True)
+    alias = models.CharField(max_length=32, blank=True, null=True, unique=True)
     display_name = models.CharField(max_length=80, blank=True)
     biography = models.CharField(max_length=480, blank=True)
     genres = models.CharField(max_length=120, blank=True)
@@ -21,9 +21,7 @@ class SocialProfile(models.Model):
     share_stats = models.BooleanField(default=False)
 
     class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['alias'], condition=~Q(alias=''), name='social_unique_alias'),
-        ]
+        constraints = []
 
     @property
     def name(self):
@@ -57,6 +55,8 @@ class SocialPost(models.Model):
     author = models.ForeignKey(SocialProfile, on_delete=models.CASCADE, related_name='posts')
     submission_id = models.UUIDField(editable=False)
     body = models.CharField(max_length=2400)
+    is_review = models.BooleanField(default=False)
+    rating = models.PositiveSmallIntegerField(null=True, blank=True)
     catalogue_id = models.PositiveBigIntegerField(null=True, blank=True)
     visibility = models.CharField(max_length=10, choices=Visibility.choices, default=Visibility.PRIVATE)
     spoiler = models.BooleanField(default=False)
@@ -70,7 +70,15 @@ class SocialPost(models.Model):
         indexes = [models.Index(fields=['visibility', '-created_at'], name='social_post_visibility')]
         constraints = [
             models.UniqueConstraint(fields=['author', 'submission_id'], name='social_unique_post_submission'),
+            models.CheckConstraint(condition=Q(rating__isnull=True) | Q(rating__gte=1, rating__lte=5),
+                                   name='review_rating_range'),
+            models.CheckConstraint(condition=Q(is_review=False) | Q(catalogue_id__isnull=False, rating__isnull=False),
+                                   name='review_requires_book_rating'),
         ]
+
+    @property
+    def rating_stars(self):
+        return '★' * (self.rating or 0) + '☆' * (5 - (self.rating or 0))
 
 
 class PostLike(models.Model):

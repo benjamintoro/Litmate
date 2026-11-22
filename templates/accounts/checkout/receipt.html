@@ -4,6 +4,7 @@
 <p role="status" class="lm-result">{{ order.get_state_display }}</p>
 <section class="lm-panel lm-stack">
 <p>Este comprobante corresponde a una demostración académica. No acredita un pago real ni constituye un documento tributario.</p>
+{% if order.method == 'webpay' %}<p>Procesado mediante Webpay Plus en su ambiente de integración. El resultado fue comprobado por el servidor con Transbank.</p>{% endif %}
 <dl class="lm-order-summary"><dt>Identificador</dt><dd>{{ order.pk }}</dd><dt>Referencia</dt><dd>{{ order.payment.referencia_transaccion }}</dd>
 <dt>Fecha y hora</dt><dd>{{ order.created_at|date:'d/m/Y H:i:s' }}</dd><dt>Cuenta</dt><dd>{{ user.username }}</dd>
 <dt>Plan</dt><dd>{{ order.plan_name }}</dd><dt>Importe</dt><dd>{{ order.payment.monto }} {{ order.payment.moneda }}</dd>

@@ -6,9 +6,9 @@
     <div class="lm-columns">
         <div class="lm-stack">
             {% if social_tab == 'publicaciones' or social_tab == 'actividad' %}
-                <section class="lm-panel lm-row"><div><h2>{% if social_tab == 'actividad' %}Actividad literaria{% else %}Publicaciones{% endif %}</h2>
-                    <p class="lm-muted">Comparte una opinión y elige quién puede verla.</p></div>
-                    <a class="lm-btn lm-primary" href="{% url 'social_new_post' %}">Nueva publicación</a></section>
+                <section class="lm-panel lm-row"><div><h2>{% if social_tab == 'actividad' %}Actividad literaria{% else %}Reseñas y archivo{% endif %}</h2>
+                    <p class="lm-muted">Elige un libro, valora su lectura y comparte tu reseña. Aquí conservas también tus publicaciones anteriores.</p></div>
+                    <a class="lm-btn lm-primary" href="{% url 'social_new_post' %}">Nueva reseña</a></section>
                 {% for post in posts %}{% include 'accounts/social/post_card.html' %}{% empty %}<section class="lm-panel lm-empty"><h2>Tu próxima lectura merece una conversación</h2><p class="lm-muted">Escribe una opinión y elige quién puede verla antes de publicarla.</p><a class="lm-btn" href="{% url 'social_new_post' %}">Crear mi primera publicación</a></section>{% endfor %}
                 {% if social_tab == 'actividad' %}{% include 'accounts/social/page_links.html' with page_obj=posts query_prefix='seccion=actividad&' page_param='publicaciones' %}{% else %}{% include 'accounts/social/page_links.html' with page_obj=posts query_prefix='seccion=publicaciones&' page_param='publicaciones' %}{% endif %}
             {% elif social_tab == 'biblioteca' %}

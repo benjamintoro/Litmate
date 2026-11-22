@@ -85,8 +85,9 @@ def prepare(source, folder):
     return result
 
 
-def rehearse(folder, schema, credential):
-    if not re.fullmatch(r'litmate_accounts_ensayo_[a-z0-9_]{6,40}', schema):
+def rehearse(folder, schema, credential, *, production_target=False):
+    pattern = r'litmate_accounts_release_[a-z0-9_]{6,40}' if production_target else r'litmate_accounts_ensayo_[a-z0-9_]{6,40}'
+    if not re.fullmatch(pattern, schema):
         raise ValueError('Nombre de base aislada inválido.')
     manifest = json.loads((folder/'manifest.json').read_text())
     fixture = folder/'cuentas.json'
@@ -100,7 +101,7 @@ def rehearse(folder, schema, credential):
                             passwd=password, charset='utf8mb4')
     with server.cursor() as cursor:
         # CREATE sin IF EXISTS impide adoptar una base con datos anteriores.
-        cursor.execute('CREATE DATABASE '+schema+' CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci')
+        cursor.execute('CREATE DATABASE '+schema+' CHARACTER SET utf8mb4 COLLATE utf8mb4_bin')
     server.close()
     setup(folder)
     from django.conf import settings
@@ -137,13 +138,18 @@ def rehearse(folder, schema, credential):
     after = fingerprint(records())
     if after != manifest['models']:
         raise ValueError('El ensayo no conserva las filas e identificadores.')
+    if production_target:
+        return {'mysql_executed': True, 'target_schema': schema,
+                'all_original_ids_hashes_and_relations_preserved': True,
+                'rows': sum(value['count'] for value in after.values()),
+                'source_changed': False, 'synthetic_users_created': False}
     from django.test import Client
     from django.contrib.auth import authenticate
     from django.contrib.auth.models import User
     from uuid import uuid4
     name = 'migration_'+uuid4().hex[:12]
     trial_password = uuid4().hex+'-Reader!'
-    client = Client()
+    client = Client(HTTP_HOST='127.0.0.1')
     client.get('/registro/')
     response = client.post('/registro/', {
         'username': name, 'email':name+'@example.invalid',
@@ -167,6 +173,7 @@ def main():
     parser.add_argument('--report', required=True, type=Path)
     parser.add_argument('--schema')
     parser.add_argument('--mysql-secret-file', type=Path)
+    parser.add_argument('--production-target', action='store_true', help='Destino nuevo de publicación ya autorizado, sin añadir cuentas de ensayo.')
     args = parser.parse_args()
     folder = args.folder.resolve()
     if not folder.is_relative_to(ROOT/'.testtmp') or args.report.exists():
@@ -178,7 +185,7 @@ def main():
     else:
         if args.schema is None or args.mysql_secret_file is None:
             parser.error('Faltan el esquema nuevo y la credencial DPAPI local.')
-        result = rehearse(folder, args.schema, args.mysql_secret_file)
+        result = rehearse(folder, args.schema, args.mysql_secret_file, production_target=args.production_target)
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(result, indent=2), encoding='utf8')
     print(json.dumps({key:value for key,value in result.items() if key != 'models'}))

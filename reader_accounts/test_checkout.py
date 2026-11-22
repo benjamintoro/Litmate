@@ -59,7 +59,7 @@ class CheckoutTests(TestCase):
         return reverse(name, args=args)
 
     def test_all_methods_activate_signed_pro_and_receipts(self):
-        for method in dict(SimulatedOrder.METHODS):
+        for method in ('debit', 'credit', 'transfer'):
             order = self.approve(method=method, renew=method != 'debit')
             self.assertEqual(order.state, 'approved')
             sub = service.subscription(self.a)

@@ -55,7 +55,7 @@ def owned_post(request, pk):
 @require_safe
 def feed(request):
     scope = 'seguidos' if request.GET.get('ver') == 'seguidos' and request.user.is_authenticated else 'recientes'
-    posts = visible_posts(request.user).filter(author__published=True, author__user__is_active=True)
+    posts = visible_posts(request.user).filter(is_review=True, author__published=True, author__user__is_active=True)
     if scope == 'seguidos':
         following = Follow.objects.filter(follower__user=request.user, follower__published=True).values('target_id')
         posts = posts.filter(author_id__in=following).exclude(visibility=SocialPost.Visibility.PRIVATE)
@@ -108,9 +108,10 @@ def post_editor(request, pk=None):
             profile = profile_for(request.user)
             # Reenvíos del mismo formulario reutilizan la primera publicación.
             fields = {name: form.cleaned_data[name] for name in PostForm.Meta.fields}
+            fields['is_review'] = True
             saved, _ = SocialPost.objects.get_or_create(
                 author=profile, submission_id=form.cleaned_data['submission_id'], defaults=fields)
-        messages.success(request, 'Guardamos tu publicación.')
+        messages.success(request, 'Guardamos tu reseña.')
         if saved.moderated:
             return redirect('perfil')
         return redirect('social_post', pk=saved.pk)

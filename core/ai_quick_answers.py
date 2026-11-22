@@ -546,6 +546,17 @@ def catalogue_lookup_answer(message, history, search):
     from .ai_catalog_fallback import _topic_catalogue_origin
     candidates = [source for source in found if _topic_catalogue_origin(source) and title_matches(title, source)
                   and (not reference['books'] or normalized(source['author']) == normalized(book['author']))]
+    if author and not candidates and not reference['books']:
+        # «el Infierno de Dante» incluye un autor como pista, no como título.
+        # Se exige el título exacto y después una única autoría de fuente.
+        qualified=re.fullmatch(r'(.+?)\s+(?:de|del autor|de la autora)\s+(.{2,100})',title,re.I)
+        if qualified:
+            requested_title=qualified[1].strip(' ,')
+            hint=set(normalized(qualified[2]).split())
+            forms=[requested_title,re.sub(r'^(?:el|la|los|las)\s+','',requested_title,flags=re.I)]
+            candidates=[source for source in found if _topic_catalogue_origin(source)
+                and any(title_matches(form,source) for form in forms)
+                and hint and hint<=set(normalized(source['author']).split())]
     # Open Library puede devolver ediciones con traductores o ilustradores en
     # el campo de autoría. Para una pregunta de autoría, Wikidata aporta una
     # identidad estructurada y evita que esas ediciones conviertan una obra
@@ -618,6 +629,41 @@ def catalogue_lookup_answer(message, history, search):
     if description and description in source['description'] and len(description) <= 300:
         return _validated_result(message, [{**source, 'description': description}])
     return None
+
+def same_book_answer(message,history,search):
+    """Compara identidades recibidas, no inventa una sinopsis de la segunda."""
+    from .literary_identity import same_work
+    if obvious_rejection(message) or has_excerpt(message) or requires_exact_text(message):return None
+    value=request_text(message).strip(' ¿?¡!.,')
+    match=re.fullmatch(r'(?:es|se trata de) (?:la )?misma (?:obra|novela) que (.{2,180})',value)
+    if not match:return None
+    prior=next((turn['books'][0] for turn in reversed(sanitized_history(history)) if len(turn['books'])==1),None)
+    if not prior:
+        return ChatResult('¿Con qué libro quieres compararlo? Indícame su título y autor.',
+                          'clarification',intent='conversation',diagnostics={'identity_comparison':True,'model_calls':0})
+    left=catalogue_lookup_answer('¿Quién escribió '+prior['title']+'?',[],search)
+    right=catalogue_lookup_answer('¿Quién escribió '+match[1]+'?',[],search)
+    if left is None or right is None:
+        return ChatResult('No puedo confirmar la equivalencia con una ficha inequívoca. '
+                          'Indícame los títulos y autores de las dos obras.', 'clarification',
+                          intent='conversation',diagnostics={'identity_comparison':True,'model_calls':0})
+    sources=canonical_sources([*left.sources,*right.sources],4)
+    selected=[]
+    for target in [left.books[0],right.books[0]]:
+        source=next((s for s in sources if same_work(s,target)),None)
+        if source is None:return None
+        selected.append(source)
+    equal=same_work(*selected)
+    text=('Sí, las referencias coinciden en el catálogo.' if equal else
+          'Las referencias del catálogo son distintas; no tengo una equivalencia verificada entre ambas.')
+    lines=[f'**{source["title"]}** — **{source["author"]}**.' for source in selected]
+    draft={'status':'answer','basis':'sources','text':'\n\n'.join(lines),
+           'citations':[s['id'] for s in sources],'needs_web':False,
+           'books':[{'title':s['title'],'author':s['author'],'source_id':s['id']} for s in sources]}
+    validate_draft(draft,sources)
+    return ChatResult(text+'\n\n'+'\n\n'.join(lines),'answered',True,sources,draft['books'],
+                      'sources','author',{'identity_comparison':True,'model_calls':0})
+
 
 def isbn_lookup_answer(message, *, search=None):
     """Identifica un ISBN sólo si el registro recibido contiene ese número."""

@@ -16,7 +16,7 @@
             </section>
         {% elif social_tab == 'informacion' %}{% include 'accounts/social/about.html' %}
         {% else %}
-            <h2>{% if social_tab == 'actividad' %}Actividad literaria{% else %}Publicaciones{% endif %}</h2>
+            <h2>{% if social_tab == 'actividad' %}Actividad literaria{% else %}Reseñas{% endif %}</h2>
             {% for post in posts %}{% include 'accounts/social/post_card.html' %}{% empty %}<p class="lm-panel">No hay publicaciones visibles.</p>{% endfor %}
             {% if social_tab == 'actividad' %}{% include 'accounts/social/page_links.html' with page_obj=posts query_prefix='seccion=actividad&' %}{% else %}{% include 'accounts/social/page_links.html' with page_obj=posts query_prefix='seccion=publicaciones&' %}{% endif %}
         {% endif %}
@@ -24,7 +24,7 @@
     <aside class="lm-stack" aria-label="Información compartida">
         {% include 'accounts/social/stats.html' %}
         {% if social_tab != 'informacion' %}{% if social.favorite_book or social.favorite_author %}{% include 'accounts/social/about.html' %}{% endif %}{% endif %}
-        <section class="lm-panel"><h2>Comunidad LitMate</h2><a href="{% url 'social_feed' %}">Descubrir publicaciones</a></section>
+        <section class="lm-panel"><h2>Reseñas LitMate</h2><a href="{% url 'social_feed' %}">Descubrir reseñas</a></section>
     </aside>
 </div>
 {% endblock %}

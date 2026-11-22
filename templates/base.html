@@ -129,7 +129,7 @@
                     <li class="nav-item"><a class="nav-link px-lg-2 px-xl-3 py-3 py-lg-4" href="{% url 'about' %}">Sobre Nosotros</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-2 px-xl-3 py-3 py-lg-4" href="{% url 'post' %}">Post</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-2 px-xl-3 py-3 py-lg-4" href="{% url 'buscar_libros' %}">Explorar</a></li>
-                    {% if community_enabled %}<li class="nav-item"><a class="nav-link px-lg-2 px-xl-3 py-3 py-lg-4" href="{% url 'social_feed' %}">Comunidad</a></li>{% endif %}
+                    {% if community_enabled %}<li class="nav-item"><a class="nav-link px-lg-2 px-xl-3 py-3 py-lg-4" href="{% url 'social_feed' %}">Reseñas</a></li>{% endif %}
                     <li class="nav-item"><a class="nav-link px-lg-2 px-xl-3 py-3 py-lg-4" href="{% url 'chatbot_page' %}">Asistente IA</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-2 px-xl-3 py-3 py-lg-4" href="{% url 'suscripciones:planes' %}">Planes</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-2 px-xl-3 py-3 py-lg-4" href="{% url 'contact' %}">Contacto</a></li>
@@ -646,6 +646,14 @@
 
             function renderResults(data, q) {
                 selectedIndex = -1;
+                const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({
+                    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+                }[character]));
+                q = escapeHtml(q);
+                data = {
+                    shortcuts: (data.shortcuts || []).map(item => Object.fromEntries(Object.entries(item).map(([key, value]) => [key, escapeHtml(value)]))),
+                    books: (data.books || []).map(item => Object.fromEntries(Object.entries(item).map(([key, value]) => [key, escapeHtml(value)])))
+                };
                 let html = '';
 
                 if (data.shortcuts && data.shortcuts.length > 0) {

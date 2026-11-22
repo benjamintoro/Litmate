@@ -11,6 +11,7 @@ from django.views.decorators.http import require_GET, require_POST
 from core.literary_ai_views import HISTORY_KEY, STREAM_NONCE_KEY
 from core.models import ConversacionIA, MensajeIA
 from .models import QueryOperation
+from .locking import reader_lock
 
 
 def active_conversation(request):
@@ -57,7 +58,7 @@ def clear(request):
     if request.POST.get('confirm') != 'delete-current-conversation':
         return JsonResponse({'response': 'Confirma que deseas borrar la conversación actual.'}, status=400)
     try:
-        with transaction.atomic(using='accounts'):
+        with reader_lock(request.reader_actor), transaction.atomic(using='accounts'):
             if QueryOperation.objects.filter(actor=request.reader_actor, status='pending',
                                              expires_at__gt=timezone.now()).exists():
                 return JsonResponse({'response': 'Espera a que termine la consulta antes de borrar el chat.'}, status=409)

@@ -2,6 +2,7 @@
 import json
 import re
 from django.conf import settings
+from django.conf import settings
 from django.db import connections, DatabaseError
 from django.http import JsonResponse, Http404, HttpResponse
 from django.shortcuts import render
@@ -20,11 +21,21 @@ def live(request):
 @require_safe
 @never_cache
 def ready(request):
+    from .production_runtime import local_json
     try:
         with connections['accounts'].cursor() as cursor:
             cursor.execute('SELECT 1 FROM auth_user LIMIT 1')
-    except DatabaseError:
+        with connections['default'].cursor() as cursor:
+            cursor.execute('SELECT id FROM core_libro LIMIT 1')
+        model = local_json(settings.LITMATE_OLLAMA_URL, '/api/tags')
+        if not any(entry.get('name') == settings.LITMATE_LOCAL_MODEL for entry in model.get('models', [])):
+            return JsonResponse({'status': 'unavailable'}, status=503)
+    except (DatabaseError, OSError, ValueError, TypeError):
         return JsonResponse({'status':'unavailable'},status=503)
+    try:
+        local_json(settings.LITMATE_SEARXNG_URL, '/healthz')
+    except (OSError, ValueError, TypeError):
+        return JsonResponse({'status': 'degraded'})
     return JsonResponse({'status':'ok'})
 
 

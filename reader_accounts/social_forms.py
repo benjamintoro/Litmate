@@ -4,6 +4,7 @@ from django.core.validators import RegexValidator
 
 from .avatars import normalize
 from .models import SocialPost, SocialProfile
+from .content_policy import validate_reader_text
 
 
 class SocialProfileForm(forms.ModelForm):
@@ -35,7 +36,7 @@ class SocialProfileForm(forms.ModelForm):
         widgets = {'biography': forms.Textarea(attrs={'rows': 4})}
 
     def clean_alias(self):
-        return self.cleaned_data['alias'].lower()
+        return self.cleaned_data['alias'].lower() or None
 
     def clean_photo(self):
         upload = self.cleaned_data['photo']
@@ -61,12 +62,15 @@ class SocialProfileForm(forms.ModelForm):
 
 class PostForm(forms.ModelForm):
     submission_id = forms.UUIDField(widget=forms.HiddenInput)
-    catalogue_id = forms.IntegerField(min_value=1, max_value=2**63-1, required=False, widget=forms.HiddenInput)
+    catalogue_id = forms.IntegerField(min_value=1, max_value=2**63-1, required=True, widget=forms.HiddenInput,
+                                     error_messages={'required': 'Selecciona un libro del catálogo para reseñar.'})
+    rating = forms.TypedChoiceField(label='Tu valoración', coerce=int, choices=[('', 'Selecciona de 1 a 5 estrellas')] +
+                                   [(number, f'{number} {"estrella" if number == 1 else "estrellas"}') for number in range(1, 6)])
 
     class Meta:
         model = SocialPost
-        fields = ['body', 'catalogue_id', 'visibility', 'spoiler', 'allow_comments']
-        labels = {'body': 'Tu publicación', 'visibility': 'Visibilidad',
+        fields = ['body', 'catalogue_id', 'rating', 'visibility', 'spoiler', 'allow_comments']
+        labels = {'body': 'Tu reseña', 'visibility': 'Visibilidad',
                   'spoiler': 'Contiene spoilers', 'allow_comments': 'Permitir comentarios'}
         widgets = {'body': forms.Textarea(attrs={'rows': 5, 'maxlength': 2400})}
 
@@ -86,6 +90,16 @@ class PostForm(forms.ModelForm):
                 raise ValidationError('Selecciona una obra del catálogo.')
         return pk
 
+    def clean_body(self):
+        body = self.cleaned_data['body']
+        validate_reader_text(body)
+        return body
+
+    def clean(self):
+        data = super().clean()
+        self.instance.is_review = True
+        return data
+
     def clean_visibility(self):
         visibility = self.cleaned_data['visibility']
         if visibility != SocialPost.Visibility.PRIVATE and not self.profile.published:
@@ -95,7 +109,8 @@ class PostForm(forms.ModelForm):
 
 class CommentForm(forms.Form):
     submission_id = forms.UUIDField(widget=forms.HiddenInput)
-    body = forms.CharField(label='Tu comentario', max_length=600, widget=forms.Textarea(attrs={'rows': 3}))
+    body = forms.CharField(label='Tu comentario', max_length=600, validators=[validate_reader_text],
+                           widget=forms.Textarea(attrs={'rows': 3}))
 
 
 class ReportForm(forms.Form):

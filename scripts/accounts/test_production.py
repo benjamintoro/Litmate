@@ -13,6 +13,7 @@ from contextlib import closing
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--label', action='append', help='Pruebas focalizadas con el perfil de producción aislado.')
     args=parser.parse_args()
     if args.output.exists():parser.error('Utiliza un informe nuevo.')
     root=Path.cwd();(root/'.testtmp').mkdir(exist_ok=True)
@@ -38,7 +39,7 @@ def main():
             def run_suite(self,suite,**kwargs):
                 self.result=super().run_suite(suite,**kwargs);return self.result
         started=time.monotonic();runner=Runner(interactive=False,verbosity=1)
-        failures=runner.run_tests(['reader_accounts.test_production'])
+        failures=runner.run_tests(args.label or ['reader_accounts.test_production'])
         report={'tests_run':runner.result.testsRun,'failures':len(runner.result.failures),'errors':len(runner.result.errors),
             'seconds':round(time.monotonic()-started,4),'production_databases_used':False,
             'failed_tests':[{'test':str(test),'error':error} for test,error in [*runner.result.failures,*runner.result.errors]]}

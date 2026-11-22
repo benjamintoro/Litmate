@@ -7,6 +7,7 @@ UUID_PATH = r'[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}'
 
 
 def social_methods(path):
+    path = path.replace('/resenas/', '/comunidad/', 1)
     if path == '/comunidad/' or re.fullmatch(
         rf'/(?:comunidad/obra/\d+|comunidad/publicacion/{UUID_PATH}|'
         rf'lectores/{UUID_PATH}(?:/lista/\d+|/imagen/(?:avatar|portada))?)/', path
@@ -26,6 +27,11 @@ def social_methods(path):
 
 
 def reader_methods(path):
+    if getattr(settings, 'LITMATE_WEBPAY_INTEGRATION_ENABLED', False):
+        if path == '/suscripciones/webpay/retorno/':
+            return {'GET', 'POST'}
+        if re.fullmatch(r'/suscripciones/pedido/' + UUID_PATH + r'/webpay/', path):
+            return {'POST'}
     if path == '/api/chat/actual/':
         return {'GET', 'HEAD'}
     if path in {'/api/chat/borrar/', '/api/presencia/'}:

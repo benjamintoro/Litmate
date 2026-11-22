@@ -79,7 +79,7 @@ def public_profile(request, public_id):
         data['follows_profile'] = profile.followers.filter(follower__user=request.user).exists()
     if selected in {'publicaciones', 'actividad'}:
         # La vista pública se puede previsualizar incluso por el dueño sin sus publicaciones privadas.
-        visible = visible_posts(request.user).filter(author=profile).exclude(visibility='private')
+        visible = visible_posts(request.user).filter(author=profile, is_review=True).exclude(visibility='private')
         data['posts'] = posts_page(request, visible, request.GET.get('page'))
     if selected == 'biblioteca':
         shared = ElementoListaLectura.objects.filter(lista__usuario_id=profile.user_id, social_share__isnull=False)

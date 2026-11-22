@@ -237,6 +237,9 @@ class OpenProductionTests(TestCase):
         self.assertEqual(client.post('/registro/',{},secure=True).status_code,403)
 
     def test_health_is_minimal_and_ready_detects_database_failure(self):
+        self.enterContext(patch.object(connections['default'], 'cursor'))
+        self.enterContext(patch('reader_accounts.production_runtime.local_json', side_effect=lambda base,path:
+            {'models':[{'name':settings.LITMATE_LOCAL_MODEL}]} if path == '/api/tags' else {'http_status':200}))
         self.assertEqual(self.get('/_health/live/').json(),{'status':'ok'})
         self.assertEqual(self.get('/_health/ready/').json(),{'status':'ok'})
         from django.db import DatabaseError

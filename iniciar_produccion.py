@@ -73,8 +73,13 @@ def main(argv=None):
         # No copia el archivo SQLite activo: usa backup API y restaura una copia
         # antes de abrir el listener. No reemplaza respaldos ni elimina versiones.
         if not config.testing:
-            from scripts.accounts.backup_job import run_backup
-            backup=run_backup(config.accounts,ROOT/'backups/automatic')
+            from django.db import connections
+            if connections['accounts'].vendor == 'mysql':
+                from scripts.accounts.mysql_backup import create
+                backup = create(ROOT, config.accounts)
+            else:
+                from scripts.accounts.backup_job import run_backup
+                backup=run_backup(config.accounts,ROOT/'backups/automatic')
             if backup['status'] not in ('verified','recent_backup_valid'):
                 raise ValueError('El respaldo automático está pausado o no está verificado.')
         password=getpass.getpass('Contraseña Basic transitoria (oculta, mínimo16): ') if args.basic else None

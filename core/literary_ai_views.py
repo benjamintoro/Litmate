@@ -493,6 +493,18 @@ def _compute_answer_impl(message, history, topic_context, *, pending_clarificati
         repair = conversation_repair(message, history, topic_context)
         if repair is not None:
             return repair, SimpleNamespace(usage={}, provider='conversation-repair', calls=0)
+        from .literary_identity import resolve_followup_context
+        reference=resolve_followup_context(message,history)
+        if reference.get('reason')=='missing_ordinal':
+            return (ChatResult('No tengo una lista anterior que permita identificar ese libro. '
+                'Indícame el título o pídeme una nueva lista de recomendaciones.',
+                'clarification',intent='conversation',diagnostics={'unresolved_ordinal':True,'model_calls':0}),
+                SimpleNamespace(usage={},provider='conversation-reference',calls=0))
+        from .ai_quick_answers import same_book_answer
+        from .literary_search import search_catalog
+        comparison=same_book_answer(message,history,search_catalog)
+        if comparison is not None:
+            return comparison,SimpleNamespace(usage={},provider='verified-catalogue-comparison',calls=0)
         retrieval_message = (topic_context['query'] if topic_context.get('followup')
                              and topic_context.get('intent') == 'recommend' else message)
         from .literary_ai import requires_exact_text, has_excerpt, EXACT_TEXT_NEEDED

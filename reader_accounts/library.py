@@ -18,6 +18,7 @@ from suscripciones.models import SuscripcionUsuario
 from .forms import ReaderProfileForm, ReadingListForm, BookSnapshotForm
 from .usage import entitlement, UsageError
 from .auth_limits import auth_limit
+from .locking import reader_lock
 
 
 def api(view):
@@ -88,7 +89,7 @@ def reading_groups(user):
 @require_POST
 def favorite_add(request):
     data = snapshot(payload(request))
-    with transaction.atomic(using='accounts'):
+    with reader_lock('u:' + str(request.user.pk)), transaction.atomic(using='accounts'):
         favorite = LibroFavorito.objects.filter(usuario=request.user, google_id=data['google_id']).first()
         if favorite:
             return JsonResponse({'status': 'exists', 'id': favorite.pk, 'msg': 'Este libro ya está guardado.'})

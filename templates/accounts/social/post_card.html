@@ -14,9 +14,10 @@
             {% if post.moderated %}<span class="lm-tag">Retirada por moderación</span>{% endif %}</div>
         </div>
     </header>
+    {% if post.is_review %}<p class="lm-review-rating" aria-label="{{ post.rating }} de 5 estrellas"><span aria-hidden="true">{{ post.rating_stars }}</span> · {{ post.rating }}/5</p>{% else %}<p class="lm-muted">Publicación anterior al módulo de reseñas</p>{% endif %}
     {% if post.spoiler %}<details class="lm-spoiler"><summary>Contiene spoilers. Mostrar texto</summary><p class="lm-post-text">{{ post.body }}</p></details>
     {% else %}<p class="lm-post-text">{{ post.body }}</p>{% endif %}
-    {% if post.linked_book %}{% include 'accounts/social/book_card.html' with book=post.linked_book %}{% endif %}
+    {% if post.linked_book %}{% include 'accounts/social/book_card.html' with book=post.linked_book %}{% elif post.is_review %}<p class="lm-muted">La ficha del libro vinculado no está disponible temporalmente.</p>{% endif %}
     <footer class="lm-post-footer">
         {% if post.visibility != 'private' %}
             {% if user.is_authenticated %}

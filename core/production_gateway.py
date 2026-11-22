@@ -46,7 +46,10 @@ class ProductionGateway:
             methods={'GET','HEAD','POST'}
         if not methods or '\\' in path or any(part.startswith('.') for part in path.split('/') if part):
             return reject('404 Not Found','Recurso no disponible.')
-        if self.expected is not None:
+        # Retorno cruzado de Transbank. El adaptador valida el token registrado y
+        # confirma el resultado por API. El comprobante exige sesión y propietario.
+        webpay_return = path == '/suscripciones/webpay/retorno/' and bool(methods)
+        if self.expected is not None and not webpay_return:
             header=environ.get('HTTP_AUTHORIZATION','')
             supplied=b''
             if len(header)<=1024 and header.startswith('Basic '):

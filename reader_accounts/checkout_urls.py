@@ -1,7 +1,10 @@
 from django.urls import path
 from . import checkout_views as checkout
+from . import webpay_views
 
 urlpatterns = [
+    path('suscripciones/webpay/retorno/', webpay_views.returned, name='webpay_return'),
+    path('suscripciones/pedido/<uuid:order_id>/webpay/', webpay_views.start, name='webpay_start'),
     path('suscripciones/checkout/<slug:plan_slug>/', checkout.checkout, name='sim_checkout'),
     path('suscripciones/checkout/<slug:plan_slug>/metodo/', checkout.methods, name='sim_methods'),
     path('suscripciones/pedido/<uuid:order_id>/', checkout.order, name='sim_order'),
