@@ -1,0 +1,7 @@
+Hola, {{ user.get_username }}:
+
+Solicitaste restablecer tu contraseña de LitMate. Este enlace vence en 24 horas:
+{{ protocol }}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}
+
+Si no lo solicitaste, ignora este mensaje. Tu contraseña no se ha modificado.
+LitMate

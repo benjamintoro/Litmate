@@ -26,6 +26,20 @@ ROWS = (
  ('essay','genre',('nonfiction',),('ensayo','essays')),
  ('biography','genre',('nonfiction',),('biografía','biography','autobiography')),
  ('nonfiction','genre',(),('no ficción','nonfiction','non fiction')),
+ ('programming','subject',(),('programación','programming','computer programming',
+    'programming electronic computers','software development','software engineering','desarrollo de software')),
+ ('python_programming','subject',('programming',),('python','python computer program language',
+    'python programming language','python lenguaje de programación')),
+ ('java_programming','subject',('programming',),('java','java computer program language','java programming language')),
+ ('javascript_programming','subject',('programming',),('javascript','javascript computer program language',
+    'javascript programming language')),
+ ('sql_programming','subject',('programming',),('sql','sql computer program language','structured query language')),
+ ('web_programming','subject',('programming',),('programación web','web programming','web development')),
+ ('algorithms','subject',(),('algoritmos','algorithms','computer algorithms')),
+ ('networking','subject',(),('redes informáticas','redes de computadoras','redes de computadores',
+    'redes de ordenadores','redes','computer networks','computer networking','networking','tcp ip')),
+ ('cisco','subject',('networking',),('cisco','cisco systems','cisco networking','ccna','ccnp','ccst','ccie')),
+ ('packet_tracer','subject',('cisco',),('packet tracer','cisco packet tracer')),
  ('manga','format',(),('manga',)),
  ('graphic_novel','format',(),('novela gráfica','graphic novels','graphic novel')),
  ('children','audience',(),('literatura infantil','infantil','children fiction','children s fiction','children s literature')),
@@ -33,7 +47,7 @@ ROWS = (
 )
 TAXONOMY={code:{'axis':axis,'parents':parents,'aliases':tuple(normalize_identity(x) for x in aliases)}
           for code,axis,parents,aliases in ROWS}
-VERSION='literary-taxonomy-v1'
+VERSION='literary-taxonomy-v3-networking'
 
 
 def ancestors(code):
@@ -77,4 +91,14 @@ def excluded_categories(text):
 
 def matches_categories(source,codes):
     actual=classify_categories(source.get('categories',[]))
-    return all(code in actual for code in codes)
+    if not all(code in actual for code in codes):return False
+    languages={'python_programming':'python','java_programming':'java',
+               'javascript_programming':'javascript','sql_programming':'sql'}
+    requested={languages[code] for code in codes if code in languages}
+    title=normalize_identity(source.get('title'))
+    if 'javascript' in requested and re.search(r'\b(?:jscript net|vbscript|actionscript)\b',title):
+        return False  # Un dialecto o tecnología distinta no es JavaScript por una materia mezclada.
+    named={name for name in languages.values() if re.search(r'(?<!\w)'+name+r'(?!\w)',title)}
+    # Algunas fichas colaborativas mezclan materias de varios lenguajes. Un
+    # título explícito de otro lenguaje es una contradicción, no una afinidad.
+    return not (requested and named and not requested & named)

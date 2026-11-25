@@ -1,0 +1,8 @@
+{% extends 'accounts/social/frame.html' %}
+{% block social_content %}
+<div class="lm-narrow lm-panel">
+    <h1>Revisa tu reporte</h1>
+    {{ form.errors }}
+    <a href="{% url 'social_post' entry.pk %}">Volver a la publicación</a>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+from django.urls import path, include, re_path
+from . import views, chat, library, recovery, privacy, contact, current_chat, presence
+from django.contrib.auth import views as auth_views
+
+urlpatterns = [
+    path('api/chat/actual/', current_chat.current, name='reader_current_chat'),
+    path('api/chat/borrar/', current_chat.clear, name='reader_clear_chat'),
+    path('api/presencia/', presence.heartbeat, name='reader_presence'),
+    path('contact/', contact.contact, name='reader_contact'),
+    path('', include('reader_accounts.checkout_urls')),
+    path('', include('reader_accounts.social_urls')),
+    path('registro/', views.register), path('login/', views.login), path('logout/', views.logout),
+    path('suscripciones/planes/', views.plans),
+    path('cuenta/activar-gratis/', views.activate_free, name='reader_activate_free'),
+    path('perfil/', views.account), path('suscripciones/mi-suscripcion/', views.account),
+    path('perfil/editar/', library.profile_edit),
+    path('cuenta/password/', recovery.change_password, name='reader_password_change'),
+    path('cuenta/exportar/', privacy.export_data, name='reader_export_data'),
+    path('cuenta/avatar/', library.avatar, name='reader_avatar'),
+    path('cuenta/biblioteca/', library.library_page, name='reader_library'),
+    path('cuenta/pagos/', views.payment_history, name='reader_payment_history'),
+    path('cuenta/libro/', library.book_detail, name='reader_book_detail'),
+    path('cuenta/lecturas/<int:id>/nota/', library.reading_note, name='reader_reading_note'),
+    path('api/biblioteca/estado/', library.book_status),
+    path('favoritos/agregar/', library.favorite_add),
+    path('favoritos/eliminar/<int:id>/', library.favorite_remove),
+    path('api/listas/crear/', library.list_create),
+    path('api/listas/obtener/', library.list_get),
+    path('api/listas/agregar-libro/', library.list_add),
+    path('api/estado-lectura/', library.reading_state),
+    path('api/listas/eliminar/<int:id>/', library.list_remove),
+    path('api/listas/quitar-libro/<int:id>/', library.item_remove),
+    path('cuenta/listas/<int:id>/editar/', library.list_edit, name='reader_list_edit'),
+    path('password-reset/', recovery.request_reset),
+    path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(
+        template_name='accounts/recovery_done.html')),
+    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(
+        template_name='registration/password_reset_complete.html')),
+    path('reset/<uidb64>/<token>/', recovery.confirm_reset),
+    path('cuenta/conversaciones/<int:pk>/', views.conversation, name='reader_conversation'),
+    path('cuenta/conversaciones/<int:pk>/ver/', views.conversation_page, name='reader_conversation_page'),
+    path('api/cuota-ia/', views.quota),
+    path('chat/', views.chat_page), path('chatbot/', views.chat_page),
+    path('chatbot_query/', chat.query), path('chatbot_finalize/', chat.finalize),
+    re_path(r'^suscripciones/(iniciar-pago|webpay/commit|mercadopago/callback|paypal/callback|simulador-gateway)/$',
+            lambda request, *_: views.payment_disabled(request)),
+]

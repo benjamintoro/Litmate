@@ -1,83 +1,39 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block title %}Contacto - LitMate{% endblock %}
-
 {% block content %}
-<header class="masthead" style="background-image: url({% static 'assets/img/contact-bg.jpg' %})">
-    <div class="container position-relative px-4 px-lg-5">
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-7">
-                <div class="page-heading">
-                    <h1>Contactanos</h1>
-                    <span class="subheading">¿Tienes preguntas? Tenemos respuestas.</span>
-                </div>
-            </div>
-        </div>
+<link rel="stylesheet" href="{% static 'css/reader-social.css' %}">
+<main class="lm-social lm-contact">
+  <div class="lm-shell">
+    <header class="lm-contact-heading"><p class="lm-kicker">Contacto</p>
+      <h1>Conversemos sobre LitMate</h1>
+      <p class="lm-muted">Consultas, sugerencias o dificultades con tu experiencia de lectura.</p>
+    </header>
+    <div class="lm-contact-grid">
+      <section class="lm-panel">
+        <h2>Escríbenos</h2>
+        <p class="lm-muted lm-small">Tu mensaje se guarda en la bandeja privada del equipo. El equipo podrá usar el correo que indiques para responderte.</p>
+        <form method="post" action="{% url 'contact' %}" class="lm-form lm-spaced">
+          {% csrf_token %}
+          {% if form.errors %}<div class="lm-form-error" role="alert"><p>Revisa los campos indicados.</p>{{ form.non_field_errors }}{{ form.website.errors }}</div>{% endif %}
+          <div hidden aria-hidden="true"><label for="website">Sitio web</label><input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></div>
+          <div class="lm-contact-fields">
+            <div class="lm-field"><label for="name">Nombre</label><input id="name" name="name" value="{{ form.name.value|default_if_none:'' }}" maxlength="150" autocomplete="name" required {% if form.name.errors %}aria-invalid="true" aria-describedby="name-errors"{% endif %}><div id="name-errors">{{ form.name.errors }}</div></div>
+            <div class="lm-field"><label for="email">Correo electrónico</label><input id="email" name="email" type="email" value="{{ form.email.value|default_if_none:'' }}" maxlength="254" autocomplete="email" required {% if form.email.errors %}aria-invalid="true" aria-describedby="email-errors"{% endif %}><div id="email-errors">{{ form.email.errors }}</div></div>
+          </div>
+          <div class="lm-field"><label for="phone">Teléfono <span class="lm-muted lm-small">Opcional</span></label><input id="phone" name="phone" type="tel" value="{{ form.phone.value|default_if_none:'' }}" maxlength="50" autocomplete="tel">{{ form.phone.errors }}</div>
+          <div class="lm-field"><label for="message">Mensaje</label><textarea id="message" name="message" rows="6" maxlength="5000" required {% if form.message.errors %}aria-invalid="true" aria-describedby="message-errors"{% endif %}>{{ form.message.value|default_if_none:'' }}</textarea><div id="message-errors">{{ form.message.errors }}</div></div>
+          <div class="lm-actions"><button class="lm-btn lm-primary" type="submit">Enviar mensaje</button><span class="lm-muted lm-small">Hasta 5000 caracteres</span></div>
+        </form>
+      </section>
+      <aside class="lm-contact-aside">
+        <div class="lm-contact-art" role="img" aria-label="Libros y espacio de lectura"></div>
+        <section class="lm-panel"><h2>Equipo LitMate</h2><p class="lm-muted">Santiago, Chile</p>
+          <p class="lm-small">Incluye el título de la obra o la sección que necesitas consultar. Conserva tus contraseñas y datos bancarios en privado.</p>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=INACAP+Puente+Alto" target="_blank" rel="noopener noreferrer">Ver ubicación de INACAP Puente Alto</a>
+        </section>
+      </aside>
     </div>
-</header>
-
-<main class="mb-5">
-    <div class="container px-4 px-lg-5 py-4">
-        <div class="row justify-content-center mb-4">
-            <div class="col-lg-8">
-                <p class="text-muted contact-lead">¿Quieres contactarnos? Completa el formulario a continuación para enviarnos un mensaje y te responderemos lo antes posible.</p>
-            </div>
-        </div>
-
-        {% if success %}
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="alert alert-success" role="alert">
-                        {{ success }}
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-
-        <div class="row gx-5 justify-content-center">
-            <div class="col-lg-5 mb-4">
-                <form id="contactForm" method="post" action="{% url 'contact' %}">
-                    {% csrf_token %}
-                    <!-- Campo Honeypot Anti-Spam -->
-                    <div class="hp-field" aria-hidden="true" tabindex="-1">
-                        <input type="text" name="website_url_check" value="" autocomplete="off">
-                    </div>
-                    <div class="mb-3">
-                        <label for="name" class="form-label small fw-semibold text-muted">Nombre</label>
-                        <input class="form-control" id="name" name="name" type="text" placeholder="Tu nombre completo" required />
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label small fw-semibold text-muted">Correo electrónico</label>
-                        <input class="form-control" id="email" name="email" type="email" placeholder="correo@ejemplo.com" required />
-                    </div>
-                    <div class="mb-3">
-                        <label for="phone" class="form-label small fw-semibold text-muted">Teléfono</label>
-                        <input class="form-control" id="phone" name="phone" type="tel" placeholder="+56 9 1234 5678" required />
-                    </div>
-                    <div class="mb-4">
-                        <label for="message" class="form-label small fw-semibold text-muted">Mensaje</label>
-                        <textarea class="form-control contact-textarea" id="message" name="message" placeholder="Escribe tu mensaje aquí..." required></textarea>
-                    </div>
-                    <button class="btn btn-primary w-100" id="submitButton" type="submit">Enviar mensaje</button>
-                </form>
-            </div>
-            <div class="col-lg-5 mb-4">
-                <div class="mb-4 contact-map-wrapper">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3323.7535486720667!2d-70.58110130000001!3d-33.5857476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662d718a032972d%3A0x45da5699698e2261!2sINACAP%20Puente%20Alto!5e0!3m2!1ses-419!2scl!4v1760580957042!5m2!1ses-419!2scl" width="100%" height="280" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-                <div class="contact-info-list">
-                    <p class="mb-2">
-                        <i class="iconoir-map-pin me-2 contact-info-icon"></i>
-                        <strong>Ubicación:</strong> Santiago, Chile
-                    </p>
-                    <p class="mb-0">
-                        <i class="iconoir-clock me-2 contact-info-icon"></i>
-                        <strong>Horario:</strong> Lunes a Viernes, 9:00 a 18:00
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+  </div>
 </main>
 {% endblock %}

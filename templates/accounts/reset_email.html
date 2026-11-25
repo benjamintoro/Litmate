@@ -1,0 +1,10 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Recupera tu cuenta de LitMate</title></head>
+<body style="margin:0;background:#f5f0e7;color:#26231d;font-family:Arial,sans-serif">
+<main style="max-width:560px;margin:32px auto;padding:24px;background:white;border-radius:12px">
+<h1 style="color:#806020">LitMate</h1><h2>Recupera tu cuenta</h2>
+<p>Hola, {{ user.get_username }}:</p><p>Recibimos una solicitud para restablecer tu contraseña.</p>
+<p><a style="display:inline-block;padding:14px 20px;background:#806020;color:white;border-radius:6px" href="{{ protocol }}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}">Elegir una nueva contraseña</a></p>
+<p>El enlace vence en 24 horas y deja de funcionar después de cambiar tu contraseña.</p>
+<p>Si no hiciste esta solicitud, ignora este mensaje. Tu contraseña permanece intacta.</p>
+<p>LitMate nunca te pedirá que respondas este correo con tu contraseña ni con datos bancarios.</p>
+</main></body></html>

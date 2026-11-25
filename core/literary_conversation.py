@@ -86,7 +86,7 @@ def _explicit_subject(message):
         # espacial en un pedido ambiguo de manuales sobre el espacio.
         value = value[:themed.start()] + 'libros sobre ' + themed.group(1) + ' ' + themed.group(2)
     match = re.search(r'\b(?:libros?|lecturas?|novelas?|ensayos?|bibliograf[ií]a|'
-                      r'obras?)\s+(?:sobre|acerca de|de|del)\s+(.+)', value, re.I)
+                      r'obras?)\s+(?:sobre|acerca de|de|del|con)\s+(.+)', value, re.I)
     if not match:
         match = re.search(r'\b(?:recomi[eé]nda(?:me)?|recomendar|busc(?:o|ando)|'
                           r'quiero|necesito)\b.*?\b(?:sobre|acerca de)\s+(.+)', value, re.I)
@@ -204,6 +204,16 @@ def resolve_topic_context(message, state, *, now=None):
     previous = _current_topic(state, now)
     from .literary_genres import requested_categories
     normalized_message=_normalized(message).strip('¿?¡!., ')
+    replacement = re.fullmatch(r'(?:no (?:quiero|busco) [^,.;!?]{2,100},\s*)?prefiero ([^,.;!?]{2,140})',
+                               message.strip('¿?¡!., '), flags=re.I)
+    if previous and replacement:
+        subject = _safe_subject(_without_language_preference(replacement[1]))
+        from .books_google import book_topic_profile
+        if subject and (requested_categories(subject) or book_topic_profile(_topic_query(subject))['structured']):
+            language = requested_language(replacement[1])
+            return {'subject': subject, 'intent': 'recommend', 'query': _topic_query(subject, language),
+                    'followup': True, 'explicit_change': True, 'reset_work_context': True,
+                    'preference_replacement': True, **_language_field(language)}
     # Cambios y rechazos elípticos siguen dentro de la conversación literaria.
     change=re.fullmatch(r'ahora (?:de |sobre )?(.+)',message.strip('¿?¡!., '),re.I)
     if change and requested_categories(change[1]):

@@ -1,0 +1,42 @@
+{% extends 'accounts/social/frame.html' %}
+{% load static %}
+{% block social_content %}
+<div class="lm-narrow lm-stack">
+    <div><a href="{% url 'perfil' %}">Volver a mi cuenta</a><h1>Editar perfil literario</h1></div>
+    <form class="lm-stack" method="post" enctype="multipart/form-data" data-profile-form>
+        {% csrf_token %}{{ form.non_field_errors }}
+        <section class="lm-panel lm-form"><h2>Información literaria</h2>
+            {% include 'accounts/social/field.html' with field=form.display_name %}
+            {% include 'accounts/social/field.html' with field=form.alias %}
+            {% include 'accounts/social/field.html' with field=form.biography %}
+            {% include 'accounts/social/field.html' with field=form.genres %}
+            {% include 'accounts/social/field.html' with field=form.favorite_author %}
+            {% include 'accounts/social/field.html' with field=form.favorite_book %}
+            {% include 'accounts/social/field.html' with field=form.annual_goal %}
+        </section>
+        <section class="lm-panel lm-form" id="imagenes"><h2>Foto y portada</h2>
+            <p class="lm-muted">JPEG o PNG, hasta 4 megapíxeles y 2 MiB en total por envío. La fotografía se centra en un cuadrado y la portada requiere al menos 640 × 210 píxeles.</p>
+            <div class="lm-image-preview lm-preview-avatar">
+                <img data-preview="photo" alt="Vista previa de la fotografía" src="{% if has_avatar %}{% url 'reader_avatar' %}{% else %}{% static 'assets/img/avatar/feliz.png' %}{% endif %}">
+            </div>
+            {% include 'accounts/social/field.html' with field=form.photo %}
+            {% include 'accounts/social/field.html' with field=form.remove_photo %}
+            <div class="lm-image-preview lm-preview-cover">
+                <img data-preview="cover" alt="Vista previa de la portada" {% if has_cover %}src="{% url 'social_image' social.public_id 'portada' %}"{% else %}hidden{% endif %}>
+            </div>
+            {% include 'accounts/social/field.html' with field=form.cover %}
+            {% include 'accounts/social/field.html' with field=form.cover_focus %}
+            {% include 'accounts/social/field.html' with field=form.remove_cover %}
+            <p role="status" data-upload-status></p>
+        </section>
+        <section class="lm-panel lm-form" id="privacidad"><h2>Privacidad</h2>
+            <p class="lm-muted">Al habilitar tu perfil se verán tu nombre público, biografía y preferencias literarias. Las lecturas y listas se comparten desde la biblioteca. Puedes ocultar el perfil cuando quieras.</p>
+            {% include 'accounts/social/field.html' with field=form.published %}
+            {% include 'accounts/social/field.html' with field=form.share_avatar %}
+            {% include 'accounts/social/field.html' with field=form.share_cover %}
+            {% include 'accounts/social/field.html' with field=form.share_stats %}
+        </section>
+        <div><button class="lm-btn lm-primary">Guardar perfil</button></div>
+    </form>
+</div>
+{% endblock %}

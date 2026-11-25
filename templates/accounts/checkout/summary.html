@@ -1,0 +1,17 @@
+{% extends 'accounts/checkout/frame.html' %}
+{% block checkout_content %}
+<nav class="lm-tabs" aria-label="Etapas del checkout"><span aria-current="step">Resumen</span><span>Método</span><span>Confirmación</span></nav>
+<h1>Revisar contratación</h1>
+<section class="lm-panel lm-stack"><h2>{{ plan.nombre }}</h2><p>{{ plan.descripcion }}</p>
+<dl class="lm-order-summary">
+<dt>Precio mensual</dt><dd>{{ plan.precio }} {{ plan.moneda }}</dd>
+<dt>Total de esta operación simulada</dt><dd><strong>{{ plan.precio }} {{ plan.moneda }}</strong></dd>
+<dt>Periodicidad</dt><dd>Mensual</dd><dt>Cuenta</dt><dd>{{ user.username }}</dd>
+<dt>Consultas diarias</dt><dd>{% if plan.limite_consultas_ia_diarias == 0 %}Ilimitadas según la política vigente{% else %}{{ plan.limite_consultas_ia_diarias }}{% endif %}</dd>
+<dt>Libros favoritos</dt><dd>{% if plan.limite_favoritos == 0 %}Sin límite configurado{% else %}{{ plan.limite_favoritos }}{% endif %}</dd>
+</dl>
+{% if same_plan %}<p role="status">Ya tienes este plan. Puedes extenderlo un período mediante una renovación voluntaria confirmada.</p>
+{% elif current.plan.precio > 0 %}<p>El cambio se aplica inmediatamente y comienza un período mensual nuevo, sin prorrateo. El consumo diario acumulado y tus libros se conservan.</p>{% endif %}
+<div class="lm-actions"><a class="lm-btn lm-primary" href="{% url 'sim_methods' plan.slug %}">Continuar</a><a class="lm-btn" href="{% url 'suscripciones:planes' %}">Volver a Planes</a></div>
+</section>
+{% endblock %}

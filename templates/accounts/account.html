@@ -1,9 +1,33 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-<main class="container py-5"><h1>Mi cuenta</h1><p>{{ user.username }}</p>
+{% if community_enabled %}
+{% include 'accounts/social/owner.html' %}
+{% else %}
+<link rel="stylesheet" href="{% static 'css/reader-personal.css' %}">
+<main class="container py-5 reader-personal"><h1>Mi cuenta</h1>{% if simulated_checkout_enabled %}<a class="btn btn-primary" href="{% url 'sim_subscription' %}">Mi suscripción</a>{% endif %}<p>{{ user.username }}</p>
 <a href="{% url 'suscripciones:planes' %}">Ver mi plan y continuar</a>
+<p class="mt-3"><a class="btn btn-primary" href="{% url 'reader_library' %}">Mis favoritos y listas</a>
+<a class="btn btn-outline-primary" href="{% url 'editar_perfil' %}">Editar perfil</a>
+<a class="btn btn-outline-primary" href="{% url 'reader_password_change' %}">Cambiar contraseña</a></p>
+<p><a href="{% url 'reader_payment_history' %}">Mi historial de operaciones</a></p>
+<p><a href="{% url 'reader_export_data' %}">Descargar mis datos</a></p>
+<p>{{ user.first_name }} {{ user.last_name }} · {{ user.email }}</p>
+{% if profile %}<p>{{ profile.pais }}{% if profile.genero_lector_preferido %} · {{ profile.genero_lector_preferido }}{% endif %}</p>
+{% if profile.biografia %}<p>{{ profile.biografia }}</p>{% endif %}
+<p>Meta anual configurada: {{ profile.meta_anual_libros }} libros.</p>{% endif %}
+<section aria-label="Resumen de mi biblioteca"><h2 class="h4">Organizador de lectura</h2>
+<p>{{ favorite_count }} favoritos · {{ reading_list_count }} listas privadas.</p>
+<p>Quiero leer: {{ library_counts.por_leer }} · Leyendo: {{ library_counts.leyendo }} · Terminados: {{ library_counts.completado }}.</p></section>
+{% include 'accounts/usage.html' %}
 <h2 class="mt-4">Mis conversaciones</h2>
 <ul>{% for conversacion in conversaciones %}<li>
-<a href="{% url 'reader_conversation' conversacion.pk %}">{{ conversacion.titulo }}</a></li>
-{% empty %}<li>Todavía no tienes conversaciones guardadas.</li>{% endfor %}</ul></main>
+<a href="{% url 'reader_conversation_page' conversacion.pk %}">{{ conversacion.titulo }}</a></li>
+{% empty %}<li>Todavía no tienes conversaciones guardadas.</li>{% endfor %}</ul>
+{% if history_page.has_other_pages %}<nav aria-label="Páginas del historial">
+{% if history_page.has_previous %}<a href="?page={{ history_page.previous_page_number }}">Conversaciones recientes</a>{% endif %}
+<span>Página {{ history_page.number }} de {{ history_page.paginator.num_pages }}</span>
+{% if history_page.has_next %}<a href="?page={{ history_page.next_page_number }}">Conversaciones anteriores</a>{% endif %}
+</nav>{% endif %}</main>
+{% endif %}
 {% endblock %}

@@ -1,0 +1,37 @@
+{% load static %}
+<header class="lm-profile">
+    <div class="lm-profile-cover">
+        {% if has_cover %}<img src="{% url 'social_image' social.public_id 'portada' %}" alt="Portada de {{ social.name }}">{% endif %}
+    </div>
+    <div class="lm-identity">
+        <div class="lm-profile-avatar">
+            {% if has_avatar %}{% if profile_owner %}<img src="{% url 'reader_avatar' %}" alt="">{% else %}<img src="{% url 'social_image' social.public_id 'avatar' %}" alt="">{% endif %}
+            {% else %}<img src="{% static 'assets/img/avatar/feliz.png' %}" alt="">{% endif %}
+        </div>
+        <div class="lm-profile-name">
+            <p class="lm-kicker">{% if profile_owner %}Mi cuenta{% else %}Perfil literario{% endif %}</p>
+            <h1>{% if profile_owner and not social.display_name and not social.alias %}{{ user.get_full_name|default:user.username }}{% else %}{{ social.name }}{% endif %}</h1>
+            {% if social.alias %}<p class="lm-handle">@{{ social.alias }}</p>{% endif %}
+            {% if social.biography %}<p class="lm-prewrap">{{ social.biography }}</p>{% endif %}
+            {% if social.genres %}<p class="lm-genres">{{ social.genres }}</p>{% endif %}
+            <p class="lm-follow-count"><strong>{{ follower_count }}</strong> seguidores <span aria-hidden="true">·</span> <strong>{{ following_count }}</strong> seguidos</p>
+        </div>
+        <div class="lm-actions lm-profile-actions">
+            {% if profile_owner %}
+                <a class="lm-btn lm-primary" href="{% url 'social_edit_profile' %}">Editar perfil</a>
+                <a class="lm-btn" href="{% url 'social_edit_profile' %}#imagenes">Foto y portada</a>
+                <a class="lm-btn" href="{% url 'social_edit_profile' %}#privacidad">Privacidad</a>
+                {% if social.published %}<a class="lm-btn" href="{% url 'social_public_profile' social.public_id %}">Ver perfil público</a>{% endif %}
+            {% else %}
+                {% if visitor_is_owner %}<a class="lm-btn" href="{% url 'perfil' %}">Volver a mi cuenta</a>
+                {% elif user.is_authenticated %}
+                    <form method="post" action="{% url 'social_follow' social.public_id %}">{% csrf_token %}
+                        <button class="lm-btn lm-primary" name="action" value="{% if follows_profile %}remove{% else %}add{% endif %}">{% if follows_profile %}Dejar de seguir{% else %}Seguir{% endif %}</button>
+                    </form>
+                {% else %}<a class="lm-btn lm-primary" href="{% url 'login' %}?next={{ request.path|urlencode }}">Inicia sesión para seguir</a>{% endif %}
+                <button class="lm-btn" type="button" data-share="{% url 'social_public_profile' social.public_id %}" hidden>Copiar enlace</button>
+                <span class="lm-feedback" data-share-status role="status"></span>
+            {% endif %}
+        </div>
+    </div>
+</header>

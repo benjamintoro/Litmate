@@ -115,8 +115,12 @@ def genre_answer(message,history,context,*,candidates=None):
     remainder=normalize_identity(context.get('subject') or message)
     aliases=sorted({alias for row in TAXONOMY.values() for alias in row['aliases']},key=len,reverse=True)
     for alias in aliases:remainder=re.sub(r'(?<!\w)'+re.escape(alias)+r'(?!\w)',' ',remainder)
+    technical=any(TAXONOMY[code]['axis']=='subject' for code in codes)
+    if technical:
+        # Describe la petición, no atribuye al libro un nivel que no está catalogado.
+        remainder=re.sub(r'\b(?:para|aprender|empezar|programar|programacion|con|manual(?:es)?|guias?|practicar|estudiar|usar|utilizar)\b',' ',remainder)
     remainder=re.sub(r'\b(?:recomiendame|recomienda|quiero|dame|busco|necesito|libros?|novelas?|obras?|'
-        r'de|sobre|del|la|el|los|las|y|o|en|sin|excepto|tres|cuatro|cinco|algunos|mas|otros?|otras?|'
+        r'de|sobre|del|la|el|los|las|y|o|en|sin|excepto|un|una|uno|dos|tres|cuatro|cinco|algunos|mas|otros?|otras?|'
         r'espanol|ingles|frances|aleman|portugues|japones)\b|\d+',' ',remainder)
     if remainder.strip():return None  # No borrar un calificador como «psicológico».
     if evidence_requirements(message,'recommend')!=['recommendation'] and not context.get('followup'):return None
@@ -155,6 +159,18 @@ def genre_answer(message,history,context,*,candidates=None):
     from .books_google import content_coverage
     valid.sort(key=lambda s:(-content_coverage(s),{'es':0,'en':1}.get(s.get('language'),2),not bool(s.get('image_url')),
                              not bool(s.get('synopsis')),normalize_identity(s.get('title'))))
+    if technical:
+        # Prioriza manuales explícitos frente a actas/informes. Son señales de
+        # selección, nunca una afirmación de haber revisado su contenido o nivel.
+        def technical_order(source):
+            title=normalize_identity(source.get('title'))
+            categories=normalize_identity(' '.join(source.get('categories',[])))
+            proceedings=bool(re.search(r'\b(?:conference|proceedings|congresses|dissertation|thesis)\b',title+' '+categories))
+            direct=bool(re.search(r'\b(?:programming|programacion|programar|python|java|javascript|sql|algorithms|software|coding|fortran|cobol|pascal)\b',title))
+            tutorial=bool(re.search(r'\b(?:learn|learning|beginner|beginners|tutorial|teach|introduction|introduccion|aprende|principles|handbook)\b',title))
+            year=str(source.get('year') or '')
+            return (proceedings,not direct,not tutorial,-int(year) if re.fullmatch(r'\d{4}',year) else 0)
+        valid.sort(key=technical_order)
     # Primera pasada por autores; sólo usa más obras del mismo autor si faltan opciones.
     chosen=[]
     for diversity in (2,1,0):
@@ -168,11 +184,20 @@ def genre_answer(message,history,context,*,candidates=None):
     if not chosen:
         return ChatResult('No encontré otras obras con una clasificación comprobada que cumpla lo que buscas. '
             '¿Quieres probar con un género cercano?','unavailable',False,intent='recommend')
+    # La normalización limita las materias de cada ficha. Anteponer las que
+    # justifican esta selección evita perder SQL/JavaScript tras cinco materias
+    # genéricas ordenadas alfabéticamente. Se conservan los textos de fuente.
+    chosen=[{**source,'categories':sorted(source.get('categories',[]),
+        key=lambda category:not bool(set(classify_categories([category])) & set(codes)))} for source in chosen]
     sources=canonical_sources(chosen,5)
     lines=[f'{index}. **{s["title"]}** — {s["author"]}.' for index,s in enumerate(sources,1)]
     cards=[{'title':s['title'],'author':s['author'],'source_id':s['id']} for s in sources]
-    text='¡Claro!\n\n'+'\n\n'.join(lines)
-    if len(chosen)<count:text+='\n\nPude verificar '+str(len(chosen))+' opciones que cumplen esos criterios.'
+    text=('Estas referencias están clasificadas por sus materias en el catálogo. '
+          'Dispongo de sus metadatos bibliográficos; no del texto completo.\n\n' if technical else '¡Claro!\n\n')+'\n\n'.join(lines)
+    if technical:
+        text+='\n\nEl lote incluye ediciones de distintos años; comprueba la edición y la versión de la tecnología antes de elegir.'
+    if len(chosen)<count:
+        text+='\n\nPude verificar '+str(len(chosen))+(' opción que cumple' if len(chosen)==1 else ' opciones que cumplen')+' esos criterios.'
     text+='\n\n¿Cuál te interesa más?'
     draft={'status':'answer','basis':'sources','text':'\n\n'.join(lines),'citations':[s['id'] for s in sources],
         'books':cards,'needs_web':False}

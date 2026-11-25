@@ -50,6 +50,9 @@ def explicit_author(message):
     if not cue:
         return ''
     name = cue.group(1).strip()
+    from .literary_genres import TAXONOMY
+    if any(normalize_identity(name) in row['aliases'] for row in TAXONOMY.values()):
+        return ''  # Packet Tracer y otras materias con mayúsculas no son autores.
     # Las mayúsculas de «libros de Segunda Guerra Mundial» o «Historia de
     # Corea» no convierten una materia completa en un nombre de autor. Solo se
     # descarta esta inferencia si todo el nombre coincide con materias/lugares

@@ -25,7 +25,7 @@ class Resources(HTMLParser):
             self.external_images.add(value)
 
 
-def verify_frontend(request):
+def verify_frontend(request, *, reader_accounts=False):
     checks, pages, assets, links, images = {}, [], set(), set(), set()
     for path in PAGES:
         started = time.monotonic()
@@ -42,9 +42,11 @@ def verify_frontend(request):
                           'internal_links': sorted(resources.links)})
             if path == '/':
                 checks['real_homepage'] = 'coverflowStage' in html and 'chat-character-page' not in html
-            if path in {'/login/', '/registro/', '/password-reset/', '/contact/'}:
+            if reader_accounts and path == '/password-reset/':
+                checks['recovery_not_faked'] = 'No se ha enviado ningún enlace' in html
+            if path in ({'/contact/'} if reader_accounts else {'/login/', '/registro/', '/password-reset/', '/contact/'}):
                 checks['preview_notice:' + path] = 'role="status"' in html and 'vista previa' in html.lower()
-        if path in {'/login/', '/registro/', '/password-reset/', '/contact/'}:
+        if path in ({'/contact/'} if reader_accounts else {'/login/', '/registro/', '/password-reset/', '/contact/'}):
             with request(path, {'username': 'demo-test', 'password': 'not-a-real-credential-fixture',
                                 'email': 'nobody@example.invalid', 'message': 'Prueba sin envío'}) as response:
                 body = response.read().decode('utf-8')

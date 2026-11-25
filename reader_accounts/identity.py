@@ -22,6 +22,7 @@ class VisitorIdentityMiddleware:
         except (signing.BadSignature, ValueError, TypeError):
             value, fresh = secrets.token_urlsafe(32), True
         request.reader_identity_established = not fresh
+        request.reader_visitor_hash = hashlib.sha256(value.encode()).hexdigest()
         request.reader_actor = ('u:' + str(request.user.pk) if request.user.is_authenticated
                                 else 'g:' + hashlib.sha256(value.encode()).hexdigest())
         response = self.get_response(request)

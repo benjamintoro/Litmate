@@ -1,0 +1,10 @@
+{% extends 'accounts/checkout/frame.html' %}
+{% block checkout_content %}<h1>Historial de operaciones</h1>
+{% for payment in payments %}<article class="lm-panel lm-stack"><h2>{{ payment.plan.nombre|default:'Plan histórico' }}</h2>
+<p>{{ payment.fecha_pago|date:'d/m/Y H:i' }} · {{ payment.monto }} {{ payment.moneda }}</p>
+{% if payment.simulated_order %}<p>{{ payment.simulated_order.get_kind_display }} · {{ payment.simulated_order.get_state_display }} · {{ payment.simulated_order.get_method_display }}</p>
+<a href="{% url 'sim_receipt' payment.simulated_order.pk %}">Ver operación y comprobante</a>
+{% else %}<p>{{ payment.get_estado_display }} · Registro previo</p>{% endif %}</article>
+{% empty %}<p class="lm-panel">Todavía no hay operaciones.</p>{% endfor %}
+{% include 'accounts/social/page_links.html' with page_obj=payments %}
+<a href="{% url 'sim_subscription' %}">Volver a Mi suscripción</a>{% endblock %}

@@ -649,6 +649,9 @@ def resolve_followup_context(message, history):
                     else _ordinal_works(selection_lists, index, returning=returning))
         if selected:
             return {**result, 'books': selected, 'reason': relation or 'ordinal'}
+        tail=value[ordinal.end():].strip()
+        if re.fullmatch(r'(?:(?:libro|novela|obra|titulo)(?: recomendado)?)?(?: de la lista)?(?: por favor)?',tail):
+            return {**result,'ambiguous':True,'reason':'missing_ordinal'}
         return result
     # Un título explícito conocido cambia la obra activa aunque haya otra más reciente.
     named = []

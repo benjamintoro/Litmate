@@ -338,6 +338,7 @@ def identification_recall_answer(message, *, history=None, search=None):
     _, used_context = contextual_query(message, history)
     memory = bool(re.search(
         r'\b(?:recuerdo|recordaba|no recuerdo|no me acuerdo|busco un libro|'
+        r'(?:busco|estoy buscando) (?:un|una|el|la) (?:historia|relato|cuento)|'
         r'estoy buscando un libro|en que libro|a que obra|como se llama el libro|'
         r'identifica (?:el|este|un) libro)\b', value))
     correction = bool(re.match(r'^(?:no|ya no)\s+(?:es|era|se trata de)\b', value))
@@ -350,6 +351,13 @@ def identification_recall_answer(message, *, history=None, search=None):
     legacy = identification_answer(message, search=search)
     if legacy is not None:
         return legacy
+    # El índice puede devolver una página de personajes sin las pistas de
+    # la trama. Las fichas originales revisadas aportan evidencia independiente.
+    if search is not None:
+        from .ai_quick_answers import bundled_knowledge_sources
+        reviewed = identification_answer(message, search=bundled_knowledge_sources)
+        if reviewed is not None:
+            return reviewed
     query_sources, query, used_context = candidate_sources(
         message, history=history, maximum=40)
     from .literary_research import _clues, rank_candidates

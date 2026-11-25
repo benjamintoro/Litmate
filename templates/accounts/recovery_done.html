@@ -1,0 +1,4 @@
+{% extends 'base.html' %}
+{% block content %}<main class="container py-5"><h1>Solicitud recibida</h1>
+<p>Si el correo corresponde a una cuenta activa y única, se ha solicitado su enlace de recuperación. Revisa tu bandeja y el correo no deseado. El enlace vence en 24 horas.</p>
+<a href="{% url 'login' %}">Volver a iniciar sesión</a></main>{% endblock %}

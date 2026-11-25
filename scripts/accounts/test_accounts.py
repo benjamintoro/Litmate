@@ -11,6 +11,7 @@ import time
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--label', action='append', help='Etiqueta Django focalizada; se mantiene el aislamiento.')
     args = parser.parse_args()
     if args.output.exists():
         parser.error('Usa un informe nuevo.')
@@ -19,6 +20,7 @@ def main():
     with TemporaryDirectory(prefix='reader-acceptance-', dir=root / '.testtmp') as temp:
         path = Path(temp)
         os.environ.update(DB_ENGINE='sqlite', DB_SQLITE_PATH=str(path / 'bibliography.sqlite3'),
+            PYTHON_DOTENV_DISABLED='1',
             DJANGO_SETTINGS_MODULE='litmate_project.reader_settings', LITMATE_DEMO_MODE='local',
             LITMATE_DEMO_WORKSPACE=str(path), LITMATE_ACCOUNTS_DB=str(path / 'accounts.sqlite3'),
             SECRET_KEY=secrets.token_urlsafe(64))
@@ -34,11 +36,17 @@ def main():
                 return self.result
         started = time.monotonic()
         runner = Runner(verbosity=1, interactive=False)
-        failures = runner.run_tests(['reader_accounts.tests'])
+        failures = runner.run_tests(args.label or ['reader_accounts.tests', 'reader_accounts.test_personal',
+                                                  'reader_accounts.test_payment_lifecycle',
+                                                  'reader_accounts.test_library_platform'])
         result = runner.result
         report = {'tests_run': result.testsRun, 'failures': len(result.failures), 'errors': len(result.errors),
                   'seconds': time.monotonic()-started, 'real_databases_used': False,
                   'failed_tests': [{'test': str(test), 'error': error} for test, error in [*result.failures, *result.errors]]}
+        from reader_accounts.tests import CONCURRENCY_METRICS
+        report['sqlite_concurrency'] = CONCURRENCY_METRICS
+        from reader_accounts.test_personal import HTTP_PERSONAL_CHECKS
+        report['isolated_http'] = HTTP_PERSONAL_CHECKS
         args.output.parent.mkdir(parents=True, exist_ok=True)
         with args.output.open('x', encoding='utf-8') as stream:
             json.dump(report, stream, indent=2)

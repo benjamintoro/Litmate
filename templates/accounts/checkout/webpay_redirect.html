@@ -1,0 +1,10 @@
+{% extends 'accounts/checkout/frame.html' %}
+{% block checkout_content %}
+<h1>Pagar con Webpay de integración</h1>
+<p>Introduce únicamente tarjetas oficiales de prueba en la página de Transbank. La operación de integración utiliza dinero ficticio.</p>
+<form method="post" action="https://webpay3gint.transbank.cl/webpayserver/initTransaction">
+    <input type="hidden" name="token_ws" value="{{ entry.token }}">
+    <button class="lm-btn lm-primary" type="submit">Continuar a Transbank</button>
+</form>
+<a href="{% url 'sim_order' entry.order_id %}">Volver al pedido</a>
+{% endblock %}

@@ -1,0 +1,3 @@
+{% extends 'accounts/checkout/frame.html' %}
+{% block checkout_content %}<h1>Revisa la operación</h1><section class="lm-panel lm-stack"><p role="alert">{{ error }}</p>
+<a class="lm-btn" href="{% url 'sim_subscription' %}">Mi suscripción</a><a href="{% url 'suscripciones:planes' %}">Volver a Planes</a></section>{% endblock %}

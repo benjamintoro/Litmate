@@ -1,0 +1,62 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/reader-social.css' %}">
+<main class="lm-social"><div class="lm-shell lm-stack">
+    <div class="lm-row"><div><a href="{% url 'perfil' %}">Mi cuenta</a><h1>Mi biblioteca</h1>
+        <p class="lm-muted">Organiza tus lecturas. Tú decides cuáles compartir.</p></div>
+        <a class="lm-btn lm-primary" href="{% url 'buscar_libros' %}">Buscar libros</a>
+    </div>
+    <nav class="lm-tabs" aria-label="Secciones de mi biblioteca">
+        {% for group in reading_groups %}<a href="#lm-{{ group.state }}">{{ group.label }}</a>{% endfor %}
+        <a href="#lm-favorites">Favoritos</a><a href="#lm-lists">Listas</a>
+    </nav>
+    <div class="lm-library-grid">
+        {% for group in reading_groups %}
+        <section class="lm-panel lm-stack" id="lm-{{ group.state }}">
+            <h2>{{ group.label }} <span class="lm-tag">{{ group.books|length }}</span></h2>
+            {% for book in group.books %}<div class="lm-library-entry">
+                {% include 'accounts/social/book_card.html' with private_book=True %}
+                <form class="lm-form" method="post" action="{% url 'actualizar_estado_lectura' %}">{% csrf_token %}
+                    <input type="hidden" name="google_id" value="{{ book.google_id }}"><input type="hidden" name="titulo" value="{{ book.titulo }}">
+                    <input type="hidden" name="autores" value="{{ book.autores }}"><input type="hidden" name="imagen_url" value="{{ book.display_cover }}">
+                    <div class="lm-field"><label for="reading-state-{{ book.pk }}">Estado de {{ book.titulo }}</label>
+                        <select id="reading-state-{{ book.pk }}" name="estado">{% for state,label in reading_labels.items %}
+                            <option value="{{ state }}" {% if state == group.state %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}</select></div>
+                    <div><button class="lm-btn lm-small" type="submit">Guardar estado</button></div>
+                </form>
+                {% url 'social_share_library' 'lectura' book.pk as share_url %}
+                {% include 'accounts/social/share_control.html' with share_url=share_url shared=book.shared kind='lectura' %}
+            </div>{% empty %}<p class="lm-muted">No tienes libros en este estado.</p>{% endfor %}
+        </section>{% endfor %}
+    </div>
+    <section class="lm-panel lm-stack" id="lm-favorites"><h2>Favoritos</h2>
+        <div class="lm-library-grid">{% for book in favorites %}<div>
+            {% include 'accounts/social/book_card.html' with private_book=True %}
+            <form method="post" action="{% url 'eliminar_favorito' book.pk %}">{% csrf_token %}<button type="submit" class="lm-btn lm-danger lm-small">Quitar de favoritos</button></form>
+        </div>{% empty %}<p>No tienes favoritos todavía.</p>{% endfor %}</div>
+    </section>
+    <section class="lm-panel lm-stack" id="lm-lists"><h2>Mis listas</h2>
+        {% for list in reading_lists %}<article class="lm-library-entry lm-stack">
+            <div><h3>{{ list.nombre }}</h3><p class="lm-prewrap">{{ list.descripcion }}</p></div>
+            <div><a href="{% url 'reader_list_edit' list.pk %}">Cambiar nombre o descripción</a></div>
+            <ul>{% for book in list.elementos.all %}<li>
+                <a href="{% url 'reader_book_detail' %}?id={{ book.google_id|urlencode }}">{{ book.titulo }}</a> · {{ book.autores }}
+                <form method="post" action="{% url 'quitar_de_lista_api' book.pk %}">{% csrf_token %}<button class="lm-btn lm-small" type="submit">Quitar libro</button></form>
+            </li>{% empty %}<li>Esta lista todavía no tiene libros.</li>{% endfor %}</ul>
+            {% url 'social_share_library' 'lista' list.pk as share_url %}
+            {% include 'accounts/social/share_control.html' with share_url=share_url shared=list.shared kind='lista' %}
+            <details><summary>Eliminar lista</summary>
+                <form class="lm-form" method="post" action="{% url 'eliminar_lista_api' list.pk %}">{% csrf_token %}
+                    <label class="lm-check"><input type="checkbox" name="confirmar" value="si" required> Confirmo eliminar esta lista y sus elementos.</label>
+                    <div><button class="lm-btn lm-danger" type="submit">Eliminar lista</button></div>
+                </form>
+            </details>
+        </article>{% empty %}<p>No tienes listas todavía.</p>{% endfor %}
+        <form class="lm-form" method="post" action="{% url 'crear_lista_api' %}">{% csrf_token %}
+            <h3>Crear lista privada</h3>{{ list_form.non_field_errors }}
+            {% for field in list_form %}{% include 'accounts/social/field.html' %}{% endfor %}
+            <div><button class="lm-btn lm-primary" type="submit">Crear lista</button></div>
+        </form>
+    </section>
+</div></main>
+<script defer src="{% static 'js/reader-social.js' %}"></script>

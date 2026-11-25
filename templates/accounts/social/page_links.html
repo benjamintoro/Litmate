@@ -1,0 +1,7 @@
+{% if page_obj.has_other_pages %}
+<nav class="lm-pager" aria-label="Paginación">
+    {% if page_obj.has_previous %}<a class="lm-btn" href="?{{ query_prefix }}{{ page_param|default:'page' }}={{ page_obj.previous_page_number }}">Anterior</a>{% endif %}
+    <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}<a class="lm-btn" href="?{{ query_prefix }}{{ page_param|default:'page' }}={{ page_obj.next_page_number }}">Siguiente</a>{% endif %}
+</nav>
+{% endif %}

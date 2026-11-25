@@ -27,6 +27,8 @@
                 </div>
 
                 <div id="chat-main-page">
+                    <div class="lm-chat-toolbar"><span>Tu conversación</span><button id="clear-chat-btn" type="button" disabled>Borrar conversación</button></div>
+                    <p id="chat-restore-status" role="status" class="lm-chat-restore">Recuperando conversación…</p>
                     <div id="chat-body-page" role="log" aria-label="Conversación con LitMate">
                         <div class="chat-message bot">
                             <p>¡Hola! Soy LitMate. Cuéntame qué te apetece leer, pregúntame por un libro o comparte un pasaje: podemos descubrir historias y conversar sobre sus ideas, autores y personajes.</p>
@@ -64,8 +66,14 @@
         </div>
     </div>
 </div>
+<dialog id="clear-chat-dialog" class="lm-clear-dialog" aria-labelledby="clear-chat-title" aria-describedby="clear-chat-warning">
+    <h2 id="clear-chat-title">¿Borrar esta conversación?</h2>
+    <p id="clear-chat-warning">Se eliminarán los mensajes de esta conversación y su contexto. No podrás recuperarlos desde LitMate. Tu cuota utilizada se conserva.</p>
+    <p id="clear-chat-error" role="alert"></p>
+    <div class="lm-dialog-actions"><button type="button" id="cancel-clear-chat" autofocus>Conservar conversación</button><button type="button" id="confirm-clear-chat" class="lm-delete">Borrar definitivamente</button></div>
+</dialog>
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'js/chatbot.js' %}?v=chat-v6"></script>
+<script src="{% static 'js/chatbot.js' %}?v=chat-v7"></script>
 {% endblock %}

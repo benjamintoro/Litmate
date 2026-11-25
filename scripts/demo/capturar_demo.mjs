@@ -10,7 +10,8 @@ input = '';
 if (!Number.isInteger(config.port ?? 8002) || (config.port ?? 8002) < 1024 || (config.port ?? 8002) > 65535) {
   throw new Error('Puerto local inválido.');
 }
-const origin = 'http://127.0.0.1:' + (config.port ?? 8002);
+const origin = config.productionOpen ? config.origin : 'http://127.0.0.1:' + (config.port ?? 8002);
+if(config.productionOpen && (new URL(origin).hostname!=='litmate.example.test' || new URL(origin).protocol!=='https:' || config.port===8003))throw new Error('El navegador de producción sólo admite el dominio ficticio del ensayo.');
 const root = process.cwd();
 const folder = path.resolve(config.folder);
 if (!folder.startsWith(path.join(root, 'reports') + path.sep) || fs.existsSync(folder)) {
@@ -21,6 +22,7 @@ const profile = path.join(root, '.testtmp', 'edge-demo-' + Date.now());
 fs.mkdirSync(profile, {recursive: true});
 const browser = spawn('C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
   ['--headless=new', '--no-first-run', '--no-default-browser-check', '--disable-background-timer-throttling', '--disable-renderer-backgrounding', '--remote-debugging-port=0',
+   ...(config.productionOpen ? ['--host-resolver-rules=MAP litmate.example.test 127.0.0.1','--ignore-certificate-errors','--no-proxy-server'] : []),
    '--remote-debugging-address=127.0.0.1', '--user-data-dir=' + profile, '--window-size=1280,800', 'about:blank'],
   {stdio: 'ignore', windowsHide: true});
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -69,7 +71,7 @@ async function navigate(route) {
   if (!clicked) await command('Page.navigate', {url: origin + route});
   let ready = false;
   for (let tries = 0; tries < 100; tries++) {
-    ready = await evaluate(`location.pathname === ${JSON.stringify(route)} && document.readyState === 'complete' && Boolean(document.querySelector('.navbar-brand'))`);
+    ready = await evaluate(`location.pathname === ${JSON.stringify(route.split('?')[0])} && document.readyState === 'complete' && Boolean(document.querySelector('.navbar-brand'))`);
     if (ready) break;
     await sleep(200);
   }
@@ -98,9 +100,11 @@ async function readerMobile() {
   await navigate('/chat/');
   await evaluate("document.getElementById('btnRejectCookies')?.click();true");
   await sleep(500);
+  if (!config.readerLibrary) {
   await sendReaderMessage('Hola');
   await sendReaderMessage('Recomiéndame un libro');
   mobileChecks.push({case:'guest_actions',passed:await evaluate("!document.getElementById('reader-actions').hidden && document.getElementById('reader-actions').querySelectorAll('a').length===3")});
+  }
   const user = 'movil_' + randomBytes(5).toString('hex');
   const password = randomBytes(24).toString('base64url');
   await navigate('/registro/');
@@ -110,6 +114,7 @@ async function readerMobile() {
   await evaluate("document.querySelector('form[action=\"/cuenta/activar-gratis/\"]').requestSubmit();true");
   for(let i=0;i<100;i++){if(await evaluate("location.pathname==='/chat/' && Boolean(window.LitMateSafe) && Boolean(document.getElementById('chat-input'))"))break;await sleep(200);}
   await sleep(500);
+  if (!config.readerLibrary) {
   await sendReaderMessage('Recomiéndame dos novelas de fantasía en español');
   await evaluate("Promise.race([Promise.allSettled(Array.from(document.querySelectorAll('.lm-chat-book-cover img')).map(img=>img.decode())),new Promise(r=>setTimeout(r,5000))])");
   mobileChecks.push(await evaluate("(()=>{const imgs=Array.from(document.querySelectorAll('.lm-chat-book-cover img'));return {case:'cover_elements',total:imgs.length,loaded:imgs.filter(i=>i.naturalWidth>0).length,pending:imgs.filter(i=>!i.complete).length,failed:imgs.filter(i=>i.complete&&!i.naturalWidth).length,passed:imgs.length===2}})()"));
@@ -136,6 +141,104 @@ async function readerMobile() {
   const keyboard = await evaluate("(()=>{const r=document.getElementById('chat-input').getBoundingClientRect();return {case:'reduced_viewport_keyboard_simulation',top:r.top,bottom:r.bottom,viewport:visualViewport.height,passed:r.top>=0 && r.bottom<=visualViewport.height+1}})()");
   mobileChecks.push(keyboard);
   await capture();
+  }
+  // Flujo visible de biblioteca: botones existentes del catálogo, no sólo APIs.
+  await command('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
+  await navigate('/libros/');
+  const selected = await evaluate("(()=>{const b=document.querySelector('.btn-fav');if(!b)return null;const book={id:b.dataset.googleId,title:b.dataset.titulo};b.click();return book})()");
+  await sleep(800);
+  await navigate('/cuenta/biblioteca/');
+  mobileChecks.push({case:'catalogue_favorite_button_and_library',passed:Boolean(selected) && await evaluate(`document.querySelector('main').textContent.includes(${JSON.stringify(selected?.title ?? '__missing__')})`)});
+  await evaluate("document.querySelector('input[name=nombre]').value='Lista móvil';document.querySelector('form[action=\"/api/listas/crear/\"]').requestSubmit();true");
+  await sleep(1000);
+  mobileChecks.push({case:'list_created_by_visible_form',passed:await evaluate("document.querySelector('main').textContent.includes('Lista móvil')")});
+  for (const width of [320,360,390,430,768]) {
+    await command('Emulation.setDeviceMetricsOverride',{width,height:844,deviceScaleFactor:1,mobile:width<768});
+    await sleep(200);
+    const layout = await evaluate("(()=>{const width=document.documentElement.clientWidth;return {passed:document.documentElement.scrollWidth<=width+1,offenders:Array.from(document.querySelectorAll('main *')).filter(e=>e.getBoundingClientRect().right>width+1).slice(0,8).map(e=>({tag:e.tagName,width:e.getBoundingClientRect().width}))}})()");
+    mobileChecks.push({case:'library_width_'+width,...layout});
+  }
+  await capture();
+  await navigate('/libros/');
+  await evaluate("document.querySelector('.btn-ver-demo').click();true");
+  await sleep(500);
+  await evaluate("document.querySelector('[onclick=\"abrirModalAgregarListaDirecto()\"]').click();true");
+  await sleep(600);
+  mobileChecks.push({case:'catalogue_list_selector_visible',passed:await evaluate("Boolean(document.querySelector('#userListsModalList .select-list-row'))")});
+  await evaluate("document.querySelector('#userListsModalList .select-list-row')?.click();true");
+  await sleep(700);
+  await navigate('/cuenta/biblioteca/');
+  mobileChecks.push({case:'catalogue_list_button_persists_book',passed:await evaluate("Array.from(document.querySelectorAll('main section li')).some(e=>!e.textContent.includes('Lista sin libros'))")});
+  await navigate('/perfil/editar/');
+  await evaluate("(async()=>{const canvas=document.createElement('canvas');canvas.width=80;canvas.height=80;const ctx=canvas.getContext('2d');ctx.fillStyle='#227d8e';ctx.fillRect(0,0,80,80);const blob=await new Promise(r=>canvas.toBlob(r,'image/png'));const files=new DataTransfer();files.items.add(new File([blob],'synthetic-avatar.png',{type:'image/png'}));document.querySelector('input[name=photo]').files=files.files;return true})()");
+  await evaluate("document.querySelector('input[name=nombre]').value='Lectora móvil';document.querySelector('main form[method=post]').requestSubmit();true");
+  await sleep(1000);
+  mobileChecks.push({case:'profile_updated_by_visible_form',passed:await evaluate("location.pathname==='/perfil/' && document.querySelector('main').textContent.includes('Lectora móvil')")});
+  mobileChecks.push({case:'private_avatar_uploaded_and_loaded',passed:await evaluate("Array.from(document.querySelectorAll('img[src=\"/cuenta/avatar/\"]')).some(i=>i.complete && i.naturalWidth>0)")});
+  await capture();
+}
+async function platformLibrary() {
+  const check = async (name, expression) => mobileChecks.push({case:name, passed:await evaluate(expression)});
+  async function waitFor(expression) {
+    for (let n=0;n<70;n++) {if (await evaluate(expression))return;await sleep(100);}
+    throw new Error('No se completó un control de la biblioteca.');
+  }
+  await command('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
+  await navigate('/login/');
+  if(config.productionOpen) {
+    await navigate('/registro/');
+    await evaluate(`document.querySelector('input[name=username]').value=${JSON.stringify(config.platformUser)};document.querySelector('input[name=email]').value=${JSON.stringify(config.platformUser+'@example.invalid')};document.querySelector('input[name=password]').value=${JSON.stringify(config.platformPassword)};document.querySelector('input[name=password_confirm]').value=${JSON.stringify(config.platformPassword)};document.getElementById('registerForm').requestSubmit();true`);
+    await waitFor("location.pathname==='/suscripciones/planes/'");
+    await evaluate("document.querySelector('form[action=\"/cuenta/activar-gratis/\"]').requestSubmit();true");
+    await waitFor("location.pathname==='/chat/'");
+    await evaluate("(async()=>{const csrf=document.cookie.split('; ').find(v=>v.startsWith('csrftoken=')).split('=')[1];const post=async(url,data)=>await (await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':csrf},body:JSON.stringify(data)})).json();const b={google_id:'platform-a',titulo:'La isla de prueba',autores:'Autora sintética'};await post('/favoritos/agregar/',b);const l=await post('/api/listas/crear/',{nombre:'Mis lecturas'});await post('/api/listas/agregar-libro/',{...b,lista_id:l.id});return true})()");
+  } else {
+    await evaluate(`(async()=>{const csrf=document.cookie.split('; ').find(v=>v.startsWith('csrftoken=')).split('=')[1];await fetch('/login/',{method:'POST',headers:{'X-CSRFToken':csrf},body:new URLSearchParams(${JSON.stringify({username_or_email:config.platformUser,password:config.platformPassword})})});return true})()`);
+  }
+  await navigate('/chat/');
+  await waitFor('Boolean(window.LitMateSafe && window.LitmateLibrary)');
+  const cards = [
+    {id:'platform-a',title:'La isla de prueba',author:'Autora sintética',image_url:'',synopsis:'',links:[]},
+    {id:'platform-b',title:'El bosque de prueba',author:'Autor sintético',image_url:'',synopsis:'',links:[]}
+  ];
+  const render = `(()=>{let c=document.createElement('div');c.id='platform-cards';document.getElementById('chat-body-page').appendChild(c);LitMateSafe.renderBookCards(c,${JSON.stringify(cards)});LitMateSafe.renderBookCards(c,[${JSON.stringify(cards[1])}]);return true})()`;
+  await evaluate(render);
+  await waitFor("document.querySelector('#platform-cards button[data-library-ready]')?.getAttribute('aria-pressed')==='true'");
+  await check('existing_favorite_restored_on_card',"document.querySelector('#platform-cards button[data-library-ready]').getAttribute('aria-pressed')==='true'");
+  await evaluate("(()=>{const b=document.querySelectorAll('#platform-cards button[data-library-ready]');b[1].click();b[2].click();return true})()");
+  await waitFor("Array.from(document.querySelectorAll('#platform-cards button[data-library-ready]')).slice(1).every(b=>b.getAttribute('aria-pressed')==='true'&&!b.disabled)");
+  await check('duplicate_card_buttons_stay_synchronized',"Array.from(document.querySelectorAll('#platform-cards button[data-library-ready]')).every(b=>b.getAttribute('aria-pressed')==='true')");
+  await capture();
+  await navigate('/cuenta/biblioteca/');
+  await check('favorite_survives_navigation',"document.querySelector('main').textContent.includes('El bosque de prueba')");
+  await navigate('/cuenta/libro/?id=platform-a');
+  await waitFor("document.querySelector('.btn-fav[data-library-ready]')?.getAttribute('aria-pressed')==='true'");
+  await check('favorite_state_on_private_detail',"document.querySelector('.btn-fav').getAttribute('aria-pressed')==='true'");
+  await evaluate("document.querySelector('textarea[name=nota_personal]').value='Nota privada desde el navegador';document.querySelector('textarea[name=nota_personal]').form.requestSubmit();true");
+  await sleep(600);
+  await check('note_saved_by_visible_form',"document.querySelector('textarea[name=nota_personal]').value==='Nota privada desde el navegador'");
+  await evaluate("document.querySelector('select[name=estado]').value='leyendo';document.querySelector('select[name=estado]').form.requestSubmit();true");
+  await waitFor("location.pathname==='/cuenta/biblioteca/'");
+  await check('reading_state_saved',"document.querySelector('main').textContent.includes('Mi organizador de lectura') && document.querySelector('select[name=estado]').value==='leyendo'");
+  for(const width of [320,390,768]) {
+    await command('Emulation.setDeviceMetricsOverride',{width,height:844,deviceScaleFactor:1,mobile:width<768});
+    await sleep(200);
+    await check('organizer_width_'+width,'document.documentElement.scrollWidth<=document.documentElement.clientWidth+1');
+    await capture();
+  }
+  await command('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
+  await navigate('/chat/');
+  await waitFor('Boolean(window.LitMateSafe && window.LitmateLibrary)');
+  await evaluate(render);
+  await waitFor("document.querySelectorAll('#platform-cards button[data-library-ready]')[1]?.getAttribute('aria-pressed')==='true'");
+  await evaluate("document.querySelectorAll('#platform-cards button[data-library-ready]')[1].click();true");
+  await waitFor("Array.from(document.querySelectorAll('#platform-cards button[data-library-ready]')).slice(1).every(b=>b.getAttribute('aria-pressed')==='false'&&!b.disabled)");
+  await check('favorite_removed_and_duplicate_controls_updated',"Array.from(document.querySelectorAll('#platform-cards button[data-library-ready]')).slice(1).every(b=>b.getAttribute('aria-pressed')==='false')");
+  const personalStarted = elapsed();
+  await sendReaderMessage('Muéstrame mis favoritos');
+  conversation.at(-1).seconds = elapsed()-personalStarted;
+  await check('personal_sse_answer_uses_saved_library',"Array.from(document.querySelectorAll('#chat-body-page .chat-message.bot')).at(-1).textContent.includes('La isla de prueba')");
+  await capture();
 }
 let timer;
 try {
@@ -159,7 +262,9 @@ try {
         authChallengeResponse: local ? {response: 'ProvideCredentials', username: 'demo', password: config.password}
                                     : {response: 'CancelAuth'}});
     } else if (message.method === 'Runtime.exceptionThrown') {
-      errors.push('Excepción JavaScript en la página de demo.');
+      const detail = message.params.exceptionDetails;
+      errors.push({text: detail.text, description: detail.exception?.description?.split('\n').slice(0,6),
+                   path: detail.url ? new URL(detail.url).pathname : '', line: detail.lineNumber});
     } else if (message.method === 'Network.responseReceived') {
       const response = message.params.response;
       if (response.url.startsWith(origin + '/')) {
@@ -172,7 +277,10 @@ try {
   await command('Runtime.enable');
   await command('Network.enable');
   await command('Fetch.enable', {handleAuthRequests: true, patterns: [{urlPattern: origin + '/*'}]});
-  if(config.readerMobile) {
+  if(config.platform) {
+    await platformLibrary();
+    console.log(JSON.stringify({mobileChecks,errors}));
+  } else if(config.readerMobile) {
     await command('Page.addScriptToEvaluateOnNewDocument',{source:'window.__readerScrollAudit=[];'});
     await readerMobile();
     console.log(JSON.stringify({mobileChecks,errors}));

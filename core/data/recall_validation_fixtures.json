@@ -1,0 +1,157 @@
+{
+  "scope": "Public bibliographic metadata, no accounts or private conversations",
+  "rows": [
+    {
+      "expected": "El principito",
+      "query": "Un niño que vivía en un planeta diminuto, cuidaba una rosa y conoció a un zorro",
+      "retrieved": [
+        {
+          "kind": "book",
+          "title": "El principito",
+          "author": "Antoine de Saint-Exupéry",
+          "description": "El principito, de Antoine de Saint-Exupéry, trata de un niño que vive en un planeta muy pequeño y se siente responsable de una rosa. Visita otros planetas. En la Tierra entabla amistad con un zorro y encuentra a un aviador en el desierto del Sahara. El principito: Niño viajero que cuida una rosa en su pequeño planeta. El zorro: Amigo que el principito conoce en la Tierra. El aviador: Encuentra al principito en el Sahara.",
+          "url": "https://es.literaturasm.com/personaje/principito",
+          "source": "Conocimiento literario local / Catálogo LitMate",
+          "license": "CC0-1.0 (redacción factual original de LitMate; no licencia de la obra ni de las páginas citadas)",
+          "image_url": "https://covers.openlibrary.org/b/id/13499066-L.jpg",
+          "book_id": "db_30029"
+        }
+      ]
+    },
+    {
+      "expected": "La metamorfosis",
+      "query": "Alguien despierta convertido en un insecto horrible y su familia lo rechaza",
+      "retrieved": [
+        {
+          "kind": "book",
+          "title": "La metamorfosis",
+          "author": "Franz Kafka",
+          "description": "Gregor Samsa despierta transformado en un insecto monstruoso y se ve incapacitado para trabajar y mantener a su familia.",
+          "url": "https://es.wikipedia.org/wiki/La_metamorfosis",
+          "source": "Conocimiento literario local",
+          "license": "CC0-1.0 (redacción factual original de LitMate; no licencia de la obra ni de las páginas citadas)",
+          "language": "es",
+          "categories": [
+            "Novela corta",
+            "Fiction"
+          ],
+          "book_id": ""
+        }
+      ]
+    },
+    {
+      "expected": "Fahrenheit 451",
+      "query": "Una sociedad donde se prohíben los libros y los queman",
+      "retrieved": [
+        {
+          "kind": "book",
+          "title": "Fahrenheit 451",
+          "author": "Ray Bradbury",
+          "description": "Guy Montag es un bombero cuya misión es quemar libros prohibidos por el Estado. Al conocer a una joven rebelde, empieza a cuestionar el régimen y a salvar obras maestras.",
+          "url": "",
+          "source": "Catálogo LitMate",
+          "image_url": "https://covers.openlibrary.org/b/id/12993656-L.jpg",
+          "language": "es",
+          "categories": [
+            "Ciencia Ficción"
+          ],
+          "book_id": "db_30031"
+        }
+      ]
+    },
+    {
+      "expected": "1984",
+      "query": "Una historia sobre vigilancia constante y ausencia de libertad",
+      "retrieved": [
+        {
+          "kind": "book",
+          "title": "1984",
+          "author": "George Orwell",
+          "description": "En una sociedad totalitaria vigilada constantemente por el Gran Hermano, Winston Smith lucha por mantener su individualidad y pensamiento crítico.",
+          "url": "",
+          "source": "Catálogo LitMate",
+          "image_url": "https://covers.openlibrary.org/b/id/8745958-L.jpg",
+          "language": "es",
+          "categories": [
+            "Ciencia Ficción"
+          ],
+          "book_id": "db_2"
+        }
+      ]
+    },
+    {
+      "expected": "Don Quijote",
+      "query": "Recuerdo un caballero que confunde molinos de viento con gigantes y viaja con su escudero",
+      "retrieved": [
+        {
+          "kind": "book",
+          "title": "Don Quijote de la Mancha",
+          "author": "Miguel de Cervantes",
+          "description": "Las aventuras del ingenioso hidalgo Don Quijote y su escudero Sancho Panza por los caminos de La Mancha en busca de justicia, honor y su amada Dulcinea.",
+          "url": "https://es.wikipedia.org/wiki/Don_Quijote_de_la_Mancha",
+          "source": "Conocimiento literario local / Catálogo LitMate",
+          "license": "CC0-1.0 (redacción factual original de LitMate; no licencia de la obra ni de las páginas citadas)",
+          "image_url": "https://covers.openlibrary.org/b/id/13478610-L.jpg",
+          "language": "es",
+          "categories": [
+            "Novela",
+            "Fiction"
+          ],
+          "book_id": "db_30028"
+        }
+      ]
+    },
+    {
+      "expected": "Alicia en el país de las maravillas",
+      "query": "Recuerdo una niña que sigue a un conejo blanco y cae por una madriguera",
+      "retrieved": [
+        {
+          "kind": "book",
+          "title": "Cien años de soledad",
+          "author": "Gabriel García Márquez",
+          "description": "La novela sigue la historia de la familia Buendía-Iguarán en Macondo, entrelazando sucesos familiares, fantasía y tragedia.",
+          "url": "https://www.penguinlibros.com/es/literatura-contemporanea/35974-libro-cien-anos-de-soledad-9788497592208",
+          "source": "Conocimiento literario local",
+          "license": "CC0-1.0 (redacción factual original de LitMate; no licencia de la obra ni de las páginas citadas)",
+          "language": "es",
+          "categories": [
+            "Novela",
+            "Fiction"
+          ],
+          "book_id": ""
+        },
+        {
+          "kind": "book",
+          "title": "Las Crónicas de Narnia: El león, la bruja y el ropero",
+          "author": "C.S. Lewis",
+          "description": "Cuatro hermanos descubren un ropero mágico que conduce al gélido mundo de Narnia, atrapado en un invierno eterno por la temible Bruja Blanca. Con la ayuda del gran león Aslan, lucharán por liberar el reino.",
+          "source": "Catálogo LitMate",
+          "image_url": "https://covers.openlibrary.org/b/id/8441376-L.jpg",
+          "language": "es",
+          "categories": [
+            "Fantasía"
+          ],
+          "book_id": "db_30001",
+          "candidate_origin": "catalog"
+        }
+      ]
+    }
+  ],
+  "abstract_source": {
+    "kind": "book",
+    "title": "The Wisdom of Insecurity",
+    "author": "Alan Watts",
+    "description": "Temas del catálogo: Fear, Peur, Religion, Philosophie, Security (Psychology).",
+    "url": "https://openlibrary.org/works/OL266158W",
+    "source": "Open Library",
+    "image_url": "https://covers.openlibrary.org/b/id/254059-M.jpg",
+    "categories": [
+      "Fear",
+      "Peur",
+      "Religion",
+      "Philosophie",
+      "Security (Psychology)"
+    ],
+    "book_id": "/works/OL266158W"
+  }
+}

@@ -795,6 +795,29 @@ def unsupported_event_target(statement, evidence):
         for target in documented) for person in claimed))
 
 
+def unsupported_ordinal_claim(statement,evidence):
+    """No confunde cuarta y sexta novela aunque el auditor acepte el pasaje."""
+    ranks={word:number for number,words in enumerate([
+        ('primero','primera','primer','first'),('segundo','segunda','second'),
+        ('tercero','tercera','tercer','third'),('cuarto','cuarta','fourth'),
+        ('quinto','quinta','fifth'),('sexto','sexta','sixth'),('septimo','septima','seventh'),
+        ('octavo','octava','eighth'),('noveno','novena','ninth'),('decimo','decima','tenth')],1) for word in words}
+    pattern=r'\b('+ '|'.join(ranks)+r')\s+(novelas?|novels?|libros?|books?|entregas?|installments?)\b'
+    def values(text):
+        normal=''.join(c for c in unicodedata.normalize('NFKD',str(text or '')) if not unicodedata.combining(c)).casefold()
+        normal=re.sub(r'[*_`]','',normal)
+        result={}
+        for match in re.finditer(pattern,normal):
+            if re.match(r'\s+(?:de la lista|que (?:te |hemos |he )?recom|recomendad)',normal[match.end():]):continue
+            noun=match[2]
+            kind='novel' if noun.startswith(('novel','novela')) else 'book' if noun.startswith(('libro','book')) else 'installment'
+            result.setdefault(kind,set()).add(ranks[match[1]])
+        return result
+    claimed,documented=values(statement),values(evidence)
+    return any(len(numbers)==1 and len(documented.get(kind,()))==1 and numbers!=documented[kind]
+               for kind,numbers in claimed.items())
+
+
 @timed_stage('audit')
 def validate_audit(audit, plan, draft, sources, message, *, strict_facts=False):
     if (not isinstance(audit, dict) or set(audit) != set(AUDIT_SCHEMA['properties'])
@@ -858,6 +881,8 @@ def validate_audit(audit, plan, draft, sources, message, *, strict_facts=False):
                 raise ValueError('Las materias del catálogo no prueban acontecimientos de la trama; cita el pasaje narrativo de la obra correcta.')
             if unsupported_century_claim(claim['statement'], claim['evidence'], source):
                 raise RetryableAuditError('La evidencia no respalda el siglo afirmado; retira ese alcance temporal o aporta la prueba correspondiente.')
+            if unsupported_ordinal_claim(claim['statement'],claim['evidence']):
+                raise RetryableAuditError('La posición del libro en la serie contradice la evidencia; corrige el ordinal o retira ese dato.')
             if _unsupported_correspondence_attribution(claim['statement'], claim['evidence']):
                 raise RetryableAuditError('La prueba no respalda esa atribución de remitente, '
                     'destinatario o papel en la correspondencia; corrige el sujeto o cita un pasaje que lo identifique.')

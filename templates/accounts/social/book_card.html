@@ -1,0 +1,11 @@
+<article class="lm-book">
+    <div class="lm-book-cover"><span aria-hidden="true">Sin portada</span>
+        {% if book.display_cover %}<img src="{{ book.display_cover }}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-cover-image>{% endif %}
+    </div>
+    <div><h3>
+        {% if book.catalogue_id %}<a href="{% url 'social_book' book.catalogue_id %}">{{ book.titulo }}</a>
+        {% elif private_book %}<a href="{{ book.detail_url }}">{{ book.titulo }}</a>
+        {% else %}<a href="{% url 'buscar_libros' %}?q={{ book.titulo|urlencode }}">{{ book.titulo }}</a>{% endif %}
+    </h3><p>{{ book.autores }}</p>
+    {% if show_state %}<span class="lm-tag">{{ book.get_estado_lectura_display }}</span>{% endif %}</div>
+</article>

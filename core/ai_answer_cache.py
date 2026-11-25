@@ -15,7 +15,7 @@ import time
 
 # Cambiar el namespace evita reutilizar referencias admitidas antes de los
 # filtros de identidad, sin borrar registros ni datos de conversaciones.
-POLICY = 'extractive-answer-v9-specific-recommendations'
+POLICY = 'extractive-answer-v10-topic-intents'
 
 
 def _path(database=None):

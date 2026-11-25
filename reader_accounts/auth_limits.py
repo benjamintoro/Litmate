@@ -11,8 +11,10 @@ def auth_limit(limit):
         @functools.wraps(view)
         def guarded(request, *args, **kwargs):
             if request.method == 'POST':
-                principal = (request.POST.get('username_or_email') or request.POST.get('username') or '').strip().casefold()
-                identifiers = ['visitor:' + request.reader_actor, 'principal:' + principal]
+                principal = (request.POST.get('username_or_email') or request.POST.get('username') or request.POST.get('email') or '').strip().casefold()
+                identifiers = ['visitor:' + request.reader_actor]
+                if principal:
+                    identifiers.append('principal:' + principal)
                 try:
                     for identifier in identifiers:
                         key = 'reader-auth:' + hashlib.sha256(identifier.encode()).hexdigest() + ':' + str(int(time.time()) // 60)

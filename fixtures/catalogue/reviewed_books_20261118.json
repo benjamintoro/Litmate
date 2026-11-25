@@ -1,0 +1,267 @@
+{
+  "books": [
+    {
+      "title": "CCNA 200-301 Hands-on Mastery with Packet Tracer",
+      "author": "Anthony J. Sequeira, Ronald Wong",
+      "isbn_13": "9780135313091",
+      "publisher": "Cisco Press",
+      "language": "en",
+      "published_date": "2024-11-22",
+      "pages": 496,
+      "categories": [
+        "Computer networks",
+        "Cisco",
+        "CCNA",
+        "Packet Tracer"
+      ],
+      "source_url": "https://www.ciscopress.com/store/ccna-200-301-hands-on-mastery-with-packet-tracer-9780135313091",
+      "source_sha256": "11ac01cf2577a93c69177252a79b47b5b08de14ad68d17b0ece88fe964bafec5",
+      "reviewed_at": "2026-11-18T21:33:47.291599+00:00",
+      "admission": "official-publisher-bibliographic-facts-only",
+      "full_text_imported": false
+    },
+    {
+      "title": "CCNA 200-301 Official Cert Guide, Volume 1, 2nd Edition",
+      "author": "Wendell Odom",
+      "isbn_13": "9780138229634",
+      "publisher": "Cisco Press",
+      "language": "en",
+      "published_date": "2024-05-24",
+      "pages": 944,
+      "categories": [
+        "Computer networks",
+        "Cisco",
+        "CCNA"
+      ],
+      "source_url": "https://www.ciscopress.com/store/ccna-200-301-official-cert-guide-volume-1-9780138229634",
+      "source_sha256": "f4951308f6ba00afbbc06142f19af37e1ce21027ef8ba9eae3f7f637dee4fc35",
+      "reviewed_at": "2026-11-18T21:33:49.086702+00:00",
+      "admission": "official-publisher-bibliographic-facts-only",
+      "full_text_imported": false
+    },
+    {
+      "title": "CCNA 200-301 Official Cert Guide, Volume 2, 2nd Edition",
+      "author": "Wendell Odom, Jason Gooley, David Hucaby",
+      "isbn_13": "9780138214951",
+      "publisher": "Cisco Press",
+      "language": "en",
+      "published_date": "2024-07-19",
+      "pages": 752,
+      "categories": [
+        "Computer networks",
+        "Cisco",
+        "CCNA"
+      ],
+      "source_url": "https://www.ciscopress.com/store/ccna-200-301-official-cert-guide-volume-2-9780138214951",
+      "source_sha256": "ca244b5f83fd3e84833d105805a1af093bf729f38f94d414651843cae88a5ea8",
+      "reviewed_at": "2026-11-18T21:33:50.886368+00:00",
+      "admission": "official-publisher-bibliographic-facts-only",
+      "full_text_imported": false
+    },
+    {
+      "title": "Introduction to Networks Companion Guide (CCNAv7)",
+      "author": "Cisco Networking Academy",
+      "isbn_13": "9780136633662",
+      "publisher": "Cisco Press",
+      "language": "en",
+      "published_date": "2020-07-14",
+      "pages": 736,
+      "categories": [
+        "Computer networks",
+        "Cisco"
+      ],
+      "source_url": "https://www.ciscopress.com/store/introduction-to-networks-companion-guide-ccnav7-9780136633662",
+      "source_sha256": "690f0a7f49d14f9d419705f4f5c0152c741850b87b1cbd60da3ea3c982d98ce5",
+      "reviewed_at": "2026-11-18T21:33:52.265575+00:00",
+      "admission": "official-publisher-bibliographic-facts-only",
+      "full_text_imported": false
+    },
+    {
+      "title": "31 Days Before your CCNA Exam: A Day-By-Day Review Guide for the CCNA 200-301 Certification Exam, 2nd Edition",
+      "author": "Allan Johnson",
+      "isbn_13": "9780138214258",
+      "publisher": "Cisco Press",
+      "language": "en",
+      "published_date": "2024-11-21",
+      "pages": 512,
+      "categories": [
+        "Computer networks",
+        "Cisco",
+        "CCNA"
+      ],
+      "source_url": "https://www.ciscopress.com/store/31-days-before-your-ccna-exam-a-day-by-day-review-guide-9780138214258",
+      "source_sha256": "66c12861d9c7e74cd7f2150547b8c1954b01f4555d514ca385da8ad6e66cbe1a",
+      "reviewed_at": "2026-11-18T21:33:53.619011+00:00",
+      "admission": "official-publisher-bibliographic-facts-only",
+      "full_text_imported": false
+    },
+    {
+      "title": "Cisco Certified Support Technician (CCST) Cybersecurity 100-160 Official Cert Guide",
+      "author": "Shane Sexton, Raymond Lacoste",
+      "isbn_13": "9780138203924",
+      "publisher": "Cisco Press",
+      "language": "en",
+      "published_date": "2024-02-13",
+      "pages": 384,
+      "categories": [
+        "Computer networks",
+        "Cisco",
+        "CCST"
+      ],
+      "source_url": "https://www.ciscopress.com/store/cisco-certified-support-technician-ccst-cybersecurity-9780138203924",
+      "source_sha256": "bfbbb6fcd6355ab03f448086aca3efc24862fc45488f5fb0eb2d00123a0ab3bf",
+      "reviewed_at": "2026-11-18T21:34:00.598109+00:00",
+      "admission": "official-publisher-bibliographic-facts-only",
+      "full_text_imported": false
+    },
+    {
+      "title": "CCNA 200-301 Official Cert Guide, Volume 1, 3rd Edition",
+      "author": "Wendell Odom",
+      "isbn_13": "9780136171584",
+      "publisher": "Cisco Press",
+      "language": "en",
+      "published_date": "2026-12-23",
+      "pages": 832,
+      "categories": [
+        "Computer networks",
+        "Cisco",
+        "CCNA"
+      ],
+      "source_url": "https://www.ciscopress.com/store/ccna-200-301-official-cert-guide-volume-1-9780136171584",
+      "source_sha256": "38156e65ae0f8c33dac5660c151f79886357e97c9b58f08f3ac2e98ff5c87b7b",
+      "reviewed_at": "2026-11-18T21:34:04.465385+00:00",
+      "admission": "official-publisher-bibliographic-facts-only",
+      "full_text_imported": false
+    },
+    {
+      "title": "Switching, Routing, and Wireless Essentials Companion Guide (CCNAv7)",
+      "author": "Cisco Networking Academy",
+      "isbn_13": "9780136729402",
+      "publisher": "Cisco Press",
+      "language": "en",
+      "pages": 640,
+      "categories": [
+        "Computer networks",
+        "Cisco",
+        "CCNA"
+      ],
+      "source_url": "https://www.ciscopress.com/store/switching-routing-and-wireless-essentials-companion-9780136729402",
+      "source_sha256": "aed6beaf9a546c3a5fa732d425f67e376b139c1acf7e3e359bcb0caf937cf016",
+      "reviewed_at": "2026-11-18T21:38:45.835176+00:00",
+      "admission": "official-publisher-bibliographic-facts-only",
+      "full_text_imported": false
+    },
+    {
+      "title": "Enterprise Networking, Security, and Automation  Companion Guide (CCNAv7)",
+      "author": "Cisco Networking Academy",
+      "isbn_13": "9780136634324",
+      "publisher": "Cisco Press",
+      "language": "en",
+      "pages": 800,
+      "categories": [
+        "Computer networks",
+        "Cisco",
+        "CCNA"
+      ],
+      "source_url": "https://www.ciscopress.com/store/enterprise-networking-security-and-automation-companion-9780136634324",
+      "source_sha256": "b5be3e92b09c4c925bbd61fa7ad7a5f04eadb092ca2232c1c9619f9ac0136bd7",
+      "reviewed_at": "2026-11-18T21:38:46.728825+00:00",
+      "admission": "official-publisher-bibliographic-facts-only",
+      "full_text_imported": false
+    },
+    {
+      "title": "Packet Tracer Network Simulator",
+      "author": "Jesin A",
+      "isbn_13": "9781782170426",
+      "publisher": "Packt Publishing",
+      "language": "en",
+      "categories": [
+        "Computer networks",
+        "Cisco",
+        "Packet Tracer"
+      ],
+      "source_url": "https://www.oreilly.com/library/view/packet-tracer-network/9781782170426/pr01.html",
+      "reviewed_at": "2026-11-18T21:38:46.728837+00:00",
+      "admission": "official-publisher-bibliographic-facts-only",
+      "full_text_imported": false
+    },
+    {
+      "title": "Infierno",
+      "author": "Dante Alighieri",
+      "language": "es",
+      "categories": [],
+      "source_url": "https://openlibrary.org/works/OL16807568W",
+      "source_sha256": "666b292bb077830b8337afe7154e535e357d0f234fe103ce99d439a64ee49287",
+      "reviewed_at": "2026-11-18T21:38:47.326039+00:00",
+      "admission": "reviewed-catalogue-facts-only",
+      "full_text_imported": false
+    },
+    {
+      "title": "Inferno",
+      "author": "Dan Brown",
+      "language": "und",
+      "categories": [
+        "Dante Alighieri, 1265-1321",
+        "Code and cipher stories",
+        "Fiction",
+        "Cryptographers",
+        "Robert Langdon (Fictitious character)",
+        "Langdon, Robert (Fictitious character)",
+        "Reading Level-Grade 7",
+        "Reading Level-Grade 9",
+        "Reading Level-Grade 8",
+        "Reading Level-Grade 11",
+        "Reading Level-Grade 10",
+        "Reading Level-Grade 12"
+      ],
+      "source_url": "https://openlibrary.org/works/OL16804289W",
+      "admission": "reviewed-catalogue-facts-only",
+      "reviewed_at": "2026-11-18T21:57:31.001507+00:00",
+      "full_text_imported": false
+    },
+    {
+      "title": "La mano que mece la cuna",
+      "author": "Olmedo Miró Rodríguez",
+      "publisher": "Editorial Culturama Internacional",
+      "isbn_13": "9789962896401",
+      "language": "es",
+      "pages": 111,
+      "categories": [],
+      "source_url": "https://seapanama.org/wp-content/uploads/2019/03/repertorio-sea-panamc3a1-1997-2019.pdf",
+      "source_locator": "página 201 del PDF; registro ISBN de 2009",
+      "admission": "reviewed-catalogue-facts-only",
+      "reviewed_at": "2026-11-18T21:57:31.001507+00:00",
+      "full_text_imported": false,
+      "teacher_edition_confirmed": false
+    },
+    {
+      "title": "La Divina Comedia",
+      "author": "Dante Alighieri",
+      "language": "es",
+      "categories": [
+        "Dante Alighieri, 1265-1321 -- Adaptations",
+        "Epic poetry, Italian -- Adaptations"
+      ],
+      "source_url": "https://www.gutenberg.org/ebooks/57303",
+      "admission": "reviewed-catalogue-facts-only",
+      "reviewed_at": "2026-11-18T21:57:31.001507+00:00",
+      "full_text_imported": false
+    },
+    {
+      "title": "Redes Cisco, Guía de estudio para la certificación CCNA 200-301",
+      "author": "Ernesto Ariganello",
+      "isbn_13": "9788499649306",
+      "language": "es",
+      "publisher": "RA-MA S.A. Editorial y Publicaciones",
+      "pages": 528,
+      "categories": [
+        "Computer networks",
+        "Cisco",
+        "CCNA"
+      ],
+      "source_url": "https://openlibrary.org/books/OL47388353M",
+      "admission": "reviewed-catalogue-facts-only",
+      "full_text_imported": false
+    }
+  ]
+}

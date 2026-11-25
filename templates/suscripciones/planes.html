@@ -24,7 +24,7 @@
     <div class="row justify-content-center text-center mb-5 mt-4">
         <div class="col-lg-7">
             <h2 class="fw-bold plan-hero-title">Elige la experiencia que mejor se adapte a ti</h2>
-            <p class="text-muted plan-hero-desc">Accede a recomendaciones ilimitadas, búsqueda inteligente y la mejor tecnología de IA para tus libros.</p>
+            <p class="text-muted plan-hero-desc">{% if reader_accounts_enabled %}Compara los planes y sus consultas diarias. El plan gratuito no requiere tarjeta.{% else %}Accede a recomendaciones ilimitadas, búsqueda inteligente y la mejor tecnología de IA para tus libros.{% endif %}</p>
             <hr class="my-4 mx-auto plan-hero-divider">
         </div>
     </div>
@@ -58,7 +58,7 @@
 
                     <div class="my-3 py-2">
                         <span class="fw-bold plan-price-value">${{ plan.precio }}</span>
-                        <span class="text-muted small">/ {{ plan.periodo }}</span>
+                        <span class="text-muted small">{{ plan.moneda }} / {{ plan.periodo }}</span>
                     </div>
 
                     <hr class="my-3 mx-auto plan-price-divider">
@@ -87,10 +87,10 @@
                         <li class="mb-3 d-flex align-items-start">
                             {% if plan.acceso_ia_avanzada %}
                                 <i class="iconoir-check me-2 mt-1 plan-check-icon"></i>
-                                <span><strong>Modelos IA Avanzados</strong></span>
+                                <span><strong>Acceso al asistente literario</strong></span>
                             {% else %}
                                 <i class="iconoir-check me-2 mt-1 plan-check-icon-muted"></i>
-                                <span class="text-muted">Modelo IA Estándar</span>
+                                <span class="text-muted">Acceso al asistente literario</span>
                             {% endif %}
                         </li>
                         <li class="mb-3 d-flex align-items-start">
@@ -101,7 +101,7 @@
 
                     <div class="mt-auto pt-3">
                         {% if reader_accounts_enabled %}
-                        <p class="small text-muted">En este perfil están habilitados el chat y su cuota. Favoritos, listas y beneficios avanzados aún no están disponibles.</p>
+                        <p class="small text-muted">Chat, favoritos y listas privadas disponibles.{% if simulated_checkout_enabled %} Contratación de demostración con medios ficticios.{% else %} La contratación de pago sigue desactivada.{% endif %}</p>
                         {% endif %}
                         {% if reader_accounts_enabled and user.is_authenticated %}
                             {% if suscripcion_actual.es_valida and suscripcion_actual.plan_id == plan.id %}
@@ -114,7 +114,7 @@
                                     <button type="submit" class="btn btn-primary w-100">Activar gratis sin tarjeta</button>
                                 </form>
                             {% else %}
-                                <button class="btn btn-outline-secondary w-100" disabled>Contratación no disponible</button>
+                                {% if simulated_checkout_enabled %}<a class="btn btn-primary w-100" href="{% url 'sim_checkout' plan.slug %}">Contratar plan</a>{% else %}<button class="btn btn-outline-secondary w-100" disabled>Contratación no disponible</button>{% endif %}
                             {% endif %}
                         {% else %}
                         {% if user.is_authenticated %}
@@ -128,7 +128,7 @@
                                 </a>
                             {% endif %}
                         {% else %}
-                            <a href="{% url 'login' %}?next={% url 'suscripciones:checkout' plan.slug %}" class="btn btn-outline-primary w-100 fw-semibold">
+                            <a href="{% if simulated_checkout_enabled and plan.precio > 0 %}{% url 'sim_checkout' plan.slug %}{% else %}{% url 'login' %}?next={% url 'suscripciones:checkout' plan.slug %}{% endif %}" class="btn btn-outline-primary w-100 fw-semibold">
                                 Iniciar Sesión para Elegir
                             </a>
                         {% endif %}

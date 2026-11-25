@@ -1,24 +1,39 @@
-"""Reutiliza usuarios, formularios y planes existentes; sin pagos simulados."""
+"""Reutiliza usuarios, formularios, planes y navegación de cuentas."""
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
+from django.core.paginator import Paginator
 from django.db import IntegrityError, transaction, DatabaseError
 from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
+from django.utils.dateparse import parse_datetime
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST
 from django.views.decorators.cache import never_cache
 from core.forms import UserRegisterForm
 from .forms import ReaderLoginForm
-from core.models import PerfilUsuario, ConversacionIA
+from core.models import PerfilUsuario, ConversacionIA, LibroFavorito, ListaLectura
 from .auth_limits import auth_limit
-from suscripciones.models import PlanSuscripcion, SuscripcionUsuario
+from suscripciones.models import PlanSuscripcion, SuscripcionUsuario, HistorialPago
 from .models import AccountEmail
 from .usage import info, UsageError
+
+
+def usage_context(request):
+    """Misma cuota que el endpoint; sin un segundo contador de presentación."""
+    if not request.user.is_authenticated:
+        return {}
+    try:
+        data = info(request.reader_actor, request.user)
+    except UsageError as error:
+        return {'usage_error': error.text}
+    except DatabaseError:
+        return {'usage_error': 'El consumo no está disponible. Inténtalo más tarde.'}
+    return {'usage': data, 'next_reset': parse_datetime(data['renovacion']) if data['renovacion'] else None}
 
 
 @never_cache
@@ -32,6 +47,15 @@ def register(request):
         user = form.save(commit=False)
         try:
             validate_password(form.cleaned_data['password'], user)
+            from .signup import signup_allowed
+            try:
+                allowed = signup_allowed(request)
+            except Exception:
+                form.add_error(None, 'El registro no está disponible temporalmente. Inténtalo más tarde.')
+                return render(request, 'registration/register.html', {'form':form}, status=503)
+            if not allowed:
+                form.add_error(None, 'Se alcanzó el límite temporal de registros. Inténtalo más tarde.')
+                return render(request, 'registration/register.html', {'form':form}, status=429)
             with transaction.atomic(using='accounts'):
                 if type(user).objects.filter(username__iexact=user.username).exists():
                     raise IntegrityError('duplicate identity')
@@ -41,7 +65,8 @@ def register(request):
                 PerfilUsuario.objects.create(usuario=user, nombre=user.first_name or user.username, correo=user.email)
             auth_login(request, user)
             messages.success(request, 'Tu cuenta está creada. Elige tu plan; el gratuito no requiere tarjeta.')
-            return redirect('suscripciones:planes')
+            from .checkout_views import resume_selection
+            return redirect(resume_selection(request))
         except ValidationError as error:
             form.add_error('password', error)
         except IntegrityError:
@@ -59,7 +84,8 @@ def login(request):
     if request.method == 'POST' and not request.POST.get('website_url_check') and form.is_valid():
         auth_login(request, form.cleaned_data['user'])
         request.session.set_expiry(14 * 24 * 3600 if form.cleaned_data.get('remember_me') else 0)
-        return redirect('suscripciones:planes')
+        from .checkout_views import resume_selection
+        return redirect(resume_selection(request))
     return render(request, 'registration/login.html', {'form': form})
 
 
@@ -80,6 +106,7 @@ def plans(request):
         'suscripcion_actual': sub,
         'reader_accounts_enabled': True,
         'paid_verification_pending': bool(sub and sub.plan.precio > 0 and not verified_payment(sub)),
+        **usage_context(request),
     })
 
 
@@ -114,8 +141,22 @@ def quota(request):
 @never_cache
 @login_required
 def account(request):
-    return render(request, 'accounts/account.html', {
-        'conversaciones': ConversacionIA.objects.filter(usuario=request.user)[:20]})
+    from django.conf import settings
+    from .library import reading_counts
+    history_page = Paginator(ConversacionIA.objects.filter(usuario=request.user).order_by(
+        '-ultima_actividad', '-pk'), 20).get_page(request.GET.get('page'))
+    profile = PerfilUsuario.objects.filter(usuario=request.user).first()
+    context = {
+        'conversaciones': history_page, 'history_page': history_page,
+        'profile': profile,
+        'favorite_count': LibroFavorito.objects.filter(usuario=request.user).count(),
+        'reading_list_count': ListaLectura.objects.filter(usuario=request.user).count(),
+        'library_counts': reading_counts(request.user),
+        **usage_context(request)}
+    if settings.LITMATE_COMMUNITY_ENABLED:
+        from .social_profiles import owner_context
+        context.update(owner_context(request, profile))
+    return render(request, 'accounts/account.html', context)
 
 
 @never_cache
@@ -126,6 +167,14 @@ def conversation(request, pk):
 
 
 @never_cache
+@login_required
+def conversation_page(request, pk):
+    conv = get_object_or_404(ConversacionIA, pk=pk, usuario=request.user)
+    return render(request, 'accounts/conversation.html', {'conversation': conv,
+        'history_messages': conv.mensajes.order_by('id')})
+
+
+@never_cache
 @ensure_csrf_cookie
 def chat_page(request):
     return render(request, 'accounts/chatbot.html')
@@ -133,3 +182,10 @@ def chat_page(request):
 
 def payment_disabled(request):
     raise Http404('Contratación no disponible')
+
+
+@never_cache
+@login_required
+def payment_history(request):
+    payments = Paginator(HistorialPago.objects.filter(usuario=request.user).select_related('plan'), 20).get_page(request.GET.get('page'))
+    return render(request, 'accounts/payments.html', {'payments': payments})

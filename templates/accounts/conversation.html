@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}{{ conversation.titulo }} - LitMate{% endblock %}
+{% block content %}
+<main class="container py-5">
+  <h1>{{ conversation.titulo }}</h1>
+  <p><a href="{% url 'perfil' %}">Volver a mi cuenta</a> · <a href="{% url 'chatbot_page' %}">Ir al chat</a></p>
+  <p>Este historial permite leer mensajes guardados. El contexto del chat se conserva en la conversación activa.</p>
+  {% for message in history_messages %}
+  <article class="card mb-3"><div class="card-body">
+    <strong>{% if message.rol == 'user' %}Tú{% else %}LitMate{% endif %}</strong>
+    <div style="white-space: pre-wrap; overflow-wrap: anywhere;">{{ message.contenido }}</div>
+    {% if message.metadata_json.delivery_status == "failed" %}<p role="status">La respuesta no llegó a completarse. Puedes volver a consultar desde el chat.</p>{% endif %}
+  </div></article>
+  {% empty %}<p>No hay mensajes guardados.</p>{% endfor %}
+</main>
+{% endblock %}

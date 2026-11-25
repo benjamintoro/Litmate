@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if community_enabled %}
+{% include 'accounts/social/library_body.html' %}
+{% else %}
+<link rel="stylesheet" href="{% static 'css/reader-personal.css' %}">
+<main class="container py-5 reader-personal"><h1>Mi biblioteca</h1>
+<p>Solo tú puedes consultar tus favoritos y listas. Añade libros desde <a href="{% url 'buscar_libros' %}">Buscar libros</a>.</p>
+<h2>Favoritos</h2>
+<div class="row g-3">{% for book in favorites %}<article class="col-12 col-sm-6 col-lg-4"><div class="card h-100 p-3">
+{% if book.display_cover %}<img src="{{ book.display_cover }}" referrerpolicy="no-referrer" alt="Portada de {{ book.titulo }}" style="width: 80px; height: 120px; object-fit: contain">{% endif %}
+<h3 class="h5 mt-2"><a href="{{ book.detail_url }}">{{ book.titulo }}</a></h3><p>{{ book.autores }}</p>
+<form method="post" action="{% url 'eliminar_favorito' book.pk %}">{% csrf_token %}<button type="submit" class="btn btn-outline-danger btn-sm">Quitar de favoritos</button></form>
+</div></article>{% empty %}<p>No tienes favoritos todavía.</p>{% endfor %}</div>
+<h2 class="mt-5">Listas de lectura</h2>
+{% for reading_list in reading_lists %}<section class="card p-3 my-3">
+<h3 class="h5">{{ reading_list.nombre }}</h3><p>{{ reading_list.descripcion }}</p>
+<a href="{% url 'reader_list_edit' reading_list.pk %}">Cambiar nombre o descripción</a>
+<ul>{% for book in reading_list.elementos.all %}<li class="my-2"><a href="{% url 'reader_book_detail' %}?id={{ book.google_id|urlencode }}">{{ book.titulo }}</a> — {{ book.autores }} · {{ book.get_estado_lectura_display }}
+<form class="d-inline" method="post" action="{% url 'quitar_de_lista_api' book.pk %}">{% csrf_token %}<button class="btn btn-outline-secondary btn-sm" type="submit">Quitar libro</button></form></li>
+{% empty %}<li>Lista sin libros. Añádelos desde el catálogo.</li>{% endfor %}</ul>
+<form method="post" action="{% url 'eliminar_lista_api' reading_list.pk %}">{% csrf_token %}
+<label><input type="checkbox" name="confirmar" value="si" required> Confirmo eliminar esta lista y sus elementos</label>
+<button class="btn btn-outline-danger btn-sm" type="submit">Eliminar lista</button></form></section>
+{% empty %}<p>Todavía no tienes listas.</p>{% endfor %}
+<h3 class="h5 mt-4">Crear lista privada</h3><form method="post" action="{% url 'crear_lista_api' %}">{% csrf_token %}{{ list_form.as_p }}<button class="btn btn-primary" type="submit">Crear lista</button></form>
+<h2 class="mt-5">Mi organizador de lectura</h2>
+<p>Cada obra aparece una vez en el organizador aunque pertenezca a varias listas.</p>
+<div class="row g-3">{% for group in reading_groups %}<section class="col-12 col-lg-4"><div class="card p-3 h-100">
+<h3 class="h5">{{ group.label }} ({{ group.books|length }})</h3>
+{% for book in group.books %}<article class="mb-3"><a href="{{ book.detail_url }}">{{ book.titulo }}</a><p>{{ book.autores }}</p>
+<form method="post" action="{% url 'actualizar_estado_lectura' %}">{% csrf_token %}
+<input type="hidden" name="google_id" value="{{ book.google_id }}"><input type="hidden" name="titulo" value="{{ book.titulo }}">
+<input type="hidden" name="autores" value="{{ book.autores }}"><input type="hidden" name="imagen_url" value="{{ book.display_cover }}">
+<label for="reading-state-{{ book.pk }}">Estado de {{ book.titulo }}</label>
+<select id="reading-state-{{ book.pk }}" name="estado">{% for state,label in reading_labels.items %}
+<option value="{{ state }}" {% if state == group.state %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+<button type="submit" class="btn btn-outline-primary btn-sm mt-2">Guardar estado</button></form></article>
+{% empty %}<p>No tienes libros en este estado.</p>{% endfor %}</div></section>{% endfor %}</div>
+<p class="mt-4"><a href="{% url 'perfil' %}">Volver a mi cuenta</a></p></main>
+{% endif %}
+{% endblock %}

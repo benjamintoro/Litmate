@@ -33,6 +33,11 @@
                 quota.textContent = q.plan + ': ' + q.usadas + ' utilizadas' +
                     (q.es_ilimitado ? ' · Sin límite diario' : ' · ' + q.restantes + ' disponibles') +
                     (q.invitado ? ' en total como invitado.' : ' hoy (hora de Chile).');
+                if (q.renovacion) {
+                    quota.textContent += ' Próxima renovación: ' + new Date(q.renovacion).toLocaleString('es-CL', {
+                        timeZone: q.zona_horaria, day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
+                    }) + ' (Chile).';
+                }
             } else quota.textContent = data.response || '';
         } catch (_) { /* No impedir el chat por el indicador informativo. */ }
     }

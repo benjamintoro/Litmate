@@ -1,0 +1,14 @@
+{% if shared %}
+    <form method="post" action="{{ share_url }}">{% csrf_token %}
+        <button class="lm-btn lm-small" name="action" value="remove">Dejar de compartir esta {{ kind }}</button>
+    </form>
+{% else %}
+    <details><summary>Compartir esta {{ kind }}</summary>
+        <form class="lm-form" method="post" action="{{ share_url }}">{% csrf_token %}
+            {% if kind == 'lista' %}<p class="lm-muted">Los visitantes podrán ver el nombre y los títulos de esta lista, incluidos los que añadas después.</p>
+            {% else %}<p class="lm-muted">Los visitantes podrán ver el título y el estado de esta lectura.</p>{% endif %}
+            <label class="lm-check"><input type="checkbox" name="confirm" value="yes" required> Confirmo que quiero mostrarla en mi perfil público.</label>
+            <div><button class="lm-btn lm-small" name="action" value="add">Compartir en mi perfil</button></div>
+        </form>
+    </details>
+{% endif %}

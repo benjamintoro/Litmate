@@ -1,10 +1,11 @@
-"""Validación defensiva de acceso pagado; no crea pagos ni recibos.
+"""Valida recibos del ciclo comercial y del checkout ficticio.
 
-Los estados históricos 'activa/completado' por sí solos no prueban un cobro.
-No existe todavía una ruta pública que emita el recibo firmado: los pagos
-siguen desactivados hasta integrar y probar la confirmación real del proveedor.
+Los recibos simulados requieren el modo de demostración habilitado y un pedido
+aprobado persistente. Los estados históricos por sí solos no conceden acceso.
 """
+from uuid import UUID
 from django.core import signing
+from django.conf import settings
 from suscripciones.models import HistorialPago
 
 SALT = 'litmate-provider-payment-receipt-v1'
@@ -13,10 +14,25 @@ SALT = 'litmate-provider-payment-receipt-v1'
 def verified_payment(sub):
     metadata = sub.metadatos if isinstance(sub.metadatos, dict) else {}
     receipt = metadata.get('provider_receipt')
+    salt = SALT
+    if metadata.get('simulation_receipt'):
+        if not getattr(settings, 'LITMATE_SIMULATED_CHECKOUT_ENABLED', False):
+            return False
+        from .checkout_models import SimulatedOrder
+        try:
+            order_id = UUID(str(metadata.get('simulation_order')))
+        except (ValueError, TypeError, AttributeError):
+            return False
+        if not SimulatedOrder.objects.filter(user_id=sub.usuario_id, state='approved',
+                payment__referencia_transaccion=sub.id_suscripcion_externa,
+                id=order_id).exists():
+            return False
+        receipt = metadata['simulation_receipt']
+        salt = SALT + '.simulation'
     if not isinstance(receipt, str) or len(receipt) > 4096 or not sub.id_suscripcion_externa:
         return False
     try:
-        claims = signing.loads(receipt, salt=SALT)
+        claims = signing.loads(receipt, salt=salt)
     except (signing.BadSignature, ValueError, TypeError):
         return False
     expected = {'user': sub.usuario_id, 'plan': sub.plan_id,

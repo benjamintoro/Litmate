@@ -48,7 +48,6 @@ class SimpleResearchPlanTests(SimpleTestCase):
             ('¿Qué sucede con él y cómo termina su historia?', 'analysis'),
             ('Explica la metáfora y su relación con la alegoría', 'concept'),
             ('¿Qué sucede con él? Analiza también el simbolismo.', 'analysis'),
-            ('Analiza este fragmento: El árbol preservaba sus recuerdos.', 'analysis'),
             ('¿Quién es y en qué página exacta aparece?', 'analysis'),
             ('Compara el protagonista de El túnel con el de Madame Bovary.', 'analysis'),
             ('Recuerdo ' + 'una escena muy lejana ' * 15, 'identify'),
@@ -56,6 +55,13 @@ class SimpleResearchPlanTests(SimpleTestCase):
             with self.subTest(message=message):
                 self.assertIsNone(simple_research_plan(message, intent, followup=True,
                                                        selected_books=[{'title': 'Una obra'}]))
+
+    def test_reader_excerpt_uses_its_existing_local_plan_without_a_web_query(self):
+        plan=simple_research_plan('Analiza este fragmento: El árbol preservaba sus recuerdos.',
+                                  'analysis',followup=True,selected_books=[{'title':'Una obra'}])
+        self.assertEqual(plan['questions'],['Analiza este fragmento:'])
+        self.assertEqual(plan['search_queries'],[])
+        self.assertFalse(plan['needs_contents'])
 
     def test_detail_needs_an_accepted_work_and_a_followup(self):
         for followup, books in [(False, [{'title': 'Una obra'}]), (True, [])]:

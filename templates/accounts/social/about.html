@@ -1,0 +1,9 @@
+<section class="lm-panel"><h2>Información literaria</h2>
+    {% if social.biography %}<p class="lm-prewrap">{{ social.biography }}</p>{% endif %}
+    <dl class="lm-info">
+        {% if social.genres %}<dt>Géneros favoritos</dt><dd>{{ social.genres }}</dd>{% endif %}
+        {% if social.favorite_author %}<dt>Autor favorito</dt><dd>{{ social.favorite_author }}</dd>{% endif %}
+        {% if social.favorite_book %}<dt>Libro favorito</dt><dd>{{ social.favorite_book }}</dd>{% endif %}
+    </dl>
+    {% if not social.biography and not social.genres and not social.favorite_author and not social.favorite_book %}<p class="lm-muted">Todavía no hay información literaria.</p>{% endif %}
+</section>
